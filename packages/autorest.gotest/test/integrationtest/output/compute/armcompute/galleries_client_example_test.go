@@ -46,6 +46,36 @@ func ExampleGalleriesClient_BeginCreateOrUpdate_createOrUpdateASimpleGalleryWith
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Gallery = armcompute.Gallery{
+	// 	Name: to.Ptr("myGalleryName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryProperties{
+	// 		Description: to.Ptr("This is the gallery description."),
+	// 		Identifier: &armcompute.GalleryIdentifier{
+	// 			UniqueName: to.Ptr("{subscription-id}-MYGALLERYNAME"),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryPropertiesProvisioningStateSucceeded),
+	// 		SharingProfile: &armcompute.SharingProfile{
+	// 			Permissions: to.Ptr(armcompute.GallerySharingPermissionTypesGroups),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"description": "This is the gallery description.",
+	// 		"identifier": {
+	// 			"uniqueName": "{subscription-id}-MYGALLERYNAME"
+	// 		},
+	// 		"provisioningState": "Updating",
+	// 		"sharingProfile": {
+	// 			"permissions": "Groups"
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGallery.json
@@ -74,6 +104,30 @@ func ExampleGalleriesClient_BeginCreateOrUpdate_createOrUpdateASimpleGallery() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Gallery = armcompute.Gallery{
+	// 	Name: to.Ptr("myGalleryName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryProperties{
+	// 		Description: to.Ptr("This is the gallery description."),
+	// 		Identifier: &armcompute.GalleryIdentifier{
+	// 			UniqueName: to.Ptr("{subscription-id}-MYGALLERYNAME"),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryPropertiesProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"description": "This is the gallery description.",
+	// 		"identifier": {
+	// 			"uniqueName": "{subscription-id}-MYGALLERYNAME"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGallery.json
@@ -101,6 +155,30 @@ func ExampleGalleriesClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Gallery = armcompute.Gallery{
+	// 	Name: to.Ptr("myGalleryName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryProperties{
+	// 		Description: to.Ptr("This is the gallery description."),
+	// 		Identifier: &armcompute.GalleryIdentifier{
+	// 			UniqueName: to.Ptr("{subscription-id}-MYGALLERYNAME"),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryPropertiesProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"description": "This is the gallery description.",
+	// 		"identifier": {
+	// 			"uniqueName": "{subscription-id}-MYGALLERYNAME"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryWithSelectPermissions.json
@@ -120,6 +198,53 @@ func ExampleGalleriesClient_Get_getAGalleryWithSelectPermissions() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Gallery = armcompute.Gallery{
+	// 	Name: to.Ptr("myGalleryName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryProperties{
+	// 		SharingProfile: &armcompute.SharingProfile{
+	// 			Groups: []*armcompute.SharingProfileGroup{
+	// 				{
+	// 					Type: to.Ptr(armcompute.SharingProfileGroupTypesSubscriptions),
+	// 					IDs: []*string{
+	// 						to.Ptr("34a4ab42-0d72-47d9-bd1a-aed207386dac"),
+	// 						to.Ptr("380fd389-260b-41aa-bad9-0a83108c370b")},
+	// 					},
+	// 					{
+	// 						Type: to.Ptr(armcompute.SharingProfileGroupTypesAADTenants),
+	// 						IDs: []*string{
+	// 							to.Ptr("c24c76aa-8897-4027-9b03-8f7928b54ff6")},
+	// 					}},
+	// 					Permissions: to.Ptr(armcompute.GallerySharingPermissionTypesGroups),
+	// 				},
+	// 			},
+	// 		}
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"sharingProfile": {
+	// 			"groups": [
+	// 				{
+	// 					"type": "Subscriptions",
+	// 					"ids": [
+	// 						"34a4ab42-0d72-47d9-bd1a-aed207386dac",
+	// 						"380fd389-260b-41aa-bad9-0a83108c370b"
+	// 					]
+	// 				},
+	// 				{
+	// 					"type": "AADTenants",
+	// 					"ids": [
+	// 						"c24c76aa-8897-4027-9b03-8f7928b54ff6"
+	// 					]
+	// 				}
+	// 			],
+	// 			"permissions": "Groups"
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGallery.json
@@ -139,6 +264,30 @@ func ExampleGalleriesClient_Get_getAGallery() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Gallery = armcompute.Gallery{
+	// 	Name: to.Ptr("myGalleryName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryProperties{
+	// 		Description: to.Ptr("This is the gallery description."),
+	// 		Identifier: &armcompute.GalleryIdentifier{
+	// 			UniqueName: to.Ptr("{subscription-id}-MYGALLERYNAME"),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryPropertiesProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"description": "This is the gallery description.",
+	// 		"identifier": {
+	// 			"uniqueName": "{subscription-id}-MYGALLERYNAME"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGallery.json
@@ -183,6 +332,40 @@ func ExampleGalleriesClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.GalleryList = armcompute.GalleryList{
+		// 	Value: []*armcompute.Gallery{
+		// 		{
+		// 			Name: to.Ptr("myGalleryName"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.GalleryProperties{
+		// 				Description: to.Ptr("This is the gallery description."),
+		// 				Identifier: &armcompute.GalleryIdentifier{
+		// 					UniqueName: to.Ptr("{subscription-id}-MYGALLERYNAME"),
+		// 				},
+		// 				ProvisioningState: to.Ptr(armcompute.GalleryPropertiesProvisioningStateSucceeded),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/galleries/myGalleryName",
+		// 	"value": [
+		// 		{
+		// 			"name": "myGalleryName",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"description": "This is the gallery description.",
+		// 				"identifier": {
+		// 					"uniqueName": "{subscription-id}-MYGALLERYNAME"
+		// 				},
+		// 				"provisioningState": "Succeeded"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -207,5 +390,39 @@ func ExampleGalleriesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.GalleryList = armcompute.GalleryList{
+		// 	Value: []*armcompute.Gallery{
+		// 		{
+		// 			Name: to.Ptr("myGalleryName"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.GalleryProperties{
+		// 				Description: to.Ptr("This is the gallery description."),
+		// 				Identifier: &armcompute.GalleryIdentifier{
+		// 					UniqueName: to.Ptr("{subscription-id}-MYGALLERYNAME"),
+		// 				},
+		// 				ProvisioningState: to.Ptr(armcompute.GalleryPropertiesProvisioningStateSucceeded),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/galleries/myGalleryName",
+		// 	"value": [
+		// 		{
+		// 			"name": "myGalleryName",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"description": "This is the gallery description.",
+		// 				"identifier": {
+		// 					"uniqueName": "{subscription-id}-MYGALLERYNAME"
+		// 				},
+		// 				"provisioningState": "Succeeded"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

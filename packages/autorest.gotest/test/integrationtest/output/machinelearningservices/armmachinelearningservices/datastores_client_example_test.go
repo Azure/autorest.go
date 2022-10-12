@@ -46,6 +46,73 @@ func ExampleDatastoresClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DatastoreResourceArmPaginatedResult = armmachinelearningservices.DatastoreResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.DatastoreData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.AzureBlobDatastore{
+		// 				Description: to.Ptr("string"),
+		// 				Tags: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+		// 					CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+		// 				},
+		// 				DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureBlob),
+		// 				IsDefault: to.Ptr(false),
+		// 				AccountName: to.Ptr("string"),
+		// 				ContainerName: to.Ptr("string"),
+		// 				Endpoint: to.Ptr("core.windows.net"),
+		// 				Protocol: to.Ptr("https"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"accountName": "string",
+		// 				"containerName": "string",
+		// 				"credentials": {
+		// 					"credentialsType": "AccountKey"
+		// 				},
+		// 				"datastoreType": "AzureBlob",
+		// 				"endpoint": "core.windows.net",
+		// 				"isDefault": false,
+		// 				"properties": null,
+		// 				"tags": {
+		// 					"string": "string"
+		// 				},
+		// 				"protocol": "https"
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -83,6 +150,65 @@ func ExampleDatastoresClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DatastoreData = armmachinelearningservices.DatastoreData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.AzureBlobDatastore{
+	// 		Description: to.Ptr("string"),
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+	// 			CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+	// 		},
+	// 		DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureBlob),
+	// 		IsDefault: to.Ptr(false),
+	// 		AccountName: to.Ptr("string"),
+	// 		ContainerName: to.Ptr("string"),
+	// 		Endpoint: to.Ptr("core.windows.net"),
+	// 		Protocol: to.Ptr("https"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"accountName": "string",
+	// 		"containerName": "string",
+	// 		"credentials": {
+	// 			"credentialsType": "AccountKey"
+	// 		},
+	// 		"datastoreType": "AzureBlob",
+	// 		"endpoint": "core.windows.net",
+	// 		"isDefault": false,
+	// 		"properties": null,
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"protocol": "https"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
@@ -122,6 +248,65 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureDataLake
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DatastoreData = armmachinelearningservices.DatastoreData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.AzureDataLakeGen1Datastore{
+	// 		Description: to.Ptr("string"),
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
+	// 			CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
+	// 			AuthorityURL: to.Ptr("string"),
+	// 			ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			ResourceURL: to.Ptr("string"),
+	// 			TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		},
+	// 		DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen1),
+	// 		StoreName: to.Ptr("string"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"credentials": {
+	// 			"authorityUrl": "string",
+	// 			"clientId": "00000000-1111-2222-3333-444444444444",
+	// 			"credentialsType": "ServicePrincipal",
+	// 			"resourceUrl": "string",
+	// 			"tenantId": "00000000-1111-2222-3333-444444444444"
+	// 		},
+	// 		"datastoreType": "AzureDataLakeGen1",
+	// 		"properties": null,
+	// 		"storeName": "string",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
@@ -164,6 +349,71 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureDataLake
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DatastoreData = armmachinelearningservices.DatastoreData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.AzureDataLakeGen2Datastore{
+	// 		Description: to.Ptr("string"),
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
+	// 			CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
+	// 			AuthorityURL: to.Ptr("string"),
+	// 			ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			ResourceURL: to.Ptr("string"),
+	// 			TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		},
+	// 		DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen2),
+	// 		AccountName: to.Ptr("string"),
+	// 		Endpoint: to.Ptr("string"),
+	// 		Filesystem: to.Ptr("string"),
+	// 		Protocol: to.Ptr("string"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"accountName": "string",
+	// 		"credentials": {
+	// 			"authorityUrl": "string",
+	// 			"clientId": "00000000-1111-2222-3333-444444444444",
+	// 			"credentialsType": "ServicePrincipal",
+	// 			"resourceUrl": "string",
+	// 			"tenantId": "00000000-1111-2222-3333-444444444444"
+	// 		},
+	// 		"datastoreType": "AzureDataLakeGen2",
+	// 		"endpoint": "string",
+	// 		"filesystem": "string",
+	// 		"properties": null,
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"protocol": "string"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
@@ -202,6 +452,63 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureFileStor
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DatastoreData = armmachinelearningservices.DatastoreData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.AzureFileDatastore{
+	// 		Description: to.Ptr("string"),
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+	// 			CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+	// 		},
+	// 		DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureFile),
+	// 		AccountName: to.Ptr("string"),
+	// 		Endpoint: to.Ptr("string"),
+	// 		FileShareName: to.Ptr("string"),
+	// 		Protocol: to.Ptr("string"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"accountName": "string",
+	// 		"credentials": {
+	// 			"credentialsType": "AccountKey"
+	// 		},
+	// 		"datastoreType": "AzureFile",
+	// 		"endpoint": "string",
+	// 		"fileShareName": "string",
+	// 		"properties": null,
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"protocol": "string"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
@@ -240,6 +547,65 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureBlobWAcc
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DatastoreData = armmachinelearningservices.DatastoreData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.AzureBlobDatastore{
+	// 		Description: to.Ptr("string"),
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+	// 			CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+	// 		},
+	// 		DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureBlob),
+	// 		IsDefault: to.Ptr(false),
+	// 		AccountName: to.Ptr("string"),
+	// 		ContainerName: to.Ptr("string"),
+	// 		Endpoint: to.Ptr("core.windows.net"),
+	// 		Protocol: to.Ptr("https"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"accountName": "string",
+	// 		"containerName": "string",
+	// 		"credentials": {
+	// 			"credentialsType": "AccountKey"
+	// 		},
+	// 		"datastoreType": "AzureBlob",
+	// 		"endpoint": "core.windows.net",
+	// 		"isDefault": false,
+	// 		"properties": null,
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"protocol": "https"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json
@@ -259,4 +625,16 @@ func ExampleDatastoresClient_ListSecrets() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res = armmachinelearningservices.DatastoresClientListSecretsResponse{
+	// 	                            DatastoreSecretsClassification: &armmachinelearningservices.AccountKeyDatastoreSecrets{
+	// 		SecretsType: to.Ptr(armmachinelearningservices.SecretsTypeAccountKey),
+	// 		Key: to.Ptr("string"),
+	// 	},
+	// 	                        }
+	// with the raw JSON response:
+	// {
+	// 	"key": "string",
+	// 	"secretsType": "AccountKey"
+	// }
 }

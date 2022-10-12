@@ -60,4 +60,139 @@ func ExampleRestorePointsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RestorePoint = armcompute.RestorePoint{
+	// 	Name: to.Ptr("rpName"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/rpName"),
+	// 	ConsistencyMode: to.Ptr(armcompute.ConsistencyModeTypesApplicationConsistent),
+	// 	ExcludeDisks: []*armcompute.APIEntityReference{
+	// 		{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
+	// 	}},
+	// 	ProvisioningDetails: &armcompute.RestorePointProvisioningDetails{
+	// 		CreationTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.8401519+00:00"); return t}()),
+	// 		StatusCode: to.Ptr[int32](0),
+	// 		StatusMessage: to.Ptr("{\"jobMessage\":\"\",\"messageStr\":\"1/27/2021 8:35:56 PM , snapshotCreator=guestExtension, hostStatusCodePreSnapshot=200, Plugin enable Succeeded (command: Snapshot) Snapshot command completed \",\"snapshotConsistency\":2}"),
+	// 		TotalUsedSizeInBytes: to.Ptr[int64](10835349504),
+	// 	},
+	// 	ProvisioningState: to.Ptr("Succeeded"),
+	// 	SourceMetadata: &armcompute.RestorePointSourceMetadata{
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardB1S),
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("admin"),
+	// 			AllowExtensionOperations: to.Ptr(true),
+	// 			ComputerName: to.Ptr("computerName"),
+	// 			RequireGuestProvisionSignal: to.Ptr(true),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		StorageProfile: &armcompute.RestorePointSourceVMStorageProfile{
+	// 			DataDisks: []*armcompute.RestorePointSourceVMDataDisk{
+	// 				{
+	// 					Name: to.Ptr("testingexcludedisk_DataDisk_1"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					DiskRestorePoint: &armcompute.APIEntityReference{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/userdata/providers/Microsoft.Compute/restorePointCollections/mynewrpc/restorePoints/restorepointtwo/diskRestorePoints/testingexcludedisk_DataDisk_1_68785190-1acb-4d5e-a8ae-705b45f3dca5"),
+	// 					},
+	// 					Lun: to.Ptr[int32](1),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/userdata/providers/Microsoft.Compute/disks/testingexcludedisk_DataDisk_1"),
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 			}},
+	// 			OSDisk: &armcompute.RestorePointSourceVMOSDisk{
+	// 				Name: to.Ptr("testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				DiskRestorePoint: &armcompute.APIEntityReference{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/rpName/diskRestorePoints/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f_22b4bdfe-6c54-4f72-84d8-85d8860f0c57"),
+	// 				},
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f"),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypeWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("76d6541e-80bd-4dc1-932b-3cae4cfb80e7"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "rpName",
+	// 	"consistencyMode": "ApplicationConsistent",
+	// 	"excludeDisks": [
+	// 		{
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"
+	// 		}
+	// 	],
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/rpName",
+	// 	"provisioningDetails": {
+	// 		"creationTime": "2021-01-27T20:35:05.8401519+00:00",
+	// 		"statusCode": 0,
+	// 		"statusMessage": "{\"jobMessage\":\"\",\"messageStr\":\"1/27/2021 8:35:56 PM , snapshotCreator=guestExtension, hostStatusCodePreSnapshot=200, Plugin enable Succeeded (command: Snapshot) Snapshot command completed \",\"snapshotConsistency\":2}",
+	// 		"totalUsedSizeInBytes": 10835349504
+	// 	},
+	// 	"provisioningState": "Succeeded",
+	// 	"sourceMetadata": {
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true
+	// 			}
+	// 		},
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_B1s"
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "admin",
+	// 			"allowExtensionOperations": true,
+	// 			"computerName": "computerName",
+	// 			"requireGuestProvisionSignal": true,
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"name": "testingexcludedisk_DataDisk_1",
+	// 					"caching": "None",
+	// 					"diskRestorePoint": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/userdata/providers/Microsoft.Compute/restorePointCollections/mynewrpc/restorePoints/restorepointtwo/diskRestorePoints/testingexcludedisk_DataDisk_1_68785190-1acb-4d5e-a8ae-705b45f3dca5"
+	// 					},
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/userdata/providers/Microsoft.Compute/disks/testingexcludedisk_DataDisk_1",
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			],
+	// 			"osDisk": {
+	// 				"name": "testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f",
+	// 				"caching": "ReadWrite",
+	// 				"diskRestorePoint": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/rpName/diskRestorePoints/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f_22b4bdfe-6c54-4f72-84d8-85d8860f0c57"
+	// 				},
+	// 				"managedDisk": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f",
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "76d6541e-80bd-4dc1-932b-3cae4cfb80e7"
+	// 	}
+	// }
 }

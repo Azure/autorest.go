@@ -40,6 +40,59 @@ func ExampleWorkspaceConnectionsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.PaginatedWorkspaceConnectionsList = armmachinelearningservices.PaginatedWorkspaceConnectionsList{
+		// 	Value: []*armmachinelearningservices.WorkspaceConnection{
+		// 		{
+		// 			Name: to.Ptr("connection-1"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/connections"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/linkedWorkspaces/connection-1"),
+		// 			Properties: &armmachinelearningservices.WorkspaceConnectionProps{
+		// 				AuthType: to.Ptr("PAT"),
+		// 				Category: to.Ptr("ACR"),
+		// 				Target: to.Ptr("www.facebook.com"),
+		// 				Value: to.Ptr("secrets"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("connection-2"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/connections"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/linkedWorkspaces/connection-2"),
+		// 			Properties: &armmachinelearningservices.WorkspaceConnectionProps{
+		// 				AuthType: to.Ptr("PAT"),
+		// 				Category: to.Ptr("ACR"),
+		// 				Target: to.Ptr("www.facebook.com"),
+		// 				Value: to.Ptr("secrets"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "connection-1",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/connections",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/linkedWorkspaces/connection-1",
+		// 			"properties": {
+		// 				"authType": "PAT",
+		// 				"category": "ACR",
+		// 				"target": "www.facebook.com",
+		// 				"value": "secrets"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "connection-2",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/connections",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/linkedWorkspaces/connection-2",
+		// 			"properties": {
+		// 				"authType": "PAT",
+		// 				"category": "ACR",
+		// 				"target": "www.facebook.com",
+		// 				"value": "secrets"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -67,6 +120,30 @@ func ExampleWorkspaceConnectionsClient_Create() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.WorkspaceConnection = armmachinelearningservices.WorkspaceConnection{
+	// 	Name: to.Ptr("connection-1"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/connections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/connections/connection-1"),
+	// 	Properties: &armmachinelearningservices.WorkspaceConnectionProps{
+	// 		AuthType: to.Ptr("PAT"),
+	// 		Category: to.Ptr("ACR"),
+	// 		Target: to.Ptr("www.facebook.com"),
+	// 		Value: to.Ptr("secrets"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "connection-1",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/connections",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/connections/connection-1",
+	// 	"properties": {
+	// 		"authType": "PAT",
+	// 		"category": "ACR",
+	// 		"target": "www.facebook.com",
+	// 		"value": "secrets"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json
@@ -86,6 +163,30 @@ func ExampleWorkspaceConnectionsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.WorkspaceConnection = armmachinelearningservices.WorkspaceConnection{
+	// 	Name: to.Ptr("connection-1"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/connections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/connections/connection-1"),
+	// 	Properties: &armmachinelearningservices.WorkspaceConnectionProps{
+	// 		AuthType: to.Ptr("PAT"),
+	// 		Category: to.Ptr("ACR"),
+	// 		Target: to.Ptr("www.facebook.com"),
+	// 		Value: to.Ptr("secrets"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "connection-1",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/connections",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.MachineLearningServices/workspaces/workspace-1/connections/connection-1",
+	// 	"properties": {
+	// 		"authType": "PAT",
+	// 		"category": "ACR",
+	// 		"target": "www.facebook.com",
+	// 		"value": "secrets"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json

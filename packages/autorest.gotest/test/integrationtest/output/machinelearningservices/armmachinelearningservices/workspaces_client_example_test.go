@@ -34,6 +34,150 @@ func ExampleWorkspacesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Workspace = armmachinelearningservices.Workspace{
+	// 	Name: to.Ptr("testworkspace"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace"),
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Location: to.Ptr("eastus2euap"),
+	// 	Properties: &armmachinelearningservices.WorkspaceProperties{
+	// 		Description: to.Ptr("test description"),
+	// 		AllowPublicAccessWhenBehindVnet: to.Ptr(false),
+	// 		ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+	// 		ContainerRegistry: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
+	// 		DiscoveryURL: to.Ptr("http://example.com"),
+	// 		Encryption: &armmachinelearningservices.EncryptionProperty{
+	// 			Identity: &armmachinelearningservices.IdentityForCmk{
+	// 				UserAssignedIdentity: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"),
+	// 			},
+	// 			KeyVaultProperties: &armmachinelearningservices.EncryptionKeyVaultProperties{
+	// 				IdentityClientID: to.Ptr(""),
+	// 				KeyIdentifier: to.Ptr("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb"),
+	// 				KeyVaultArmID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+	// 			},
+	// 			Status: to.Ptr(armmachinelearningservices.EncryptionStatusEnabled),
+	// 		},
+	// 		FriendlyName: to.Ptr("HelloName"),
+	// 		HbiWorkspace: to.Ptr(false),
+	// 		ImageBuildCompute: to.Ptr("testcompute"),
+	// 		KeyVault: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+	// 		PrivateEndpointConnections: []*armmachinelearningservices.PrivateEndpointConnection{
+	// 			{
+	// 				Name: to.Ptr("testprivatelinkconnection"),
+	// 				Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/privateEndpointConnections"),
+	// 				ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/testprivatelinkconnection"),
+	// 				Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
+	// 					PrivateEndpoint: &armmachinelearningservices.PrivateEndpoint{
+	// 						ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"),
+	// 					},
+	// 					PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
+	// 						Description: to.Ptr("Auto-Approved"),
+	// 						ActionsRequired: to.Ptr("None"),
+	// 						Status: to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+	// 					},
+	// 					ProvisioningState: to.Ptr(armmachinelearningservices.PrivateEndpointConnectionProvisioningStateSucceeded),
+	// 				},
+	// 		}},
+	// 		PrivateLinkCount: to.Ptr[int32](0),
+	// 		PublicNetworkAccess: to.Ptr(armmachinelearningservices.PublicNetworkAccessDisabled),
+	// 		ServiceProvisionedResourceGroup: to.Ptr("testworkspace_0000111122223333"),
+	// 		SharedPrivateLinkResources: []*armmachinelearningservices.SharedPrivateLinkResource{
+	// 			{
+	// 				Name: to.Ptr("testcosmosdbresource"),
+	// 				Properties: &armmachinelearningservices.SharedPrivateLinkResourceProperty{
+	// 					GroupID: to.Ptr("Sql"),
+	// 					PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testcosmosdbresource/privateLinkResources/Sql"),
+	// 					RequestMessage: to.Ptr("Please approve"),
+	// 					Status: to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+	// 				},
+	// 		}},
+	// 		StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "testworkspace",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace",
+	// 	"identity": {
+	// 		"type": "SystemAssigned,UserAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"location": "eastus2euap",
+	// 	"properties": {
+	// 		"description": "test description",
+	// 		"allowPublicAccessWhenBehindVnet": false,
+	// 		"applicationInsights": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
+	// 		"containerRegistry": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry",
+	// 		"discoveryUrl": "http://example.com",
+	// 		"encryption": {
+	// 			"identity": {
+	// 				"userAssignedIdentity": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"
+	// 			},
+	// 			"keyVaultProperties": {
+	// 				"identityClientId": "",
+	// 				"keyIdentifier": "https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb",
+	// 				"keyVaultArmId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"
+	// 			},
+	// 			"status": "Enabled"
+	// 		},
+	// 		"friendlyName": "HelloName",
+	// 		"hbiWorkspace": false,
+	// 		"imageBuildCompute": "testcompute",
+	// 		"keyVault": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv",
+	// 		"privateEndpointConnections": [
+	// 			{
+	// 				"name": "testprivatelinkconnection",
+	// 				"type": "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections",
+	// 				"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/testprivatelinkconnection",
+	// 				"properties": {
+	// 					"privateEndpoint": {
+	// 						"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"
+	// 					},
+	// 					"privateLinkServiceConnectionState": {
+	// 						"description": "Auto-Approved",
+	// 						"actionsRequired": "None",
+	// 						"status": "Approved"
+	// 					},
+	// 					"provisioningState": "Succeeded"
+	// 				}
+	// 			}
+	// 		],
+	// 		"privateLinkCount": 0,
+	// 		"publicNetworkAccess": "Disabled",
+	// 		"serviceProvisionedResourceGroup": "testworkspace_0000111122223333",
+	// 		"sharedPrivateLinkResources": [
+	// 			{
+	// 				"name": "testcosmosdbresource",
+	// 				"properties": {
+	// 					"groupId": "Sql",
+	// 					"privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testcosmosdbresource/privateLinkResources/Sql",
+	// 					"requestMessage": "Please approve",
+	// 					"status": "Approved"
+	// 				}
+	// 			}
+	// 		],
+	// 		"storageAccount": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json
@@ -95,6 +239,109 @@ func ExampleWorkspacesClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Workspace = armmachinelearningservices.Workspace{
+	// 	Name: to.Ptr("testworkspace"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace"),
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Location: to.Ptr("eastus2euap"),
+	// 	Properties: &armmachinelearningservices.WorkspaceProperties{
+	// 		Description: to.Ptr("test description"),
+	// 		AllowPublicAccessWhenBehindVnet: to.Ptr(false),
+	// 		ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+	// 		ContainerRegistry: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
+	// 		DiscoveryURL: to.Ptr("http://example.com"),
+	// 		Encryption: &armmachinelearningservices.EncryptionProperty{
+	// 			Identity: &armmachinelearningservices.IdentityForCmk{
+	// 				UserAssignedIdentity: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"),
+	// 			},
+	// 			KeyVaultProperties: &armmachinelearningservices.EncryptionKeyVaultProperties{
+	// 				IdentityClientID: to.Ptr(""),
+	// 				KeyIdentifier: to.Ptr("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb"),
+	// 				KeyVaultArmID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+	// 			},
+	// 			Status: to.Ptr(armmachinelearningservices.EncryptionStatusEnabled),
+	// 		},
+	// 		FriendlyName: to.Ptr("HelloName"),
+	// 		HbiWorkspace: to.Ptr(false),
+	// 		KeyVault: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+	// 		PublicNetworkAccess: to.Ptr(armmachinelearningservices.PublicNetworkAccessDisabled),
+	// 		SharedPrivateLinkResources: []*armmachinelearningservices.SharedPrivateLinkResource{
+	// 			{
+	// 				Name: to.Ptr("testdbresource"),
+	// 				Properties: &armmachinelearningservices.SharedPrivateLinkResourceProperty{
+	// 					GroupID: to.Ptr("Sql"),
+	// 					PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testdbresource/privateLinkResources/Sql"),
+	// 					RequestMessage: to.Ptr("Please approve"),
+	// 					Status: to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+	// 				},
+	// 		}},
+	// 		StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "testworkspace",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace",
+	// 	"identity": {
+	// 		"type": "SystemAssigned,UserAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"location": "eastus2euap",
+	// 	"properties": {
+	// 		"description": "test description",
+	// 		"allowPublicAccessWhenBehindVnet": false,
+	// 		"applicationInsights": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
+	// 		"containerRegistry": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry",
+	// 		"discoveryUrl": "http://example.com",
+	// 		"encryption": {
+	// 			"identity": {
+	// 				"userAssignedIdentity": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"
+	// 			},
+	// 			"keyVaultProperties": {
+	// 				"identityClientId": "",
+	// 				"keyIdentifier": "https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb",
+	// 				"keyVaultArmId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"
+	// 			},
+	// 			"status": "Enabled"
+	// 		},
+	// 		"friendlyName": "HelloName",
+	// 		"hbiWorkspace": false,
+	// 		"keyVault": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv",
+	// 		"publicNetworkAccess": "Disabled",
+	// 		"sharedPrivateLinkResources": [
+	// 			{
+	// 				"name": "testdbresource",
+	// 				"properties": {
+	// 					"groupId": "Sql",
+	// 					"privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testdbresource/privateLinkResources/Sql",
+	// 					"requestMessage": "Please approve",
+	// 					"status": "Approved"
+	// 				}
+	// 			}
+	// 		],
+	// 		"storageAccount": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json
@@ -145,6 +392,50 @@ func ExampleWorkspacesClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Workspace = armmachinelearningservices.Workspace{
+	// 	Name: to.Ptr("testworkspace"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace"),
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 	},
+	// 	Location: to.Ptr("eastus2euap"),
+	// 	Properties: &armmachinelearningservices.WorkspaceProperties{
+	// 		Description: to.Ptr("new description"),
+	// 		ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+	// 		ContainerRegistry: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
+	// 		DiscoveryURL: to.Ptr("http://example.com"),
+	// 		FriendlyName: to.Ptr("New friendly name"),
+	// 		KeyVault: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+	// 		PublicNetworkAccess: to.Ptr(armmachinelearningservices.PublicNetworkAccessDisabled),
+	// 		StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "testworkspace",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444"
+	// 	},
+	// 	"location": "eastus2euap",
+	// 	"properties": {
+	// 		"description": "new description",
+	// 		"applicationInsights": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
+	// 		"containerRegistry": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry",
+	// 		"discoveryUrl": "http://example.com",
+	// 		"friendlyName": "New friendly name",
+	// 		"keyVault": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv",
+	// 		"publicNetworkAccess": "Disabled",
+	// 		"storageAccount": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listByResourceGroup.json
@@ -168,6 +459,76 @@ func ExampleWorkspacesClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.WorkspaceListResult = armmachinelearningservices.WorkspaceListResult{
+		// 	Value: []*armmachinelearningservices.Workspace{
+		// 		{
+		// 			Name: to.Ptr("testworkspace"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armmachinelearningservices.WorkspaceProperties{
+		// 				Description: to.Ptr("test description"),
+		// 				ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+		// 				ContainerRegistry: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
+		// 				DiscoveryURL: to.Ptr("http://example.com"),
+		// 				FriendlyName: to.Ptr("HelloName"),
+		// 				KeyVault: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+		// 				StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("testworkspace1"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace1"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armmachinelearningservices.WorkspaceProperties{
+		// 				Description: to.Ptr("test description"),
+		// 				ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+		// 				ContainerRegistry: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistryNew"),
+		// 				DiscoveryURL: to.Ptr("http://example.com"),
+		// 				FriendlyName: to.Ptr("HelloName 1"),
+		// 				KeyVault: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkvNew"),
+		// 				StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccountOld"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "nextLink",
+		// 	"value": [
+		// 		{
+		// 			"name": "testworkspace",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"description": "test description",
+		// 				"applicationInsights": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
+		// 				"containerRegistry": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry",
+		// 				"discoveryUrl": "http://example.com",
+		// 				"friendlyName": "HelloName",
+		// 				"keyVault": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv",
+		// 				"storageAccount": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "testworkspace1",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace1",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"description": "test description",
+		// 				"applicationInsights": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
+		// 				"containerRegistry": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistryNew",
+		// 				"discoveryUrl": "http://example.com",
+		// 				"friendlyName": "HelloName 1",
+		// 				"keyVault": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkvNew",
+		// 				"storageAccount": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccountOld"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -205,6 +566,53 @@ func ExampleWorkspacesClient_BeginDiagnose() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiagnoseResponseResult = armmachinelearningservices.DiagnoseResponseResult{
+	// 	Value: &armmachinelearningservices.DiagnoseResponseResultValue{
+	// 		ApplicationInsightsResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 		ContainerRegistryResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 		DNSResolutionResults: []*armmachinelearningservices.DiagnoseResult{
+	// 			{
+	// 				Code: to.Ptr("CustomDNSInUse"),
+	// 				Level: to.Ptr(armmachinelearningservices.DiagnoseResultLevelWarning),
+	// 				Message: to.Ptr("We have detected an on-premise dns server is configured. Please make sure conditional forwarding is configured correctly according to doc https://foo"),
+	// 		}},
+	// 		KeyVaultResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 		NetworkSecurityRuleResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 		OtherResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 		ResourceLockResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 		StorageAccountResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 		UserDefinedRouteResults: []*armmachinelearningservices.DiagnoseResult{
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"value": {
+	// 		"applicationInsightsResults": [],
+	// 		"containerRegistryResults": [],
+	// 		"dnsResolutionResults": [
+	// 			{
+	// 				"code": "CustomDNSInUse",
+	// 				"level": "Warning",
+	// 				"message": "We have detected an on-premise dns server is configured. Please make sure conditional forwarding is configured correctly according to doc https://foo"
+	// 			}
+	// 		],
+	// 		"keyVaultResults": [],
+	// 		"networkSecurityRuleResults": [],
+	// 		"otherResults": [],
+	// 		"resourceLockResults": [],
+	// 		"storageAccountResults": [],
+	// 		"userDefinedRouteResults": []
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json
@@ -224,6 +632,48 @@ func ExampleWorkspacesClient_ListKeys() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ListWorkspaceKeysResult = armmachinelearningservices.ListWorkspaceKeysResult{
+	// 	ContainerRegistryCredentials: &armmachinelearningservices.RegistryListCredentialsResult{
+	// 		Passwords: []*armmachinelearningservices.Password{
+	// 			{
+	// 				Name: to.Ptr("password"),
+	// 				Value: to.Ptr("<value>"),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("password2"),
+	// 				Value: to.Ptr("0KARRQoQHSUq1yViPWg7YFernOS=Ic/t"),
+	// 		}},
+	// 		Username: to.Ptr("testdemoworkjmjmeykp"),
+	// 	},
+	// 	NotebookAccessKeys: &armmachinelearningservices.ListNotebookKeysResult{
+	// 	},
+	// 	UserStorageResourceID: to.Ptr("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/ragargeastus2euap/providers/Microsoft.Storage/storageAccounts/testdemoworkazashomr"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"appInsightsInstrumentationKey": null,
+	// 	"containerRegistryCredentials": {
+	// 		"location": null,
+	// 		"passwords": [
+	// 			{
+	// 				"name": "password",
+	// 				"value": "<value>"
+	// 			},
+	// 			{
+	// 				"name": "password2",
+	// 				"value": "0KARRQoQHSUq1yViPWg7YFernOS=Ic/t"
+	// 			}
+	// 		],
+	// 		"username": "testdemoworkjmjmeykp"
+	// 	},
+	// 	"notebookAccessKeys": {
+	// 		"primaryAccessKey": null,
+	// 		"secondaryAccessKey": null
+	// 	},
+	// 	"userStorageKey": null,
+	// 	"userStorageResourceId": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/ragargeastus2euap/providers/Microsoft.Storage/storageAccounts/testdemoworkazashomr"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json
@@ -268,6 +718,76 @@ func ExampleWorkspacesClient_NewListBySubscriptionPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.WorkspaceListResult = armmachinelearningservices.WorkspaceListResult{
+		// 	Value: []*armmachinelearningservices.Workspace{
+		// 		{
+		// 			Name: to.Ptr("testworkspace"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armmachinelearningservices.WorkspaceProperties{
+		// 				Description: to.Ptr("test description"),
+		// 				ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+		// 				ContainerRegistry: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
+		// 				DiscoveryURL: to.Ptr("http://example.com"),
+		// 				FriendlyName: to.Ptr("HelloName"),
+		// 				KeyVault: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+		// 				StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("testworkspace"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-5678/providers/Microsoft.MachineLearningServices/workspaces/testworkspace"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armmachinelearningservices.WorkspaceProperties{
+		// 				Description: to.Ptr("test description"),
+		// 				ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+		// 				ContainerRegistry: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistryNew"),
+		// 				DiscoveryURL: to.Ptr("http://example.com"),
+		// 				FriendlyName: to.Ptr("HelloName"),
+		// 				KeyVault: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkvNew"),
+		// 				StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccountOld"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "nextLink",
+		// 	"value": [
+		// 		{
+		// 			"name": "testworkspace",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"description": "test description",
+		// 				"applicationInsights": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
+		// 				"containerRegistry": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry",
+		// 				"discoveryUrl": "http://example.com",
+		// 				"friendlyName": "HelloName",
+		// 				"keyVault": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv",
+		// 				"storageAccount": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "testworkspace",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-5678/providers/Microsoft.MachineLearningServices/workspaces/testworkspace",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"description": "test description",
+		// 				"applicationInsights": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
+		// 				"containerRegistry": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistryNew",
+		// 				"discoveryUrl": "http://example.com",
+		// 				"friendlyName": "HelloName",
+		// 				"keyVault": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkvNew",
+		// 				"storageAccount": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccountOld"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -288,6 +808,24 @@ func ExampleWorkspacesClient_ListNotebookAccessToken() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.NotebookAccessTokenResult = armmachinelearningservices.NotebookAccessTokenResult{
+	// 	ExpiresIn: to.Ptr[int32](28800),
+	// 	HostName: to.Ptr("Host product name"),
+	// 	NotebookResourceID: to.Ptr("94350843095843059"),
+	// 	PublicDNS: to.Ptr("resource.notebooks.azure.net"),
+	// 	Scope: to.Ptr("aznb_identity"),
+	// 	TokenType: to.Ptr("Bearer"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"expiresIn": 28800,
+	// 	"hostName": "Host product name",
+	// 	"notebookResourceId": "94350843095843059",
+	// 	"publicDns": "resource.notebooks.azure.net",
+	// 	"scope": "aznb_identity",
+	// 	"tokenType": "Bearer"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json
@@ -311,6 +849,24 @@ func ExampleWorkspacesClient_BeginPrepareNotebook() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.NotebookResourceInfo = armmachinelearningservices.NotebookResourceInfo{
+	// 	Fqdn: to.Ptr("testnotebook.notebooks.azure.com"),
+	// 	NotebookPreparationError: &armmachinelearningservices.NotebookPreparationError{
+	// 		ErrorMessage: to.Ptr("general error"),
+	// 		StatusCode: to.Ptr[int32](500),
+	// 	},
+	// 	ResourceID: to.Ptr("aabbccddee112233445566778899"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"fqdn": "testnotebook.notebooks.azure.com",
+	// 	"notebookPreparationError": {
+	// 		"errorMessage": "general error",
+	// 		"statusCode": 500
+	// 	},
+	// 	"resourceId": "aabbccddee112233445566778899"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json
@@ -330,6 +886,13 @@ func ExampleWorkspacesClient_ListStorageAccountKeys() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ListStorageAccountKeysResult = armmachinelearningservices.ListStorageAccountKeysResult{
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"userStorageKey": null
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json
@@ -349,6 +912,14 @@ func ExampleWorkspacesClient_ListNotebookKeys() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ListNotebookKeysResult = armmachinelearningservices.ListNotebookKeysResult{
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"primaryAccessKey": null,
+	// 	"secondaryAccessKey": null
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json
@@ -368,4 +939,69 @@ func ExampleWorkspacesClient_ListOutboundNetworkDependenciesEndpoints() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ExternalFQDNResponse = armmachinelearningservices.ExternalFQDNResponse{
+	// 	Value: []*armmachinelearningservices.FQDNEndpoints{
+	// 		{
+	// 			Properties: &armmachinelearningservices.FQDNEndpointsProperties{
+	// 				Category: to.Ptr("Azure Active Directory"),
+	// 				Endpoints: []*armmachinelearningservices.FQDNEndpoint{
+	// 					{
+	// 						DomainName: to.Ptr("login.microsoftonline.com"),
+	// 						EndpointDetails: []*armmachinelearningservices.FQDNEndpointDetail{
+	// 							{
+	// 								Port: to.Ptr[int32](443),
+	// 						}},
+	// 				}},
+	// 			},
+	// 		},
+	// 		{
+	// 			Properties: &armmachinelearningservices.FQDNEndpointsProperties{
+	// 				Category: to.Ptr("Azure portal"),
+	// 				Endpoints: []*armmachinelearningservices.FQDNEndpoint{
+	// 					{
+	// 						DomainName: to.Ptr("management.azure.com"),
+	// 						EndpointDetails: []*armmachinelearningservices.FQDNEndpointDetail{
+	// 							{
+	// 								Port: to.Ptr[int32](443),
+	// 						}},
+	// 				}},
+	// 			},
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"properties": {
+	// 				"category": "Azure Active Directory",
+	// 				"endpoints": [
+	// 					{
+	// 						"domainName": "login.microsoftonline.com",
+	// 						"endpointDetails": [
+	// 							{
+	// 								"port": 443
+	// 							}
+	// 						]
+	// 					}
+	// 				]
+	// 			}
+	// 		},
+	// 		{
+	// 			"properties": {
+	// 				"category": "Azure portal",
+	// 				"endpoints": [
+	// 					{
+	// 						"domainName": "management.azure.com",
+	// 						"endpointDetails": [
+	// 							{
+	// 								"port": 443
+	// 							}
+	// 						]
+	// 					}
+	// 				]
+	// 			}
+	// 		}
+	// 	]
+	// }
 }

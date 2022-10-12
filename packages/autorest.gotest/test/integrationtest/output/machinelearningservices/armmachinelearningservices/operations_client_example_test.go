@@ -37,5 +37,62 @@ func ExampleOperationsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.AmlOperationListResult = armmachinelearningservices.AmlOperationListResult{
+		// 	Value: []*armmachinelearningservices.AmlOperation{
+		// 		{
+		// 			Name: to.Ptr("Microsoft.MachineLearningServices/workspaces/write"),
+		// 			Display: &armmachinelearningservices.AmlOperationDisplay{
+		// 				Operation: to.Ptr("Create/Update Machine Learning workspaces"),
+		// 				Provider: to.Ptr("Microsoft MachineLearningServices"),
+		// 				Resource: to.Ptr("workspaces"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("Microsoft.MachineLearningServices/workspaces/delete"),
+		// 			Display: &armmachinelearningservices.AmlOperationDisplay{
+		// 				Operation: to.Ptr("Delete Machine Learning workspaces"),
+		// 				Provider: to.Ptr("Microsoft MachineLearningServices"),
+		// 				Resource: to.Ptr("workspaces"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("Microsoft.MachineLearningServices/workspaces/listkeys/action"),
+		// 			Display: &armmachinelearningservices.AmlOperationDisplay{
+		// 				Operation: to.Ptr("List workspace Keys"),
+		// 				Provider: to.Ptr("Microsoft MachineLearningServices"),
+		// 				Resource: to.Ptr("workspaces"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "Microsoft.MachineLearningServices/workspaces/write",
+		// 			"display": {
+		// 				"operation": "Create/Update Machine Learning workspaces",
+		// 				"provider": "Microsoft MachineLearningServices",
+		// 				"resource": "workspaces"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "Microsoft.MachineLearningServices/workspaces/delete",
+		// 			"display": {
+		// 				"operation": "Delete Machine Learning workspaces",
+		// 				"provider": "Microsoft MachineLearningServices",
+		// 				"resource": "workspaces"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "Microsoft.MachineLearningServices/workspaces/listkeys/action",
+		// 			"display": {
+		// 				"operation": "List workspace Keys",
+		// 				"provider": "Microsoft MachineLearningServices",
+		// 				"resource": "workspaces"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

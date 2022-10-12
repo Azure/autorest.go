@@ -34,6 +34,41 @@ func ExampleConfigServersClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ConfigServerResource = armappplatform.ConfigServerResource{
+	// 	Name: to.Ptr("default"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/configServers"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configServers/default"),
+	// 	Properties: &armappplatform.ConfigServerProperties{
+	// 		ConfigServer: &armappplatform.ConfigServerSettings{
+	// 			GitProperty: &armappplatform.ConfigServerGitProperty{
+	// 				Label: to.Ptr("master"),
+	// 				SearchPaths: []*string{
+	// 					to.Ptr("/")},
+	// 					URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
+	// 				},
+	// 			},
+	// 			ProvisioningState: to.Ptr(armappplatform.ConfigServerStateSucceeded),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "default",
+	// 	"type": "Microsoft.AppPlatform/Spring/configServers",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configServers/default",
+	// 	"properties": {
+	// 		"configServer": {
+	// 			"gitProperty": {
+	// 				"label": "master",
+	// 				"searchPaths": [
+	// 					"/"
+	// 				],
+	// 				"uri": "https://github.com/fake-user/fake-repository.git"
+	// 			}
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json
@@ -68,6 +103,41 @@ func ExampleConfigServersClient_BeginUpdatePut() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ConfigServerResource = armappplatform.ConfigServerResource{
+	// 	Name: to.Ptr("default"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/configServers"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configServers/default"),
+	// 	Properties: &armappplatform.ConfigServerProperties{
+	// 		ConfigServer: &armappplatform.ConfigServerSettings{
+	// 			GitProperty: &armappplatform.ConfigServerGitProperty{
+	// 				Label: to.Ptr("master"),
+	// 				SearchPaths: []*string{
+	// 					to.Ptr("/")},
+	// 					URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
+	// 				},
+	// 			},
+	// 			ProvisioningState: to.Ptr(armappplatform.ConfigServerStateSucceeded),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "default",
+	// 	"type": "Microsoft.AppPlatform/Spring/configServers",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configServers/default",
+	// 	"properties": {
+	// 		"configServer": {
+	// 			"gitProperty": {
+	// 				"label": "master",
+	// 				"searchPaths": [
+	// 					"/"
+	// 				],
+	// 				"uri": "https://github.com/fake-user/fake-repository.git"
+	// 			}
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json
@@ -102,6 +172,41 @@ func ExampleConfigServersClient_BeginUpdatePatch() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ConfigServerResource = armappplatform.ConfigServerResource{
+	// 	Name: to.Ptr("default"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/configServers"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configServers/default"),
+	// 	Properties: &armappplatform.ConfigServerProperties{
+	// 		ConfigServer: &armappplatform.ConfigServerSettings{
+	// 			GitProperty: &armappplatform.ConfigServerGitProperty{
+	// 				Label: to.Ptr("master"),
+	// 				SearchPaths: []*string{
+	// 					to.Ptr("/")},
+	// 					URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
+	// 				},
+	// 			},
+	// 			ProvisioningState: to.Ptr(armappplatform.ConfigServerStateSucceeded),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "default",
+	// 	"type": "Microsoft.AppPlatform/Spring/configServers",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configServers/default",
+	// 	"properties": {
+	// 		"configServer": {
+	// 			"gitProperty": {
+	// 				"label": "master",
+	// 				"searchPaths": [
+	// 					"/"
+	// 				],
+	// 				"uri": "https://github.com/fake-user/fake-repository.git"
+	// 			}
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json
@@ -132,4 +237,12 @@ func ExampleConfigServersClient_BeginValidate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ConfigServerSettingsValidateResult = armappplatform.ConfigServerSettingsValidateResult{
+	// 	IsValid: to.Ptr(true),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"isValid": true
+	// }
 }

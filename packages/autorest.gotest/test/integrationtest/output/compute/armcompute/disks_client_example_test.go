@@ -48,6 +48,34 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		DiskAccessID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/{existing-diskAccess-name}"),
+	// 		DiskSizeGB: to.Ptr[int32](200),
+	// 		NetworkAccessPolicy: to.Ptr(armcompute.NetworkAccessPolicyAllowPrivate),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"diskAccessId": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/{existing-diskAccess-name}",
+	// 		"diskSizeGB": 200,
+	// 		"networkAccessPolicy": "AllowPrivate",
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskEncryptionSet.json
@@ -82,6 +110,36 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](200),
+	// 		Encryption: &armcompute.Encryption{
+	// 			DiskEncryptionSetID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"diskSizeGB": 200,
+	// 		"encryption": {
+	// 			"diskEncryptionSetId": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByCopyingASnapshot.json
@@ -113,6 +171,30 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByCopyingASnapshot
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+	// 			SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Copy",
+	// 			"sourceResourceId": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromADifferentSubscription.json
@@ -145,6 +227,32 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByImportingAnUnman
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+	// 			SourceURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 			StorageAccountID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Import",
+	// 			"sourceUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+	// 			"storageAccountId": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromTheSameSubscription.json
@@ -176,6 +284,30 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByImportingAnUnman
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+	// 			SourceURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Import",
+	// 			"sourceUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAPlatformImage.json
@@ -210,6 +342,48 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAPlatformImage
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+	// 			ImageReference: &armcompute.ImageDiskReference{
+	// 				ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/westus/Publishers/{publisher}/ArtifactTypes/VMImage/Offers/{offer}/Skus/{sku}/Versions/1.0.0"),
+	// 			},
+	// 		},
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		PurchasePlan: &armcompute.DiskPurchasePlan{
+	// 			Name: to.Ptr("{sku}"),
+	// 			Product: to.Ptr("{offer}"),
+	// 			Publisher: to.Ptr("{publisher}"),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "FromImage",
+	// 			"imageReference": {
+	// 				"id": "/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/westus/Publishers/{publisher}/ArtifactTypes/VMImage/Offers/{offer}/Skus/{sku}/Versions/1.0.0"
+	// 			}
+	// 		},
+	// 		"hyperVGeneration": "V1",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Succeeded",
+	// 		"purchasePlan": {
+	// 			"name": "{sku}",
+	// 			"product": "{offer}",
+	// 			"publisher": "{publisher}"
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAnExistingManagedDisk.json
@@ -241,6 +415,30 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAnExistingMana
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk2"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+	// 			SourceResourceID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk1"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk2",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Copy",
+	// 			"sourceResourceId": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk1"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSecurityProfile.json
@@ -278,6 +476,42 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSecurityProfil
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("North Central US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+	// 			ImageReference: &armcompute.ImageDiskReference{
+	// 				ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"),
+	// 			},
+	// 		},
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SecurityProfile: &armcompute.DiskSecurityProfile{
+	// 			SecurityType: to.Ptr(armcompute.DiskSecurityTypesTrustedLaunch),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "North Central US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "FromImage",
+	// 			"imageReference": {
+	// 				"id": "/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"
+	// 			}
+	// 		},
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Updating",
+	// 		"securityProfile": {
+	// 			"securityType": "TrustedLaunch"
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSSDZRSAccountType.json
@@ -312,6 +546,38 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSsdZrsAccountT
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](200),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// 	SKU: &armcompute.DiskSKU{
+	// 		Name: to.Ptr(armcompute.DiskStorageAccountTypesPremiumZRS),
+	// 		Tier: to.Ptr("Premium"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"diskSizeGB": 200,
+	// 		"provisioningState": "Updating"
+	// 	},
+	// 	"sku": {
+	// 		"name": "Premium_ZRS",
+	// 		"tier": "Premium"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedUploadDisk.json
@@ -343,6 +609,30 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedUploadDisk() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionUpload),
+	// 			UploadSizeBytes: to.Ptr[int64](10737418752),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Upload",
+	// 			"uploadSizeBytes": 10737418752
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDiskInExtendedLocation.json
@@ -378,6 +668,38 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnEmptyManagedDiskInExtendedLo
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	ExtendedLocation: &armcompute.ExtendedLocation{
+	// 		Name: to.Ptr("{edge-zone-id}"),
+	// 		Type: to.Ptr(armcompute.ExtendedLocationTypesEdgeZone),
+	// 	},
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](200),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"extendedLocation": {
+	// 		"name": "{edge-zone-id}",
+	// 		"type": "EdgeZone"
+	// 	},
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"diskSizeGB": 200,
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDisk.json
@@ -409,6 +731,30 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnEmptyManagedDisk() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](200),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"diskSizeGB": 200,
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithLogicalSectorSize.json
@@ -444,6 +790,40 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnUltraManagedDiskWithLogicalS
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 			LogicalSectorSize: to.Ptr[int32](512),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](200),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// 	SKU: &armcompute.DiskSKU{
+	// 		Name: to.Ptr(armcompute.DiskStorageAccountTypesUltraSSDLRS),
+	// 		Tier: to.Ptr("Ultra"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty",
+	// 			"logicalSectorSize": 512
+	// 		},
+	// 		"diskSizeGB": 200,
+	// 		"provisioningState": "Updating"
+	// 	},
+	// 	"sku": {
+	// 		"name": "UltraSSD_LRS",
+	// 		"tier": "Ultra"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateOrUpdateABurstingEnabledManagedDisk.json
@@ -472,6 +852,32 @@ func ExampleDisksClient_BeginUpdate_createOrUpdateABurstingEnabledManagedDisk() 
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		BurstingEnabled: to.Ptr(true),
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](1024),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"burstingEnabled": true,
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"diskSizeGB": 1024,
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddPurchasePlan.json
@@ -504,6 +910,60 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToAddPurchasePlan() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+	// 			ImageReference: &armcompute.ImageDiskReference{
+	// 				ID: to.Ptr("/Subscriptions/{subscription-id}/Providers/Microsoft.Compute/Locations/westus/Publishers/test_test_pmc2pc1/ArtifactTypes/VMImage/Offers/marketplace_vm_test/Skus/test_sku/Versions/1.0.0"),
+	// 			},
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](127),
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		PurchasePlan: &armcompute.DiskPurchasePlan{
+	// 			Name: to.Ptr("myPurchasePlanName"),
+	// 			Product: to.Ptr("myPurchasePlanProduct"),
+	// 			PromotionCode: to.Ptr("myPurchasePlanPromotionCode"),
+	// 			Publisher: to.Ptr("myPurchasePlanPublisher"),
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.DiskSKU{
+	// 		Name: to.Ptr(armcompute.DiskStorageAccountTypesStandardLRS),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "FromImage",
+	// 			"imageReference": {
+	// 				"id": "/Subscriptions/{subscription-id}/Providers/Microsoft.Compute/Locations/westus/Publishers/test_test_pmc2pc1/ArtifactTypes/VMImage/Offers/marketplace_vm_test/Skus/test_sku/Versions/1.0.0"
+	// 			}
+	// 		},
+	// 		"diskSizeGB": 127,
+	// 		"hyperVGeneration": "V1",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Succeeded",
+	// 		"purchasePlan": {
+	// 			"name": "myPurchasePlanName",
+	// 			"product": "myPurchasePlanProduct",
+	// 			"promotionCode": "myPurchasePlanPromotionCode",
+	// 			"publisher": "myPurchasePlanPublisher"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_LRS",
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddSupportsHibernation.json
@@ -531,6 +991,46 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToAddSupportsHibernation()
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+	// 			SourceURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](127),
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SupportsHibernation: to.Ptr(true),
+	// 	},
+	// 	SKU: &armcompute.DiskSKU{
+	// 		Name: to.Ptr(armcompute.DiskStorageAccountTypesStandardLRS),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Import",
+	// 			"sourceUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"
+	// 		},
+	// 		"diskSizeGB": 127,
+	// 		"hyperVGeneration": "V1",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Succeeded",
+	// 		"supportsHibernation": true
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_LRS",
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToChangeTier.json
@@ -558,6 +1058,30 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToChangeTier() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		Tier: to.Ptr("P30"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"tier": "P30"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToDisableBursting.json
@@ -585,6 +1109,28 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToDisableBursting() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToRemoveDiskAccess.json
@@ -612,6 +1158,32 @@ func ExampleDisksClient_BeginUpdate_updateManagedDiskToRemoveDiskAccessResourceA
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myDisk"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](200),
+	// 		NetworkAccessPolicy: to.Ptr(armcompute.NetworkAccessPolicyAllowAll),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDisk",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Empty"
+	// 		},
+	// 		"diskSizeGB": 200,
+	// 		"networkAccessPolicy": "AllowAll",
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAManagedDisk.json
@@ -631,6 +1203,123 @@ func ExampleDisksClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Disk = armcompute.Disk{
+	// 	Name: to.Ptr("myManagedDisk"),
+	// 	Type: to.Ptr("Microsoft.Compute/disks"),
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("Development"),
+	// 		"project": to.Ptr("ManagedDisks"),
+	// 	},
+	// 	ManagedBy: to.Ptr("/subscriptions/123caaa-123v-v211-a49f-f88ccac5bf88/resourceGroups/ResourceGroupName/providers/Microsoft.Compute/virtualMachines/TestVM414689371c88843d65ec"),
+	// 	Properties: &armcompute.DiskProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+	// 			ImageReference: &armcompute.ImageDiskReference{
+	// 				ID: to.Ptr("/Subscriptions/{subscription-id}/Providers/Microsoft.Compute/Locations/westus/Publishers/test_test_pmc2pc1/ArtifactTypes/VMImage/Offers/marketplace_vm_test/Skus/test_sku/Versions/1.0.0"),
+	// 			},
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](10),
+	// 		Encryption: &armcompute.Encryption{
+	// 			Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+	// 		},
+	// 		EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+	// 			Enabled: to.Ptr(true),
+	// 			EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+	// 				{
+	// 					DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+	// 						SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+	// 						SourceVault: &armcompute.SourceVault{
+	// 							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+	// 						},
+	// 					},
+	// 					KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+	// 						KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+	// 						SourceVault: &armcompute.SourceVault{
+	// 							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+	// 						},
+	// 					},
+	// 			}},
+	// 		},
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		PurchasePlan: &armcompute.DiskPurchasePlan{
+	// 			Name: to.Ptr("test_sku"),
+	// 			Product: to.Ptr("marketplace_vm_test"),
+	// 			Publisher: to.Ptr("test_test_pmc2pc1"),
+	// 		},
+	// 		SecurityProfile: &armcompute.DiskSecurityProfile{
+	// 			SecurityType: to.Ptr(armcompute.DiskSecurityTypesTrustedLaunch),
+	// 		},
+	// 		SupportsHibernation: to.Ptr(true),
+	// 		TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.079872+00:00"); return t}()),
+	// 	},
+	// 	SKU: &armcompute.DiskSKU{
+	// 		Name: to.Ptr(armcompute.DiskStorageAccountTypesStandardLRS),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myManagedDisk",
+	// 	"type": "Microsoft.Compute/disks",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk",
+	// 	"location": "westus",
+	// 	"managedBy": "/subscriptions/123caaa-123v-v211-a49f-f88ccac5bf88/resourceGroups/ResourceGroupName/providers/Microsoft.Compute/virtualMachines/TestVM414689371c88843d65ec",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "FromImage",
+	// 			"imageReference": {
+	// 				"id": "/Subscriptions/{subscription-id}/Providers/Microsoft.Compute/Locations/westus/Publishers/test_test_pmc2pc1/ArtifactTypes/VMImage/Offers/marketplace_vm_test/Skus/test_sku/Versions/1.0.0"
+	// 			}
+	// 		},
+	// 		"diskSizeGB": 10,
+	// 		"encryption": {
+	// 			"type": "EncryptionAtRestWithPlatformKey"
+	// 		},
+	// 		"encryptionSettingsCollection": {
+	// 			"enabled": true,
+	// 			"encryptionSettings": [
+	// 				{
+	// 					"diskEncryptionKey": {
+	// 						"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+	// 						"sourceVault": {
+	// 							"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+	// 						}
+	// 					},
+	// 					"keyEncryptionKey": {
+	// 						"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+	// 						"sourceVault": {
+	// 							"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+	// 						}
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"hyperVGeneration": "V1",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Succeeded",
+	// 		"purchasePlan": {
+	// 			"name": "test_sku",
+	// 			"product": "marketplace_vm_test",
+	// 			"publisher": "test_test_pmc2pc1"
+	// 		},
+	// 		"securityProfile": {
+	// 			"securityType": "TrustedLaunch"
+	// 		},
+	// 		"supportsHibernation": true,
+	// 		"timeCreated": "2016-12-28T04:41:35.079872+00:00"
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_LRS"
+	// 	},
+	// 	"tags": {
+	// 		"department": "Development",
+	// 		"project": "ManagedDisks"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListManagedDisksInAResourceGroup.json
@@ -654,6 +1343,222 @@ func ExampleDisksClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DiskList = armcompute.DiskList{
+		// 	Value: []*armcompute.Disk{
+		// 		{
+		// 			Name: to.Ptr("myManagedDisk1"),
+		// 			Type: to.Ptr("Microsoft.Compute/disks"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("ManagedDisks"),
+		// 			},
+		// 			Properties: &armcompute.DiskProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+		// 					SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](200),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+		// 					Enabled: to.Ptr(true),
+		// 					EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+		// 						{
+		// 							DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+		// 								SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 							KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+		// 								KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 					}},
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.9278721+00:00"); return t}()),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myManagedDisk2"),
+		// 			Type: to.Ptr("Microsoft.Compute/disks"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+		// 			Location: to.Ptr("westus"),
+		// 			Properties: &armcompute.DiskProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](10),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.872242+00:00"); return t}()),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myManagedDisk3"),
+		// 			Type: to.Ptr("Microsoft.Compute/disks"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("ManagedDisks"),
+		// 			},
+		// 			Properties: &armcompute.DiskProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+		// 					ImageReference: &armcompute.ImageDiskReference{
+		// 						ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"),
+		// 					},
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](200),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+		// 					Enabled: to.Ptr(true),
+		// 					EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+		// 						{
+		// 							DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+		// 								SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 							KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+		// 								KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 					}},
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.3973934+00:00"); return t}()),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://disksvchost:99/subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/Disks/myManagedDisk",
+		// 	"value": [
+		// 		{
+		// 			"name": "myManagedDisk1",
+		// 			"type": "Microsoft.Compute/disks",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "Copy",
+		// 					"sourceResourceId": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"
+		// 				},
+		// 				"diskSizeGB": 200,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"encryptionSettingsCollection": {
+		// 					"enabled": true,
+		// 					"encryptionSettings": [
+		// 						{
+		// 							"diskEncryptionKey": {
+		// 								"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							},
+		// 							"keyEncryptionKey": {
+		// 								"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:41:35.9278721+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "ManagedDisks"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myManagedDisk2",
+		// 			"type": "Microsoft.Compute/disks",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "Empty"
+		// 				},
+		// 				"diskSizeGB": 10,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:41:36.872242+00:00"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myManagedDisk3",
+		// 			"type": "Microsoft.Compute/disks",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "FromImage",
+		// 					"imageReference": {
+		// 						"id": "/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"
+		// 					}
+		// 				},
+		// 				"diskSizeGB": 200,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"encryptionSettingsCollection": {
+		// 					"enabled": true,
+		// 					"encryptionSettings": [
+		// 						{
+		// 							"diskEncryptionKey": {
+		// 								"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							},
+		// 							"keyEncryptionKey": {
+		// 								"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:41:36.3973934+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "ManagedDisks"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -678,5 +1583,221 @@ func ExampleDisksClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DiskList = armcompute.DiskList{
+		// 	Value: []*armcompute.Disk{
+		// 		{
+		// 			Name: to.Ptr("myManagedDisk1"),
+		// 			Type: to.Ptr("Microsoft.Compute/disks"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("ManagedDisks"),
+		// 			},
+		// 			Properties: &armcompute.DiskProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+		// 					SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"),
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](200),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+		// 					Enabled: to.Ptr(true),
+		// 					EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+		// 						{
+		// 							DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+		// 								SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 							KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+		// 								KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 					}},
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.9278721+00:00"); return t}()),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myManagedDisk2"),
+		// 			Type: to.Ptr("Microsoft.Compute/disks"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
+		// 			Location: to.Ptr("westus"),
+		// 			Properties: &armcompute.DiskProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](10),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.872242+00:00"); return t}()),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myManagedDisk3"),
+		// 			Type: to.Ptr("Microsoft.Compute/disks"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk3"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("ManagedDisks"),
+		// 			},
+		// 			Properties: &armcompute.DiskProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+		// 					ImageReference: &armcompute.ImageDiskReference{
+		// 						ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"),
+		// 					},
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](200),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+		// 					Enabled: to.Ptr(true),
+		// 					EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+		// 						{
+		// 							DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+		// 								SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 							KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+		// 								KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 					}},
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.3973934+00:00"); return t}()),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://disksvchost:99/subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/Disks/myManagedDisk",
+		// 	"value": [
+		// 		{
+		// 			"name": "myManagedDisk1",
+		// 			"type": "Microsoft.Compute/disks",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "Copy",
+		// 					"sourceResourceId": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"
+		// 				},
+		// 				"diskSizeGB": 200,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"encryptionSettingsCollection": {
+		// 					"enabled": true,
+		// 					"encryptionSettings": [
+		// 						{
+		// 							"diskEncryptionKey": {
+		// 								"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							},
+		// 							"keyEncryptionKey": {
+		// 								"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:41:35.9278721+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "ManagedDisks"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myManagedDisk2",
+		// 			"type": "Microsoft.Compute/disks",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "Empty"
+		// 				},
+		// 				"diskSizeGB": 10,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:41:36.872242+00:00"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myManagedDisk3",
+		// 			"type": "Microsoft.Compute/disks",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk3",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "FromImage",
+		// 					"imageReference": {
+		// 						"id": "/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"
+		// 					}
+		// 				},
+		// 				"diskSizeGB": 200,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"encryptionSettingsCollection": {
+		// 					"enabled": true,
+		// 					"encryptionSettings": [
+		// 						{
+		// 							"diskEncryptionKey": {
+		// 								"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							},
+		// 							"keyEncryptionKey": {
+		// 								"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:41:36.3973934+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "ManagedDisks"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

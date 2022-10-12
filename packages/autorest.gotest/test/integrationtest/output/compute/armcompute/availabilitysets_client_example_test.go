@@ -43,6 +43,34 @@ func ExampleAvailabilitySetsClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.AvailabilitySet = armcompute.AvailabilitySet{
+	// 	Name: to.Ptr("myAvailabilitySet"),
+	// 	Type: to.Ptr("Microsoft.Compute/availabilitySets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/myAvailabilitySet"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.AvailabilitySetProperties{
+	// 		PlatformFaultDomainCount: to.Ptr[int32](2),
+	// 		PlatformUpdateDomainCount: to.Ptr[int32](20),
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Classic"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myAvailabilitySet",
+	// 	"type": "Microsoft.Compute/availabilitySets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/myAvailabilitySet",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"platformFaultDomainCount": 2,
+	// 		"platformUpdateDomainCount": 20
+	// 	},
+	// 	"sku": {
+	// 		"name": "Classic"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListAvailabilitySetsInASubscription.json
@@ -66,5 +94,154 @@ func ExampleAvailabilitySetsClient_NewListBySubscriptionPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.AvailabilitySetListResult = armcompute.AvailabilitySetListResult{
+		// 	Value: []*armcompute.AvailabilitySet{
+		// 		{
+		// 			Name: to.Ptr("{availabilitySetName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/availabilitySets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+		// 			Location: to.Ptr("australiasoutheast"),
+		// 			Properties: &armcompute.AvailabilitySetProperties{
+		// 				PlatformFaultDomainCount: to.Ptr[int32](3),
+		// 				PlatformUpdateDomainCount: to.Ptr[int32](5),
+		// 				VirtualMachines: []*armcompute.SubResource{
+		// 					{
+		// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
+		// 				}},
+		// 			},
+		// 			SKU: &armcompute.SKU{
+		// 				Name: to.Ptr("Classic"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("{availabilitySetName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/availabilitySets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+		// 			Location: to.Ptr("australiasoutheast"),
+		// 			Properties: &armcompute.AvailabilitySetProperties{
+		// 				PlatformFaultDomainCount: to.Ptr[int32](3),
+		// 				PlatformUpdateDomainCount: to.Ptr[int32](5),
+		// 				VirtualMachines: []*armcompute.SubResource{
+		// 					{
+		// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
+		// 				}},
+		// 			},
+		// 			SKU: &armcompute.SKU{
+		// 				Name: to.Ptr("Classic"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("{availabilitySetName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/availabilitySets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+		// 			Location: to.Ptr("westcentralus"),
+		// 			Tags: map[string]*string{
+		// 				"{tagName}": to.Ptr("{tagValue}"),
+		// 			},
+		// 			Properties: &armcompute.AvailabilitySetProperties{
+		// 				PlatformFaultDomainCount: to.Ptr[int32](3),
+		// 				PlatformUpdateDomainCount: to.Ptr[int32](5),
+		// 				VirtualMachines: []*armcompute.SubResource{
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.SKU{
+		// 				Name: to.Ptr("Classic"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("{availabilitySetName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/availabilitySets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+		// 			Location: to.Ptr("westcentralus"),
+		// 			Tags: map[string]*string{
+		// 				"{tagName}": to.Ptr("{tagValue}"),
+		// 			},
+		// 			Properties: &armcompute.AvailabilitySetProperties{
+		// 				PlatformFaultDomainCount: to.Ptr[int32](3),
+		// 				PlatformUpdateDomainCount: to.Ptr[int32](5),
+		// 				VirtualMachines: []*armcompute.SubResource{
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.SKU{
+		// 				Name: to.Ptr("Classic"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "{availabilitySetName}",
+		// 			"type": "Microsoft.Compute/availabilitySets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}",
+		// 			"location": "australiasoutheast",
+		// 			"properties": {
+		// 				"platformFaultDomainCount": 3,
+		// 				"platformUpdateDomainCount": 5,
+		// 				"virtualMachines": [
+		// 					{
+		// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+		// 					}
+		// 				]
+		// 			},
+		// 			"sku": {
+		// 				"name": "Classic"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "{availabilitySetName}",
+		// 			"type": "Microsoft.Compute/availabilitySets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}",
+		// 			"location": "australiasoutheast",
+		// 			"properties": {
+		// 				"platformFaultDomainCount": 3,
+		// 				"platformUpdateDomainCount": 5,
+		// 				"virtualMachines": [
+		// 					{
+		// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+		// 					}
+		// 				]
+		// 			},
+		// 			"sku": {
+		// 				"name": "Classic"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "{availabilitySetName}",
+		// 			"type": "Microsoft.Compute/availabilitySets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}",
+		// 			"location": "westcentralus",
+		// 			"properties": {
+		// 				"platformFaultDomainCount": 3,
+		// 				"platformUpdateDomainCount": 5,
+		// 				"virtualMachines": []
+		// 			},
+		// 			"sku": {
+		// 				"name": "Classic"
+		// 			},
+		// 			"tags": {
+		// 				"{tagName}": "{tagValue}"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "{availabilitySetName}",
+		// 			"type": "Microsoft.Compute/availabilitySets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}",
+		// 			"location": "westcentralus",
+		// 			"properties": {
+		// 				"platformFaultDomainCount": 3,
+		// 				"platformUpdateDomainCount": 5,
+		// 				"virtualMachines": []
+		// 			},
+		// 			"sku": {
+		// 				"name": "Classic"
+		// 			},
+		// 			"tags": {
+		// 				"{tagName}": "{tagValue}"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

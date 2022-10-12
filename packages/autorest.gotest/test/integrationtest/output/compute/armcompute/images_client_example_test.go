@@ -52,6 +52,51 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlob
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"blobUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+	// 				"caching": "ReadWrite",
+	// 				"diskEncryptionSet": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlob.json
@@ -87,6 +132,47 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlob
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 			ZoneResilient: to.Ptr(true),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"blobUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+	// 				"caching": "ReadWrite",
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux"
+	// 			},
+	// 			"zoneResilient": true
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDiskWithDiskEncryptionSet.json
@@ -126,6 +212,55 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAMana
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 				},
+	// 				ManagedDisk: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"caching": "ReadWrite",
+	// 				"diskEncryptionSet": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 				},
+	// 				"managedDisk": {
+	// 					"id": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDisk.json
@@ -163,6 +298,51 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAMana
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				ManagedDisk: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 			ZoneResilient: to.Ptr(true),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"caching": "ReadWrite",
+	// 				"managedDisk": {
+	// 					"id": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux"
+	// 			},
+	// 			"zoneResilient": true
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshotWithDiskEncryptionSet.json
@@ -202,6 +382,55 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnap
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 				},
+	// 				Snapshot: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"caching": "ReadWrite",
+	// 				"diskEncryptionSet": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux",
+	// 				"snapshot": {
+	// 					"id": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshot.json
@@ -239,6 +468,51 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnap
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				Snapshot: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 			ZoneResilient: to.Ptr(false),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"caching": "ReadWrite",
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux",
+	// 				"snapshot": {
+	// 					"id": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"
+	// 				}
+	// 			},
+	// 			"zoneResilient": false
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAVM.json
@@ -269,6 +543,57 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAnExi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SourceVirtualMachine: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 		},
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				ManagedDisk: &armcompute.SubResource{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myVM_OsDisk_1_6dc293b7d811433196903acf92665022"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 			ZoneResilient: to.Ptr(false),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"sourceVirtualMachine": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"caching": "ReadWrite",
+	// 				"managedDisk": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myVM_OsDisk_1_6dc293b7d811433196903acf92665022"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux"
+	// 			},
+	// 			"zoneResilient": false
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromABlob.json
@@ -309,6 +634,55 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 				{
+	// 					BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 			ZoneResilient: to.Ptr(false),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"blobUri": "https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd",
+	// 					"lun": 1
+	// 				}
+	// 			],
+	// 			"osDisk": {
+	// 				"blobUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+	// 				"caching": "ReadWrite",
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux"
+	// 			},
+	// 			"zoneResilient": false
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromAManagedDisk.json
@@ -353,6 +727,63 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 				{
+	// 					ManagedDisk: &armcompute.SubResource{
+	// 						ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
+	// 					},
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				ManagedDisk: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 			ZoneResilient: to.Ptr(false),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"
+	// 					}
+	// 				}
+	// 			],
+	// 			"osDisk": {
+	// 				"caching": "ReadWrite",
+	// 				"managedDisk": {
+	// 					"id": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux"
+	// 			},
+	// 			"zoneResilient": false
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromASnapshot.json
@@ -397,6 +828,63 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 				{
+	// 					Snapshot: &armcompute.SubResource{
+	// 						ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
+	// 					},
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				Snapshot: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+	// 				},
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 			ZoneResilient: to.Ptr(true),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/disk/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"lun": 1,
+	// 					"snapshot": {
+	// 						"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"
+	// 					}
+	// 				}
+	// 			],
+	// 			"osDisk": {
+	// 				"caching": "ReadWrite",
+	// 				"osState": "Generalized",
+	// 				"osType": "Linux",
+	// 				"snapshot": {
+	// 					"id": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"
+	// 				}
+	// 			},
+	// 			"zoneResilient": true
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateImage.json
@@ -430,6 +918,89 @@ func ExampleImagesClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("HR"),
+	// 	},
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 				{
+	// 					BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
+	// 					ManagedDisk: &armcompute.SubResource{
+	// 						ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
+	// 					},
+	// 					Snapshot: &armcompute.SubResource{
+	// 						ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
+	// 					},
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 				DiskSizeGB: to.Ptr[int32](20),
+	// 				ManagedDisk: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"),
+	// 				},
+	// 				Snapshot: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
+	// 				},
+	// 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 			ZoneResilient: to.Ptr(true),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "created",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"blobUri": "https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd",
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"
+	// 					},
+	// 					"snapshot": {
+	// 						"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"
+	// 					},
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			],
+	// 			"osDisk": {
+	// 				"blobUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+	// 				"diskSizeGB": 20,
+	// 				"managedDisk": {
+	// 					"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Windows",
+	// 				"snapshot": {
+	// 					"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"
+	// 				},
+	// 				"storageAccountType": "Standard_LRS"
+	// 			},
+	// 			"zoneResilient": true
+	// 		}
+	// 	},
+	// 	"tags": {
+	// 		"department": "HR"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInformationAboutAnImage.json
@@ -449,6 +1020,83 @@ func ExampleImagesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Image = armcompute.Image{
+	// 	Name: to.Ptr("myImage"),
+	// 	Type: to.Ptr("Microsoft.Compute/images"),
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.ImageProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.ImageStorageProfile{
+	// 			DataDisks: []*armcompute.ImageDataDisk{
+	// 				{
+	// 					BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
+	// 					ManagedDisk: &armcompute.SubResource{
+	// 						ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
+	// 					},
+	// 					Snapshot: &armcompute.SubResource{
+	// 						ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
+	// 					},
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDisk: &armcompute.ImageOSDisk{
+	// 				BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 				DiskSizeGB: to.Ptr[int32](20),
+	// 				ManagedDisk: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"),
+	// 				},
+	// 				Snapshot: &armcompute.SubResource{
+	// 					ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
+	// 				},
+	// 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 			ZoneResilient: to.Ptr(true),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myImage",
+	// 	"type": "Microsoft.Compute/images",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "created",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"blobUri": "https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd",
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"
+	// 					},
+	// 					"snapshot": {
+	// 						"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"
+	// 					},
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			],
+	// 			"osDisk": {
+	// 				"blobUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+	// 				"diskSizeGB": 20,
+	// 				"managedDisk": {
+	// 					"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"
+	// 				},
+	// 				"osState": "Generalized",
+	// 				"osType": "Windows",
+	// 				"snapshot": {
+	// 					"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"
+	// 				},
+	// 				"storageAccountType": "Standard_LRS"
+	// 			},
+	// 			"zoneResilient": true
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListImagesInAResourceGroup.json
@@ -472,6 +1120,86 @@ func ExampleImagesClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ImageListResult = armcompute.ImageListResult{
+		// 	Value: []*armcompute.Image{
+		// 		{
+		// 			Name: to.Ptr("myImage"),
+		// 			Type: to.Ptr("Microsoft.Compute/images"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.ImageProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				StorageProfile: &armcompute.ImageStorageProfile{
+		// 					DataDisks: []*armcompute.ImageDataDisk{
+		// 						{
+		// 							BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
+		// 							ManagedDisk: &armcompute.SubResource{
+		// 								ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
+		// 							},
+		// 							Snapshot: &armcompute.SubResource{
+		// 								ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
+		// 							},
+		// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+		// 							Lun: to.Ptr[int32](1),
+		// 					}},
+		// 					OSDisk: &armcompute.ImageOSDisk{
+		// 						BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+		// 						ManagedDisk: &armcompute.SubResource{
+		// 							ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"),
+		// 						},
+		// 						Snapshot: &armcompute.SubResource{
+		// 							ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
+		// 						},
+		// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+		// 						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+		// 						OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 					},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myImage",
+		// 			"type": "Microsoft.Compute/images",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "created",
+		// 				"storageProfile": {
+		// 					"dataDisks": [
+		// 						{
+		// 							"blobUri": "https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd",
+		// 							"lun": 1,
+		// 							"managedDisk": {
+		// 								"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"
+		// 							},
+		// 							"snapshot": {
+		// 								"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"
+		// 							},
+		// 							"storageAccountType": "Standard_LRS"
+		// 						}
+		// 					],
+		// 					"osDisk": {
+		// 						"blobUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+		// 						"managedDisk": {
+		// 							"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"
+		// 						},
+		// 						"osState": "Generalized",
+		// 						"osType": "Windows",
+		// 						"snapshot": {
+		// 							"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"
+		// 						},
+		// 						"storageAccountType": "Standard_LRS"
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -496,5 +1224,85 @@ func ExampleImagesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ImageListResult = armcompute.ImageListResult{
+		// 	Value: []*armcompute.Image{
+		// 		{
+		// 			Name: to.Ptr("myImage"),
+		// 			Type: to.Ptr("Microsoft.Compute/images"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.ImageProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				StorageProfile: &armcompute.ImageStorageProfile{
+		// 					DataDisks: []*armcompute.ImageDataDisk{
+		// 						{
+		// 							BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
+		// 							ManagedDisk: &armcompute.SubResource{
+		// 								ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
+		// 							},
+		// 							Snapshot: &armcompute.SubResource{
+		// 								ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
+		// 							},
+		// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+		// 							Lun: to.Ptr[int32](1),
+		// 					}},
+		// 					OSDisk: &armcompute.ImageOSDisk{
+		// 						BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+		// 						ManagedDisk: &armcompute.SubResource{
+		// 							ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"),
+		// 						},
+		// 						Snapshot: &armcompute.SubResource{
+		// 							ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
+		// 						},
+		// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+		// 						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+		// 						OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 					},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myImage",
+		// 			"type": "Microsoft.Compute/images",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/myImage",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "created",
+		// 				"storageProfile": {
+		// 					"dataDisks": [
+		// 						{
+		// 							"blobUri": "https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd",
+		// 							"lun": 1,
+		// 							"managedDisk": {
+		// 								"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"
+		// 							},
+		// 							"snapshot": {
+		// 								"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"
+		// 							},
+		// 							"storageAccountType": "Standard_LRS"
+		// 						}
+		// 					],
+		// 					"osDisk": {
+		// 						"blobUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+		// 						"managedDisk": {
+		// 							"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk1"
+		// 						},
+		// 						"osState": "Generalized",
+		// 						"osType": "Windows",
+		// 						"snapshot": {
+		// 							"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"
+		// 						},
+		// 						"storageAccountType": "Standard_LRS"
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

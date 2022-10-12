@@ -38,6 +38,79 @@ func ExamplePrivateEndpointConnectionsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.PrivateEndpointConnectionListResult = armmachinelearningservices.PrivateEndpointConnectionListResult{
+		// 	Value: []*armmachinelearningservices.PrivateEndpointConnection{
+		// 		{
+		// 			Name: to.Ptr("{privateEndpointConnectionName}"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/privateEndpointConnections"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}"),
+		// 			Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
+		// 				PrivateEndpoint: &armmachinelearningservices.PrivateEndpoint{
+		// 					ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"),
+		// 				},
+		// 				PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
+		// 					Description: to.Ptr("Auto-Approved"),
+		// 					ActionsRequired: to.Ptr("None"),
+		// 					Status: to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+		// 				},
+		// 				ProvisioningState: to.Ptr(armmachinelearningservices.PrivateEndpointConnectionProvisioningStateSucceeded),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("{privateEndpointConnectionName}"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/privateEndpointConnections"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}"),
+		// 			Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
+		// 				PrivateEndpoint: &armmachinelearningservices.PrivateEndpoint{
+		// 					ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"),
+		// 				},
+		// 				PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
+		// 					Description: to.Ptr("Auto-Approved"),
+		// 					ActionsRequired: to.Ptr("None"),
+		// 					Status: to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+		// 				},
+		// 				ProvisioningState: to.Ptr(armmachinelearningservices.PrivateEndpointConnectionProvisioningStateSucceeded),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "{privateEndpointConnectionName}",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}",
+		// 			"properties": {
+		// 				"privateEndpoint": {
+		// 					"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"
+		// 				},
+		// 				"privateLinkServiceConnectionState": {
+		// 					"description": "Auto-Approved",
+		// 					"actionsRequired": "None",
+		// 					"status": "Approved"
+		// 				},
+		// 				"provisioningState": "Succeeded"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "{privateEndpointConnectionName}",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}",
+		// 			"properties": {
+		// 				"privateEndpoint": {
+		// 					"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"
+		// 				},
+		// 				"privateLinkServiceConnectionState": {
+		// 					"description": "Auto-Approved",
+		// 					"actionsRequired": "None",
+		// 					"status": "Approved"
+		// 				},
+		// 				"provisioningState": "Succeeded"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -58,6 +131,40 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateEndpointConnection = armmachinelearningservices.PrivateEndpointConnection{
+	// 	Name: to.Ptr("{privateEndpointConnectionName}"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/privateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}"),
+	// 	Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
+	// 		PrivateEndpoint: &armmachinelearningservices.PrivateEndpoint{
+	// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"),
+	// 		},
+	// 		PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
+	// 			Description: to.Ptr("Auto-Approved"),
+	// 			ActionsRequired: to.Ptr("None"),
+	// 			Status: to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.PrivateEndpointConnectionProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{privateEndpointConnectionName}",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}",
+	// 	"properties": {
+	// 		"privateEndpoint": {
+	// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"
+	// 		},
+	// 		"privateLinkServiceConnectionState": {
+	// 			"description": "Auto-Approved",
+	// 			"actionsRequired": "None",
+	// 			"status": "Approved"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json
@@ -84,6 +191,40 @@ func ExamplePrivateEndpointConnectionsClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateEndpointConnection = armmachinelearningservices.PrivateEndpointConnection{
+	// 	Name: to.Ptr("{privateEndpointConnectionName}"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/privateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}"),
+	// 	Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
+	// 		PrivateEndpoint: &armmachinelearningservices.PrivateEndpoint{
+	// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"),
+	// 		},
+	// 		PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
+	// 			Description: to.Ptr("Auto-Approved"),
+	// 			ActionsRequired: to.Ptr("None"),
+	// 			Status: to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.PrivateEndpointConnectionProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{privateEndpointConnectionName}",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/privateEndpointConnections",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateEndpointConnections/{privateEndpointConnectionName}",
+	// 	"properties": {
+	// 		"privateEndpoint": {
+	// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.Network/privateEndpoints/petest01"
+	// 		},
+	// 		"privateLinkServiceConnectionState": {
+	// 			"description": "Auto-Approved",
+	// 			"actionsRequired": "None",
+	// 			"status": "Approved"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json

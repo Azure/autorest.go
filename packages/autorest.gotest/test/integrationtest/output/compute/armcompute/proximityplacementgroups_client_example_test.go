@@ -39,6 +39,26 @@ func ExampleProximityPlacementGroupsClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ProximityPlacementGroup = armcompute.ProximityPlacementGroup{
+	// 	Name: to.Ptr("myProximityPlacementGroup"),
+	// 	Type: to.Ptr("Microsoft.Compute/proximityPlacementGroups"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ProximityPlacementGroupProperties{
+	// 		ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myProximityPlacementGroup",
+	// 	"type": "Microsoft.Compute/proximityPlacementGroups",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"proximityPlacementGroupType": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PatchAProximityPlacementGroup.json
@@ -62,6 +82,26 @@ func ExampleProximityPlacementGroupsClient_Update() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ProximityPlacementGroup = armcompute.ProximityPlacementGroup{
+	// 	Name: to.Ptr("myProximityPlacementGroup"),
+	// 	Type: to.Ptr("Microsoft.Compute/proximityPlacementGroups"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ProximityPlacementGroupProperties{
+	// 		ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myProximityPlacementGroup",
+	// 	"type": "Microsoft.Compute/proximityPlacementGroups",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"proximityPlacementGroupType": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteAProximityPlacementGroup.json
@@ -98,6 +138,53 @@ func ExampleProximityPlacementGroupsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ProximityPlacementGroup = armcompute.ProximityPlacementGroup{
+	// 	Name: to.Ptr("myProximityPlacementGroup"),
+	// 	Type: to.Ptr("Microsoft.Compute/proximityPlacementGroups"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.ProximityPlacementGroupProperties{
+	// 		AvailabilitySets: []*armcompute.SubResourceWithColocationStatus{
+	// 			{
+	// 				ID: to.Ptr("string"),
+	// 		}},
+	// 		ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
+	// 		VirtualMachineScaleSets: []*armcompute.SubResourceWithColocationStatus{
+	// 			{
+	// 				ID: to.Ptr("string"),
+	// 		}},
+	// 		VirtualMachines: []*armcompute.SubResourceWithColocationStatus{
+	// 			{
+	// 				ID: to.Ptr("string"),
+	// 		}},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myProximityPlacementGroup",
+	// 	"type": "Microsoft.Compute/proximityPlacementGroups",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"availabilitySets": [
+	// 			{
+	// 				"id": "string"
+	// 			}
+	// 		],
+	// 		"proximityPlacementGroupType": "Standard",
+	// 		"virtualMachineScaleSets": [
+	// 			{
+	// 				"id": "string"
+	// 			}
+	// 		],
+	// 		"virtualMachines": [
+	// 			{
+	// 				"id": "string"
+	// 			}
+	// 		]
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListProximityPlacementGroupsInASubscription.json
@@ -121,6 +208,61 @@ func ExampleProximityPlacementGroupsClient_NewListBySubscriptionPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ProximityPlacementGroupListResult = armcompute.ProximityPlacementGroupListResult{
+		// 	Value: []*armcompute.ProximityPlacementGroup{
+		// 		{
+		// 			Name: to.Ptr("myProximityPlacementGroup"),
+		// 			Type: to.Ptr("Microsoft.Compute/proximityPlacementGroups"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup"),
+		// 			Location: to.Ptr("westus"),
+		// 			Properties: &armcompute.ProximityPlacementGroupProperties{
+		// 				AvailabilitySets: []*armcompute.SubResourceWithColocationStatus{
+		// 					{
+		// 						ID: to.Ptr("string"),
+		// 				}},
+		// 				ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
+		// 				VirtualMachineScaleSets: []*armcompute.SubResourceWithColocationStatus{
+		// 					{
+		// 						ID: to.Ptr("string"),
+		// 				}},
+		// 				VirtualMachines: []*armcompute.SubResourceWithColocationStatus{
+		// 					{
+		// 						ID: to.Ptr("string"),
+		// 				}},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "myProximityPlacementGroup",
+		// 			"type": "Microsoft.Compute/proximityPlacementGroups",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"availabilitySets": [
+		// 					{
+		// 						"id": "string"
+		// 					}
+		// 				],
+		// 				"proximityPlacementGroupType": "Standard",
+		// 				"virtualMachineScaleSets": [
+		// 					{
+		// 						"id": "string"
+		// 					}
+		// 				],
+		// 				"virtualMachines": [
+		// 					{
+		// 						"id": "string"
+		// 					}
+		// 				]
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -145,5 +287,60 @@ func ExampleProximityPlacementGroupsClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ProximityPlacementGroupListResult = armcompute.ProximityPlacementGroupListResult{
+		// 	Value: []*armcompute.ProximityPlacementGroup{
+		// 		{
+		// 			Name: to.Ptr("myProximityPlacementGroup"),
+		// 			Type: to.Ptr("Microsoft.Compute/proximityPlacementGroups"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup"),
+		// 			Location: to.Ptr("westus"),
+		// 			Properties: &armcompute.ProximityPlacementGroupProperties{
+		// 				AvailabilitySets: []*armcompute.SubResourceWithColocationStatus{
+		// 					{
+		// 						ID: to.Ptr("string"),
+		// 				}},
+		// 				ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
+		// 				VirtualMachineScaleSets: []*armcompute.SubResourceWithColocationStatus{
+		// 					{
+		// 						ID: to.Ptr("string"),
+		// 				}},
+		// 				VirtualMachines: []*armcompute.SubResourceWithColocationStatus{
+		// 					{
+		// 						ID: to.Ptr("string"),
+		// 				}},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "myProximityPlacementGroup",
+		// 			"type": "Microsoft.Compute/proximityPlacementGroups",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myProximityPlacementGroup",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"availabilitySets": [
+		// 					{
+		// 						"id": "string"
+		// 					}
+		// 				],
+		// 				"proximityPlacementGroupType": "Standard",
+		// 				"virtualMachineScaleSets": [
+		// 					{
+		// 						"id": "string"
+		// 					}
+		// 				],
+		// 				"virtualMachines": [
+		// 					{
+		// 						"id": "string"
+		// 					}
+		// 				]
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

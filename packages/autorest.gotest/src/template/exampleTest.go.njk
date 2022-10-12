@@ -55,6 +55,10 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
             // TODO: use page item
             _ = v
         }
+        // For example, nextResult struct should like: 
+        // {% if example.responseTypePointer %}*{% endif %}nextResult{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
+        // with the raw JSON response: 
+        // {{jsFunc.getCommentRawResponseJSON(example)}}
     }
     {%- else %}
     client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
@@ -69,11 +73,19 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
             // TODO: use page item
             _ = v
         }
+        // For example, nextResult struct should like: 
+        // {% if example.responseTypePointer %}*{% endif %}nextResult{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
+        // with the raw JSON response: 
+        // {{jsFunc.getCommentRawResponseJSON(example)}}
     }
     {%- endif %}
     {%- if example.checkResponse and not example.isPageable%}
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // {% if example.responseTypePointer %}*{% endif %}res{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
+    // with the raw JSON response: 
+    // {{jsFunc.getCommentRawResponseJSON(example)}}
     {%- endif %}
 }
 {%- endif %}

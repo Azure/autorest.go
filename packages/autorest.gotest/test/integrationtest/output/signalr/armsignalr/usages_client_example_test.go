@@ -37,5 +37,55 @@ func ExampleUsagesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.UsageList = armsignalr.UsageList{
+		// 	Value: []*armsignalr.Usage{
+		// 		{
+		// 			Name: &armsignalr.UsageName{
+		// 				LocalizedValue: to.Ptr("Usage1"),
+		// 				Value: to.Ptr("Usage1"),
+		// 			},
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.SignalRService/locations/eastus/usages/Usage1"),
+		// 			Limit: to.Ptr[int64](100),
+		// 			Unit: to.Ptr("Count"),
+		// 		},
+		// 		{
+		// 			Name: &armsignalr.UsageName{
+		// 				LocalizedValue: to.Ptr("Usage2"),
+		// 				Value: to.Ptr("Usage2"),
+		// 			},
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.SignalRService/locations/eastus/usages/Usage2"),
+		// 			Limit: to.Ptr[int64](100),
+		// 			Unit: to.Ptr("Count"),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...",
+		// 	"value": [
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Usage1",
+		// 				"value": "Usage1"
+		// 			},
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.SignalRService/locations/eastus/usages/Usage1",
+		// 			"limit": 100,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Usage2",
+		// 				"value": "Usage2"
+		// 			},
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.SignalRService/locations/eastus/usages/Usage2",
+		// 			"limit": 100,
+		// 			"unit": "Count"
+		// 		}
+		// 	]
+		// }
 	}
 }

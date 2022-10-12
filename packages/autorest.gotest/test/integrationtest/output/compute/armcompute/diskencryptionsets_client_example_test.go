@@ -49,6 +49,37 @@ func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate_createADiskEncryptionSe
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskEncryptionSet = armcompute.DiskEncryptionSet{
+	// 	Name: to.Ptr("myDiskEncryptionSet"),
+	// 	Location: to.Ptr("West US"),
+	// 	Identity: &armcompute.EncryptionSetIdentity{
+	// 		Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+	// 	},
+	// 	Properties: &armcompute.EncryptionSetProperties{
+	// 		ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+	// 			KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/{key}"),
+	// 		},
+	// 		EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+	// 		PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskEncryptionSet",
+	// 	"identity": {
+	// 		"type": "SystemAssigned"
+	// 	},
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"activeKey": {
+	// 			"keyUrl": "https://myvaultdifferentsub.vault-int.azure-int.net/keys/{key}"
+	// 		},
+	// 		"encryptionType": "EncryptionAtRestWithCustomerKey",
+	// 		"previousKeys": []
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSet.json
@@ -86,6 +117,43 @@ func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate_createADiskEncryptionSe
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskEncryptionSet = armcompute.DiskEncryptionSet{
+	// 	Name: to.Ptr("myDiskEncryptionSet"),
+	// 	Location: to.Ptr("West US"),
+	// 	Identity: &armcompute.EncryptionSetIdentity{
+	// 		Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+	// 	},
+	// 	Properties: &armcompute.EncryptionSetProperties{
+	// 		ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+	// 			KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+	// 			SourceVault: &armcompute.SourceVault{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+	// 			},
+	// 		},
+	// 		EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+	// 		PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskEncryptionSet",
+	// 	"identity": {
+	// 		"type": "SystemAssigned"
+	// 	},
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"activeKey": {
+	// 			"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+	// 			"sourceVault": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+	// 			}
+	// 		},
+	// 		"encryptionType": "EncryptionAtRestWithCustomerKey",
+	// 		"previousKeys": []
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabled.json
@@ -120,6 +188,44 @@ func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSetWithRot
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskEncryptionSet = armcompute.DiskEncryptionSet{
+	// 	Name: to.Ptr("myDiskEncryptionSet"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskEncryptionSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet"),
+	// 	Location: to.Ptr("West US"),
+	// 	Identity: &armcompute.EncryptionSetIdentity{
+	// 		Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+	// 	},
+	// 	Properties: &armcompute.EncryptionSetProperties{
+	// 		ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+	// 			KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/KeyVersion2"),
+	// 		},
+	// 		EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+	// 		LastKeyRotationTimestamp: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079872+00:00"); return t}()),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RotationToLatestKeyVersionEnabled: to.Ptr(true),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskEncryptionSet",
+	// 	"type": "Microsoft.Compute/diskEncryptionSets",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet",
+	// 	"identity": {
+	// 		"type": "SystemAssigned"
+	// 	},
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"activeKey": {
+	// 			"keyUrl": "https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/KeyVersion2"
+	// 		},
+	// 		"encryptionType": "EncryptionAtRestWithCustomerKey",
+	// 		"lastKeyRotationTimestamp": "2020-12-01T04:41:35.079872+00:00",
+	// 		"provisioningState": "Succeeded",
+	// 		"rotationToLatestKeyVersionEnabled": true
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabledInProgress.json
@@ -154,6 +260,53 @@ func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSetWithRot
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskEncryptionSet = armcompute.DiskEncryptionSet{
+	// 	Name: to.Ptr("myDiskEncryptionSet"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskEncryptionSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet"),
+	// 	Location: to.Ptr("West US"),
+	// 	Identity: &armcompute.EncryptionSetIdentity{
+	// 		Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+	// 	},
+	// 	Properties: &armcompute.EncryptionSetProperties{
+	// 		ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+	// 			KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion2"),
+	// 		},
+	// 		EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+	// 		LastKeyRotationTimestamp: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079872+00:00"); return t}()),
+	// 		PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+	// 			{
+	// 				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RotationToLatestKeyVersionEnabled: to.Ptr(true),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskEncryptionSet",
+	// 	"type": "Microsoft.Compute/diskEncryptionSets",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet",
+	// 	"identity": {
+	// 		"type": "SystemAssigned"
+	// 	},
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"activeKey": {
+	// 			"keyUrl": "https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion2"
+	// 		},
+	// 		"encryptionType": "EncryptionAtRestWithCustomerKey",
+	// 		"lastKeyRotationTimestamp": "2020-12-01T04:41:35.079872+00:00",
+	// 		"previousKeys": [
+	// 			{
+	// 				"keyUrl": "https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Updating",
+	// 		"rotationToLatestKeyVersionEnabled": true
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSet.json
@@ -191,6 +344,53 @@ func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSet() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskEncryptionSet = armcompute.DiskEncryptionSet{
+	// 	Name: to.Ptr("myDiskEncryptionSet"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("Development"),
+	// 		"project": to.Ptr("Encryption"),
+	// 	},
+	// 	Identity: &armcompute.EncryptionSetIdentity{
+	// 		Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+	// 	},
+	// 	Properties: &armcompute.EncryptionSetProperties{
+	// 		ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+	// 			KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/keyName/keyVersion"),
+	// 			SourceVault: &armcompute.SourceVault{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+	// 			},
+	// 		},
+	// 		EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+	// 		LastKeyRotationTimestamp: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079872+00:00"); return t}()),
+	// 		PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskEncryptionSet",
+	// 	"identity": {
+	// 		"type": "SystemAssigned"
+	// 	},
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"activeKey": {
+	// 			"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/keyName/keyVersion",
+	// 			"sourceVault": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+	// 			}
+	// 		},
+	// 		"encryptionType": "EncryptionAtRestWithCustomerKey",
+	// 		"lastKeyRotationTimestamp": "2020-12-01T04:41:35.079872+00:00",
+	// 		"previousKeys": []
+	// 	},
+	// 	"tags": {
+	// 		"department": "Development",
+	// 		"project": "Encryption"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskEncryptionSet.json
@@ -210,6 +410,57 @@ func ExampleDiskEncryptionSetsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskEncryptionSet = armcompute.DiskEncryptionSet{
+	// 	Name: to.Ptr("myDiskEncryptionSet"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskEncryptionSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("Development"),
+	// 		"project": to.Ptr("Encryption"),
+	// 	},
+	// 	Identity: &armcompute.EncryptionSetIdentity{
+	// 		Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+	// 	},
+	// 	Properties: &armcompute.EncryptionSetProperties{
+	// 		ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+	// 			KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+	// 			SourceVault: &armcompute.SourceVault{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+	// 			},
+	// 		},
+	// 		EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+	// 		PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskEncryptionSet",
+	// 	"type": "Microsoft.Compute/diskEncryptionSets",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet",
+	// 	"identity": {
+	// 		"type": "SystemAssigned"
+	// 	},
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"activeKey": {
+	// 			"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+	// 			"sourceVault": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+	// 			}
+	// 		},
+	// 		"encryptionType": "EncryptionAtRestWithCustomerKey",
+	// 		"previousKeys": [],
+	// 		"provisioningState": "Succeeded"
+	// 	},
+	// 	"tags": {
+	// 		"department": "Development",
+	// 		"project": "Encryption"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskEncryptionSet.json
@@ -254,6 +505,114 @@ func ExampleDiskEncryptionSetsClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DiskEncryptionSetList = armcompute.DiskEncryptionSetList{
+		// 	Value: []*armcompute.DiskEncryptionSet{
+		// 		{
+		// 			Name: to.Ptr("myDiskEncryptionSet"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskEncryptionSets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("Encryption"),
+		// 			},
+		// 			Identity: &armcompute.EncryptionSetIdentity{
+		// 				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+		// 			},
+		// 			Properties: &armcompute.EncryptionSetProperties{
+		// 				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+		// 					KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 					SourceVault: &armcompute.SourceVault{
+		// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 					},
+		// 				},
+		// 				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		// 				PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+		// 				},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myDiskEncryptionSet2"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskEncryptionSets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet2"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("Encryption"),
+		// 			},
+		// 			Identity: &armcompute.EncryptionSetIdentity{
+		// 				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+		// 			},
+		// 			Properties: &armcompute.EncryptionSetProperties{
+		// 				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+		// 					KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 					SourceVault: &armcompute.SourceVault{
+		// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault2"),
+		// 					},
+		// 				},
+		// 				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		// 				PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+		// 				},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "https://management.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets?$skiptoken={token}",
+		// 	"value": [
+		// 		{
+		// 			"name": "myDiskEncryptionSet",
+		// 			"type": "Microsoft.Compute/diskEncryptionSets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet",
+		// 			"identity": {
+		// 				"type": "SystemAssigned"
+		// 			},
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"activeKey": {
+		// 					"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 					"sourceVault": {
+		// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 					}
+		// 				},
+		// 				"encryptionType": "EncryptionAtRestWithCustomerKey",
+		// 				"previousKeys": [],
+		// 				"provisioningState": "Succeeded"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "Encryption"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myDiskEncryptionSet2",
+		// 			"type": "Microsoft.Compute/diskEncryptionSets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet2",
+		// 			"identity": {
+		// 				"type": "SystemAssigned"
+		// 			},
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"activeKey": {
+		// 					"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 					"sourceVault": {
+		// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault2"
+		// 					}
+		// 				},
+		// 				"encryptionType": "EncryptionAtRestWithCustomerKey",
+		// 				"previousKeys": [],
+		// 				"provisioningState": "Succeeded"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "Encryption"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -278,6 +637,114 @@ func ExampleDiskEncryptionSetsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DiskEncryptionSetList = armcompute.DiskEncryptionSetList{
+		// 	Value: []*armcompute.DiskEncryptionSet{
+		// 		{
+		// 			Name: to.Ptr("myDiskEncryptionSet"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskEncryptionSets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("Encryption"),
+		// 			},
+		// 			Identity: &armcompute.EncryptionSetIdentity{
+		// 				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+		// 			},
+		// 			Properties: &armcompute.EncryptionSetProperties{
+		// 				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+		// 					KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 					SourceVault: &armcompute.SourceVault{
+		// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 					},
+		// 				},
+		// 				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		// 				PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+		// 				},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myDiskEncryptionSet2"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskEncryptionSets"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet2"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("Encryption"),
+		// 			},
+		// 			Identity: &armcompute.EncryptionSetIdentity{
+		// 				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+		// 			},
+		// 			Properties: &armcompute.EncryptionSetProperties{
+		// 				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+		// 					KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 					SourceVault: &armcompute.SourceVault{
+		// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/mySecondResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault2"),
+		// 					},
+		// 				},
+		// 				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		// 				PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
+		// 				},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "https://management.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets?$skiptoken={token}",
+		// 	"value": [
+		// 		{
+		// 			"name": "myDiskEncryptionSet",
+		// 			"type": "Microsoft.Compute/diskEncryptionSets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet",
+		// 			"identity": {
+		// 				"type": "SystemAssigned"
+		// 			},
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"activeKey": {
+		// 					"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 					"sourceVault": {
+		// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 					}
+		// 				},
+		// 				"encryptionType": "EncryptionAtRestWithCustomerKey",
+		// 				"previousKeys": [],
+		// 				"provisioningState": "Succeeded"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "Encryption"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myDiskEncryptionSet2",
+		// 			"type": "Microsoft.Compute/diskEncryptionSets",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet2",
+		// 			"identity": {
+		// 				"type": "SystemAssigned"
+		// 			},
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"activeKey": {
+		// 					"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 					"sourceVault": {
+		// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/mySecondResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault2"
+		// 					}
+		// 				},
+		// 				"encryptionType": "EncryptionAtRestWithCustomerKey",
+		// 				"previousKeys": [],
+		// 				"provisioningState": "Succeeded"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "Encryption"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -302,5 +769,19 @@ func ExampleDiskEncryptionSetsClient_NewListAssociatedResourcesPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ResourceURIList = armcompute.ResourceURIList{
+		// 	Value: []*string{
+		// 		to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+		// 		to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot")},
+		// 	}
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}/associatedResources?$skiptoken={token}",
+		// 	"value": [
+		// 		"/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk",
+		// 		"/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"
+		// 	]
+		// }
 	}
 }

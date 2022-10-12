@@ -34,6 +34,28 @@ func ExampleCustomDomainsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CustomDomainResource = armappplatform.CustomDomainResource{
+	// 	Name: to.Ptr("mydomain.com"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/domains"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com"),
+	// 	Properties: &armappplatform.CustomDomainProperties{
+	// 		AppName: to.Ptr("myapp"),
+	// 		CertName: to.Ptr("mycert"),
+	// 		Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mydomain.com",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/domains",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com",
+	// 	"properties": {
+	// 		"appName": "myapp",
+	// 		"certName": "mycert",
+	// 		"thumbprint": "934367bf1c97033f877db0f15cb1b586957d3133"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json
@@ -62,6 +84,28 @@ func ExampleCustomDomainsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CustomDomainResource = armappplatform.CustomDomainResource{
+	// 	Name: to.Ptr("mydomain.com"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/domains"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com"),
+	// 	Properties: &armappplatform.CustomDomainProperties{
+	// 		AppName: to.Ptr("myapp"),
+	// 		CertName: to.Ptr("mycert"),
+	// 		Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mydomain.com",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/domains",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com",
+	// 	"properties": {
+	// 		"appName": "myapp",
+	// 		"certName": "mycert",
+	// 		"thumbprint": "934367bf1c97033f877db0f15cb1b586957d3133"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json
@@ -111,6 +155,28 @@ func ExampleCustomDomainsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CustomDomainResource = armappplatform.CustomDomainResource{
+	// 	Name: to.Ptr("mydomain.com"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/domains"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com"),
+	// 	Properties: &armappplatform.CustomDomainProperties{
+	// 		AppName: to.Ptr("myapp"),
+	// 		CertName: to.Ptr("mycert"),
+	// 		Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mydomain.com",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/domains",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com",
+	// 	"properties": {
+	// 		"appName": "myapp",
+	// 		"certName": "mycert",
+	// 		"thumbprint": "934367bf1c97033f877db0f15cb1b586957d3133"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json
@@ -134,5 +200,35 @@ func ExampleCustomDomainsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.CustomDomainResourceCollection = armappplatform.CustomDomainResourceCollection{
+		// 	Value: []*armappplatform.CustomDomainResource{
+		// 		{
+		// 			Name: to.Ptr("mydomain.com"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/domains"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com"),
+		// 			Properties: &armappplatform.CustomDomainProperties{
+		// 				AppName: to.Ptr("myapp"),
+		// 				CertName: to.Ptr("mycert"),
+		// 				Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains?$page=2",
+		// 	"value": [
+		// 		{
+		// 			"name": "mydomain.com",
+		// 			"type": "Microsoft.AppPlatform/Spring/apps/domains",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/domains/mydomain.com",
+		// 			"properties": {
+		// 				"appName": "myapp",
+		// 				"certName": "mycert",
+		// 				"thumbprint": "934367bf1c97033f877db0f15cb1b586957d3133"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

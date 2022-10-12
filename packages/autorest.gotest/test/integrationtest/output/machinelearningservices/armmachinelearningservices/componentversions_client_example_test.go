@@ -42,6 +42,68 @@ func ExampleComponentVersionsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ComponentVersionResourceArmPaginatedResult = armmachinelearningservices.ComponentVersionResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.ComponentVersionData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.ComponentVersionDetails{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				IsAnonymous: to.Ptr(false),
+		// 				ComponentSpec: map[string]interface{}{
+		// 					"50acbce5-cccc-475a-8ac6-c4da402afbd8": nil,
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"componentSpec": {
+		// 					"50acbce5-cccc-475a-8ac6-c4da402afbd8": null
+		// 				},
+		// 				"isAnonymous": false,
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"tags": {
+		// 					"string": "string"
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -79,6 +141,60 @@ func ExampleComponentVersionsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComponentVersionData = armmachinelearningservices.ComponentVersionData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.ComponentVersionDetails{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		IsAnonymous: to.Ptr(false),
+	// 		ComponentSpec: map[string]interface{}{
+	// 			"1a7c40b5-2029-4f5f-a8d6-fd0822038773": nil,
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"componentSpec": {
+	// 			"1a7c40b5-2029-4f5f-a8d6-fd0822038773": null
+	// 		},
+	// 		"isAnonymous": false,
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json
@@ -112,4 +228,58 @@ func ExampleComponentVersionsClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComponentVersionData = armmachinelearningservices.ComponentVersionData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.ComponentVersionDetails{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		IsAnonymous: to.Ptr(false),
+	// 		ComponentSpec: map[string]interface{}{
+	// 			"2de2e74e-457d-4447-a581-933abc2b9d96": nil,
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"componentSpec": {
+	// 			"2de2e74e-457d-4447-a581-933abc2b9d96": null
+	// 		},
+	// 		"isAnonymous": false,
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }

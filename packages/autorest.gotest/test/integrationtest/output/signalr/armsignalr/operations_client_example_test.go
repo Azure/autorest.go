@@ -37,5 +37,38 @@ func ExampleOperationsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.OperationList = armsignalr.OperationList{
+		// 	Value: []*armsignalr.Operation{
+		// 		{
+		// 			Name: to.Ptr("Microsoft.SignalRService/SignalR/read"),
+		// 			Display: &armsignalr.OperationDisplay{
+		// 				Description: to.Ptr("View the resource settings and configurations in the management portal or through API"),
+		// 				Operation: to.Ptr("Manage SignalR (read-only)"),
+		// 				Provider: to.Ptr("Microsoft.SignalRService"),
+		// 				Resource: to.Ptr("SignalR"),
+		// 			},
+		// 			IsDataAction: to.Ptr(false),
+		// 			Properties: &armsignalr.OperationProperties{
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "providers/Microsoft.SignalRService?$skipToken={opaqueString}",
+		// 	"value": [
+		// 		{
+		// 			"name": "Microsoft.SignalRService/SignalR/read",
+		// 			"display": {
+		// 				"description": "View the resource settings and configurations in the management portal or through API",
+		// 				"operation": "Manage SignalR (read-only)",
+		// 				"provider": "Microsoft.SignalRService",
+		// 				"resource": "SignalR"
+		// 			},
+		// 			"isDataAction": false,
+		// 			"properties": {}
+		// 		}
+		// 	]
+		// }
 	}
 }

@@ -34,6 +34,85 @@ func ExampleDeploymentsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DeploymentResource = armappplatform.DeploymentResource{
+	// 	Name: to.Ptr("mydeployment"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment"),
+	// 	Properties: &armappplatform.DeploymentResourceProperties{
+	// 		Active: to.Ptr(false),
+	// 		AppName: to.Ptr("myapp"),
+	// 		DeploymentSettings: &armappplatform.DeploymentSettings{
+	// 			CPU: to.Ptr[int32](1),
+	// 			EnvironmentVariables: map[string]*string{
+	// 				"env": to.Ptr("test"),
+	// 			},
+	// 			JvmOptions: to.Ptr("-Xms1G -Xmx3G"),
+	// 			MemoryInGB: to.Ptr[int32](3),
+	// 			RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+	// 		},
+	// 		Instances: []*armappplatform.DeploymentInstance{
+	// 			{
+	// 				Name: to.Ptr("instance1"),
+	// 				DiscoveryStatus: to.Ptr("pending"),
+	// 				StartTime: to.Ptr("2020-08-26T01:55:02Z"),
+	// 				Status: to.Ptr("Running"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr(armappplatform.DeploymentResourceProvisioningStateSucceeded),
+	// 		Source: &armappplatform.UserSourceInfo{
+	// 			Type: to.Ptr(armappplatform.UserSourceTypeSource),
+	// 			ArtifactSelector: to.Ptr("sub-module-1"),
+	// 			RelativePath: to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+	// 			Version: to.Ptr("1.0"),
+	// 		},
+	// 		Status: to.Ptr(armappplatform.DeploymentResourceStatusRunning),
+	// 	},
+	// 	SKU: &armappplatform.SKU{
+	// 		Name: to.Ptr("S0"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mydeployment",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/deployments",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment",
+	// 	"properties": {
+	// 		"active": false,
+	// 		"appName": "myapp",
+	// 		"deploymentSettings": {
+	// 			"cpu": 1,
+	// 			"environmentVariables": {
+	// 				"env": "test"
+	// 			},
+	// 			"jvmOptions": "-Xms1G -Xmx3G",
+	// 			"memoryInGB": 3,
+	// 			"runtimeVersion": "Java_8"
+	// 		},
+	// 		"instances": [
+	// 			{
+	// 				"name": "instance1",
+	// 				"discoveryStatus": "pending",
+	// 				"startTime": "2020-08-26T01:55:02Z",
+	// 				"status": "Running"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"source": {
+	// 			"type": "Source",
+	// 			"artifactSelector": "sub-module-1",
+	// 			"relativePath": "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
+	// 			"version": "1.0"
+	// 		},
+	// 		"status": "Running"
+	// 	},
+	// 	"sku": {
+	// 		"name": "S0",
+	// 		"capacity": 1,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json
@@ -80,6 +159,85 @@ func ExampleDeploymentsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DeploymentResource = armappplatform.DeploymentResource{
+	// 	Name: to.Ptr("mydeployment"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment"),
+	// 	Properties: &armappplatform.DeploymentResourceProperties{
+	// 		Active: to.Ptr(false),
+	// 		AppName: to.Ptr("myapp"),
+	// 		DeploymentSettings: &armappplatform.DeploymentSettings{
+	// 			CPU: to.Ptr[int32](1),
+	// 			EnvironmentVariables: map[string]*string{
+	// 				"env": to.Ptr("test"),
+	// 			},
+	// 			JvmOptions: to.Ptr("-Xms1G -Xmx3G"),
+	// 			MemoryInGB: to.Ptr[int32](3),
+	// 			RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+	// 		},
+	// 		Instances: []*armappplatform.DeploymentInstance{
+	// 			{
+	// 				Name: to.Ptr("instance1"),
+	// 				DiscoveryStatus: to.Ptr("pending"),
+	// 				StartTime: to.Ptr("2020-08-26T01:55:02Z"),
+	// 				Status: to.Ptr("Running"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr(armappplatform.DeploymentResourceProvisioningStateSucceeded),
+	// 		Source: &armappplatform.UserSourceInfo{
+	// 			Type: to.Ptr(armappplatform.UserSourceTypeSource),
+	// 			ArtifactSelector: to.Ptr("sub-module-1"),
+	// 			RelativePath: to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+	// 			Version: to.Ptr("1.0"),
+	// 		},
+	// 		Status: to.Ptr(armappplatform.DeploymentResourceStatusRunning),
+	// 	},
+	// 	SKU: &armappplatform.SKU{
+	// 		Name: to.Ptr("S0"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mydeployment",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/deployments",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment",
+	// 	"properties": {
+	// 		"active": false,
+	// 		"appName": "myapp",
+	// 		"deploymentSettings": {
+	// 			"cpu": 1,
+	// 			"environmentVariables": {
+	// 				"env": "test"
+	// 			},
+	// 			"jvmOptions": "-Xms1G -Xmx3G",
+	// 			"memoryInGB": 3,
+	// 			"runtimeVersion": "Java_8"
+	// 		},
+	// 		"instances": [
+	// 			{
+	// 				"name": "instance1",
+	// 				"discoveryStatus": "pending",
+	// 				"startTime": "2020-08-26T01:55:02Z",
+	// 				"status": "Running"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"source": {
+	// 			"type": "Source",
+	// 			"artifactSelector": "sub-module-1",
+	// 			"relativePath": "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
+	// 			"version": "1.0"
+	// 		},
+	// 		"status": "Running"
+	// 	},
+	// 	"sku": {
+	// 		"name": "S0",
+	// 		"capacity": 1,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json
@@ -133,6 +291,85 @@ func ExampleDeploymentsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DeploymentResource = armappplatform.DeploymentResource{
+	// 	Name: to.Ptr("mydeployment"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment"),
+	// 	Properties: &armappplatform.DeploymentResourceProperties{
+	// 		Active: to.Ptr(false),
+	// 		AppName: to.Ptr("myapp"),
+	// 		DeploymentSettings: &armappplatform.DeploymentSettings{
+	// 			CPU: to.Ptr[int32](1),
+	// 			EnvironmentVariables: map[string]*string{
+	// 				"env": to.Ptr("test"),
+	// 			},
+	// 			JvmOptions: to.Ptr("-Xms1G -Xmx3G"),
+	// 			MemoryInGB: to.Ptr[int32](3),
+	// 			RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+	// 		},
+	// 		Instances: []*armappplatform.DeploymentInstance{
+	// 			{
+	// 				Name: to.Ptr("instance1"),
+	// 				DiscoveryStatus: to.Ptr("pending"),
+	// 				StartTime: to.Ptr("2020-08-26T01:55:02Z"),
+	// 				Status: to.Ptr("Running"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr(armappplatform.DeploymentResourceProvisioningStateSucceeded),
+	// 		Source: &armappplatform.UserSourceInfo{
+	// 			Type: to.Ptr(armappplatform.UserSourceTypeSource),
+	// 			ArtifactSelector: to.Ptr("sub-module-1"),
+	// 			RelativePath: to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+	// 			Version: to.Ptr("1.0"),
+	// 		},
+	// 		Status: to.Ptr(armappplatform.DeploymentResourceStatusRunning),
+	// 	},
+	// 	SKU: &armappplatform.SKU{
+	// 		Name: to.Ptr("S0"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mydeployment",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/deployments",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment",
+	// 	"properties": {
+	// 		"active": false,
+	// 		"appName": "myapp",
+	// 		"deploymentSettings": {
+	// 			"cpu": 1,
+	// 			"environmentVariables": {
+	// 				"env": "test"
+	// 			},
+	// 			"jvmOptions": "-Xms1G -Xmx3G",
+	// 			"memoryInGB": 3,
+	// 			"runtimeVersion": "Java_8"
+	// 		},
+	// 		"instances": [
+	// 			{
+	// 				"name": "instance1",
+	// 				"discoveryStatus": "pending",
+	// 				"startTime": "2020-08-26T01:55:02Z",
+	// 				"status": "Running"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"source": {
+	// 			"type": "Source",
+	// 			"artifactSelector": "sub-module-1",
+	// 			"relativePath": "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
+	// 			"version": "1.0"
+	// 		},
+	// 		"status": "Running"
+	// 	},
+	// 	"sku": {
+	// 		"name": "S0",
+	// 		"capacity": 1,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json
@@ -156,6 +393,92 @@ func ExampleDeploymentsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DeploymentResourceCollection = armappplatform.DeploymentResourceCollection{
+		// 	Value: []*armappplatform.DeploymentResource{
+		// 		{
+		// 			Name: to.Ptr("mydeployment"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment"),
+		// 			Properties: &armappplatform.DeploymentResourceProperties{
+		// 				Active: to.Ptr(false),
+		// 				AppName: to.Ptr("myapp"),
+		// 				DeploymentSettings: &armappplatform.DeploymentSettings{
+		// 					CPU: to.Ptr[int32](1),
+		// 					EnvironmentVariables: map[string]*string{
+		// 						"env": to.Ptr("test"),
+		// 					},
+		// 					JvmOptions: to.Ptr("-Xms1G -Xmx3G"),
+		// 					MemoryInGB: to.Ptr[int32](3),
+		// 					RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+		// 				},
+		// 				Instances: []*armappplatform.DeploymentInstance{
+		// 					{
+		// 						Name: to.Ptr("instance1"),
+		// 						DiscoveryStatus: to.Ptr("pending"),
+		// 						StartTime: to.Ptr("2020-08-26T01:55:02Z"),
+		// 						Status: to.Ptr("Running"),
+		// 				}},
+		// 				ProvisioningState: to.Ptr(armappplatform.DeploymentResourceProvisioningStateSucceeded),
+		// 				Source: &armappplatform.UserSourceInfo{
+		// 					Type: to.Ptr(armappplatform.UserSourceTypeSource),
+		// 					ArtifactSelector: to.Ptr("sub-module-1"),
+		// 					RelativePath: to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+		// 					Version: to.Ptr("1.0"),
+		// 				},
+		// 				Status: to.Ptr(armappplatform.DeploymentResourceStatusRunning),
+		// 			},
+		// 			SKU: &armappplatform.SKU{
+		// 				Name: to.Ptr("S0"),
+		// 				Capacity: to.Ptr[int32](1),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mydeployment",
+		// 			"type": "Microsoft.AppPlatform/Spring/apps/deployments",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment",
+		// 			"properties": {
+		// 				"active": false,
+		// 				"appName": "myapp",
+		// 				"deploymentSettings": {
+		// 					"cpu": 1,
+		// 					"environmentVariables": {
+		// 						"env": "test"
+		// 					},
+		// 					"jvmOptions": "-Xms1G -Xmx3G",
+		// 					"memoryInGB": 3,
+		// 					"runtimeVersion": "Java_8"
+		// 				},
+		// 				"instances": [
+		// 					{
+		// 						"name": "instance1",
+		// 						"discoveryStatus": "pending",
+		// 						"startTime": "2020-08-26T01:55:02Z",
+		// 						"status": "Running"
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"source": {
+		// 					"type": "Source",
+		// 					"artifactSelector": "sub-module-1",
+		// 					"relativePath": "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
+		// 					"version": "1.0"
+		// 				},
+		// 				"status": "Running"
+		// 			},
+		// 			"sku": {
+		// 				"name": "S0",
+		// 				"capacity": 1,
+		// 				"tier": "Standard"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -180,6 +503,92 @@ func ExampleDeploymentsClient_NewListForClusterPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DeploymentResourceCollection = armappplatform.DeploymentResourceCollection{
+		// 	Value: []*armappplatform.DeploymentResource{
+		// 		{
+		// 			Name: to.Ptr("mydeployment"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment"),
+		// 			Properties: &armappplatform.DeploymentResourceProperties{
+		// 				Active: to.Ptr(false),
+		// 				AppName: to.Ptr("myapp"),
+		// 				DeploymentSettings: &armappplatform.DeploymentSettings{
+		// 					CPU: to.Ptr[int32](1),
+		// 					EnvironmentVariables: map[string]*string{
+		// 						"env": to.Ptr("test"),
+		// 					},
+		// 					JvmOptions: to.Ptr("-Xms1G -Xmx3G"),
+		// 					MemoryInGB: to.Ptr[int32](3),
+		// 					RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+		// 				},
+		// 				Instances: []*armappplatform.DeploymentInstance{
+		// 					{
+		// 						Name: to.Ptr("instance1"),
+		// 						DiscoveryStatus: to.Ptr("pending"),
+		// 						StartTime: to.Ptr("2020-08-26T01:55:02Z"),
+		// 						Status: to.Ptr("Running"),
+		// 				}},
+		// 				ProvisioningState: to.Ptr(armappplatform.DeploymentResourceProvisioningStateSucceeded),
+		// 				Source: &armappplatform.UserSourceInfo{
+		// 					Type: to.Ptr(armappplatform.UserSourceTypeSource),
+		// 					ArtifactSelector: to.Ptr("sub-module-1"),
+		// 					RelativePath: to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+		// 					Version: to.Ptr("1.0"),
+		// 				},
+		// 				Status: to.Ptr(armappplatform.DeploymentResourceStatusRunning),
+		// 			},
+		// 			SKU: &armappplatform.SKU{
+		// 				Name: to.Ptr("S0"),
+		// 				Capacity: to.Ptr[int32](1),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mydeployment",
+		// 			"type": "Microsoft.AppPlatform/Spring/apps/deployments",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/deployments/mydeployment",
+		// 			"properties": {
+		// 				"active": false,
+		// 				"appName": "myapp",
+		// 				"deploymentSettings": {
+		// 					"cpu": 1,
+		// 					"environmentVariables": {
+		// 						"env": "test"
+		// 					},
+		// 					"jvmOptions": "-Xms1G -Xmx3G",
+		// 					"memoryInGB": 3,
+		// 					"runtimeVersion": "Java_8"
+		// 				},
+		// 				"instances": [
+		// 					{
+		// 						"name": "instance1",
+		// 						"discoveryStatus": "pending",
+		// 						"startTime": "2020-08-26T01:55:02Z",
+		// 						"status": "Running"
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"source": {
+		// 					"type": "Source",
+		// 					"artifactSelector": "sub-module-1",
+		// 					"relativePath": "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
+		// 					"version": "1.0"
+		// 				},
+		// 				"status": "Running"
+		// 			},
+		// 			"sku": {
+		// 				"name": "S0",
+		// 				"capacity": 1,
+		// 				"tier": "Standard"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -263,4 +672,12 @@ func ExampleDeploymentsClient_GetLogFileURL() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.LogFileURLResponse = armappplatform.LogFileURLResponse{
+	// 	URL: to.Ptr("https://spring.blob.core.windows.net/logs/110ec0c337154d45b1f01daf2196c0bf/b58b0cb4ecdea3c65311b4ca8833fe47b6ae0a7500f87a8eb31e8379d3fe48f1-2019081312-42b7b90c-f108-4c09-b33d-1ea134f57f23?sv=2018-03-28&sr=b&sig=example-signature&se=2019-08-14T09%3A43%3A52Z&sp=r"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"url": "https://spring.blob.core.windows.net/logs/110ec0c337154d45b1f01daf2196c0bf/b58b0cb4ecdea3c65311b4ca8833fe47b6ae0a7500f87a8eb31e8379d3fe48f1-2019081312-42b7b90c-f108-4c09-b33d-1ea134f57f23?sv=2018-03-28&sr=b&sig=example-signature&se=2019-08-14T09%3A43%3A52Z&sp=r"
+	// }
 }

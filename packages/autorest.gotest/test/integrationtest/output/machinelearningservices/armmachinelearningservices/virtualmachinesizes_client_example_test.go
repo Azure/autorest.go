@@ -33,4 +33,741 @@ func ExampleVirtualMachineSizesClient_List() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineSizeListResult = armmachinelearningservices.VirtualMachineSizeListResult{
+	// 	Value: []*armmachinelearningservices.VirtualMachineSize{
+	// 		{
+	// 			Name: to.Ptr("Standard_DS1_v2"),
+	// 			EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 				BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 				UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 				Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 					{
+	// 						OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 						RetailPrice: to.Ptr[float64](0.13),
+	// 						VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 					},
+	// 					{
+	// 						OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 						RetailPrice: to.Ptr[float64](0.01),
+	// 						VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 					},
+	// 					{
+	// 						OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 						RetailPrice: to.Ptr[float64](0.07),
+	// 						VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 					},
+	// 					{
+	// 						OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 						RetailPrice: to.Ptr[float64](0.05),
+	// 						VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 				}},
+	// 			},
+	// 			Family: to.Ptr("standardDSv2Family"),
+	// 			Gpus: to.Ptr[int32](0),
+	// 			LowPriorityCapable: to.Ptr(true),
+	// 			MaxResourceVolumeMB: to.Ptr[int32](7168),
+	// 			MemoryGB: to.Ptr[float64](3.5),
+	// 			OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 			PremiumIO: to.Ptr(true),
+	// 			SupportedComputeTypes: []*string{
+	// 				to.Ptr("AmlCompute"),
+	// 				to.Ptr("ComputeInstance")},
+	// 				VCPUs: to.Ptr[int32](1),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("Standard_DS2_v2"),
+	// 				EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 					BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 					UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 					Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 						{
+	// 							OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 							RetailPrice: to.Ptr[float64](0.03),
+	// 							VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 						},
+	// 						{
+	// 							OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 							RetailPrice: to.Ptr[float64](0.15),
+	// 							VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 						},
+	// 						{
+	// 							OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 							RetailPrice: to.Ptr[float64](0.1),
+	// 							VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 						},
+	// 						{
+	// 							OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 							RetailPrice: to.Ptr[float64](0.25),
+	// 							VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 					}},
+	// 				},
+	// 				Family: to.Ptr("standardDSv2Family"),
+	// 				Gpus: to.Ptr[int32](0),
+	// 				LowPriorityCapable: to.Ptr(true),
+	// 				MaxResourceVolumeMB: to.Ptr[int32](14336),
+	// 				MemoryGB: to.Ptr[float64](7),
+	// 				OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 				PremiumIO: to.Ptr(true),
+	// 				SupportedComputeTypes: []*string{
+	// 					to.Ptr("AmlCompute"),
+	// 					to.Ptr("ComputeInstance"),
+	// 					to.Ptr("MIR")},
+	// 					VCPUs: to.Ptr[int32](2),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("Standard_DS3_v2"),
+	// 					EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 						BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 						UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 						Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 							{
+	// 								OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 								RetailPrice: to.Ptr[float64](0.2),
+	// 								VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 							},
+	// 							{
+	// 								OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 								RetailPrice: to.Ptr[float64](0.06),
+	// 								VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 							},
+	// 							{
+	// 								OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 								RetailPrice: to.Ptr[float64](0.5),
+	// 								VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 							},
+	// 							{
+	// 								OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 								RetailPrice: to.Ptr[float64](0.29),
+	// 								VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 						}},
+	// 					},
+	// 					Family: to.Ptr("standardDSv2Family"),
+	// 					Gpus: to.Ptr[int32](0),
+	// 					LowPriorityCapable: to.Ptr(true),
+	// 					MaxResourceVolumeMB: to.Ptr[int32](28672),
+	// 					MemoryGB: to.Ptr[float64](14),
+	// 					OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 					PremiumIO: to.Ptr(true),
+	// 					SupportedComputeTypes: []*string{
+	// 						to.Ptr("AmlCompute"),
+	// 						to.Ptr("ComputeInstance"),
+	// 						to.Ptr("MIR")},
+	// 						VCPUs: to.Ptr[int32](4),
+	// 					},
+	// 					{
+	// 						Name: to.Ptr("Standard_DS4_v2"),
+	// 						EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 							BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 							UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 							Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 								{
+	// 									OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 									RetailPrice: to.Ptr[float64](0.12),
+	// 									VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 								},
+	// 								{
+	// 									OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 									RetailPrice: to.Ptr[float64](0.4),
+	// 									VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 								},
+	// 								{
+	// 									OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 									RetailPrice: to.Ptr[float64](1.01),
+	// 									VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 								},
+	// 								{
+	// 									OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 									RetailPrice: to.Ptr[float64](0.58),
+	// 									VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 							}},
+	// 						},
+	// 						Family: to.Ptr("standardDSv2Family"),
+	// 						Gpus: to.Ptr[int32](0),
+	// 						LowPriorityCapable: to.Ptr(true),
+	// 						MaxResourceVolumeMB: to.Ptr[int32](57344),
+	// 						MemoryGB: to.Ptr[float64](28),
+	// 						OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 						PremiumIO: to.Ptr(true),
+	// 						SupportedComputeTypes: []*string{
+	// 							to.Ptr("AmlCompute"),
+	// 							to.Ptr("ComputeInstance"),
+	// 							to.Ptr("MIR")},
+	// 							VCPUs: to.Ptr[int32](8),
+	// 						},
+	// 						{
+	// 							Name: to.Ptr("Standard_DS5_v2"),
+	// 							EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 								BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 								UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 								Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 									{
+	// 										OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 										RetailPrice: to.Ptr[float64](1.17),
+	// 										VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 									},
+	// 									{
+	// 										OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 										RetailPrice: to.Ptr[float64](0.81),
+	// 										VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 									},
+	// 									{
+	// 										OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 										RetailPrice: to.Ptr[float64](2.02),
+	// 										VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 									},
+	// 									{
+	// 										OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 										RetailPrice: to.Ptr[float64](0.23),
+	// 										VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 								}},
+	// 							},
+	// 							Family: to.Ptr("standardDSv2Family"),
+	// 							Gpus: to.Ptr[int32](0),
+	// 							LowPriorityCapable: to.Ptr(true),
+	// 							MaxResourceVolumeMB: to.Ptr[int32](114688),
+	// 							MemoryGB: to.Ptr[float64](56),
+	// 							OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 							PremiumIO: to.Ptr(true),
+	// 							SupportedComputeTypes: []*string{
+	// 								to.Ptr("AmlCompute"),
+	// 								to.Ptr("ComputeInstance"),
+	// 								to.Ptr("MIR")},
+	// 								VCPUs: to.Ptr[int32](16),
+	// 							},
+	// 							{
+	// 								Name: to.Ptr("Standard_DS11_v2"),
+	// 								EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 									BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 									UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 									Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 										{
+	// 											OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 											RetailPrice: to.Ptr[float64](0.26),
+	// 											VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 										},
+	// 										{
+	// 											OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 											RetailPrice: to.Ptr[float64](0.18),
+	// 											VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 										},
+	// 										{
+	// 											OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 											RetailPrice: to.Ptr[float64](0.11),
+	// 											VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 										},
+	// 										{
+	// 											OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 											RetailPrice: to.Ptr[float64](0.04),
+	// 											VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 									}},
+	// 								},
+	// 								Family: to.Ptr("standardDSv2Family"),
+	// 								Gpus: to.Ptr[int32](0),
+	// 								LowPriorityCapable: to.Ptr(true),
+	// 								MaxResourceVolumeMB: to.Ptr[int32](28672),
+	// 								MemoryGB: to.Ptr[float64](14),
+	// 								OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 								PremiumIO: to.Ptr(true),
+	// 								SupportedComputeTypes: []*string{
+	// 									to.Ptr("AmlCompute"),
+	// 									to.Ptr("ComputeInstance")},
+	// 									VCPUs: to.Ptr[int32](2),
+	// 								},
+	// 								{
+	// 									Name: to.Ptr("Standard_DS12_v2"),
+	// 									EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 										BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 										UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 										Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 											{
+	// 												OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 												RetailPrice: to.Ptr[float64](0.37),
+	// 												VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 											},
+	// 											{
+	// 												OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 												RetailPrice: to.Ptr[float64](0.53),
+	// 												VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 											},
+	// 											{
+	// 												OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 												RetailPrice: to.Ptr[float64](0.21),
+	// 												VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 											},
+	// 											{
+	// 												OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 												RetailPrice: to.Ptr[float64](0.07),
+	// 												VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 										}},
+	// 									},
+	// 									Family: to.Ptr("standardDSv2Family"),
+	// 									Gpus: to.Ptr[int32](0),
+	// 									LowPriorityCapable: to.Ptr(true),
+	// 									MaxResourceVolumeMB: to.Ptr[int32](57344),
+	// 									MemoryGB: to.Ptr[float64](28),
+	// 									OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 									PremiumIO: to.Ptr(true),
+	// 									SupportedComputeTypes: []*string{
+	// 										to.Ptr("AmlCompute"),
+	// 										to.Ptr("ComputeInstance")},
+	// 										VCPUs: to.Ptr[int32](4),
+	// 									},
+	// 									{
+	// 										Name: to.Ptr("Standard_DS13_v2"),
+	// 										EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 											BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 											UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 											Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 												{
+	// 													OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 													RetailPrice: to.Ptr[float64](0.15),
+	// 													VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 												},
+	// 												{
+	// 													OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 													RetailPrice: to.Ptr[float64](0.42),
+	// 													VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 												},
+	// 												{
+	// 													OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 													RetailPrice: to.Ptr[float64](0.74),
+	// 													VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 												},
+	// 												{
+	// 													OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 													RetailPrice: to.Ptr[float64](1.06),
+	// 													VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 											}},
+	// 										},
+	// 										Family: to.Ptr("standardDSv2Family"),
+	// 										Gpus: to.Ptr[int32](0),
+	// 										LowPriorityCapable: to.Ptr(true),
+	// 										MaxResourceVolumeMB: to.Ptr[int32](114688),
+	// 										MemoryGB: to.Ptr[float64](56),
+	// 										OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 										PremiumIO: to.Ptr(true),
+	// 										SupportedComputeTypes: []*string{
+	// 											to.Ptr("AmlCompute"),
+	// 											to.Ptr("ComputeInstance")},
+	// 											VCPUs: to.Ptr[int32](8),
+	// 										},
+	// 										{
+	// 											Name: to.Ptr("Standard_DS14_v2"),
+	// 											EstimatedVMPrices: &armmachinelearningservices.EstimatedVMPrices{
+	// 												BillingCurrency: to.Ptr(armmachinelearningservices.BillingCurrencyUSD),
+	// 												UnitOfMeasure: to.Ptr(armmachinelearningservices.UnitOfMeasureOneHour),
+	// 												Values: []*armmachinelearningservices.EstimatedVMPrice{
+	// 													{
+	// 														OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 														RetailPrice: to.Ptr[float64](0.3),
+	// 														VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 													},
+	// 													{
+	// 														OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeLinux),
+	// 														RetailPrice: to.Ptr[float64](1.48),
+	// 														VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 													},
+	// 													{
+	// 														OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 														RetailPrice: to.Ptr[float64](0.84),
+	// 														VMTier: to.Ptr(armmachinelearningservices.VMTierLowPriority),
+	// 													},
+	// 													{
+	// 														OSType: to.Ptr(armmachinelearningservices.VMPriceOSTypeWindows),
+	// 														RetailPrice: to.Ptr[float64](2.11),
+	// 														VMTier: to.Ptr(armmachinelearningservices.VMTierStandard),
+	// 												}},
+	// 											},
+	// 											Family: to.Ptr("standardDSv2Family"),
+	// 											Gpus: to.Ptr[int32](0),
+	// 											LowPriorityCapable: to.Ptr(true),
+	// 											MaxResourceVolumeMB: to.Ptr[int32](229376),
+	// 											MemoryGB: to.Ptr[float64](112),
+	// 											OSVhdSizeMB: to.Ptr[int32](1047552),
+	// 											PremiumIO: to.Ptr(true),
+	// 											SupportedComputeTypes: []*string{
+	// 												to.Ptr("AmlCompute"),
+	// 												to.Ptr("ComputeInstance")},
+	// 												VCPUs: to.Ptr[int32](16),
+	// 										}},
+	// 									}
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"name": "Standard_DS1_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.13,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.01,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.07,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.05,
+	// 						"vmTier": "LowPriority"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 7168,
+	// 			"memoryGB": 3.5,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance"
+	// 			],
+	// 			"vCPUs": 1
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS2_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.03,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.15,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.1,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.25,
+	// 						"vmTier": "Standard"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 14336,
+	// 			"memoryGB": 7,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance",
+	// 				"MIR"
+	// 			],
+	// 			"vCPUs": 2
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS3_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.2,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.06,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.5,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.29,
+	// 						"vmTier": "Standard"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 28672,
+	// 			"memoryGB": 14,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance",
+	// 				"MIR"
+	// 			],
+	// 			"vCPUs": 4
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS4_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.12,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.4,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 1.01,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.58,
+	// 						"vmTier": "Standard"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 57344,
+	// 			"memoryGB": 28,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance",
+	// 				"MIR"
+	// 			],
+	// 			"vCPUs": 8
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS5_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 1.17,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.81,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 2.02,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.23,
+	// 						"vmTier": "LowPriority"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 114688,
+	// 			"memoryGB": 56,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance",
+	// 				"MIR"
+	// 			],
+	// 			"vCPUs": 16
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS11_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.26,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.18,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.11,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.04,
+	// 						"vmTier": "LowPriority"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 28672,
+	// 			"memoryGB": 14,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance"
+	// 			],
+	// 			"vCPUs": 2
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS12_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.37,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.53,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.21,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.07,
+	// 						"vmTier": "LowPriority"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 57344,
+	// 			"memoryGB": 28,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance"
+	// 			],
+	// 			"vCPUs": 4
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS13_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.15,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.42,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.74,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 1.06,
+	// 						"vmTier": "Standard"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 114688,
+	// 			"memoryGB": 56,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance"
+	// 			],
+	// 			"vCPUs": 8
+	// 		},
+	// 		{
+	// 			"name": "Standard_DS14_v2",
+	// 			"estimatedVMPrices": {
+	// 				"billingCurrency": "USD",
+	// 				"unitOfMeasure": "OneHour",
+	// 				"values": [
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 0.3,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Linux",
+	// 						"retailPrice": 1.48,
+	// 						"vmTier": "Standard"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 0.84,
+	// 						"vmTier": "LowPriority"
+	// 					},
+	// 					{
+	// 						"osType": "Windows",
+	// 						"retailPrice": 2.11,
+	// 						"vmTier": "Standard"
+	// 					}
+	// 				]
+	// 			},
+	// 			"family": "standardDSv2Family",
+	// 			"gpus": 0,
+	// 			"lowPriorityCapable": true,
+	// 			"maxResourceVolumeMB": 229376,
+	// 			"memoryGB": 112,
+	// 			"osVhdSizeMB": 1047552,
+	// 			"premiumIO": true,
+	// 			"supportedComputeTypes": [
+	// 				"AmlCompute",
+	// 				"ComputeInstance"
+	// 			],
+	// 			"vCPUs": 16
+	// 		}
+	// 	]
+	// }
 }

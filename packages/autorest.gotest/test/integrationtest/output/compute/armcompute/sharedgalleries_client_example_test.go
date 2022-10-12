@@ -37,6 +37,30 @@ func ExampleSharedGalleriesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SharedGalleryList = armcompute.SharedGalleryList{
+		// 	Value: []*armcompute.SharedGallery{
+		// 		{
+		// 			Name: to.Ptr("galleryUniqueName"),
+		// 			Location: to.Ptr("myLocation"),
+		// 			Identifier: &armcompute.SharedGalleryIdentifier{
+		// 				UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscriptionId}/providers/Microsoft.Compute/sharedGalleries?$skiptoken={token}/Subscriptions/{subscriptionId}/galleries/galleryUniqueName",
+		// 	"value": [
+		// 		{
+		// 			"name": "galleryUniqueName",
+		// 			"identifier": {
+		// 				"uniqueId": "/SharedGalleries/galleryUniqueName"
+		// 			},
+		// 			"location": "myLocation"
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -57,4 +81,20 @@ func ExampleSharedGalleriesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SharedGallery = armcompute.SharedGallery{
+	// 	Name: to.Ptr("myGalleryName"),
+	// 	Location: to.Ptr("myLocation"),
+	// 	Identifier: &armcompute.SharedGalleryIdentifier{
+	// 		UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryName",
+	// 	"identifier": {
+	// 		"uniqueId": "/SharedGalleries/galleryUniqueName"
+	// 	},
+	// 	"location": "myLocation"
+	// }
 }

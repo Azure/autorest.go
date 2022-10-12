@@ -49,6 +49,42 @@ func ExampleDedicatedHostsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DedicatedHost = armcompute.DedicatedHost{
+	// 	Name: to.Ptr("myDedicatedHost"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/HostGroups/myDedicatedHostGroup/hosts/myDedicatedHost"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("HR"),
+	// 	},
+	// 	Properties: &armcompute.DedicatedHostProperties{
+	// 		AutoReplaceOnFailure: to.Ptr(false),
+	// 		HostID: to.Ptr("{GUID}"),
+	// 		LicenseType: to.Ptr(armcompute.DedicatedHostLicenseTypesWindowsServerHybrid),
+	// 		PlatformFaultDomain: to.Ptr[int32](1),
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("DSv3-Type1"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDedicatedHost",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/HostGroups/myDedicatedHostGroup/hosts/myDedicatedHost",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"autoReplaceOnFailure": false,
+	// 		"hostId": "{GUID}",
+	// 		"licenseType": "Windows_Server_Hybrid",
+	// 		"platformFaultDomain": 1
+	// 	},
+	// 	"sku": {
+	// 		"name": "DSv3-Type1"
+	// 	},
+	// 	"tags": {
+	// 		"department": "HR"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHost.json
@@ -68,4 +104,93 @@ func ExampleDedicatedHostsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DedicatedHost = armcompute.DedicatedHost{
+	// 	Name: to.Ptr("myHost"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("HR"),
+	// 	},
+	// 	Properties: &armcompute.DedicatedHostProperties{
+	// 		AutoReplaceOnFailure: to.Ptr(true),
+	// 		HostID: to.Ptr("{GUID}"),
+	// 		InstanceView: &armcompute.DedicatedHostInstanceView{
+	// 			AssetID: to.Ptr("eb3f58b8-b4e8-4882-b69f-301a01812407"),
+	// 			AvailableCapacity: &armcompute.DedicatedHostAvailableCapacity{
+	// 				AllocatableVMs: []*armcompute.DedicatedHostAllocatableVM{
+	// 					{
+	// 						Count: to.Ptr[float64](10),
+	// 						VMSize: to.Ptr("Standard_A1"),
+	// 				}},
+	// 			},
+	// 			Statuses: []*armcompute.InstanceViewStatus{
+	// 				{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				},
+	// 				{
+	// 					Code: to.Ptr("HealthState/available"),
+	// 					DisplayStatus: to.Ptr("Host available"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			}},
+	// 		},
+	// 		PlatformFaultDomain: to.Ptr[int32](1),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		ProvisioningTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-27T01:02:38.3138469+00:00"); return t}()),
+	// 		VirtualMachines: []*armcompute.SubResourceReadOnly{
+	// 			{
+	// 				ID: to.Ptr("/subscriptions/subId/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/vm1"),
+	// 		}},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("DSv3-Type1"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myHost",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"autoReplaceOnFailure": true,
+	// 		"hostId": "{GUID}",
+	// 		"instanceView": {
+	// 			"assetId": "eb3f58b8-b4e8-4882-b69f-301a01812407",
+	// 			"availableCapacity": {
+	// 				"allocatableVMs": [
+	// 					{
+	// 						"count": 10,
+	// 						"vmSize": "Standard_A1"
+	// 					}
+	// 				]
+	// 			},
+	// 			"statuses": [
+	// 				{
+	// 					"code": "ProvisioningState/succeeded",
+	// 					"displayStatus": "Provisioning succeeded",
+	// 					"level": "Info"
+	// 				},
+	// 				{
+	// 					"code": "HealthState/available",
+	// 					"displayStatus": "Host available",
+	// 					"level": "Info"
+	// 				}
+	// 			]
+	// 		},
+	// 		"platformFaultDomain": 1,
+	// 		"provisioningState": "Succeeded",
+	// 		"provisioningTime": "2019-06-27T01:02:38.3138469+00:00",
+	// 		"virtualMachines": [
+	// 			{
+	// 				"id": "/subscriptions/subId/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/vm1"
+	// 			}
+	// 		]
+	// 	},
+	// 	"sku": {
+	// 		"name": "DSv3-Type1"
+	// 	},
+	// 	"tags": {
+	// 		"department": "HR"
+	// 	}
+	// }
 }

@@ -50,6 +50,38 @@ func ExampleGalleryImagesClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImage = armcompute.GalleryImage{
+	// 	Name: to.Ptr("myGalleryImageName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageProperties{
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		Identifier: &armcompute.GalleryImageIdentifier{
+	// 			Offer: to.Ptr("myOfferName"),
+	// 			Publisher: to.Ptr("myPublisherName"),
+	// 			SKU: to.Ptr("mySkuName"),
+	// 		},
+	// 		OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImagePropertiesProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryImageName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"hyperVGeneration": "V1",
+	// 		"identifier": {
+	// 			"offer": "myOfferName",
+	// 			"publisher": "myPublisherName",
+	// 			"sku": "mySkuName"
+	// 		},
+	// 		"osState": "Generalized",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImage.json
@@ -84,6 +116,38 @@ func ExampleGalleryImagesClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImage = armcompute.GalleryImage{
+	// 	Name: to.Ptr("myGalleryImageName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageProperties{
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		Identifier: &armcompute.GalleryImageIdentifier{
+	// 			Offer: to.Ptr("myOfferName"),
+	// 			Publisher: to.Ptr("myPublisherName"),
+	// 			SKU: to.Ptr("mySkuName"),
+	// 		},
+	// 		OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImagePropertiesProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryImageName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"hyperVGeneration": "V1",
+	// 		"identifier": {
+	// 			"offer": "myOfferName",
+	// 			"publisher": "myPublisherName",
+	// 			"sku": "mySkuName"
+	// 		},
+	// 		"osState": "Generalized",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImage.json
@@ -103,6 +167,38 @@ func ExampleGalleryImagesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImage = armcompute.GalleryImage{
+	// 	Name: to.Ptr("myGalleryImageName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageProperties{
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		Identifier: &armcompute.GalleryImageIdentifier{
+	// 			Offer: to.Ptr("myOfferName"),
+	// 			Publisher: to.Ptr("myPublisherName"),
+	// 			SKU: to.Ptr("mySkuName"),
+	// 		},
+	// 		OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImagePropertiesProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryImageName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"hyperVGeneration": "V1",
+	// 		"identifier": {
+	// 			"offer": "myOfferName",
+	// 			"publisher": "myPublisherName",
+	// 			"sku": "mySkuName"
+	// 		},
+	// 		"osState": "Generalized",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImage.json
@@ -147,5 +243,45 @@ func ExampleGalleryImagesClient_NewListByGalleryPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.GalleryImageList = armcompute.GalleryImageList{
+		// 	Value: []*armcompute.GalleryImage{
+		// 		{
+		// 			Name: to.Ptr("myGalleryImageName"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.GalleryImageProperties{
+		// 				HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+		// 				Identifier: &armcompute.GalleryImageIdentifier{
+		// 					Offer: to.Ptr("myOfferName"),
+		// 					Publisher: to.Ptr("myPublisherName"),
+		// 					SKU: to.Ptr("mySkuName"),
+		// 				},
+		// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr(armcompute.GalleryImagePropertiesProvisioningStateSucceeded),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/images?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/galleries/myGalleryName/images/myGalleryImageName",
+		// 	"value": [
+		// 		{
+		// 			"name": "myGalleryImageName",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"hyperVGeneration": "V1",
+		// 				"identifier": {
+		// 					"offer": "myOfferName",
+		// 					"publisher": "myPublisherName",
+		// 					"sku": "mySkuName"
+		// 				},
+		// 				"osState": "Generalized",
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

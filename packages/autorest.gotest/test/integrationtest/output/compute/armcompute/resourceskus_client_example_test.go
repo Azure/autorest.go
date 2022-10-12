@@ -38,6 +38,357 @@ func ExampleResourceSKUsClient_NewListPager_listsAllAvailableResourceSkUs() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ResourceSKUsResult = armcompute.ResourceSKUsResult{
+		// 	Value: []*armcompute.ResourceSKU{
+		// 		{
+		// 			Name: to.Ptr("Standard_A0"),
+		// 			Capabilities: []*armcompute.ResourceSKUCapabilities{
+		// 				{
+		// 					Name: to.Ptr("MaxResourceVolumeMB"),
+		// 					Value: to.Ptr("20480"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("OSVhdSizeMB"),
+		// 					Value: to.Ptr("1047552"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("vCPUs"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("HyperVGenerations"),
+		// 					Value: to.Ptr("V1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("MemoryGB"),
+		// 					Value: to.Ptr("0.75"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("MaxDataDiskCount"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("LowPriorityCapable"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("PremiumIO"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("vCPUsAvailable"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("ACUs"),
+		// 					Value: to.Ptr("50"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("vCPUsPerCore"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("EphemeralOSDiskSupported"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("AcceleratedNetworkingEnabled"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("RdmaEnabled"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("MaxNetworkInterfaces"),
+		// 					Value: to.Ptr("2"),
+		// 			}},
+		// 			Family: to.Ptr("standardA0_A7Family"),
+		// 			LocationInfo: []*armcompute.ResourceSKULocationInfo{
+		// 				{
+		// 					Location: to.Ptr("westus"),
+		// 					ZoneDetails: []*armcompute.ResourceSKUZoneDetails{
+		// 						{
+		// 							Name: []*string{
+		// 								to.Ptr("2")},
+		// 								Capabilities: []*armcompute.ResourceSKUCapabilities{
+		// 									{
+		// 										Name: to.Ptr("UltraSSDAvailable"),
+		// 										Value: to.Ptr("True"),
+		// 								}},
+		// 						}},
+		// 						Zones: []*string{
+		// 							to.Ptr("2"),
+		// 							to.Ptr("1")},
+		// 					}},
+		// 					Locations: []*string{
+		// 						to.Ptr("westus")},
+		// 						ResourceType: to.Ptr("virtualMachines"),
+		// 						Size: to.Ptr("A0"),
+		// 						Tier: to.Ptr("Standard"),
+		// 					},
+		// 					{
+		// 						Name: to.Ptr("Standard_A1"),
+		// 						Capabilities: []*armcompute.ResourceSKUCapabilities{
+		// 							{
+		// 								Name: to.Ptr("MaxResourceVolumeMB"),
+		// 								Value: to.Ptr("71680"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("OSVhdSizeMB"),
+		// 								Value: to.Ptr("1047552"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("vCPUs"),
+		// 								Value: to.Ptr("1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("HyperVGenerations"),
+		// 								Value: to.Ptr("V1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("MemoryGB"),
+		// 								Value: to.Ptr("1.75"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("MaxDataDiskCount"),
+		// 								Value: to.Ptr("2"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("LowPriorityCapable"),
+		// 								Value: to.Ptr("True"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("PremiumIO"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("vCPUsAvailable"),
+		// 								Value: to.Ptr("1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("ACUs"),
+		// 								Value: to.Ptr("100"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("vCPUsPerCore"),
+		// 								Value: to.Ptr("1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("EphemeralOSDiskSupported"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("AcceleratedNetworkingEnabled"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("RdmaEnabled"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("MaxNetworkInterfaces"),
+		// 								Value: to.Ptr("2"),
+		// 						}},
+		// 						Family: to.Ptr("standardA0_A7Family"),
+		// 						LocationInfo: []*armcompute.ResourceSKULocationInfo{
+		// 							{
+		// 								Location: to.Ptr("westus"),
+		// 								Zones: []*string{
+		// 									to.Ptr("1"),
+		// 									to.Ptr("2"),
+		// 									to.Ptr("3")},
+		// 							}},
+		// 							Locations: []*string{
+		// 								to.Ptr("westus")},
+		// 								ResourceType: to.Ptr("virtualMachines"),
+		// 								Size: to.Ptr("A1"),
+		// 								Tier: to.Ptr("Standard"),
+		// 						}},
+		// 					}
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": null,
+		// 	"value": [
+		// 		{
+		// 			"name": "Standard_A0",
+		// 			"capabilities": [
+		// 				{
+		// 					"name": "MaxResourceVolumeMB",
+		// 					"value": "20480"
+		// 				},
+		// 				{
+		// 					"name": "OSVhdSizeMB",
+		// 					"value": "1047552"
+		// 				},
+		// 				{
+		// 					"name": "vCPUs",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "HyperVGenerations",
+		// 					"value": "V1"
+		// 				},
+		// 				{
+		// 					"name": "MemoryGB",
+		// 					"value": "0.75"
+		// 				},
+		// 				{
+		// 					"name": "MaxDataDiskCount",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "LowPriorityCapable",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "PremiumIO",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsAvailable",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "ACUs",
+		// 					"value": "50"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsPerCore",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "EphemeralOSDiskSupported",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "AcceleratedNetworkingEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "RdmaEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "MaxNetworkInterfaces",
+		// 					"value": "2"
+		// 				}
+		// 			],
+		// 			"family": "standardA0_A7Family",
+		// 			"locationInfo": [
+		// 				{
+		// 					"location": "westus",
+		// 					"zoneDetails": [
+		// 						{
+		// 							"name": [
+		// 								"2"
+		// 							],
+		// 							"capabilities": [
+		// 								{
+		// 									"name": "UltraSSDAvailable",
+		// 									"value": "True"
+		// 								}
+		// 							]
+		// 						}
+		// 					],
+		// 					"zones": [
+		// 						"2",
+		// 						"1"
+		// 					]
+		// 				}
+		// 			],
+		// 			"locations": [
+		// 				"westus"
+		// 			],
+		// 			"resourceType": "virtualMachines",
+		// 			"size": "A0",
+		// 			"tier": "Standard"
+		// 		},
+		// 		{
+		// 			"name": "Standard_A1",
+		// 			"capabilities": [
+		// 				{
+		// 					"name": "MaxResourceVolumeMB",
+		// 					"value": "71680"
+		// 				},
+		// 				{
+		// 					"name": "OSVhdSizeMB",
+		// 					"value": "1047552"
+		// 				},
+		// 				{
+		// 					"name": "vCPUs",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "HyperVGenerations",
+		// 					"value": "V1"
+		// 				},
+		// 				{
+		// 					"name": "MemoryGB",
+		// 					"value": "1.75"
+		// 				},
+		// 				{
+		// 					"name": "MaxDataDiskCount",
+		// 					"value": "2"
+		// 				},
+		// 				{
+		// 					"name": "LowPriorityCapable",
+		// 					"value": "True"
+		// 				},
+		// 				{
+		// 					"name": "PremiumIO",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsAvailable",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "ACUs",
+		// 					"value": "100"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsPerCore",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "EphemeralOSDiskSupported",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "AcceleratedNetworkingEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "RdmaEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "MaxNetworkInterfaces",
+		// 					"value": "2"
+		// 				}
+		// 			],
+		// 			"family": "standardA0_A7Family",
+		// 			"locationInfo": [
+		// 				{
+		// 					"location": "westus",
+		// 					"zones": [
+		// 						"1",
+		// 						"2",
+		// 						"3"
+		// 					]
+		// 				}
+		// 			],
+		// 			"locations": [
+		// 				"westus"
+		// 			],
+		// 			"resourceType": "virtualMachines",
+		// 			"size": "A1",
+		// 			"tier": "Standard"
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -62,5 +413,356 @@ func ExampleResourceSKUsClient_NewListPager_listsAllAvailableResourceSkUsForTheS
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ResourceSKUsResult = armcompute.ResourceSKUsResult{
+		// 	Value: []*armcompute.ResourceSKU{
+		// 		{
+		// 			Name: to.Ptr("Standard_A0"),
+		// 			Capabilities: []*armcompute.ResourceSKUCapabilities{
+		// 				{
+		// 					Name: to.Ptr("MaxResourceVolumeMB"),
+		// 					Value: to.Ptr("20480"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("OSVhdSizeMB"),
+		// 					Value: to.Ptr("1047552"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("vCPUs"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("HyperVGenerations"),
+		// 					Value: to.Ptr("V1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("MemoryGB"),
+		// 					Value: to.Ptr("0.75"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("MaxDataDiskCount"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("LowPriorityCapable"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("PremiumIO"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("vCPUsAvailable"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("ACUs"),
+		// 					Value: to.Ptr("50"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("vCPUsPerCore"),
+		// 					Value: to.Ptr("1"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("EphemeralOSDiskSupported"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("AcceleratedNetworkingEnabled"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("RdmaEnabled"),
+		// 					Value: to.Ptr("False"),
+		// 				},
+		// 				{
+		// 					Name: to.Ptr("MaxNetworkInterfaces"),
+		// 					Value: to.Ptr("2"),
+		// 			}},
+		// 			Family: to.Ptr("standardA0_A7Family"),
+		// 			LocationInfo: []*armcompute.ResourceSKULocationInfo{
+		// 				{
+		// 					Location: to.Ptr("westus"),
+		// 					ZoneDetails: []*armcompute.ResourceSKUZoneDetails{
+		// 						{
+		// 							Name: []*string{
+		// 								to.Ptr("2")},
+		// 								Capabilities: []*armcompute.ResourceSKUCapabilities{
+		// 									{
+		// 										Name: to.Ptr("UltraSSDAvailable"),
+		// 										Value: to.Ptr("True"),
+		// 								}},
+		// 						}},
+		// 						Zones: []*string{
+		// 							to.Ptr("2"),
+		// 							to.Ptr("1")},
+		// 					}},
+		// 					Locations: []*string{
+		// 						to.Ptr("westus")},
+		// 						ResourceType: to.Ptr("virtualMachines"),
+		// 						Size: to.Ptr("A0"),
+		// 						Tier: to.Ptr("Standard"),
+		// 					},
+		// 					{
+		// 						Name: to.Ptr("Standard_A1"),
+		// 						Capabilities: []*armcompute.ResourceSKUCapabilities{
+		// 							{
+		// 								Name: to.Ptr("MaxResourceVolumeMB"),
+		// 								Value: to.Ptr("71680"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("OSVhdSizeMB"),
+		// 								Value: to.Ptr("1047552"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("vCPUs"),
+		// 								Value: to.Ptr("1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("HyperVGenerations"),
+		// 								Value: to.Ptr("V1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("MemoryGB"),
+		// 								Value: to.Ptr("1.75"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("MaxDataDiskCount"),
+		// 								Value: to.Ptr("2"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("LowPriorityCapable"),
+		// 								Value: to.Ptr("True"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("PremiumIO"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("vCPUsAvailable"),
+		// 								Value: to.Ptr("1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("ACUs"),
+		// 								Value: to.Ptr("100"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("vCPUsPerCore"),
+		// 								Value: to.Ptr("1"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("EphemeralOSDiskSupported"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("AcceleratedNetworkingEnabled"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("RdmaEnabled"),
+		// 								Value: to.Ptr("False"),
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("MaxNetworkInterfaces"),
+		// 								Value: to.Ptr("2"),
+		// 						}},
+		// 						Family: to.Ptr("standardA0_A7Family"),
+		// 						LocationInfo: []*armcompute.ResourceSKULocationInfo{
+		// 							{
+		// 								Location: to.Ptr("westus"),
+		// 								Zones: []*string{
+		// 									to.Ptr("1"),
+		// 									to.Ptr("2"),
+		// 									to.Ptr("3")},
+		// 							}},
+		// 							Locations: []*string{
+		// 								to.Ptr("westus")},
+		// 								ResourceType: to.Ptr("virtualMachines"),
+		// 								Size: to.Ptr("A1"),
+		// 								Tier: to.Ptr("Standard"),
+		// 						}},
+		// 					}
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": null,
+		// 	"value": [
+		// 		{
+		// 			"name": "Standard_A0",
+		// 			"capabilities": [
+		// 				{
+		// 					"name": "MaxResourceVolumeMB",
+		// 					"value": "20480"
+		// 				},
+		// 				{
+		// 					"name": "OSVhdSizeMB",
+		// 					"value": "1047552"
+		// 				},
+		// 				{
+		// 					"name": "vCPUs",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "HyperVGenerations",
+		// 					"value": "V1"
+		// 				},
+		// 				{
+		// 					"name": "MemoryGB",
+		// 					"value": "0.75"
+		// 				},
+		// 				{
+		// 					"name": "MaxDataDiskCount",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "LowPriorityCapable",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "PremiumIO",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsAvailable",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "ACUs",
+		// 					"value": "50"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsPerCore",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "EphemeralOSDiskSupported",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "AcceleratedNetworkingEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "RdmaEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "MaxNetworkInterfaces",
+		// 					"value": "2"
+		// 				}
+		// 			],
+		// 			"family": "standardA0_A7Family",
+		// 			"locationInfo": [
+		// 				{
+		// 					"location": "westus",
+		// 					"zoneDetails": [
+		// 						{
+		// 							"name": [
+		// 								"2"
+		// 							],
+		// 							"capabilities": [
+		// 								{
+		// 									"name": "UltraSSDAvailable",
+		// 									"value": "True"
+		// 								}
+		// 							]
+		// 						}
+		// 					],
+		// 					"zones": [
+		// 						"2",
+		// 						"1"
+		// 					]
+		// 				}
+		// 			],
+		// 			"locations": [
+		// 				"westus"
+		// 			],
+		// 			"resourceType": "virtualMachines",
+		// 			"size": "A0",
+		// 			"tier": "Standard"
+		// 		},
+		// 		{
+		// 			"name": "Standard_A1",
+		// 			"capabilities": [
+		// 				{
+		// 					"name": "MaxResourceVolumeMB",
+		// 					"value": "71680"
+		// 				},
+		// 				{
+		// 					"name": "OSVhdSizeMB",
+		// 					"value": "1047552"
+		// 				},
+		// 				{
+		// 					"name": "vCPUs",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "HyperVGenerations",
+		// 					"value": "V1"
+		// 				},
+		// 				{
+		// 					"name": "MemoryGB",
+		// 					"value": "1.75"
+		// 				},
+		// 				{
+		// 					"name": "MaxDataDiskCount",
+		// 					"value": "2"
+		// 				},
+		// 				{
+		// 					"name": "LowPriorityCapable",
+		// 					"value": "True"
+		// 				},
+		// 				{
+		// 					"name": "PremiumIO",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsAvailable",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "ACUs",
+		// 					"value": "100"
+		// 				},
+		// 				{
+		// 					"name": "vCPUsPerCore",
+		// 					"value": "1"
+		// 				},
+		// 				{
+		// 					"name": "EphemeralOSDiskSupported",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "AcceleratedNetworkingEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "RdmaEnabled",
+		// 					"value": "False"
+		// 				},
+		// 				{
+		// 					"name": "MaxNetworkInterfaces",
+		// 					"value": "2"
+		// 				}
+		// 			],
+		// 			"family": "standardA0_A7Family",
+		// 			"locationInfo": [
+		// 				{
+		// 					"location": "westus",
+		// 					"zones": [
+		// 						"1",
+		// 						"2",
+		// 						"3"
+		// 					]
+		// 				}
+		// 			],
+		// 			"locations": [
+		// 				"westus"
+		// 			],
+		// 			"resourceType": "virtualMachines",
+		// 			"size": "A1",
+		// 			"tier": "Standard"
+		// 		}
+		// 	]
+		// }
 	}
 }

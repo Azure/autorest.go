@@ -37,6 +37,18 @@ func ExampleClient_CheckNameAvailability() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.NameAvailability = armsignalr.NameAvailability{
+	// 	Message: to.Ptr("The name is already taken. Please try a different name."),
+	// 	NameAvailable: to.Ptr(false),
+	// 	Reason: to.Ptr("AlreadyExists"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"message": "The name is already taken. Please try a different name.",
+	// 	"nameAvailable": false,
+	// 	"reason": "AlreadyExists"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
@@ -60,6 +72,250 @@ func ExampleClient_NewListBySubscriptionPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ResourceInfoList = armsignalr.ResourceInfoList{
+		// 	Value: []*armsignalr.ResourceInfo{
+		// 		{
+		// 			Name: to.Ptr("mySignalRService"),
+		// 			Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"key1": to.Ptr("value1"),
+		// 			},
+		// 			Identity: &armsignalr.ManagedIdentity{
+		// 				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		// 				PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+		// 				TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+		// 			},
+		// 			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		// 			Properties: &armsignalr.Properties{
+		// 				Cors: &armsignalr.CorsSettings{
+		// 					AllowedOrigins: []*string{
+		// 						to.Ptr("https://foo.com"),
+		// 						to.Ptr("https://bar.com")},
+		// 					},
+		// 					DisableAADAuth: to.Ptr(false),
+		// 					DisableLocalAuth: to.Ptr(false),
+		// 					ExternalIP: to.Ptr("10.0.0.1"),
+		// 					Features: []*armsignalr.Feature{
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("Serverless"),
+		// 						},
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("True"),
+		// 						},
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("False"),
+		// 						},
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("False"),
+		// 					}},
+		// 					HostName: to.Ptr("mysignalrservice.service.signalr.net"),
+		// 					NetworkACLs: &armsignalr.NetworkACLs{
+		// 						DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+		// 						PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+		// 							{
+		// 								Allow: []*armsignalr.SignalRRequestType{
+		// 									to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+		// 									Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 							}},
+		// 							PublicNetwork: &armsignalr.NetworkACL{
+		// 								Allow: []*armsignalr.SignalRRequestType{
+		// 									to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+		// 								},
+		// 							},
+		// 							PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
+		// 								{
+		// 									Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 									Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+		// 									ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 									Properties: &armsignalr.PrivateEndpointConnectionProperties{
+		// 										PrivateEndpoint: &armsignalr.PrivateEndpoint{
+		// 											ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+		// 										},
+		// 										PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+		// 											ActionsRequired: to.Ptr("None"),
+		// 											Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+		// 										},
+		// 										ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+		// 									},
+		// 									SystemData: &armsignalr.SystemData{
+		// 										CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 										CreatedBy: to.Ptr("string"),
+		// 										CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 										LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 										LastModifiedBy: to.Ptr("string"),
+		// 										LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 									},
+		// 							}},
+		// 							ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+		// 							PublicNetworkAccess: to.Ptr("Enabled"),
+		// 							PublicPort: to.Ptr[int32](443),
+		// 							ServerPort: to.Ptr[int32](443),
+		// 							TLS: &armsignalr.TLSSettings{
+		// 								ClientCertEnabled: to.Ptr(true),
+		// 							},
+		// 							Upstream: &armsignalr.ServerlessUpstreamSettings{
+		// 								Templates: []*armsignalr.UpstreamTemplate{
+		// 									{
+		// 										URLTemplate: to.Ptr("http://foo.com"),
+		// 								}},
+		// 							},
+		// 							Version: to.Ptr("1.0"),
+		// 						},
+		// 						SKU: &armsignalr.ResourceSKU{
+		// 							Name: to.Ptr("Standard_S1"),
+		// 							Capacity: to.Ptr[int32](1),
+		// 							Size: to.Ptr("S1"),
+		// 							Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+		// 						},
+		// 						SystemData: &armsignalr.SystemData{
+		// 							CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 							CreatedBy: to.Ptr("string"),
+		// 							CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 							LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 							LastModifiedBy: to.Ptr("string"),
+		// 							LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 						},
+		// 				}},
+		// 			}
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mySignalRService",
+		// 			"type": "Microsoft.SignalRService/SignalR",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService",
+		// 			"identity": {
+		// 				"type": "SystemAssigned",
+		// 				"principalId": "00000000-0000-0000-0000-000000000000",
+		// 				"tenantId": "00000000-0000-0000-0000-000000000000"
+		// 			},
+		// 			"kind": "SignalR",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"cors": {
+		// 					"allowedOrigins": [
+		// 						"https://foo.com",
+		// 						"https://bar.com"
+		// 					]
+		// 				},
+		// 				"disableAadAuth": false,
+		// 				"disableLocalAuth": false,
+		// 				"externalIP": "10.0.0.1",
+		// 				"features": [
+		// 					{
+		// 						"flag": "ServiceMode",
+		// 						"properties": {},
+		// 						"value": "Serverless"
+		// 					},
+		// 					{
+		// 						"flag": "EnableConnectivityLogs",
+		// 						"properties": {},
+		// 						"value": "True"
+		// 					},
+		// 					{
+		// 						"flag": "EnableMessagingLogs",
+		// 						"properties": {},
+		// 						"value": "False"
+		// 					},
+		// 					{
+		// 						"flag": "EnableLiveTrace",
+		// 						"properties": {},
+		// 						"value": "False"
+		// 					}
+		// 				],
+		// 				"hostName": "mysignalrservice.service.signalr.net",
+		// 				"networkACLs": {
+		// 					"defaultAction": "Deny",
+		// 					"privateEndpoints": [
+		// 						{
+		// 							"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 							"allow": [
+		// 								"ServerConnection"
+		// 							]
+		// 						}
+		// 					],
+		// 					"publicNetwork": {
+		// 						"allow": [
+		// 							"ClientConnection"
+		// 						]
+		// 					}
+		// 				},
+		// 				"privateEndpointConnections": [
+		// 					{
+		// 						"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 						"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+		// 						"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 						"properties": {
+		// 							"privateEndpoint": {
+		// 								"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+		// 							},
+		// 							"privateLinkServiceConnectionState": {
+		// 								"actionsRequired": "None",
+		// 								"status": "Approved"
+		// 							},
+		// 							"provisioningState": "Succeeded"
+		// 						},
+		// 						"systemData": {
+		// 							"createdAt": "2015-02-03T04:05:06Z",
+		// 							"createdBy": "string",
+		// 							"createdByType": "User",
+		// 							"lastModifiedAt": "2015-02-03T04:05:06Z",
+		// 							"lastModifiedBy": "string",
+		// 							"lastModifiedByType": "User"
+		// 						}
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"publicNetworkAccess": "Enabled",
+		// 				"publicPort": 443,
+		// 				"serverPort": 443,
+		// 				"tls": {
+		// 					"clientCertEnabled": true
+		// 				},
+		// 				"upstream": {
+		// 					"templates": [
+		// 						{
+		// 							"urlTemplate": "http://foo.com"
+		// 						}
+		// 					]
+		// 				},
+		// 				"version": "1.0"
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_S1",
+		// 				"capacity": 1,
+		// 				"size": "S1",
+		// 				"tier": "Standard"
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2015-02-03T04:05:06Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2015-02-03T04:05:06Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			},
+		// 			"tags": {
+		// 				"key1": "value1"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -84,6 +340,250 @@ func ExampleClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ResourceInfoList = armsignalr.ResourceInfoList{
+		// 	Value: []*armsignalr.ResourceInfo{
+		// 		{
+		// 			Name: to.Ptr("mySignalRService"),
+		// 			Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"key1": to.Ptr("value1"),
+		// 			},
+		// 			Identity: &armsignalr.ManagedIdentity{
+		// 				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		// 				PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+		// 				TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+		// 			},
+		// 			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		// 			Properties: &armsignalr.Properties{
+		// 				Cors: &armsignalr.CorsSettings{
+		// 					AllowedOrigins: []*string{
+		// 						to.Ptr("https://foo.com"),
+		// 						to.Ptr("https://bar.com")},
+		// 					},
+		// 					DisableAADAuth: to.Ptr(false),
+		// 					DisableLocalAuth: to.Ptr(false),
+		// 					ExternalIP: to.Ptr("10.0.0.1"),
+		// 					Features: []*armsignalr.Feature{
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("Serverless"),
+		// 						},
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("True"),
+		// 						},
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("False"),
+		// 						},
+		// 						{
+		// 							Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+		// 							Properties: map[string]*string{
+		// 							},
+		// 							Value: to.Ptr("False"),
+		// 					}},
+		// 					HostName: to.Ptr("mysignalrservice.service.signalr.net"),
+		// 					NetworkACLs: &armsignalr.NetworkACLs{
+		// 						DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+		// 						PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+		// 							{
+		// 								Allow: []*armsignalr.SignalRRequestType{
+		// 									to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+		// 									Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 							}},
+		// 							PublicNetwork: &armsignalr.NetworkACL{
+		// 								Allow: []*armsignalr.SignalRRequestType{
+		// 									to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+		// 								},
+		// 							},
+		// 							PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
+		// 								{
+		// 									Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 									Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+		// 									ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 									Properties: &armsignalr.PrivateEndpointConnectionProperties{
+		// 										PrivateEndpoint: &armsignalr.PrivateEndpoint{
+		// 											ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+		// 										},
+		// 										PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+		// 											ActionsRequired: to.Ptr("None"),
+		// 											Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+		// 										},
+		// 										ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+		// 									},
+		// 									SystemData: &armsignalr.SystemData{
+		// 										CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 										CreatedBy: to.Ptr("string"),
+		// 										CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 										LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 										LastModifiedBy: to.Ptr("string"),
+		// 										LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 									},
+		// 							}},
+		// 							ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+		// 							PublicNetworkAccess: to.Ptr("Enabled"),
+		// 							PublicPort: to.Ptr[int32](443),
+		// 							ServerPort: to.Ptr[int32](443),
+		// 							TLS: &armsignalr.TLSSettings{
+		// 								ClientCertEnabled: to.Ptr(true),
+		// 							},
+		// 							Upstream: &armsignalr.ServerlessUpstreamSettings{
+		// 								Templates: []*armsignalr.UpstreamTemplate{
+		// 									{
+		// 										URLTemplate: to.Ptr("http://foo.com"),
+		// 								}},
+		// 							},
+		// 							Version: to.Ptr("1.0"),
+		// 						},
+		// 						SKU: &armsignalr.ResourceSKU{
+		// 							Name: to.Ptr("Standard_S1"),
+		// 							Capacity: to.Ptr[int32](1),
+		// 							Size: to.Ptr("S1"),
+		// 							Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+		// 						},
+		// 						SystemData: &armsignalr.SystemData{
+		// 							CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 							CreatedBy: to.Ptr("string"),
+		// 							CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 							LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 							LastModifiedBy: to.Ptr("string"),
+		// 							LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 						},
+		// 				}},
+		// 			}
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mySignalRService",
+		// 			"type": "Microsoft.SignalRService/SignalR",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService",
+		// 			"identity": {
+		// 				"type": "SystemAssigned",
+		// 				"principalId": "00000000-0000-0000-0000-000000000000",
+		// 				"tenantId": "00000000-0000-0000-0000-000000000000"
+		// 			},
+		// 			"kind": "SignalR",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"cors": {
+		// 					"allowedOrigins": [
+		// 						"https://foo.com",
+		// 						"https://bar.com"
+		// 					]
+		// 				},
+		// 				"disableAadAuth": false,
+		// 				"disableLocalAuth": false,
+		// 				"externalIP": "10.0.0.1",
+		// 				"features": [
+		// 					{
+		// 						"flag": "ServiceMode",
+		// 						"properties": {},
+		// 						"value": "Serverless"
+		// 					},
+		// 					{
+		// 						"flag": "EnableConnectivityLogs",
+		// 						"properties": {},
+		// 						"value": "True"
+		// 					},
+		// 					{
+		// 						"flag": "EnableMessagingLogs",
+		// 						"properties": {},
+		// 						"value": "False"
+		// 					},
+		// 					{
+		// 						"flag": "EnableLiveTrace",
+		// 						"properties": {},
+		// 						"value": "False"
+		// 					}
+		// 				],
+		// 				"hostName": "mysignalrservice.service.signalr.net",
+		// 				"networkACLs": {
+		// 					"defaultAction": "Deny",
+		// 					"privateEndpoints": [
+		// 						{
+		// 							"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 							"allow": [
+		// 								"ServerConnection"
+		// 							]
+		// 						}
+		// 					],
+		// 					"publicNetwork": {
+		// 						"allow": [
+		// 							"ClientConnection"
+		// 						]
+		// 					}
+		// 				},
+		// 				"privateEndpointConnections": [
+		// 					{
+		// 						"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 						"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+		// 						"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 						"properties": {
+		// 							"privateEndpoint": {
+		// 								"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+		// 							},
+		// 							"privateLinkServiceConnectionState": {
+		// 								"actionsRequired": "None",
+		// 								"status": "Approved"
+		// 							},
+		// 							"provisioningState": "Succeeded"
+		// 						},
+		// 						"systemData": {
+		// 							"createdAt": "2015-02-03T04:05:06Z",
+		// 							"createdBy": "string",
+		// 							"createdByType": "User",
+		// 							"lastModifiedAt": "2015-02-03T04:05:06Z",
+		// 							"lastModifiedBy": "string",
+		// 							"lastModifiedByType": "User"
+		// 						}
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"publicNetworkAccess": "Enabled",
+		// 				"publicPort": 443,
+		// 				"serverPort": 443,
+		// 				"tls": {
+		// 					"clientCertEnabled": true
+		// 				},
+		// 				"upstream": {
+		// 					"templates": [
+		// 						{
+		// 							"urlTemplate": "http://foo.com"
+		// 						}
+		// 					]
+		// 				},
+		// 				"version": "1.0"
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_S1",
+		// 				"capacity": 1,
+		// 				"size": "S1",
+		// 				"tier": "Standard"
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2015-02-03T04:05:06Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2015-02-03T04:05:06Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			},
+		// 			"tags": {
+		// 				"key1": "value1"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -104,6 +604,243 @@ func ExampleClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ResourceInfo = armsignalr.ResourceInfo{
+	// 	Name: to.Ptr("mySignalRService"),
+	// 	Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService"),
+	// 	Location: to.Ptr("eastus"),
+	// 	Tags: map[string]*string{
+	// 		"key1": to.Ptr("value1"),
+	// 	},
+	// 	Identity: &armsignalr.ManagedIdentity{
+	// 		Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 		TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 	},
+	// 	Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+	// 	Properties: &armsignalr.Properties{
+	// 		Cors: &armsignalr.CorsSettings{
+	// 			AllowedOrigins: []*string{
+	// 				to.Ptr("https://foo.com"),
+	// 				to.Ptr("https://bar.com")},
+	// 			},
+	// 			DisableAADAuth: to.Ptr(false),
+	// 			DisableLocalAuth: to.Ptr(false),
+	// 			ExternalIP: to.Ptr("10.0.0.1"),
+	// 			Features: []*armsignalr.Feature{
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("Serverless"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("True"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("False"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("False"),
+	// 			}},
+	// 			HostName: to.Ptr("mysignalrservice.service.signalr.net"),
+	// 			NetworkACLs: &armsignalr.NetworkACLs{
+	// 				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+	// 				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+	// 					{
+	// 						Allow: []*armsignalr.SignalRRequestType{
+	// 							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+	// 							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 					}},
+	// 					PublicNetwork: &armsignalr.NetworkACL{
+	// 						Allow: []*armsignalr.SignalRRequestType{
+	// 							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+	// 						},
+	// 					},
+	// 					PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
+	// 						{
+	// 							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 							Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+	// 							ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 							Properties: &armsignalr.PrivateEndpointConnectionProperties{
+	// 								PrivateEndpoint: &armsignalr.PrivateEndpoint{
+	// 									ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 								},
+	// 								PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+	// 									ActionsRequired: to.Ptr("None"),
+	// 									Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+	// 								},
+	// 								ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 							},
+	// 							SystemData: &armsignalr.SystemData{
+	// 								CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 								CreatedBy: to.Ptr("string"),
+	// 								CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 								LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 								LastModifiedBy: to.Ptr("string"),
+	// 								LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 							},
+	// 					}},
+	// 					ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 					PublicNetworkAccess: to.Ptr("Enabled"),
+	// 					PublicPort: to.Ptr[int32](443),
+	// 					ServerPort: to.Ptr[int32](443),
+	// 					TLS: &armsignalr.TLSSettings{
+	// 						ClientCertEnabled: to.Ptr(true),
+	// 					},
+	// 					Upstream: &armsignalr.ServerlessUpstreamSettings{
+	// 						Templates: []*armsignalr.UpstreamTemplate{
+	// 							{
+	// 								URLTemplate: to.Ptr("http://foo.com"),
+	// 						}},
+	// 					},
+	// 					Version: to.Ptr("1.0"),
+	// 				},
+	// 				SKU: &armsignalr.ResourceSKU{
+	// 					Name: to.Ptr("Standard_S1"),
+	// 					Capacity: to.Ptr[int32](1),
+	// 					Size: to.Ptr("S1"),
+	// 					Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+	// 				},
+	// 				SystemData: &armsignalr.SystemData{
+	// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 					CreatedBy: to.Ptr("string"),
+	// 					CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 					LastModifiedBy: to.Ptr("string"),
+	// 					LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 				},
+	// 			}
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySignalRService",
+	// 	"type": "Microsoft.SignalRService/SignalR",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-0000-0000-0000-000000000000",
+	// 		"tenantId": "00000000-0000-0000-0000-000000000000"
+	// 	},
+	// 	"kind": "SignalR",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"cors": {
+	// 			"allowedOrigins": [
+	// 				"https://foo.com",
+	// 				"https://bar.com"
+	// 			]
+	// 		},
+	// 		"disableAadAuth": false,
+	// 		"disableLocalAuth": false,
+	// 		"externalIP": "10.0.0.1",
+	// 		"features": [
+	// 			{
+	// 				"flag": "ServiceMode",
+	// 				"properties": {},
+	// 				"value": "Serverless"
+	// 			},
+	// 			{
+	// 				"flag": "EnableConnectivityLogs",
+	// 				"properties": {},
+	// 				"value": "True"
+	// 			},
+	// 			{
+	// 				"flag": "EnableMessagingLogs",
+	// 				"properties": {},
+	// 				"value": "False"
+	// 			},
+	// 			{
+	// 				"flag": "EnableLiveTrace",
+	// 				"properties": {},
+	// 				"value": "False"
+	// 			}
+	// 		],
+	// 		"hostName": "mysignalrservice.service.signalr.net",
+	// 		"networkACLs": {
+	// 			"defaultAction": "Deny",
+	// 			"privateEndpoints": [
+	// 				{
+	// 					"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 					"allow": [
+	// 						"ServerConnection"
+	// 					]
+	// 				}
+	// 			],
+	// 			"publicNetwork": {
+	// 				"allow": [
+	// 					"ClientConnection"
+	// 				]
+	// 			}
+	// 		},
+	// 		"privateEndpointConnections": [
+	// 			{
+	// 				"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 				"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+	// 				"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 				"properties": {
+	// 					"privateEndpoint": {
+	// 						"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 					},
+	// 					"privateLinkServiceConnectionState": {
+	// 						"actionsRequired": "None",
+	// 						"status": "Approved"
+	// 					},
+	// 					"provisioningState": "Succeeded"
+	// 				},
+	// 				"systemData": {
+	// 					"createdAt": "2015-02-03T04:05:06Z",
+	// 					"createdBy": "string",
+	// 					"createdByType": "User",
+	// 					"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 					"lastModifiedBy": "string",
+	// 					"lastModifiedByType": "User"
+	// 				}
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"publicNetworkAccess": "Enabled",
+	// 		"publicPort": 443,
+	// 		"serverPort": 443,
+	// 		"tls": {
+	// 			"clientCertEnabled": true
+	// 		},
+	// 		"upstream": {
+	// 			"templates": [
+	// 				{
+	// 					"urlTemplate": "http://foo.com"
+	// 				}
+	// 			]
+	// 		},
+	// 		"version": "1.0"
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_S1",
+	// 		"capacity": 1,
+	// 		"size": "S1",
+	// 		"tier": "Standard"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2015-02-03T04:05:06Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {
+	// 		"key1": "value1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
@@ -203,6 +940,243 @@ func ExampleClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ResourceInfo = armsignalr.ResourceInfo{
+	// 	Name: to.Ptr("mySignalRService"),
+	// 	Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService"),
+	// 	Location: to.Ptr("eastus"),
+	// 	Tags: map[string]*string{
+	// 		"key1": to.Ptr("value1"),
+	// 	},
+	// 	Identity: &armsignalr.ManagedIdentity{
+	// 		Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 		TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 	},
+	// 	Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+	// 	Properties: &armsignalr.Properties{
+	// 		Cors: &armsignalr.CorsSettings{
+	// 			AllowedOrigins: []*string{
+	// 				to.Ptr("https://foo.com"),
+	// 				to.Ptr("https://bar.com")},
+	// 			},
+	// 			DisableAADAuth: to.Ptr(false),
+	// 			DisableLocalAuth: to.Ptr(false),
+	// 			ExternalIP: to.Ptr("10.0.0.1"),
+	// 			Features: []*armsignalr.Feature{
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("Serverless"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("True"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("False"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("False"),
+	// 			}},
+	// 			HostName: to.Ptr("mysignalrservice.service.signalr.net"),
+	// 			NetworkACLs: &armsignalr.NetworkACLs{
+	// 				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+	// 				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+	// 					{
+	// 						Allow: []*armsignalr.SignalRRequestType{
+	// 							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+	// 							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 					}},
+	// 					PublicNetwork: &armsignalr.NetworkACL{
+	// 						Allow: []*armsignalr.SignalRRequestType{
+	// 							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+	// 						},
+	// 					},
+	// 					PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
+	// 						{
+	// 							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 							Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+	// 							ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 							Properties: &armsignalr.PrivateEndpointConnectionProperties{
+	// 								PrivateEndpoint: &armsignalr.PrivateEndpoint{
+	// 									ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 								},
+	// 								PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+	// 									ActionsRequired: to.Ptr("None"),
+	// 									Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+	// 								},
+	// 								ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 							},
+	// 							SystemData: &armsignalr.SystemData{
+	// 								CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 								CreatedBy: to.Ptr("string"),
+	// 								CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 								LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 								LastModifiedBy: to.Ptr("string"),
+	// 								LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 							},
+	// 					}},
+	// 					ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 					PublicNetworkAccess: to.Ptr("Enabled"),
+	// 					PublicPort: to.Ptr[int32](443),
+	// 					ServerPort: to.Ptr[int32](443),
+	// 					TLS: &armsignalr.TLSSettings{
+	// 						ClientCertEnabled: to.Ptr(true),
+	// 					},
+	// 					Upstream: &armsignalr.ServerlessUpstreamSettings{
+	// 						Templates: []*armsignalr.UpstreamTemplate{
+	// 							{
+	// 								URLTemplate: to.Ptr("http://foo.com"),
+	// 						}},
+	// 					},
+	// 					Version: to.Ptr("1.0"),
+	// 				},
+	// 				SKU: &armsignalr.ResourceSKU{
+	// 					Name: to.Ptr("Standard_S1"),
+	// 					Capacity: to.Ptr[int32](1),
+	// 					Size: to.Ptr("S1"),
+	// 					Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+	// 				},
+	// 				SystemData: &armsignalr.SystemData{
+	// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 					CreatedBy: to.Ptr("string"),
+	// 					CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 					LastModifiedBy: to.Ptr("string"),
+	// 					LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 				},
+	// 			}
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySignalRService",
+	// 	"type": "Microsoft.SignalRService/SignalR",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-0000-0000-0000-000000000000",
+	// 		"tenantId": "00000000-0000-0000-0000-000000000000"
+	// 	},
+	// 	"kind": "SignalR",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"cors": {
+	// 			"allowedOrigins": [
+	// 				"https://foo.com",
+	// 				"https://bar.com"
+	// 			]
+	// 		},
+	// 		"disableAadAuth": false,
+	// 		"disableLocalAuth": false,
+	// 		"externalIP": "10.0.0.1",
+	// 		"features": [
+	// 			{
+	// 				"flag": "ServiceMode",
+	// 				"properties": {},
+	// 				"value": "Serverless"
+	// 			},
+	// 			{
+	// 				"flag": "EnableConnectivityLogs",
+	// 				"properties": {},
+	// 				"value": "True"
+	// 			},
+	// 			{
+	// 				"flag": "EnableMessagingLogs",
+	// 				"properties": {},
+	// 				"value": "False"
+	// 			},
+	// 			{
+	// 				"flag": "EnableLiveTrace",
+	// 				"properties": {},
+	// 				"value": "False"
+	// 			}
+	// 		],
+	// 		"hostName": "mysignalrservice.service.signalr.net",
+	// 		"networkACLs": {
+	// 			"defaultAction": "Deny",
+	// 			"privateEndpoints": [
+	// 				{
+	// 					"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 					"allow": [
+	// 						"ServerConnection"
+	// 					]
+	// 				}
+	// 			],
+	// 			"publicNetwork": {
+	// 				"allow": [
+	// 					"ClientConnection"
+	// 				]
+	// 			}
+	// 		},
+	// 		"privateEndpointConnections": [
+	// 			{
+	// 				"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 				"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+	// 				"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 				"properties": {
+	// 					"privateEndpoint": {
+	// 						"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 					},
+	// 					"privateLinkServiceConnectionState": {
+	// 						"actionsRequired": "None",
+	// 						"status": "Approved"
+	// 					},
+	// 					"provisioningState": "Succeeded"
+	// 				},
+	// 				"systemData": {
+	// 					"createdAt": "2015-02-03T04:05:06Z",
+	// 					"createdBy": "string",
+	// 					"createdByType": "User",
+	// 					"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 					"lastModifiedBy": "string",
+	// 					"lastModifiedByType": "User"
+	// 				}
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"publicNetworkAccess": "Enabled",
+	// 		"publicPort": 443,
+	// 		"serverPort": 443,
+	// 		"tls": {
+	// 			"clientCertEnabled": true
+	// 		},
+	// 		"upstream": {
+	// 			"templates": [
+	// 				{
+	// 					"urlTemplate": "http://foo.com"
+	// 				}
+	// 			]
+	// 		},
+	// 		"version": "1.0"
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_S1",
+	// 		"capacity": 1,
+	// 		"size": "S1",
+	// 		"tier": "Standard"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2015-02-03T04:05:06Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {
+	// 		"key1": "value1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
@@ -324,6 +1298,243 @@ func ExampleClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ResourceInfo = armsignalr.ResourceInfo{
+	// 	Name: to.Ptr("mySignalRService"),
+	// 	Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService"),
+	// 	Location: to.Ptr("eastus"),
+	// 	Tags: map[string]*string{
+	// 		"key1": to.Ptr("value1"),
+	// 	},
+	// 	Identity: &armsignalr.ManagedIdentity{
+	// 		Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 		TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 	},
+	// 	Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+	// 	Properties: &armsignalr.Properties{
+	// 		Cors: &armsignalr.CorsSettings{
+	// 			AllowedOrigins: []*string{
+	// 				to.Ptr("https://foo.com"),
+	// 				to.Ptr("https://bar.com")},
+	// 			},
+	// 			DisableAADAuth: to.Ptr(false),
+	// 			DisableLocalAuth: to.Ptr(false),
+	// 			ExternalIP: to.Ptr("10.0.0.1"),
+	// 			Features: []*armsignalr.Feature{
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("Serverless"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("True"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("False"),
+	// 				},
+	// 				{
+	// 					Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+	// 					Properties: map[string]*string{
+	// 					},
+	// 					Value: to.Ptr("False"),
+	// 			}},
+	// 			HostName: to.Ptr("mysignalrservice.service.signalr.net"),
+	// 			NetworkACLs: &armsignalr.NetworkACLs{
+	// 				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+	// 				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+	// 					{
+	// 						Allow: []*armsignalr.SignalRRequestType{
+	// 							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+	// 							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 					}},
+	// 					PublicNetwork: &armsignalr.NetworkACL{
+	// 						Allow: []*armsignalr.SignalRRequestType{
+	// 							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+	// 						},
+	// 					},
+	// 					PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
+	// 						{
+	// 							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 							Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+	// 							ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 							Properties: &armsignalr.PrivateEndpointConnectionProperties{
+	// 								PrivateEndpoint: &armsignalr.PrivateEndpoint{
+	// 									ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 								},
+	// 								PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+	// 									ActionsRequired: to.Ptr("None"),
+	// 									Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+	// 								},
+	// 								ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 							},
+	// 							SystemData: &armsignalr.SystemData{
+	// 								CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 								CreatedBy: to.Ptr("string"),
+	// 								CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 								LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 								LastModifiedBy: to.Ptr("string"),
+	// 								LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 							},
+	// 					}},
+	// 					ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 					PublicNetworkAccess: to.Ptr("Enabled"),
+	// 					PublicPort: to.Ptr[int32](443),
+	// 					ServerPort: to.Ptr[int32](443),
+	// 					TLS: &armsignalr.TLSSettings{
+	// 						ClientCertEnabled: to.Ptr(true),
+	// 					},
+	// 					Upstream: &armsignalr.ServerlessUpstreamSettings{
+	// 						Templates: []*armsignalr.UpstreamTemplate{
+	// 							{
+	// 								URLTemplate: to.Ptr("http://foo.com"),
+	// 						}},
+	// 					},
+	// 					Version: to.Ptr("1.0"),
+	// 				},
+	// 				SKU: &armsignalr.ResourceSKU{
+	// 					Name: to.Ptr("Standard_S1"),
+	// 					Capacity: to.Ptr[int32](1),
+	// 					Size: to.Ptr("S1"),
+	// 					Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+	// 				},
+	// 				SystemData: &armsignalr.SystemData{
+	// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 					CreatedBy: to.Ptr("string"),
+	// 					CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 					LastModifiedBy: to.Ptr("string"),
+	// 					LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 				},
+	// 			}
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySignalRService",
+	// 	"type": "Microsoft.SignalRService/SignalR",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-0000-0000-0000-000000000000",
+	// 		"tenantId": "00000000-0000-0000-0000-000000000000"
+	// 	},
+	// 	"kind": "SignalR",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"cors": {
+	// 			"allowedOrigins": [
+	// 				"https://foo.com",
+	// 				"https://bar.com"
+	// 			]
+	// 		},
+	// 		"disableAadAuth": false,
+	// 		"disableLocalAuth": false,
+	// 		"externalIP": "10.0.0.1",
+	// 		"features": [
+	// 			{
+	// 				"flag": "ServiceMode",
+	// 				"properties": {},
+	// 				"value": "Serverless"
+	// 			},
+	// 			{
+	// 				"flag": "EnableConnectivityLogs",
+	// 				"properties": {},
+	// 				"value": "True"
+	// 			},
+	// 			{
+	// 				"flag": "EnableMessagingLogs",
+	// 				"properties": {},
+	// 				"value": "False"
+	// 			},
+	// 			{
+	// 				"flag": "EnableLiveTrace",
+	// 				"properties": {},
+	// 				"value": "False"
+	// 			}
+	// 		],
+	// 		"hostName": "mysignalrservice.service.signalr.net",
+	// 		"networkACLs": {
+	// 			"defaultAction": "Deny",
+	// 			"privateEndpoints": [
+	// 				{
+	// 					"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 					"allow": [
+	// 						"ServerConnection"
+	// 					]
+	// 				}
+	// 			],
+	// 			"publicNetwork": {
+	// 				"allow": [
+	// 					"ClientConnection"
+	// 				]
+	// 			}
+	// 		},
+	// 		"privateEndpointConnections": [
+	// 			{
+	// 				"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 				"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+	// 				"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 				"properties": {
+	// 					"privateEndpoint": {
+	// 						"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 					},
+	// 					"privateLinkServiceConnectionState": {
+	// 						"actionsRequired": "None",
+	// 						"status": "Approved"
+	// 					},
+	// 					"provisioningState": "Succeeded"
+	// 				},
+	// 				"systemData": {
+	// 					"createdAt": "2015-02-03T04:05:06Z",
+	// 					"createdBy": "string",
+	// 					"createdByType": "User",
+	// 					"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 					"lastModifiedBy": "string",
+	// 					"lastModifiedByType": "User"
+	// 				}
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"publicNetworkAccess": "Enabled",
+	// 		"publicPort": 443,
+	// 		"serverPort": 443,
+	// 		"tls": {
+	// 			"clientCertEnabled": true
+	// 		},
+	// 		"upstream": {
+	// 			"templates": [
+	// 				{
+	// 					"urlTemplate": "http://foo.com"
+	// 				}
+	// 			]
+	// 		},
+	// 		"version": "1.0"
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_S1",
+	// 		"capacity": 1,
+	// 		"size": "S1",
+	// 		"tier": "Standard"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2015-02-03T04:05:06Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {
+	// 		"key1": "value1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
@@ -343,6 +1554,11 @@ func ExampleClient_ListKeys() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Keys = armsignalr.Keys{
+	// }
+	// with the raw JSON response:
+	// {}
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json

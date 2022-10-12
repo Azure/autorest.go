@@ -54,6 +54,45 @@ func ExampleCloudServiceRoleInstancesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RoleInstance = armcompute.RoleInstance{
+	// 	Name: to.Ptr("{roleInstance-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices/roleInstances"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/{roleInstance-name}"),
+	// 	Location: to.Ptr("eastus2euap"),
+	// 	Properties: &armcompute.RoleInstanceProperties{
+	// 		NetworkProfile: &armcompute.RoleInstanceNetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.SubResource{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/{roleInstance-name}/networkInterfaces/nic1"),
+	// 			}},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.InstanceSKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{roleInstance-name}",
+	// 	"type": "Microsoft.Compute/cloudServices/roleInstances",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/{roleInstance-name}",
+	// 	"location": "eastus2euap",
+	// 	"properties": {
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/{roleInstance-name}/networkInterfaces/nic1"
+	// 				}
+	// 			]
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInstanceViewOfCloudServiceRoleInstance.json
@@ -73,6 +112,33 @@ func ExampleCloudServiceRoleInstancesClient_GetInstanceView() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RoleInstanceView = armcompute.RoleInstanceView{
+	// 	PlatformFaultDomain: to.Ptr[int32](0),
+	// 	PlatformUpdateDomain: to.Ptr[int32](0),
+	// 	PrivateID: to.Ptr("3491bc0c-1f6c-444f-b1d0-ec0751a74e3e"),
+	// 	Statuses: []*armcompute.ResourceInstanceViewStatus{
+	// 		{
+	// 			Code: to.Ptr("RoleState/RoleStateStarted"),
+	// 			DisplayStatus: to.Ptr("RoleStateStarted"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Message: to.Ptr(""),
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"platformFaultDomain": 0,
+	// 	"platformUpdateDomain": 0,
+	// 	"privateId": "3491bc0c-1f6c-444f-b1d0-ec0751a74e3e",
+	// 	"statuses": [
+	// 		{
+	// 			"code": "RoleState/RoleStateStarted",
+	// 			"displayStatus": "RoleStateStarted",
+	// 			"level": "Info",
+	// 			"message": ""
+	// 		}
+	// 	]
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceRolesInstances.json
@@ -96,6 +162,163 @@ func ExampleCloudServiceRoleInstancesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.RoleInstanceListResult = armcompute.RoleInstanceListResult{
+		// 	Value: []*armcompute.RoleInstance{
+		// 		{
+		// 			Name: to.Ptr("ContosoFrontend_IN_0"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices/roleInstances"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_0"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.RoleInstanceProperties{
+		// 				NetworkProfile: &armcompute.RoleInstanceNetworkProfile{
+		// 					NetworkInterfaces: []*armcompute.SubResource{
+		// 						{
+		// 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_0/networkInterfaces/nic1"),
+		// 					}},
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.InstanceSKU{
+		// 				Name: to.Ptr("Standard_D1_v2"),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("ContosoFrontend_IN_1"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices/roleInstances"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_1"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.RoleInstanceProperties{
+		// 				NetworkProfile: &armcompute.RoleInstanceNetworkProfile{
+		// 					NetworkInterfaces: []*armcompute.SubResource{
+		// 						{
+		// 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_1/networkInterfaces/nic1"),
+		// 					}},
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.InstanceSKU{
+		// 				Name: to.Ptr("Standard_D1_v2"),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("ContosoBackend_IN_0"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices/roleInstances"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_0"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.RoleInstanceProperties{
+		// 				NetworkProfile: &armcompute.RoleInstanceNetworkProfile{
+		// 					NetworkInterfaces: []*armcompute.SubResource{
+		// 						{
+		// 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_0/networkInterfaces/nic1"),
+		// 					}},
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.InstanceSKU{
+		// 				Name: to.Ptr("Standard_D1_v2"),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("ContosoBackend_IN_1"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices/roleInstances"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_1"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.RoleInstanceProperties{
+		// 				NetworkProfile: &armcompute.RoleInstanceNetworkProfile{
+		// 					NetworkInterfaces: []*armcompute.SubResource{
+		// 						{
+		// 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_1/networkInterfaces/nic1"),
+		// 					}},
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.InstanceSKU{
+		// 				Name: to.Ptr("Standard_D1_v2"),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "ContosoFrontend_IN_0",
+		// 			"type": "Microsoft.Compute/cloudServices/roleInstances",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_0",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"networkProfile": {
+		// 					"networkInterfaces": [
+		// 						{
+		// 							"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_0/networkInterfaces/nic1"
+		// 						}
+		// 					]
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D1_v2",
+		// 				"tier": "Standard"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "ContosoFrontend_IN_1",
+		// 			"type": "Microsoft.Compute/cloudServices/roleInstances",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_1",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"networkProfile": {
+		// 					"networkInterfaces": [
+		// 						{
+		// 							"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoFrontend_IN_1/networkInterfaces/nic1"
+		// 						}
+		// 					]
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D1_v2",
+		// 				"tier": "Standard"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "ContosoBackend_IN_0",
+		// 			"type": "Microsoft.Compute/cloudServices/roleInstances",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_0",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"networkProfile": {
+		// 					"networkInterfaces": [
+		// 						{
+		// 							"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_0/networkInterfaces/nic1"
+		// 						}
+		// 					]
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D1_v2",
+		// 				"tier": "Standard"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "ContosoBackend_IN_1",
+		// 			"type": "Microsoft.Compute/cloudServices/roleInstances",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_1",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"networkProfile": {
+		// 					"networkInterfaces": [
+		// 						{
+		// 							"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roleInstances/ContosoBackend_IN_1/networkInterfaces/nic1"
+		// 						}
+		// 					]
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D1_v2",
+		// 				"tier": "Standard"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 

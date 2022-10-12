@@ -38,6 +38,39 @@ func ExampleSharedPrivateLinkResourcesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SharedPrivateLinkResourceList = armsignalr.SharedPrivateLinkResourceList{
+		// 	Value: []*armsignalr.SharedPrivateLinkResource{
+		// 		{
+		// 			Name: to.Ptr("upstream"),
+		// 			Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/upstream"),
+		// 			Properties: &armsignalr.SharedPrivateLinkResourceProperties{
+		// 				GroupID: to.Ptr("sites"),
+		// 				PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
+		// 				ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+		// 				RequestMessage: to.Ptr("Please approve"),
+		// 				Status: to.Ptr(armsignalr.SharedPrivateLinkResourceStatusApproved),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "upstream",
+		// 			"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/upstream",
+		// 			"properties": {
+		// 				"groupId": "sites",
+		// 				"privateLinkResourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp",
+		// 				"provisioningState": "Succeeded",
+		// 				"requestMessage": "Please approve",
+		// 				"status": "Approved"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -58,6 +91,32 @@ func ExampleSharedPrivateLinkResourcesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SharedPrivateLinkResource = armsignalr.SharedPrivateLinkResource{
+	// 	Name: to.Ptr("upstream"),
+	// 	Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/upstream"),
+	// 	Properties: &armsignalr.SharedPrivateLinkResourceProperties{
+	// 		GroupID: to.Ptr("sites"),
+	// 		PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
+	// 		ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 		RequestMessage: to.Ptr("Please approve"),
+	// 		Status: to.Ptr(armsignalr.SharedPrivateLinkResourceStatusApproved),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "upstream",
+	// 	"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/upstream",
+	// 	"properties": {
+	// 		"groupId": "sites",
+	// 		"privateLinkResourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp",
+	// 		"provisioningState": "Succeeded",
+	// 		"requestMessage": "Please approve",
+	// 		"status": "Approved"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
@@ -87,6 +146,32 @@ func ExampleSharedPrivateLinkResourcesClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SharedPrivateLinkResource = armsignalr.SharedPrivateLinkResource{
+	// 	Name: to.Ptr("upstream"),
+	// 	Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/upstream"),
+	// 	Properties: &armsignalr.SharedPrivateLinkResourceProperties{
+	// 		GroupID: to.Ptr("sites"),
+	// 		PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
+	// 		ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 		RequestMessage: to.Ptr("Please approve"),
+	// 		Status: to.Ptr(armsignalr.SharedPrivateLinkResourceStatusApproved),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "upstream",
+	// 	"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/upstream",
+	// 	"properties": {
+	// 		"groupId": "sites",
+	// 		"privateLinkResourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp",
+	// 		"provisioningState": "Succeeded",
+	// 		"requestMessage": "Please approve",
+	// 		"status": "Approved"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json

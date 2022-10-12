@@ -55,6 +55,245 @@ func ExampleVirtualMachineScaleSetVMsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSetVM = armcompute.VirtualMachineScaleSetVM{
+	// 	Name: to.Ptr("{vmss-vm-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}/virtualMachines/0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineScaleSetVMProperties{
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 		},
+	// 		LatestModelApplied: to.Ptr(true),
+	// 		ModelDefinitionApplied: to.Ptr("VirtualMachineScaleSet"),
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}/virtualMachines/0/networkInterfaces/vmsstestnetconfig5415"),
+	// 			}},
+	// 		},
+	// 		NetworkProfileConfiguration: &armcompute.VirtualMachineScaleSetVMNetworkProfileConfiguration{
+	// 			NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 				{
+	// 					Name: to.Ptr("vmsstestnetconfig5415"),
+	// 					Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 						DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 							DNSServers: []*string{
+	// 							},
+	// 						},
+	// 						EnableAcceleratedNetworking: to.Ptr(false),
+	// 						EnableIPForwarding: to.Ptr(false),
+	// 						IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 							{
+	// 								Name: to.Ptr("vmsstestnetconfig9693"),
+	// 								Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 									PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 									Subnet: &armcompute.APIEntityReference{
+	// 										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/vn4071/subnets/sn5503"),
+	// 									},
+	// 								},
+	// 						}},
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("Foo12"),
+	// 			AllowExtensionOperations: to.Ptr(true),
+	// 			ComputerName: to.Ptr("test000000"),
+	// 			RequireGuestProvisionSignal: to.Ptr(true),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 				{
+	// 					Name: to.Ptr("vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](128),
+	// 					Lun: to.Ptr[int32](1),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d"),
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 					ToBeDetached: to.Ptr(false),
+	// 			}},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				ExactVersion: to.Ptr("4.127.20180315"),
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2012-R2-Datacenter"),
+	// 				Version: to.Ptr("4.127.20180315"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("vmss3176_vmss3176_0_OsDisk_1_6d72b805e50e4de6830303c5055077fc"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiskSizeGB: to.Ptr[int32](127),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_OsDisk_1_6d72b805e50e4de6830303c5055077fc"),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		UserData: to.Ptr("RXhhbXBsZSBVc2VyRGF0YQ=="),
+	// 		VMID: to.Ptr("42af9fdf-b906-4ad7-9905-8316209ff619"),
+	// 	},
+	// 	Resources: []*armcompute.VirtualMachineExtension{
+	// 		{
+	// 			Name: to.Ptr("CustomScriptExtension-DSC"),
+	// 			Type: to.Ptr("Microsoft.Compute/virtualMachines/extensions"),
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/extensions/CustomScriptExtension-DSC"),
+	// 			Location: to.Ptr("west us"),
+	// 			Tags: map[string]*string{
+	// 				"displayName": to.Ptr("CustomScriptExtension-DSC"),
+	// 			},
+	// 			Properties: &armcompute.VirtualMachineExtensionProperties{
+	// 				Type: to.Ptr("CustomScriptExtension"),
+	// 				AutoUpgradeMinorVersion: to.Ptr(true),
+	// 				ProvisioningState: to.Ptr("Succeeded"),
+	// 				Publisher: to.Ptr("Microsoft.Compute"),
+	// 				Settings: map[string]interface{}{
+	// 				},
+	// 				TypeHandlerVersion: to.Ptr("1.9"),
+	// 			},
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-vm-name}",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}/virtualMachines/0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true
+	// 			}
+	// 		},
+	// 		"hardwareProfile": {},
+	// 		"latestModelApplied": true,
+	// 		"modelDefinitionApplied": "VirtualMachineScaleSet",
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}/virtualMachines/0/networkInterfaces/vmsstestnetconfig5415"
+	// 				}
+	// 			]
+	// 		},
+	// 		"networkProfileConfiguration": {
+	// 			"networkInterfaceConfigurations": [
+	// 				{
+	// 					"name": "vmsstestnetconfig5415",
+	// 					"properties": {
+	// 						"dnsSettings": {
+	// 							"dnsServers": []
+	// 						},
+	// 						"enableAcceleratedNetworking": false,
+	// 						"enableIPForwarding": false,
+	// 						"ipConfigurations": [
+	// 							{
+	// 								"name": "vmsstestnetconfig9693",
+	// 								"properties": {
+	// 									"privateIPAddressVersion": "IPv4",
+	// 									"subnet": {
+	// 										"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/vn4071/subnets/sn5503"
+	// 									}
+	// 								}
+	// 							}
+	// 						],
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "Foo12",
+	// 			"allowExtensionOperations": true,
+	// 			"computerName": "test000000",
+	// 			"requireGuestProvisionSignal": true,
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"name": "vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d",
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 128,
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d",
+	// 						"storageAccountType": "Standard_LRS"
+	// 					},
+	// 					"toBeDetached": false
+	// 				}
+	// 			],
+	// 			"imageReference": {
+	// 				"exactVersion": "4.127.20180315",
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2012-R2-Datacenter",
+	// 				"version": "4.127.20180315"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "vmss3176_vmss3176_0_OsDisk_1_6d72b805e50e4de6830303c5055077fc",
+	// 				"caching": "None",
+	// 				"createOption": "FromImage",
+	// 				"diskSizeGB": 127,
+	// 				"managedDisk": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_OsDisk_1_6d72b805e50e4de6830303c5055077fc",
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"userData": "RXhhbXBsZSBVc2VyRGF0YQ==",
+	// 		"vmId": "42af9fdf-b906-4ad7-9905-8316209ff619"
+	// 	},
+	// 	"resources": [
+	// 		{
+	// 			"name": "CustomScriptExtension-DSC",
+	// 			"type": "Microsoft.Compute/virtualMachines/extensions",
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/extensions/CustomScriptExtension-DSC",
+	// 			"location": "west us",
+	// 			"properties": {
+	// 				"type": "CustomScriptExtension",
+	// 				"autoUpgradeMinorVersion": true,
+	// 				"provisioningState": "Succeeded",
+	// 				"publisher": "Microsoft.Compute",
+	// 				"settings": {},
+	// 				"typeHandlerVersion": "1.9"
+	// 			},
+	// 			"tags": {
+	// 				"displayName": "CustomScriptExtension-DSC"
+	// 			}
+	// 		}
+	// 	],
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMInstanceViewAutoPlacedOnDedicatedHostGroup.json
@@ -74,6 +313,99 @@ func ExampleVirtualMachineScaleSetVMsClient_GetInstanceView() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSetVMInstanceView = armcompute.VirtualMachineScaleSetVMInstanceView{
+	// 	AssignedHost: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup/hosts/myHost"),
+	// 	Disks: []*armcompute.DiskInstanceView{
+	// 		{
+	// 			Name: to.Ptr("myOSDisk"),
+	// 			Statuses: []*armcompute.InstanceViewStatus{
+	// 				{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 					Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T04:58:58.0882815+00:00"); return t}()),
+	// 			}},
+	// 	}},
+	// 	PlatformFaultDomain: to.Ptr[int32](0),
+	// 	PlatformUpdateDomain: to.Ptr[int32](0),
+	// 	Statuses: []*armcompute.InstanceViewStatus{
+	// 		{
+	// 			Code: to.Ptr("ProvisioningState/succeeded"),
+	// 			DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-06-05T04:59:58.1852966+00:00"); return t}()),
+	// 		},
+	// 		{
+	// 			Code: to.Ptr("PowerState/running"),
+	// 			DisplayStatus: to.Ptr("VM running"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 	}},
+	// 	VMAgent: &armcompute.VirtualMachineAgentInstanceView{
+	// 		Statuses: []*armcompute.InstanceViewStatus{
+	// 			{
+	// 				Code: to.Ptr("ProvisioningState/Unavailable"),
+	// 				DisplayStatus: to.Ptr("Not Ready"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesWarning),
+	// 				Message: to.Ptr("VM status blob is found but not yet populated."),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T05:00:32+00:00"); return t}()),
+	// 		}},
+	// 		VMAgentVersion: to.Ptr("Unknown"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"assignedHost": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup/hosts/myHost",
+	// 	"bootDiagnostics": null,
+	// 	"disks": [
+	// 		{
+	// 			"name": "myOSDisk",
+	// 			"encryptionSettings": null,
+	// 			"statuses": [
+	// 				{
+	// 					"code": "ProvisioningState/succeeded",
+	// 					"displayStatus": "Provisioning succeeded",
+	// 					"level": "Info",
+	// 					"message": null,
+	// 					"time": "2021-03-01T04:58:58.0882815+00:00"
+	// 				}
+	// 			]
+	// 		}
+	// 	],
+	// 	"platformFaultDomain": 0,
+	// 	"platformUpdateDomain": 0,
+	// 	"rdpThumbPrint": null,
+	// 	"statuses": [
+	// 		{
+	// 			"code": "ProvisioningState/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"message": null,
+	// 			"time": "2020-06-05T04:59:58.1852966+00:00"
+	// 		},
+	// 		{
+	// 			"code": "PowerState/running",
+	// 			"displayStatus": "VM running",
+	// 			"level": "Info",
+	// 			"message": null,
+	// 			"time": null
+	// 		}
+	// 	],
+	// 	"vmAgent": {
+	// 		"extensionHandlers": null,
+	// 		"statuses": [
+	// 			{
+	// 				"code": "ProvisioningState/Unavailable",
+	// 				"displayStatus": "Not Ready",
+	// 				"level": "Warning",
+	// 				"message": "VM status blob is found but not yet populated.",
+	// 				"time": "2021-03-01T05:00:32+00:00"
+	// 			}
+	// 		],
+	// 		"vmAgentVersion": "Unknown"
+	// 	},
+	// 	"extensions": null
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RetrieveBootDiagnosticsDataVMScaleSetVM.json
@@ -93,6 +425,16 @@ func ExampleVirtualMachineScaleSetVMsClient_RetrieveBootDiagnosticsData() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RetrieveBootDiagnosticsDataResult = armcompute.RetrieveBootDiagnosticsDataResult{
+	// 	ConsoleScreenshotBlobURI: to.Ptr("https://storageuri/myvmScaleSetinstance.screenshot.bmp?{saskey}"),
+	// 	SerialConsoleLogBlobURI: to.Ptr("https://storageuri/myvmScaleSetinstance.serialconsole.log?{saskey}"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"consoleScreenshotBlobUri": "https://storageuri/myvmScaleSetinstance.screenshot.bmp?{saskey}",
+	// 	"serialConsoleLogBlobUri": "https://storageuri/myvmScaleSetinstance.serialconsole.log?{saskey}"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVmssVM.json
@@ -137,4 +479,37 @@ func ExampleVirtualMachineScaleSetVMsClient_BeginRunCommand() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RunCommandResult = armcompute.RunCommandResult{
+	// 	Value: []*armcompute.InstanceViewStatus{
+	// 		{
+	// 			Code: to.Ptr("ComponentStatus/StdOut/succeeded"),
+	// 			DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Message: to.Ptr("Hello World!"),
+	// 		},
+	// 		{
+	// 			Code: to.Ptr("ComponentStatus/StdErr/succeeded"),
+	// 			DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Message: to.Ptr(""),
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"code": "ComponentStatus/StdOut/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"message": "Hello World!"
+	// 		},
+	// 		{
+	// 			"code": "ComponentStatus/StdErr/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"message": ""
+	// 		}
+	// 	]
+	// }
 }

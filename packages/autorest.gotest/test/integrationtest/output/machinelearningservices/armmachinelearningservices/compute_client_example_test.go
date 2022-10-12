@@ -38,6 +38,72 @@ func ExampleComputeClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.PaginatedComputeResourcesList = armmachinelearningservices.PaginatedComputeResourcesList{
+		// 	Value: []*armmachinelearningservices.ComputeResource{
+		// 		{
+		// 			Properties: &armmachinelearningservices.AKS{
+		// 				Description: to.Ptr("some compute"),
+		// 				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+		// 				CreatedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+		// 				ModifiedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+		// 				ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+		// 				ResourceID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+		// 			},
+		// 			Name: to.Ptr("compute123"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+		// 			ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+		// 			Location: to.Ptr("eastus"),
+		// 		},
+		// 		{
+		// 			Properties: &armmachinelearningservices.AKS{
+		// 				Description: to.Ptr("some compute"),
+		// 				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+		// 				CreatedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+		// 				ModifiedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+		// 				ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+		// 				ResourceID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute1234-56826-c9b00420020b2"),
+		// 			},
+		// 			Name: to.Ptr("compute1234"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+		// 			ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute1234"),
+		// 			Location: to.Ptr("eastus"),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "nextLink",
+		// 	"value": [
+		// 		{
+		// 			"name": "compute123",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/computes",
+		// 			"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"description": "some compute",
+		// 				"computeType": "AKS",
+		// 				"createdOn": "2021-04-01T22:00:00.0000000+00:00",
+		// 				"modifiedOn": "2021-04-01T22:00:00.0000000+00:00",
+		// 				"provisioningState": "Succeeded",
+		// 				"resourceId": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "compute1234",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/computes",
+		// 			"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute1234",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"description": "some compute",
+		// 				"computeType": "AKS",
+		// 				"createdOn": "2021-04-01T22:00:00.0000000+00:00",
+		// 				"modifiedOn": "2021-04-01T22:00:00.0000000+00:00",
+		// 				"provisioningState": "Succeeded",
+		// 				"resourceId": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute1234-56826-c9b00420020b2"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -58,6 +124,36 @@ func ExampleComputeClient_Get_getAAksCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.AKS{
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+	// 		CreatedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ModifiedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 		ResourceID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "AKS",
+	// 		"createdOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"modifiedOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"provisioningState": "Succeeded",
+	// 		"resourceId": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
@@ -77,6 +173,92 @@ func ExampleComputeClient_Get_getAAmlCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.AmlCompute{
+	// 		Properties: &armmachinelearningservices.AmlComputeProperties{
+	// 			AllocationState: to.Ptr(armmachinelearningservices.AllocationStateResizing),
+	// 			AllocationStateTransitionTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2017-09-27T22:28:08.998Z"); return t}()),
+	// 			CurrentNodeCount: to.Ptr[int32](0),
+	// 			EnableNodePublicIP: to.Ptr(true),
+	// 			IsolatedNetwork: to.Ptr(false),
+	// 			NodeStateCounts: &armmachinelearningservices.NodeStateCounts{
+	// 				IdleNodeCount: to.Ptr[int32](0),
+	// 				LeavingNodeCount: to.Ptr[int32](0),
+	// 				PreemptedNodeCount: to.Ptr[int32](0),
+	// 				PreparingNodeCount: to.Ptr[int32](0),
+	// 				RunningNodeCount: to.Ptr[int32](0),
+	// 				UnusableNodeCount: to.Ptr[int32](0),
+	// 			},
+	// 			OSType: to.Ptr(armmachinelearningservices.OsTypeWindows),
+	// 			RemoteLoginPortPublicAccess: to.Ptr(armmachinelearningservices.RemoteLoginPortPublicAccessEnabled),
+	// 			ScaleSettings: &armmachinelearningservices.ScaleSettings{
+	// 				MaxNodeCount: to.Ptr[int32](1),
+	// 				MinNodeCount: to.Ptr[int32](0),
+	// 				NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
+	// 			},
+	// 			Subnet: &armmachinelearningservices.ResourceID{
+	// 				ID: to.Ptr("test-subnet-resource-id"),
+	// 			},
+	// 			TargetNodeCount: to.Ptr[int32](1),
+	// 			VMPriority: to.Ptr(armmachinelearningservices.VMPriorityDedicated),
+	// 			VMSize: to.Ptr("STANDARD_NC6"),
+	// 		},
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
+	// 		CreatedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ModifiedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus2"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus2",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "AmlCompute",
+	// 		"createdOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"modifiedOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"properties": {
+	// 			"allocationState": "Resizing",
+	// 			"allocationStateTransitionTime": "2017-09-27T22:28:08.998Z",
+	// 			"currentNodeCount": 0,
+	// 			"enableNodePublicIp": true,
+	// 			"errors": null,
+	// 			"isolatedNetwork": false,
+	// 			"nodeStateCounts": {
+	// 				"idleNodeCount": 0,
+	// 				"leavingNodeCount": 0,
+	// 				"preemptedNodeCount": 0,
+	// 				"preparingNodeCount": 0,
+	// 				"runningNodeCount": 0,
+	// 				"unusableNodeCount": 0
+	// 			},
+	// 			"osType": "Windows",
+	// 			"remoteLoginPortPublicAccess": "Enabled",
+	// 			"scaleSettings": {
+	// 				"maxNodeCount": 1,
+	// 				"minNodeCount": 0,
+	// 				"nodeIdleTimeBeforeScaleDown": "PT5M"
+	// 			},
+	// 			"subnet": {
+	// 				"id": "test-subnet-resource-id"
+	// 			},
+	// 			"targetNodeCount": 1,
+	// 			"virtualMachineImage": null,
+	// 			"vmPriority": "Dedicated",
+	// 			"vmSize": "STANDARD_NC6"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
@@ -96,6 +278,85 @@ func ExampleComputeClient_Get_getAKubernetesCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.Kubernetes{
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeKubernetes),
+	// 		CreatedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		IsAttachedCompute: to.Ptr(true),
+	// 		ModifiedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 		ResourceID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+	// 		Properties: &armmachinelearningservices.KubernetesProperties{
+	// 			DefaultInstanceType: to.Ptr("defaultInstanceType"),
+	// 			ExtensionInstanceReleaseTrain: to.Ptr("stable"),
+	// 			InstanceTypes: map[string]*armmachinelearningservices.InstanceTypeSchema{
+	// 				"defaultInstanceType": &armmachinelearningservices.InstanceTypeSchema{
+	// 					Resources: &armmachinelearningservices.InstanceTypeSchemaResources{
+	// 						Limits: map[string]*string{
+	// 							"cpu": to.Ptr("1"),
+	// 							"memory": to.Ptr("4Gi"),
+	// 							"nvidia.com/gpu": nil,
+	// 						},
+	// 						Requests: map[string]*string{
+	// 							"cpu": to.Ptr("1"),
+	// 							"memory": to.Ptr("4Gi"),
+	// 							"nvidia.com/gpu": nil,
+	// 						},
+	// 					},
+	// 				},
+	// 			},
+	// 			Namespace: to.Ptr("default"),
+	// 		},
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "Kubernetes",
+	// 		"createdOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"isAttachedCompute": true,
+	// 		"modifiedOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"properties": {
+	// 			"defaultInstanceType": "defaultInstanceType",
+	// 			"extensionInstanceReleaseTrain": "stable",
+	// 			"extensionPrincipalId": null,
+	// 			"instanceTypes": {
+	// 				"defaultInstanceType": {
+	// 					"nodeSelector": null,
+	// 					"resources": {
+	// 						"limits": {
+	// 							"cpu": "1",
+	// 							"memory": "4Gi",
+	// 							"nvidia.com/gpu": null
+	// 						},
+	// 						"requests": {
+	// 							"cpu": "1",
+	// 							"memory": "4Gi",
+	// 							"nvidia.com/gpu": null
+	// 						}
+	// 					}
+	// 				}
+	// 			},
+	// 			"namespace": "default",
+	// 			"relayConnectionString": null,
+	// 			"serviceBusConnectionString": null,
+	// 			"vcName": null
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"resourceId": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
@@ -115,6 +376,104 @@ func ExampleComputeClient_Get_getAnComputeInstance() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.ComputeInstance{
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
+	// 		CreatedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ModifiedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 		Properties: &armmachinelearningservices.ComputeInstanceProperties{
+	// 			ApplicationSharingPolicy: to.Ptr(armmachinelearningservices.ApplicationSharingPolicyShared),
+	// 			Applications: []*armmachinelearningservices.ComputeInstanceApplication{
+	// 				{
+	// 					DisplayName: to.Ptr("Jupyter"),
+	// 					EndpointURI: to.Ptr("https://compute123.eastus2.azureml.net/jupyter"),
+	// 			}},
+	// 			ComputeInstanceAuthorizationType: to.Ptr(armmachinelearningservices.ComputeInstanceAuthorizationTypePersonal),
+	// 			ConnectivityEndpoints: &armmachinelearningservices.ComputeInstanceConnectivityEndpoints{
+	// 				PrivateIPAddress: to.Ptr("10.0.0.1"),
+	// 				PublicIPAddress: to.Ptr("10.0.0.1"),
+	// 			},
+	// 			CreatedBy: &armmachinelearningservices.ComputeInstanceCreatedBy{
+	// 				UserID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 				UserName: to.Ptr("foobar@microsoft.com"),
+	// 				UserOrgID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 			},
+	// 			PersonalComputeInstanceSettings: &armmachinelearningservices.PersonalComputeInstanceSettings{
+	// 				AssignedUser: &armmachinelearningservices.AssignedUser{
+	// 					ObjectID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 					TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 				},
+	// 			},
+	// 			SSHSettings: &armmachinelearningservices.ComputeInstanceSSHSettings{
+	// 				AdminUserName: to.Ptr("azureuser"),
+	// 				SSHPort: to.Ptr[int32](22),
+	// 				SSHPublicAccess: to.Ptr(armmachinelearningservices.SSHPublicAccessEnabled),
+	// 			},
+	// 			State: to.Ptr(armmachinelearningservices.ComputeInstanceStateRunning),
+	// 			Subnet: &armmachinelearningservices.ResourceID{
+	// 				ID: to.Ptr("test-subnet-resource-id"),
+	// 			},
+	// 			VMSize: to.Ptr("STANDARD_NC6"),
+	// 		},
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus2"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus2",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "ComputeInstance",
+	// 		"createdOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"modifiedOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"properties": {
+	// 			"applicationSharingPolicy": "Shared",
+	// 			"applications": [
+	// 				{
+	// 					"displayName": "Jupyter",
+	// 					"endpointUri": "https://compute123.eastus2.azureml.net/jupyter"
+	// 				}
+	// 			],
+	// 			"computeInstanceAuthorizationType": "personal",
+	// 			"connectivityEndpoints": {
+	// 				"privateIpAddress": "10.0.0.1",
+	// 				"publicIpAddress": "10.0.0.1"
+	// 			},
+	// 			"createdBy": {
+	// 				"userId": "00000000-0000-0000-0000-000000000000",
+	// 				"userName": "foobar@microsoft.com",
+	// 				"userOrgId": "00000000-0000-0000-0000-000000000000"
+	// 			},
+	// 			"errors": null,
+	// 			"personalComputeInstanceSettings": {
+	// 				"assignedUser": {
+	// 					"objectId": "00000000-0000-0000-0000-000000000000",
+	// 					"tenantId": "00000000-0000-0000-0000-000000000000"
+	// 				}
+	// 			},
+	// 			"sshSettings": {
+	// 				"adminUserName": "azureuser",
+	// 				"sshPort": 22,
+	// 				"sshPublicAccess": "Enabled"
+	// 			},
+	// 			"state": "Running",
+	// 			"subnet": {
+	// 				"id": "test-subnet-resource-id"
+	// 			},
+	// 			"vmSize": "STANDARD_NC6"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
@@ -165,6 +524,79 @@ func ExampleComputeClient_BeginCreateOrUpdate_attachAKubernetesCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.Kubernetes{
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeKubernetes),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 		ResourceID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+	// 		Properties: &armmachinelearningservices.KubernetesProperties{
+	// 			DefaultInstanceType: to.Ptr("defaultInstanceType"),
+	// 			ExtensionInstanceReleaseTrain: to.Ptr("stable"),
+	// 			InstanceTypes: map[string]*armmachinelearningservices.InstanceTypeSchema{
+	// 				"defaultInstanceType": &armmachinelearningservices.InstanceTypeSchema{
+	// 					Resources: &armmachinelearningservices.InstanceTypeSchemaResources{
+	// 						Limits: map[string]*string{
+	// 							"cpu": to.Ptr("1"),
+	// 							"memory": to.Ptr("4Gi"),
+	// 							"nvidia.com/gpu": nil,
+	// 						},
+	// 						Requests: map[string]*string{
+	// 							"cpu": to.Ptr("1"),
+	// 							"memory": to.Ptr("4Gi"),
+	// 							"nvidia.com/gpu": nil,
+	// 						},
+	// 					},
+	// 				},
+	// 			},
+	// 			Namespace: to.Ptr("default"),
+	// 		},
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "Kubernetes",
+	// 		"properties": {
+	// 			"defaultInstanceType": "defaultInstanceType",
+	// 			"extensionInstanceReleaseTrain": "stable",
+	// 			"extensionPrincipalId": null,
+	// 			"instanceTypes": {
+	// 				"defaultInstanceType": {
+	// 					"nodeSelector": null,
+	// 					"resources": {
+	// 						"limits": {
+	// 							"cpu": "1",
+	// 							"memory": "4Gi",
+	// 							"nvidia.com/gpu": null
+	// 						},
+	// 						"requests": {
+	// 							"cpu": "1",
+	// 							"memory": "4Gi",
+	// 							"nvidia.com/gpu": null
+	// 						}
+	// 					}
+	// 				}
+	// 			},
+	// 			"namespace": "default",
+	// 			"relayConnectionString": null,
+	// 			"serviceBusConnectionString": null,
+	// 			"vcName": null
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"resourceId": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
@@ -209,6 +641,28 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAAmlCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.AmlCompute{
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"computeType": "AmlCompute",
+	// 		"provisioningState": "Creating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
@@ -237,6 +691,28 @@ func ExampleComputeClient_BeginCreateOrUpdate_createADataFactoryCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.DataFactory{
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeDataFactory),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"computeType": "DataFactory",
+	// 		"provisioningState": "Creating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
@@ -265,6 +741,28 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnAksCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.AKS{
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"computeType": "AKS",
+	// 		"provisioningState": "Creating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
@@ -310,6 +808,28 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.ComputeInstance{
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"computeType": "ComputeInstance",
+	// 		"provisioningState": "Creating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
@@ -341,6 +861,28 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceComputeWith
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.ComputeInstance{
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"computeType": "ComputeInstance",
+	// 		"provisioningState": "Creating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
@@ -377,6 +919,92 @@ func ExampleComputeClient_BeginCreateOrUpdate_updateAAmlCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.AmlCompute{
+	// 		Properties: &armmachinelearningservices.AmlComputeProperties{
+	// 			AllocationState: to.Ptr(armmachinelearningservices.AllocationStateResizing),
+	// 			AllocationStateTransitionTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2017-09-27T22:28:08.998Z"); return t}()),
+	// 			CurrentNodeCount: to.Ptr[int32](0),
+	// 			EnableNodePublicIP: to.Ptr(true),
+	// 			IsolatedNetwork: to.Ptr(false),
+	// 			NodeStateCounts: &armmachinelearningservices.NodeStateCounts{
+	// 				IdleNodeCount: to.Ptr[int32](0),
+	// 				LeavingNodeCount: to.Ptr[int32](0),
+	// 				PreemptedNodeCount: to.Ptr[int32](0),
+	// 				PreparingNodeCount: to.Ptr[int32](0),
+	// 				RunningNodeCount: to.Ptr[int32](0),
+	// 				UnusableNodeCount: to.Ptr[int32](0),
+	// 			},
+	// 			OSType: to.Ptr(armmachinelearningservices.OsTypeWindows),
+	// 			RemoteLoginPortPublicAccess: to.Ptr(armmachinelearningservices.RemoteLoginPortPublicAccessEnabled),
+	// 			ScaleSettings: &armmachinelearningservices.ScaleSettings{
+	// 				MaxNodeCount: to.Ptr[int32](1),
+	// 				MinNodeCount: to.Ptr[int32](0),
+	// 				NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
+	// 			},
+	// 			Subnet: &armmachinelearningservices.ResourceID{
+	// 				ID: to.Ptr("test-subnet-resource-id"),
+	// 			},
+	// 			TargetNodeCount: to.Ptr[int32](1),
+	// 			VMPriority: to.Ptr(armmachinelearningservices.VMPriorityDedicated),
+	// 			VMSize: to.Ptr("STANDARD_NC6"),
+	// 		},
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
+	// 		CreatedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ModifiedOn: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-04-01T22:00:00.0000000+00:00"); return t}()),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus2"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus2",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "AmlCompute",
+	// 		"createdOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"modifiedOn": "2021-04-01T22:00:00.0000000+00:00",
+	// 		"properties": {
+	// 			"allocationState": "Resizing",
+	// 			"allocationStateTransitionTime": "2017-09-27T22:28:08.998Z",
+	// 			"currentNodeCount": 0,
+	// 			"enableNodePublicIp": true,
+	// 			"errors": null,
+	// 			"isolatedNetwork": false,
+	// 			"nodeStateCounts": {
+	// 				"idleNodeCount": 0,
+	// 				"leavingNodeCount": 0,
+	// 				"preemptedNodeCount": 0,
+	// 				"preparingNodeCount": 0,
+	// 				"runningNodeCount": 0,
+	// 				"unusableNodeCount": 0
+	// 			},
+	// 			"osType": "Windows",
+	// 			"remoteLoginPortPublicAccess": "Enabled",
+	// 			"scaleSettings": {
+	// 				"maxNodeCount": 1,
+	// 				"minNodeCount": 0,
+	// 				"nodeIdleTimeBeforeScaleDown": "PT5M"
+	// 			},
+	// 			"subnet": {
+	// 				"id": "test-subnet-resource-id"
+	// 			},
+	// 			"targetNodeCount": 1,
+	// 			"virtualMachineImage": null,
+	// 			"vmPriority": "Dedicated",
+	// 			"vmSize": "STANDARD_NC6"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
@@ -410,6 +1038,38 @@ func ExampleComputeClient_BeginCreateOrUpdate_updateAnAksCompute() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.AKS{
+	// 		Properties: &armmachinelearningservices.AKSSchemaProperties{
+	// 			AgentCount: to.Ptr[int32](4),
+	// 		},
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 		ResourceID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "AKS",
+	// 		"properties": {
+	// 			"agentCount": 4
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"resourceId": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json
@@ -443,6 +1103,30 @@ func ExampleComputeClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ComputeResource = armmachinelearningservices.ComputeResource{
+	// 	Properties: &armmachinelearningservices.AmlCompute{
+	// 		Description: to.Ptr("some compute"),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.ProvisioningStateSucceeded),
+	// 	},
+	// 	Name: to.Ptr("compute123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes"),
+	// 	ID: to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123"),
+	// 	Location: to.Ptr("eastus2"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "compute123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/computes",
+	// 	"id": "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspaces123/computes/compute123",
+	// 	"location": "eastus2",
+	// 	"properties": {
+	// 		"description": "some compute",
+	// 		"computeType": "AmlCompute",
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json
@@ -487,6 +1171,46 @@ func ExampleComputeClient_NewListNodesPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.AmlComputeNodesInformation = armmachinelearningservices.AmlComputeNodesInformation{
+		// 	Nodes: []*armmachinelearningservices.AmlComputeNodeInformation{
+		// 		{
+		// 			NodeID: to.Ptr("tvm-3601533753_1-20170719t162906z"),
+		// 			NodeState: to.Ptr(armmachinelearningservices.NodeStateRunning),
+		// 			Port: to.Ptr[int32](50000),
+		// 			PrivateIPAddress: to.Ptr("13.84.190.124"),
+		// 			PublicIPAddress: to.Ptr("13.84.190.134"),
+		// 			RunID: to.Ptr("2f378a44-38f2-443a-9f0d-9909d0b47890"),
+		// 		},
+		// 		{
+		// 			NodeID: to.Ptr("tvm-3601533753_2-20170719t162906z"),
+		// 			NodeState: to.Ptr(armmachinelearningservices.NodeStateIdle),
+		// 			Port: to.Ptr[int32](50001),
+		// 			PrivateIPAddress: to.Ptr("13.84.190.124"),
+		// 			PublicIPAddress: to.Ptr("13.84.190.134"),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "nextLink",
+		// 	"nodes": [
+		// 		{
+		// 			"nodeId": "tvm-3601533753_1-20170719t162906z",
+		// 			"nodeState": "running",
+		// 			"port": 50000,
+		// 			"privateIpAddress": "13.84.190.124",
+		// 			"publicIpAddress": "13.84.190.134",
+		// 			"runId": "2f378a44-38f2-443a-9f0d-9909d0b47890"
+		// 		},
+		// 		{
+		// 			"nodeId": "tvm-3601533753_2-20170719t162906z",
+		// 			"nodeState": "idle",
+		// 			"port": 50001,
+		// 			"privateIpAddress": "13.84.190.124",
+		// 			"publicIpAddress": "13.84.190.134"
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -507,6 +1231,22 @@ func ExampleComputeClient_ListKeys() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res = armmachinelearningservices.ComputeClientListKeysResponse{
+	// 	                            ComputeSecretsClassification: &armmachinelearningservices.AksComputeSecrets{
+	// 		AdminKubeConfig: to.Ptr("admin kube config..."),
+	// 		ImagePullSecretName: to.Ptr("the image pull secret name"),
+	// 		UserKubeConfig: to.Ptr("user kube config..."),
+	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+	// 	},
+	// 	                        }
+	// with the raw JSON response:
+	// {
+	// 	"adminKubeConfig": "admin kube config...",
+	// 	"computeType": "AKS",
+	// 	"imagePullSecretName": "the image pull secret name",
+	// 	"userKubeConfig": "user kube config..."
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json

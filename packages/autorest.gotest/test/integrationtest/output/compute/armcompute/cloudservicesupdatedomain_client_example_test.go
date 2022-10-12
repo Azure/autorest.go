@@ -54,6 +54,16 @@ func ExampleCloudServicesUpdateDomainClient_GetUpdateDomain() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.UpdateDomain = armcompute.UpdateDomain{
+	// 	Name: to.Ptr("1"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/updateDomains/1"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/updateDomains/1"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceUpdateDomains.json
@@ -77,5 +87,30 @@ func ExampleCloudServicesUpdateDomainClient_NewListUpdateDomainsPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.UpdateDomainListResult = armcompute.UpdateDomainListResult{
+		// 	Value: []*armcompute.UpdateDomain{
+		// 		{
+		// 			Name: to.Ptr("0"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/updateDomains/0"),
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("1"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/updateDomains/1"),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "0",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/updateDomains/0"
+		// 		},
+		// 		{
+		// 			"name": "1",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/updateDomains/1"
+		// 		}
+		// 	]
+		// }
 	}
 }

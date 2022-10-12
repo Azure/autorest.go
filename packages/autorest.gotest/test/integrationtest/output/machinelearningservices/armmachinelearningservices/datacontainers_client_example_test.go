@@ -40,6 +40,116 @@ func ExampleDataContainersClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DataContainerResourceArmPaginatedResult = armmachinelearningservices.DataContainerResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.DataContainerData{
+		// 		{
+		// 			Name: to.Ptr("datastore123"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/data"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer123"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+		// 				CreatedBy: to.Ptr("John Smith"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("John Smith"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.DataContainerDetails{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"properties1": to.Ptr("value1"),
+		// 					"properties2": to.Ptr("value2"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"tag1": to.Ptr("value1"),
+		// 					"tag2": to.Ptr("value2"),
+		// 				},
+		// 				DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("datastore124"),
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/data"),
+		// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer124"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+		// 				CreatedBy: to.Ptr("John Smith"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("John Smith"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.DataContainerDetails{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"properties1": to.Ptr("value1"),
+		// 					"properties2": to.Ptr("value2"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"tag1": to.Ptr("value1"),
+		// 					"tag2": to.Ptr("value2"),
+		// 				},
+		// 				DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "nextlink",
+		// 	"value": [
+		// 		{
+		// 			"name": "datastore123",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/data",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer123",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"dataType": "UriFile",
+		// 				"properties": {
+		// 					"properties1": "value1",
+		// 					"properties2": "value2"
+		// 				},
+		// 				"tags": {
+		// 					"tag1": "value1",
+		// 					"tag2": "value2"
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-12-01T12:00:00.000Z",
+		// 				"createdBy": "John Smith",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-12-01T12:00:00.000Z",
+		// 				"lastModifiedBy": "John Smith",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "datastore124",
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/data",
+		// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer124",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"dataType": "UriFile",
+		// 				"properties": {
+		// 					"properties1": "value1",
+		// 					"properties2": "value2"
+		// 				},
+		// 				"tags": {
+		// 					"tag1": "value1",
+		// 					"tag2": "value2"
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-12-01T12:00:00.000Z",
+		// 				"createdBy": "John Smith",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-12-01T12:00:00.000Z",
+		// 				"lastModifiedBy": "John Smith",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -77,6 +187,58 @@ func ExampleDataContainersClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DataContainerData = armmachinelearningservices.DataContainerData{
+	// 	Name: to.Ptr("datacontainer123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/data"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer123"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+	// 		CreatedBy: to.Ptr("John Smith"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("John Smith"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.DataContainerDetails{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"properties1": to.Ptr("value1"),
+	// 			"properties2": to.Ptr("value2"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"tag1": to.Ptr("value1"),
+	// 			"tag2": to.Ptr("value2"),
+	// 		},
+	// 		DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "datacontainer123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/data",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer123",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"dataType": "UriFile",
+	// 		"properties": {
+	// 			"properties1": "value1",
+	// 			"properties2": "value2"
+	// 		},
+	// 		"tags": {
+	// 			"tag1": "value1",
+	// 			"tag2": "value2"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-12-01T12:00:00.000Z",
+	// 		"createdBy": "John Smith",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-12-01T12:00:00.000Z",
+	// 		"lastModifiedBy": "John Smith",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json
@@ -109,4 +271,56 @@ func ExampleDataContainersClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DataContainerData = armmachinelearningservices.DataContainerData{
+	// 	Name: to.Ptr("datacontainer123"),
+	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/data"),
+	// 	ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer123"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+	// 		CreatedBy: to.Ptr("John Smith"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T12:00:00.000Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("John Smith"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.DataContainerDetails{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"properties1": to.Ptr("value1"),
+	// 			"properties2": to.Ptr("value2"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"tag1": to.Ptr("value1"),
+	// 			"tag2": to.Ptr("value2"),
+	// 		},
+	// 		DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "datacontainer123",
+	// 	"type": "Microsoft.MachineLearningServices/workspaces/data",
+	// 	"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg123/providers/Microsoft.MachineLearningServices/workspaces/workspace123/data/datacontainer123",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"dataType": "UriFile",
+	// 		"properties": {
+	// 			"properties1": "value1",
+	// 			"properties2": "value2"
+	// 		},
+	// 		"tags": {
+	// 			"tag1": "value1",
+	// 			"tag2": "value2"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-12-01T12:00:00.000Z",
+	// 		"createdBy": "John Smith",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-12-01T12:00:00.000Z",
+	// 		"lastModifiedBy": "John Smith",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }

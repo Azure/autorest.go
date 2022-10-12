@@ -37,5 +37,784 @@ func ExampleUsagesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ListUsagesResult = armmachinelearningservices.ListUsagesResult{
+		// 	Value: []*armmachinelearningservices.Usage{
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Clusters"),
+		// 				Value: to.Ptr("Clusters"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/totalCores/usages"),
+		// 			CurrentValue: to.Ptr[int64](7),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages"),
+		// 			Limit: to.Ptr[int64](100),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Total Cluster Dedicated Regional vCPUs"),
+		// 				Value: to.Ptr("Total Cluster Dedicated Regional vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/dedicatedCores/usages"),
+		// 			CurrentValue: to.Ptr[int64](14),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard D Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard D Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_D_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](48),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](2),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/usages"),
+		// 			CurrentValue: to.Ptr[int64](2),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes/usages"),
+		// 			CurrentValue: to.Ptr[int64](2),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster1_dsv2/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard DSv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster2_dsv2/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard Dv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard Dv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_Dv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard FSv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard FSv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_FSv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](12),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspace/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspace/computes/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster1_nc/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/computes/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/computes/demo_cluser1_nc/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NCv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NCv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](0),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NCv3 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NCv3 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv3_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](0),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard ND Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard ND Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_ND_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](0),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NDv2 Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NDv2 Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NDv2_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](0),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NV Family Cluster Dedicated vCPUs"),
+		// 				Value: to.Ptr("Standard NV Family Cluster Dedicated vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NV_Family_Cluster_Dedicated_vCPUs"),
+		// 			Limit: to.Ptr[int64](24),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Total Cluster LowPriority Regional vCPUs"),
+		// 				Value: to.Ptr("Total Cluster LowPriority Regional vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/lowPriorityCores/usages"),
+		// 			CurrentValue: to.Ptr[int64](18),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages"),
+		// 			Limit: to.Ptr[int64](50),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard D Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard D Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_D_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard DSv2 Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard DSv2 Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_DSv2_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard Dv2 Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard Dv2 Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_Dv2_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard FSv2 Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard FSv2 Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_FSv2_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](18),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspace/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspace/computes/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster1_lowPriority_nc/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspace/usages"),
+		// 			CurrentValue: to.Ptr[int64](12),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspace/computes/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/computes/demo_cluster2_lowPriority_nc/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NC Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspace/computes/usages"),
+		// 			CurrentValue: to.Ptr[int64](6),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/computes/demo_cluster3_lowPriority_nc/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NCv2 Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NCv2 Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv2_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NCv3 Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NCv3 Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv3_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard ND Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard ND Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_ND_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NDv2 Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NDv2 Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NDv2_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 		},
+		// 		{
+		// 			Name: &armmachinelearningservices.UsageName{
+		// 				LocalizedValue: to.Ptr("Standard NV Family Cluster LowPriority vCPUs"),
+		// 				Value: to.Ptr("Standard NV Family Cluster LowPriority vCPUs"),
+		// 			},
+		// 			Type: to.Ptr("Microsoft.MachineLearningServices/vmFamily/usages"),
+		// 			CurrentValue: to.Ptr[int64](0),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NV_Family_Cluster_LowPriority_vCPUs"),
+		// 			Limit: to.Ptr[int64](-1),
+		// 			Unit: to.Ptr(armmachinelearningservices.UsageUnitCount),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Clusters",
+		// 				"value": "Clusters"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/totalCores/usages",
+		// 			"currentValue": 7,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages",
+		// 			"limit": 100,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Total Cluster Dedicated Regional vCPUs",
+		// 				"value": "Total Cluster Dedicated Regional vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/dedicatedCores/usages",
+		// 			"currentValue": 14,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard D Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard D Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_D_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 48,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard DSv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard DSv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 2,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard DSv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard DSv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/usages",
+		// 			"currentValue": 2,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard DSv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard DSv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/computes/usages",
+		// 			"currentValue": 2,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster1_dsv2/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard DSv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard DSv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/computes/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster2_dsv2/usages/Standard_DSv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard Dv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard Dv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_Dv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard FSv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard FSv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_FSv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NC Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 12,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NC Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspace/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NC Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspace/computes/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster1_nc/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NC Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NC Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspaces/computes/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/computes/demo_cluser1_nc/usages/Standard_NC_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NCv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NCv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 0,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NCv3 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NCv3 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv3_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 0,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard ND Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard ND Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_ND_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 0,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NDv2 Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NDv2 Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NDv2_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 0,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NV Family Cluster Dedicated vCPUs",
+		// 				"value": "Standard NV Family Cluster Dedicated vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NV_Family_Cluster_Dedicated_vCPUs",
+		// 			"limit": 24,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Total Cluster LowPriority Regional vCPUs",
+		// 				"value": "Total Cluster LowPriority Regional vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/lowPriorityCores/usages",
+		// 			"currentValue": 18,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages",
+		// 			"limit": 50,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard D Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard D Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_D_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard DSv2 Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard DSv2 Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_DSv2_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard Dv2 Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard Dv2 Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_Dv2_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard FSv2 Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard FSv2 Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_FSv2_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NC Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 18,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NC Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspace/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NC Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspace/computes/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/computes/demo_cluster1_lowPriority_nc/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NC Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspace/usages",
+		// 			"currentValue": 12,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NC Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspace/computes/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/computes/demo_cluster2_lowPriority_nc/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NC Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NC Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/workspace/computes/usages",
+		// 			"currentValue": 6,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/computes/demo_cluster3_lowPriority_nc/usages/Standard_NC_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NCv2 Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NCv2 Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv2_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NCv3 Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NCv3 Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NCv3_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard ND Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard ND Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_ND_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NDv2 Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NDv2 Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NDv2_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		},
+		// 		{
+		// 			"name": {
+		// 				"localizedValue": "Standard NV Family Cluster LowPriority vCPUs",
+		// 				"value": "Standard NV Family Cluster LowPriority vCPUs"
+		// 			},
+		// 			"type": "Microsoft.MachineLearningServices/vmFamily/usages",
+		// 			"currentValue": 0,
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/usages/Standard_NV_Family_Cluster_LowPriority_vCPUs",
+		// 			"limit": -1,
+		// 			"unit": "Count"
+		// 		}
+		// 	]
+		// }
 	}
 }

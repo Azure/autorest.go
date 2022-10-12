@@ -40,6 +40,241 @@ func ExampleVirtualMachinesClient_NewListByLocationPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.VirtualMachineListResult = armcompute.VirtualMachineListResult{
+		// 	Value: []*armcompute.VirtualMachine{
+		// 		{
+		// 			Name: to.Ptr("{virtualMachineName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"RG": to.Ptr("rg"),
+		// 				"testTag": to.Ptr("1"),
+		// 			},
+		// 			Properties: &armcompute.VirtualMachineProperties{
+		// 				AvailabilitySet: &armcompute.SubResource{
+		// 					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+		// 				},
+		// 				HardwareProfile: &armcompute.HardwareProfile{
+		// 					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardA0),
+		// 				},
+		// 				NetworkProfile: &armcompute.NetworkProfile{
+		// 					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+		// 						{
+		// 							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"),
+		// 					}},
+		// 				},
+		// 				OSProfile: &armcompute.OSProfile{
+		// 					AdminUsername: to.Ptr("Foo12"),
+		// 					AllowExtensionOperations: to.Ptr(true),
+		// 					ComputerName: to.Ptr("Test"),
+		// 					Secrets: []*armcompute.VaultSecretGroup{
+		// 					},
+		// 					WindowsConfiguration: &armcompute.WindowsConfiguration{
+		// 						EnableAutomaticUpdates: to.Ptr(true),
+		// 						ProvisionVMAgent: to.Ptr(true),
+		// 					},
+		// 				},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				StorageProfile: &armcompute.StorageProfile{
+		// 					DataDisks: []*armcompute.DataDisk{
+		// 					},
+		// 					ImageReference: &armcompute.ImageReference{
+		// 						Offer: to.Ptr("WindowsServer"),
+		// 						Publisher: to.Ptr("MicrosoftWindowsServer"),
+		// 						SKU: to.Ptr("2012-R2-Datacenter"),
+		// 						Version: to.Ptr("4.127.20170406"),
+		// 					},
+		// 					OSDisk: &armcompute.OSDisk{
+		// 						Name: to.Ptr("test"),
+		// 						Caching: to.Ptr(armcompute.CachingTypesNone),
+		// 						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+		// 						DiskSizeGB: to.Ptr[int32](127),
+		// 						OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 						Vhd: &armcompute.VirtualHardDisk{
+		// 							URI: to.Ptr("https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd"),
+		// 						},
+		// 					},
+		// 				},
+		// 				VMID: to.Ptr("{vmId}"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("{virtualMachineName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"RG": to.Ptr("rg"),
+		// 				"testTag": to.Ptr("1"),
+		// 			},
+		// 			Properties: &armcompute.VirtualMachineProperties{
+		// 				AvailabilitySet: &armcompute.SubResource{
+		// 					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+		// 				},
+		// 				HardwareProfile: &armcompute.HardwareProfile{
+		// 					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardA0),
+		// 				},
+		// 				NetworkProfile: &armcompute.NetworkProfile{
+		// 					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+		// 						{
+		// 							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"),
+		// 					}},
+		// 				},
+		// 				OSProfile: &armcompute.OSProfile{
+		// 					AdminUsername: to.Ptr("Foo12"),
+		// 					AllowExtensionOperations: to.Ptr(true),
+		// 					ComputerName: to.Ptr("Test"),
+		// 					Secrets: []*armcompute.VaultSecretGroup{
+		// 					},
+		// 					WindowsConfiguration: &armcompute.WindowsConfiguration{
+		// 						EnableAutomaticUpdates: to.Ptr(true),
+		// 						ProvisionVMAgent: to.Ptr(true),
+		// 					},
+		// 				},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				StorageProfile: &armcompute.StorageProfile{
+		// 					DataDisks: []*armcompute.DataDisk{
+		// 					},
+		// 					ImageReference: &armcompute.ImageReference{
+		// 						Offer: to.Ptr("WindowsServer"),
+		// 						Publisher: to.Ptr("MicrosoftWindowsServer"),
+		// 						SKU: to.Ptr("2012-R2-Datacenter"),
+		// 						Version: to.Ptr("4.127.20170406"),
+		// 					},
+		// 					OSDisk: &armcompute.OSDisk{
+		// 						Name: to.Ptr("test"),
+		// 						Caching: to.Ptr(armcompute.CachingTypesNone),
+		// 						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+		// 						DiskSizeGB: to.Ptr[int32](127),
+		// 						OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 						Vhd: &armcompute.VirtualHardDisk{
+		// 							URI: to.Ptr("https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd"),
+		// 						},
+		// 					},
+		// 				},
+		// 				VMID: to.Ptr("{vmId}"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "{virtualMachineName}",
+		// 			"type": "Microsoft.Compute/virtualMachines",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"availabilitySet": {
+		// 					"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
+		// 				},
+		// 				"hardwareProfile": {
+		// 					"vmSize": "Standard_A0"
+		// 				},
+		// 				"networkProfile": {
+		// 					"networkInterfaces": [
+		// 						{
+		// 							"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
+		// 						}
+		// 					]
+		// 				},
+		// 				"osProfile": {
+		// 					"adminUsername": "Foo12",
+		// 					"allowExtensionOperations": true,
+		// 					"computerName": "Test",
+		// 					"secrets": [],
+		// 					"windowsConfiguration": {
+		// 						"enableAutomaticUpdates": true,
+		// 						"provisionVMAgent": true
+		// 					}
+		// 				},
+		// 				"provisioningState": "Succeeded",
+		// 				"storageProfile": {
+		// 					"dataDisks": [],
+		// 					"imageReference": {
+		// 						"offer": "WindowsServer",
+		// 						"publisher": "MicrosoftWindowsServer",
+		// 						"sku": "2012-R2-Datacenter",
+		// 						"version": "4.127.20170406"
+		// 					},
+		// 					"osDisk": {
+		// 						"name": "test",
+		// 						"caching": "None",
+		// 						"createOption": "FromImage",
+		// 						"diskSizeGB": 127,
+		// 						"osType": "Windows",
+		// 						"vhd": {
+		// 							"uri": "https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd"
+		// 						}
+		// 					}
+		// 				},
+		// 				"vmId": "{vmId}"
+		// 			},
+		// 			"tags": {
+		// 				"RG": "rg",
+		// 				"testTag": "1"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "{virtualMachineName}",
+		// 			"type": "Microsoft.Compute/virtualMachines",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"availabilitySet": {
+		// 					"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
+		// 				},
+		// 				"hardwareProfile": {
+		// 					"vmSize": "Standard_A0"
+		// 				},
+		// 				"networkProfile": {
+		// 					"networkInterfaces": [
+		// 						{
+		// 							"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
+		// 						}
+		// 					]
+		// 				},
+		// 				"osProfile": {
+		// 					"adminUsername": "Foo12",
+		// 					"allowExtensionOperations": true,
+		// 					"computerName": "Test",
+		// 					"secrets": [],
+		// 					"windowsConfiguration": {
+		// 						"enableAutomaticUpdates": true,
+		// 						"provisionVMAgent": true
+		// 					}
+		// 				},
+		// 				"provisioningState": "Succeeded",
+		// 				"storageProfile": {
+		// 					"dataDisks": [],
+		// 					"imageReference": {
+		// 						"offer": "WindowsServer",
+		// 						"publisher": "MicrosoftWindowsServer",
+		// 						"sku": "2012-R2-Datacenter",
+		// 						"version": "4.127.20170406"
+		// 					},
+		// 					"osDisk": {
+		// 						"name": "test",
+		// 						"caching": "None",
+		// 						"createOption": "FromImage",
+		// 						"diskSizeGB": 127,
+		// 						"osType": "Windows",
+		// 						"vhd": {
+		// 							"uri": "https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd"
+		// 						}
+		// 					}
+		// 				},
+		// 				"vmId": "{vmId}"
+		// 			},
+		// 			"tags": {
+		// 				"RG": "rg",
+		// 				"testTag": "1"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -107,6 +342,113 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSe
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 				PatchSettings: &armcompute.LinuxPatchSettings{
+	// 					AssessmentMode: to.Ptr(armcompute.LinuxPatchAssessmentModeImageDefault),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("UbuntuServer"),
+	// 				Publisher: to.Ptr("Canonical"),
+	// 				SKU: to.Ptr("16.04-LTS"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2s_v3"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"linuxConfiguration": {
+	// 				"patchSettings": {
+	// 					"assessmentMode": "ImageDefault"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			},
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "UbuntuServer",
+	// 				"publisher": "Canonical",
+	// 				"sku": "16.04-LTS",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModeOfImageDefault.json
@@ -173,6 +515,113 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSe
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 				PatchSettings: &armcompute.LinuxPatchSettings{
+	// 					PatchMode: to.Ptr(armcompute.LinuxVMGuestPatchModeImageDefault),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("UbuntuServer"),
+	// 				Publisher: to.Ptr("Canonical"),
+	// 				SKU: to.Ptr("16.04-LTS"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2s_v3"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"linuxConfiguration": {
+	// 				"patchSettings": {
+	// 					"patchMode": "ImageDefault"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			},
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "UbuntuServer",
+	// 				"publisher": "Canonical",
+	// 				"sku": "16.04-LTS",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModesOfAutomaticByPlatform.json
@@ -240,6 +689,115 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSe
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 				PatchSettings: &armcompute.LinuxPatchSettings{
+	// 					AssessmentMode: to.Ptr(armcompute.LinuxPatchAssessmentModeAutomaticByPlatform),
+	// 					PatchMode: to.Ptr(armcompute.LinuxVMGuestPatchModeAutomaticByPlatform),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("UbuntuServer"),
+	// 				Publisher: to.Ptr("Canonical"),
+	// 				SKU: to.Ptr("16.04-LTS"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2s_v3"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"linuxConfiguration": {
+	// 				"patchSettings": {
+	// 					"assessmentMode": "AutomaticByPlatform",
+	// 					"patchMode": "AutomaticByPlatform"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			},
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "UbuntuServer",
+	// 				"publisher": "Canonical",
+	// 				"sku": "16.04-LTS",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithUefiSettings.json
@@ -307,6 +865,123 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUefiSettingsO
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SecurityProfile: &armcompute.SecurityProfile{
+	// 			SecurityType: to.Ptr("TrustedLaunch"),
+	// 			UefiSettings: &armcompute.UefiSettings{
+	// 				SecureBootEnabled: to.Ptr(true),
+	// 				VTpmEnabled: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("windowsserver-gen2preview-preview"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("windows10-tvm"),
+	// 				Version: to.Ptr("18363.592.2001092016"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardSSDLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("5c0d55a7-c407-4ed6-bf7d-ddb810267c85"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2s_v3"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"securityProfile": {
+	// 			"securityType": "TrustedLaunch",
+	// 			"uefiSettings": {
+	// 				"secureBootEnabled": true,
+	// 				"vTpmEnabled": true
+	// 			}
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "windowsserver-gen2preview-preview",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "windows10-tvm",
+	// 				"version": "18363.592.2001092016"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadOnly",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "StandardSSD_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "5c0d55a7-c407-4ed6-bf7d-ddb810267c85"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAVmWithUserData.json
@@ -374,6 +1049,121 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUserData() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("{vm-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/{vm-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 				StorageURI: to.Ptr("http://nsgdiagnostic.blob.core.windows.net"),
+	// 			},
+	// 		},
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("{vm-name}"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("vmOSdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("676420ba-7a24-4bfe-80bd-9c841ee184fa"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vm-name}",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/{vm-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true,
+	// 				"storageUri": "http://nsgdiagnostic.blob.core.windows.net"
+	// 			}
+	// 		},
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "{vm-name}",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "vmOSdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "676420ba-7a24-4bfe-80bd-9c841ee184fa"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithNetworkInterfaceConfiguration.json
@@ -454,6 +1244,109 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithNetworkInterf
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/toBeCreatedNetworkInterface"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("b7a098cc-b0b8-46e8-a205-62f301a62a8f"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/toBeCreatedNetworkInterface",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "b7a098cc-b0b8-46e8-a205-62f301a62a8f"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingAssessmentModeOfImageDefault.json
@@ -521,6 +1414,115 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				PatchSettings: &armcompute.PatchSettings{
+	// 					AssessmentMode: to.Ptr(armcompute.WindowsPatchAssessmentModeImageDefault),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"patchSettings": {
+	// 					"assessmentMode": "ImageDefault"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByOS.json
@@ -588,6 +1590,115 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				PatchSettings: &armcompute.PatchSettings{
+	// 					PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByOS),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"patchSettings": {
+	// 					"patchMode": "AutomaticByOS"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json
@@ -656,6 +1767,117 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				PatchSettings: &armcompute.PatchSettings{
+	// 					EnableHotpatching: to.Ptr(true),
+	// 					PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByPlatform),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"patchSettings": {
+	// 					"enableHotpatching": true,
+	// 					"patchMode": "AutomaticByPlatform"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfManual.json
@@ -723,6 +1945,115 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				PatchSettings: &armcompute.PatchSettings{
+	// 					PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeManual),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"patchSettings": {
+	// 					"patchMode": "Manual"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModesOfAutomaticByPlatform.json
@@ -791,6 +2122,117 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchS
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				PatchSettings: &armcompute.PatchSettings{
+	// 					AssessmentMode: to.Ptr(armcompute.WindowsPatchAssessmentModeAutomaticByPlatform),
+	// 					PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByPlatform),
+	// 				},
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"patchSettings": {
+	// 					"assessmentMode": "AutomaticByPlatform",
+	// 					"patchMode": "AutomaticByPlatform"
+	// 				},
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageVmFromAnUnmanagedGeneralizedOsImage.json
@@ -849,6 +2291,103 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createACustomImageVmFromAn
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				Image: &armcompute.VirtualHardDisk{
+	// 					URI: to.Ptr("https://{existing-storage-account-name}.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/{existing-generalized-os-image-blob-name}.vhd"),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 				Vhd: &armcompute.VirtualHardDisk{
+	// 					URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk.vhd"),
+	// 				},
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("926cd555-a07c-4ff5-b214-4aa4dd09d79b"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"image": {
+	// 					"uri": "https://{existing-storage-account-name}.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/{existing-generalized-os-image-blob-name}.vhd"
+	// 				},
+	// 				"osType": "Windows",
+	// 				"vhd": {
+	// 					"uri": "http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk.vhd"
+	// 				}
+	// 			}
+	// 		},
+	// 		"vmId": "926cd555-a07c-4ff5-b214-4aa4dd09d79b"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageVmWithUnmanagedOsAndDataDisks.json
@@ -926,6 +2465,149 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAPlatformImageVmWith
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 				{
+	// 					Name: to.Ptr("dataDisk0"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](0),
+	// 					Vhd: &armcompute.VirtualHardDisk{
+	// 						URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk0.vhd"),
+	// 					},
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("dataDisk1"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](1),
+	// 					Vhd: &armcompute.VirtualHardDisk{
+	// 						URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk1.vhd"),
+	// 					},
+	// 			}},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 				Vhd: &armcompute.VirtualHardDisk{
+	// 					URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk.vhd"),
+	// 				},
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("5230a749-2f68-4830-900b-702182d32e63"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"name": "dataDisk0",
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 0,
+	// 					"vhd": {
+	// 						"uri": "http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk0.vhd"
+	// 					}
+	// 				},
+	// 				{
+	// 					"name": "dataDisk1",
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 1,
+	// 					"vhd": {
+	// 						"uri": "http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk1.vhd"
+	// 					}
+	// 				}
+	// 			],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"osType": "Windows",
+	// 				"vhd": {
+	// 					"uri": "http://{existing-storage-account-name}.blob.core.windows.net/vhds/myDisk.vhd"
+	// 				}
+	// 			}
+	// 		},
+	// 		"vmId": "5230a749-2f68-4830-900b-702182d32e63"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromACustomImage.json
@@ -983,6 +2665,103 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmFromACustomImage(
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 				DisablePasswordAuthentication: to.Ptr(false),
+	// 			},
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiskSizeGB: to.Ptr[int32](30),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("71aa3d5a-d73d-4970-9182-8580433b2865"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"linuxConfiguration": {
+	// 				"disablePasswordAuthentication": false
+	// 			},
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"diskSizeGB": 30,
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "71aa3d5a-d73d-4970-9182-8580433b2865"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromAGeneralizedSharedImage.json
@@ -1040,6 +2819,103 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmFromAGeneralizedS
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 				DisablePasswordAuthentication: to.Ptr(false),
+	// 			},
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiskSizeGB: to.Ptr[int32](30),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("71aa3d5a-d73d-4970-9182-8580433b2865"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"linuxConfiguration": {
+	// 				"disablePasswordAuthentication": false
+	// 			},
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"diskSizeGB": 30,
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "71aa3d5a-d73d-4970-9182-8580433b2865"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromASpecializedSharedImage.json
@@ -1092,6 +2968,86 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmFromASpecializedS
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiskSizeGB: to.Ptr[int32](30),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("71aa3d5a-d73d-4970-9182-8580433b2865"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"diskSizeGB": 30,
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "71aa3d5a-d73d-4970-9182-8580433b2865"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAVirtualMachineScaleSetWithCustomerAssignedPlatformFaultDomain.json
@@ -1156,6 +3112,117 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmInAVirtualMachine
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		PlatformFaultDomain: to.Ptr[int32](1),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VirtualMachineScaleSet: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myExistingFlexVmss"),
+	// 		},
+	// 		VMID: to.Ptr("7cce54f2-ecd3-4ddd-a8d9-50984faa3918"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"platformFaultDomain": 1,
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"virtualMachineScaleSet": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myExistingFlexVmss"
+	// 		},
+	// 		"vmId": "7cce54f2-ecd3-4ddd-a8d9-50984faa3918"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAnAvailabilitySet.json
@@ -1219,6 +3286,115 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmInAnAvailabilityS
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		AvailabilitySet: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/NSGEXISTINGAS"),
+	// 		},
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("b7a098cc-b0b8-46e8-a205-62f301a62a8f"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"availabilitySet": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/NSGEXISTINGAS"
+	// 		},
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "b7a098cc-b0b8-46e8-a205-62f301a62a8f"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithDiskEncryptionSetResource.json
@@ -1305,6 +3481,159 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithDiskEncryptio
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 				DisablePasswordAuthentication: to.Ptr(false),
+	// 			},
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](0),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 						},
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesAttach),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](1),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/{existing-managed-disk-name}"),
+	// 						DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 						},
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 			}},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiskSizeGB: to.Ptr[int32](30),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskencryptionset-name}"),
+	// 					},
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("71aa3d5a-d73d-4970-9182-8580433b2865"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"linuxConfiguration": {
+	// 				"disablePasswordAuthentication": false
+	// 			},
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 0,
+	// 					"managedDisk": {
+	// 						"diskEncryptionSet": {
+	// 							"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 						},
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				},
+	// 				{
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "Attach",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"diskEncryptionSet": {
+	// 							"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 						},
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/{existing-managed-disk-name}",
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			],
+	// 			"imageReference": {
+	// 				"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"diskSizeGB": 30,
+	// 				"managedDisk": {
+	// 					"diskEncryptionSet": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskencryptionset-name}"
+	// 					},
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "71aa3d5a-d73d-4970-9182-8580433b2865"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEncryptionAtHost.json
@@ -1373,6 +3702,125 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithHostEncryptio
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SecurityProfile: &armcompute.SecurityProfile{
+	// 			EncryptionAtHost: to.Ptr(true),
+	// 		},
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("standard-data-science-vm"),
+	// 				Publisher: to.Ptr("microsoft-ads"),
+	// 				SKU: to.Ptr("standard-data-science-vm"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("5c0d55a7-c407-4ed6-bf7d-ddb810267c85"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"securityProfile": {
+	// 			"encryptionAtHost": true
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "standard-data-science-vm",
+	// 				"publisher": "microsoft-ads",
+	// 				"sku": "standard-data-science-vm",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadOnly",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "5c0d55a7-c407-4ed6-bf7d-ddb810267c85"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithScheduledEventsProfile.json
@@ -1445,6 +3893,133 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithScheduledEven
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 				StorageURI: to.Ptr("http://nsgdiagnostic.blob.core.windows.net"),
+	// 			},
+	// 		},
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		ScheduledEventsProfile: &armcompute.ScheduledEventsProfile{
+	// 			TerminateNotificationProfile: &armcompute.TerminateNotificationProfile{
+	// 				Enable: to.Ptr(true),
+	// 				NotBeforeTimeout: to.Ptr("PT10M"),
+	// 			},
+	// 		},
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("676420ba-7a24-4bfe-80bd-9c841ee184fa"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true,
+	// 				"storageUri": "http://nsgdiagnostic.blob.core.windows.net"
+	// 			}
+	// 		},
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"scheduledEventsProfile": {
+	// 			"terminateNotificationProfile": {
+	// 				"enable": true,
+	// 				"notBeforeTimeout": "PT10M"
+	// 			}
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "676420ba-7a24-4bfe-80bd-9c841ee184fa"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithAMarketplaceImagePlan.json
@@ -1510,6 +4085,119 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithAMarketplaceI
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("standard-data-science-vm"),
+	// 				Publisher: to.Ptr("microsoft-ads"),
+	// 				SKU: to.Ptr("standard-data-science-vm"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("5c0d55a7-c407-4ed6-bf7d-ddb810267c85"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "standard-data-science-vm",
+	// 				"publisher": "microsoft-ads",
+	// 				"sku": "standard-data-science-vm",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "5c0d55a7-c407-4ed6-bf7d-ddb810267c85"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithExtensionsTimeBudget.json
@@ -1577,6 +4265,123 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithAnExtensionsT
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 				StorageURI: to.Ptr("http://nsgdiagnostic.blob.core.windows.net"),
+	// 			},
+	// 		},
+	// 		ExtensionsTimeBudget: to.Ptr("PT30M"),
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("676420ba-7a24-4bfe-80bd-9c841ee184fa"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true,
+	// 				"storageUri": "http://nsgdiagnostic.blob.core.windows.net"
+	// 			}
+	// 		},
+	// 		"extensionsTimeBudget": "PT30M",
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "676420ba-7a24-4bfe-80bd-9c841ee184fa"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithBootDiagnostics.json
@@ -1643,6 +4448,121 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithBootDiagnosti
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 				StorageURI: to.Ptr("http://nsgdiagnostic.blob.core.windows.net"),
+	// 			},
+	// 		},
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("676420ba-7a24-4bfe-80bd-9c841ee184fa"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true,
+	// 				"storageUri": "http://nsgdiagnostic.blob.core.windows.net"
+	// 			}
+	// 		},
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "676420ba-7a24-4bfe-80bd-9c841ee184fa"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEmptyDataDisks.json
@@ -1714,6 +4634,145 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEmptyDataDisk
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](0),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](1),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 			}},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("3906fef9-a1e5-4b83-a8a8-540858b41df0"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 0,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				},
+	// 				{
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "3906fef9-a1e5-4b83-a8a8-540858b41df0"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json
@@ -1783,6 +4842,127 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("standard-data-science-vm"),
+	// 				Publisher: to.Ptr("microsoft-ads"),
+	// 				SKU: to.Ptr("standard-data-science-vm"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiffDiskSettings: &armcompute.DiffDiskSettings{
+	// 					Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
+	// 					Placement: to.Ptr(armcompute.DiffDiskPlacementCacheDisk),
+	// 				},
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("5c0d55a7-c407-4ed6-bf7d-ddb810267c85"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "standard-data-science-vm",
+	// 				"publisher": "microsoft-ads",
+	// 				"sku": "standard-data-science-vm",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadOnly",
+	// 				"createOption": "FromImage",
+	// 				"diffDiskSettings": {
+	// 					"option": "Local",
+	// 					"placement": "CacheDisk"
+	// 				},
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "5c0d55a7-c407-4ed6-bf7d-ddb810267c85"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json
@@ -1852,6 +5032,127 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("standard-data-science-vm"),
+	// 				Publisher: to.Ptr("microsoft-ads"),
+	// 				SKU: to.Ptr("standard-data-science-vm"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiffDiskSettings: &armcompute.DiffDiskSettings{
+	// 					Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
+	// 					Placement: to.Ptr(armcompute.DiffDiskPlacementResourceDisk),
+	// 				},
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("5c0d55a7-c407-4ed6-bf7d-ddb810267c85"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "standard-data-science-vm",
+	// 				"publisher": "microsoft-ads",
+	// 				"sku": "standard-data-science-vm",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadOnly",
+	// 				"createOption": "FromImage",
+	// 				"diffDiskSettings": {
+	// 					"option": "Local",
+	// 					"placement": "ResourceDisk"
+	// 				},
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "5c0d55a7-c407-4ed6-bf7d-ddb810267c85"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDisk.json
@@ -1920,6 +5221,125 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("standard-data-science-vm"),
+	// 				Publisher: to.Ptr("microsoft-ads"),
+	// 				SKU: to.Ptr("standard-data-science-vm"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiffDiskSettings: &armcompute.DiffDiskSettings{
+	// 					Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
+	// 				},
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("5c0d55a7-c407-4ed6-bf7d-ddb810267c85"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "standard-data-science-vm",
+	// 				"publisher": "microsoft-ads",
+	// 				"sku": "standard-data-science-vm",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadOnly",
+	// 				"createOption": "FromImage",
+	// 				"diffDiskSettings": {
+	// 					"option": "Local"
+	// 				},
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "5c0d55a7-c407-4ed6-bf7d-ddb810267c85"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithManagedBootDiagnostics.json
@@ -1985,6 +5405,119 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithManagedBootDi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("676420ba-7a24-4bfe-80bd-9c841ee184fa"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true
+	// 			}
+	// 		},
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "676420ba-7a24-4bfe-80bd-9c841ee184fa"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPasswordAuthentication.json
@@ -2045,6 +5578,109 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithPasswordAuthe
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("b248db33-62ba-4d2d-b791-811e075ee0f5"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "b248db33-62ba-4d2d-b791-811e075ee0f5"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPremiumStorage.json
@@ -2105,6 +5741,109 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithPremiumStorag
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("a149cd25-409f-41af-8088-275f5486bc93"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "a149cd25-409f-41af-8088-275f5486bc93"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithSshAuthentication.json
@@ -2174,6 +5913,122 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithSshAuthentica
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 				DisablePasswordAuthentication: to.Ptr(true),
+	// 				SSH: &armcompute.SSHConfiguration{
+	// 					PublicKeys: []*armcompute.SSHPublicKey{
+	// 						{
+	// 							Path: to.Ptr("/home/{your-username}/.ssh/authorized_keys"),
+	// 							KeyData: to.Ptr("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"),
+	// 					}},
+	// 				},
+	// 			},
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("UbuntuServer"),
+	// 				Publisher: to.Ptr("Canonical"),
+	// 				SKU: to.Ptr("16.04-LTS"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("e0de9b84-a506-4b95-9623-00a425d05c90"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D1_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"linuxConfiguration": {
+	// 				"disablePasswordAuthentication": true,
+	// 				"ssh": {
+	// 					"publicKeys": [
+	// 						{
+	// 							"path": "/home/{your-username}/.ssh/authorized_keys",
+	// 							"keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"
+	// 						}
+	// 					]
+	// 				}
+	// 			},
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "UbuntuServer",
+	// 				"publisher": "Canonical",
+	// 				"sku": "16.04-LTS",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Linux"
+	// 			}
+	// 		},
+	// 		"vmId": "e0de9b84-a506-4b95-9623-00a425d05c90"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMDetachDataDiskUsingToBeDetachedProperty.json
@@ -2246,6 +6101,149 @@ func ExampleVirtualMachinesClient_BeginUpdate_updateAVmByDetachingDataDisk() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](0),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 					ToBeDetached: to.Ptr(true),
+	// 				},
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](1),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 					ToBeDetached: to.Ptr(false),
+	// 			}},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("3906fef9-a1e5-4b83-a8a8-540858b41df0"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Updating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 0,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					},
+	// 					"toBeDetached": true
+	// 				},
+	// 				{
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					},
+	// 					"toBeDetached": false
+	// 				}
+	// 			],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "3906fef9-a1e5-4b83-a8a8-540858b41df0"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMForceDetachDataDisk.json
@@ -2319,6 +6317,151 @@ func ExampleVirtualMachinesClient_BeginUpdate_updateAVmByForceDetachingDataDisk(
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+	// 					Properties: &armcompute.NetworkInterfaceReferenceProperties{
+	// 						Primary: to.Ptr(true),
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("{your-username}"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(true),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DetachOption: to.Ptr(armcompute.DiskDetachOptionTypesForceDetach),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](0),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 					ToBeDetached: to.Ptr(true),
+	// 				},
+	// 				{
+	// 					Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](1023),
+	// 					Lun: to.Ptr[int32](1),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 					ToBeDetached: to.Ptr(false),
+	// 			}},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myVMosdisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("3906fef9-a1e5-4b83-a8a8-540858b41df0"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+	// 					"properties": {
+	// 						"primary": true
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "{your-username}",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": true,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Updating",
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"detachOption": "ForceDetach",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 0,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					},
+	// 					"toBeDetached": true
+	// 				},
+	// 				{
+	// 					"caching": "None",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 1023,
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					},
+	// 					"toBeDetached": false
+	// 				}
+	// 			],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myVMosdisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"managedDisk": {
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "3906fef9-a1e5-4b83-a8a8-540858b41df0"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachine.json
@@ -2359,6 +6502,223 @@ func ExampleVirtualMachinesClient_Get_getAVirtualMachine() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		AvailabilitySet: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/my-AvailabilitySet"),
+	// 		},
+	// 		DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 			BootDiagnostics: &armcompute.BootDiagnostics{
+	// 				Enabled: to.Ptr(true),
+	// 				StorageURI: to.Ptr("http://{myStorageAccount}.blob.core.windows.net"),
+	// 			},
+	// 		},
+	// 		ExtensionsTimeBudget: to.Ptr("PT50M"),
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS3V2),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{myNIC}"),
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("admin"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(false),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		ProximityPlacementGroup: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/my-ppg01"),
+	// 		},
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 				{
+	// 					Name: to.Ptr("myDataDisk0"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 					DiskSizeGB: to.Ptr[int32](30),
+	// 					Lun: to.Ptr[int32](0),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDataDisk0"),
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 					},
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("myDataDisk1"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesAttach),
+	// 					DiskSizeGB: to.Ptr[int32](100),
+	// 					Lun: to.Ptr[int32](1),
+	// 					ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDataDisk1"),
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 					},
+	// 			}},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myOsDisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiskSizeGB: to.Ptr[int32](30),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myOsDisk"),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		UserData: to.Ptr("RXhhbXBsZSBVc2VyRGF0YQ=="),
+	// 		VMID: to.Ptr("0f47b100-583c-48e3-a4c0-aefc2c9bbcc1"),
+	// 	},
+	// 	Resources: []*armcompute.VirtualMachineExtension{
+	// 		{
+	// 			Name: to.Ptr("CustomScriptExtension-DSC"),
+	// 			Type: to.Ptr("Microsoft.Compute/virtualMachines/extensions"),
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/extensions/CustomScriptExtension-DSC"),
+	// 			Location: to.Ptr("west us"),
+	// 			Tags: map[string]*string{
+	// 				"displayName": to.Ptr("CustomScriptExtension-DSC"),
+	// 			},
+	// 			Properties: &armcompute.VirtualMachineExtensionProperties{
+	// 				Type: to.Ptr("CustomScriptExtension"),
+	// 				AutoUpgradeMinorVersion: to.Ptr(true),
+	// 				ProvisioningState: to.Ptr("Succeeded"),
+	// 				Publisher: to.Ptr("Microsoft.Compute"),
+	// 				Settings: map[string]interface{}{
+	// 				},
+	// 				TypeHandlerVersion: to.Ptr("1.9"),
+	// 			},
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"availabilitySet": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/my-AvailabilitySet"
+	// 		},
+	// 		"diagnosticsProfile": {
+	// 			"bootDiagnostics": {
+	// 				"enabled": true,
+	// 				"storageUri": "http://{myStorageAccount}.blob.core.windows.net"
+	// 			}
+	// 		},
+	// 		"extensionsTimeBudget": "PT50M",
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_DS3_v2"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{myNIC}"
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "admin",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": false,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"proximityPlacementGroup": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/my-ppg01"
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDisks": [
+	// 				{
+	// 					"name": "myDataDisk0",
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "Empty",
+	// 					"diskSizeGB": 30,
+	// 					"lun": 0,
+	// 					"managedDisk": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDataDisk0",
+	// 						"storageAccountType": "Premium_LRS"
+	// 					}
+	// 				},
+	// 				{
+	// 					"name": "myDataDisk1",
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "Attach",
+	// 					"diskSizeGB": 100,
+	// 					"lun": 1,
+	// 					"managedDisk": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDataDisk1",
+	// 						"storageAccountType": "Premium_LRS"
+	// 					}
+	// 				}
+	// 			],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myOsDisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"diskSizeGB": 30,
+	// 				"managedDisk": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myOsDisk",
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"userData": "RXhhbXBsZSBVc2VyRGF0YQ==",
+	// 		"vmId": "0f47b100-583c-48e3-a4c0-aefc2c9bbcc1"
+	// 	},
+	// 	"resources": [
+	// 		{
+	// 			"name": "CustomScriptExtension-DSC",
+	// 			"type": "Microsoft.Compute/virtualMachines/extensions",
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/extensions/CustomScriptExtension-DSC",
+	// 			"location": "west us",
+	// 			"properties": {
+	// 				"type": "CustomScriptExtension",
+	// 				"autoUpgradeMinorVersion": true,
+	// 				"provisioningState": "Succeeded",
+	// 				"publisher": "Microsoft.Compute",
+	// 				"settings": {},
+	// 				"typeHandlerVersion": "1.9"
+	// 			},
+	// 			"tags": {
+	// 				"displayName": "CustomScriptExtension-DSC"
+	// 			}
+	// 		}
+	// 	],
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineAutoPlacedOnDedicatedHostGroup.json
@@ -2378,6 +6738,119 @@ func ExampleVirtualMachinesClient_Get_getAVirtualMachinePlacedOnADedicatedHostGr
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachine = armcompute.VirtualMachine{
+	// 	Name: to.Ptr("myVM"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineProperties{
+	// 		HardwareProfile: &armcompute.HardwareProfile{
+	// 			VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+	// 		},
+	// 		HostGroup: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup"),
+	// 		},
+	// 		NetworkProfile: &armcompute.NetworkProfile{
+	// 			NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+	// 				{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{myNIC}"),
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.OSProfile{
+	// 			AdminUsername: to.Ptr("admin"),
+	// 			ComputerName: to.Ptr("myVM"),
+	// 			Secrets: []*armcompute.VaultSecretGroup{
+	// 			},
+	// 			WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 				EnableAutomaticUpdates: to.Ptr(false),
+	// 				ProvisionVMAgent: to.Ptr(true),
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		StorageProfile: &armcompute.StorageProfile{
+	// 			DataDisks: []*armcompute.DataDisk{
+	// 			},
+	// 			ImageReference: &armcompute.ImageReference{
+	// 				Offer: to.Ptr("WindowsServer"),
+	// 				Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 				SKU: to.Ptr("2016-Datacenter"),
+	// 				Version: to.Ptr("latest"),
+	// 			},
+	// 			OSDisk: &armcompute.OSDisk{
+	// 				Name: to.Ptr("myOsDisk"),
+	// 				Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 				CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 				DiskSizeGB: to.Ptr[int32](30),
+	// 				ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myOsDisk"),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 				},
+	// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 			},
+	// 		},
+	// 		VMID: to.Ptr("0f47b100-583c-48e3-a4c0-aefc2c9bbcc1"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVM",
+	// 	"type": "Microsoft.Compute/virtualMachines",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"hardwareProfile": {
+	// 			"vmSize": "Standard_D2s_v3"
+	// 		},
+	// 		"hostGroup": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup"
+	// 		},
+	// 		"networkProfile": {
+	// 			"networkInterfaces": [
+	// 				{
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{myNIC}"
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"adminUsername": "admin",
+	// 			"computerName": "myVM",
+	// 			"secrets": [],
+	// 			"windowsConfiguration": {
+	// 				"enableAutomaticUpdates": false,
+	// 				"provisionVMAgent": true
+	// 			}
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"storageProfile": {
+	// 			"dataDisks": [],
+	// 			"imageReference": {
+	// 				"offer": "WindowsServer",
+	// 				"publisher": "MicrosoftWindowsServer",
+	// 				"sku": "2016-Datacenter",
+	// 				"version": "latest"
+	// 			},
+	// 			"osDisk": {
+	// 				"name": "myOsDisk",
+	// 				"caching": "ReadWrite",
+	// 				"createOption": "FromImage",
+	// 				"diskSizeGB": 30,
+	// 				"managedDisk": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myOsDisk",
+	// 					"storageAccountType": "Premium_LRS"
+	// 				},
+	// 				"osType": "Windows"
+	// 			}
+	// 		},
+	// 		"vmId": "0f47b100-583c-48e3-a4c0-aefc2c9bbcc1"
+	// 	},
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceView.json
@@ -2397,6 +6870,261 @@ func ExampleVirtualMachinesClient_InstanceView_getVirtualMachineInstanceView() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineInstanceView = armcompute.VirtualMachineInstanceView{
+	// 	BootDiagnostics: &armcompute.BootDiagnosticsInstanceView{
+	// 		ConsoleScreenshotBlobURI: to.Ptr("https://{myStorageAccount}.blob.core.windows.net/bootdiagnostics-myOsDisk/myOsDisk.screenshot.bmp"),
+	// 		SerialConsoleLogBlobURI: to.Ptr("https://{myStorageAccount}.blob.core.windows.net/bootdiagnostics-myOsDisk/myOsDisk.serialconsole.log"),
+	// 	},
+	// 	ComputerName: to.Ptr("myVM"),
+	// 	Disks: []*armcompute.DiskInstanceView{
+	// 		{
+	// 			Name: to.Ptr("myOsDisk"),
+	// 			Statuses: []*armcompute.InstanceViewStatus{
+	// 				{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 					Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:29:47.477089+00:00"); return t}()),
+	// 			}},
+	// 		},
+	// 		{
+	// 			Name: to.Ptr("myDataDisk0"),
+	// 			Statuses: []*armcompute.InstanceViewStatus{
+	// 				{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 					Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:29:47.461517+00:00"); return t}()),
+	// 			}},
+	// 	}},
+	// 	HyperVGeneration: to.Ptr(armcompute.HyperVGenerationTypeV1),
+	// 	OSName: to.Ptr("Windows Server 2016 Datacenter"),
+	// 	OSVersion: to.Ptr("Microsoft Windows NT 10.0.14393.0"),
+	// 	PatchStatus: &armcompute.VirtualMachinePatchStatus{
+	// 		AvailablePatchSummary: &armcompute.AvailablePatchSummary{
+	// 			AssessmentActivityID: to.Ptr("68f8b292-dfc2-4646-9781-33cc88631968"),
+	// 			CriticalAndSecurityPatchCount: to.Ptr[int32](1),
+	// 			LastModifiedTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			OtherPatchCount: to.Ptr[int32](2),
+	// 			RebootPending: to.Ptr(true),
+	// 			StartTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			Status: to.Ptr(armcompute.PatchOperationStatusSucceeded),
+	// 		},
+	// 		ConfigurationStatuses: []*armcompute.InstanceViewStatus{
+	// 			{
+	// 				Code: to.Ptr("PatchModeConfigurationState/Ready"),
+	// 				DisplayStatus: to.Ptr("Status_PatchModeConfigurationState_Ready"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			},
+	// 			{
+	// 				Code: to.Ptr("PatchModeConfigurationState/Pending"),
+	// 				DisplayStatus: to.Ptr("Status_PatchModeConfigurationState_Pending"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			},
+	// 			{
+	// 				Code: to.Ptr("AssessmentModeConfigurationState/Pending"),
+	// 				DisplayStatus: to.Ptr("Status_AssessmentModeConfigurationState_Pending"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 		}},
+	// 		LastPatchInstallationSummary: &armcompute.LastPatchInstallationSummary{
+	// 			ExcludedPatchCount: to.Ptr[int32](1),
+	// 			FailedPatchCount: to.Ptr[int32](1),
+	// 			InstallationActivityID: to.Ptr("68f8b292-dfc2-4646-9981-33cc88631968"),
+	// 			InstalledPatchCount: to.Ptr[int32](1),
+	// 			LastModifiedTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			MaintenanceWindowExceeded: to.Ptr(false),
+	// 			NotSelectedPatchCount: to.Ptr[int32](1),
+	// 			PendingPatchCount: to.Ptr[int32](1),
+	// 			StartTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			Status: to.Ptr(armcompute.PatchOperationStatusSucceeded),
+	// 		},
+	// 	},
+	// 	PlatformFaultDomain: to.Ptr[int32](1),
+	// 	PlatformUpdateDomain: to.Ptr[int32](1),
+	// 	Statuses: []*armcompute.InstanceViewStatus{
+	// 		{
+	// 			Code: to.Ptr("ProvisioningState/succeeded"),
+	// 			DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:30:12.8051917+00:00"); return t}()),
+	// 		},
+	// 		{
+	// 			Code: to.Ptr("PowerState/running"),
+	// 			DisplayStatus: to.Ptr("VM running"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 	}},
+	// 	VMAgent: &armcompute.VirtualMachineAgentInstanceView{
+	// 		ExtensionHandlers: []*armcompute.VirtualMachineExtensionHandlerInstanceView{
+	// 			{
+	// 				Type: to.Ptr("Microsoft.Azure.Security.IaaSAntimalware"),
+	// 				Status: &armcompute.InstanceViewStatus{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					DisplayStatus: to.Ptr("Ready"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				},
+	// 				TypeHandlerVersion: to.Ptr("1.5.5.9"),
+	// 		}},
+	// 		Statuses: []*armcompute.InstanceViewStatus{
+	// 			{
+	// 				Code: to.Ptr("ProvisioningState/succeeded"),
+	// 				DisplayStatus: to.Ptr("Ready"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				Message: to.Ptr("GuestAgent is running and accepting new configurations."),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T23:11:22+00:00"); return t}()),
+	// 		}},
+	// 		VMAgentVersion: to.Ptr("2.7.41491.949"),
+	// 	},
+	// 	Extensions: []*armcompute.VirtualMachineExtensionInstanceView{
+	// 		{
+	// 			Name: to.Ptr("IaaSAntiMalware-ext0"),
+	// 			Type: to.Ptr("Microsoft.Azure.Security.IaaSAntimalware"),
+	// 			Statuses: []*armcompute.InstanceViewStatus{
+	// 				{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 					Message: to.Ptr("Microsoft Antimalware enabled"),
+	// 			}},
+	// 			TypeHandlerVersion: to.Ptr("1.5.5.9"),
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"bootDiagnostics": {
+	// 		"consoleScreenshotBlobUri": "https://{myStorageAccount}.blob.core.windows.net/bootdiagnostics-myOsDisk/myOsDisk.screenshot.bmp",
+	// 		"serialConsoleLogBlobUri": "https://{myStorageAccount}.blob.core.windows.net/bootdiagnostics-myOsDisk/myOsDisk.serialconsole.log"
+	// 	},
+	// 	"computerName": "myVM",
+	// 	"disks": [
+	// 		{
+	// 			"name": "myOsDisk",
+	// 			"statuses": [
+	// 				{
+	// 					"code": "ProvisioningState/succeeded",
+	// 					"displayStatus": "Provisioning succeeded",
+	// 					"level": "Info",
+	// 					"time": "2019-10-14T21:29:47.477089+00:00"
+	// 				}
+	// 			]
+	// 		},
+	// 		{
+	// 			"name": "myDataDisk0",
+	// 			"statuses": [
+	// 				{
+	// 					"code": "ProvisioningState/succeeded",
+	// 					"displayStatus": "Provisioning succeeded",
+	// 					"level": "Info",
+	// 					"time": "2019-10-14T21:29:47.461517+00:00"
+	// 				}
+	// 			]
+	// 		}
+	// 	],
+	// 	"hyperVGeneration": "V1",
+	// 	"osName": "Windows Server 2016 Datacenter",
+	// 	"osVersion": "Microsoft Windows NT 10.0.14393.0",
+	// 	"patchStatus": {
+	// 		"availablePatchSummary": {
+	// 			"assessmentActivityId": "68f8b292-dfc2-4646-9781-33cc88631968",
+	// 			"criticalAndSecurityPatchCount": 1,
+	// 			"error": null,
+	// 			"lastModifiedTime": "2020-04-24T21:02:04.2556154Z",
+	// 			"otherPatchCount": 2,
+	// 			"rebootPending": true,
+	// 			"startTime": "2020-04-24T21:02:04.2556154Z",
+	// 			"status": "Succeeded"
+	// 		},
+	// 		"configurationStatuses": [
+	// 			{
+	// 				"code": "PatchModeConfigurationState/Ready",
+	// 				"displayStatus": "Status_PatchModeConfigurationState_Ready",
+	// 				"level": "Info",
+	// 				"time": "2020-04-24T21:02:04.2556154Z"
+	// 			},
+	// 			{
+	// 				"code": "PatchModeConfigurationState/Pending",
+	// 				"displayStatus": "Status_PatchModeConfigurationState_Pending",
+	// 				"level": "Info",
+	// 				"time": "2020-04-24T21:02:04.2556154Z"
+	// 			},
+	// 			{
+	// 				"code": "AssessmentModeConfigurationState/Pending",
+	// 				"displayStatus": "Status_AssessmentModeConfigurationState_Pending",
+	// 				"level": "Info",
+	// 				"time": "2020-04-24T21:02:04.2556154Z"
+	// 			}
+	// 		],
+	// 		"lastPatchInstallationSummary": {
+	// 			"error": null,
+	// 			"excludedPatchCount": 1,
+	// 			"failedPatchCount": 1,
+	// 			"installationActivityId": "68f8b292-dfc2-4646-9981-33cc88631968",
+	// 			"installedPatchCount": 1,
+	// 			"lastModifiedTime": "2020-04-24T21:02:04.2556154Z",
+	// 			"maintenanceWindowExceeded": false,
+	// 			"notSelectedPatchCount": 1,
+	// 			"pendingPatchCount": 1,
+	// 			"startTime": "2020-04-24T21:02:04.2556154Z",
+	// 			"status": "Succeeded"
+	// 		}
+	// 	},
+	// 	"platformFaultDomain": 1,
+	// 	"platformUpdateDomain": 1,
+	// 	"statuses": [
+	// 		{
+	// 			"code": "ProvisioningState/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"time": "2019-10-14T21:30:12.8051917+00:00"
+	// 		},
+	// 		{
+	// 			"code": "PowerState/running",
+	// 			"displayStatus": "VM running",
+	// 			"level": "Info"
+	// 		}
+	// 	],
+	// 	"vmAgent": {
+	// 		"extensionHandlers": [
+	// 			{
+	// 				"type": "Microsoft.Azure.Security.IaaSAntimalware",
+	// 				"status": {
+	// 					"code": "ProvisioningState/succeeded",
+	// 					"displayStatus": "Ready",
+	// 					"level": "Info"
+	// 				},
+	// 				"typeHandlerVersion": "1.5.5.9"
+	// 			}
+	// 		],
+	// 		"statuses": [
+	// 			{
+	// 				"code": "ProvisioningState/succeeded",
+	// 				"displayStatus": "Ready",
+	// 				"level": "Info",
+	// 				"message": "GuestAgent is running and accepting new configurations.",
+	// 				"time": "2019-10-14T23:11:22+00:00"
+	// 			}
+	// 		],
+	// 		"vmAgentVersion": "2.7.41491.949"
+	// 	},
+	// 	"extensions": [
+	// 		{
+	// 			"name": "IaaSAntiMalware-ext0",
+	// 			"type": "Microsoft.Azure.Security.IaaSAntimalware",
+	// 			"statuses": [
+	// 				{
+	// 					"code": "ProvisioningState/succeeded",
+	// 					"displayStatus": "Provisioning succeeded",
+	// 					"level": "Info",
+	// 					"message": "Microsoft Antimalware enabled"
+	// 				}
+	// 			],
+	// 			"typeHandlerVersion": "1.5.5.9"
+	// 		}
+	// 	]
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceViewAutoPlacedOnDedicatedHostGroup.json
@@ -2416,6 +7144,94 @@ func ExampleVirtualMachinesClient_InstanceView_getInstanceViewOfAVirtualMachineP
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineInstanceView = armcompute.VirtualMachineInstanceView{
+	// 	AssignedHost: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup/hosts/myHost"),
+	// 	ComputerName: to.Ptr("myVM"),
+	// 	Disks: []*armcompute.DiskInstanceView{
+	// 		{
+	// 			Name: to.Ptr("myOsDisk"),
+	// 			Statuses: []*armcompute.InstanceViewStatus{
+	// 				{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 					Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 					Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T21:29:47.477089+00:00"); return t}()),
+	// 			}},
+	// 	}},
+	// 	HyperVGeneration: to.Ptr(armcompute.HyperVGenerationTypeV1),
+	// 	OSName: to.Ptr("Windows Server 2016 Datacenter"),
+	// 	OSVersion: to.Ptr("Microsoft Windows NT 10.0.14393.0"),
+	// 	Statuses: []*armcompute.InstanceViewStatus{
+	// 		{
+	// 			Code: to.Ptr("ProvisioningState/succeeded"),
+	// 			DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T21:30:12.8051917+00:00"); return t}()),
+	// 		},
+	// 		{
+	// 			Code: to.Ptr("PowerState/running"),
+	// 			DisplayStatus: to.Ptr("VM running"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 	}},
+	// 	VMAgent: &armcompute.VirtualMachineAgentInstanceView{
+	// 		Statuses: []*armcompute.InstanceViewStatus{
+	// 			{
+	// 				Code: to.Ptr("ProvisioningState/succeeded"),
+	// 				DisplayStatus: to.Ptr("Ready"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				Message: to.Ptr("GuestAgent is running and accepting new configurations."),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T23:11:22+00:00"); return t}()),
+	// 		}},
+	// 		VMAgentVersion: to.Ptr("2.7.41491.949"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"assignedHost": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup/hosts/myHost",
+	// 	"computerName": "myVM",
+	// 	"disks": [
+	// 		{
+	// 			"name": "myOsDisk",
+	// 			"statuses": [
+	// 				{
+	// 					"code": "ProvisioningState/succeeded",
+	// 					"displayStatus": "Provisioning succeeded",
+	// 					"level": "Info",
+	// 					"time": "2021-03-01T21:29:47.477089+00:00"
+	// 				}
+	// 			]
+	// 		}
+	// 	],
+	// 	"hyperVGeneration": "V1",
+	// 	"osName": "Windows Server 2016 Datacenter",
+	// 	"osVersion": "Microsoft Windows NT 10.0.14393.0",
+	// 	"statuses": [
+	// 		{
+	// 			"code": "ProvisioningState/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"time": "2021-03-01T21:30:12.8051917+00:00"
+	// 		},
+	// 		{
+	// 			"code": "PowerState/running",
+	// 			"displayStatus": "VM running",
+	// 			"level": "Info"
+	// 		}
+	// 	],
+	// 	"vmAgent": {
+	// 		"statuses": [
+	// 			{
+	// 				"code": "ProvisioningState/succeeded",
+	// 				"displayStatus": "Ready",
+	// 				"level": "Info",
+	// 				"message": "GuestAgent is running and accepting new configurations.",
+	// 				"time": "2021-03-01T23:11:22+00:00"
+	// 			}
+	// 		],
+	// 		"vmAgentVersion": "2.7.41491.949"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GeneralizeVirtualMachine.json
@@ -2456,6 +7272,47 @@ func ExampleVirtualMachinesClient_NewListAvailableSizesPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.VirtualMachineSizeListResult = armcompute.VirtualMachineSizeListResult{
+		// 	Value: []*armcompute.VirtualMachineSize{
+		// 		{
+		// 			Name: to.Ptr("Standard_A1_V2"),
+		// 			MaxDataDiskCount: to.Ptr[int32](2),
+		// 			MemoryInMB: to.Ptr[int32](2048),
+		// 			NumberOfCores: to.Ptr[int32](1),
+		// 			OSDiskSizeInMB: to.Ptr[int32](1047552),
+		// 			ResourceDiskSizeInMB: to.Ptr[int32](10240),
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("Standard_A2_V2"),
+		// 			MaxDataDiskCount: to.Ptr[int32](4),
+		// 			MemoryInMB: to.Ptr[int32](4096),
+		// 			NumberOfCores: to.Ptr[int32](2),
+		// 			OSDiskSizeInMB: to.Ptr[int32](1047552),
+		// 			ResourceDiskSizeInMB: to.Ptr[int32](20480),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "Standard_A1_V2",
+		// 			"maxDataDiskCount": 2,
+		// 			"memoryInMB": 2048,
+		// 			"numberOfCores": 1,
+		// 			"osDiskSizeInMB": 1047552,
+		// 			"resourceDiskSizeInMB": 10240
+		// 		},
+		// 		{
+		// 			"name": "Standard_A2_V2",
+		// 			"maxDataDiskCount": 4,
+		// 			"memoryInMB": 4096,
+		// 			"numberOfCores": 2,
+		// 			"osDiskSizeInMB": 1047552,
+		// 			"resourceDiskSizeInMB": 20480
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -2521,6 +7378,16 @@ func ExampleVirtualMachinesClient_RetrieveBootDiagnosticsData() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RetrieveBootDiagnosticsDataResult = armcompute.RetrieveBootDiagnosticsDataResult{
+	// 	ConsoleScreenshotBlobURI: to.Ptr("https://storageuri/vm.screenshot.bmp?{sasKey}"),
+	// 	SerialConsoleLogBlobURI: to.Ptr("https://storageuri/vm.serialconsole.log?{sasKey}"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"consoleScreenshotBlobUri": "https://storageuri/vm.screenshot.bmp?{sasKey}",
+	// 	"serialConsoleLogBlobUri": "https://storageuri/vm.serialconsole.log?{sasKey}"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVM.json
@@ -2561,6 +7428,82 @@ func ExampleVirtualMachinesClient_BeginAssessPatches() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineAssessPatchesResult = armcompute.VirtualMachineAssessPatchesResult{
+	// 	AssessmentActivityID: to.Ptr("68f8b292-dfc2-4646-9781-33cc88631968"),
+	// 	AvailablePatches: []*armcompute.VirtualMachineSoftwarePatchProperties{
+	// 		{
+	// 			Name: to.Ptr("Definition Update for Windows Defender Antivirus - KB2267602 (Definition 1.279.1373.0)"),
+	// 			ActivityID: to.Ptr("68f8b292-dfc2-4646-9781-33cc88631968"),
+	// 			AssessmentState: to.Ptr(armcompute.PatchAssessmentStateAvailable),
+	// 			Classifications: []*string{
+	// 				to.Ptr("Definition Updates")},
+	// 				KbID: to.Ptr("2267602"),
+	// 				LastModifiedDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:18:45.2830263Z"); return t}()),
+	// 				PatchID: to.Ptr("35428702-5784-4ba4-a6e0-5222258b5411"),
+	// 				PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-11-07T00:00:00Z"); return t}()),
+	// 				RebootBehavior: to.Ptr(armcompute.VMGuestPatchRebootBehaviorNeverReboots),
+	// 				Version: to.Ptr(""),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("Windows Malicious Software Removal Tool x64 - October 2018 (KB890830)"),
+	// 				ActivityID: to.Ptr("68f8b292-dfc2-4646-9781-33cc88631968"),
+	// 				AssessmentState: to.Ptr(armcompute.PatchAssessmentStateAvailable),
+	// 				Classifications: []*string{
+	// 					to.Ptr("Update Rollups")},
+	// 					KbID: to.Ptr("890830"),
+	// 					LastModifiedDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:18:45.2830263Z"); return t}()),
+	// 					PatchID: to.Ptr("39f9cdd1-795c-4d0e-8c0a-73ab3f31746d"),
+	// 					PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-11-07T00:00:00Z"); return t}()),
+	// 					RebootBehavior: to.Ptr(armcompute.VMGuestPatchRebootBehaviorCanRequestReboot),
+	// 					Version: to.Ptr(""),
+	// 			}},
+	// 			CriticalAndSecurityPatchCount: to.Ptr[int32](1),
+	// 			OtherPatchCount: to.Ptr[int32](2),
+	// 			RebootPending: to.Ptr(true),
+	// 			StartDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			Status: to.Ptr(armcompute.PatchOperationStatusSucceeded),
+	// 		}
+	// with the raw JSON response:
+	// {
+	// 	"assessmentActivityId": "68f8b292-dfc2-4646-9781-33cc88631968",
+	// 	"availablePatches": [
+	// 		{
+	// 			"name": "Definition Update for Windows Defender Antivirus - KB2267602 (Definition 1.279.1373.0)",
+	// 			"activityId": "68f8b292-dfc2-4646-9781-33cc88631968",
+	// 			"assessmentState": "Available",
+	// 			"classifications": [
+	// 				"Definition Updates"
+	// 			],
+	// 			"kbId": "2267602",
+	// 			"lastModifiedDateTime": "2020-04-24T21:18:45.2830263Z",
+	// 			"patchId": "35428702-5784-4ba4-a6e0-5222258b5411",
+	// 			"publishedDate": "2018-11-07T00:00:00Z",
+	// 			"rebootBehavior": "NeverReboots",
+	// 			"version": ""
+	// 		},
+	// 		{
+	// 			"name": "Windows Malicious Software Removal Tool x64 - October 2018 (KB890830)",
+	// 			"activityId": "68f8b292-dfc2-4646-9781-33cc88631968",
+	// 			"assessmentState": "Available",
+	// 			"classifications": [
+	// 				"Update Rollups"
+	// 			],
+	// 			"kbId": "890830",
+	// 			"lastModifiedDateTime": "2020-04-24T21:18:45.2830263Z",
+	// 			"patchId": "39f9cdd1-795c-4d0e-8c0a-73ab3f31746d",
+	// 			"publishedDate": "2018-11-07T00:00:00Z",
+	// 			"rebootBehavior": "CanRequestReboot",
+	// 			"version": ""
+	// 		}
+	// 	],
+	// 	"criticalAndSecurityPatchCount": 1,
+	// 	"error": null,
+	// 	"otherPatchCount": 2,
+	// 	"rebootPending": true,
+	// 	"startDateTime": "2020-04-24T21:02:04.2556154Z",
+	// 	"status": "Succeeded"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineInstallPatches.json
@@ -2593,6 +7536,74 @@ func ExampleVirtualMachinesClient_BeginInstallPatches() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineInstallPatchesResult = armcompute.VirtualMachineInstallPatchesResult{
+	// 	ExcludedPatchCount: to.Ptr[int32](0),
+	// 	FailedPatchCount: to.Ptr[int32](0),
+	// 	InstallationActivityID: to.Ptr("68f8b292-dfc2-4646-9781-33cc88631968"),
+	// 	InstalledPatchCount: to.Ptr[int32](3),
+	// 	MaintenanceWindowExceeded: to.Ptr(false),
+	// 	NotSelectedPatchCount: to.Ptr[int32](0),
+	// 	Patches: []*armcompute.PatchInstallationDetail{
+	// 		{
+	// 			Name: to.Ptr("Definition Update for Windows Defender Antivirus - KB2267602 (Definition 1.279.1373.0)"),
+	// 			Classifications: []*string{
+	// 				to.Ptr("Definition Updates")},
+	// 				InstallationState: to.Ptr(armcompute.PatchInstallationStateInstalled),
+	// 				KbID: to.Ptr("2267602"),
+	// 				PatchID: to.Ptr("35428702-5784-4ba4-a6e0-5222258b5411"),
+	// 				Version: to.Ptr(""),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("Windows Malicious Software Removal Tool x64 - October 2018 (KB890830)"),
+	// 				Classifications: []*string{
+	// 					to.Ptr("Update Rollups")},
+	// 					InstallationState: to.Ptr(armcompute.PatchInstallationStatePending),
+	// 					KbID: to.Ptr("890830"),
+	// 					PatchID: to.Ptr("39f9cdd1-795c-4d0e-8c0a-73ab3f31746d"),
+	// 					Version: to.Ptr(""),
+	// 			}},
+	// 			PendingPatchCount: to.Ptr[int32](2),
+	// 			RebootStatus: to.Ptr(armcompute.VMGuestPatchRebootStatusCompleted),
+	// 			StartDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t}()),
+	// 			Status: to.Ptr(armcompute.PatchOperationStatusSucceeded),
+	// 		}
+	// with the raw JSON response:
+	// {
+	// 	"error": null,
+	// 	"excludedPatchCount": 0,
+	// 	"failedPatchCount": 0,
+	// 	"installationActivityId": "68f8b292-dfc2-4646-9781-33cc88631968",
+	// 	"installedPatchCount": 3,
+	// 	"maintenanceWindowExceeded": false,
+	// 	"notSelectedPatchCount": 0,
+	// 	"patches": [
+	// 		{
+	// 			"name": "Definition Update for Windows Defender Antivirus - KB2267602 (Definition 1.279.1373.0)",
+	// 			"classifications": [
+	// 				"Definition Updates"
+	// 			],
+	// 			"installationState": "Installed",
+	// 			"kbId": "2267602",
+	// 			"patchId": "35428702-5784-4ba4-a6e0-5222258b5411",
+	// 			"version": ""
+	// 		},
+	// 		{
+	// 			"name": "Windows Malicious Software Removal Tool x64 - October 2018 (KB890830)",
+	// 			"classifications": [
+	// 				"Update Rollups"
+	// 			],
+	// 			"installationState": "Pending",
+	// 			"kbId": "890830",
+	// 			"patchId": "39f9cdd1-795c-4d0e-8c0a-73ab3f31746d",
+	// 			"version": ""
+	// 		}
+	// 	],
+	// 	"pendingPatchCount": 2,
+	// 	"rebootStatus": "Completed",
+	// 	"startDateTime": "2020-04-24T21:02:04.2556154Z",
+	// 	"status": "Succeeded"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommand.json
@@ -2618,4 +7629,37 @@ func ExampleVirtualMachinesClient_BeginRunCommand() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RunCommandResult = armcompute.RunCommandResult{
+	// 	Value: []*armcompute.InstanceViewStatus{
+	// 		{
+	// 			Code: to.Ptr("ComponentStatus/StdOut/succeeded"),
+	// 			DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Message: to.Ptr("This is a sample script with parameters value1 value2"),
+	// 		},
+	// 		{
+	// 			Code: to.Ptr("ComponentStatus/StdErr/succeeded"),
+	// 			DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 			Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			Message: to.Ptr(""),
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"code": "ComponentStatus/StdOut/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"message": "This is a sample script with parameters value1 value2"
+	// 		},
+	// 		{
+	// 			"code": "ComponentStatus/StdErr/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"message": ""
+	// 		}
+	// 	]
+	// }
 }

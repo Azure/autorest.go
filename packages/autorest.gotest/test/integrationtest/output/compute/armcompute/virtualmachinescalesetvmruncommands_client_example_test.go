@@ -58,6 +58,57 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineRunCommand = armcompute.VirtualMachineRunCommand{
+	// 	Name: to.Ptr("myRunCommand"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineRunCommandProperties{
+	// 		AsyncExecution: to.Ptr(false),
+	// 		Parameters: []*armcompute.RunCommandInputParameter{
+	// 			{
+	// 				Name: to.Ptr("param1"),
+	// 				Value: to.Ptr("value1"),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("param2"),
+	// 				Value: to.Ptr("value2"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RunAsUser: to.Ptr("user1"),
+	// 		Source: &armcompute.VirtualMachineRunCommandScriptSource{
+	// 			Script: to.Ptr("Write-Host Hello World!"),
+	// 		},
+	// 		TimeoutInSeconds: to.Ptr[int32](3600),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRunCommand",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"asyncExecution": false,
+	// 		"parameters": [
+	// 			{
+	// 				"name": "param1",
+	// 				"value": "value1"
+	// 			},
+	// 			{
+	// 				"name": "param2",
+	// 				"value": "value2"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"runAsUser": "user1",
+	// 		"source": {
+	// 			"script": "Write-Host Hello World!"
+	// 		},
+	// 		"timeoutInSeconds": 3600
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMRunCommands.json
@@ -87,6 +138,65 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineRunCommand = armcompute.VirtualMachineRunCommand{
+	// 	Name: to.Ptr("myRunCommand"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"tag1": to.Ptr("value1"),
+	// 		"tag2": to.Ptr("value2"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineRunCommandProperties{
+	// 		AsyncExecution: to.Ptr(false),
+	// 		Parameters: []*armcompute.RunCommandInputParameter{
+	// 			{
+	// 				Name: to.Ptr("param1"),
+	// 				Value: to.Ptr("value1"),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("param2"),
+	// 				Value: to.Ptr("value2"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RunAsUser: to.Ptr("user1"),
+	// 		Source: &armcompute.VirtualMachineRunCommandScriptSource{
+	// 			Script: to.Ptr("Write-Host Script Source Updated!"),
+	// 		},
+	// 		TimeoutInSeconds: to.Ptr[int32](3600),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRunCommand",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"asyncExecution": false,
+	// 		"parameters": [
+	// 			{
+	// 				"name": "param1",
+	// 				"value": "value1"
+	// 			},
+	// 			{
+	// 				"name": "param2",
+	// 				"value": "value2"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Updating",
+	// 		"runAsUser": "user1",
+	// 		"source": {
+	// 			"script": "Write-Host Script Source Updated!"
+	// 		},
+	// 		"timeoutInSeconds": 3600
+	// 	},
+	// 	"tags": {
+	// 		"tag1": "value1",
+	// 		"tag2": "value2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMRunCommands.json
@@ -127,6 +237,65 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineRunCommand = armcompute.VirtualMachineRunCommand{
+	// 	Name: to.Ptr("myRunCommand"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"tag1": to.Ptr("value1"),
+	// 		"tag2": to.Ptr("value2"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineRunCommandProperties{
+	// 		AsyncExecution: to.Ptr(false),
+	// 		Parameters: []*armcompute.RunCommandInputParameter{
+	// 			{
+	// 				Name: to.Ptr("param1"),
+	// 				Value: to.Ptr("value1"),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("param2"),
+	// 				Value: to.Ptr("value2"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RunAsUser: to.Ptr("user1"),
+	// 		Source: &armcompute.VirtualMachineRunCommandScriptSource{
+	// 			Script: to.Ptr("Write-Host Hello World!"),
+	// 		},
+	// 		TimeoutInSeconds: to.Ptr[int32](3600),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRunCommand",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"asyncExecution": false,
+	// 		"parameters": [
+	// 			{
+	// 				"name": "param1",
+	// 				"value": "value1"
+	// 			},
+	// 			{
+	// 				"name": "param2",
+	// 				"value": "value2"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"runAsUser": "user1",
+	// 		"source": {
+	// 			"script": "Write-Host Hello World!"
+	// 		},
+	// 		"timeoutInSeconds": 3600
+	// 	},
+	// 	"tags": {
+	// 		"tag1": "value1",
+	// 		"tag2": "value2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetVMRunCommands.json
@@ -150,5 +319,63 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.VirtualMachineRunCommandsListResult = armcompute.VirtualMachineRunCommandsListResult{
+		// 	Value: []*armcompute.VirtualMachineRunCommand{
+		// 		{
+		// 			Name: to.Ptr("myRunCommand"),
+		// 			Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand"),
+		// 			Location: to.Ptr("westus"),
+		// 			Properties: &armcompute.VirtualMachineRunCommandProperties{
+		// 				AsyncExecution: to.Ptr(false),
+		// 				Parameters: []*armcompute.RunCommandInputParameter{
+		// 					{
+		// 						Name: to.Ptr("param1"),
+		// 						Value: to.Ptr("value1"),
+		// 					},
+		// 					{
+		// 						Name: to.Ptr("param2"),
+		// 						Value: to.Ptr("value2"),
+		// 				}},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				RunAsUser: to.Ptr("user1"),
+		// 				Source: &armcompute.VirtualMachineRunCommandScriptSource{
+		// 					Script: to.Ptr("Write-Host Hello World!"),
+		// 				},
+		// 				TimeoutInSeconds: to.Ptr[int32](0),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myRunCommand",
+		// 			"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/runCommands/myRunCommand",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"asyncExecution": false,
+		// 				"parameters": [
+		// 					{
+		// 						"name": "param1",
+		// 						"value": "value1"
+		// 					},
+		// 					{
+		// 						"name": "param2",
+		// 						"value": "value2"
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"runAsUser": "user1",
+		// 				"source": {
+		// 					"script": "Write-Host Hello World!"
+		// 				},
+		// 				"timeoutInSeconds": 0
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

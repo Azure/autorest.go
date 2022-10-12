@@ -46,6 +46,18 @@ func ExampleLogAnalyticsClient_BeginExportRequestRateByInterval() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.LogAnalyticsOperationResult = armcompute.LogAnalyticsOperationResult{
+	// 	Properties: &armcompute.LogAnalyticsOutput{
+	// 		Output: to.Ptr("https://crptestar4227.blob.core.windows.net:443/sascontainer/RequestRateByInterval_20180121-0154_20180123-0154.csv"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"properties": {
+	// 		"output": "https://crptestar4227.blob.core.windows.net:443/sascontainer/RequestRateByInterval_20180121-0154_20180123-0154.csv"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsThrottledRequests.json
@@ -77,4 +89,16 @@ func ExampleLogAnalyticsClient_BeginExportThrottledRequests() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.LogAnalyticsOperationResult = armcompute.LogAnalyticsOperationResult{
+	// 	Properties: &armcompute.LogAnalyticsOutput{
+	// 		Output: to.Ptr("https://crptestar4227.blob.core.windows.net:443/sascontainer/ThrottledRequests_20180121-0154_20180123-0154.csv"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"properties": {
+	// 		"output": "https://crptestar4227.blob.core.windows.net:443/sascontainer/ThrottledRequests_20180121-0154_20180123-0154.csv"
+	// 	}
+	// }
 }

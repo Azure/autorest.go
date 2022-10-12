@@ -44,6 +44,42 @@ func ExampleRestorePointCollectionsClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RestorePointCollection = armcompute.RestorePointCollection{
+	// 	Name: to.Ptr("myRpc"),
+	// 	Type: to.Ptr("Microsoft.Compute/restorePointCollections"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/myRpc"),
+	// 	Location: to.Ptr("norwayeast"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.RestorePointCollectionProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RestorePointCollectionID: to.Ptr("638f052b-a7c2-450c-89e7-6a3b8f1d6a7c"),
+	// 		Source: &armcompute.RestorePointCollectionSourceProperties{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 			Location: to.Ptr("eastus"),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRpc",
+	// 	"type": "Microsoft.Compute/restorePointCollections",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/myRpc",
+	// 	"location": "norwayeast",
+	// 	"properties": {
+	// 		"provisioningState": "Successful",
+	// 		"restorePointCollectionId": "638f052b-a7c2-450c-89e7-6a3b8f1d6a7c",
+	// 		"source": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 			"location": "eastus"
+	// 		}
+	// 	},
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollection.json
@@ -63,6 +99,42 @@ func ExampleRestorePointCollectionsClient_Get_getARestorePointCollectionButNotTh
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RestorePointCollection = armcompute.RestorePointCollection{
+	// 	Name: to.Ptr("myRpc"),
+	// 	Type: to.Ptr("Microsoft.Compute/restorePointCollections"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/myRpc"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.RestorePointCollectionProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RestorePointCollectionID: to.Ptr("59f04a5d-f783-4200-a1bd-d3f464e8c4b4"),
+	// 		Source: &armcompute.RestorePointCollectionSourceProperties{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/myRpc"),
+	// 			Location: to.Ptr("eastus"),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRpc",
+	// 	"type": "Microsoft.Compute/restorePointCollections",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/myRpc",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Successful",
+	// 		"restorePointCollectionId": "59f04a5d-f783-4200-a1bd-d3f464e8c4b4",
+	// 		"source": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/myRpc",
+	// 			"location": "eastus"
+	// 		}
+	// 	},
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionWithContainedRestorePoints.json
@@ -82,6 +154,178 @@ func ExampleRestorePointCollectionsClient_Get_getARestorePointCollectionIncludin
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RestorePointCollection = armcompute.RestorePointCollection{
+	// 	Name: to.Ptr("rpcName"),
+	// 	Type: to.Ptr("Microsoft.Compute/restorePointCollections"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.RestorePointCollectionProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RestorePointCollectionID: to.Ptr("59f04a5d-f783-4200-a1bd-d3f464e8c4b4"),
+	// 		RestorePoints: []*armcompute.RestorePoint{
+	// 			{
+	// 				Name: to.Ptr("restorePointName"),
+	// 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/restorePointName"),
+	// 				ConsistencyMode: to.Ptr(armcompute.ConsistencyModeTypesApplicationConsistent),
+	// 				ExcludeDisks: []*armcompute.APIEntityReference{
+	// 					{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
+	// 				}},
+	// 				ProvisioningDetails: &armcompute.RestorePointProvisioningDetails{
+	// 					CreationTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.8401519+00:00"); return t}()),
+	// 					StatusCode: to.Ptr[int32](0),
+	// 					StatusMessage: to.Ptr("{\"jobMessage\":\"\",\"messageStr\":\"1/27/2021 8:35:56 PM , snapshotCreator=guestExtension, hostStatusCodePreSnapshot=200, Plugin enable Succeeded (command: Snapshot) Snapshot command completed \",\"snapshotConsistency\":2}"),
+	// 					TotalUsedSizeInBytes: to.Ptr[int64](10835349504),
+	// 				},
+	// 				ProvisioningState: to.Ptr("Succeeded"),
+	// 				SourceMetadata: &armcompute.RestorePointSourceMetadata{
+	// 					DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 						BootDiagnostics: &armcompute.BootDiagnostics{
+	// 							Enabled: to.Ptr(true),
+	// 						},
+	// 					},
+	// 					HardwareProfile: &armcompute.HardwareProfile{
+	// 						VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardB1S),
+	// 					},
+	// 					OSProfile: &armcompute.OSProfile{
+	// 						AdminUsername: to.Ptr("admin"),
+	// 						AllowExtensionOperations: to.Ptr(true),
+	// 						ComputerName: to.Ptr("computerName"),
+	// 						RequireGuestProvisionSignal: to.Ptr(true),
+	// 						Secrets: []*armcompute.VaultSecretGroup{
+	// 						},
+	// 						WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 							EnableAutomaticUpdates: to.Ptr(true),
+	// 							ProvisionVMAgent: to.Ptr(true),
+	// 						},
+	// 					},
+	// 					StorageProfile: &armcompute.RestorePointSourceVMStorageProfile{
+	// 						DataDisks: []*armcompute.RestorePointSourceVMDataDisk{
+	// 							{
+	// 								Name: to.Ptr("testingexcludedisk_DataDisk_1"),
+	// 								Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 								DiskRestorePoint: &armcompute.APIEntityReference{
+	// 									ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/restorePointName/diskRestorePoints/testingexcludedisk_DataDisk_1_68785190-1acb-4d5e-a8ae-705b45f3dca5"),
+	// 								},
+	// 								Lun: to.Ptr[int32](1),
+	// 								ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 									ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_DataDisk_1"),
+	// 									StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 								},
+	// 						}},
+	// 						OSDisk: &armcompute.RestorePointSourceVMOSDisk{
+	// 							Name: to.Ptr("testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f"),
+	// 							Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 							DiskRestorePoint: &armcompute.APIEntityReference{
+	// 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/restorePointName/diskRestorePoints/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f_22b4bdfe-6c54-4f72-84d8-85d8860f0c57"),
+	// 							},
+	// 							ManagedDisk: &armcompute.ManagedDiskParameters{
+	// 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f"),
+	// 								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 							},
+	// 							OSType: to.Ptr(armcompute.OperatingSystemTypeWindows),
+	// 						},
+	// 					},
+	// 					VMID: to.Ptr("76d6541e-80bd-4dc1-932b-3cae4cfb80e7"),
+	// 				},
+	// 		}},
+	// 		Source: &armcompute.RestorePointCollectionSourceProperties{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+	// 			Location: to.Ptr("eastus"),
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "rpcName",
+	// 	"type": "Microsoft.Compute/restorePointCollections",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Successful",
+	// 		"restorePointCollectionId": "59f04a5d-f783-4200-a1bd-d3f464e8c4b4",
+	// 		"restorePoints": [
+	// 			{
+	// 				"name": "restorePointName",
+	// 				"consistencyMode": "ApplicationConsistent",
+	// 				"excludeDisks": [
+	// 					{
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"
+	// 					}
+	// 				],
+	// 				"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/restorePointName",
+	// 				"provisioningDetails": {
+	// 					"creationTime": "2021-01-27T20:35:05.8401519+00:00",
+	// 					"statusCode": 0,
+	// 					"statusMessage": "{\"jobMessage\":\"\",\"messageStr\":\"1/27/2021 8:35:56 PM , snapshotCreator=guestExtension, hostStatusCodePreSnapshot=200, Plugin enable Succeeded (command: Snapshot) Snapshot command completed \",\"snapshotConsistency\":2}",
+	// 					"totalUsedSizeInBytes": 10835349504
+	// 				},
+	// 				"provisioningState": "Succeeded",
+	// 				"sourceMetadata": {
+	// 					"diagnosticsProfile": {
+	// 						"bootDiagnostics": {
+	// 							"enabled": true
+	// 						}
+	// 					},
+	// 					"hardwareProfile": {
+	// 						"vmSize": "Standard_B1s"
+	// 					},
+	// 					"osProfile": {
+	// 						"adminUsername": "admin",
+	// 						"allowExtensionOperations": true,
+	// 						"computerName": "computerName",
+	// 						"requireGuestProvisionSignal": true,
+	// 						"secrets": [],
+	// 						"windowsConfiguration": {
+	// 							"enableAutomaticUpdates": true,
+	// 							"provisionVMAgent": true
+	// 						}
+	// 					},
+	// 					"storageProfile": {
+	// 						"dataDisks": [
+	// 							{
+	// 								"name": "testingexcludedisk_DataDisk_1",
+	// 								"caching": "None",
+	// 								"diskRestorePoint": {
+	// 									"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/restorePointName/diskRestorePoints/testingexcludedisk_DataDisk_1_68785190-1acb-4d5e-a8ae-705b45f3dca5"
+	// 								},
+	// 								"lun": 1,
+	// 								"managedDisk": {
+	// 									"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_DataDisk_1",
+	// 									"storageAccountType": "Standard_LRS"
+	// 								}
+	// 							}
+	// 						],
+	// 						"osDisk": {
+	// 							"name": "testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f",
+	// 							"caching": "ReadWrite",
+	// 							"diskRestorePoint": {
+	// 								"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/rpcName/restorePoints/restorePointName/diskRestorePoints/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f_22b4bdfe-6c54-4f72-84d8-85d8860f0c57"
+	// 							},
+	// 							"managedDisk": {
+	// 								"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f",
+	// 								"storageAccountType": "Standard_LRS"
+	// 							},
+	// 							"osType": "Windows"
+	// 						}
+	// 					},
+	// 					"vmId": "76d6541e-80bd-4dc1-932b-3cae4cfb80e7"
+	// 				}
+	// 			}
+	// 		],
+	// 		"source": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+	// 			"location": "eastus"
+	// 		}
+	// 	},
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionsInAResourceGroup.json
@@ -105,6 +349,83 @@ func ExampleRestorePointCollectionsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.RestorePointCollectionListResult = armcompute.RestorePointCollectionListResult{
+		// 	Value: []*armcompute.RestorePointCollection{
+		// 		{
+		// 			Name: to.Ptr("restorePointCollection1"),
+		// 			Type: to.Ptr("Microsoft.Compute/restorePointCollections"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection1"),
+		// 			Location: to.Ptr("West US"),
+		// 			Tags: map[string]*string{
+		// 				"myTag1": to.Ptr("tagValue1"),
+		// 			},
+		// 			Properties: &armcompute.RestorePointCollectionProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				RestorePointCollectionID: to.Ptr("59f04a5d-f783-4200-a1bd-d3f464e8c4b4"),
+		// 				Source: &armcompute.RestorePointCollectionSourceProperties{
+		// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection1"),
+		// 					Location: to.Ptr("West US"),
+		// 				},
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("restorePointCollection2"),
+		// 			Type: to.Ptr("Microsoft.Compute/restorePointCollections"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection2"),
+		// 			Location: to.Ptr("West US"),
+		// 			Tags: map[string]*string{
+		// 				"myTag1": to.Ptr("tagValue1"),
+		// 			},
+		// 			Properties: &armcompute.RestorePointCollectionProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				RestorePointCollectionID: to.Ptr("2875c590-e337-4102-9668-4f5b7e3f98a4"),
+		// 				Source: &armcompute.RestorePointCollectionSourceProperties{
+		// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection2"),
+		// 					Location: to.Ptr("West US"),
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "restorePointCollection1",
+		// 			"type": "Microsoft.Compute/restorePointCollections",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection1",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "Successful",
+		// 				"restorePointCollectionId": "59f04a5d-f783-4200-a1bd-d3f464e8c4b4",
+		// 				"source": {
+		// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection1",
+		// 					"location": "West US"
+		// 				}
+		// 			},
+		// 			"tags": {
+		// 				"myTag1": "tagValue1"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "restorePointCollection2",
+		// 			"type": "Microsoft.Compute/restorePointCollections",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection2",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "Deleting",
+		// 				"restorePointCollectionId": "2875c590-e337-4102-9668-4f5b7e3f98a4",
+		// 				"source": {
+		// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/restorePointCollection2",
+		// 					"location": "West US"
+		// 				}
+		// 			},
+		// 			"tags": {
+		// 				"myTag1": "tagValue1"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -129,5 +450,82 @@ func ExampleRestorePointCollectionsClient_NewListAllPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.RestorePointCollectionListResult = armcompute.RestorePointCollectionListResult{
+		// 	Value: []*armcompute.RestorePointCollection{
+		// 		{
+		// 			Name: to.Ptr("restorePointCollection1"),
+		// 			Type: to.Ptr("Microsoft.Compute/restorePointCollections"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/resourceGroup1/providers/Microsoft.Compute/restorePointCollections/restorePointCollection1"),
+		// 			Location: to.Ptr("West US"),
+		// 			Tags: map[string]*string{
+		// 				"myTag1": to.Ptr("tagValue1"),
+		// 			},
+		// 			Properties: &armcompute.RestorePointCollectionProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				RestorePointCollectionID: to.Ptr("59f04a5d-f783-4200-a1bd-d3f464e8c4b4"),
+		// 				Source: &armcompute.RestorePointCollectionSourceProperties{
+		// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/VM_Test"),
+		// 					Location: to.Ptr("West US"),
+		// 				},
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("restorePointCollection2"),
+		// 			Type: to.Ptr("Microsoft.Compute/restorePointCollections"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/resourceGroup2/providers/Microsoft.Compute/restorePointCollections/restorePointCollection2"),
+		// 			Location: to.Ptr("West US"),
+		// 			Tags: map[string]*string{
+		// 				"myTag1": to.Ptr("tagValue1"),
+		// 			},
+		// 			Properties: &armcompute.RestorePointCollectionProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				RestorePointCollectionID: to.Ptr("2875c590-e337-4102-9668-4f5b7e3f98a4"),
+		// 				Source: &armcompute.RestorePointCollectionSourceProperties{
+		// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/VM_Prod"),
+		// 					Location: to.Ptr("West US"),
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "restorePointCollection1",
+		// 			"type": "Microsoft.Compute/restorePointCollections",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/resourceGroup1/providers/Microsoft.Compute/restorePointCollections/restorePointCollection1",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "Successful",
+		// 				"restorePointCollectionId": "59f04a5d-f783-4200-a1bd-d3f464e8c4b4",
+		// 				"source": {
+		// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/VM_Test",
+		// 					"location": "West US"
+		// 				}
+		// 			},
+		// 			"tags": {
+		// 				"myTag1": "tagValue1"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "restorePointCollection2",
+		// 			"type": "Microsoft.Compute/restorePointCollections",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/resourceGroup2/providers/Microsoft.Compute/restorePointCollections/restorePointCollection2",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "Deleting",
+		// 				"restorePointCollectionId": "2875c590-e337-4102-9668-4f5b7e3f98a4",
+		// 				"source": {
+		// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/VM_Prod",
+		// 					"location": "West US"
+		// 				}
+		// 			},
+		// 			"tags": {
+		// 				"myTag1": "tagValue1"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

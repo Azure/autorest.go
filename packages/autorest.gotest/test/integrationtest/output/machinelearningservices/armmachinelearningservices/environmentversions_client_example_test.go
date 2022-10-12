@@ -42,6 +42,104 @@ func ExampleEnvironmentVersionsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.EnvironmentVersionResourceArmPaginatedResult = armmachinelearningservices.EnvironmentVersionResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.EnvironmentVersionData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.EnvironmentVersionDetails{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				IsAnonymous: to.Ptr(false),
+		// 				Build: &armmachinelearningservices.BuildContext{
+		// 					ContextURI: to.Ptr("https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/"),
+		// 					DockerfilePath: to.Ptr("prod/Dockerfile"),
+		// 				},
+		// 				CondaFile: to.Ptr("string"),
+		// 				EnvironmentType: to.Ptr(armmachinelearningservices.EnvironmentTypeCurated),
+		// 				Image: to.Ptr("docker.io/tensorflow/serving:latest"),
+		// 				InferenceConfig: &armmachinelearningservices.InferenceContainerProperties{
+		// 					LivenessRoute: &armmachinelearningservices.Route{
+		// 						Path: to.Ptr("string"),
+		// 						Port: to.Ptr[int32](1),
+		// 					},
+		// 					ReadinessRoute: &armmachinelearningservices.Route{
+		// 						Path: to.Ptr("string"),
+		// 						Port: to.Ptr[int32](1),
+		// 					},
+		// 					ScoringRoute: &armmachinelearningservices.Route{
+		// 						Path: to.Ptr("string"),
+		// 						Port: to.Ptr[int32](1),
+		// 					},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"build": {
+		// 					"contextUri": "https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/",
+		// 					"dockerfilePath": "prod/Dockerfile"
+		// 				},
+		// 				"condaFile": "string",
+		// 				"environmentType": "Curated",
+		// 				"image": "docker.io/tensorflow/serving:latest",
+		// 				"inferenceConfig": {
+		// 					"livenessRoute": {
+		// 						"path": "string",
+		// 						"port": 1
+		// 					},
+		// 					"readinessRoute": {
+		// 						"path": "string",
+		// 						"port": 1
+		// 					},
+		// 					"scoringRoute": {
+		// 						"path": "string",
+		// 						"port": 1
+		// 					}
+		// 				},
+		// 				"isAnonymous": false,
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"tags": {
+		// 					"string": "string"
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -79,6 +177,96 @@ func ExampleEnvironmentVersionsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.EnvironmentVersionData = armmachinelearningservices.EnvironmentVersionData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.EnvironmentVersionDetails{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		IsAnonymous: to.Ptr(false),
+	// 		Build: &armmachinelearningservices.BuildContext{
+	// 			ContextURI: to.Ptr("https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/"),
+	// 			DockerfilePath: to.Ptr("prod/Dockerfile"),
+	// 		},
+	// 		CondaFile: to.Ptr("string"),
+	// 		EnvironmentType: to.Ptr(armmachinelearningservices.EnvironmentTypeCurated),
+	// 		Image: to.Ptr("docker.io/tensorflow/serving:latest"),
+	// 		InferenceConfig: &armmachinelearningservices.InferenceContainerProperties{
+	// 			LivenessRoute: &armmachinelearningservices.Route{
+	// 				Path: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 			},
+	// 			ReadinessRoute: &armmachinelearningservices.Route{
+	// 				Path: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 			},
+	// 			ScoringRoute: &armmachinelearningservices.Route{
+	// 				Path: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"build": {
+	// 			"contextUri": "https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/",
+	// 			"dockerfilePath": "prod/Dockerfile"
+	// 		},
+	// 		"condaFile": "string",
+	// 		"environmentType": "Curated",
+	// 		"image": "docker.io/tensorflow/serving:latest",
+	// 		"inferenceConfig": {
+	// 			"livenessRoute": {
+	// 				"path": "string",
+	// 				"port": 1
+	// 			},
+	// 			"readinessRoute": {
+	// 				"path": "string",
+	// 				"port": 1
+	// 			},
+	// 			"scoringRoute": {
+	// 				"path": "string",
+	// 				"port": 1
+	// 			}
+	// 		},
+	// 		"isAnonymous": false,
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json
@@ -129,4 +317,94 @@ func ExampleEnvironmentVersionsClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.EnvironmentVersionData = armmachinelearningservices.EnvironmentVersionData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.EnvironmentVersionDetails{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		IsAnonymous: to.Ptr(false),
+	// 		Build: &armmachinelearningservices.BuildContext{
+	// 			ContextURI: to.Ptr("https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/"),
+	// 			DockerfilePath: to.Ptr("prod/Dockerfile"),
+	// 		},
+	// 		CondaFile: to.Ptr("string"),
+	// 		EnvironmentType: to.Ptr(armmachinelearningservices.EnvironmentTypeCurated),
+	// 		Image: to.Ptr("docker.io/tensorflow/serving:latest"),
+	// 		InferenceConfig: &armmachinelearningservices.InferenceContainerProperties{
+	// 			LivenessRoute: &armmachinelearningservices.Route{
+	// 				Path: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 			},
+	// 			ReadinessRoute: &armmachinelearningservices.Route{
+	// 				Path: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 			},
+	// 			ScoringRoute: &armmachinelearningservices.Route{
+	// 				Path: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"build": {
+	// 			"contextUri": "https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/",
+	// 			"dockerfilePath": "prod/Dockerfile"
+	// 		},
+	// 		"condaFile": "string",
+	// 		"environmentType": "Curated",
+	// 		"image": "docker.io/tensorflow/serving:latest",
+	// 		"inferenceConfig": {
+	// 			"livenessRoute": {
+	// 				"path": "string",
+	// 				"port": 1
+	// 			},
+	// 			"readinessRoute": {
+	// 				"path": "string",
+	// 				"port": 1
+	// 			},
+	// 			"scoringRoute": {
+	// 				"path": "string",
+	// 				"port": 1
+	// 			}
+	// 		},
+	// 		"isAnonymous": false,
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }

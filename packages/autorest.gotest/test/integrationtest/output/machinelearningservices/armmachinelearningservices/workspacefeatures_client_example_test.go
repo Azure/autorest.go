@@ -37,5 +37,34 @@ func ExampleWorkspaceFeaturesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ListAmlUserFeatureResult = armmachinelearningservices.ListAmlUserFeatureResult{
+		// 	Value: []*armmachinelearningservices.AmlUserFeature{
+		// 		{
+		// 			Description: to.Ptr("Create, edit or delete AutoML experiments in the SDK"),
+		// 			DisplayName: to.Ptr("Create edit experiments UI"),
+		// 			ID: to.Ptr("automatedml_createeditexperimentsui"),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Upgrade workspace from Basic to enterprise from the UI"),
+		// 			DisplayName: to.Ptr("Upgrade workspace UI"),
+		// 			ID: to.Ptr("workspace_upgradeworkspaceui"),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"description": "Create, edit or delete AutoML experiments in the SDK",
+		// 			"displayName": "Create edit experiments UI",
+		// 			"id": "automatedml_createeditexperimentsui"
+		// 		},
+		// 		{
+		// 			"description": "Upgrade workspace from Basic to enterprise from the UI",
+		// 			"displayName": "Upgrade workspace UI",
+		// 			"id": "workspace_upgradeworkspaceui"
+		// 		}
+		// 	]
+		// }
 	}
 }

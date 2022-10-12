@@ -47,6 +47,34 @@ func ExampleGalleryApplicationsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryApplication = armcompute.GalleryApplication{
+	// 	Name: to.Ptr("myGalleryApplicationName"),
+	// 	Type: to.Ptr("Microsoft.Compute/galleries"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryApplicationProperties{
+	// 		Description: to.Ptr("This is the gallery application description."),
+	// 		Eula: to.Ptr("This is the gallery application EULA."),
+	// 		PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+	// 		ReleaseNoteURI: to.Ptr("myReleaseNoteUri"),
+	// 		SupportedOSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryApplicationName",
+	// 	"type": "Microsoft.Compute/galleries",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"description": "This is the gallery application description.",
+	// 		"eula": "This is the gallery application EULA.",
+	// 		"privacyStatementUri": "myPrivacyStatementUri}",
+	// 		"releaseNoteUri": "myReleaseNoteUri",
+	// 		"supportedOSType": "Windows"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplication.json
@@ -78,6 +106,34 @@ func ExampleGalleryApplicationsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryApplication = armcompute.GalleryApplication{
+	// 	Name: to.Ptr("myGalleryApplicationName"),
+	// 	Type: to.Ptr("Microsoft.Compute/galleries"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryApplicationProperties{
+	// 		Description: to.Ptr("This is the gallery application description."),
+	// 		Eula: to.Ptr("This is the gallery application EULA."),
+	// 		PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+	// 		ReleaseNoteURI: to.Ptr("myReleaseNoteUri"),
+	// 		SupportedOSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryApplicationName",
+	// 	"type": "Microsoft.Compute/galleries",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"description": "This is the gallery application description.",
+	// 		"eula": "This is the gallery application EULA.",
+	// 		"privacyStatementUri": "myPrivacyStatementUri}",
+	// 		"releaseNoteUri": "myReleaseNoteUri",
+	// 		"supportedOSType": "Windows"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplication.json
@@ -97,6 +153,30 @@ func ExampleGalleryApplicationsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryApplication = armcompute.GalleryApplication{
+	// 	Name: to.Ptr("myGalleryApplicationName"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryApplicationProperties{
+	// 		Description: to.Ptr("This is the gallery application description."),
+	// 		Eula: to.Ptr("This is the gallery application EULA."),
+	// 		PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+	// 		ReleaseNoteURI: to.Ptr("myReleaseNoteUri"),
+	// 		SupportedOSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryApplicationName",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"description": "This is the gallery application description.",
+	// 		"eula": "This is the gallery application EULA.",
+	// 		"privacyStatementUri": "myPrivacyStatementUri}",
+	// 		"releaseNoteUri": "myReleaseNoteUri",
+	// 		"supportedOSType": "Windows"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplication.json
@@ -141,5 +221,37 @@ func ExampleGalleryApplicationsClient_NewListByGalleryPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.GalleryApplicationList = armcompute.GalleryApplicationList{
+		// 	Value: []*armcompute.GalleryApplication{
+		// 		{
+		// 			Name: to.Ptr("myGalleryApplicationName"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.GalleryApplicationProperties{
+		// 				Description: to.Ptr("This is the gallery application description."),
+		// 				Eula: to.Ptr("This is the gallery application EULA."),
+		// 				PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+		// 				ReleaseNoteURI: to.Ptr("myReleaseNoteUri"),
+		// 				SupportedOSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/galleries/myGalleryName/applications/myGalleryApplicationName",
+		// 	"value": [
+		// 		{
+		// 			"name": "myGalleryApplicationName",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"description": "This is the gallery application description.",
+		// 				"eula": "This is the gallery application EULA.",
+		// 				"privacyStatementUri": "myPrivacyStatementUri}",
+		// 				"releaseNoteUri": "myReleaseNoteUri",
+		// 				"supportedOSType": "Windows"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

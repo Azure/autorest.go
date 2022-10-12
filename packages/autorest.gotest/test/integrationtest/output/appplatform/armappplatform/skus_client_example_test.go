@@ -37,5 +37,59 @@ func ExampleSKUsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ResourceSKUCollection = armappplatform.ResourceSKUCollection{
+		// 	Value: []*armappplatform.ResourceSKU{
+		// 		{
+		// 			Name: to.Ptr("B0"),
+		// 			Capacity: &armappplatform.SKUCapacity{
+		// 				Default: to.Ptr[int32](1),
+		// 				Maximum: to.Ptr[int32](20),
+		// 				Minimum: to.Ptr[int32](1),
+		// 				ScaleType: to.Ptr(armappplatform.SKUScaleTypeAutomatic),
+		// 			},
+		// 			LocationInfo: []*armappplatform.ResourceSKULocationInfo{
+		// 				{
+		// 					Location: to.Ptr("eastus"),
+		// 					ZoneDetails: []*armappplatform.ResourceSKUZoneDetails{
+		// 					},
+		// 					Zones: []*string{
+		// 					},
+		// 			}},
+		// 			Locations: []*string{
+		// 				to.Ptr("eastus")},
+		// 				ResourceType: to.Ptr("Spring"),
+		// 				Restrictions: []*armappplatform.ResourceSKURestrictions{
+		// 				},
+		// 				Tier: to.Ptr("Basic"),
+		// 		}},
+		// 	}
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "B0",
+		// 			"capacity": {
+		// 				"default": 1,
+		// 				"maximum": 20,
+		// 				"minimum": 1,
+		// 				"scaleType": "Automatic"
+		// 			},
+		// 			"locationInfo": [
+		// 				{
+		// 					"location": "eastus",
+		// 					"zoneDetails": [],
+		// 					"zones": []
+		// 				}
+		// 			],
+		// 			"locations": [
+		// 				"eastus"
+		// 			],
+		// 			"resourceType": "Spring",
+		// 			"restrictions": [],
+		// 			"tier": "Basic"
+		// 		}
+		// 	]
+		// }
 	}
 }

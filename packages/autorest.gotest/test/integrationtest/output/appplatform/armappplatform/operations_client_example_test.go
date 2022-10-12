@@ -37,5 +37,42 @@ func ExampleOperationsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.AvailableOperations = armappplatform.AvailableOperations{
+		// 	Value: []*armappplatform.OperationDetail{
+		// 		{
+		// 			Name: to.Ptr("Microsoft.AppPlatform/Spring/read"),
+		// 			Display: &armappplatform.OperationDisplay{
+		// 				Description: to.Ptr("Create or Update Managed Applications"),
+		// 				Operation: to.Ptr("Create or Update Managed Applications"),
+		// 				Provider: to.Ptr("Microsoft Azure Distributed Managed Service for Spring"),
+		// 				Resource: to.Ptr("Managed Applications"),
+		// 			},
+		// 			IsDataAction: to.Ptr(false),
+		// 			Origin: to.Ptr("user,system"),
+		// 			Properties: &armappplatform.OperationProperties{
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "providers/Microsoft.AppPlatform?$skipToken={opaqueString}",
+		// 	"value": [
+		// 		{
+		// 			"name": "Microsoft.AppPlatform/Spring/read",
+		// 			"display": {
+		// 				"description": "Create or Update Managed Applications",
+		// 				"operation": "Create or Update Managed Applications",
+		// 				"provider": "Microsoft Azure Distributed Managed Service for Spring",
+		// 				"resource": "Managed Applications"
+		// 			},
+		// 			"isDataAction": false,
+		// 			"origin": "user,system",
+		// 			"properties": {
+		// 				"serviceSpecification": null
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

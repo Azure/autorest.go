@@ -38,6 +38,61 @@ func ExamplePrivateEndpointConnectionsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.PrivateEndpointConnectionList = armsignalr.PrivateEndpointConnectionList{
+		// 	Value: []*armsignalr.PrivateEndpointConnection{
+		// 		{
+		// 			Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 			Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+		// 			Properties: &armsignalr.PrivateEndpointConnectionProperties{
+		// 				PrivateEndpoint: &armsignalr.PrivateEndpoint{
+		// 					ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+		// 				},
+		// 				PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+		// 					ActionsRequired: to.Ptr("None"),
+		// 					Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+		// 				},
+		// 				ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+		// 			},
+		// 			SystemData: &armsignalr.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 			"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+		// 			"properties": {
+		// 				"privateEndpoint": {
+		// 					"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+		// 				},
+		// 				"privateLinkServiceConnectionState": {
+		// 					"actionsRequired": "None",
+		// 					"status": "Approved"
+		// 				},
+		// 				"provisioningState": "Succeeded"
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2015-02-03T04:05:06Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2015-02-03T04:05:06Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -58,6 +113,54 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateEndpointConnection = armsignalr.PrivateEndpointConnection{
+	// 	Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 	Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 	Properties: &armsignalr.PrivateEndpointConnectionProperties{
+	// 		PrivateEndpoint: &armsignalr.PrivateEndpoint{
+	// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 		},
+	// 		PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+	// 			ActionsRequired: to.Ptr("None"),
+	// 			Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 	},
+	// 	SystemData: &armsignalr.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 	"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 	"properties": {
+	// 		"privateEndpoint": {
+	// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 		},
+	// 		"privateLinkServiceConnectionState": {
+	// 			"actionsRequired": "None",
+	// 			"status": "Approved"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2015-02-03T04:05:06Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
@@ -87,6 +190,54 @@ func ExamplePrivateEndpointConnectionsClient_Update() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateEndpointConnection = armsignalr.PrivateEndpointConnection{
+	// 	Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 	Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+	// 	Properties: &armsignalr.PrivateEndpointConnectionProperties{
+	// 		PrivateEndpoint: &armsignalr.PrivateEndpoint{
+	// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 		},
+	// 		PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+	// 			ActionsRequired: to.Ptr("None"),
+	// 			Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
+	// 	},
+	// 	SystemData: &armsignalr.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 	"type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+	// 	"properties": {
+	// 		"privateEndpoint": {
+	// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 		},
+	// 		"privateLinkServiceConnectionState": {
+	// 			"actionsRequired": "None",
+	// 			"status": "Approved"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2015-02-03T04:05:06Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2015-02-03T04:05:06Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json

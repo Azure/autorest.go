@@ -87,6 +87,144 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 			},
+	// 			Source: &armcompute.GalleryArtifactVersionSource{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_ZRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10
+	// 			},
+	// 			"source": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersion.json
@@ -159,6 +297,144 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 			},
+	// 			Source: &armcompute.GalleryArtifactVersionSource{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_ZRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10
+	// 			},
+	// 			"source": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json
@@ -234,6 +510,134 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Source: &armcompute.GalleryArtifactVersionSource{
+	// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
+	// 					},
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 				Source: &armcompute.GalleryArtifactVersionSource{
+	// 					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_ZRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10,
+	// 					"source": {
+	// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"
+	// 					}
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10,
+	// 				"source": {
+	// 					"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithImageVersionAsSource.json
@@ -306,6 +710,144 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 			},
+	// 			Source: &armcompute.GalleryArtifactVersionSource{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionName}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_ZRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10
+	// 			},
+	// 			"source": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVHD.json
@@ -373,6 +915,113 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					Source: &armcompute.GalleryArtifactVersionSource{
+	// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
+	// 						URI: to.Ptr("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
+	// 					},
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				Source: &armcompute.GalleryArtifactVersionSource{
+	// 					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
+	// 					URI: to.Ptr("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_ZRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"source": {
+	// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}",
+	// 						"uri": "https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"
+	// 					}
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"source": {
+	// 					"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}",
+	// 					"uri": "https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersion.json
@@ -416,6 +1065,107 @@ func ExampleGalleryImageVersionsClient_BeginUpdate_updateASimpleGalleryImageVers
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 			},
+	// 			Source: &armcompute.GalleryArtifactVersionSource{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_ZRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10
+	// 			},
+	// 			"source": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersionWithoutSourceId.json
@@ -455,6 +1205,107 @@ func ExampleGalleryImageVersionsClient_BeginUpdate_updateASimpleGalleryImageVers
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 			},
+	// 			Source: &armcompute.GalleryArtifactVersionSource{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_ZRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10
+	// 			},
+	// 			"source": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithReplicationStatus.json
@@ -474,6 +1325,148 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithReplicatio
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 		},
+	// 		ReplicationStatus: &armcompute.ReplicationStatus{
+	// 			AggregatedState: to.Ptr(armcompute.AggregatedReplicationStateCompleted),
+	// 			Summary: []*armcompute.RegionalReplicationStatus{
+	// 				{
+	// 					Progress: to.Ptr[int32](100),
+	// 					Region: to.Ptr("West US"),
+	// 					State: to.Ptr(armcompute.ReplicationStateCompleted),
+	// 					Details: to.Ptr(""),
+	// 				},
+	// 				{
+	// 					Progress: to.Ptr[int32](100),
+	// 					Region: to.Ptr("East US"),
+	// 					State: to.Ptr(armcompute.ReplicationStateCompleted),
+	// 					Details: to.Ptr(""),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 			},
+	// 			Source: &armcompute.GalleryArtifactVersionSource{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"replicationStatus": {
+	// 			"aggregatedState": "Completed",
+	// 			"summary": [
+	// 				{
+	// 					"progress": 100,
+	// 					"region": "West US",
+	// 					"state": "Completed",
+	// 					"details": ""
+	// 				},
+	// 				{
+	// 					"progress": 100,
+	// 					"region": "East US",
+	// 					"state": "Completed",
+	// 					"details": ""
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10
+	// 			},
+	// 			"source": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithSnapshotsAsSource.json
@@ -493,6 +1486,107 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithSnapshotsA
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Source: &armcompute.GalleryArtifactVersionSource{
+	// 					},
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 				Source: &armcompute.GalleryArtifactVersionSource{
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10,
+	// 					"source": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{diskSnapshotName}"
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10,
+	// 				"source": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{snapshotName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithVhdAsSource.json
@@ -512,6 +1606,113 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithVhdAsASour
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					Source: &armcompute.GalleryArtifactVersionSource{
+	// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
+	// 						URI: to.Ptr("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
+	// 					},
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				Source: &armcompute.GalleryArtifactVersionSource{
+	// 					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
+	// 					URI: to.Ptr("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"source": {
+	// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}",
+	// 						"uri": "https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"
+	// 					}
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"source": {
+	// 					"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}",
+	// 					"uri": "https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersion.json
@@ -531,6 +1732,115 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersion() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryImageVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					Encryption: &armcompute.EncryptionImages{
+	// 						DataDiskImages: []*armcompute.DataDiskImageEncryption{
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](0),
+	// 							},
+	// 							{
+	// 								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 								Lun: to.Ptr[int32](1),
+	// 						}},
+	// 						OSDiskImage: &armcompute.OSDiskImageEncryption{
+	// 							DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+	// 						},
+	// 					},
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("East US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](2),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 		},
+	// 		StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+	// 			DataDiskImages: []*armcompute.GalleryDataDiskImage{
+	// 				{
+	// 					HostCaching: to.Ptr(armcompute.HostCachingNone),
+	// 					SizeInGB: to.Ptr[int32](10),
+	// 					Lun: to.Ptr[int32](1),
+	// 			}},
+	// 			OSDiskImage: &armcompute.GalleryOSDiskImage{
+	// 				HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+	// 				SizeInGB: to.Ptr[int32](10),
+	// 			},
+	// 			Source: &armcompute.GalleryArtifactVersionSource{
+	// 				ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"publishingProfile": {
+	// 			"publishedDate": "2018-01-01T00:00:00Z",
+	// 			"replicaCount": 1,
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"encryption": {
+	// 						"dataDiskImages": [
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet",
+	// 								"lun": 0
+	// 							},
+	// 							{
+	// 								"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet",
+	// 								"lun": 1
+	// 							}
+	// 						],
+	// 						"osDiskImage": {
+	// 							"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+	// 						}
+	// 					},
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				},
+	// 				{
+	// 					"name": "East US",
+	// 					"regionalReplicaCount": 2,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"storageProfile": {
+	// 			"dataDiskImages": [
+	// 				{
+	// 					"hostCaching": "None",
+	// 					"lun": 1,
+	// 					"sizeInGB": 10
+	// 				}
+	// 			],
+	// 			"osDiskImage": {
+	// 				"hostCaching": "ReadOnly",
+	// 				"sizeInGB": 10
+	// 			},
+	// 			"source": {
+	// 				"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImageVersion.json
@@ -575,5 +1885,122 @@ func ExampleGalleryImageVersionsClient_NewListByGalleryImagePager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.GalleryImageVersionList = armcompute.GalleryImageVersionList{
+		// 	Value: []*armcompute.GalleryImageVersion{
+		// 		{
+		// 			Name: to.Ptr("1.0.0"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.GalleryImageVersionProperties{
+		// 				ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
+		// 				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+		// 					PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t}()),
+		// 					ReplicaCount: to.Ptr[int32](1),
+		// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+		// 					TargetRegions: []*armcompute.TargetRegion{
+		// 						{
+		// 							Name: to.Ptr("West US"),
+		// 							Encryption: &armcompute.EncryptionImages{
+		// 								DataDiskImages: []*armcompute.DataDiskImageEncryption{
+		// 									{
+		// 										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
+		// 										Lun: to.Ptr[int32](0),
+		// 									},
+		// 									{
+		// 										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+		// 										Lun: to.Ptr[int32](1),
+		// 								}},
+		// 								OSDiskImage: &armcompute.OSDiskImageEncryption{
+		// 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
+		// 								},
+		// 							},
+		// 							RegionalReplicaCount: to.Ptr[int32](1),
+		// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+		// 						},
+		// 						{
+		// 							Name: to.Ptr("East US"),
+		// 							RegionalReplicaCount: to.Ptr[int32](2),
+		// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+		// 					}},
+		// 				},
+		// 				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+		// 					DataDiskImages: []*armcompute.GalleryDataDiskImage{
+		// 						{
+		// 							HostCaching: to.Ptr(armcompute.HostCachingNone),
+		// 							SizeInGB: to.Ptr[int32](10),
+		// 							Lun: to.Ptr[int32](1),
+		// 					}},
+		// 					OSDiskImage: &armcompute.GalleryOSDiskImage{
+		// 						HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+		// 						SizeInGB: to.Ptr[int32](10),
+		// 					},
+		// 					Source: &armcompute.GalleryArtifactVersionSource{
+		// 						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+		// 					},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/images/myGalleryImageName/versions?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/galleries/myGalleryName/images/myGalleryImageName/versions/myGalleryImageVersionName",
+		// 	"value": [
+		// 		{
+		// 			"name": "1.0.0",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "Succeeded",
+		// 				"publishingProfile": {
+		// 					"publishedDate": "2018-01-01T00:00:00Z",
+		// 					"replicaCount": 1,
+		// 					"storageAccountType": "Standard_LRS",
+		// 					"targetRegions": [
+		// 						{
+		// 							"name": "West US",
+		// 							"encryption": {
+		// 								"dataDiskImages": [
+		// 									{
+		// 										"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet",
+		// 										"lun": 0
+		// 									},
+		// 									{
+		// 										"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet",
+		// 										"lun": 1
+		// 									}
+		// 								],
+		// 								"osDiskImage": {
+		// 									"diskEncryptionSetId": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"
+		// 								}
+		// 							},
+		// 							"regionalReplicaCount": 1,
+		// 							"storageAccountType": "Standard_LRS"
+		// 						},
+		// 						{
+		// 							"name": "East US",
+		// 							"regionalReplicaCount": 2,
+		// 							"storageAccountType": "Standard_LRS"
+		// 						}
+		// 					]
+		// 				},
+		// 				"storageProfile": {
+		// 					"dataDiskImages": [
+		// 						{
+		// 							"hostCaching": "None",
+		// 							"lun": 1,
+		// 							"sizeInGB": 10
+		// 						}
+		// 					],
+		// 					"osDiskImage": {
+		// 						"hostCaching": "ReadOnly",
+		// 						"sizeInGB": 10
+		// 					},
+		// 					"source": {
+		// 						"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

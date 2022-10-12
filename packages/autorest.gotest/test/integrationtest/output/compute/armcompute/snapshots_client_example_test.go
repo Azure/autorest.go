@@ -47,6 +47,32 @@ func ExampleSnapshotsClient_BeginCreateOrUpdate_createASnapshotByImportingAnUnma
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Snapshot = armcompute.Snapshot{
+	// 	Name: to.Ptr("mySnapshot1"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.SnapshotProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+	// 			SourceURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 			StorageAccountID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySnapshot1",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Import",
+	// 			"sourceUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+	// 			"storageAccountId": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromTheSameSubscription.json
@@ -78,6 +104,30 @@ func ExampleSnapshotsClient_BeginCreateOrUpdate_createASnapshotByImportingAnUnma
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Snapshot = armcompute.Snapshot{
+	// 	Name: to.Ptr("mySnapshot1"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.SnapshotProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+	// 			SourceURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySnapshot1",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Import",
+	// 			"sourceUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotFromAnExistingSnapshot.json
@@ -109,6 +159,30 @@ func ExampleSnapshotsClient_BeginCreateOrUpdate_createASnapshotFromAnExistingSna
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Snapshot = armcompute.Snapshot{
+	// 	Name: to.Ptr("mySnapshot2"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.SnapshotProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+	// 			SourceResourceID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySnapshot2",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Copy",
+	// 			"sourceResourceId": "subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"
+	// 		},
+	// 		"provisioningState": "Updating"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutASnapshot.json
@@ -128,6 +202,107 @@ func ExampleSnapshotsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.Snapshot = armcompute.Snapshot{
+	// 	Name: to.Ptr("mySnapshot"),
+	// 	Type: to.Ptr("Microsoft.Compute/snapshots"),
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("Development"),
+	// 		"project": to.Ptr("Snapshots"),
+	// 	},
+	// 	Properties: &armcompute.SnapshotProperties{
+	// 		CreationData: &armcompute.CreationData{
+	// 			CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+	// 			SourceResourceID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk"),
+	// 			SourceUniqueID: to.Ptr("d633885d-d102-4481-901e-5b2413d1a7be"),
+	// 		},
+	// 		DiskSizeGB: to.Ptr[int32](100),
+	// 		Encryption: &armcompute.Encryption{
+	// 			Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+	// 		},
+	// 		EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+	// 			Enabled: to.Ptr(true),
+	// 			EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+	// 				{
+	// 					DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+	// 						SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+	// 						SourceVault: &armcompute.SourceVault{
+	// 							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+	// 						},
+	// 					},
+	// 					KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+	// 						KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+	// 						SourceVault: &armcompute.SourceVault{
+	// 							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+	// 						},
+	// 					},
+	// 			}},
+	// 		},
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		PurchasePlan: &armcompute.DiskPurchasePlan{
+	// 			Name: to.Ptr("test_sku"),
+	// 			Product: to.Ptr("marketplace_vm_test"),
+	// 			Publisher: to.Ptr("test_test_pmc2pc1"),
+	// 		},
+	// 		SupportsHibernation: to.Ptr(true),
+	// 		TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.079872+00:00"); return t}()),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySnapshot",
+	// 	"type": "Microsoft.Compute/snapshots",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"creationData": {
+	// 			"createOption": "Copy",
+	// 			"sourceResourceId": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk",
+	// 			"sourceUniqueId": "d633885d-d102-4481-901e-5b2413d1a7be"
+	// 		},
+	// 		"diskSizeGB": 100,
+	// 		"encryption": {
+	// 			"type": "EncryptionAtRestWithPlatformKey"
+	// 		},
+	// 		"encryptionSettingsCollection": {
+	// 			"enabled": true,
+	// 			"encryptionSettings": [
+	// 				{
+	// 					"diskEncryptionKey": {
+	// 						"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+	// 						"sourceVault": {
+	// 							"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+	// 						}
+	// 					},
+	// 					"keyEncryptionKey": {
+	// 						"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+	// 						"sourceVault": {
+	// 							"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+	// 						}
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"hyperVGeneration": "V1",
+	// 		"osType": "Windows",
+	// 		"provisioningState": "Succeeded",
+	// 		"purchasePlan": {
+	// 			"name": "test_sku",
+	// 			"product": "marketplace_vm_test",
+	// 			"publisher": "test_test_pmc2pc1"
+	// 		},
+	// 		"supportsHibernation": true,
+	// 		"timeCreated": "2016-12-28T04:41:35.079872+00:00"
+	// 	},
+	// 	"tags": {
+	// 		"department": "Development",
+	// 		"project": "Snapshots"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListSnapshotsInAResourceGroup.json
@@ -151,6 +326,98 @@ func ExampleSnapshotsClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SnapshotList = armcompute.SnapshotList{
+		// 	Value: []*armcompute.Snapshot{
+		// 		{
+		// 			Name: to.Ptr("mySnapshot"),
+		// 			Type: to.Ptr("Microsoft.Compute/snapshots"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("Snapshots"),
+		// 			},
+		// 			Properties: &armcompute.SnapshotProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+		// 					SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](200),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+		// 					Enabled: to.Ptr(true),
+		// 					EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+		// 						{
+		// 							DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+		// 								SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 							KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+		// 								KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 					}},
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.9278721+00:00"); return t}()),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mySnapshot",
+		// 			"type": "Microsoft.Compute/snapshots",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "Copy",
+		// 					"sourceResourceId": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"
+		// 				},
+		// 				"diskSizeGB": 200,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"encryptionSettingsCollection": {
+		// 					"enabled": true,
+		// 					"encryptionSettings": [
+		// 						{
+		// 							"diskEncryptionKey": {
+		// 								"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							},
+		// 							"keyEncryptionKey": {
+		// 								"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:41:35.9278721+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "Snapshots"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -175,5 +442,182 @@ func ExampleSnapshotsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SnapshotList = armcompute.SnapshotList{
+		// 	Value: []*armcompute.Snapshot{
+		// 		{
+		// 			Name: to.Ptr("mySnapshot1"),
+		// 			Type: to.Ptr("Microsoft.Compute/snapshots"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("Snapshots"),
+		// 			},
+		// 			Properties: &armcompute.SnapshotProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionCopy),
+		// 					SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](200),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+		// 					Enabled: to.Ptr(true),
+		// 					EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+		// 						{
+		// 							DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+		// 								SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 							KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+		// 								KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 					}},
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:47:30.6630569+00:00"); return t}()),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("mySnapshot2"),
+		// 			Type: to.Ptr("Microsoft.Compute/snapshots"),
+		// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("Snapshots"),
+		// 			},
+		// 			Properties: &armcompute.SnapshotProperties{
+		// 				CreationData: &armcompute.CreationData{
+		// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+		// 					SourceURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+		// 					StorageAccountID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"),
+		// 				},
+		// 				DiskSizeGB: to.Ptr[int32](200),
+		// 				Encryption: &armcompute.Encryption{
+		// 					Type: to.Ptr(armcompute.EncryptionTypeEncryptionAtRestWithPlatformKey),
+		// 				},
+		// 				EncryptionSettingsCollection: &armcompute.EncryptionSettingsCollection{
+		// 					Enabled: to.Ptr(true),
+		// 					EncryptionSettings: []*armcompute.EncryptionSettingsElement{
+		// 						{
+		// 							DiskEncryptionKey: &armcompute.KeyVaultAndSecretReference{
+		// 								SecretURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/secrets/{secret}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 							KeyEncryptionKey: &armcompute.KeyVaultAndKeyReference{
+		// 								KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+		// 								SourceVault: &armcompute.SourceVault{
+		// 									ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+		// 								},
+		// 							},
+		// 					}},
+		// 				},
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:47:30.3247198+00:00"); return t}()),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mySnapshot1",
+		// 			"type": "Microsoft.Compute/snapshots",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "Copy",
+		// 					"sourceResourceId": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"
+		// 				},
+		// 				"diskSizeGB": 200,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"encryptionSettingsCollection": {
+		// 					"enabled": true,
+		// 					"encryptionSettings": [
+		// 						{
+		// 							"diskEncryptionKey": {
+		// 								"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							},
+		// 							"keyEncryptionKey": {
+		// 								"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:47:30.6630569+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "Snapshots"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "mySnapshot2",
+		// 			"type": "Microsoft.Compute/snapshots",
+		// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"creationData": {
+		// 					"createOption": "Import",
+		// 					"sourceUri": "https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd",
+		// 					"storageAccountId": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"
+		// 				},
+		// 				"diskSizeGB": 200,
+		// 				"encryption": {
+		// 					"type": "EncryptionAtRestWithPlatformKey"
+		// 				},
+		// 				"encryptionSettingsCollection": {
+		// 					"enabled": true,
+		// 					"encryptionSettings": [
+		// 						{
+		// 							"diskEncryptionKey": {
+		// 								"secretUrl": "https://myvmvault.vault-int.azure-int.net/secrets/{secret}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							},
+		// 							"keyEncryptionKey": {
+		// 								"keyUrl": "https://myvmvault.vault-int.azure-int.net/keys/{key}",
+		// 								"sourceVault": {
+		// 									"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"
+		// 								}
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osType": "Windows",
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2016-12-28T04:47:30.3247198+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "Snapshots"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

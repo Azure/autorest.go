@@ -46,6 +46,204 @@ func ExampleJobsClient_NewListPager_listAutoMlJob() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.JobBaseData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeManagedIdentity),
+		// 			},
+		// 			Properties: &armmachinelearningservices.AutoMLJob{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				ComputeID: to.Ptr("string"),
+		// 				DisplayName: to.Ptr("string"),
+		// 				ExperimentName: to.Ptr("string"),
+		// 				Identity: &armmachinelearningservices.AmlToken{
+		// 					IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+		// 				},
+		// 				IsArchived: to.Ptr(false),
+		// 				JobType: to.Ptr(armmachinelearningservices.JobTypeAutoML),
+		// 				Schedule: &armmachinelearningservices.CronSchedule{
+		// 					EndTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 					ScheduleStatus: to.Ptr(armmachinelearningservices.ScheduleStatusDisabled),
+		// 					ScheduleType: to.Ptr(armmachinelearningservices.ScheduleTypeCron),
+		// 					StartTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 					TimeZone: to.Ptr("string"),
+		// 					Expression: to.Ptr("string"),
+		// 				},
+		// 				Services: map[string]*armmachinelearningservices.JobService{
+		// 					"string": &armmachinelearningservices.JobService{
+		// 						Endpoint: to.Ptr("string"),
+		// 						ErrorMessage: to.Ptr("string"),
+		// 						JobServiceType: to.Ptr("string"),
+		// 						Port: to.Ptr[int32](1),
+		// 						Properties: map[string]*string{
+		// 							"string": to.Ptr("string"),
+		// 						},
+		// 						Status: to.Ptr("string"),
+		// 					},
+		// 				},
+		// 				Status: to.Ptr(armmachinelearningservices.JobStatusScheduled),
+		// 				EnvironmentID: to.Ptr("string"),
+		// 				EnvironmentVariables: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+		// 					"string": &armmachinelearningservices.URIFileJobOutput{
+		// 						Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+		// 						URI: to.Ptr("string"),
+		// 						Description: to.Ptr("string"),
+		// 						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+		// 					},
+		// 				},
+		// 				Resources: &armmachinelearningservices.ResourceConfiguration{
+		// 					InstanceCount: to.Ptr[int32](1),
+		// 					InstanceType: to.Ptr("string"),
+		// 					Properties: map[string]interface{}{
+		// 						"string": map[string]interface{}{
+		// 							"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
+		// 						},
+		// 					},
+		// 				},
+		// 				TaskDetails: &armmachinelearningservices.ImageClassification{
+		// 					TaskType: to.Ptr(armmachinelearningservices.TaskTypeImageClassification),
+		// 					DataSettings: &armmachinelearningservices.ImageVerticalDataSettings{
+		// 						TargetColumnName: to.Ptr("string"),
+		// 						TrainingData: &armmachinelearningservices.TrainingDataSettings{
+		// 							Data: &armmachinelearningservices.MLTableJobInput{
+		// 								URI: to.Ptr("string"),
+		// 								JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeMLTable),
+		// 							},
+		// 						},
+		// 					},
+		// 					LimitSettings: &armmachinelearningservices.ImageLimitSettings{
+		// 						MaxTrials: to.Ptr[int32](2),
+		// 					},
+		// 					ModelSettings: &armmachinelearningservices.ImageModelSettingsClassification{
+		// 						ValidationCropSize: to.Ptr[int32](2),
+		// 					},
+		// 					SearchSpace: []*armmachinelearningservices.ImageModelDistributionSettingsClassification{
+		// 						{
+		// 							ValidationCropSize: to.Ptr("choice(2, 360)"),
+		// 					}},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"computeId": "string",
+		// 				"displayName": "string",
+		// 				"environmentId": "string",
+		// 				"environmentVariables": {
+		// 					"string": "string"
+		// 				},
+		// 				"experimentName": "string",
+		// 				"identity": {
+		// 					"identityType": "AMLToken"
+		// 				},
+		// 				"isArchived": false,
+		// 				"jobType": "AutoML",
+		// 				"outputs": {
+		// 					"string": {
+		// 						"description": "string",
+		// 						"jobOutputType": "UriFile",
+		// 						"mode": "ReadWriteMount",
+		// 						"uri": "string"
+		// 					}
+		// 				},
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"resources": {
+		// 					"instanceCount": 1,
+		// 					"instanceType": "string",
+		// 					"properties": {
+		// 						"string": {
+		// 							"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": null
+		// 						}
+		// 					}
+		// 				},
+		// 				"schedule": {
+		// 					"endTime": "2020-01-01T12:34:56.999Z",
+		// 					"expression": "string",
+		// 					"scheduleStatus": "Disabled",
+		// 					"scheduleType": "Cron",
+		// 					"startTime": "2020-01-01T12:34:56.999Z",
+		// 					"timeZone": "string"
+		// 				},
+		// 				"services": {
+		// 					"string": {
+		// 						"endpoint": "string",
+		// 						"errorMessage": "string",
+		// 						"jobServiceType": "string",
+		// 						"port": 1,
+		// 						"properties": {
+		// 							"string": "string"
+		// 						},
+		// 						"status": "string"
+		// 					}
+		// 				},
+		// 				"status": "Scheduled",
+		// 				"tags": {
+		// 					"string": "string"
+		// 				},
+		// 				"taskDetails": {
+		// 					"dataSettings": {
+		// 						"targetColumnName": "string",
+		// 						"trainingData": {
+		// 							"data": {
+		// 								"jobInputType": "MLTable",
+		// 								"uri": "string"
+		// 							}
+		// 						}
+		// 					},
+		// 					"limitSettings": {
+		// 						"maxTrials": 2
+		// 					},
+		// 					"modelSettings": {
+		// 						"validationCropSize": 2
+		// 					},
+		// 					"searchSpace": [
+		// 						{
+		// 							"validationCropSize": "choice(2, 360)"
+		// 						}
+		// 					],
+		// 					"taskType": "ImageClassification"
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "ManagedIdentity"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -76,6 +274,184 @@ func ExampleJobsClient_NewListPager_listCommandJob() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.JobBaseData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.CommandJob{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				ComputeID: to.Ptr("string"),
+		// 				DisplayName: to.Ptr("string"),
+		// 				ExperimentName: to.Ptr("string"),
+		// 				Identity: &armmachinelearningservices.AmlToken{
+		// 					IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+		// 				},
+		// 				JobType: to.Ptr(armmachinelearningservices.JobTypeCommand),
+		// 				Services: map[string]*armmachinelearningservices.JobService{
+		// 					"string": &armmachinelearningservices.JobService{
+		// 						Endpoint: to.Ptr("string"),
+		// 						ErrorMessage: to.Ptr("string"),
+		// 						JobServiceType: to.Ptr("string"),
+		// 						Port: to.Ptr[int32](1),
+		// 						Properties: map[string]*string{
+		// 							"string": to.Ptr("string"),
+		// 						},
+		// 						Status: to.Ptr("string"),
+		// 					},
+		// 				},
+		// 				Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+		// 				CodeID: to.Ptr("string"),
+		// 				Command: to.Ptr("string"),
+		// 				Distribution: &armmachinelearningservices.TensorFlow{
+		// 					DistributionType: to.Ptr(armmachinelearningservices.DistributionTypeTensorFlow),
+		// 					ParameterServerCount: to.Ptr[int32](1),
+		// 					WorkerCount: to.Ptr[int32](1),
+		// 				},
+		// 				EnvironmentID: to.Ptr("string"),
+		// 				EnvironmentVariables: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Inputs: map[string]armmachinelearningservices.JobInputClassification{
+		// 					"string": &armmachinelearningservices.LiteralJobInput{
+		// 						Description: to.Ptr("string"),
+		// 						JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+		// 						Value: to.Ptr("string"),
+		// 					},
+		// 				},
+		// 				Limits: &armmachinelearningservices.CommandJobLimits{
+		// 					JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeCommand),
+		// 					Timeout: to.Ptr("PT5M"),
+		// 				},
+		// 				Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+		// 					"string": &armmachinelearningservices.URIFileJobOutput{
+		// 						Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+		// 						URI: to.Ptr("string"),
+		// 						Description: to.Ptr("string"),
+		// 						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+		// 					},
+		// 				},
+		// 				Parameters: map[string]interface{}{
+		// 					"string": "string",
+		// 				},
+		// 				Resources: &armmachinelearningservices.ResourceConfiguration{
+		// 					InstanceCount: to.Ptr[int32](1),
+		// 					InstanceType: to.Ptr("string"),
+		// 					Properties: map[string]interface{}{
+		// 						"string": map[string]interface{}{
+		// 							"7aad5998-6c83-4ca9-b50a-b44dfc43f420": nil,
+		// 						},
+		// 					},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"codeId": "string",
+		// 				"command": "string",
+		// 				"computeId": "string",
+		// 				"displayName": "string",
+		// 				"distribution": {
+		// 					"distributionType": "TensorFlow",
+		// 					"parameterServerCount": 1,
+		// 					"workerCount": 1
+		// 				},
+		// 				"environmentId": "string",
+		// 				"environmentVariables": {
+		// 					"string": "string"
+		// 				},
+		// 				"experimentName": "string",
+		// 				"identity": {
+		// 					"identityType": "AMLToken"
+		// 				},
+		// 				"inputs": {
+		// 					"string": {
+		// 						"description": "string",
+		// 						"jobInputType": "Literal",
+		// 						"value": "string"
+		// 					}
+		// 				},
+		// 				"jobType": "Command",
+		// 				"limits": {
+		// 					"jobLimitsType": "Command",
+		// 					"timeout": "PT5M"
+		// 				},
+		// 				"outputs": {
+		// 					"string": {
+		// 						"description": "string",
+		// 						"jobOutputType": "UriFile",
+		// 						"mode": "ReadWriteMount",
+		// 						"uri": "string"
+		// 					}
+		// 				},
+		// 				"parameters": {
+		// 					"string": "string"
+		// 				},
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"resources": {
+		// 					"instanceCount": 1,
+		// 					"instanceType": "string",
+		// 					"properties": {
+		// 						"string": {
+		// 							"7aad5998-6c83-4ca9-b50a-b44dfc43f420": null
+		// 						}
+		// 					}
+		// 				},
+		// 				"services": {
+		// 					"string": {
+		// 						"endpoint": "string",
+		// 						"errorMessage": "string",
+		// 						"jobServiceType": "string",
+		// 						"port": 1,
+		// 						"properties": {
+		// 							"string": "string"
+		// 						},
+		// 						"status": "string"
+		// 					}
+		// 				},
+		// 				"status": "NotStarted",
+		// 				"tags": {
+		// 					"string": "string"
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -106,6 +482,127 @@ func ExampleJobsClient_NewListPager_listPipelineJob() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.JobBaseData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.PipelineJob{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				ComputeID: to.Ptr("string"),
+		// 				DisplayName: to.Ptr("string"),
+		// 				ExperimentName: to.Ptr("string"),
+		// 				JobType: to.Ptr(armmachinelearningservices.JobTypePipeline),
+		// 				Services: map[string]*armmachinelearningservices.JobService{
+		// 					"string": &armmachinelearningservices.JobService{
+		// 						Endpoint: to.Ptr("string"),
+		// 						ErrorMessage: to.Ptr("string"),
+		// 						JobServiceType: to.Ptr("string"),
+		// 						Port: to.Ptr[int32](1),
+		// 						Properties: map[string]*string{
+		// 							"string": to.Ptr("string"),
+		// 						},
+		// 						Status: to.Ptr("string"),
+		// 					},
+		// 				},
+		// 				Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+		// 				Inputs: map[string]armmachinelearningservices.JobInputClassification{
+		// 					"string": &armmachinelearningservices.LiteralJobInput{
+		// 						Description: to.Ptr("string"),
+		// 						JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+		// 						Value: to.Ptr("string"),
+		// 					},
+		// 				},
+		// 				Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+		// 					"string": &armmachinelearningservices.URIFileJobOutput{
+		// 						Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeUpload),
+		// 						URI: to.Ptr("string"),
+		// 						Description: to.Ptr("string"),
+		// 						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+		// 					},
+		// 				},
+		// 				Settings: map[string]interface{}{
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"computeId": "string",
+		// 				"displayName": "string",
+		// 				"experimentName": "string",
+		// 				"inputs": {
+		// 					"string": {
+		// 						"description": "string",
+		// 						"jobInputType": "Literal",
+		// 						"value": "string"
+		// 					}
+		// 				},
+		// 				"jobType": "Pipeline",
+		// 				"outputs": {
+		// 					"string": {
+		// 						"description": "string",
+		// 						"jobOutputType": "UriFile",
+		// 						"mode": "Upload",
+		// 						"uri": "string"
+		// 					}
+		// 				},
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"services": {
+		// 					"string": {
+		// 						"endpoint": "string",
+		// 						"errorMessage": "string",
+		// 						"jobServiceType": "string",
+		// 						"port": 1,
+		// 						"properties": {
+		// 							"string": "string"
+		// 						},
+		// 						"status": "string"
+		// 					}
+		// 				},
+		// 				"settings": {},
+		// 				"status": "NotStarted",
+		// 				"tags": {
+		// 					"string": "string"
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -136,6 +633,179 @@ func ExampleJobsClient_NewListPager_listSweepJob() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.JobBaseData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Properties: &armmachinelearningservices.SweepJob{
+		// 				Description: to.Ptr("string"),
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				ComputeID: to.Ptr("string"),
+		// 				DisplayName: to.Ptr("string"),
+		// 				ExperimentName: to.Ptr("string"),
+		// 				JobType: to.Ptr(armmachinelearningservices.JobTypeSweep),
+		// 				Services: map[string]*armmachinelearningservices.JobService{
+		// 					"string": &armmachinelearningservices.JobService{
+		// 						Endpoint: to.Ptr("string"),
+		// 						ErrorMessage: to.Ptr("string"),
+		// 						JobServiceType: to.Ptr("string"),
+		// 						Port: to.Ptr[int32](1),
+		// 						Properties: map[string]*string{
+		// 							"string": to.Ptr("string"),
+		// 						},
+		// 						Status: to.Ptr("string"),
+		// 					},
+		// 				},
+		// 				Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+		// 				EarlyTermination: &armmachinelearningservices.MedianStoppingPolicy{
+		// 					DelayEvaluation: to.Ptr[int32](1),
+		// 					EvaluationInterval: to.Ptr[int32](1),
+		// 					PolicyType: to.Ptr(armmachinelearningservices.EarlyTerminationPolicyTypeMedianStopping),
+		// 				},
+		// 				Limits: &armmachinelearningservices.SweepJobLimits{
+		// 					JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeSweep),
+		// 					MaxConcurrentTrials: to.Ptr[int32](1),
+		// 					MaxTotalTrials: to.Ptr[int32](1),
+		// 					TrialTimeout: to.Ptr("PT1S"),
+		// 				},
+		// 				Objective: &armmachinelearningservices.Objective{
+		// 					Goal: to.Ptr(armmachinelearningservices.GoalMinimize),
+		// 					PrimaryMetric: to.Ptr("string"),
+		// 				},
+		// 				SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
+		// 					SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
+		// 				},
+		// 				SearchSpace: map[string]interface{}{
+		// 					"string":map[string]interface{}{
+		// 					},
+		// 				},
+		// 				Trial: &armmachinelearningservices.TrialComponent{
+		// 					CodeID: to.Ptr("string"),
+		// 					Command: to.Ptr("string"),
+		// 					Distribution: &armmachinelearningservices.Mpi{
+		// 						DistributionType: to.Ptr(armmachinelearningservices.DistributionTypeMpi),
+		// 						ProcessCountPerInstance: to.Ptr[int32](1),
+		// 					},
+		// 					EnvironmentID: to.Ptr("string"),
+		// 					EnvironmentVariables: map[string]*string{
+		// 						"string": to.Ptr("string"),
+		// 					},
+		// 					Resources: &armmachinelearningservices.ResourceConfiguration{
+		// 						InstanceCount: to.Ptr[int32](1),
+		// 						InstanceType: to.Ptr("string"),
+		// 						Properties: map[string]interface{}{
+		// 							"string": map[string]interface{}{
+		// 								"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
+		// 							},
+		// 						},
+		// 					},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"computeId": "string",
+		// 				"displayName": "string",
+		// 				"earlyTermination": {
+		// 					"delayEvaluation": 1,
+		// 					"evaluationInterval": 1,
+		// 					"policyType": "MedianStopping"
+		// 				},
+		// 				"experimentName": "string",
+		// 				"jobType": "Sweep",
+		// 				"limits": {
+		// 					"jobLimitsType": "Sweep",
+		// 					"maxConcurrentTrials": 1,
+		// 					"maxTotalTrials": 1,
+		// 					"trialTimeout": "PT1S"
+		// 				},
+		// 				"objective": {
+		// 					"goal": "Minimize",
+		// 					"primaryMetric": "string"
+		// 				},
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"samplingAlgorithm": {
+		// 					"samplingAlgorithmType": "Grid"
+		// 				},
+		// 				"searchSpace": {
+		// 					"string": {}
+		// 				},
+		// 				"services": {
+		// 					"string": {
+		// 						"endpoint": "string",
+		// 						"errorMessage": "string",
+		// 						"jobServiceType": "string",
+		// 						"port": 1,
+		// 						"properties": {
+		// 							"string": "string"
+		// 						},
+		// 						"status": "string"
+		// 					}
+		// 				},
+		// 				"status": "NotStarted",
+		// 				"tags": {
+		// 					"string": "string"
+		// 				},
+		// 				"trial": {
+		// 					"codeId": "string",
+		// 					"command": "string",
+		// 					"distribution": {
+		// 						"distributionType": "Mpi",
+		// 						"processCountPerInstance": 1
+		// 					},
+		// 					"environmentId": "string",
+		// 					"environmentVariables": {
+		// 						"string": "string"
+		// 					},
+		// 					"resources": {
+		// 						"instanceCount": 1,
+		// 						"instanceType": "string",
+		// 						"properties": {
+		// 							"string": {
+		// 								"e6b6493e-7d5e-4db3-be1e-306ec641327e": null
+		// 							}
+		// 						}
+		// 					}
+		// 				}
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -177,6 +847,197 @@ func ExampleJobsClient_Get_getAutoMlJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeManagedIdentity),
+	// 	},
+	// 	Properties: &armmachinelearningservices.AutoMLJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		Identity: &armmachinelearningservices.AmlToken{
+	// 			IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+	// 		},
+	// 		IsArchived: to.Ptr(false),
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypeAutoML),
+	// 		Schedule: &armmachinelearningservices.CronSchedule{
+	// 			EndTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 			ScheduleStatus: to.Ptr(armmachinelearningservices.ScheduleStatusDisabled),
+	// 			ScheduleType: to.Ptr(armmachinelearningservices.ScheduleTypeCron),
+	// 			StartTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 			TimeZone: to.Ptr("string"),
+	// 			Expression: to.Ptr("string"),
+	// 		},
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusScheduled),
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+	// 			"string": &armmachinelearningservices.URIFileJobOutput{
+	// 				Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+	// 				URI: to.Ptr("string"),
+	// 				Description: to.Ptr("string"),
+	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+	// 			},
+	// 		},
+	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 			InstanceCount: to.Ptr[int32](1),
+	// 			InstanceType: to.Ptr("string"),
+	// 			Properties: map[string]interface{}{
+	// 				"string": map[string]interface{}{
+	// 					"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
+	// 				},
+	// 			},
+	// 		},
+	// 		TaskDetails: &armmachinelearningservices.ImageClassification{
+	// 			TaskType: to.Ptr(armmachinelearningservices.TaskTypeImageClassification),
+	// 			DataSettings: &armmachinelearningservices.ImageVerticalDataSettings{
+	// 				TargetColumnName: to.Ptr("string"),
+	// 				TrainingData: &armmachinelearningservices.TrainingDataSettings{
+	// 					Data: &armmachinelearningservices.MLTableJobInput{
+	// 						URI: to.Ptr("string"),
+	// 						JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeMLTable),
+	// 					},
+	// 				},
+	// 			},
+	// 			LimitSettings: &armmachinelearningservices.ImageLimitSettings{
+	// 				MaxTrials: to.Ptr[int32](2),
+	// 			},
+	// 			ModelSettings: &armmachinelearningservices.ImageModelSettingsClassification{
+	// 				ValidationCropSize: to.Ptr[int32](2),
+	// 			},
+	// 			SearchSpace: []*armmachinelearningservices.ImageModelDistributionSettingsClassification{
+	// 				{
+	// 					ValidationCropSize: to.Ptr("choice(2, 360)"),
+	// 			}},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"experimentName": "string",
+	// 		"identity": {
+	// 			"identityType": "AMLToken"
+	// 		},
+	// 		"isArchived": false,
+	// 		"jobType": "AutoML",
+	// 		"outputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobOutputType": "UriFile",
+	// 				"mode": "ReadWriteMount",
+	// 				"uri": "string"
+	// 			}
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"resources": {
+	// 			"instanceCount": 1,
+	// 			"instanceType": "string",
+	// 			"properties": {
+	// 				"string": {
+	// 					"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": null
+	// 				}
+	// 			}
+	// 		},
+	// 		"schedule": {
+	// 			"endTime": "2020-01-01T12:34:56.999Z",
+	// 			"expression": "string",
+	// 			"scheduleStatus": "Disabled",
+	// 			"scheduleType": "Cron",
+	// 			"startTime": "2020-01-01T12:34:56.999Z",
+	// 			"timeZone": "string"
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"status": "Scheduled",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"taskDetails": {
+	// 			"dataSettings": {
+	// 				"targetColumnName": "string",
+	// 				"trainingData": {
+	// 					"data": {
+	// 						"jobInputType": "MLTable",
+	// 						"uri": "string"
+	// 					}
+	// 				}
+	// 			},
+	// 			"limitSettings": {
+	// 				"maxTrials": 2
+	// 			},
+	// 			"modelSettings": {
+	// 				"validationCropSize": 2
+	// 			},
+	// 			"searchSpace": [
+	// 				{
+	// 					"validationCropSize": "choice(2, 360)"
+	// 				}
+	// 			],
+	// 			"taskType": "ImageClassification"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "ManagedIdentity"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json
@@ -196,6 +1057,176 @@ func ExampleJobsClient_Get_getCommandJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.CommandJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		Identity: &armmachinelearningservices.AmlToken{
+	// 			IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+	// 		},
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypeCommand),
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+	// 		CodeID: to.Ptr("string"),
+	// 		Command: to.Ptr("string"),
+	// 		Distribution: &armmachinelearningservices.TensorFlow{
+	// 			DistributionType: to.Ptr(armmachinelearningservices.DistributionTypeTensorFlow),
+	// 			ParameterServerCount: to.Ptr[int32](1),
+	// 			WorkerCount: to.Ptr[int32](1),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Inputs: map[string]armmachinelearningservices.JobInputClassification{
+	// 			"string": &armmachinelearningservices.LiteralJobInput{
+	// 				Description: to.Ptr("string"),
+	// 				JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+	// 				Value: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Limits: &armmachinelearningservices.CommandJobLimits{
+	// 			JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeCommand),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+	// 			"string": &armmachinelearningservices.URIFileJobOutput{
+	// 				Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+	// 				URI: to.Ptr("string"),
+	// 				Description: to.Ptr("string"),
+	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+	// 			},
+	// 		},
+	// 		Parameters: map[string]interface{}{
+	// 			"string": "string",
+	// 		},
+	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 			InstanceCount: to.Ptr[int32](1),
+	// 			InstanceType: to.Ptr("string"),
+	// 			Properties: map[string]interface{}{
+	// 				"string": map[string]interface{}{
+	// 					"8385cf05-78c0-41ef-b31d-36796a678e19": nil,
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"codeId": "string",
+	// 		"command": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"distribution": {
+	// 			"distributionType": "TensorFlow",
+	// 			"parameterServerCount": 1,
+	// 			"workerCount": 1
+	// 		},
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"experimentName": "string",
+	// 		"identity": {
+	// 			"identityType": "AMLToken"
+	// 		},
+	// 		"inputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobInputType": "Literal",
+	// 				"value": "string"
+	// 			}
+	// 		},
+	// 		"jobType": "Command",
+	// 		"limits": {
+	// 			"jobLimitsType": "Command",
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"outputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobOutputType": "UriFile",
+	// 				"mode": "ReadWriteMount",
+	// 				"uri": "string"
+	// 			}
+	// 		},
+	// 		"parameters": {
+	// 			"string": "string"
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"resources": {
+	// 			"instanceCount": 1,
+	// 			"instanceType": "string",
+	// 			"properties": {
+	// 				"string": {
+	// 					"8385cf05-78c0-41ef-b31d-36796a678e19": null
+	// 				}
+	// 			}
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"status": "NotStarted",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json
@@ -215,6 +1246,119 @@ func ExampleJobsClient_Get_getPipelineJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.PipelineJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypePipeline),
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+	// 		Inputs: map[string]armmachinelearningservices.JobInputClassification{
+	// 			"string": &armmachinelearningservices.LiteralJobInput{
+	// 				Description: to.Ptr("string"),
+	// 				JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+	// 				Value: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+	// 			"string": &armmachinelearningservices.URIFileJobOutput{
+	// 				Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeUpload),
+	// 				URI: to.Ptr("string"),
+	// 				Description: to.Ptr("string"),
+	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+	// 			},
+	// 		},
+	// 		Settings: map[string]interface{}{
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"experimentName": "string",
+	// 		"inputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobInputType": "Literal",
+	// 				"value": "string"
+	// 			}
+	// 		},
+	// 		"jobType": "Pipeline",
+	// 		"outputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobOutputType": "UriFile",
+	// 				"mode": "Upload",
+	// 				"uri": "string"
+	// 			}
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"settings": {},
+	// 		"status": "NotStarted",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json
@@ -234,6 +1378,171 @@ func ExampleJobsClient_Get_getSweepJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.SweepJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypeSweep),
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+	// 		EarlyTermination: &armmachinelearningservices.MedianStoppingPolicy{
+	// 			DelayEvaluation: to.Ptr[int32](1),
+	// 			EvaluationInterval: to.Ptr[int32](1),
+	// 			PolicyType: to.Ptr(armmachinelearningservices.EarlyTerminationPolicyTypeMedianStopping),
+	// 		},
+	// 		Limits: &armmachinelearningservices.SweepJobLimits{
+	// 			JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeSweep),
+	// 			MaxConcurrentTrials: to.Ptr[int32](1),
+	// 			MaxTotalTrials: to.Ptr[int32](1),
+	// 			TrialTimeout: to.Ptr("PT1S"),
+	// 		},
+	// 		Objective: &armmachinelearningservices.Objective{
+	// 			Goal: to.Ptr(armmachinelearningservices.GoalMinimize),
+	// 			PrimaryMetric: to.Ptr("string"),
+	// 		},
+	// 		SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
+	// 			SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
+	// 		},
+	// 		SearchSpace: map[string]interface{}{
+	// 			"string":map[string]interface{}{
+	// 			},
+	// 		},
+	// 		Trial: &armmachinelearningservices.TrialComponent{
+	// 			CodeID: to.Ptr("string"),
+	// 			Command: to.Ptr("string"),
+	// 			Distribution: &armmachinelearningservices.Mpi{
+	// 				DistributionType: to.Ptr(armmachinelearningservices.DistributionTypeMpi),
+	// 				ProcessCountPerInstance: to.Ptr[int32](1),
+	// 			},
+	// 			EnvironmentID: to.Ptr("string"),
+	// 			EnvironmentVariables: map[string]*string{
+	// 				"string": to.Ptr("string"),
+	// 			},
+	// 			Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 				InstanceCount: to.Ptr[int32](1),
+	// 				InstanceType: to.Ptr("string"),
+	// 				Properties: map[string]interface{}{
+	// 					"string": map[string]interface{}{
+	// 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"earlyTermination": {
+	// 			"delayEvaluation": 1,
+	// 			"evaluationInterval": 1,
+	// 			"policyType": "MedianStopping"
+	// 		},
+	// 		"experimentName": "string",
+	// 		"jobType": "Sweep",
+	// 		"limits": {
+	// 			"jobLimitsType": "Sweep",
+	// 			"maxConcurrentTrials": 1,
+	// 			"maxTotalTrials": 1,
+	// 			"trialTimeout": "PT1S"
+	// 		},
+	// 		"objective": {
+	// 			"goal": "Minimize",
+	// 			"primaryMetric": "string"
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"samplingAlgorithm": {
+	// 			"samplingAlgorithmType": "Grid"
+	// 		},
+	// 		"searchSpace": {
+	// 			"string": {}
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"status": "NotStarted",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"trial": {
+	// 			"codeId": "string",
+	// 			"command": "string",
+	// 			"distribution": {
+	// 				"distributionType": "Mpi",
+	// 				"processCountPerInstance": 1
+	// 			},
+	// 			"environmentId": "string",
+	// 			"environmentVariables": {
+	// 				"string": "string"
+	// 			},
+	// 			"resources": {
+	// 				"instanceCount": 1,
+	// 				"instanceType": "string",
+	// 				"properties": {
+	// 					"string": {
+	// 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": null
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json
@@ -332,6 +1641,197 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateAutoMlJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeManagedIdentity),
+	// 	},
+	// 	Properties: &armmachinelearningservices.AutoMLJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		Identity: &armmachinelearningservices.AmlToken{
+	// 			IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+	// 		},
+	// 		IsArchived: to.Ptr(false),
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypeAutoML),
+	// 		Schedule: &armmachinelearningservices.CronSchedule{
+	// 			EndTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 			ScheduleStatus: to.Ptr(armmachinelearningservices.ScheduleStatusDisabled),
+	// 			ScheduleType: to.Ptr(armmachinelearningservices.ScheduleTypeCron),
+	// 			StartTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 			TimeZone: to.Ptr("string"),
+	// 			Expression: to.Ptr("string"),
+	// 		},
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusScheduled),
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+	// 			"string": &armmachinelearningservices.URIFileJobOutput{
+	// 				Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+	// 				URI: to.Ptr("string"),
+	// 				Description: to.Ptr("string"),
+	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+	// 			},
+	// 		},
+	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 			InstanceCount: to.Ptr[int32](1),
+	// 			InstanceType: to.Ptr("string"),
+	// 			Properties: map[string]interface{}{
+	// 				"string": map[string]interface{}{
+	// 					"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
+	// 				},
+	// 			},
+	// 		},
+	// 		TaskDetails: &armmachinelearningservices.ImageClassification{
+	// 			TaskType: to.Ptr(armmachinelearningservices.TaskTypeImageClassification),
+	// 			DataSettings: &armmachinelearningservices.ImageVerticalDataSettings{
+	// 				TargetColumnName: to.Ptr("string"),
+	// 				TrainingData: &armmachinelearningservices.TrainingDataSettings{
+	// 					Data: &armmachinelearningservices.MLTableJobInput{
+	// 						URI: to.Ptr("string"),
+	// 						JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeMLTable),
+	// 					},
+	// 				},
+	// 			},
+	// 			LimitSettings: &armmachinelearningservices.ImageLimitSettings{
+	// 				MaxTrials: to.Ptr[int32](2),
+	// 			},
+	// 			ModelSettings: &armmachinelearningservices.ImageModelSettingsClassification{
+	// 				ValidationCropSize: to.Ptr[int32](2),
+	// 			},
+	// 			SearchSpace: []*armmachinelearningservices.ImageModelDistributionSettingsClassification{
+	// 				{
+	// 					ValidationCropSize: to.Ptr("choice(2, 360)"),
+	// 			}},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"experimentName": "string",
+	// 		"identity": {
+	// 			"identityType": "AMLToken"
+	// 		},
+	// 		"isArchived": false,
+	// 		"jobType": "AutoML",
+	// 		"outputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobOutputType": "UriFile",
+	// 				"mode": "ReadWriteMount",
+	// 				"uri": "string"
+	// 			}
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"resources": {
+	// 			"instanceCount": 1,
+	// 			"instanceType": "string",
+	// 			"properties": {
+	// 				"string": {
+	// 					"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": null
+	// 				}
+	// 			}
+	// 		},
+	// 		"schedule": {
+	// 			"endTime": "2020-01-01T12:34:56.999Z",
+	// 			"expression": "string",
+	// 			"scheduleStatus": "Disabled",
+	// 			"scheduleType": "Cron",
+	// 			"startTime": "2020-01-01T12:34:56.999Z",
+	// 			"timeZone": "string"
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"status": "Scheduled",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"taskDetails": {
+	// 			"dataSettings": {
+	// 				"targetColumnName": "string",
+	// 				"trainingData": {
+	// 					"data": {
+	// 						"jobInputType": "MLTable",
+	// 						"uri": "string"
+	// 					}
+	// 				}
+	// 			},
+	// 			"limitSettings": {
+	// 				"maxTrials": 2
+	// 			},
+	// 			"modelSettings": {
+	// 				"validationCropSize": 2
+	// 			},
+	// 			"searchSpace": [
+	// 				{
+	// 					"validationCropSize": "choice(2, 360)"
+	// 				}
+	// 			],
+	// 			"taskType": "ImageClassification"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "ManagedIdentity"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json
@@ -417,6 +1917,176 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateCommandJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.CommandJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		Identity: &armmachinelearningservices.AmlToken{
+	// 			IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+	// 		},
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypeCommand),
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+	// 		CodeID: to.Ptr("string"),
+	// 		Command: to.Ptr("string"),
+	// 		Distribution: &armmachinelearningservices.TensorFlow{
+	// 			DistributionType: to.Ptr(armmachinelearningservices.DistributionTypeTensorFlow),
+	// 			ParameterServerCount: to.Ptr[int32](1),
+	// 			WorkerCount: to.Ptr[int32](1),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Inputs: map[string]armmachinelearningservices.JobInputClassification{
+	// 			"string": &armmachinelearningservices.LiteralJobInput{
+	// 				Description: to.Ptr("string"),
+	// 				JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+	// 				Value: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Limits: &armmachinelearningservices.CommandJobLimits{
+	// 			JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeCommand),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+	// 			"string": &armmachinelearningservices.URIFileJobOutput{
+	// 				Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+	// 				URI: to.Ptr("string"),
+	// 				Description: to.Ptr("string"),
+	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+	// 			},
+	// 		},
+	// 		Parameters: map[string]interface{}{
+	// 			"string": "string",
+	// 		},
+	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 			InstanceCount: to.Ptr[int32](1),
+	// 			InstanceType: to.Ptr("string"),
+	// 			Properties: map[string]interface{}{
+	// 				"string": map[string]interface{}{
+	// 					"a0847709-f5aa-4561-8ba5-d915d403fdcf": nil,
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"codeId": "string",
+	// 		"command": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"distribution": {
+	// 			"distributionType": "TensorFlow",
+	// 			"parameterServerCount": 1,
+	// 			"workerCount": 1
+	// 		},
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"experimentName": "string",
+	// 		"identity": {
+	// 			"identityType": "AMLToken"
+	// 		},
+	// 		"inputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobInputType": "Literal",
+	// 				"value": "string"
+	// 			}
+	// 		},
+	// 		"jobType": "Command",
+	// 		"limits": {
+	// 			"jobLimitsType": "Command",
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"outputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobOutputType": "UriFile",
+	// 				"mode": "ReadWriteMount",
+	// 				"uri": "string"
+	// 			}
+	// 		},
+	// 		"parameters": {
+	// 			"string": "string"
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"resources": {
+	// 			"instanceCount": 1,
+	// 			"instanceType": "string",
+	// 			"properties": {
+	// 				"string": {
+	// 					"a0847709-f5aa-4561-8ba5-d915d403fdcf": null
+	// 				}
+	// 			}
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"status": "NotStarted",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json
@@ -476,6 +2146,119 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdatePipelineJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.PipelineJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypePipeline),
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+	// 		Inputs: map[string]armmachinelearningservices.JobInputClassification{
+	// 			"string": &armmachinelearningservices.LiteralJobInput{
+	// 				Description: to.Ptr("string"),
+	// 				JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+	// 				Value: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+	// 			"string": &armmachinelearningservices.URIFileJobOutput{
+	// 				Mode: to.Ptr(armmachinelearningservices.OutputDeliveryModeUpload),
+	// 				URI: to.Ptr("string"),
+	// 				Description: to.Ptr("string"),
+	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+	// 			},
+	// 		},
+	// 		Settings: map[string]interface{}{
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"experimentName": "string",
+	// 		"inputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobInputType": "Literal",
+	// 				"value": "string"
+	// 			}
+	// 		},
+	// 		"jobType": "Pipeline",
+	// 		"outputs": {
+	// 			"string": {
+	// 				"description": "string",
+	// 				"jobOutputType": "UriFile",
+	// 				"mode": "Upload",
+	// 				"uri": "string"
+	// 			}
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"settings": {},
+	// 		"status": "NotStarted",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json
@@ -561,6 +2344,171 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateSweepJob() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.JobBaseData = armmachinelearningservices.JobBaseData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Properties: &armmachinelearningservices.SweepJob{
+	// 		Description: to.Ptr("string"),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ComputeID: to.Ptr("string"),
+	// 		DisplayName: to.Ptr("string"),
+	// 		ExperimentName: to.Ptr("string"),
+	// 		JobType: to.Ptr(armmachinelearningservices.JobTypeSweep),
+	// 		Services: map[string]*armmachinelearningservices.JobService{
+	// 			"string": &armmachinelearningservices.JobService{
+	// 				Endpoint: to.Ptr("string"),
+	// 				ErrorMessage: to.Ptr("string"),
+	// 				JobServiceType: to.Ptr("string"),
+	// 				Port: to.Ptr[int32](1),
+	// 				Properties: map[string]*string{
+	// 					"string": to.Ptr("string"),
+	// 				},
+	// 				Status: to.Ptr("string"),
+	// 			},
+	// 		},
+	// 		Status: to.Ptr(armmachinelearningservices.JobStatusNotStarted),
+	// 		EarlyTermination: &armmachinelearningservices.MedianStoppingPolicy{
+	// 			DelayEvaluation: to.Ptr[int32](1),
+	// 			EvaluationInterval: to.Ptr[int32](1),
+	// 			PolicyType: to.Ptr(armmachinelearningservices.EarlyTerminationPolicyTypeMedianStopping),
+	// 		},
+	// 		Limits: &armmachinelearningservices.SweepJobLimits{
+	// 			JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeSweep),
+	// 			MaxConcurrentTrials: to.Ptr[int32](1),
+	// 			MaxTotalTrials: to.Ptr[int32](1),
+	// 			TrialTimeout: to.Ptr("PT1S"),
+	// 		},
+	// 		Objective: &armmachinelearningservices.Objective{
+	// 			Goal: to.Ptr(armmachinelearningservices.GoalMinimize),
+	// 			PrimaryMetric: to.Ptr("string"),
+	// 		},
+	// 		SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
+	// 			SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
+	// 		},
+	// 		SearchSpace: map[string]interface{}{
+	// 			"string":map[string]interface{}{
+	// 			},
+	// 		},
+	// 		Trial: &armmachinelearningservices.TrialComponent{
+	// 			CodeID: to.Ptr("string"),
+	// 			Command: to.Ptr("string"),
+	// 			Distribution: &armmachinelearningservices.Mpi{
+	// 				DistributionType: to.Ptr(armmachinelearningservices.DistributionTypeMpi),
+	// 				ProcessCountPerInstance: to.Ptr[int32](1),
+	// 			},
+	// 			EnvironmentID: to.Ptr("string"),
+	// 			EnvironmentVariables: map[string]*string{
+	// 				"string": to.Ptr("string"),
+	// 			},
+	// 			Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 				InstanceCount: to.Ptr[int32](1),
+	// 				InstanceType: to.Ptr("string"),
+	// 				Properties: map[string]interface{}{
+	// 					"string": map[string]interface{}{
+	// 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"computeId": "string",
+	// 		"displayName": "string",
+	// 		"earlyTermination": {
+	// 			"delayEvaluation": 1,
+	// 			"evaluationInterval": 1,
+	// 			"policyType": "MedianStopping"
+	// 		},
+	// 		"experimentName": "string",
+	// 		"jobType": "Sweep",
+	// 		"limits": {
+	// 			"jobLimitsType": "Sweep",
+	// 			"maxConcurrentTrials": 1,
+	// 			"maxTotalTrials": 1,
+	// 			"trialTimeout": "PT1S"
+	// 		},
+	// 		"objective": {
+	// 			"goal": "Minimize",
+	// 			"primaryMetric": "string"
+	// 		},
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"samplingAlgorithm": {
+	// 			"samplingAlgorithmType": "Grid"
+	// 		},
+	// 		"searchSpace": {
+	// 			"string": {}
+	// 		},
+	// 		"services": {
+	// 			"string": {
+	// 				"endpoint": "string",
+	// 				"errorMessage": "string",
+	// 				"jobServiceType": "string",
+	// 				"port": 1,
+	// 				"properties": {
+	// 					"string": "string"
+	// 				},
+	// 				"status": "string"
+	// 			}
+	// 		},
+	// 		"status": "NotStarted",
+	// 		"tags": {
+	// 			"string": "string"
+	// 		},
+	// 		"trial": {
+	// 			"codeId": "string",
+	// 			"command": "string",
+	// 			"distribution": {
+	// 				"distributionType": "Mpi",
+	// 				"processCountPerInstance": 1
+	// 			},
+	// 			"environmentId": "string",
+	// 			"environmentVariables": {
+	// 				"string": "string"
+	// 			},
+	// 			"resources": {
+	// 				"instanceCount": 1,
+	// 				"instanceType": "string",
+	// 				"properties": {
+	// 					"string": {
+	// 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": null
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json

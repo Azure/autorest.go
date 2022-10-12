@@ -39,6 +39,24 @@ func ExampleSSHPublicKeysClient_Create() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SSHPublicKeyResource = armcompute.SSHPublicKeyResource{
+	// 	Name: to.Ptr("mySshPublicKeyName"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/sshPublicKeys/mySshPublicKeyName"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.SSHPublicKeyResourceProperties{
+	// 		PublicKey: to.Ptr("{ssh-rsa public key}"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySshPublicKeyName",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/sshPublicKeys/mySshPublicKeyName",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"publicKey": "{ssh-rsa public key}"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetAnSshPublicKey.json
@@ -58,6 +76,30 @@ func ExampleSSHPublicKeysClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SSHPublicKeyResource = armcompute.SSHPublicKeyResource{
+	// 	Name: to.Ptr("mySshPublicKeyName"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/SshPublicKeys/mySshPublicKeyName"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"{tagName}": to.Ptr("{tagValue}"),
+	// 	},
+	// 	Properties: &armcompute.SSHPublicKeyResourceProperties{
+	// 		PublicKey: to.Ptr("{ssh-rsa public key}"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mySshPublicKeyName",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/SshPublicKeys/mySshPublicKeyName",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"publicKey": "{ssh-rsa public key}"
+	// 	},
+	// 	"tags": {
+	// 		"{tagName}": "{tagValue}"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GenerateSshKeyPair.json
@@ -77,4 +119,16 @@ func ExampleSSHPublicKeysClient_GenerateKeyPair() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SSHPublicKeyGenerateKeyPairResult = armcompute.SSHPublicKeyGenerateKeyPairResult{
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/SshPublicKeys/mySshPublicKeyName"),
+	// 	PrivateKey: to.Ptr("{ssh private key}"),
+	// 	PublicKey: to.Ptr("{ssh-rsa public key}"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/SshPublicKeys/mySshPublicKeyName",
+	// 	"privateKey": "{ssh private key}",
+	// 	"publicKey": "{ssh-rsa public key}"
+	// }
 }

@@ -38,6 +38,321 @@ func ExampleVirtualMachineScaleSetsClient_NewListByLocationPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.VirtualMachineScaleSetListResult = armcompute.VirtualMachineScaleSetListResult{
+		// 	Value: []*armcompute.VirtualMachineScaleSet{
+		// 		{
+		// 			Name: to.Ptr("{virtualMachineScaleSetName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"myTag1": to.Ptr("tagValue1"),
+		// 			},
+		// 			Properties: &armcompute.VirtualMachineScaleSetProperties{
+		// 				DoNotRunExtensionsOnOverprovisionedVMs: to.Ptr(false),
+		// 				Overprovision: to.Ptr(false),
+		// 				PlatformFaultDomainCount: to.Ptr[int32](1),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				SinglePlacementGroup: to.Ptr(false),
+		// 				UpgradePolicy: &armcompute.UpgradePolicy{
+		// 					AutomaticOSUpgradePolicy: &armcompute.AutomaticOSUpgradePolicy{
+		// 						EnableAutomaticOSUpgrade: to.Ptr(false),
+		// 					},
+		// 					Mode: to.Ptr(armcompute.UpgradeModeAutomatic),
+		// 				},
+		// 				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+		// 					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+		// 						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+		// 							{
+		// 								Name: to.Ptr("myNic"),
+		// 								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+		// 									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+		// 										{
+		// 											Name: to.Ptr("myIPConfig"),
+		// 											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+		// 												Primary: to.Ptr(true),
+		// 												Subnet: &armcompute.APIEntityReference{
+		// 													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"),
+		// 												},
+		// 											},
+		// 									}},
+		// 									NetworkSecurityGroup: &armcompute.SubResource{
+		// 										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"),
+		// 									},
+		// 									Primary: to.Ptr(true),
+		// 								},
+		// 						}},
+		// 					},
+		// 					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+		// 						AdminUsername: to.Ptr("admin"),
+		// 						ComputerNamePrefix: to.Ptr("{virtualMachineScaleSetName}"),
+		// 						LinuxConfiguration: &armcompute.LinuxConfiguration{
+		// 							DisablePasswordAuthentication: to.Ptr(false),
+		// 						},
+		// 					},
+		// 					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+		// 						DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+		// 						},
+		// 						ImageReference: &armcompute.ImageReference{
+		// 							Offer: to.Ptr("databricks"),
+		// 							Publisher: to.Ptr("azuredatabricks"),
+		// 							SKU: to.Ptr("databricksworker"),
+		// 							Version: to.Ptr("3.15.2"),
+		// 						},
+		// 						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+		// 							Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+		// 							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+		// 							DiskSizeGB: to.Ptr[int32](30),
+		// 							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+		// 								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+		// 							},
+		// 						},
+		// 					},
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.SKU{
+		// 				Name: to.Ptr("Standard_D2s_v3"),
+		// 				Capacity: to.Ptr[int64](4),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("{virtualMachineScaleSetName}"),
+		// 			Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}1"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"myTag1": to.Ptr("tagValue2"),
+		// 			},
+		// 			Properties: &armcompute.VirtualMachineScaleSetProperties{
+		// 				DoNotRunExtensionsOnOverprovisionedVMs: to.Ptr(false),
+		// 				Overprovision: to.Ptr(false),
+		// 				PlatformFaultDomainCount: to.Ptr[int32](1),
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				SinglePlacementGroup: to.Ptr(false),
+		// 				UpgradePolicy: &armcompute.UpgradePolicy{
+		// 					AutomaticOSUpgradePolicy: &armcompute.AutomaticOSUpgradePolicy{
+		// 						EnableAutomaticOSUpgrade: to.Ptr(false),
+		// 					},
+		// 					Mode: to.Ptr(armcompute.UpgradeModeAutomatic),
+		// 				},
+		// 				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+		// 					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+		// 						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+		// 							{
+		// 								Name: to.Ptr("myNic1"),
+		// 								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+		// 									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+		// 										{
+		// 											Name: to.Ptr("myIPConfig"),
+		// 											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+		// 												Primary: to.Ptr(true),
+		// 												Subnet: &armcompute.APIEntityReference{
+		// 													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"),
+		// 												},
+		// 											},
+		// 									}},
+		// 									NetworkSecurityGroup: &armcompute.SubResource{
+		// 										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"),
+		// 									},
+		// 									Primary: to.Ptr(true),
+		// 								},
+		// 						}},
+		// 					},
+		// 					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+		// 						AdminUsername: to.Ptr("admin"),
+		// 						ComputerNamePrefix: to.Ptr("{virtualMachineScaleSetName}"),
+		// 						LinuxConfiguration: &armcompute.LinuxConfiguration{
+		// 							DisablePasswordAuthentication: to.Ptr(false),
+		// 						},
+		// 					},
+		// 					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+		// 						DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+		// 						},
+		// 						ImageReference: &armcompute.ImageReference{
+		// 							Offer: to.Ptr("databricks"),
+		// 							Publisher: to.Ptr("azuredatabricks"),
+		// 							SKU: to.Ptr("databricksworker"),
+		// 							Version: to.Ptr("3.15.2"),
+		// 						},
+		// 						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+		// 							Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+		// 							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+		// 							DiskSizeGB: to.Ptr[int32](30),
+		// 							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+		// 								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+		// 							},
+		// 						},
+		// 					},
+		// 				},
+		// 			},
+		// 			SKU: &armcompute.SKU{
+		// 				Name: to.Ptr("Standard_D2s_v3"),
+		// 				Capacity: to.Ptr[int64](4),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "{virtualMachineScaleSetName}",
+		// 			"type": "Microsoft.Compute/virtualMachineScaleSets",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"doNotRunExtensionsOnOverprovisionedVMs": false,
+		// 				"overprovision": false,
+		// 				"platformFaultDomainCount": 1,
+		// 				"provisioningState": "succeeded",
+		// 				"singlePlacementGroup": false,
+		// 				"upgradePolicy": {
+		// 					"automaticOSUpgradePolicy": {
+		// 						"enableAutomaticOSUpgrade": false
+		// 					},
+		// 					"mode": "Automatic"
+		// 				},
+		// 				"virtualMachineProfile": {
+		// 					"networkProfile": {
+		// 						"networkInterfaceConfigurations": [
+		// 							{
+		// 								"name": "myNic",
+		// 								"properties": {
+		// 									"ipConfigurations": [
+		// 										{
+		// 											"name": "myIPConfig",
+		// 											"properties": {
+		// 												"primary": true,
+		// 												"subnet": {
+		// 													"id": "/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"
+		// 												}
+		// 											}
+		// 										}
+		// 									],
+		// 									"networkSecurityGroup": {
+		// 										"id": "/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"
+		// 									},
+		// 									"primary": true
+		// 								}
+		// 							}
+		// 						]
+		// 					},
+		// 					"osProfile": {
+		// 						"adminUsername": "admin",
+		// 						"computerNamePrefix": "{virtualMachineScaleSetName}",
+		// 						"linuxConfiguration": {
+		// 							"disablePasswordAuthentication": false
+		// 						}
+		// 					},
+		// 					"storageProfile": {
+		// 						"dataDisks": [],
+		// 						"imageReference": {
+		// 							"offer": "databricks",
+		// 							"publisher": "azuredatabricks",
+		// 							"sku": "databricksworker",
+		// 							"version": "3.15.2"
+		// 						},
+		// 						"osDisk": {
+		// 							"caching": "ReadWrite",
+		// 							"createOption": "FromImage",
+		// 							"diskSizeGB": 30,
+		// 							"managedDisk": {
+		// 								"storageAccountType": "Premium_LRS"
+		// 							}
+		// 						}
+		// 					}
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D2s_v3",
+		// 				"capacity": 4,
+		// 				"tier": "Standard"
+		// 			},
+		// 			"tags": {
+		// 				"myTag1": "tagValue1"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "{virtualMachineScaleSetName}",
+		// 			"type": "Microsoft.Compute/virtualMachineScaleSets",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}1",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"doNotRunExtensionsOnOverprovisionedVMs": false,
+		// 				"overprovision": false,
+		// 				"platformFaultDomainCount": 1,
+		// 				"provisioningState": "succeeded",
+		// 				"singlePlacementGroup": false,
+		// 				"upgradePolicy": {
+		// 					"automaticOSUpgradePolicy": {
+		// 						"enableAutomaticOSUpgrade": false
+		// 					},
+		// 					"mode": "Automatic"
+		// 				},
+		// 				"virtualMachineProfile": {
+		// 					"networkProfile": {
+		// 						"networkInterfaceConfigurations": [
+		// 							{
+		// 								"name": "myNic1",
+		// 								"properties": {
+		// 									"ipConfigurations": [
+		// 										{
+		// 											"name": "myIPConfig",
+		// 											"properties": {
+		// 												"primary": true,
+		// 												"subnet": {
+		// 													"id": "/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"
+		// 												}
+		// 											}
+		// 										}
+		// 									],
+		// 									"networkSecurityGroup": {
+		// 										"id": "/subscriptions/{subscription-id}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"
+		// 									},
+		// 									"primary": true
+		// 								}
+		// 							}
+		// 						]
+		// 					},
+		// 					"osProfile": {
+		// 						"adminUsername": "admin",
+		// 						"computerNamePrefix": "{virtualMachineScaleSetName}",
+		// 						"linuxConfiguration": {
+		// 							"disablePasswordAuthentication": false
+		// 						}
+		// 					},
+		// 					"storageProfile": {
+		// 						"dataDisks": [],
+		// 						"imageReference": {
+		// 							"offer": "databricks",
+		// 							"publisher": "azuredatabricks",
+		// 							"sku": "databricksworker",
+		// 							"version": "3.15.2"
+		// 						},
+		// 						"osDisk": {
+		// 							"caching": "ReadWrite",
+		// 							"createOption": "FromImage",
+		// 							"diskSizeGB": 30,
+		// 							"managedDisk": {
+		// 								"storageAccountType": "Premium_LRS"
+		// 							}
+		// 						}
+		// 					}
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D2s_v3",
+		// 				"capacity": 4,
+		// 				"tier": "Standard"
+		// 			},
+		// 			"tags": {
+		// 				"myTag1": "tagValue2"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -106,6 +421,144 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createACustomImage
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("d6e9ab29-f8c9-4792-978c-ae2c07b98f17"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Name: to.Ptr("osDisk"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					Image: &armcompute.VirtualHardDisk{
+	// 						URI: to.Ptr("https://{existing-storage-account-name}.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/{existing-generalized-os-image-blob-name}.vhd"),
+	// 					},
+	// 					OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "d6e9ab29-f8c9-4792-978c-ae2c07b98f17",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"osDisk": {
+	// 					"name": "osDisk",
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"image": {
+	// 						"uri": "https://{existing-storage-account-name}.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/{existing-generalized-os-image-blob-name}.vhd"
+	// 					},
+	// 					"osType": "Windows"
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageScaleSetWithUnmanagedOsDisks.json
@@ -187,6 +640,153 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAPlatformIma
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("77b7df9a-32fe-45e3-8911-60ac9c9b9c64"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Name: to.Ptr("osDisk"),
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					VhdContainers: []*string{
+	// 						to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/vhds")},
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 		SKU: &armcompute.SKU{
+	// 			Name: to.Ptr("Standard_D1_v2"),
+	// 			Capacity: to.Ptr[int64](3),
+	// 			Tier: to.Ptr("Standard"),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "77b7df9a-32fe-45e3-8911-60ac9c9b9c64",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"name": "osDisk",
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"vhdContainers": [
+	// 						"http://{existing-storage-account-name}.blob.core.windows.net/vhds"
+	// 					]
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromACustomImage.json
@@ -261,6 +861,144 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("afa2afa8-9e49-48fb-9d18-c86323b5d064"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 					DisablePasswordAuthentication: to.Ptr(false),
+	// 				},
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "afa2afa8-9e49-48fb-9d18-c86323b5d064",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"linuxConfiguration": {
+	// 					"disablePasswordAuthentication": false
+	// 				},
+	// 				"secrets": []
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromAGeneralizedSharedImage.json
@@ -335,6 +1073,144 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("afa2afa8-9e49-48fb-9d18-c86323b5d064"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 					DisablePasswordAuthentication: to.Ptr(false),
+	// 				},
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "afa2afa8-9e49-48fb-9d18-c86323b5d064",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"linuxConfiguration": {
+	// 					"disablePasswordAuthentication": false
+	// 				},
+	// 				"secrets": []
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromASpecializedSharedImage.json
@@ -404,6 +1280,127 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("afa2afa8-9e49-48fb-9d18-c86323b5d064"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "afa2afa8-9e49-48fb-9d18-c86323b5d064",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScalesetWithDiskEncryptionSetResource.json
@@ -494,6 +1491,177 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("afa2afa8-9e49-48fb-9d18-c86323b5d064"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 					DisablePasswordAuthentication: to.Ptr(false),
+	// 				},
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+	// 					{
+	// 						Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 						DiskSizeGB: to.Ptr[int32](1023),
+	// 						Lun: to.Ptr[int32](0),
+	// 						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 							DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 							},
+	// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 						},
+	// 				}},
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+	// 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+	// 						},
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "afa2afa8-9e49-48fb-9d18-c86323b5d064",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"linuxConfiguration": {
+	// 					"disablePasswordAuthentication": false
+	// 				},
+	// 				"secrets": []
+	// 			},
+	// 			"storageProfile": {
+	// 				"dataDisks": [
+	// 					{
+	// 						"caching": "ReadWrite",
+	// 						"createOption": "Empty",
+	// 						"diskSizeGB": 1023,
+	// 						"lun": 0,
+	// 						"managedDisk": {
+	// 							"diskEncryptionSet": {
+	// 								"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 							},
+	// 							"storageAccountType": "Standard_LRS"
+	// 						}
+	// 					}
+	// 				],
+	// 				"imageReference": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"diskEncryptionSet": {
+	// 							"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"
+	// 						},
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromWithFpgaNetworkInterface.json
@@ -588,6 +1756,190 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("afa2afa8-9e49-48fb-9d18-c86323b5d064"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 					},
+	// 					{
+	// 						Name: to.Ptr("{fpgaNic-Name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableFpga: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{fpgaNic-Name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										Primary: to.Ptr(true),
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-fpga-subnet-name}"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(false),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 					DisablePasswordAuthentication: to.Ptr(false),
+	// 				},
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "afa2afa8-9e49-48fb-9d18-c86323b5d064",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					},
+	// 					{
+	// 						"name": "{fpgaNic-Name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableFpga": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{fpgaNic-Name}",
+	// 									"properties": {
+	// 										"primary": true,
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-fpga-subnet-name}"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": false
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"linuxConfiguration": {
+	// 					"disablePasswordAuthentication": false
+	// 				},
+	// 				"secrets": []
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/nsgcustom"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEncryptionAtHost.json
@@ -673,6 +2025,168 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("b9e23088-6ffc-46e0-9e02-b0a6eeef47db"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			SecurityProfile: &armcompute.SecurityProfile{
+	// 				EncryptionAtHost: to.Ptr(true),
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("standard-data-science-vm"),
+	// 					Publisher: to.Ptr("microsoft-ads"),
+	// 					SKU: to.Ptr("standard-data-science-vm"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_DS1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "b9e23088-6ffc-46e0-9e02-b0a6eeef47db",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"securityProfile": {
+	// 				"encryptionAtHost": true
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "standard-data-science-vm",
+	// 					"publisher": "microsoft-ads",
+	// 					"sku": "standard-data-science-vm",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadOnly",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_DS1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithUefiSettings.json
@@ -757,6 +2271,166 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("b9e23088-6ffc-46e0-9e02-b0a6eeef47db"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			SecurityProfile: &armcompute.SecurityProfile{
+	// 				SecurityType: to.Ptr("TrustedLaunch"),
+	// 				UefiSettings: &armcompute.UefiSettings{
+	// 					SecureBootEnabled: to.Ptr(true),
+	// 					VTpmEnabled: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("windowsserver-gen2preview-preview"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("windows10-tvm"),
+	// 					Version: to.Ptr("18363.592.2001092016"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardSSDLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D2s_v3"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "b9e23088-6ffc-46e0-9e02-b0a6eeef47db",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"securityProfile": {
+	// 				"securityType": "TrustedLaunch",
+	// 				"uefiSettings": {
+	// 					"secureBootEnabled": true,
+	// 					"vTpmEnabled": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "windowsserver-gen2preview-preview",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "windows10-tvm",
+	// 					"version": "18363.592.2001092016"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadOnly",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "StandardSSD_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D2s_v3",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAMarketplaceImagePlan.json
@@ -839,6 +2513,162 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("b9e23088-6ffc-46e0-9e02-b0a6eeef47db"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("standard-data-science-vm"),
+	// 					Publisher: to.Ptr("microsoft-ads"),
+	// 					SKU: to.Ptr("standard-data-science-vm"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "b9e23088-6ffc-46e0-9e02-b0a6eeef47db",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "standard-data-science-vm",
+	// 					"publisher": "microsoft-ads",
+	// 					"sku": "standard-data-science-vm",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureApplicationGateway.json
@@ -920,6 +2750,161 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("a0134477-b9d9-484b-b0e3-205c1c089ffa"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										ApplicationGatewayBackendAddressPools: []*armcompute.SubResource{
+	// 											{
+	// 												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/applicationGateways/nsgExistingAppGw/backendAddressPools/appGatewayBackendPool"),
+	// 										}},
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "a0134477-b9d9-484b-b0e3-205c1c089ffa",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"applicationGatewayBackendAddressPools": [
+	// 											{
+	// 												"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/applicationGateways/nsgExistingAppGw/backendAddressPools/appGatewayBackendPool"
+	// 											}
+	// 										],
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureLoadBalancer.json
@@ -1011,6 +2996,170 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("ec0b21ca-51ec-414b-9323-f236ffc21479"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										LoadBalancerBackendAddressPools: []*armcompute.SubResource{
+	// 											{
+	// 												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/myLb/backendAddressPools/lbBackendPool"),
+	// 										}},
+	// 										LoadBalancerInboundNatPools: []*armcompute.SubResource{
+	// 											{
+	// 												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/myLb/inboundNatPools/lbNatPool"),
+	// 										}},
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "ec0b21ca-51ec-414b-9323-f236ffc21479",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"loadBalancerBackendAddressPools": [
+	// 											{
+	// 												"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/myLb/backendAddressPools/lbBackendPool"
+	// 											}
+	// 										],
+	// 										"loadBalancerInboundNatPools": [
+	// 											{
+	// 												"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/myLb/inboundNatPools/lbNatPool"
+	// 											}
+	// 										],
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAutomaticRepairs.json
@@ -1092,6 +3241,160 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		AutomaticRepairsPolicy: &armcompute.AutomaticRepairsPolicy{
+	// 			Enabled: to.Ptr(true),
+	// 			GracePeriod: to.Ptr("PT30M"),
+	// 		},
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("d053ec5a-8da6-495f-ab13-38216503c6d7"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"automaticRepairsPolicy": {
+	// 			"enabled": true,
+	// 			"gracePeriod": "PT30M"
+	// 		},
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "d053ec5a-8da6-495f-ab13-38216503c6d7",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithBootDiagnostics.json
@@ -1175,6 +3478,164 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("d053ec5a-8da6-495f-ab13-38216503c6d7"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 				BootDiagnostics: &armcompute.BootDiagnostics{
+	// 					Enabled: to.Ptr(true),
+	// 					StorageURI: to.Ptr("http://nsgdiagnostic.blob.core.windows.net"),
+	// 				},
+	// 			},
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "d053ec5a-8da6-495f-ab13-38216503c6d7",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"diagnosticsProfile": {
+	// 				"bootDiagnostics": {
+	// 					"enabled": true,
+	// 					"storageUri": "http://nsgdiagnostic.blob.core.windows.net"
+	// 				}
+	// 			},
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEmptyDataDisksOnEachVm.json
@@ -1264,6 +3725,193 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("8042c376-4690-4c47-9fa2-fbdad70e32fa"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+	// 					{
+	// 						Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 						DiskSizeGB: to.Ptr[int32](1023),
+	// 						Lun: to.Ptr[int32](0),
+	// 						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 						},
+	// 					},
+	// 					{
+	// 						Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 						DiskSizeGB: to.Ptr[int32](1023),
+	// 						Lun: to.Ptr[int32](1),
+	// 						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 						},
+	// 				}},
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					DiskSizeGB: to.Ptr[int32](512),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D2_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Succeeded",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "8042c376-4690-4c47-9fa2-fbdad70e32fa",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"dataDisks": [
+	// 					{
+	// 						"caching": "None",
+	// 						"createOption": "Empty",
+	// 						"diskSizeGB": 1023,
+	// 						"lun": 0,
+	// 						"managedDisk": {
+	// 							"storageAccountType": "Standard_LRS"
+	// 						}
+	// 					},
+	// 					{
+	// 						"caching": "None",
+	// 						"createOption": "Empty",
+	// 						"diskSizeGB": 1023,
+	// 						"lun": 1,
+	// 						"managedDisk": {
+	// 							"storageAccountType": "Standard_LRS"
+	// 						}
+	// 					}
+	// 				],
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"diskSizeGB": 512,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D2_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDiskUsingDiffDiskPlacement.json
@@ -1350,6 +3998,170 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("b9e23088-6ffc-46e0-9e02-b0a6eeef47db"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("standard-data-science-vm"),
+	// 					Publisher: to.Ptr("microsoft-ads"),
+	// 					SKU: to.Ptr("standard-data-science-vm"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					DiffDiskSettings: &armcompute.DiffDiskSettings{
+	// 						Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
+	// 						Placement: to.Ptr(armcompute.DiffDiskPlacementResourceDisk),
+	// 					},
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_DS1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "b9e23088-6ffc-46e0-9e02-b0a6eeef47db",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "standard-data-science-vm",
+	// 					"publisher": "microsoft-ads",
+	// 					"sku": "standard-data-science-vm",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadOnly",
+	// 					"createOption": "FromImage",
+	// 					"diffDiskSettings": {
+	// 						"option": "Local",
+	// 						"placement": "ResourceDisk"
+	// 					},
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_DS1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDisk.json
@@ -1431,6 +4243,168 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Plan: &armcompute.Plan{
+	// 		Name: to.Ptr("standard-data-science-vm"),
+	// 		Product: to.Ptr("standard-data-science-vm"),
+	// 		Publisher: to.Ptr("microsoft-ads"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("b9e23088-6ffc-46e0-9e02-b0a6eeef47db"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("standard-data-science-vm"),
+	// 					Publisher: to.Ptr("microsoft-ads"),
+	// 					SKU: to.Ptr("standard-data-science-vm"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadOnly),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					DiffDiskSettings: &armcompute.DiffDiskSettings{
+	// 						Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
+	// 					},
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_DS1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"plan": {
+	// 		"name": "standard-data-science-vm",
+	// 		"product": "standard-data-science-vm",
+	// 		"publisher": "microsoft-ads"
+	// 	},
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "b9e23088-6ffc-46e0-9e02-b0a6eeef47db",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "standard-data-science-vm",
+	// 					"publisher": "microsoft-ads",
+	// 					"sku": "standard-data-science-vm",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadOnly",
+	// 					"createOption": "FromImage",
+	// 					"diffDiskSettings": {
+	// 						"option": "Local"
+	// 					},
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_DS1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithExtensionsTimeBudget.json
@@ -1528,6 +4502,194 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("d053ec5a-8da6-495f-ab13-38216503c6d7"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 				BootDiagnostics: &armcompute.BootDiagnostics{
+	// 					Enabled: to.Ptr(true),
+	// 					StorageURI: to.Ptr("http://nsgdiagnostic.blob.core.windows.net"),
+	// 				},
+	// 			},
+	// 			ExtensionProfile: &armcompute.VirtualMachineScaleSetExtensionProfile{
+	// 				ExtensionsTimeBudget: to.Ptr("PT1H20M"),
+	// 				Extensions: []*armcompute.VirtualMachineScaleSetExtension{
+	// 					{
+	// 						Name: to.Ptr("{extension-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetExtensionProperties{
+	// 							Type: to.Ptr("{extension-Type}"),
+	// 							AutoUpgradeMinorVersion: to.Ptr(false),
+	// 							Publisher: to.Ptr("{extension-Publisher}"),
+	// 							Settings: map[string]interface{}{
+	// 							},
+	// 							TypeHandlerVersion: to.Ptr("{handler-version}"),
+	// 						},
+	// 				}},
+	// 			},
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "d053ec5a-8da6-495f-ab13-38216503c6d7",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"diagnosticsProfile": {
+	// 				"bootDiagnostics": {
+	// 					"enabled": true,
+	// 					"storageUri": "http://nsgdiagnostic.blob.core.windows.net"
+	// 				}
+	// 			},
+	// 			"extensionProfile": {
+	// 				"extensionsTimeBudget": "PT1H20M",
+	// 				"extensions": [
+	// 					{
+	// 						"name": "{extension-name}",
+	// 						"properties": {
+	// 							"type": "{extension-Type}",
+	// 							"autoUpgradeMinorVersion": false,
+	// 							"publisher": "{extension-Publisher}",
+	// 							"settings": {},
+	// 							"typeHandlerVersion": "{handler-version}"
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithManagedBootDiagnostics.json
@@ -1610,6 +4772,162 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("d053ec5a-8da6-495f-ab13-38216503c6d7"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 				BootDiagnostics: &armcompute.BootDiagnostics{
+	// 					Enabled: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "d053ec5a-8da6-495f-ab13-38216503c6d7",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"diagnosticsProfile": {
+	// 				"bootDiagnostics": {
+	// 					"enabled": true
+	// 				}
+	// 			},
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPasswordAuthentication.json
@@ -1687,6 +5005,152 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("ffb27c5c-39a5-4d4e-b307-b32598689813"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "ffb27c5c-39a5-4d4e-b307-b32598689813",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPremiumStorage.json
@@ -1764,6 +5228,152 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("19fd38a2-f50a-42c6-9dc7-3f9cf3791225"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_DS1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "19fd38a2-f50a-42c6-9dc7-3f9cf3791225",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Premium_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_DS1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithSshAuthentication.json
@@ -1850,6 +5460,165 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("fb73af19-0090-467c-9ced-b00bceab1c45"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 					DisablePasswordAuthentication: to.Ptr(true),
+	// 					SSH: &armcompute.SSHConfiguration{
+	// 						PublicKeys: []*armcompute.SSHPublicKey{
+	// 							{
+	// 								Path: to.Ptr("/home/{your-username}/.ssh/authorized_keys"),
+	// 								KeyData: to.Ptr("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"),
+	// 						}},
+	// 					},
+	// 				},
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("UbuntuServer"),
+	// 					Publisher: to.Ptr("Canonical"),
+	// 					SKU: to.Ptr("16.04-LTS"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "fb73af19-0090-467c-9ced-b00bceab1c45",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"linuxConfiguration": {
+	// 					"disablePasswordAuthentication": true,
+	// 					"ssh": {
+	// 						"publicKeys": [
+	// 							{
+	// 								"path": "/home/{your-username}/.ssh/authorized_keys",
+	// 								"keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"
+	// 							}
+	// 						]
+	// 					}
+	// 				},
+	// 				"secrets": []
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "UbuntuServer",
+	// 					"publisher": "Canonical",
+	// 					"sku": "16.04-LTS",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithTerminateScheduledEventEnabled.json
@@ -1933,6 +5702,164 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("d053ec5a-8da6-495f-ab13-38216503c6d7"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			ScheduledEventsProfile: &armcompute.ScheduledEventsProfile{
+	// 				TerminateNotificationProfile: &armcompute.TerminateNotificationProfile{
+	// 					Enable: to.Ptr(true),
+	// 					NotBeforeTimeout: to.Ptr("PT5M"),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "d053ec5a-8da6-495f-ab13-38216503c6d7",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"scheduledEventsProfile": {
+	// 				"terminateNotificationProfile": {
+	// 					"enable": true,
+	// 					"notBeforeTimeout": "PT5M"
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAScaleSetWithUserData.json
@@ -2011,6 +5938,164 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(true),
+	// 		UniqueID: to.Ptr("d053ec5a-8da6-495f-ab13-38216503c6d7"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeManual),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+	// 				BootDiagnostics: &armcompute.BootDiagnostics{
+	// 					Enabled: to.Ptr(true),
+	// 					StorageURI: to.Ptr("http://nsgdiagnostic.blob.core.windows.net"),
+	// 				},
+	// 			},
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](3),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Creating",
+	// 		"singlePlacementGroup": true,
+	// 		"uniqueId": "d053ec5a-8da6-495f-ab13-38216503c6d7",
+	// 		"upgradePolicy": {
+	// 			"mode": "Manual"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"diagnosticsProfile": {
+	// 				"bootDiagnostics": {
+	// 					"enabled": true,
+	// 					"storageUri": "http://nsgdiagnostic.blob.core.windows.net"
+	// 				}
+	// 			},
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 3,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithVMsInDifferentZones.json
@@ -2103,6 +6188,202 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("{vmss-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}"),
+	// 	Location: to.Ptr("centralus"),
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		Overprovision: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(false),
+	// 		UniqueID: to.Ptr("8042c376-4690-4c47-9fa2-fbdad70e32fa"),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			Mode: to.Ptr(armcompute.UpgradeModeAutomatic),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("{vmss-name}"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							DNSSettings: &armcompute.VirtualMachineScaleSetNetworkConfigurationDNSSettings{
+	// 								DNSServers: []*string{
+	// 								},
+	// 							},
+	// 							EnableAcceleratedNetworking: to.Ptr(false),
+	// 							EnableIPForwarding: to.Ptr(true),
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("{vmss-name}"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("{your-username}"),
+	// 				ComputerNamePrefix: to.Ptr("{vmss-name}"),
+	// 				Secrets: []*armcompute.VaultSecretGroup{
+	// 				},
+	// 				WindowsConfiguration: &armcompute.WindowsConfiguration{
+	// 					EnableAutomaticUpdates: to.Ptr(true),
+	// 					ProvisionVMAgent: to.Ptr(true),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+	// 					{
+	// 						Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 						DiskSizeGB: to.Ptr[int32](1023),
+	// 						Lun: to.Ptr[int32](0),
+	// 						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 						},
+	// 					},
+	// 					{
+	// 						Caching: to.Ptr(armcompute.CachingTypesNone),
+	// 						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+	// 						DiskSizeGB: to.Ptr[int32](1023),
+	// 						Lun: to.Ptr[int32](1),
+	// 						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 						},
+	// 				}},
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("WindowsServer"),
+	// 					Publisher: to.Ptr("MicrosoftWindowsServer"),
+	// 					SKU: to.Ptr("2016-Datacenter"),
+	// 					Version: to.Ptr("latest"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					DiskSizeGB: to.Ptr[int32](512),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 		ZoneBalance: to.Ptr(false),
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_A1_v2"),
+	// 		Capacity: to.Ptr[int64](2),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// 	Zones: []*string{
+	// 		to.Ptr("1"),
+	// 		to.Ptr("3")},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "{vmss-name}",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}",
+	// 	"location": "centralus",
+	// 	"properties": {
+	// 		"overprovision": true,
+	// 		"provisioningState": "Succeeded",
+	// 		"singlePlacementGroup": false,
+	// 		"uniqueId": "8042c376-4690-4c47-9fa2-fbdad70e32fa",
+	// 		"upgradePolicy": {
+	// 			"mode": "Automatic"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "{vmss-name}",
+	// 						"properties": {
+	// 							"dnsSettings": {
+	// 								"dnsServers": []
+	// 							},
+	// 							"enableAcceleratedNetworking": false,
+	// 							"enableIPForwarding": true,
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "{vmss-name}",
+	// 									"properties": {
+	// 										"privateIPAddressVersion": "IPv4",
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/nsgExistingVnet/subnets/nsgExistingSubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "{your-username}",
+	// 				"computerNamePrefix": "{vmss-name}",
+	// 				"secrets": [],
+	// 				"windowsConfiguration": {
+	// 					"enableAutomaticUpdates": true,
+	// 					"provisionVMAgent": true
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"dataDisks": [
+	// 					{
+	// 						"caching": "None",
+	// 						"createOption": "Empty",
+	// 						"diskSizeGB": 1023,
+	// 						"lun": 0,
+	// 						"managedDisk": {
+	// 							"storageAccountType": "Standard_LRS"
+	// 						}
+	// 					},
+	// 					{
+	// 						"caching": "None",
+	// 						"createOption": "Empty",
+	// 						"diskSizeGB": 1023,
+	// 						"lun": 1,
+	// 						"managedDisk": {
+	// 							"storageAccountType": "Standard_LRS"
+	// 						}
+	// 					}
+	// 				],
+	// 				"imageReference": {
+	// 					"offer": "WindowsServer",
+	// 					"publisher": "MicrosoftWindowsServer",
+	// 					"sku": "2016-Datacenter",
+	// 					"version": "latest"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"diskSizeGB": 512,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Standard_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		},
+	// 		"zoneBalance": false
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_A1_v2",
+	// 		"capacity": 2,
+	// 		"tier": "Standard"
+	// 	},
+	// 	"zones": [
+	// 		"1",
+	// 		"3"
+	// 	]
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSets.json
@@ -2143,6 +6424,167 @@ func ExampleVirtualMachineScaleSetsClient_Get_getAVirtualMachineScaleSetPlacedOn
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("myVirtualMachineScaleSet"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myVirtualMachineScaleSet"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		DoNotRunExtensionsOnOverprovisionedVMs: to.Ptr(false),
+	// 		HostGroup: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup"),
+	// 		},
+	// 		Overprovision: to.Ptr(false),
+	// 		PlatformFaultDomainCount: to.Ptr[int32](1),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(false),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			AutomaticOSUpgradePolicy: &armcompute.AutomaticOSUpgradePolicy{
+	// 				EnableAutomaticOSUpgrade: to.Ptr(false),
+	// 			},
+	// 			Mode: to.Ptr(armcompute.UpgradeModeAutomatic),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("myNic"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("myIPConfig"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										Primary: to.Ptr(true),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							NetworkSecurityGroup: &armcompute.SubResource{
+	// 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"),
+	// 							},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("admin"),
+	// 				ComputerNamePrefix: to.Ptr("myVirtualMachineScaleSet"),
+	// 				LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 					DisablePasswordAuthentication: to.Ptr(false),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+	// 				},
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("databricks"),
+	// 					Publisher: to.Ptr("azuredatabricks"),
+	// 					SKU: to.Ptr("databricksworker"),
+	// 					Version: to.Ptr("3.15.2"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					DiskSizeGB: to.Ptr[int32](30),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D2s_v3"),
+	// 		Capacity: to.Ptr[int64](4),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVirtualMachineScaleSet",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myVirtualMachineScaleSet",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"doNotRunExtensionsOnOverprovisionedVMs": false,
+	// 		"hostGroup": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup"
+	// 		},
+	// 		"overprovision": false,
+	// 		"platformFaultDomainCount": 1,
+	// 		"provisioningState": "succeeded",
+	// 		"singlePlacementGroup": false,
+	// 		"upgradePolicy": {
+	// 			"automaticOSUpgradePolicy": {
+	// 				"enableAutomaticOSUpgrade": false
+	// 			},
+	// 			"mode": "Automatic"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "myNic",
+	// 						"properties": {
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "myIPConfig",
+	// 									"properties": {
+	// 										"primary": true,
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"networkSecurityGroup": {
+	// 								"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"
+	// 							},
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "admin",
+	// 				"computerNamePrefix": "myVirtualMachineScaleSet",
+	// 				"linuxConfiguration": {
+	// 					"disablePasswordAuthentication": false
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"dataDisks": [],
+	// 				"imageReference": {
+	// 					"offer": "databricks",
+	// 					"publisher": "azuredatabricks",
+	// 					"sku": "databricksworker",
+	// 					"version": "3.15.2"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"diskSizeGB": 30,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Premium_LRS"
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D2s_v3",
+	// 		"capacity": 4,
+	// 		"tier": "Standard"
+	// 	},
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetWithUserData.json
@@ -2162,4 +6604,167 @@ func ExampleVirtualMachineScaleSetsClient_Get_getAVirtualMachineScaleSetWithUser
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
+	// 	Name: to.Ptr("myVirtualMachineScaleSet"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myVirtualMachineScaleSet"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"myTag1": to.Ptr("tagValue1"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineScaleSetProperties{
+	// 		DoNotRunExtensionsOnOverprovisionedVMs: to.Ptr(false),
+	// 		HostGroup: &armcompute.SubResource{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup"),
+	// 		},
+	// 		Overprovision: to.Ptr(false),
+	// 		PlatformFaultDomainCount: to.Ptr[int32](1),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		SinglePlacementGroup: to.Ptr(false),
+	// 		UpgradePolicy: &armcompute.UpgradePolicy{
+	// 			AutomaticOSUpgradePolicy: &armcompute.AutomaticOSUpgradePolicy{
+	// 				EnableAutomaticOSUpgrade: to.Ptr(false),
+	// 			},
+	// 			Mode: to.Ptr(armcompute.UpgradeModeAutomatic),
+	// 		},
+	// 		VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+	// 			NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+	// 				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+	// 					{
+	// 						Name: to.Ptr("myNic"),
+	// 						Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+	// 							IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("myIPConfig"),
+	// 									Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+	// 										Primary: to.Ptr(true),
+	// 										Subnet: &armcompute.APIEntityReference{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"),
+	// 										},
+	// 									},
+	// 							}},
+	// 							NetworkSecurityGroup: &armcompute.SubResource{
+	// 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"),
+	// 							},
+	// 							Primary: to.Ptr(true),
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+	// 				AdminUsername: to.Ptr("admin"),
+	// 				ComputerNamePrefix: to.Ptr("myVirtualMachineScaleSet"),
+	// 				LinuxConfiguration: &armcompute.LinuxConfiguration{
+	// 					DisablePasswordAuthentication: to.Ptr(false),
+	// 				},
+	// 			},
+	// 			StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+	// 				DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+	// 				},
+	// 				ImageReference: &armcompute.ImageReference{
+	// 					Offer: to.Ptr("databricks"),
+	// 					Publisher: to.Ptr("azuredatabricks"),
+	// 					SKU: to.Ptr("databricksworker"),
+	// 					Version: to.Ptr("3.15.2"),
+	// 				},
+	// 				OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+	// 					Caching: to.Ptr(armcompute.CachingTypesReadWrite),
+	// 					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+	// 					DiskSizeGB: to.Ptr[int32](30),
+	// 					ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+	// 						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	// 					},
+	// 				},
+	// 			},
+	// 			UserData: to.Ptr("RXhhbXBsZSBVc2VyRGF0YQ=="),
+	// 		},
+	// 	},
+	// 	SKU: &armcompute.SKU{
+	// 		Name: to.Ptr("Standard_D2s_v3"),
+	// 		Capacity: to.Ptr[int64](4),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVirtualMachineScaleSet",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myVirtualMachineScaleSet",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"doNotRunExtensionsOnOverprovisionedVMs": false,
+	// 		"hostGroup": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup"
+	// 		},
+	// 		"overprovision": false,
+	// 		"platformFaultDomainCount": 1,
+	// 		"provisioningState": "succeeded",
+	// 		"singlePlacementGroup": false,
+	// 		"upgradePolicy": {
+	// 			"automaticOSUpgradePolicy": {
+	// 				"enableAutomaticOSUpgrade": false
+	// 			},
+	// 			"mode": "Automatic"
+	// 		},
+	// 		"virtualMachineProfile": {
+	// 			"networkProfile": {
+	// 				"networkInterfaceConfigurations": [
+	// 					{
+	// 						"name": "myNic",
+	// 						"properties": {
+	// 							"ipConfigurations": [
+	// 								{
+	// 									"name": "myIPConfig",
+	// 									"properties": {
+	// 										"primary": true,
+	// 										"subnet": {
+	// 											"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/mySubnet"
+	// 										}
+	// 									}
+	// 								}
+	// 							],
+	// 							"networkSecurityGroup": {
+	// 								"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkSecurityGroups/myNetworkSecurityGroup"
+	// 							},
+	// 							"primary": true
+	// 						}
+	// 					}
+	// 				]
+	// 			},
+	// 			"osProfile": {
+	// 				"adminUsername": "admin",
+	// 				"computerNamePrefix": "myVirtualMachineScaleSet",
+	// 				"linuxConfiguration": {
+	// 					"disablePasswordAuthentication": false
+	// 				}
+	// 			},
+	// 			"storageProfile": {
+	// 				"dataDisks": [],
+	// 				"imageReference": {
+	// 					"offer": "databricks",
+	// 					"publisher": "azuredatabricks",
+	// 					"sku": "databricksworker",
+	// 					"version": "3.15.2"
+	// 				},
+	// 				"osDisk": {
+	// 					"caching": "ReadWrite",
+	// 					"createOption": "FromImage",
+	// 					"diskSizeGB": 30,
+	// 					"managedDisk": {
+	// 						"storageAccountType": "Premium_LRS"
+	// 					}
+	// 				}
+	// 			},
+	// 			"userData": "RXhhbXBsZSBVc2VyRGF0YQ=="
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D2s_v3",
+	// 		"capacity": 4,
+	// 		"tier": "Standard"
+	// 	},
+	// 	"tags": {
+	// 		"myTag1": "tagValue1"
+	// 	}
+	// }
 }

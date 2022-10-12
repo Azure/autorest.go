@@ -38,6 +38,155 @@ func ExampleVirtualMachineRunCommandsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.RunCommandListResult = armcompute.RunCommandListResult{
+		// 	Value: []*armcompute.RunCommandDocumentBase{
+		// 		{
+		// 			Description: to.Ptr("Configure the machine to enable remote PowerShell."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("EnableRemotePS"),
+		// 			Label: to.Ptr("Enable remote PowerShell"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Shows detailed information for the IP address, subnet mask and default gateway for each adapter bound to TCP/IP."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("IPConfig"),
+		// 			Label: to.Ptr("List IP configuration"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Custom multiline PowerShell script should be defined in script property. Optional parameters can be set in parameters property."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("RunPowerShellScript"),
+		// 			Label: to.Ptr("Executes a PowerShell script"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Custom multiline shell script should be defined in script property. Optional parameters can be set in parameters property."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("RunShellScript"),
+		// 			Label: to.Ptr("Executes a Linux shell script"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Get the configuration of all network interfaces."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("ifconfig"),
+		// 			Label: to.Ptr("List network configuration"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesLinux),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Checks if the local Administrator account is disabled, and if so enables it."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("EnableAdminAccount"),
+		// 			Label: to.Ptr("Enable administrator account"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Reset built-in Administrator account password."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("ResetAccountPassword"),
+		// 			Label: to.Ptr("Reset built-in Administrator account password"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Checks registry settings and domain policy settings. Suggests policy actions if machine is part of a domain or modifies the settings to default values."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("RDPSettings"),
+		// 			Label: to.Ptr("Verify RDP Listener Settings"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Sets the default or user specified port number for Remote Desktop connections. Enables firewall rule for inbound access to the port."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("SetRDPPort"),
+		// 			Label: to.Ptr("Set Remote Desktop port"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 		},
+		// 		{
+		// 			Description: to.Ptr("Removes the SSL certificate tied to the RDP listener and restores the RDP listerner security to default. Use this script if you see any issues with the certificate."),
+		// 			Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+		// 			ID: to.Ptr("ResetRDPCert"),
+		// 			Label: to.Ptr("Restore RDP Authentication mode to defaults"),
+		// 			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"description": "Configure the machine to enable remote PowerShell.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "EnableRemotePS",
+		// 			"label": "Enable remote PowerShell",
+		// 			"osType": "Windows"
+		// 		},
+		// 		{
+		// 			"description": "Shows detailed information for the IP address, subnet mask and default gateway for each adapter bound to TCP/IP.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "IPConfig",
+		// 			"label": "List IP configuration",
+		// 			"osType": "Windows"
+		// 		},
+		// 		{
+		// 			"description": "Custom multiline PowerShell script should be defined in script property. Optional parameters can be set in parameters property.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "RunPowerShellScript",
+		// 			"label": "Executes a PowerShell script",
+		// 			"osType": "Windows"
+		// 		},
+		// 		{
+		// 			"description": "Custom multiline shell script should be defined in script property. Optional parameters can be set in parameters property.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "RunShellScript",
+		// 			"label": "Executes a Linux shell script",
+		// 			"osType": "Linux"
+		// 		},
+		// 		{
+		// 			"description": "Get the configuration of all network interfaces.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "ifconfig",
+		// 			"label": "List network configuration",
+		// 			"osType": "Linux"
+		// 		},
+		// 		{
+		// 			"description": "Checks if the local Administrator account is disabled, and if so enables it.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "EnableAdminAccount",
+		// 			"label": "Enable administrator account",
+		// 			"osType": "Windows"
+		// 		},
+		// 		{
+		// 			"description": "Reset built-in Administrator account password.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "ResetAccountPassword",
+		// 			"label": "Reset built-in Administrator account password",
+		// 			"osType": "Windows"
+		// 		},
+		// 		{
+		// 			"description": "Checks registry settings and domain policy settings. Suggests policy actions if machine is part of a domain or modifies the settings to default values.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "RDPSettings",
+		// 			"label": "Verify RDP Listener Settings",
+		// 			"osType": "Windows"
+		// 		},
+		// 		{
+		// 			"description": "Sets the default or user specified port number for Remote Desktop connections. Enables firewall rule for inbound access to the port.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "SetRDPPort",
+		// 			"label": "Set Remote Desktop port",
+		// 			"osType": "Windows"
+		// 		},
+		// 		{
+		// 			"description": "Removes the SSL certificate tied to the RDP listener and restores the RDP listerner security to default. Use this script if you see any issues with the certificate.",
+		// 			"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+		// 			"id": "ResetRDPCert",
+		// 			"label": "Restore RDP Authentication mode to defaults",
+		// 			"osType": "Windows"
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -58,6 +207,58 @@ func ExampleVirtualMachineRunCommandsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.RunCommandDocument = armcompute.RunCommandDocument{
+	// 	Description: to.Ptr("Custom multiline PowerShell script should be defined in script property. Optional parameters can be set in parameters property."),
+	// 	Schema: to.Ptr("http://schema.management.azure.com/schemas/2016-11-17/runcommands.json"),
+	// 	ID: to.Ptr("RunPowerShellScript"),
+	// 	Label: to.Ptr("Executes a PowerShell script"),
+	// 	OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 	Parameters: []*armcompute.RunCommandParameterDefinition{
+	// 		{
+	// 			Name: to.Ptr("arg1"),
+	// 			Type: to.Ptr("string"),
+	// 			DefaultValue: to.Ptr("value1"),
+	// 		},
+	// 		{
+	// 			Name: to.Ptr("arg2"),
+	// 			Type: to.Ptr("string"),
+	// 			DefaultValue: to.Ptr("value2"),
+	// 	}},
+	// 	Script: []*string{
+	// 		to.Ptr("param("),
+	// 		to.Ptr("    [string]$arg1,"),
+	// 		to.Ptr("    [string]$arg2"),
+	// 		to.Ptr(")"),
+	// 		to.Ptr("Write-Host This is a sample script with parameters $arg1 $arg2")},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"description": "Custom multiline PowerShell script should be defined in script property. Optional parameters can be set in parameters property.",
+	// 	"$schema": "http://schema.management.azure.com/schemas/2016-11-17/runcommands.json",
+	// 	"id": "RunPowerShellScript",
+	// 	"label": "Executes a PowerShell script",
+	// 	"osType": "Windows",
+	// 	"parameters": [
+	// 		{
+	// 			"name": "arg1",
+	// 			"type": "string",
+	// 			"defaultValue": "value1"
+	// 		},
+	// 		{
+	// 			"name": "arg2",
+	// 			"type": "string",
+	// 			"defaultValue": "value2"
+	// 		}
+	// 	],
+	// 	"script": [
+	// 		"param(",
+	// 		"    [string]$arg1,",
+	// 		"    [string]$arg2",
+	// 		")",
+	// 		"Write-Host This is a sample script with parameters $arg1 $arg2"
+	// 	]
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateRunCommand.json
@@ -101,6 +302,65 @@ func ExampleVirtualMachineRunCommandsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineRunCommand = armcompute.VirtualMachineRunCommand{
+	// 	Name: to.Ptr("myRunCommand"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines/runCommands"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"tag1": to.Ptr("value1"),
+	// 		"tag2": to.Ptr("value2"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineRunCommandProperties{
+	// 		AsyncExecution: to.Ptr(false),
+	// 		Parameters: []*armcompute.RunCommandInputParameter{
+	// 			{
+	// 				Name: to.Ptr("param1"),
+	// 				Value: to.Ptr("value1"),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("param2"),
+	// 				Value: to.Ptr("value2"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RunAsUser: to.Ptr("user1"),
+	// 		Source: &armcompute.VirtualMachineRunCommandScriptSource{
+	// 			Script: to.Ptr("Write-Host Hello World!"),
+	// 		},
+	// 		TimeoutInSeconds: to.Ptr[int32](3600),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRunCommand",
+	// 	"type": "Microsoft.Compute/virtualMachines/runCommands",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"asyncExecution": false,
+	// 		"parameters": [
+	// 			{
+	// 				"name": "param1",
+	// 				"value": "value1"
+	// 			},
+	// 			{
+	// 				"name": "param2",
+	// 				"value": "value2"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"runAsUser": "user1",
+	// 		"source": {
+	// 			"script": "Write-Host Hello World!"
+	// 		},
+	// 		"timeoutInSeconds": 3600
+	// 	},
+	// 	"tags": {
+	// 		"tag1": "value1",
+	// 		"tag2": "value2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateRunCommand.json
@@ -130,6 +390,65 @@ func ExampleVirtualMachineRunCommandsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineRunCommand = armcompute.VirtualMachineRunCommand{
+	// 	Name: to.Ptr("myRunCommand"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines/runCommands"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"tag1": to.Ptr("value1"),
+	// 		"tag2": to.Ptr("value2"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineRunCommandProperties{
+	// 		AsyncExecution: to.Ptr(false),
+	// 		Parameters: []*armcompute.RunCommandInputParameter{
+	// 			{
+	// 				Name: to.Ptr("param1"),
+	// 				Value: to.Ptr("value1"),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("param2"),
+	// 				Value: to.Ptr("value2"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RunAsUser: to.Ptr("user1"),
+	// 		Source: &armcompute.VirtualMachineRunCommandScriptSource{
+	// 			Script: to.Ptr("Write-Host Script Source Updated!"),
+	// 		},
+	// 		TimeoutInSeconds: to.Ptr[int32](3600),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRunCommand",
+	// 	"type": "Microsoft.Compute/virtualMachines/runCommands",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"asyncExecution": false,
+	// 		"parameters": [
+	// 			{
+	// 				"name": "param1",
+	// 				"value": "value1"
+	// 			},
+	// 			{
+	// 				"name": "param2",
+	// 				"value": "value2"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Updating",
+	// 		"runAsUser": "user1",
+	// 		"source": {
+	// 			"script": "Write-Host Script Source Updated!"
+	// 		},
+	// 		"timeoutInSeconds": 3600
+	// 	},
+	// 	"tags": {
+	// 		"tag1": "value1",
+	// 		"tag2": "value2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteRunCommand.json
@@ -170,6 +489,65 @@ func ExampleVirtualMachineRunCommandsClient_GetByVirtualMachine() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineRunCommand = armcompute.VirtualMachineRunCommand{
+	// 	Name: to.Ptr("myRunCommand"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines/runCommands"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"tag1": to.Ptr("value1"),
+	// 		"tag2": to.Ptr("value2"),
+	// 	},
+	// 	Properties: &armcompute.VirtualMachineRunCommandProperties{
+	// 		AsyncExecution: to.Ptr(false),
+	// 		Parameters: []*armcompute.RunCommandInputParameter{
+	// 			{
+	// 				Name: to.Ptr("param1"),
+	// 				Value: to.Ptr("value1"),
+	// 			},
+	// 			{
+	// 				Name: to.Ptr("param2"),
+	// 				Value: to.Ptr("value2"),
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RunAsUser: to.Ptr("user1"),
+	// 		Source: &armcompute.VirtualMachineRunCommandScriptSource{
+	// 			Script: to.Ptr("Write-Host Hello World!"),
+	// 		},
+	// 		TimeoutInSeconds: to.Ptr[int32](3600),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myRunCommand",
+	// 	"type": "Microsoft.Compute/virtualMachines/runCommands",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"asyncExecution": false,
+	// 		"parameters": [
+	// 			{
+	// 				"name": "param1",
+	// 				"value": "value1"
+	// 			},
+	// 			{
+	// 				"name": "param2",
+	// 				"value": "value2"
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"runAsUser": "user1",
+	// 		"source": {
+	// 			"script": "Write-Host Hello World!"
+	// 		},
+	// 		"timeoutInSeconds": 3600
+	// 	},
+	// 	"tags": {
+	// 		"tag1": "value1",
+	// 		"tag2": "value2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListRunCommandsInVM.json
@@ -193,5 +571,71 @@ func ExampleVirtualMachineRunCommandsClient_NewListByVirtualMachinePager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.VirtualMachineRunCommandsListResult = armcompute.VirtualMachineRunCommandsListResult{
+		// 	Value: []*armcompute.VirtualMachineRunCommand{
+		// 		{
+		// 			Name: to.Ptr("myRunCommand"),
+		// 			Type: to.Ptr("Microsoft.Compute/virtualMachines/runCommands"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"tag1": to.Ptr("value1"),
+		// 				"tag2": to.Ptr("value2"),
+		// 			},
+		// 			Properties: &armcompute.VirtualMachineRunCommandProperties{
+		// 				AsyncExecution: to.Ptr(false),
+		// 				Parameters: []*armcompute.RunCommandInputParameter{
+		// 					{
+		// 						Name: to.Ptr("param1"),
+		// 						Value: to.Ptr("value1"),
+		// 					},
+		// 					{
+		// 						Name: to.Ptr("param2"),
+		// 						Value: to.Ptr("value2"),
+		// 				}},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				RunAsUser: to.Ptr("user1"),
+		// 				Source: &armcompute.VirtualMachineRunCommandScriptSource{
+		// 					Script: to.Ptr("Write-Host Hello World!"),
+		// 				},
+		// 				TimeoutInSeconds: to.Ptr[int32](0),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myRunCommand",
+		// 			"type": "Microsoft.Compute/virtualMachines/runCommands",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM/runCommands/myRunCommand",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"asyncExecution": false,
+		// 				"parameters": [
+		// 					{
+		// 						"name": "param1",
+		// 						"value": "value1"
+		// 					},
+		// 					{
+		// 						"name": "param2",
+		// 						"value": "value2"
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"runAsUser": "user1",
+		// 				"source": {
+		// 					"script": "Write-Host Hello World!"
+		// 				},
+		// 				"timeoutInSeconds": 0
+		// 			},
+		// 			"tags": {
+		// 				"tag1": "value1",
+		// 				"tag2": "value2"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

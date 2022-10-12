@@ -58,6 +58,48 @@ func ExampleExtensionsClient_Get() {
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.Extension = armagrifood.Extension{
+// 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
+// 	Name: to.Ptr(\\"provider.extension\\"),
+// 	Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/extensions\\"),
+// 	SystemData: &armagrifood.SystemData{
+// 		CreatedBy: to.Ptr(\\"string\\"),
+// 		CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 		LastModifiedBy: to.Ptr(\\"string\\"),
+// 		LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 	},
+// 	Properties: &armagrifood.ExtensionProperties{
+// 		ExtensionCategory: to.Ptr(\\"Weather\\"),
+// 		InstalledExtensionVersion: to.Ptr(\\"1.0\\"),
+// 		ExtensionAuthLink: to.Ptr(\\"https://www.provider.com/extension/\\"),
+// 		ExtensionAPIDocsLink: to.Ptr(\\"https://docs.provider.com/documentation/extension\\"),
+// 	},
+// 	ETag: to.Ptr(\\"7200b954-0000-0700-0000-603cbbc40000\\"),
+// }
+    // with the raw JSON response: 
+    // {
+// 	\\"name\\": \\"provider.extension\\",
+// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions\\",
+// 	\\"eTag\\": \\"7200b954-0000-0700-0000-603cbbc40000\\",
+// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\",
+// 	\\"properties\\": {
+// 		\\"extensionApiDocsLink\\": \\"https://docs.provider.com/documentation/extension\\",
+// 		\\"extensionAuthLink\\": \\"https://www.provider.com/extension/\\",
+// 		\\"extensionCategory\\": \\"Weather\\",
+// 		\\"installedExtensionVersion\\": \\"1.0\\"
+// 	},
+// 	\\"systemData\\": {
+// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"createdBy\\": \\"string\\",
+// 		\\"createdByType\\": \\"User\\",
+// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"lastModifiedBy\\": \\"string\\",
+// 		\\"lastModifiedByType\\": \\"User\\"
+// 	}
+// }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Update.json
 func ExampleExtensionsClient_Update() {
@@ -76,6 +118,48 @@ func ExampleExtensionsClient_Update() {
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.Extension = armagrifood.Extension{
+// 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
+// 	Name: to.Ptr(\\"provider.extension\\"),
+// 	Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/extensions\\"),
+// 	SystemData: &armagrifood.SystemData{
+// 		CreatedBy: to.Ptr(\\"string\\"),
+// 		CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 		LastModifiedBy: to.Ptr(\\"string\\"),
+// 		LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 	},
+// 	Properties: &armagrifood.ExtensionProperties{
+// 		ExtensionCategory: to.Ptr(\\"Weather\\"),
+// 		InstalledExtensionVersion: to.Ptr(\\"2.0\\"),
+// 		ExtensionAuthLink: to.Ptr(\\"https://www.provider.com/extension/\\"),
+// 		ExtensionAPIDocsLink: to.Ptr(\\"https://docs.provider.com/documentation/extension\\"),
+// 	},
+// 	ETag: to.Ptr(\\"7200b954-0000-0700-0000-603cbbc40000\\"),
+// }
+    // with the raw JSON response: 
+    // {
+// 	\\"name\\": \\"provider.extension\\",
+// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions\\",
+// 	\\"eTag\\": \\"7200b954-0000-0700-0000-603cbbc40000\\",
+// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\",
+// 	\\"properties\\": {
+// 		\\"extensionApiDocsLink\\": \\"https://docs.provider.com/documentation/extension\\",
+// 		\\"extensionAuthLink\\": \\"https://www.provider.com/extension/\\",
+// 		\\"extensionCategory\\": \\"Weather\\",
+// 		\\"installedExtensionVersion\\": \\"2.0\\"
+// 	},
+// 	\\"systemData\\": {
+// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"createdBy\\": \\"string\\",
+// 		\\"createdByType\\": \\"User\\",
+// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"lastModifiedBy\\": \\"string\\",
+// 		\\"lastModifiedByType\\": \\"User\\"
+// 	}
+// }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Delete.json
 func ExampleExtensionsClient_Delete() {
@@ -118,6 +202,55 @@ SkipToken: nil,
             // TODO: use page item
             _ = v
         }
+        // For example, nextResult struct should like: 
+        // nextResult.ExtensionListResponse = armagrifood.ExtensionListResponse{
+// 	Value: []*armagrifood.Extension{
+// 		{
+// 			ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
+// 			Name: to.Ptr(\\"provider.extension\\"),
+// 			Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/extensions\\"),
+// 			SystemData: &armagrifood.SystemData{
+// 				CreatedBy: to.Ptr(\\"string\\"),
+// 				CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 				LastModifiedBy: to.Ptr(\\"string\\"),
+// 				LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 			},
+// 			Properties: &armagrifood.ExtensionProperties{
+// 				ExtensionCategory: to.Ptr(\\"Weather\\"),
+// 				InstalledExtensionVersion: to.Ptr(\\"1.0\\"),
+// 				ExtensionAuthLink: to.Ptr(\\"https://www.provider.com/extension/\\"),
+// 				ExtensionAPIDocsLink: to.Ptr(\\"https://docs.provider.com/documentation/extension\\"),
+// 			},
+// 			ETag: to.Ptr(\\"7200b954-0000-0700-0000-603cbbc40000\\"),
+// 	}},
+// }
+        // with the raw JSON response: 
+        // {
+// 	\\"value\\": [
+// 		{
+// 			\\"name\\": \\"provider.extension\\",
+// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions\\",
+// 			\\"eTag\\": \\"7200b954-0000-0700-0000-603cbbc40000\\",
+// 			\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\",
+// 			\\"properties\\": {
+// 				\\"extensionApiDocsLink\\": \\"https://docs.provider.com/documentation/extension\\",
+// 				\\"extensionAuthLink\\": \\"https://www.provider.com/extension/\\",
+// 				\\"extensionCategory\\": \\"Weather\\",
+// 				\\"installedExtensionVersion\\": \\"1.0\\"
+// 			},
+// 			\\"systemData\\": {
+// 				\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 				\\"createdBy\\": \\"string\\",
+// 				\\"createdByType\\": \\"User\\",
+// 				\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 				\\"lastModifiedBy\\": \\"string\\",
+// 				\\"lastModifiedByType\\": \\"User\\"
+// 			}
+// 		}
+// 	]
+// }
     }
 }
 ",
@@ -170,6 +303,465 @@ MaxPageSize: nil,
             // TODO: use page item
             _ = v
         }
+        // For example, nextResult struct should like: 
+        // nextResult.FarmBeatsExtensionListResponse = armagrifood.FarmBeatsExtensionListResponse{
+// 	Value: []*armagrifood.FarmBeatsExtension{
+// 		{
+// 			ID: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\"),
+// 			Name: to.Ptr(\\"DTN.ContentServices\\"),
+// 			Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions\\"),
+// 			SystemData: &armagrifood.SystemData{
+// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2021-04-12T15:28:06Z\\"); return t}()),
+// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2021-04-12T15:30:01Z\\"); return t}()),
+// 			},
+// 			Properties: &armagrifood.FarmBeatsExtensionProperties{
+// 				TargetResourceType: to.Ptr(\\"FarmBeats\\"),
+// 				FarmBeatsExtensionID: to.Ptr(\\"DTN.ContentServices\\"),
+// 				FarmBeatsExtensionName: to.Ptr(\\"DTN\\"),
+// 				FarmBeatsExtensionVersion: to.Ptr(\\"1.0\\"),
+// 				PublisherID: to.Ptr(\\"dtn\\"),
+// 				ExtensionCategory: to.Ptr(\\"Weather\\"),
+// 				ExtensionAuthLink: to.Ptr(\\"https://www.dtn.com/dtn-content-integration/\\"),
+// 				ExtensionAPIDocsLink: to.Ptr(\\"https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/\\"),
+// 				DetailedInformation: []*armagrifood.DetailedInformation{
+// 					{
+// 						APIName: to.Ptr(\\"GetDailyObservations\\"),
+// 						CustomParameters: []*string{
+// 							to.Ptr(\\"stationId\\"),
+// 							to.Ptr(\\"stationLatitude\\"),
+// 							to.Ptr(\\"stationLongitude\\"),
+// 							to.Ptr(\\"timeZone\\"),
+// 							to.Ptr(\\"sunrise\\"),
+// 							to.Ptr(\\"sunset\\"),
+// 							to.Ptr(\\"weatherCode\\"),
+// 							to.Ptr(\\"weatherDescription\\"),
+// 							to.Ptr(\\"maxTemperature\\"),
+// 							to.Ptr(\\"minTemperature\\"),
+// 							to.Ptr(\\"avgHeatIndex\\"),
+// 							to.Ptr(\\"maxHeatIndex\\"),
+// 							to.Ptr(\\"minHeatIndex\\"),
+// 							to.Ptr(\\"maxWindChill\\"),
+// 							to.Ptr(\\"minWindChill\\"),
+// 							to.Ptr(\\"maxFeelsLike\\"),
+// 							to.Ptr(\\"minFeelsLike\\"),
+// 							to.Ptr(\\"avgFeelsLike\\"),
+// 							to.Ptr(\\"maxWindSpeed\\"),
+// 							to.Ptr(\\"avgWetBulbGlobeTemp\\"),
+// 							to.Ptr(\\"maxWetBulbGlobeTemp\\"),
+// 							to.Ptr(\\"minWetBulbGlobeTemp\\"),
+// 							to.Ptr(\\"minutesOfSunshine\\"),
+// 							to.Ptr(\\"cornHeatUnit\\"),
+// 							to.Ptr(\\"evapotranspiration\\")},
+// 							PlatformParameters: []*string{
+// 								to.Ptr(\\"cloudCover\\"),
+// 								to.Ptr(\\"dewPoint\\"),
+// 								to.Ptr(\\"growingDegreeDay\\"),
+// 								to.Ptr(\\"precipitation\\"),
+// 								to.Ptr(\\"pressure\\"),
+// 								to.Ptr(\\"relativeHumidity\\"),
+// 								to.Ptr(\\"temperature\\"),
+// 								to.Ptr(\\"wetBulbTemperature\\"),
+// 								to.Ptr(\\"dateTime\\"),
+// 								to.Ptr(\\"windChill\\"),
+// 								to.Ptr(\\"windSpeed\\"),
+// 								to.Ptr(\\"windDirection\\")},
+// 								UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 									Key: to.Ptr(\\"units\\"),
+// 									Values: []*string{
+// 										to.Ptr(\\"us\\"),
+// 										to.Ptr(\\"si\\")},
+// 									},
+// 									APIInputParameters: []*string{
+// 										to.Ptr(\\"stationId\\"),
+// 										to.Ptr(\\"lat\\"),
+// 										to.Ptr(\\"lon\\"),
+// 										to.Ptr(\\"days\\"),
+// 										to.Ptr(\\"units\\"),
+// 										to.Ptr(\\"precision\\"),
+// 										to.Ptr(\\"sector\\")},
+// 									},
+// 									{
+// 										APIName: to.Ptr(\\"GetHourlyObservations\\"),
+// 										CustomParameters: []*string{
+// 											to.Ptr(\\"stationId\\"),
+// 											to.Ptr(\\"stationLatitude\\"),
+// 											to.Ptr(\\"stationLongitude\\"),
+// 											to.Ptr(\\"timeZone\\"),
+// 											to.Ptr(\\"weatherCode\\"),
+// 											to.Ptr(\\"weatherDescription\\"),
+// 											to.Ptr(\\"feelsLike\\"),
+// 											to.Ptr(\\"visibilityWeatherCode\\"),
+// 											to.Ptr(\\"visibilityWeatherDescription\\"),
+// 											to.Ptr(\\"minutesOfSunshine\\")},
+// 											PlatformParameters: []*string{
+// 												to.Ptr(\\"cloudCover\\"),
+// 												to.Ptr(\\"dewPoint\\"),
+// 												to.Ptr(\\"precipitation\\"),
+// 												to.Ptr(\\"pressure\\"),
+// 												to.Ptr(\\"relativeHumidity\\"),
+// 												to.Ptr(\\"temperature\\"),
+// 												to.Ptr(\\"wetBulbTemperature\\"),
+// 												to.Ptr(\\"dateTime\\"),
+// 												to.Ptr(\\"visibility\\"),
+// 												to.Ptr(\\"windChill\\"),
+// 												to.Ptr(\\"windSpeed\\"),
+// 												to.Ptr(\\"windDirection\\"),
+// 												to.Ptr(\\"windGust\\")},
+// 												UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 													Key: to.Ptr(\\"units\\"),
+// 													Values: []*string{
+// 														to.Ptr(\\"us\\"),
+// 														to.Ptr(\\"si\\")},
+// 													},
+// 													APIInputParameters: []*string{
+// 														to.Ptr(\\"stationId\\"),
+// 														to.Ptr(\\"lat\\"),
+// 														to.Ptr(\\"lon\\"),
+// 														to.Ptr(\\"hours\\"),
+// 														to.Ptr(\\"units\\"),
+// 														to.Ptr(\\"precision\\"),
+// 														to.Ptr(\\"sector\\")},
+// 													},
+// 													{
+// 														APIName: to.Ptr(\\"GetHourlyForecasts\\"),
+// 														CustomParameters: []*string{
+// 															to.Ptr(\\"stationId\\"),
+// 															to.Ptr(\\"stationLatitude\\"),
+// 															to.Ptr(\\"stationLongitude\\"),
+// 															to.Ptr(\\"timeZone\\"),
+// 															to.Ptr(\\"weatherCode\\"),
+// 															to.Ptr(\\"weatherDescription\\"),
+// 															to.Ptr(\\"feelsLike\\"),
+// 															to.Ptr(\\"visibilityWeatherCode\\"),
+// 															to.Ptr(\\"visibilityWeatherDescription\\"),
+// 															to.Ptr(\\"minutesOfSunshine\\")},
+// 															PlatformParameters: []*string{
+// 																to.Ptr(\\"cloudCover\\"),
+// 																to.Ptr(\\"dewPoint\\"),
+// 																to.Ptr(\\"precipitation\\"),
+// 																to.Ptr(\\"pressure\\"),
+// 																to.Ptr(\\"relativeHumidity\\"),
+// 																to.Ptr(\\"temperature\\"),
+// 																to.Ptr(\\"wetBulbTemperature\\"),
+// 																to.Ptr(\\"dateTime\\"),
+// 																to.Ptr(\\"visibility\\"),
+// 																to.Ptr(\\"windChill\\"),
+// 																to.Ptr(\\"windSpeed\\"),
+// 																to.Ptr(\\"windDirection\\"),
+// 																to.Ptr(\\"windGust\\")},
+// 																UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 																	Key: to.Ptr(\\"units\\"),
+// 																	Values: []*string{
+// 																		to.Ptr(\\"us\\"),
+// 																		to.Ptr(\\"si\\")},
+// 																	},
+// 																	APIInputParameters: []*string{
+// 																		to.Ptr(\\"stationId\\"),
+// 																		to.Ptr(\\"lat\\"),
+// 																		to.Ptr(\\"lon\\"),
+// 																		to.Ptr(\\"days\\"),
+// 																		to.Ptr(\\"units\\"),
+// 																		to.Ptr(\\"precision\\"),
+// 																		to.Ptr(\\"sector\\")},
+// 																	},
+// 																	{
+// 																		APIName: to.Ptr(\\"GetDailyForecasts\\"),
+// 																		CustomParameters: []*string{
+// 																			to.Ptr(\\"stationId\\"),
+// 																			to.Ptr(\\"stationLatitude\\"),
+// 																			to.Ptr(\\"stationLongitude\\"),
+// 																			to.Ptr(\\"timeZone\\"),
+// 																			to.Ptr(\\"sunrise\\"),
+// 																			to.Ptr(\\"sunset\\"),
+// 																			to.Ptr(\\"weatherCode\\"),
+// 																			to.Ptr(\\"weatherDescription\\"),
+// 																			to.Ptr(\\"maxTemperature\\"),
+// 																			to.Ptr(\\"minTemperature\\"),
+// 																			to.Ptr(\\"avgHeatIndex\\"),
+// 																			to.Ptr(\\"maxHeatIndex\\"),
+// 																			to.Ptr(\\"minHeatIndex\\"),
+// 																			to.Ptr(\\"maxWindChill\\"),
+// 																			to.Ptr(\\"minWindChill\\"),
+// 																			to.Ptr(\\"maxFeelsLike\\"),
+// 																			to.Ptr(\\"minFeelsLike\\"),
+// 																			to.Ptr(\\"avgFeelsLike\\"),
+// 																			to.Ptr(\\"maxWindSpeed\\"),
+// 																			to.Ptr(\\"avgWetBulbGlobeTemp\\"),
+// 																			to.Ptr(\\"maxWetBulbGlobeTemp\\"),
+// 																			to.Ptr(\\"minWetBulbGlobeTemp\\"),
+// 																			to.Ptr(\\"minutesOfSunshine\\"),
+// 																			to.Ptr(\\"cornHeatUnit\\"),
+// 																			to.Ptr(\\"evapotranspiration\\")},
+// 																			PlatformParameters: []*string{
+// 																				to.Ptr(\\"cloudCover\\"),
+// 																				to.Ptr(\\"dewPoint\\"),
+// 																				to.Ptr(\\"growingDegreeDay\\"),
+// 																				to.Ptr(\\"precipitation\\"),
+// 																				to.Ptr(\\"pressure\\"),
+// 																				to.Ptr(\\"relativeHumidity\\"),
+// 																				to.Ptr(\\"temperature\\"),
+// 																				to.Ptr(\\"wetBulbTemperature\\"),
+// 																				to.Ptr(\\"dateTime\\"),
+// 																				to.Ptr(\\"windChill\\"),
+// 																				to.Ptr(\\"windSpeed\\"),
+// 																				to.Ptr(\\"windDirection\\")},
+// 																				UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 																					Key: to.Ptr(\\"units\\"),
+// 																					Values: []*string{
+// 																						to.Ptr(\\"us\\"),
+// 																						to.Ptr(\\"si\\")},
+// 																					},
+// 																					APIInputParameters: []*string{
+// 																						to.Ptr(\\"stationId\\"),
+// 																						to.Ptr(\\"lat\\"),
+// 																						to.Ptr(\\"lon\\"),
+// 																						to.Ptr(\\"days\\"),
+// 																						to.Ptr(\\"units\\"),
+// 																						to.Ptr(\\"precision\\"),
+// 																						to.Ptr(\\"sector\\")},
+// 																				}},
+// 																			},
+// 																	}},
+// 																}
+        // with the raw JSON response: 
+        // {
+// 	\\"nextLink\\": \\"string\\",
+// 	\\"value\\": [
+// 		{
+// 			\\"name\\": \\"DTN.ContentServices\\",
+// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions\\",
+// 			\\"id\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\",
+// 			\\"properties\\": {
+// 				\\"detailedInformation\\": [
+// 					{
+// 						\\"apiInputParameters\\": [
+// 							\\"stationId\\",
+// 							\\"lat\\",
+// 							\\"lon\\",
+// 							\\"days\\",
+// 							\\"units\\",
+// 							\\"precision\\",
+// 							\\"sector\\"
+// 						],
+// 						\\"apiName\\": \\"GetDailyObservations\\",
+// 						\\"customParameters\\": [
+// 							\\"stationId\\",
+// 							\\"stationLatitude\\",
+// 							\\"stationLongitude\\",
+// 							\\"timeZone\\",
+// 							\\"sunrise\\",
+// 							\\"sunset\\",
+// 							\\"weatherCode\\",
+// 							\\"weatherDescription\\",
+// 							\\"maxTemperature\\",
+// 							\\"minTemperature\\",
+// 							\\"avgHeatIndex\\",
+// 							\\"maxHeatIndex\\",
+// 							\\"minHeatIndex\\",
+// 							\\"maxWindChill\\",
+// 							\\"minWindChill\\",
+// 							\\"maxFeelsLike\\",
+// 							\\"minFeelsLike\\",
+// 							\\"avgFeelsLike\\",
+// 							\\"maxWindSpeed\\",
+// 							\\"avgWetBulbGlobeTemp\\",
+// 							\\"maxWetBulbGlobeTemp\\",
+// 							\\"minWetBulbGlobeTemp\\",
+// 							\\"minutesOfSunshine\\",
+// 							\\"cornHeatUnit\\",
+// 							\\"evapotranspiration\\"
+// 						],
+// 						\\"platformParameters\\": [
+// 							\\"cloudCover\\",
+// 							\\"dewPoint\\",
+// 							\\"growingDegreeDay\\",
+// 							\\"precipitation\\",
+// 							\\"pressure\\",
+// 							\\"relativeHumidity\\",
+// 							\\"temperature\\",
+// 							\\"wetBulbTemperature\\",
+// 							\\"dateTime\\",
+// 							\\"windChill\\",
+// 							\\"windSpeed\\",
+// 							\\"windDirection\\"
+// 						],
+// 						\\"unitsSupported\\": {
+// 							\\"key\\": \\"units\\",
+// 							\\"values\\": [
+// 								\\"us\\",
+// 								\\"si\\"
+// 							]
+// 						}
+// 					},
+// 					{
+// 						\\"apiInputParameters\\": [
+// 							\\"stationId\\",
+// 							\\"lat\\",
+// 							\\"lon\\",
+// 							\\"hours\\",
+// 							\\"units\\",
+// 							\\"precision\\",
+// 							\\"sector\\"
+// 						],
+// 						\\"apiName\\": \\"GetHourlyObservations\\",
+// 						\\"customParameters\\": [
+// 							\\"stationId\\",
+// 							\\"stationLatitude\\",
+// 							\\"stationLongitude\\",
+// 							\\"timeZone\\",
+// 							\\"weatherCode\\",
+// 							\\"weatherDescription\\",
+// 							\\"feelsLike\\",
+// 							\\"visibilityWeatherCode\\",
+// 							\\"visibilityWeatherDescription\\",
+// 							\\"minutesOfSunshine\\"
+// 						],
+// 						\\"platformParameters\\": [
+// 							\\"cloudCover\\",
+// 							\\"dewPoint\\",
+// 							\\"precipitation\\",
+// 							\\"pressure\\",
+// 							\\"relativeHumidity\\",
+// 							\\"temperature\\",
+// 							\\"wetBulbTemperature\\",
+// 							\\"dateTime\\",
+// 							\\"visibility\\",
+// 							\\"windChill\\",
+// 							\\"windSpeed\\",
+// 							\\"windDirection\\",
+// 							\\"windGust\\"
+// 						],
+// 						\\"unitsSupported\\": {
+// 							\\"key\\": \\"units\\",
+// 							\\"values\\": [
+// 								\\"us\\",
+// 								\\"si\\"
+// 							]
+// 						}
+// 					},
+// 					{
+// 						\\"apiInputParameters\\": [
+// 							\\"stationId\\",
+// 							\\"lat\\",
+// 							\\"lon\\",
+// 							\\"days\\",
+// 							\\"units\\",
+// 							\\"precision\\",
+// 							\\"sector\\"
+// 						],
+// 						\\"apiName\\": \\"GetHourlyForecasts\\",
+// 						\\"customParameters\\": [
+// 							\\"stationId\\",
+// 							\\"stationLatitude\\",
+// 							\\"stationLongitude\\",
+// 							\\"timeZone\\",
+// 							\\"weatherCode\\",
+// 							\\"weatherDescription\\",
+// 							\\"feelsLike\\",
+// 							\\"visibilityWeatherCode\\",
+// 							\\"visibilityWeatherDescription\\",
+// 							\\"minutesOfSunshine\\"
+// 						],
+// 						\\"platformParameters\\": [
+// 							\\"cloudCover\\",
+// 							\\"dewPoint\\",
+// 							\\"precipitation\\",
+// 							\\"pressure\\",
+// 							\\"relativeHumidity\\",
+// 							\\"temperature\\",
+// 							\\"wetBulbTemperature\\",
+// 							\\"dateTime\\",
+// 							\\"visibility\\",
+// 							\\"windChill\\",
+// 							\\"windSpeed\\",
+// 							\\"windDirection\\",
+// 							\\"windGust\\"
+// 						],
+// 						\\"unitsSupported\\": {
+// 							\\"key\\": \\"units\\",
+// 							\\"values\\": [
+// 								\\"us\\",
+// 								\\"si\\"
+// 							]
+// 						}
+// 					},
+// 					{
+// 						\\"apiInputParameters\\": [
+// 							\\"stationId\\",
+// 							\\"lat\\",
+// 							\\"lon\\",
+// 							\\"days\\",
+// 							\\"units\\",
+// 							\\"precision\\",
+// 							\\"sector\\"
+// 						],
+// 						\\"apiName\\": \\"GetDailyForecasts\\",
+// 						\\"customParameters\\": [
+// 							\\"stationId\\",
+// 							\\"stationLatitude\\",
+// 							\\"stationLongitude\\",
+// 							\\"timeZone\\",
+// 							\\"sunrise\\",
+// 							\\"sunset\\",
+// 							\\"weatherCode\\",
+// 							\\"weatherDescription\\",
+// 							\\"maxTemperature\\",
+// 							\\"minTemperature\\",
+// 							\\"avgHeatIndex\\",
+// 							\\"maxHeatIndex\\",
+// 							\\"minHeatIndex\\",
+// 							\\"maxWindChill\\",
+// 							\\"minWindChill\\",
+// 							\\"maxFeelsLike\\",
+// 							\\"minFeelsLike\\",
+// 							\\"avgFeelsLike\\",
+// 							\\"maxWindSpeed\\",
+// 							\\"avgWetBulbGlobeTemp\\",
+// 							\\"maxWetBulbGlobeTemp\\",
+// 							\\"minWetBulbGlobeTemp\\",
+// 							\\"minutesOfSunshine\\",
+// 							\\"cornHeatUnit\\",
+// 							\\"evapotranspiration\\"
+// 						],
+// 						\\"platformParameters\\": [
+// 							\\"cloudCover\\",
+// 							\\"dewPoint\\",
+// 							\\"growingDegreeDay\\",
+// 							\\"precipitation\\",
+// 							\\"pressure\\",
+// 							\\"relativeHumidity\\",
+// 							\\"temperature\\",
+// 							\\"wetBulbTemperature\\",
+// 							\\"dateTime\\",
+// 							\\"windChill\\",
+// 							\\"windSpeed\\",
+// 							\\"windDirection\\"
+// 						],
+// 						\\"unitsSupported\\": {
+// 							\\"key\\": \\"units\\",
+// 							\\"values\\": [
+// 								\\"us\\",
+// 								\\"si\\"
+// 							]
+// 						}
+// 					}
+// 				],
+// 				\\"extensionApiDocsLink\\": \\"https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/\\",
+// 				\\"extensionAuthLink\\": \\"https://www.dtn.com/dtn-content-integration/\\",
+// 				\\"extensionCategory\\": \\"Weather\\",
+// 				\\"farmBeatsExtensionId\\": \\"DTN.ContentServices\\",
+// 				\\"farmBeatsExtensionName\\": \\"DTN\\",
+// 				\\"farmBeatsExtensionVersion\\": \\"1.0\\",
+// 				\\"publisherId\\": \\"dtn\\",
+// 				\\"targetResourceType\\": \\"FarmBeats\\"
+// 			},
+// 			\\"systemData\\": {
+// 				\\"createdAt\\": \\"2021-04-12T15:28:06Z\\",
+// 				\\"lastModifiedAt\\": \\"2021-04-12T15:30:01Z\\"
+// 			}
+// 		}
+// 	]
+// }
     }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_Get.json
@@ -189,6 +781,457 @@ func ExampleFarmBeatsExtensionsClient_Get() {
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.FarmBeatsExtension = armagrifood.FarmBeatsExtension{
+// 	ID: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\"),
+// 	Name: to.Ptr(\\"DTN.ContentServices\\"),
+// 	Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions\\"),
+// 	SystemData: &armagrifood.SystemData{
+// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2021-04-12T15:28:06Z\\"); return t}()),
+// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2021-04-12T15:30:01Z\\"); return t}()),
+// 	},
+// 	Properties: &armagrifood.FarmBeatsExtensionProperties{
+// 		TargetResourceType: to.Ptr(\\"FarmBeats\\"),
+// 		FarmBeatsExtensionID: to.Ptr(\\"DTN.ContentServices\\"),
+// 		FarmBeatsExtensionName: to.Ptr(\\"DTN\\"),
+// 		FarmBeatsExtensionVersion: to.Ptr(\\"1.0\\"),
+// 		PublisherID: to.Ptr(\\"dtn\\"),
+// 		ExtensionCategory: to.Ptr(\\"Weather\\"),
+// 		ExtensionAuthLink: to.Ptr(\\"https://www.dtn.com/dtn-content-integration/\\"),
+// 		ExtensionAPIDocsLink: to.Ptr(\\"https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/\\"),
+// 		DetailedInformation: []*armagrifood.DetailedInformation{
+// 			{
+// 				APIName: to.Ptr(\\"GetDailyObservations\\"),
+// 				CustomParameters: []*string{
+// 					to.Ptr(\\"stationId\\"),
+// 					to.Ptr(\\"stationLatitude\\"),
+// 					to.Ptr(\\"stationLongitude\\"),
+// 					to.Ptr(\\"timeZone\\"),
+// 					to.Ptr(\\"sunrise\\"),
+// 					to.Ptr(\\"sunset\\"),
+// 					to.Ptr(\\"weatherCode\\"),
+// 					to.Ptr(\\"weatherDescription\\"),
+// 					to.Ptr(\\"maxTemperature\\"),
+// 					to.Ptr(\\"minTemperature\\"),
+// 					to.Ptr(\\"avgHeatIndex\\"),
+// 					to.Ptr(\\"maxHeatIndex\\"),
+// 					to.Ptr(\\"minHeatIndex\\"),
+// 					to.Ptr(\\"maxWindChill\\"),
+// 					to.Ptr(\\"minWindChill\\"),
+// 					to.Ptr(\\"maxFeelsLike\\"),
+// 					to.Ptr(\\"minFeelsLike\\"),
+// 					to.Ptr(\\"avgFeelsLike\\"),
+// 					to.Ptr(\\"maxWindSpeed\\"),
+// 					to.Ptr(\\"avgWetBulbGlobeTemp\\"),
+// 					to.Ptr(\\"maxWetBulbGlobeTemp\\"),
+// 					to.Ptr(\\"minWetBulbGlobeTemp\\"),
+// 					to.Ptr(\\"minutesOfSunshine\\"),
+// 					to.Ptr(\\"cornHeatUnit\\"),
+// 					to.Ptr(\\"evapotranspiration\\")},
+// 					PlatformParameters: []*string{
+// 						to.Ptr(\\"cloudCover\\"),
+// 						to.Ptr(\\"dewPoint\\"),
+// 						to.Ptr(\\"growingDegreeDay\\"),
+// 						to.Ptr(\\"precipitation\\"),
+// 						to.Ptr(\\"pressure\\"),
+// 						to.Ptr(\\"relativeHumidity\\"),
+// 						to.Ptr(\\"temperature\\"),
+// 						to.Ptr(\\"wetBulbTemperature\\"),
+// 						to.Ptr(\\"dateTime\\"),
+// 						to.Ptr(\\"windChill\\"),
+// 						to.Ptr(\\"windSpeed\\"),
+// 						to.Ptr(\\"windDirection\\")},
+// 						UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 							Key: to.Ptr(\\"units\\"),
+// 							Values: []*string{
+// 								to.Ptr(\\"us\\"),
+// 								to.Ptr(\\"si\\")},
+// 							},
+// 							APIInputParameters: []*string{
+// 								to.Ptr(\\"stationId\\"),
+// 								to.Ptr(\\"lat\\"),
+// 								to.Ptr(\\"lon\\"),
+// 								to.Ptr(\\"days\\"),
+// 								to.Ptr(\\"units\\"),
+// 								to.Ptr(\\"precision\\"),
+// 								to.Ptr(\\"sector\\")},
+// 							},
+// 							{
+// 								APIName: to.Ptr(\\"GetHourlyObservations\\"),
+// 								CustomParameters: []*string{
+// 									to.Ptr(\\"stationId\\"),
+// 									to.Ptr(\\"stationLatitude\\"),
+// 									to.Ptr(\\"stationLongitude\\"),
+// 									to.Ptr(\\"timeZone\\"),
+// 									to.Ptr(\\"weatherCode\\"),
+// 									to.Ptr(\\"weatherDescription\\"),
+// 									to.Ptr(\\"feelsLike\\"),
+// 									to.Ptr(\\"visibilityWeatherCode\\"),
+// 									to.Ptr(\\"visibilityWeatherDescription\\"),
+// 									to.Ptr(\\"minutesOfSunshine\\")},
+// 									PlatformParameters: []*string{
+// 										to.Ptr(\\"cloudCover\\"),
+// 										to.Ptr(\\"dewPoint\\"),
+// 										to.Ptr(\\"precipitation\\"),
+// 										to.Ptr(\\"pressure\\"),
+// 										to.Ptr(\\"relativeHumidity\\"),
+// 										to.Ptr(\\"temperature\\"),
+// 										to.Ptr(\\"wetBulbTemperature\\"),
+// 										to.Ptr(\\"dateTime\\"),
+// 										to.Ptr(\\"visibility\\"),
+// 										to.Ptr(\\"windChill\\"),
+// 										to.Ptr(\\"windSpeed\\"),
+// 										to.Ptr(\\"windDirection\\"),
+// 										to.Ptr(\\"windGust\\")},
+// 										UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 											Key: to.Ptr(\\"units\\"),
+// 											Values: []*string{
+// 												to.Ptr(\\"us\\"),
+// 												to.Ptr(\\"si\\")},
+// 											},
+// 											APIInputParameters: []*string{
+// 												to.Ptr(\\"stationId\\"),
+// 												to.Ptr(\\"lat\\"),
+// 												to.Ptr(\\"lon\\"),
+// 												to.Ptr(\\"hours\\"),
+// 												to.Ptr(\\"units\\"),
+// 												to.Ptr(\\"precision\\"),
+// 												to.Ptr(\\"sector\\")},
+// 											},
+// 											{
+// 												APIName: to.Ptr(\\"GetHourlyForecasts\\"),
+// 												CustomParameters: []*string{
+// 													to.Ptr(\\"stationId\\"),
+// 													to.Ptr(\\"stationLatitude\\"),
+// 													to.Ptr(\\"stationLongitude\\"),
+// 													to.Ptr(\\"timeZone\\"),
+// 													to.Ptr(\\"weatherCode\\"),
+// 													to.Ptr(\\"weatherDescription\\"),
+// 													to.Ptr(\\"feelsLike\\"),
+// 													to.Ptr(\\"visibilityWeatherCode\\"),
+// 													to.Ptr(\\"visibilityWeatherDescription\\"),
+// 													to.Ptr(\\"minutesOfSunshine\\")},
+// 													PlatformParameters: []*string{
+// 														to.Ptr(\\"cloudCover\\"),
+// 														to.Ptr(\\"dewPoint\\"),
+// 														to.Ptr(\\"precipitation\\"),
+// 														to.Ptr(\\"pressure\\"),
+// 														to.Ptr(\\"relativeHumidity\\"),
+// 														to.Ptr(\\"temperature\\"),
+// 														to.Ptr(\\"wetBulbTemperature\\"),
+// 														to.Ptr(\\"dateTime\\"),
+// 														to.Ptr(\\"visibility\\"),
+// 														to.Ptr(\\"windChill\\"),
+// 														to.Ptr(\\"windSpeed\\"),
+// 														to.Ptr(\\"windDirection\\"),
+// 														to.Ptr(\\"windGust\\")},
+// 														UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 															Key: to.Ptr(\\"units\\"),
+// 															Values: []*string{
+// 																to.Ptr(\\"us\\"),
+// 																to.Ptr(\\"si\\")},
+// 															},
+// 															APIInputParameters: []*string{
+// 																to.Ptr(\\"stationId\\"),
+// 																to.Ptr(\\"lat\\"),
+// 																to.Ptr(\\"lon\\"),
+// 																to.Ptr(\\"days\\"),
+// 																to.Ptr(\\"units\\"),
+// 																to.Ptr(\\"precision\\"),
+// 																to.Ptr(\\"sector\\")},
+// 															},
+// 															{
+// 																APIName: to.Ptr(\\"GetDailyForecasts\\"),
+// 																CustomParameters: []*string{
+// 																	to.Ptr(\\"stationId\\"),
+// 																	to.Ptr(\\"stationLatitude\\"),
+// 																	to.Ptr(\\"stationLongitude\\"),
+// 																	to.Ptr(\\"timeZone\\"),
+// 																	to.Ptr(\\"sunrise\\"),
+// 																	to.Ptr(\\"sunset\\"),
+// 																	to.Ptr(\\"weatherCode\\"),
+// 																	to.Ptr(\\"weatherDescription\\"),
+// 																	to.Ptr(\\"maxTemperature\\"),
+// 																	to.Ptr(\\"minTemperature\\"),
+// 																	to.Ptr(\\"avgHeatIndex\\"),
+// 																	to.Ptr(\\"maxHeatIndex\\"),
+// 																	to.Ptr(\\"minHeatIndex\\"),
+// 																	to.Ptr(\\"maxWindChill\\"),
+// 																	to.Ptr(\\"minWindChill\\"),
+// 																	to.Ptr(\\"maxFeelsLike\\"),
+// 																	to.Ptr(\\"minFeelsLike\\"),
+// 																	to.Ptr(\\"avgFeelsLike\\"),
+// 																	to.Ptr(\\"maxWindSpeed\\"),
+// 																	to.Ptr(\\"avgWetBulbGlobeTemp\\"),
+// 																	to.Ptr(\\"maxWetBulbGlobeTemp\\"),
+// 																	to.Ptr(\\"minWetBulbGlobeTemp\\"),
+// 																	to.Ptr(\\"minutesOfSunshine\\"),
+// 																	to.Ptr(\\"cornHeatUnit\\"),
+// 																	to.Ptr(\\"evapotranspiration\\")},
+// 																	PlatformParameters: []*string{
+// 																		to.Ptr(\\"cloudCover\\"),
+// 																		to.Ptr(\\"dewPoint\\"),
+// 																		to.Ptr(\\"growingDegreeDay\\"),
+// 																		to.Ptr(\\"precipitation\\"),
+// 																		to.Ptr(\\"pressure\\"),
+// 																		to.Ptr(\\"relativeHumidity\\"),
+// 																		to.Ptr(\\"temperature\\"),
+// 																		to.Ptr(\\"wetBulbTemperature\\"),
+// 																		to.Ptr(\\"dateTime\\"),
+// 																		to.Ptr(\\"windChill\\"),
+// 																		to.Ptr(\\"windSpeed\\"),
+// 																		to.Ptr(\\"windDirection\\")},
+// 																		UnitsSupported: &armagrifood.UnitSystemsInfo{
+// 																			Key: to.Ptr(\\"units\\"),
+// 																			Values: []*string{
+// 																				to.Ptr(\\"us\\"),
+// 																				to.Ptr(\\"si\\")},
+// 																			},
+// 																			APIInputParameters: []*string{
+// 																				to.Ptr(\\"stationId\\"),
+// 																				to.Ptr(\\"lat\\"),
+// 																				to.Ptr(\\"lon\\"),
+// 																				to.Ptr(\\"days\\"),
+// 																				to.Ptr(\\"units\\"),
+// 																				to.Ptr(\\"precision\\"),
+// 																				to.Ptr(\\"sector\\")},
+// 																		}},
+// 																	},
+// 																}
+    // with the raw JSON response: 
+    // {
+// 	\\"name\\": \\"DTN.ContentServices\\",
+// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions\\",
+// 	\\"id\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\",
+// 	\\"properties\\": {
+// 		\\"detailedInformation\\": [
+// 			{
+// 				\\"apiInputParameters\\": [
+// 					\\"stationId\\",
+// 					\\"lat\\",
+// 					\\"lon\\",
+// 					\\"days\\",
+// 					\\"units\\",
+// 					\\"precision\\",
+// 					\\"sector\\"
+// 				],
+// 				\\"apiName\\": \\"GetDailyObservations\\",
+// 				\\"customParameters\\": [
+// 					\\"stationId\\",
+// 					\\"stationLatitude\\",
+// 					\\"stationLongitude\\",
+// 					\\"timeZone\\",
+// 					\\"sunrise\\",
+// 					\\"sunset\\",
+// 					\\"weatherCode\\",
+// 					\\"weatherDescription\\",
+// 					\\"maxTemperature\\",
+// 					\\"minTemperature\\",
+// 					\\"avgHeatIndex\\",
+// 					\\"maxHeatIndex\\",
+// 					\\"minHeatIndex\\",
+// 					\\"maxWindChill\\",
+// 					\\"minWindChill\\",
+// 					\\"maxFeelsLike\\",
+// 					\\"minFeelsLike\\",
+// 					\\"avgFeelsLike\\",
+// 					\\"maxWindSpeed\\",
+// 					\\"avgWetBulbGlobeTemp\\",
+// 					\\"maxWetBulbGlobeTemp\\",
+// 					\\"minWetBulbGlobeTemp\\",
+// 					\\"minutesOfSunshine\\",
+// 					\\"cornHeatUnit\\",
+// 					\\"evapotranspiration\\"
+// 				],
+// 				\\"platformParameters\\": [
+// 					\\"cloudCover\\",
+// 					\\"dewPoint\\",
+// 					\\"growingDegreeDay\\",
+// 					\\"precipitation\\",
+// 					\\"pressure\\",
+// 					\\"relativeHumidity\\",
+// 					\\"temperature\\",
+// 					\\"wetBulbTemperature\\",
+// 					\\"dateTime\\",
+// 					\\"windChill\\",
+// 					\\"windSpeed\\",
+// 					\\"windDirection\\"
+// 				],
+// 				\\"unitsSupported\\": {
+// 					\\"key\\": \\"units\\",
+// 					\\"values\\": [
+// 						\\"us\\",
+// 						\\"si\\"
+// 					]
+// 				}
+// 			},
+// 			{
+// 				\\"apiInputParameters\\": [
+// 					\\"stationId\\",
+// 					\\"lat\\",
+// 					\\"lon\\",
+// 					\\"hours\\",
+// 					\\"units\\",
+// 					\\"precision\\",
+// 					\\"sector\\"
+// 				],
+// 				\\"apiName\\": \\"GetHourlyObservations\\",
+// 				\\"customParameters\\": [
+// 					\\"stationId\\",
+// 					\\"stationLatitude\\",
+// 					\\"stationLongitude\\",
+// 					\\"timeZone\\",
+// 					\\"weatherCode\\",
+// 					\\"weatherDescription\\",
+// 					\\"feelsLike\\",
+// 					\\"visibilityWeatherCode\\",
+// 					\\"visibilityWeatherDescription\\",
+// 					\\"minutesOfSunshine\\"
+// 				],
+// 				\\"platformParameters\\": [
+// 					\\"cloudCover\\",
+// 					\\"dewPoint\\",
+// 					\\"precipitation\\",
+// 					\\"pressure\\",
+// 					\\"relativeHumidity\\",
+// 					\\"temperature\\",
+// 					\\"wetBulbTemperature\\",
+// 					\\"dateTime\\",
+// 					\\"visibility\\",
+// 					\\"windChill\\",
+// 					\\"windSpeed\\",
+// 					\\"windDirection\\",
+// 					\\"windGust\\"
+// 				],
+// 				\\"unitsSupported\\": {
+// 					\\"key\\": \\"units\\",
+// 					\\"values\\": [
+// 						\\"us\\",
+// 						\\"si\\"
+// 					]
+// 				}
+// 			},
+// 			{
+// 				\\"apiInputParameters\\": [
+// 					\\"stationId\\",
+// 					\\"lat\\",
+// 					\\"lon\\",
+// 					\\"days\\",
+// 					\\"units\\",
+// 					\\"precision\\",
+// 					\\"sector\\"
+// 				],
+// 				\\"apiName\\": \\"GetHourlyForecasts\\",
+// 				\\"customParameters\\": [
+// 					\\"stationId\\",
+// 					\\"stationLatitude\\",
+// 					\\"stationLongitude\\",
+// 					\\"timeZone\\",
+// 					\\"weatherCode\\",
+// 					\\"weatherDescription\\",
+// 					\\"feelsLike\\",
+// 					\\"visibilityWeatherCode\\",
+// 					\\"visibilityWeatherDescription\\",
+// 					\\"minutesOfSunshine\\"
+// 				],
+// 				\\"platformParameters\\": [
+// 					\\"cloudCover\\",
+// 					\\"dewPoint\\",
+// 					\\"precipitation\\",
+// 					\\"pressure\\",
+// 					\\"relativeHumidity\\",
+// 					\\"temperature\\",
+// 					\\"wetBulbTemperature\\",
+// 					\\"dateTime\\",
+// 					\\"visibility\\",
+// 					\\"windChill\\",
+// 					\\"windSpeed\\",
+// 					\\"windDirection\\",
+// 					\\"windGust\\"
+// 				],
+// 				\\"unitsSupported\\": {
+// 					\\"key\\": \\"units\\",
+// 					\\"values\\": [
+// 						\\"us\\",
+// 						\\"si\\"
+// 					]
+// 				}
+// 			},
+// 			{
+// 				\\"apiInputParameters\\": [
+// 					\\"stationId\\",
+// 					\\"lat\\",
+// 					\\"lon\\",
+// 					\\"days\\",
+// 					\\"units\\",
+// 					\\"precision\\",
+// 					\\"sector\\"
+// 				],
+// 				\\"apiName\\": \\"GetDailyForecasts\\",
+// 				\\"customParameters\\": [
+// 					\\"stationId\\",
+// 					\\"stationLatitude\\",
+// 					\\"stationLongitude\\",
+// 					\\"timeZone\\",
+// 					\\"sunrise\\",
+// 					\\"sunset\\",
+// 					\\"weatherCode\\",
+// 					\\"weatherDescription\\",
+// 					\\"maxTemperature\\",
+// 					\\"minTemperature\\",
+// 					\\"avgHeatIndex\\",
+// 					\\"maxHeatIndex\\",
+// 					\\"minHeatIndex\\",
+// 					\\"maxWindChill\\",
+// 					\\"minWindChill\\",
+// 					\\"maxFeelsLike\\",
+// 					\\"minFeelsLike\\",
+// 					\\"avgFeelsLike\\",
+// 					\\"maxWindSpeed\\",
+// 					\\"avgWetBulbGlobeTemp\\",
+// 					\\"maxWetBulbGlobeTemp\\",
+// 					\\"minWetBulbGlobeTemp\\",
+// 					\\"minutesOfSunshine\\",
+// 					\\"cornHeatUnit\\",
+// 					\\"evapotranspiration\\"
+// 				],
+// 				\\"platformParameters\\": [
+// 					\\"cloudCover\\",
+// 					\\"dewPoint\\",
+// 					\\"growingDegreeDay\\",
+// 					\\"precipitation\\",
+// 					\\"pressure\\",
+// 					\\"relativeHumidity\\",
+// 					\\"temperature\\",
+// 					\\"wetBulbTemperature\\",
+// 					\\"dateTime\\",
+// 					\\"windChill\\",
+// 					\\"windSpeed\\",
+// 					\\"windDirection\\"
+// 				],
+// 				\\"unitsSupported\\": {
+// 					\\"key\\": \\"units\\",
+// 					\\"values\\": [
+// 						\\"us\\",
+// 						\\"si\\"
+// 					]
+// 				}
+// 			}
+// 		],
+// 		\\"extensionApiDocsLink\\": \\"https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/\\",
+// 		\\"extensionAuthLink\\": \\"https://www.dtn.com/dtn-content-integration/\\",
+// 		\\"extensionCategory\\": \\"Weather\\",
+// 		\\"farmBeatsExtensionId\\": \\"DTN.ContentServices\\",
+// 		\\"farmBeatsExtensionName\\": \\"DTN\\",
+// 		\\"farmBeatsExtensionVersion\\": \\"1.0\\",
+// 		\\"publisherId\\": \\"dtn\\",
+// 		\\"targetResourceType\\": \\"FarmBeats\\"
+// 	},
+// 	\\"systemData\\": {
+// 		\\"createdAt\\": \\"2021-04-12T15:28:06Z\\",
+// 		\\"lastModifiedAt\\": \\"2021-04-12T15:30:01Z\\"
+// 	}
+// }
 }
 ",
   "farmbeatsmodels_client_example_test.go": "//go:build go1.18
@@ -231,6 +1274,52 @@ func ExampleFarmBeatsModelsClient_Get() {
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.FarmBeats = armagrifood.FarmBeats{
+// 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
+// 	Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
+// 	Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
+// 	Tags: map[string]*string{
+// 		\\"key1\\": to.Ptr(\\"value1\\"),
+// 		\\"key2\\": to.Ptr(\\"value2\\"),
+// 	},
+// 	Location: to.Ptr(\\"eastus2\\"),
+// 	SystemData: &armagrifood.SystemData{
+// 		CreatedBy: to.Ptr(\\"string\\"),
+// 		CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 		LastModifiedBy: to.Ptr(\\"string\\"),
+// 		LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 	},
+// 	Properties: &armagrifood.FarmBeatsProperties{
+// 		InstanceURI: to.Ptr(\\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\"),
+// 		ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
+// 	},
+// }
+    // with the raw JSON response: 
+    // {
+// 	\\"name\\": \\"examples-farmBeatsResourceName\\",
+// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
+// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
+// 	\\"location\\": \\"eastus2\\",
+// 	\\"properties\\": {
+// 		\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
+// 		\\"provisioningState\\": \\"Succeeded\\"
+// 	},
+// 	\\"systemData\\": {
+// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"createdBy\\": \\"string\\",
+// 		\\"createdByType\\": \\"User\\",
+// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"lastModifiedBy\\": \\"string\\",
+// 		\\"lastModifiedByType\\": \\"User\\"
+// 	},
+// 	\\"tags\\": {
+// 		\\"key1\\": \\"value1\\",
+// 		\\"key2\\": \\"value2\\"
+// 	}
+// }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_CreateOrUpdate.json
 func ExampleFarmBeatsModelsClient_CreateOrUpdate() {
@@ -255,6 +1344,52 @@ Location: to.Ptr(\\"eastus2\\"),
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.FarmBeats = armagrifood.FarmBeats{
+// 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
+// 	Name: to.Ptr(\\"examples-farmbeatsResourceName\\"),
+// 	Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
+// 	Tags: map[string]*string{
+// 		\\"key1\\": to.Ptr(\\"value1\\"),
+// 		\\"key2\\": to.Ptr(\\"value2\\"),
+// 	},
+// 	Location: to.Ptr(\\"eastus2\\"),
+// 	SystemData: &armagrifood.SystemData{
+// 		CreatedBy: to.Ptr(\\"string\\"),
+// 		CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 		LastModifiedBy: to.Ptr(\\"string\\"),
+// 		LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 	},
+// 	Properties: &armagrifood.FarmBeatsProperties{
+// 		InstanceURI: to.Ptr(\\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\"),
+// 		ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
+// 	},
+// }
+    // with the raw JSON response: 
+    // {
+// 	\\"name\\": \\"examples-farmbeatsResourceName\\",
+// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
+// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
+// 	\\"location\\": \\"eastus2\\",
+// 	\\"properties\\": {
+// 		\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
+// 		\\"provisioningState\\": \\"Succeeded\\"
+// 	},
+// 	\\"systemData\\": {
+// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"createdBy\\": \\"string\\",
+// 		\\"createdByType\\": \\"User\\",
+// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"lastModifiedBy\\": \\"string\\",
+// 		\\"lastModifiedByType\\": \\"User\\"
+// 	},
+// 	\\"tags\\": {
+// 		\\"key1\\": \\"value1\\",
+// 		\\"key2\\": \\"value2\\"
+// 	}
+// }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Update.json
 func ExampleFarmBeatsModelsClient_Update() {
@@ -278,6 +1413,52 @@ Tags: map[string]*string{
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.FarmBeats = armagrifood.FarmBeats{
+// 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
+// 	Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
+// 	Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
+// 	Tags: map[string]*string{
+// 		\\"key1\\": to.Ptr(\\"value1\\"),
+// 		\\"key2\\": to.Ptr(\\"value2\\"),
+// 	},
+// 	Location: to.Ptr(\\"eastus2\\"),
+// 	SystemData: &armagrifood.SystemData{
+// 		CreatedBy: to.Ptr(\\"string\\"),
+// 		CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 		LastModifiedBy: to.Ptr(\\"string\\"),
+// 		LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 	},
+// 	Properties: &armagrifood.FarmBeatsProperties{
+// 		InstanceURI: to.Ptr(\\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\"),
+// 		ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
+// 	},
+// }
+    // with the raw JSON response: 
+    // {
+// 	\\"name\\": \\"examples-farmBeatsResourceName\\",
+// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
+// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
+// 	\\"location\\": \\"eastus2\\",
+// 	\\"properties\\": {
+// 		\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
+// 		\\"provisioningState\\": \\"Succeeded\\"
+// 	},
+// 	\\"systemData\\": {
+// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"createdBy\\": \\"string\\",
+// 		\\"createdByType\\": \\"User\\",
+// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 		\\"lastModifiedBy\\": \\"string\\",
+// 		\\"lastModifiedByType\\": \\"User\\"
+// 	},
+// 	\\"tags\\": {
+// 		\\"key1\\": \\"value1\\",
+// 		\\"key2\\": \\"value2\\"
+// 	}
+// }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Delete.json
 func ExampleFarmBeatsModelsClient_Delete() {
@@ -318,6 +1499,59 @@ SkipToken: nil,
             // TODO: use page item
             _ = v
         }
+        // For example, nextResult struct should like: 
+        // nextResult.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
+// 	Value: []*armagrifood.FarmBeats{
+// 		{
+// 			ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
+// 			Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
+// 			Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
+// 			Tags: map[string]*string{
+// 				\\"key1\\": to.Ptr(\\"value1\\"),
+// 				\\"key2\\": to.Ptr(\\"value2\\"),
+// 			},
+// 			Location: to.Ptr(\\"eastus2\\"),
+// 			SystemData: &armagrifood.SystemData{
+// 				CreatedBy: to.Ptr(\\"string\\"),
+// 				CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 				LastModifiedBy: to.Ptr(\\"string\\"),
+// 				LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 			},
+// 			Properties: &armagrifood.FarmBeatsProperties{
+// 				InstanceURI: to.Ptr(\\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\"),
+// 				ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
+// 			},
+// 	}},
+// }
+        // with the raw JSON response: 
+        // {
+// 	\\"value\\": [
+// 		{
+// 			\\"name\\": \\"examples-farmBeatsResourceName\\",
+// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
+// 			\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
+// 			\\"location\\": \\"eastus2\\",
+// 			\\"properties\\": {
+// 				\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
+// 				\\"provisioningState\\": \\"Succeeded\\"
+// 			},
+// 			\\"systemData\\": {
+// 				\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 				\\"createdBy\\": \\"string\\",
+// 				\\"createdByType\\": \\"User\\",
+// 				\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 				\\"lastModifiedBy\\": \\"string\\",
+// 				\\"lastModifiedByType\\": \\"User\\"
+// 			},
+// 			\\"tags\\": {
+// 				\\"key1\\": \\"value1\\",
+// 				\\"key2\\": \\"value2\\"
+// 			}
+// 		}
+// 	]
+// }
     }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListByResourceGroup.json
@@ -343,6 +1577,59 @@ SkipToken: nil,
             // TODO: use page item
             _ = v
         }
+        // For example, nextResult struct should like: 
+        // nextResult.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
+// 	Value: []*armagrifood.FarmBeats{
+// 		{
+// 			ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
+// 			Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
+// 			Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
+// 			Tags: map[string]*string{
+// 				\\"key1\\": to.Ptr(\\"value1\\"),
+// 				\\"key2\\": to.Ptr(\\"value2\\"),
+// 			},
+// 			Location: to.Ptr(\\"eastus2\\"),
+// 			SystemData: &armagrifood.SystemData{
+// 				CreatedBy: to.Ptr(\\"string\\"),
+// 				CreatedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 				LastModifiedBy: to.Ptr(\\"string\\"),
+// 				LastModifiedByType: to.Ptr(armagrifood.CreatedByTypeUser),
+// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, \\"2020-02-01T01:01:01.1075056Z\\"); return t}()),
+// 			},
+// 			Properties: &armagrifood.FarmBeatsProperties{
+// 				InstanceURI: to.Ptr(\\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\"),
+// 				ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
+// 			},
+// 	}},
+// }
+        // with the raw JSON response: 
+        // {
+// 	\\"value\\": [
+// 		{
+// 			\\"name\\": \\"examples-farmBeatsResourceName\\",
+// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
+// 			\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
+// 			\\"location\\": \\"eastus2\\",
+// 			\\"properties\\": {
+// 				\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
+// 				\\"provisioningState\\": \\"Succeeded\\"
+// 			},
+// 			\\"systemData\\": {
+// 				\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 				\\"createdBy\\": \\"string\\",
+// 				\\"createdByType\\": \\"User\\",
+// 				\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
+// 				\\"lastModifiedBy\\": \\"string\\",
+// 				\\"lastModifiedByType\\": \\"User\\"
+// 			},
+// 			\\"tags\\": {
+// 				\\"key1\\": \\"value1\\",
+// 				\\"key2\\": \\"value2\\"
+// 			}
+// 		}
+// 	]
+// }
     }
 }
 ",
@@ -389,6 +1676,18 @@ Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.CheckNameAvailabilityResponse = armagrifood.CheckNameAvailabilityResponse{
+// 	NameAvailable: to.Ptr(false),
+// 	Reason: to.Ptr(armagrifood.CheckNameAvailabilityReasonAlreadyExists),
+// 	Message: to.Ptr(\\"An account named 'existingaccountname' is already in use.\\"),
+// }
+    // with the raw JSON response: 
+    // {
+// 	\\"message\\": \\"An account named 'existingaccountname' is already in use.\\",
+// 	\\"nameAvailable\\": false,
+// 	\\"reason\\": \\"AlreadyExists\\"
+// }
 }
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_Available.json
 func ExampleLocationsClient_CheckNameAvailability_locationsCheckNameAvailabilityAvailable() {
@@ -410,6 +1709,14 @@ Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
     }
     // TODO: use response item
     _ = res
+    // For example, response struct should like: 
+    // res.CheckNameAvailabilityResponse = armagrifood.CheckNameAvailabilityResponse{
+// 	NameAvailable: to.Ptr(true),
+// }
+    // with the raw JSON response: 
+    // {
+// 	\\"nameAvailable\\": true
+// }
 }
 ",
   "mock_test.go": "//go:build go1.18
@@ -716,6 +2023,176 @@ func ExampleOperationsClient_NewListPager() {
             // TODO: use page item
             _ = v
         }
+        // For example, nextResult struct should like: 
+        // nextResult.OperationListResult = armagrifood.OperationListResult{
+// 	Value: []*armagrifood.Operation{
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/read\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"AgFoodPlatform FarmBeats\\"),
+// 				Operation: to.Ptr(\\"Get or List AgFoodPlatform FarmBeats resource(s).\\"),
+// 				Description: to.Ptr(\\"Gets or Lists existing AgFoodPlatform FarmBeats resource(s).\\"),
+// 			},
+// 		},
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/write\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"AgFoodPlatform FarmBeats\\"),
+// 				Operation: to.Ptr(\\"Create or Update AgFoodPlatform FarmBeats.\\"),
+// 				Description: to.Ptr(\\"Creates or Updates AgFoodPlatform FarmBeats.\\"),
+// 			},
+// 		},
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/delete\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"AgFoodPlatform FarmBeats\\"),
+// 				Operation: to.Ptr(\\"Delete AgFoodPlatform FarmBeats resource.\\"),
+// 				Description: to.Ptr(\\"Deletes an existing AgFoodPlatform FarmBeats resource.\\"),
+// 			},
+// 		},
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/locations/checkNameAvailability/action\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"Locations\\"),
+// 				Operation: to.Ptr(\\"Check Name Availability\\"),
+// 				Description: to.Ptr(\\"Checks that resource name is valid and is not in use.\\"),
+// 			},
+// 		},
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/operations/read\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"List all operations in Microsoft AgFoodPlatform resource provider.\\"),
+// 				Operation: to.Ptr(\\"List all operations.\\"),
+// 				Description: to.Ptr(\\"List all operations in Microsoft AgFoodPlatform resource provider.\\"),
+// 			},
+// 		},
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/extensions/read\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"AgFoodPlatform Extensions\\"),
+// 				Operation: to.Ptr(\\"Get or List AgFoodPlatform Extensions resource(s).\\"),
+// 				Description: to.Ptr(\\"Gets or Lists existing AgFoodPlatform Extensions resource(s).\\"),
+// 			},
+// 		},
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/extensions/write\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"AgFoodPlatform Extensions\\"),
+// 				Operation: to.Ptr(\\"Create or Update AgFoodPlatform Extensions.\\"),
+// 				Description: to.Ptr(\\"Creates or Updates AgFoodPlatform Extensions.\\"),
+// 			},
+// 		},
+// 		{
+// 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/extensions/delete\\"),
+// 			IsDataAction: to.Ptr(false),
+// 			Display: &armagrifood.OperationDisplay{
+// 				Provider: to.Ptr(\\"Microsoft AgFoodPlatform\\"),
+// 				Resource: to.Ptr(\\"AgFoodPlatform Extensions\\"),
+// 				Operation: to.Ptr(\\"Delete AgFoodPlatform Extensions resource.\\"),
+// 				Description: to.Ptr(\\"Deletes an existing AgFoodPlatform Extensions resource.\\"),
+// 			},
+// 	}},
+// }
+        // with the raw JSON response: 
+        // {
+// 	\\"nextLink\\": \\"https://management.azure.com/providers/Microsoft.AgFoodPlatform/operations?$skiptoken={token}\\",
+// 	\\"value\\": [
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/read\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"Gets or Lists existing AgFoodPlatform FarmBeats resource(s).\\",
+// 				\\"operation\\": \\"Get or List AgFoodPlatform FarmBeats resource(s).\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"AgFoodPlatform FarmBeats\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		},
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/write\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"Creates or Updates AgFoodPlatform FarmBeats.\\",
+// 				\\"operation\\": \\"Create or Update AgFoodPlatform FarmBeats.\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"AgFoodPlatform FarmBeats\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		},
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/delete\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"Deletes an existing AgFoodPlatform FarmBeats resource.\\",
+// 				\\"operation\\": \\"Delete AgFoodPlatform FarmBeats resource.\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"AgFoodPlatform FarmBeats\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		},
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/locations/checkNameAvailability/action\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"Checks that resource name is valid and is not in use.\\",
+// 				\\"operation\\": \\"Check Name Availability\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"Locations\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		},
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/operations/read\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"List all operations in Microsoft AgFoodPlatform resource provider.\\",
+// 				\\"operation\\": \\"List all operations.\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"List all operations in Microsoft AgFoodPlatform resource provider.\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		},
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions/read\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"Gets or Lists existing AgFoodPlatform Extensions resource(s).\\",
+// 				\\"operation\\": \\"Get or List AgFoodPlatform Extensions resource(s).\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"AgFoodPlatform Extensions\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		},
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions/write\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"Creates or Updates AgFoodPlatform Extensions.\\",
+// 				\\"operation\\": \\"Create or Update AgFoodPlatform Extensions.\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"AgFoodPlatform Extensions\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		},
+// 		{
+// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions/delete\\",
+// 			\\"display\\": {
+// 				\\"description\\": \\"Deletes an existing AgFoodPlatform Extensions resource.\\",
+// 				\\"operation\\": \\"Delete AgFoodPlatform Extensions resource.\\",
+// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
+// 				\\"resource\\": \\"AgFoodPlatform Extensions\\"
+// 			},
+// 			\\"isDataAction\\": false
+// 		}
+// 	]
+// }
     }
 }
 ",

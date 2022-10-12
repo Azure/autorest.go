@@ -34,6 +34,111 @@ func ExampleServicesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ServiceResource = armappplatform.ServiceResource{
+	// 	Name: to.Ptr("myservice"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice"),
+	// 	Location: to.Ptr("eastus"),
+	// 	Tags: map[string]*string{
+	// 		"key1": to.Ptr("value1"),
+	// 	},
+	// 	Properties: &armappplatform.ClusterResourceProperties{
+	// 		NetworkProfile: &armappplatform.NetworkProfile{
+	// 			OutboundIPs: &armappplatform.NetworkProfileOutboundIPs{
+	// 				PublicIPs: []*string{
+	// 					to.Ptr("20.39.3.173"),
+	// 					to.Ptr("40.64.67.13")},
+	// 				},
+	// 				RequiredTraffics: []*armappplatform.RequiredTraffic{
+	// 					{
+	// 						Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 						IPs: []*string{
+	// 							to.Ptr("20.62.211.25"),
+	// 							to.Ptr("52.188.47.226")},
+	// 							Port: to.Ptr[int32](443),
+	// 							Protocol: to.Ptr("TCP"),
+	// 						},
+	// 						{
+	// 							Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 							IPs: []*string{
+	// 								to.Ptr("20.62.211.25"),
+	// 								to.Ptr("52.188.47.226")},
+	// 								Port: to.Ptr[int32](1194),
+	// 								Protocol: to.Ptr("UDP"),
+	// 							},
+	// 							{
+	// 								Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 								IPs: []*string{
+	// 									to.Ptr("20.62.211.25"),
+	// 									to.Ptr("52.188.47.226")},
+	// 									Port: to.Ptr[int32](9000),
+	// 									Protocol: to.Ptr("TCP"),
+	// 							}},
+	// 						},
+	// 						ProvisioningState: to.Ptr(armappplatform.ProvisioningStateSucceeded),
+	// 						ServiceID: to.Ptr("12345678abcd1234abcd12345678abcd"),
+	// 					},
+	// 					SKU: &armappplatform.SKU{
+	// 						Name: to.Ptr("S0"),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 				}
+	// with the raw JSON response:
+	// {
+	// 	"name": "myservice",
+	// 	"type": "Microsoft.AppPlatform/Spring",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"networkProfile": {
+	// 			"outboundIPs": {
+	// 				"publicIPs": [
+	// 					"20.39.3.173",
+	// 					"40.64.67.13"
+	// 				]
+	// 			},
+	// 			"requiredTraffics": [
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 443,
+	// 					"protocol": "TCP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 1194,
+	// 					"protocol": "UDP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 9000,
+	// 					"protocol": "TCP"
+	// 				}
+	// 			]
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"serviceId": "12345678abcd1234abcd12345678abcd"
+	// 	},
+	// 	"sku": {
+	// 		"name": "S0",
+	// 		"tier": "Standard"
+	// 	},
+	// 	"tags": {
+	// 		"key1": "value1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
@@ -67,6 +172,111 @@ func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ServiceResource = armappplatform.ServiceResource{
+	// 	Name: to.Ptr("myservice"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice"),
+	// 	Location: to.Ptr("eastus"),
+	// 	Tags: map[string]*string{
+	// 		"key1": to.Ptr("value1"),
+	// 	},
+	// 	Properties: &armappplatform.ClusterResourceProperties{
+	// 		NetworkProfile: &armappplatform.NetworkProfile{
+	// 			OutboundIPs: &armappplatform.NetworkProfileOutboundIPs{
+	// 				PublicIPs: []*string{
+	// 					to.Ptr("20.39.3.173"),
+	// 					to.Ptr("40.64.67.13")},
+	// 				},
+	// 				RequiredTraffics: []*armappplatform.RequiredTraffic{
+	// 					{
+	// 						Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 						IPs: []*string{
+	// 							to.Ptr("20.62.211.25"),
+	// 							to.Ptr("52.188.47.226")},
+	// 							Port: to.Ptr[int32](443),
+	// 							Protocol: to.Ptr("TCP"),
+	// 						},
+	// 						{
+	// 							Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 							IPs: []*string{
+	// 								to.Ptr("20.62.211.25"),
+	// 								to.Ptr("52.188.47.226")},
+	// 								Port: to.Ptr[int32](1194),
+	// 								Protocol: to.Ptr("UDP"),
+	// 							},
+	// 							{
+	// 								Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 								IPs: []*string{
+	// 									to.Ptr("20.62.211.25"),
+	// 									to.Ptr("52.188.47.226")},
+	// 									Port: to.Ptr[int32](9000),
+	// 									Protocol: to.Ptr("TCP"),
+	// 							}},
+	// 						},
+	// 						ProvisioningState: to.Ptr(armappplatform.ProvisioningStateSucceeded),
+	// 						ServiceID: to.Ptr("12345678abcd1234abcd12345678abcd"),
+	// 					},
+	// 					SKU: &armappplatform.SKU{
+	// 						Name: to.Ptr("S0"),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 				}
+	// with the raw JSON response:
+	// {
+	// 	"name": "myservice",
+	// 	"type": "Microsoft.AppPlatform/Spring",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"networkProfile": {
+	// 			"outboundIPs": {
+	// 				"publicIPs": [
+	// 					"20.39.3.173",
+	// 					"40.64.67.13"
+	// 				]
+	// 			},
+	// 			"requiredTraffics": [
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 443,
+	// 					"protocol": "TCP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 1194,
+	// 					"protocol": "UDP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 9000,
+	// 					"protocol": "TCP"
+	// 				}
+	// 			]
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"serviceId": "12345678abcd1234abcd12345678abcd"
+	// 	},
+	// 	"sku": {
+	// 		"name": "S0",
+	// 		"tier": "Standard"
+	// 	},
+	// 	"tags": {
+	// 		"key1": "value1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
@@ -108,6 +318,119 @@ func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdateVNetInjecti
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ServiceResource = armappplatform.ServiceResource{
+	// 	Name: to.Ptr("myservice"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice"),
+	// 	Location: to.Ptr("eastus"),
+	// 	Tags: map[string]*string{
+	// 		"key1": to.Ptr("value1"),
+	// 	},
+	// 	Properties: &armappplatform.ClusterResourceProperties{
+	// 		NetworkProfile: &armappplatform.NetworkProfile{
+	// 			AppNetworkResourceGroup: to.Ptr("my-app-network-rg"),
+	// 			AppSubnetID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/apps"),
+	// 			OutboundIPs: &armappplatform.NetworkProfileOutboundIPs{
+	// 				PublicIPs: []*string{
+	// 					to.Ptr("40.64.67.13")},
+	// 				},
+	// 				RequiredTraffics: []*armappplatform.RequiredTraffic{
+	// 					{
+	// 						Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 						IPs: []*string{
+	// 							to.Ptr("20.62.211.25"),
+	// 							to.Ptr("52.188.47.226")},
+	// 							Port: to.Ptr[int32](443),
+	// 							Protocol: to.Ptr("TCP"),
+	// 						},
+	// 						{
+	// 							Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 							IPs: []*string{
+	// 								to.Ptr("20.62.211.25"),
+	// 								to.Ptr("52.188.47.226")},
+	// 								Port: to.Ptr[int32](1194),
+	// 								Protocol: to.Ptr("UDP"),
+	// 							},
+	// 							{
+	// 								Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 								IPs: []*string{
+	// 									to.Ptr("20.62.211.25"),
+	// 									to.Ptr("52.188.47.226")},
+	// 									Port: to.Ptr[int32](9000),
+	// 									Protocol: to.Ptr("TCP"),
+	// 							}},
+	// 							ServiceCidr: to.Ptr("10.8.0.0/16,10.244.0.0/16,10.245.0.1/16"),
+	// 							ServiceRuntimeNetworkResourceGroup: to.Ptr("my-service-runtime-network-rg"),
+	// 							ServiceRuntimeSubnetID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime"),
+	// 						},
+	// 						ProvisioningState: to.Ptr(armappplatform.ProvisioningStateSucceeded),
+	// 						ServiceID: to.Ptr("12345678abcd1234abcd12345678abcd"),
+	// 					},
+	// 					SKU: &armappplatform.SKU{
+	// 						Name: to.Ptr("S0"),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 				}
+	// with the raw JSON response:
+	// {
+	// 	"name": "myservice",
+	// 	"type": "Microsoft.AppPlatform/Spring",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"networkProfile": {
+	// 			"appNetworkResourceGroup": "my-app-network-rg",
+	// 			"appSubnetId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/apps",
+	// 			"outboundIPs": {
+	// 				"publicIPs": [
+	// 					"40.64.67.13"
+	// 				]
+	// 			},
+	// 			"requiredTraffics": [
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 443,
+	// 					"protocol": "TCP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 1194,
+	// 					"protocol": "UDP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 9000,
+	// 					"protocol": "TCP"
+	// 				}
+	// 			],
+	// 			"serviceCidr": "10.8.0.0/16,10.244.0.0/16,10.245.0.1/16",
+	// 			"serviceRuntimeNetworkResourceGroup": "my-service-runtime-network-rg",
+	// 			"serviceRuntimeSubnetId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime"
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"serviceId": "12345678abcd1234abcd12345678abcd"
+	// 	},
+	// 	"sku": {
+	// 		"name": "S0",
+	// 		"tier": "Standard"
+	// 	},
+	// 	"tags": {
+	// 		"key1": "value1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json
@@ -162,6 +485,111 @@ func ExampleServicesClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ServiceResource = armappplatform.ServiceResource{
+	// 	Name: to.Ptr("myservice"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice"),
+	// 	Location: to.Ptr("eastus"),
+	// 	Tags: map[string]*string{
+	// 		"key1": to.Ptr("value1"),
+	// 	},
+	// 	Properties: &armappplatform.ClusterResourceProperties{
+	// 		NetworkProfile: &armappplatform.NetworkProfile{
+	// 			OutboundIPs: &armappplatform.NetworkProfileOutboundIPs{
+	// 				PublicIPs: []*string{
+	// 					to.Ptr("20.39.3.173"),
+	// 					to.Ptr("40.64.67.13")},
+	// 				},
+	// 				RequiredTraffics: []*armappplatform.RequiredTraffic{
+	// 					{
+	// 						Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 						IPs: []*string{
+	// 							to.Ptr("20.62.211.25"),
+	// 							to.Ptr("52.188.47.226")},
+	// 							Port: to.Ptr[int32](443),
+	// 							Protocol: to.Ptr("TCP"),
+	// 						},
+	// 						{
+	// 							Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 							IPs: []*string{
+	// 								to.Ptr("20.62.211.25"),
+	// 								to.Ptr("52.188.47.226")},
+	// 								Port: to.Ptr[int32](1194),
+	// 								Protocol: to.Ptr("UDP"),
+	// 							},
+	// 							{
+	// 								Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+	// 								IPs: []*string{
+	// 									to.Ptr("20.62.211.25"),
+	// 									to.Ptr("52.188.47.226")},
+	// 									Port: to.Ptr[int32](9000),
+	// 									Protocol: to.Ptr("TCP"),
+	// 							}},
+	// 						},
+	// 						ProvisioningState: to.Ptr(armappplatform.ProvisioningStateSucceeded),
+	// 						ServiceID: to.Ptr("12345678abcd1234abcd12345678abcd"),
+	// 					},
+	// 					SKU: &armappplatform.SKU{
+	// 						Name: to.Ptr("S0"),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 				}
+	// with the raw JSON response:
+	// {
+	// 	"name": "myservice",
+	// 	"type": "Microsoft.AppPlatform/Spring",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice",
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"networkProfile": {
+	// 			"outboundIPs": {
+	// 				"publicIPs": [
+	// 					"20.39.3.173",
+	// 					"40.64.67.13"
+	// 				]
+	// 			},
+	// 			"requiredTraffics": [
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 443,
+	// 					"protocol": "TCP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 1194,
+	// 					"protocol": "UDP"
+	// 				},
+	// 				{
+	// 					"direction": "Outbound",
+	// 					"ips": [
+	// 						"20.62.211.25",
+	// 						"52.188.47.226"
+	// 					],
+	// 					"port": 9000,
+	// 					"protocol": "TCP"
+	// 				}
+	// 			]
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"serviceId": "12345678abcd1234abcd12345678abcd"
+	// 	},
+	// 	"sku": {
+	// 		"name": "S0",
+	// 		"tier": "Standard"
+	// 	},
+	// 	"tags": {
+	// 		"key1": "value1"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json
@@ -181,6 +609,22 @@ func ExampleServicesClient_ListTestKeys() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.TestKeys = armappplatform.TestKeys{
+	// 	Enabled: to.Ptr(true),
+	// 	PrimaryKey: to.Ptr("<primaryKey>"),
+	// 	PrimaryTestEndpoint: to.Ptr("<primaryTestEndpoint>"),
+	// 	SecondaryKey: to.Ptr("<secondaryKey>"),
+	// 	SecondaryTestEndpoint: to.Ptr("<secondaryTestEndpoint>"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"enabled": true,
+	// 	"primaryKey": "<primaryKey>",
+	// 	"primaryTestEndpoint": "<primaryTestEndpoint>",
+	// 	"secondaryKey": "<secondaryKey>",
+	// 	"secondaryTestEndpoint": "<secondaryTestEndpoint>"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json
@@ -202,6 +646,22 @@ func ExampleServicesClient_RegenerateTestKey() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.TestKeys = armappplatform.TestKeys{
+	// 	Enabled: to.Ptr(true),
+	// 	PrimaryKey: to.Ptr("<primaryKey>"),
+	// 	PrimaryTestEndpoint: to.Ptr("<primaryTestEndpoint>"),
+	// 	SecondaryKey: to.Ptr("<secondaryKey>"),
+	// 	SecondaryTestEndpoint: to.Ptr("<secondaryTestEndpoint>"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"enabled": true,
+	// 	"primaryKey": "<primaryKey>",
+	// 	"primaryTestEndpoint": "<primaryTestEndpoint>",
+	// 	"secondaryKey": "<secondaryKey>",
+	// 	"secondaryTestEndpoint": "<secondaryTestEndpoint>"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json
@@ -238,6 +698,22 @@ func ExampleServicesClient_EnableTestEndpoint() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.TestKeys = armappplatform.TestKeys{
+	// 	Enabled: to.Ptr(true),
+	// 	PrimaryKey: to.Ptr("<primaryKey>"),
+	// 	PrimaryTestEndpoint: to.Ptr("<primaryTestEndpoint>"),
+	// 	SecondaryKey: to.Ptr("<secondaryKey>"),
+	// 	SecondaryTestEndpoint: to.Ptr("<secondaryTestEndpoint>"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"enabled": true,
+	// 	"primaryKey": "<primaryKey>",
+	// 	"primaryTestEndpoint": "<primaryTestEndpoint>",
+	// 	"secondaryKey": "<secondaryKey>",
+	// 	"secondaryTestEndpoint": "<secondaryTestEndpoint>"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json
@@ -260,6 +736,18 @@ func ExampleServicesClient_CheckNameAvailability() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.NameAvailability = armappplatform.NameAvailability{
+	// 	Message: to.Ptr("The name is already used."),
+	// 	NameAvailable: to.Ptr(false),
+	// 	Reason: to.Ptr("AlreadyExists"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"message": "The name is already used.",
+	// 	"nameAvailable": false,
+	// 	"reason": "AlreadyExists"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json
@@ -283,6 +771,118 @@ func ExampleServicesClient_NewListBySubscriptionPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ServiceResourceList = armappplatform.ServiceResourceList{
+		// 	Value: []*armappplatform.ServiceResource{
+		// 		{
+		// 			Name: to.Ptr("myservice"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"key1": to.Ptr("value1"),
+		// 			},
+		// 			Properties: &armappplatform.ClusterResourceProperties{
+		// 				NetworkProfile: &armappplatform.NetworkProfile{
+		// 					OutboundIPs: &armappplatform.NetworkProfileOutboundIPs{
+		// 						PublicIPs: []*string{
+		// 							to.Ptr("20.39.3.173"),
+		// 							to.Ptr("40.64.67.13")},
+		// 						},
+		// 						RequiredTraffics: []*armappplatform.RequiredTraffic{
+		// 							{
+		// 								Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+		// 								IPs: []*string{
+		// 									to.Ptr("20.62.211.25"),
+		// 									to.Ptr("52.188.47.226")},
+		// 									Port: to.Ptr[int32](443),
+		// 									Protocol: to.Ptr("TCP"),
+		// 								},
+		// 								{
+		// 									Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+		// 									IPs: []*string{
+		// 										to.Ptr("20.62.211.25"),
+		// 										to.Ptr("52.188.47.226")},
+		// 										Port: to.Ptr[int32](1194),
+		// 										Protocol: to.Ptr("UDP"),
+		// 									},
+		// 									{
+		// 										Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+		// 										IPs: []*string{
+		// 											to.Ptr("20.62.211.25"),
+		// 											to.Ptr("52.188.47.226")},
+		// 											Port: to.Ptr[int32](9000),
+		// 											Protocol: to.Ptr("TCP"),
+		// 									}},
+		// 								},
+		// 								ProvisioningState: to.Ptr(armappplatform.ProvisioningStateSucceeded),
+		// 								ServiceID: to.Ptr("12345678abcd1234abcd12345678abcd"),
+		// 							},
+		// 							SKU: &armappplatform.SKU{
+		// 								Name: to.Ptr("S0"),
+		// 								Tier: to.Ptr("Standard"),
+		// 							},
+		// 					}},
+		// 				}
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myservice",
+		// 			"type": "Microsoft.AppPlatform/Spring",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"networkProfile": {
+		// 					"outboundIPs": {
+		// 						"publicIPs": [
+		// 							"20.39.3.173",
+		// 							"40.64.67.13"
+		// 						]
+		// 					},
+		// 					"requiredTraffics": [
+		// 						{
+		// 							"direction": "Outbound",
+		// 							"ips": [
+		// 								"20.62.211.25",
+		// 								"52.188.47.226"
+		// 							],
+		// 							"port": 443,
+		// 							"protocol": "TCP"
+		// 						},
+		// 						{
+		// 							"direction": "Outbound",
+		// 							"ips": [
+		// 								"20.62.211.25",
+		// 								"52.188.47.226"
+		// 							],
+		// 							"port": 1194,
+		// 							"protocol": "UDP"
+		// 						},
+		// 						{
+		// 							"direction": "Outbound",
+		// 							"ips": [
+		// 								"20.62.211.25",
+		// 								"52.188.47.226"
+		// 							],
+		// 							"port": 9000,
+		// 							"protocol": "TCP"
+		// 						}
+		// 					]
+		// 				},
+		// 				"provisioningState": "Succeeded",
+		// 				"serviceId": "12345678abcd1234abcd12345678abcd"
+		// 			},
+		// 			"sku": {
+		// 				"name": "S0",
+		// 				"tier": "Standard"
+		// 			},
+		// 			"tags": {
+		// 				"key1": "value1"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -307,5 +907,117 @@ func ExampleServicesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.ServiceResourceList = armappplatform.ServiceResourceList{
+		// 	Value: []*armappplatform.ServiceResource{
+		// 		{
+		// 			Name: to.Ptr("myservice"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice"),
+		// 			Location: to.Ptr("eastus"),
+		// 			Tags: map[string]*string{
+		// 				"key1": to.Ptr("value1"),
+		// 			},
+		// 			Properties: &armappplatform.ClusterResourceProperties{
+		// 				NetworkProfile: &armappplatform.NetworkProfile{
+		// 					OutboundIPs: &armappplatform.NetworkProfileOutboundIPs{
+		// 						PublicIPs: []*string{
+		// 							to.Ptr("20.39.3.173"),
+		// 							to.Ptr("40.64.67.13")},
+		// 						},
+		// 						RequiredTraffics: []*armappplatform.RequiredTraffic{
+		// 							{
+		// 								Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+		// 								IPs: []*string{
+		// 									to.Ptr("20.62.211.25"),
+		// 									to.Ptr("52.188.47.226")},
+		// 									Port: to.Ptr[int32](443),
+		// 									Protocol: to.Ptr("TCP"),
+		// 								},
+		// 								{
+		// 									Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+		// 									IPs: []*string{
+		// 										to.Ptr("20.62.211.25"),
+		// 										to.Ptr("52.188.47.226")},
+		// 										Port: to.Ptr[int32](1194),
+		// 										Protocol: to.Ptr("UDP"),
+		// 									},
+		// 									{
+		// 										Direction: to.Ptr(armappplatform.TrafficDirectionOutbound),
+		// 										IPs: []*string{
+		// 											to.Ptr("20.62.211.25"),
+		// 											to.Ptr("52.188.47.226")},
+		// 											Port: to.Ptr[int32](9000),
+		// 											Protocol: to.Ptr("TCP"),
+		// 									}},
+		// 								},
+		// 								ProvisioningState: to.Ptr(armappplatform.ProvisioningStateSucceeded),
+		// 								ServiceID: to.Ptr("12345678abcd1234abcd12345678abcd"),
+		// 							},
+		// 							SKU: &armappplatform.SKU{
+		// 								Name: to.Ptr("S0"),
+		// 								Tier: to.Ptr("Standard"),
+		// 							},
+		// 					}},
+		// 				}
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myservice",
+		// 			"type": "Microsoft.AppPlatform/Spring",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice",
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"networkProfile": {
+		// 					"outboundIPs": {
+		// 						"publicIPs": [
+		// 							"20.39.3.173",
+		// 							"40.64.67.13"
+		// 						]
+		// 					},
+		// 					"requiredTraffics": [
+		// 						{
+		// 							"direction": "Outbound",
+		// 							"ips": [
+		// 								"20.62.211.25",
+		// 								"52.188.47.226"
+		// 							],
+		// 							"port": 443,
+		// 							"protocol": "TCP"
+		// 						},
+		// 						{
+		// 							"direction": "Outbound",
+		// 							"ips": [
+		// 								"20.62.211.25",
+		// 								"52.188.47.226"
+		// 							],
+		// 							"port": 1194,
+		// 							"protocol": "UDP"
+		// 						},
+		// 						{
+		// 							"direction": "Outbound",
+		// 							"ips": [
+		// 								"20.62.211.25",
+		// 								"52.188.47.226"
+		// 							],
+		// 							"port": 9000,
+		// 							"protocol": "TCP"
+		// 						}
+		// 					]
+		// 				},
+		// 				"provisioningState": "Succeeded",
+		// 				"serviceId": "12345678abcd1234abcd12345678abcd"
+		// 			},
+		// 			"sku": {
+		// 				"name": "S0",
+		// 				"tier": "Standard"
+		// 			},
+		// 			"tags": {
+		// 				"key1": "value1"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

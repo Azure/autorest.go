@@ -52,6 +52,41 @@ func ExampleGallerySharingProfileClient_BeginUpdate_addSharingIdToTheSharingProf
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SharingUpdate = armcompute.SharingUpdate{
+	// 	Groups: []*armcompute.SharingProfileGroup{
+	// 		{
+	// 			Type: to.Ptr(armcompute.SharingProfileGroupTypesSubscriptions),
+	// 			IDs: []*string{
+	// 				to.Ptr("34a4ab42-0d72-47d9-bd1a-aed207386dac"),
+	// 				to.Ptr("380fd389-260b-41aa-bad9-0a83108c370b")},
+	// 			},
+	// 			{
+	// 				Type: to.Ptr(armcompute.SharingProfileGroupTypesAADTenants),
+	// 				IDs: []*string{
+	// 					to.Ptr("c24c76aa-8897-4027-9b03-8f7928b54ff6")},
+	// 			}},
+	// 			OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesAdd),
+	// 		}
+	// with the raw JSON response:
+	// {
+	// 	"groups": [
+	// 		{
+	// 			"type": "Subscriptions",
+	// 			"ids": [
+	// 				"34a4ab42-0d72-47d9-bd1a-aed207386dac",
+	// 				"380fd389-260b-41aa-bad9-0a83108c370b"
+	// 			]
+	// 		},
+	// 		{
+	// 			"type": "AADTenants",
+	// 			"ids": [
+	// 				"c24c76aa-8897-4027-9b03-8f7928b54ff6"
+	// 			]
+	// 		}
+	// 	],
+	// 	"operationType": "Add"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ResetSharingProfileInAGallery.json
@@ -77,4 +112,12 @@ func ExampleGallerySharingProfileClient_BeginUpdate_resetSharingProfileOfAGaller
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SharingUpdate = armcompute.SharingUpdate{
+	// 	OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesReset),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"operationType": "Reset"
+	// }
 }

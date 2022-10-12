@@ -34,6 +34,49 @@ func ExampleCertificatesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CertificateResource = armappplatform.CertificateResource{
+	// 	Name: to.Ptr("mycertificate"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/certificates"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/certificates/mycertificate"),
+	// 	Properties: &armappplatform.CertificateProperties{
+	// 		ActivateDate: to.Ptr("2019-02-22T07:40:42Z"),
+	// 		CertVersion: to.Ptr("08a219d06d874795a96db47e06fbb01e"),
+	// 		DNSNames: []*string{
+	// 			to.Ptr("mydomain.com"),
+	// 			to.Ptr("mydomain.net"),
+	// 			to.Ptr("mydomain.io")},
+	// 			ExpirationDate: to.Ptr("2019-02-21T07:40:42Z"),
+	// 			IssuedDate: to.Ptr("2019-02-20T07:40:42Z"),
+	// 			Issuer: to.Ptr("mydomain.com"),
+	// 			KeyVaultCertName: to.Ptr("mycert"),
+	// 			SubjectName: to.Ptr("mysubjectname"),
+	// 			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
+	// 			VaultURI: to.Ptr("https://myvault.vault.azure.net"),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "mycertificate",
+	// 	"type": "Microsoft.AppPlatform/Spring/certificates",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/certificates/mycertificate",
+	// 	"properties": {
+	// 		"activateDate": "2019-02-22T07:40:42Z",
+	// 		"certVersion": "08a219d06d874795a96db47e06fbb01e",
+	// 		"dnsNames": [
+	// 			"mydomain.com",
+	// 			"mydomain.net",
+	// 			"mydomain.io"
+	// 		],
+	// 		"expirationDate": "2019-02-21T07:40:42Z",
+	// 		"issuedDate": "2019-02-20T07:40:42Z",
+	// 		"issuer": "mydomain.com",
+	// 		"keyVaultCertName": "mycert",
+	// 		"subjectName": "mysubjectname",
+	// 		"thumbprint": "934367bf1c97033f877db0f15cb1b586957d3133",
+	// 		"vaultUri": "https://myvault.vault.azure.net"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json
@@ -63,6 +106,49 @@ func ExampleCertificatesClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CertificateResource = armappplatform.CertificateResource{
+	// 	Name: to.Ptr("mycertificate"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/certificates"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/certificates/mycertificate"),
+	// 	Properties: &armappplatform.CertificateProperties{
+	// 		ActivateDate: to.Ptr("2019-02-22T07:40:42Z"),
+	// 		CertVersion: to.Ptr("08a219d06d874795a96db47e06fbb01e"),
+	// 		DNSNames: []*string{
+	// 			to.Ptr("mydomain.com"),
+	// 			to.Ptr("mydomain.net"),
+	// 			to.Ptr("mydomain.io")},
+	// 			ExpirationDate: to.Ptr("2019-02-21T07:40:42Z"),
+	// 			IssuedDate: to.Ptr("2019-02-20T07:40:42Z"),
+	// 			Issuer: to.Ptr("mydomain.com"),
+	// 			KeyVaultCertName: to.Ptr("mycert"),
+	// 			SubjectName: to.Ptr("mysubjectname"),
+	// 			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
+	// 			VaultURI: to.Ptr("https://myvault.vault.azure.net"),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "mycertificate",
+	// 	"type": "Microsoft.AppPlatform/Spring/certificates",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/certificates/mycertificate",
+	// 	"properties": {
+	// 		"activateDate": "2019-02-22T07:40:42Z",
+	// 		"certVersion": "08a219d06d874795a96db47e06fbb01e",
+	// 		"dnsNames": [
+	// 			"mydomain.com",
+	// 			"mydomain.net",
+	// 			"mydomain.io"
+	// 		],
+	// 		"expirationDate": "2019-02-21T07:40:42Z",
+	// 		"issuedDate": "2019-02-20T07:40:42Z",
+	// 		"issuer": "mydomain.com",
+	// 		"keyVaultCertName": "mycert",
+	// 		"subjectName": "mysubjectname",
+	// 		"thumbprint": "934367bf1c97033f877db0f15cb1b586957d3133",
+	// 		"vaultUri": "https://myvault.vault.azure.net"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json
@@ -107,5 +193,56 @@ func ExampleCertificatesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.CertificateResourceCollection = armappplatform.CertificateResourceCollection{
+		// 	Value: []*armappplatform.CertificateResource{
+		// 		{
+		// 			Name: to.Ptr("mycertificate"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring/certificates"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/certificates/mycertificate"),
+		// 			Properties: &armappplatform.CertificateProperties{
+		// 				ActivateDate: to.Ptr("2019-02-22T07:40:42Z"),
+		// 				CertVersion: to.Ptr("08a219d06d874795a96db47e06fbb01e"),
+		// 				DNSNames: []*string{
+		// 					to.Ptr("mydomain.com"),
+		// 					to.Ptr("mydomain.net"),
+		// 					to.Ptr("mydomain.io")},
+		// 					ExpirationDate: to.Ptr("2019-02-21T07:40:42Z"),
+		// 					IssuedDate: to.Ptr("2019-02-20T07:40:42Z"),
+		// 					Issuer: to.Ptr("mydomain.com"),
+		// 					KeyVaultCertName: to.Ptr("mycert"),
+		// 					SubjectName: to.Ptr("mysubjectname"),
+		// 					Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
+		// 					VaultURI: to.Ptr("https://myvault.vault.azure.net"),
+		// 				},
+		// 		}},
+		// 	}
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/certificates?$page=2",
+		// 	"value": [
+		// 		{
+		// 			"name": "mycertificate",
+		// 			"type": "Microsoft.AppPlatform/Spring/certificates",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/certificates/mycertificate",
+		// 			"properties": {
+		// 				"activateDate": "2019-02-22T07:40:42Z",
+		// 				"certVersion": "08a219d06d874795a96db47e06fbb01e",
+		// 				"dnsNames": [
+		// 					"mydomain.com",
+		// 					"mydomain.net",
+		// 					"mydomain.io"
+		// 				],
+		// 				"expirationDate": "2019-02-21T07:40:42Z",
+		// 				"issuedDate": "2019-02-20T07:40:42Z",
+		// 				"issuer": "mydomain.com",
+		// 				"keyVaultCertName": "mycert",
+		// 				"subjectName": "mysubjectname",
+		// 				"thumbprint": "934367bf1c97033f877db0f15cb1b586957d3133",
+		// 				"vaultUri": "https://myvault.vault.azure.net"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

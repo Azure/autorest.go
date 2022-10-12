@@ -33,4 +33,34 @@ func ExamplePrivateLinkResourcesClient_List() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateLinkResourceListResult = armmachinelearningservices.PrivateLinkResourceListResult{
+	// 	Value: []*armmachinelearningservices.PrivateLinkResource{
+	// 		{
+	// 			Name: to.Ptr("amlworkspace"),
+	// 			Type: to.Ptr("Microsoft.MachineLearningServices/workspaces/privateLinkResources"),
+	// 			ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateLinkResources/amlworkspace"),
+	// 			Properties: &armmachinelearningservices.PrivateLinkResourceProperties{
+	// 				GroupID: to.Ptr("amlworkspace"),
+	// 				RequiredMembers: []*string{
+	// 					to.Ptr("default")},
+	// 				},
+	// 		}},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"name": "amlworkspace",
+	// 			"type": "Microsoft.MachineLearningServices/workspaces/privateLinkResources",
+	// 			"id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/privateLinkResources/amlworkspace",
+	// 			"properties": {
+	// 				"groupId": "amlworkspace",
+	// 				"requiredMembers": [
+	// 					"default"
+	// 				]
+	// 			}
+	// 		}
+	// 	]
+	// }
 }

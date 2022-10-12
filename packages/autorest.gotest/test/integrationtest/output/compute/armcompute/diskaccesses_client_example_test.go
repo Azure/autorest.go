@@ -40,6 +40,28 @@ func ExampleDiskAccessesClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskAccess = armcompute.DiskAccess{
+	// 	Name: to.Ptr("myDiskAccess"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourcegroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.DiskAccessProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t}()),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskAccess",
+	// 	"type": "Microsoft.Compute/diskAccesses",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourcegroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"timeCreated": "2020-05-01T04:41:35.079872+00:00"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskAccess.json
@@ -68,6 +90,28 @@ func ExampleDiskAccessesClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskAccess = armcompute.DiskAccess{
+	// 	Name: to.Ptr("myDiskAccess"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourcegroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess"),
+	// 	Location: to.Ptr("West US"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("Development"),
+	// 		"project": to.Ptr("PrivateEndpoints"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskAccess",
+	// 	"type": "Microsoft.Compute/diskAccesses",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourcegroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess",
+	// 	"location": "West US",
+	// 	"tags": {
+	// 		"department": "Development",
+	// 		"project": "PrivateEndpoints"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccessWithPrivateEndpoints.json
@@ -87,6 +131,71 @@ func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResourceWithPri
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskAccess = armcompute.DiskAccess{
+	// 	Name: to.Ptr("myDiskAccess"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("Development"),
+	// 		"project": to.Ptr("PrivateEndpoints"),
+	// 	},
+	// 	Properties: &armcompute.DiskAccessProperties{
+	// 		PrivateEndpointConnections: []*armcompute.PrivateEndpointConnection{
+	// 			{
+	// 				Name: to.Ptr("myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef"),
+	// 				Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
+	// 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef"),
+	// 				Properties: &armcompute.PrivateEndpointConnectionProperties{
+	// 					PrivateEndpoint: &armcompute.PrivateEndpoint{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 					},
+	// 					PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
+	// 						Description: to.Ptr("Auto-Approved"),
+	// 						ActionsRequired: to.Ptr("None"),
+	// 						Status: to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
+	// 					},
+	// 					ProvisioningState: to.Ptr(armcompute.PrivateEndpointConnectionProvisioningStateSucceeded),
+	// 				},
+	// 		}},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t}()),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskAccess",
+	// 	"type": "Microsoft.Compute/diskAccesses",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"privateEndpointConnections": [
+	// 			{
+	// 				"name": "myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef",
+	// 				"type": "Microsoft.Compute/diskAccesses/PrivateEndpointConnections",
+	// 				"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef",
+	// 				"properties": {
+	// 					"privateEndpoint": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 					},
+	// 					"privateLinkServiceConnectionState": {
+	// 						"description": "Auto-Approved",
+	// 						"actionsRequired": "None",
+	// 						"status": "Approved"
+	// 					},
+	// 					"provisioningState": "Succeeded"
+	// 				}
+	// 			}
+	// 		],
+	// 		"provisioningState": "Succeeded",
+	// 		"timeCreated": "2020-05-01T04:41:35.079872+00:00"
+	// 	},
+	// 	"tags": {
+	// 		"department": "Development",
+	// 		"project": "PrivateEndpoints"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccess.json
@@ -106,6 +215,36 @@ func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResource() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DiskAccess = armcompute.DiskAccess{
+	// 	Name: to.Ptr("myDiskAccess"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("Development"),
+	// 		"project": to.Ptr("PrivateEndpoints"),
+	// 	},
+	// 	Properties: &armcompute.DiskAccessProperties{
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t}()),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDiskAccess",
+	// 	"type": "Microsoft.Compute/diskAccesses",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"timeCreated": "2020-05-01T04:41:35.079872+00:00"
+	// 	},
+	// 	"tags": {
+	// 		"department": "Development",
+	// 		"project": "PrivateEndpoints"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskAccess.json
@@ -150,6 +289,107 @@ func ExampleDiskAccessesClient_NewListByResourceGroupPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DiskAccessList = armcompute.DiskAccessList{
+		// 	Value: []*armcompute.DiskAccess{
+		// 		{
+		// 			Name: to.Ptr("myDiskAccess"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("PrivateEndpoints"),
+		// 			},
+		// 			Properties: &armcompute.DiskAccessProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t}()),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myDiskAccess2"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("PrivateEndpoints"),
+		// 			},
+		// 			Properties: &armcompute.DiskAccessProperties{
+		// 				PrivateEndpointConnections: []*armcompute.PrivateEndpointConnection{
+		// 					{
+		// 						Name: to.Ptr("myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef"),
+		// 						Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
+		// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2/privateEndpoinConnections/myDiskAccess2.d4914cfa-6bc2-4049-a57c-3d1f622d8eef"),
+		// 						Properties: &armcompute.PrivateEndpointConnectionProperties{
+		// 							PrivateEndpoint: &armcompute.PrivateEndpoint{
+		// 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint2"),
+		// 							},
+		// 							PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
+		// 								Description: to.Ptr("Auto-Approved"),
+		// 								ActionsRequired: to.Ptr("None"),
+		// 								Status: to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
+		// 							},
+		// 							ProvisioningState: to.Ptr(armcompute.PrivateEndpointConnectionProvisioningStateSucceeded),
+		// 						},
+		// 				}},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t}()),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "https://management.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses?$skiptoken={token}",
+		// 	"value": [
+		// 		{
+		// 			"name": "myDiskAccess",
+		// 			"type": "Microsoft.Compute/diskAccesses",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2020-05-01T04:41:35.079872+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "PrivateEndpoints"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myDiskAccess2",
+		// 			"type": "Microsoft.Compute/diskAccesses",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"privateEndpointConnections": [
+		// 					{
+		// 						"name": "myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef",
+		// 						"type": "Microsoft.Compute/diskAccesses/PrivateEndpointConnections",
+		// 						"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2/privateEndpoinConnections/myDiskAccess2.d4914cfa-6bc2-4049-a57c-3d1f622d8eef",
+		// 						"properties": {
+		// 							"privateEndpoint": {
+		// 								"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint2"
+		// 							},
+		// 							"privateLinkServiceConnectionState": {
+		// 								"description": "Auto-Approved",
+		// 								"actionsRequired": "None",
+		// 								"status": "Approved"
+		// 							},
+		// 							"provisioningState": "Succeeded"
+		// 						}
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2020-05-01T04:41:35.079872+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "PrivateEndpoints"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -174,6 +414,107 @@ func ExampleDiskAccessesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.DiskAccessList = armcompute.DiskAccessList{
+		// 	Value: []*armcompute.DiskAccess{
+		// 		{
+		// 			Name: to.Ptr("myDiskAccess"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("PrivateEndpoints"),
+		// 			},
+		// 			Properties: &armcompute.DiskAccessProperties{
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t}()),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("myDiskAccess2"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskAccesses"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2"),
+		// 			Location: to.Ptr("westus"),
+		// 			Tags: map[string]*string{
+		// 				"department": to.Ptr("Development"),
+		// 				"project": to.Ptr("PrivateEndpoints"),
+		// 			},
+		// 			Properties: &armcompute.DiskAccessProperties{
+		// 				PrivateEndpointConnections: []*armcompute.PrivateEndpointConnection{
+		// 					{
+		// 						Name: to.Ptr("myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef"),
+		// 						Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
+		// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2/privateEndpoinConnections/myDiskAccess2.d4914cfa-6bc2-4049-a57c-3d1f622d8eef"),
+		// 						Properties: &armcompute.PrivateEndpointConnectionProperties{
+		// 							PrivateEndpoint: &armcompute.PrivateEndpoint{
+		// 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint2"),
+		// 							},
+		// 							PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
+		// 								Description: to.Ptr("Auto-Approved"),
+		// 								ActionsRequired: to.Ptr("None"),
+		// 								Status: to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
+		// 							},
+		// 							ProvisioningState: to.Ptr(armcompute.PrivateEndpointConnectionProvisioningStateSucceeded),
+		// 						},
+		// 				}},
+		// 				ProvisioningState: to.Ptr("Succeeded"),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t}()),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "https://management.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses?$skiptoken={token}",
+		// 	"value": [
+		// 		{
+		// 			"name": "myDiskAccess",
+		// 			"type": "Microsoft.Compute/diskAccesses",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2020-05-01T04:41:35.079872+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "PrivateEndpoints"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "myDiskAccess2",
+		// 			"type": "Microsoft.Compute/diskAccesses",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2",
+		// 			"location": "westus",
+		// 			"properties": {
+		// 				"privateEndpointConnections": [
+		// 					{
+		// 						"name": "myDiskAccess.d4914cfa-6bc2-4049-a57c-3d1f622d8eef",
+		// 						"type": "Microsoft.Compute/diskAccesses/PrivateEndpointConnections",
+		// 						"id": "/subscriptions/{subscription-id}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess2/privateEndpoinConnections/myDiskAccess2.d4914cfa-6bc2-4049-a57c-3d1f622d8eef",
+		// 						"properties": {
+		// 							"privateEndpoint": {
+		// 								"id": "/subscriptions/{subscription-id}/resourceGroups/mySecondResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint2"
+		// 							},
+		// 							"privateLinkServiceConnectionState": {
+		// 								"description": "Auto-Approved",
+		// 								"actionsRequired": "None",
+		// 								"status": "Approved"
+		// 							},
+		// 							"provisioningState": "Succeeded"
+		// 						}
+		// 					}
+		// 				],
+		// 				"provisioningState": "Succeeded",
+		// 				"timeCreated": "2020-05-01T04:41:35.079872+00:00"
+		// 			},
+		// 			"tags": {
+		// 				"department": "Development",
+		// 				"project": "PrivateEndpoints"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -194,6 +535,41 @@ func ExampleDiskAccessesClient_GetPrivateLinkResources() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateLinkResourceListResult = armcompute.PrivateLinkResourceListResult{
+	// 	Value: []*armcompute.PrivateLinkResource{
+	// 		{
+	// 			Name: to.Ptr("disks"),
+	// 			Type: to.Ptr("Microsoft.Compute/diskAccesses/privateLinkResources"),
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateLinkResources/disks"),
+	// 			Properties: &armcompute.PrivateLinkResourceProperties{
+	// 				GroupID: to.Ptr("disks"),
+	// 				RequiredMembers: []*string{
+	// 					to.Ptr("diskAccess_1")},
+	// 					RequiredZoneNames: []*string{
+	// 						to.Ptr("privatelink.blob.core.windows.net")},
+	// 					},
+	// 			}},
+	// 		}
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"name": "disks",
+	// 			"type": "Microsoft.Compute/diskAccesses/privateLinkResources",
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateLinkResources/disks",
+	// 			"properties": {
+	// 				"groupId": "disks",
+	// 				"requiredMembers": [
+	// 					"diskAccess_1"
+	// 				],
+	// 				"requiredZoneNames": [
+	// 					"privatelink.blob.core.windows.net"
+	// 				]
+	// 			}
+	// 		}
+	// 	]
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ApprovePrivateEndpointConnection.json
@@ -224,6 +600,40 @@ func ExampleDiskAccessesClient_BeginUpdateAPrivateEndpointConnection() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateEndpointConnection = armcompute.PrivateEndpointConnection{
+	// 	Name: to.Ptr("myPrivateEndpointConnectionName"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myPrivateEndpointConnectionName"),
+	// 	Properties: &armcompute.PrivateEndpointConnectionProperties{
+	// 		PrivateEndpoint: &armcompute.PrivateEndpoint{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 		},
+	// 		PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
+	// 			Description: to.Ptr("Approving myPrivateEndpointConnection"),
+	// 			ActionsRequired: to.Ptr("None"),
+	// 			Status: to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armcompute.PrivateEndpointConnectionProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myPrivateEndpointConnectionName",
+	// 	"type": "Microsoft.Compute/diskAccesses/PrivateEndpointConnections",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myPrivateEndpointConnectionName",
+	// 	"properties": {
+	// 		"privateEndpoint": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 		},
+	// 		"privateLinkServiceConnectionState": {
+	// 			"description": "Approving myPrivateEndpointConnection",
+	// 			"actionsRequired": "None",
+	// 			"status": "Approved"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAPrivateEndpointConnection.json
@@ -243,6 +653,40 @@ func ExampleDiskAccessesClient_GetAPrivateEndpointConnection() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.PrivateEndpointConnection = armcompute.PrivateEndpointConnection{
+	// 	Name: to.Ptr("myPrivateEndpointConnection"),
+	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myPrivateEndpointConnection"),
+	// 	Properties: &armcompute.PrivateEndpointConnectionProperties{
+	// 		PrivateEndpoint: &armcompute.PrivateEndpoint{
+	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+	// 		},
+	// 		PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
+	// 			Description: to.Ptr("Auto-Approved"),
+	// 			ActionsRequired: to.Ptr("None"),
+	// 			Status: to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armcompute.PrivateEndpointConnectionProvisioningStateSucceeded),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myPrivateEndpointConnection",
+	// 	"type": "Microsoft.Compute/diskAccesses/PrivateEndpointConnections",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myPrivateEndpointConnection",
+	// 	"properties": {
+	// 		"privateEndpoint": {
+	// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+	// 		},
+	// 		"privateLinkServiceConnectionState": {
+	// 			"description": "Auto-Approved",
+	// 			"actionsRequired": "None",
+	// 			"status": "Approved"
+	// 		},
+	// 		"provisioningState": "Succeeded"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteAPrivateEndpointConnection.json
@@ -287,5 +731,46 @@ func ExampleDiskAccessesClient_NewListPrivateEndpointConnectionsPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.PrivateEndpointConnectionListResult = armcompute.PrivateEndpointConnectionListResult{
+		// 	Value: []*armcompute.PrivateEndpointConnection{
+		// 		{
+		// 			Name: to.Ptr("myPrivateEndpointConnection"),
+		// 			Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myPrivateEndpointConnection"),
+		// 			Properties: &armcompute.PrivateEndpointConnectionProperties{
+		// 				PrivateEndpoint: &armcompute.PrivateEndpoint{
+		// 					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+		// 				},
+		// 				PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
+		// 					Description: to.Ptr("Auto-Approved"),
+		// 					ActionsRequired: to.Ptr("None"),
+		// 					Status: to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
+		// 				},
+		// 				ProvisioningState: to.Ptr(armcompute.PrivateEndpointConnectionProvisioningStateSucceeded),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myPrivateEndpointConnection",
+		// 			"type": "Microsoft.Compute/diskAccesses/PrivateEndpointConnections",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/myDiskAccess/privateEndpoinConnections/myPrivateEndpointConnection",
+		// 			"properties": {
+		// 				"privateEndpoint": {
+		// 					"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+		// 				},
+		// 				"privateLinkServiceConnectionState": {
+		// 					"description": "Auto-Approved",
+		// 					"actionsRequired": "None",
+		// 					"status": "Approved"
+		// 				},
+		// 				"provisioningState": "Succeeded"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

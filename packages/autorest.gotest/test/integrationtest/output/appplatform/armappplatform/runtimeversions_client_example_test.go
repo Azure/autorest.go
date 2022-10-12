@@ -33,4 +33,43 @@ func ExampleRuntimeVersionsClient_ListRuntimeVersions() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.AvailableRuntimeVersions = armappplatform.AvailableRuntimeVersions{
+	// 	Value: []*armappplatform.SupportedRuntimeVersion{
+	// 		{
+	// 			Platform: to.Ptr(armappplatform.SupportedRuntimePlatformJava),
+	// 			Value: to.Ptr(armappplatform.SupportedRuntimeValueJava8),
+	// 			Version: to.Ptr("8"),
+	// 		},
+	// 		{
+	// 			Platform: to.Ptr(armappplatform.SupportedRuntimePlatformJava),
+	// 			Value: to.Ptr(armappplatform.SupportedRuntimeValueJava11),
+	// 			Version: to.Ptr("11"),
+	// 		},
+	// 		{
+	// 			Platform: to.Ptr(armappplatform.SupportedRuntimePlatformNETCore),
+	// 			Value: to.Ptr(armappplatform.SupportedRuntimeValueNetCore31),
+	// 			Version: to.Ptr("3.1"),
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"platform": "Java",
+	// 			"value": "Java_8",
+	// 			"version": "8"
+	// 		},
+	// 		{
+	// 			"platform": "Java",
+	// 			"value": "Java_11",
+	// 			"version": "11"
+	// 		},
+	// 		{
+	// 			"platform": ".NET Core",
+	// 			"value": "NetCore_31",
+	// 			"version": "3.1"
+	// 		}
+	// 	]
+	// }
 }

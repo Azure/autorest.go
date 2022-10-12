@@ -33,6 +33,36 @@ func ExampleCloudServiceRolesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudServiceRole = armcompute.CloudServiceRole{
+	// 	Name: to.Ptr("{role-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices/roles"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roles/{role-name}"),
+	// 	Location: to.Ptr("eastus2euap"),
+	// 	Properties: &armcompute.CloudServiceRoleProperties{
+	// 		UniqueID: to.Ptr("b03bc269-766b-4921-b91a-7dffaae4d03b:{role-name}"),
+	// 	},
+	// 	SKU: &armcompute.CloudServiceRoleSKU{
+	// 		Name: to.Ptr("Standard_D1_v2"),
+	// 		Capacity: to.Ptr[int64](2),
+	// 		Tier: to.Ptr("Standard"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{role-name}",
+	// 	"type": "Microsoft.Compute/cloudServices/roles",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roles/{role-name}",
+	// 	"location": "eastus2euap",
+	// 	"properties": {
+	// 		"uniqueId": "b03bc269-766b-4921-b91a-7dffaae4d03b:{role-name}"
+	// 	},
+	// 	"sku": {
+	// 		"name": "Standard_D1_v2",
+	// 		"capacity": 2,
+	// 		"tier": "Standard"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceRoles.json
@@ -56,5 +86,70 @@ func ExampleCloudServiceRolesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.CloudServiceRoleListResult = armcompute.CloudServiceRoleListResult{
+		// 	Value: []*armcompute.CloudServiceRole{
+		// 		{
+		// 			Name: to.Ptr("ContosoFrontend"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices/roles"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roles/ContosoFrontend"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.CloudServiceRoleProperties{
+		// 				UniqueID: to.Ptr("b03bc269-766b-4921-b91a-7dffaae4d03b:ContosoFrontend"),
+		// 			},
+		// 			SKU: &armcompute.CloudServiceRoleSKU{
+		// 				Name: to.Ptr("Standard_D1_v2"),
+		// 				Capacity: to.Ptr[int64](2),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("ContosoBackend"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices/roles"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roles/ContosoBackend"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.CloudServiceRoleProperties{
+		// 				UniqueID: to.Ptr("b03bc269-766b-4921-b91a-7dffaae4d03b:ContosoBackend"),
+		// 			},
+		// 			SKU: &armcompute.CloudServiceRoleSKU{
+		// 				Name: to.Ptr("Standard_D1_v2"),
+		// 				Capacity: to.Ptr[int64](2),
+		// 				Tier: to.Ptr("Standard"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "ContosoFrontend",
+		// 			"type": "Microsoft.Compute/cloudServices/roles",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roles/ContosoFrontend",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"uniqueId": "b03bc269-766b-4921-b91a-7dffaae4d03b:ContosoFrontend"
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D1_v2",
+		// 				"capacity": 2,
+		// 				"tier": "Standard"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "ContosoBackend",
+		// 			"type": "Microsoft.Compute/cloudServices/roles",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/roles/ContosoBackend",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"uniqueId": "b03bc269-766b-4921-b91a-7dffaae4d03b:ContosoBackend"
+		// 			},
+		// 			"sku": {
+		// 				"name": "Standard_D1_v2",
+		// 				"capacity": 2,
+		// 				"tier": "Standard"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

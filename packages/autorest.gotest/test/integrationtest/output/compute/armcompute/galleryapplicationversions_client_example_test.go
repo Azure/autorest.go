@@ -62,6 +62,69 @@ func ExampleGalleryApplicationVersionsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Type: to.Ptr("Microsoft.Compute/galleries/applications/versions"),
+	// 	ID: to.Ptr("/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryApplicationVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
+	// 			EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t}()),
+	// 			ExcludeFromLatest: to.Ptr(false),
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 			EnableHealthCheck: to.Ptr(false),
+	// 			ManageActions: &armcompute.UserArtifactManage{
+	// 				Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
+	// 				Remove: to.Ptr("del C:\\package "),
+	// 			},
+	// 			Source: &armcompute.UserArtifactSource{
+	// 				MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"type": "Microsoft.Compute/galleries/applications/versions",
+	// 	"id": "/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"enableHealthCheck": false,
+	// 			"endOfLifeDate": "2019-07-01T07:00:00+00:00",
+	// 			"excludeFromLatest": false,
+	// 			"manageActions": {
+	// 				"install": "powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"",
+	// 				"remove": "del C:\\package "
+	// 			},
+	// 			"publishedDate": "2019-06-21T17:13:57.5972568+00:00",
+	// 			"replicaCount": 1,
+	// 			"source": {
+	// 				"mediaLink": "https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"
+	// 			},
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplicationVersion.json
@@ -106,6 +169,69 @@ func ExampleGalleryApplicationVersionsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Type: to.Ptr("Microsoft.Compute/galleries/applications/versions"),
+	// 	ID: to.Ptr("/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryApplicationVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
+	// 			EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t}()),
+	// 			ExcludeFromLatest: to.Ptr(false),
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 			EnableHealthCheck: to.Ptr(false),
+	// 			ManageActions: &armcompute.UserArtifactManage{
+	// 				Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
+	// 				Remove: to.Ptr("del C:\\package "),
+	// 			},
+	// 			Source: &armcompute.UserArtifactSource{
+	// 				MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"type": "Microsoft.Compute/galleries/applications/versions",
+	// 	"id": "/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Updating",
+	// 		"publishingProfile": {
+	// 			"enableHealthCheck": false,
+	// 			"endOfLifeDate": "2019-07-01T07:00:00+00:00",
+	// 			"excludeFromLatest": false,
+	// 			"manageActions": {
+	// 				"install": "powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"",
+	// 				"remove": "del C:\\package "
+	// 			},
+	// 			"publishedDate": "2019-06-21T17:13:57.5972568+00:00",
+	// 			"replicaCount": 1,
+	// 			"source": {
+	// 				"mediaLink": "https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"
+	// 			},
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersionWithReplicationStatus.json
@@ -125,6 +251,86 @@ func ExampleGalleryApplicationVersionsClient_Get_getAGalleryApplicationVersionWi
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryApplicationVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
+	// 			EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t}()),
+	// 			ExcludeFromLatest: to.Ptr(false),
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 			EnableHealthCheck: to.Ptr(false),
+	// 			ManageActions: &armcompute.UserArtifactManage{
+	// 				Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
+	// 				Remove: to.Ptr("del C:\\package "),
+	// 			},
+	// 			Source: &armcompute.UserArtifactSource{
+	// 				MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
+	// 			},
+	// 		},
+	// 		ReplicationStatus: &armcompute.ReplicationStatus{
+	// 			AggregatedState: to.Ptr(armcompute.AggregatedReplicationStateCompleted),
+	// 			Summary: []*armcompute.RegionalReplicationStatus{
+	// 				{
+	// 					Progress: to.Ptr[int32](100),
+	// 					Region: to.Ptr("West US"),
+	// 					State: to.Ptr(armcompute.ReplicationStateCompleted),
+	// 					Details: to.Ptr(""),
+	// 			}},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"publishingProfile": {
+	// 			"enableHealthCheck": false,
+	// 			"endOfLifeDate": "2019-07-01T07:00:00+00:00",
+	// 			"excludeFromLatest": false,
+	// 			"manageActions": {
+	// 				"install": "powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"",
+	// 				"remove": "del C:\\package "
+	// 			},
+	// 			"publishedDate": "2019-06-21T17:13:57.5972568+00:00",
+	// 			"replicaCount": 1,
+	// 			"source": {
+	// 				"mediaLink": "https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"
+	// 			},
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		},
+	// 		"replicationStatus": {
+	// 			"aggregatedState": "Completed",
+	// 			"summary": [
+	// 				{
+	// 					"progress": 100,
+	// 					"region": "West US",
+	// 					"state": "Completed",
+	// 					"details": ""
+	// 				}
+	// 			]
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersion.json
@@ -144,6 +350,69 @@ func ExampleGalleryApplicationVersionsClient_Get_getAGalleryApplicationVersion()
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
+	// 	Name: to.Ptr("1.0.0"),
+	// 	Type: to.Ptr("Microsoft.Compute/galleries/applications/versions"),
+	// 	ID: to.Ptr("/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0"),
+	// 	Location: to.Ptr("West US"),
+	// 	Properties: &armcompute.GalleryApplicationVersionProperties{
+	// 		ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
+	// 		PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
+	// 			EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t}()),
+	// 			ExcludeFromLatest: to.Ptr(false),
+	// 			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t}()),
+	// 			ReplicaCount: to.Ptr[int32](1),
+	// 			StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			TargetRegions: []*armcompute.TargetRegion{
+	// 				{
+	// 					Name: to.Ptr("West US"),
+	// 					RegionalReplicaCount: to.Ptr[int32](1),
+	// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+	// 			}},
+	// 			EnableHealthCheck: to.Ptr(false),
+	// 			ManageActions: &armcompute.UserArtifactManage{
+	// 				Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
+	// 				Remove: to.Ptr("del C:\\package "),
+	// 			},
+	// 			Source: &armcompute.UserArtifactSource{
+	// 				MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
+	// 			},
+	// 		},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "1.0.0",
+	// 	"type": "Microsoft.Compute/galleries/applications/versions",
+	// 	"id": "/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0",
+	// 	"location": "West US",
+	// 	"properties": {
+	// 		"provisioningState": "Succeeded",
+	// 		"publishingProfile": {
+	// 			"enableHealthCheck": false,
+	// 			"endOfLifeDate": "2019-07-01T07:00:00+00:00",
+	// 			"excludeFromLatest": false,
+	// 			"manageActions": {
+	// 				"install": "powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"",
+	// 				"remove": "del C:\\package "
+	// 			},
+	// 			"publishedDate": "2019-06-21T17:13:57.5972568+00:00",
+	// 			"replicaCount": 1,
+	// 			"source": {
+	// 				"mediaLink": "https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"
+	// 			},
+	// 			"storageAccountType": "Standard_LRS",
+	// 			"targetRegions": [
+	// 				{
+	// 					"name": "West US",
+	// 					"regionalReplicaCount": 1,
+	// 					"storageAccountType": "Standard_LRS"
+	// 				}
+	// 			]
+	// 		}
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplicationVersion.json
@@ -188,5 +457,76 @@ func ExampleGalleryApplicationVersionsClient_NewListByGalleryApplicationPager() 
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.GalleryApplicationVersionList = armcompute.GalleryApplicationVersionList{
+		// 	Value: []*armcompute.GalleryApplicationVersion{
+		// 		{
+		// 			Name: to.Ptr("1.0.0"),
+		// 			Type: to.Ptr("Microsoft.Compute/galleries/applications/versions"),
+		// 			ID: to.Ptr("/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0"),
+		// 			Location: to.Ptr("West US"),
+		// 			Properties: &armcompute.GalleryApplicationVersionProperties{
+		// 				ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
+		// 				PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
+		// 					EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t}()),
+		// 					ExcludeFromLatest: to.Ptr(false),
+		// 					PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t}()),
+		// 					ReplicaCount: to.Ptr[int32](1),
+		// 					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+		// 					TargetRegions: []*armcompute.TargetRegion{
+		// 						{
+		// 							Name: to.Ptr("West US"),
+		// 							RegionalReplicaCount: to.Ptr[int32](1),
+		// 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+		// 					}},
+		// 					EnableHealthCheck: to.Ptr(false),
+		// 					ManageActions: &armcompute.UserArtifactManage{
+		// 						Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
+		// 						Remove: to.Ptr("del C:\\package "),
+		// 					},
+		// 					Source: &armcompute.UserArtifactSource{
+		// 						MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
+		// 					},
+		// 				},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/applications/myGalleryApplicationName/versions?$skiptoken={token}/Subscriptions/{subscriptionId}/ResourceGroups/myResourceGroup/galleries/myGalleryName/applications/myGalleryApplicationName/versions/myGalleryApplicationVersionName",
+		// 	"value": [
+		// 		{
+		// 			"name": "1.0.0",
+		// 			"type": "Microsoft.Compute/galleries/applications/versions",
+		// 			"id": "/subscriptions/01523d7c-60da-455e-adef-521b547922c4/resourceGroups/galleryPsTestRg98/providers/Microsoft.Compute/galleries/galleryPsTestGallery6165/applications/galleryPsTestGalleryApplication7825/versions/1.0.0",
+		// 			"location": "West US",
+		// 			"properties": {
+		// 				"provisioningState": "Succeeded",
+		// 				"publishingProfile": {
+		// 					"enableHealthCheck": false,
+		// 					"endOfLifeDate": "2019-07-01T07:00:00+00:00",
+		// 					"excludeFromLatest": false,
+		// 					"manageActions": {
+		// 						"install": "powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"",
+		// 						"remove": "del C:\\package "
+		// 					},
+		// 					"publishedDate": "2019-06-21T17:13:57.5972568+00:00",
+		// 					"replicaCount": 1,
+		// 					"source": {
+		// 						"mediaLink": "https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"
+		// 					},
+		// 					"storageAccountType": "Standard_LRS",
+		// 					"targetRegions": [
+		// 						{
+		// 							"name": "West US",
+		// 							"regionalReplicaCount": 1,
+		// 							"storageAccountType": "Standard_LRS"
+		// 						}
+		// 					]
+		// 				}
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

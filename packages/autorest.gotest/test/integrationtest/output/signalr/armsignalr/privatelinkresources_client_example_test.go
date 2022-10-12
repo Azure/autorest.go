@@ -37,5 +37,60 @@ func ExamplePrivateLinkResourcesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.PrivateLinkResourceList = armsignalr.PrivateLinkResourceList{
+		// 	Value: []*armsignalr.PrivateLinkResource{
+		// 		{
+		// 			Name: to.Ptr("myPrivateLink"),
+		// 			Type: to.Ptr("privateLinkResources"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateLinkResources/myPrivateLink"),
+		// 			Properties: &armsignalr.PrivateLinkResourceProperties{
+		// 				GroupID: to.Ptr("signalr"),
+		// 				RequiredMembers: []*string{
+		// 					to.Ptr("signalr")},
+		// 					RequiredZoneNames: []*string{
+		// 						to.Ptr("privatelink.service.signalr.net")},
+		// 						ShareablePrivateLinkResourceTypes: []*armsignalr.ShareablePrivateLinkResourceType{
+		// 							{
+		// 								Name: to.Ptr("site"),
+		// 								Properties: &armsignalr.ShareablePrivateLinkResourceProperties{
+		// 									Type: to.Ptr("Microsoft.Web/sites"),
+		// 									Description: to.Ptr("Azure App Service can be used as an upstream"),
+		// 									GroupID: to.Ptr("sites"),
+		// 								},
+		// 						}},
+		// 					},
+		// 			}},
+		// 		}
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...",
+		// 	"value": [
+		// 		{
+		// 			"name": "myPrivateLink",
+		// 			"type": "privateLinkResources",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateLinkResources/myPrivateLink",
+		// 			"properties": {
+		// 				"groupId": "signalr",
+		// 				"requiredMembers": [
+		// 					"signalr"
+		// 				],
+		// 				"requiredZoneNames": [
+		// 					"privatelink.service.signalr.net"
+		// 				],
+		// 				"shareablePrivateLinkResourceTypes": [
+		// 					{
+		// 						"name": "site",
+		// 						"properties": {
+		// 							"type": "Microsoft.Web/sites",
+		// 							"description": "Azure App Service can be used as an upstream",
+		// 							"groupId": "sites"
+		// 						}
+		// 					}
+		// 				]
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

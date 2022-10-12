@@ -37,6 +37,38 @@ func ExampleSharedGalleryImageVersionsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SharedGalleryImageVersionList = armcompute.SharedGalleryImageVersionList{
+		// 	Value: []*armcompute.SharedGalleryImageVersion{
+		// 		{
+		// 			Name: to.Ptr("myGalleryImageVersionName"),
+		// 			Location: to.Ptr("myLocation"),
+		// 			Identifier: &armcompute.SharedGalleryIdentifier{
+		// 				UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName/Images/myGalleryImageName/Versions/myGalleryImageVersionName"),
+		// 			},
+		// 			Properties: &armcompute.SharedGalleryImageVersionProperties{
+		// 				EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-03-20T09:12:28Z"); return t}()),
+		// 				PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-03-20T09:12:28Z"); return t}()),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscription-Id}/providers/Microsoft.Compute/sharedGalleries/galleryUniqueName/images/myGalleryImageName/versions?$skiptoken={token}/Subscriptions/{subscription-Id}/galleries/galleryUniqueName/images/myGalleryImageName/versions/myGalleryImageVersionName",
+		// 	"value": [
+		// 		{
+		// 			"name": "myGalleryImageVersionName",
+		// 			"identifier": {
+		// 				"uniqueId": "/SharedGalleries/galleryUniqueName/Images/myGalleryImageName/Versions/myGalleryImageVersionName"
+		// 			},
+		// 			"location": "myLocation",
+		// 			"properties": {
+		// 				"endOfLifeDate": "2022-03-20T09:12:28Z",
+		// 				"publishedDate": "2018-03-20T09:12:28Z"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -57,4 +89,28 @@ func ExampleSharedGalleryImageVersionsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SharedGalleryImageVersion = armcompute.SharedGalleryImageVersion{
+	// 	Name: to.Ptr("myGalleryImageVersionName"),
+	// 	Location: to.Ptr("myLocation"),
+	// 	Identifier: &armcompute.SharedGalleryIdentifier{
+	// 		UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName/Images/myGalleryImageName/Versions/myGalleryImageVersionName"),
+	// 	},
+	// 	Properties: &armcompute.SharedGalleryImageVersionProperties{
+	// 		EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-03-20T09:12:28Z"); return t}()),
+	// 		PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-03-20T09:12:28Z"); return t}()),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryImageVersionName",
+	// 	"identifier": {
+	// 		"uniqueId": "/SharedGalleries/galleryUniqueName/Images/myGalleryImageName/Versions/myGalleryImageVersionName"
+	// 	},
+	// 	"location": "myLocation",
+	// 	"properties": {
+	// 		"endOfLifeDate": "2022-03-20T09:12:28Z",
+	// 		"publishedDate": "2018-03-20T09:12:28Z"
+	// 	}
+	// }
 }

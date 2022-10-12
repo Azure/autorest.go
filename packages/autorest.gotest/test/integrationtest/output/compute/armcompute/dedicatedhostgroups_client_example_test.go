@@ -45,6 +45,39 @@ func ExampleDedicatedHostGroupsClient_CreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DedicatedHostGroup = armcompute.DedicatedHostGroup{
+	// 	Name: to.Ptr("myDedicatedHostGroup"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/HostGroups/myDedicatedHostGroup"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"department": to.Ptr("finance"),
+	// 		"owner": to.Ptr("myCompany"),
+	// 	},
+	// 	Properties: &armcompute.DedicatedHostGroupProperties{
+	// 		PlatformFaultDomainCount: to.Ptr[int32](3),
+	// 		SupportAutomaticPlacement: to.Ptr(true),
+	// 	},
+	// 	Zones: []*string{
+	// 		to.Ptr("1")},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDedicatedHostGroup",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/HostGroups/myDedicatedHostGroup",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"platformFaultDomainCount": 3,
+	// 		"supportAutomaticPlacement": true
+	// 	},
+	// 	"tags": {
+	// 		"department": "finance",
+	// 		"owner": "myCompany"
+	// 	},
+	// 	"zones": [
+	// 		"1"
+	// 	]
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHostGroup.json
@@ -64,4 +97,147 @@ func ExampleDedicatedHostGroupsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DedicatedHostGroup = armcompute.DedicatedHostGroup{
+	// 	Name: to.Ptr("myDedicatedHostGroup"),
+	// 	Location: to.Ptr("westus"),
+	// 	Tags: map[string]*string{
+	// 		"{tagName}": to.Ptr("{tagValue}"),
+	// 	},
+	// 	Properties: &armcompute.DedicatedHostGroupProperties{
+	// 		Hosts: []*armcompute.SubResourceReadOnly{
+	// 			{
+	// 				ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/myDedicatedHostGroup/myHostGroup/Hosts/myHost1"),
+	// 			},
+	// 			{
+	// 				ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/myDedicatedHostGroup/myHostGroup/Hosts/myHost2"),
+	// 		}},
+	// 		InstanceView: &armcompute.DedicatedHostGroupInstanceView{
+	// 			Hosts: []*armcompute.DedicatedHostInstanceViewWithName{
+	// 				{
+	// 					AssetID: to.Ptr("eb3f58b8-b4e8-4882-b69f-301a01812407"),
+	// 					AvailableCapacity: &armcompute.DedicatedHostAvailableCapacity{
+	// 						AllocatableVMs: []*armcompute.DedicatedHostAllocatableVM{
+	// 							{
+	// 								Count: to.Ptr[float64](10),
+	// 								VMSize: to.Ptr("Standard_A1"),
+	// 						}},
+	// 					},
+	// 					Statuses: []*armcompute.InstanceViewStatus{
+	// 						{
+	// 							Code: to.Ptr("ProvisioningState/succeeded"),
+	// 							DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 							Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 						},
+	// 						{
+	// 							Code: to.Ptr("HealthState/available"),
+	// 							DisplayStatus: to.Ptr("Host available"),
+	// 							Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 					}},
+	// 					Name: to.Ptr("myHost1"),
+	// 				},
+	// 				{
+	// 					AssetID: to.Ptr("f293d4ac-5eea-4be2-b0c0-0fcaa09aebf8"),
+	// 					AvailableCapacity: &armcompute.DedicatedHostAvailableCapacity{
+	// 						AllocatableVMs: []*armcompute.DedicatedHostAllocatableVM{
+	// 							{
+	// 								Count: to.Ptr[float64](10),
+	// 								VMSize: to.Ptr("Standard_A1"),
+	// 						}},
+	// 					},
+	// 					Statuses: []*armcompute.InstanceViewStatus{
+	// 						{
+	// 							Code: to.Ptr("ProvisioningState/succeeded"),
+	// 							DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 							Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 						},
+	// 						{
+	// 							Code: to.Ptr("HealthState/available"),
+	// 							DisplayStatus: to.Ptr("Host available"),
+	// 							Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 					}},
+	// 					Name: to.Ptr("myHost2"),
+	// 			}},
+	// 		},
+	// 		PlatformFaultDomainCount: to.Ptr[int32](3),
+	// 		SupportAutomaticPlacement: to.Ptr(true),
+	// 	},
+	// 	Zones: []*string{
+	// 		to.Ptr("3")},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "myDedicatedHostGroup",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"hosts": [
+	// 			{
+	// 				"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/myDedicatedHostGroup/myHostGroup/Hosts/myHost1"
+	// 			},
+	// 			{
+	// 				"id": "subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/myDedicatedHostGroup/myHostGroup/Hosts/myHost2"
+	// 			}
+	// 		],
+	// 		"instanceView": {
+	// 			"hosts": [
+	// 				{
+	// 					"name": "myHost1",
+	// 					"assetId": "eb3f58b8-b4e8-4882-b69f-301a01812407",
+	// 					"availableCapacity": {
+	// 						"allocatableVMs": [
+	// 							{
+	// 								"count": 10,
+	// 								"vmSize": "Standard_A1"
+	// 							}
+	// 						]
+	// 					},
+	// 					"statuses": [
+	// 						{
+	// 							"code": "ProvisioningState/succeeded",
+	// 							"displayStatus": "Provisioning succeeded",
+	// 							"level": "Info"
+	// 						},
+	// 						{
+	// 							"code": "HealthState/available",
+	// 							"displayStatus": "Host available",
+	// 							"level": "Info"
+	// 						}
+	// 					]
+	// 				},
+	// 				{
+	// 					"name": "myHost2",
+	// 					"assetId": "f293d4ac-5eea-4be2-b0c0-0fcaa09aebf8",
+	// 					"availableCapacity": {
+	// 						"allocatableVMs": [
+	// 							{
+	// 								"count": 10,
+	// 								"vmSize": "Standard_A1"
+	// 							}
+	// 						]
+	// 					},
+	// 					"statuses": [
+	// 						{
+	// 							"code": "ProvisioningState/succeeded",
+	// 							"displayStatus": "Provisioning succeeded",
+	// 							"level": "Info"
+	// 						},
+	// 						{
+	// 							"code": "HealthState/available",
+	// 							"displayStatus": "Host available",
+	// 							"level": "Info"
+	// 						}
+	// 					]
+	// 				}
+	// 			]
+	// 		},
+	// 		"platformFaultDomainCount": 3,
+	// 		"supportAutomaticPlacement": true
+	// 	},
+	// 	"tags": {
+	// 		"{tagName}": "{tagValue}"
+	// 	},
+	// 	"zones": [
+	// 		"3"
+	// 	]
+	// }
 }

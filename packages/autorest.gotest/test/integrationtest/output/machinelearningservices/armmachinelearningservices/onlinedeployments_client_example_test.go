@@ -41,6 +41,179 @@ func ExampleOnlineDeploymentsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.OnlineDeploymentTrackedResourceArmPaginatedResult = armmachinelearningservices.OnlineDeploymentTrackedResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.OnlineDeploymentData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Location: to.Ptr("string"),
+		// 			Tags: map[string]*string{
+		// 			},
+		// 			Identity: &armmachinelearningservices.ManagedServiceIdentity{
+		// 				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+		// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 				TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+		// 					"string": &armmachinelearningservices.UserAssignedIdentity{
+		// 						ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 						PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 					},
+		// 				},
+		// 			},
+		// 			Kind: to.Ptr("string"),
+		// 			Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
+		// 				Description: to.Ptr("string"),
+		// 				CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+		// 					CodeID: to.Ptr("string"),
+		// 					ScoringScript: to.Ptr("string"),
+		// 				},
+		// 				EnvironmentID: to.Ptr("string"),
+		// 				EnvironmentVariables: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				AppInsightsEnabled: to.Ptr(false),
+		// 				EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+		// 				InstanceType: to.Ptr("string"),
+		// 				LivenessProbe: &armmachinelearningservices.ProbeSettings{
+		// 					FailureThreshold: to.Ptr[int32](1),
+		// 					InitialDelay: to.Ptr("PT5M"),
+		// 					Period: to.Ptr("PT5M"),
+		// 					SuccessThreshold: to.Ptr[int32](1),
+		// 					Timeout: to.Ptr("PT5M"),
+		// 				},
+		// 				Model: to.Ptr("string"),
+		// 				ModelMountPath: to.Ptr("string"),
+		// 				ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+		// 				RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+		// 					MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+		// 					MaxQueueWait: to.Ptr("PT5M"),
+		// 					RequestTimeout: to.Ptr("PT5M"),
+		// 				},
+		// 				ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+		// 					ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+		// 				},
+		// 				ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
+		// 					ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
+		// 						CPU: to.Ptr("\"1\""),
+		// 						Gpu: to.Ptr("\"1\""),
+		// 						Memory: to.Ptr("\"2Gi\""),
+		// 					},
+		// 					ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
+		// 						CPU: to.Ptr("\"1\""),
+		// 						Gpu: to.Ptr("\"1\""),
+		// 						Memory: to.Ptr("\"2Gi\""),
+		// 					},
+		// 				},
+		// 			},
+		// 			SKU: &armmachinelearningservices.SKU{
+		// 				Name: to.Ptr("string"),
+		// 				Capacity: to.Ptr[int32](1),
+		// 				Family: to.Ptr("string"),
+		// 				Size: to.Ptr("string"),
+		// 				Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"identity": {
+		// 				"type": "SystemAssigned",
+		// 				"principalId": "00000000-1111-2222-3333-444444444444",
+		// 				"tenantId": "00000000-1111-2222-3333-444444444444",
+		// 				"userAssignedIdentities": {
+		// 					"string": {
+		// 						"clientId": "00000000-1111-2222-3333-444444444444",
+		// 						"principalId": "00000000-1111-2222-3333-444444444444"
+		// 					}
+		// 				}
+		// 			},
+		// 			"kind": "string",
+		// 			"location": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"appInsightsEnabled": false,
+		// 				"codeConfiguration": {
+		// 					"codeId": "string",
+		// 					"scoringScript": "string"
+		// 				},
+		// 				"containerResourceRequirements": {
+		// 					"containerResourceLimits": {
+		// 						"cpu": "\"1\"",
+		// 						"gpu": "\"1\"",
+		// 						"memory": "\"2Gi\""
+		// 					},
+		// 					"containerResourceRequests": {
+		// 						"cpu": "\"1\"",
+		// 						"gpu": "\"1\"",
+		// 						"memory": "\"2Gi\""
+		// 					}
+		// 				},
+		// 				"endpointComputeType": "Kubernetes",
+		// 				"environmentId": "string",
+		// 				"environmentVariables": {
+		// 					"string": "string"
+		// 				},
+		// 				"instanceType": "string",
+		// 				"livenessProbe": {
+		// 					"failureThreshold": 1,
+		// 					"initialDelay": "PT5M",
+		// 					"period": "PT5M",
+		// 					"successThreshold": 1,
+		// 					"timeout": "PT5M"
+		// 				},
+		// 				"model": "string",
+		// 				"modelMountPath": "string",
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"provisioningState": "Creating",
+		// 				"requestSettings": {
+		// 					"maxConcurrentRequestsPerInstance": 1,
+		// 					"maxQueueWait": "PT5M",
+		// 					"requestTimeout": "PT5M"
+		// 				},
+		// 				"scaleSettings": {
+		// 					"scaleType": "Default"
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "string",
+		// 				"capacity": 1,
+		// 				"family": "string",
+		// 				"size": "string",
+		// 				"tier": "Free"
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			},
+		// 			"tags": {}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -82,6 +255,171 @@ func ExampleOnlineDeploymentsClient_Get_getKubernetesOnlineDeployment() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		AppInsightsEnabled: to.Ptr(false),
+	// 		EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+	// 		InstanceType: to.Ptr("string"),
+	// 		LivenessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](1),
+	// 			InitialDelay: to.Ptr("PT5M"),
+	// 			Period: to.Ptr("PT5M"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Model: to.Ptr("string"),
+	// 		ModelMountPath: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+	// 			MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+	// 			MaxQueueWait: to.Ptr("PT5M"),
+	// 			RequestTimeout: to.Ptr("PT5M"),
+	// 		},
+	// 		ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+	// 			ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+	// 		},
+	// 		ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
+	// 			ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
+	// 				CPU: to.Ptr("\"1\""),
+	// 				Gpu: to.Ptr("\"1\""),
+	// 				Memory: to.Ptr("\"2Gi\""),
+	// 			},
+	// 			ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
+	// 				CPU: to.Ptr("\"1\""),
+	// 				Gpu: to.Ptr("\"1\""),
+	// 				Memory: to.Ptr("\"2Gi\""),
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"appInsightsEnabled": false,
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"containerResourceRequirements": {
+	// 			"containerResourceLimits": {
+	// 				"cpu": "\"1\"",
+	// 				"gpu": "\"1\"",
+	// 				"memory": "\"2Gi\""
+	// 			},
+	// 			"containerResourceRequests": {
+	// 				"cpu": "\"1\"",
+	// 				"gpu": "\"1\"",
+	// 				"memory": "\"2Gi\""
+	// 			}
+	// 		},
+	// 		"endpointComputeType": "Kubernetes",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"instanceType": "string",
+	// 		"livenessProbe": {
+	// 			"failureThreshold": 1,
+	// 			"initialDelay": "PT5M",
+	// 			"period": "PT5M",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"model": "string",
+	// 		"modelMountPath": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"requestSettings": {
+	// 			"maxConcurrentRequestsPerInstance": 1,
+	// 			"maxQueueWait": "PT5M",
+	// 			"requestTimeout": "PT5M"
+	// 		},
+	// 		"scaleSettings": {
+	// 			"scaleType": "Default"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
@@ -101,6 +439,161 @@ func ExampleOnlineDeploymentsClient_Get_getManagedOnlineDeployment() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.ManagedOnlineDeployment{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		AppInsightsEnabled: to.Ptr(false),
+	// 		EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+	// 		InstanceType: to.Ptr("string"),
+	// 		LivenessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](1),
+	// 			InitialDelay: to.Ptr("PT5M"),
+	// 			Period: to.Ptr("PT5M"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Model: to.Ptr("string"),
+	// 		ModelMountPath: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		ReadinessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](30),
+	// 			InitialDelay: to.Ptr("PT1S"),
+	// 			Period: to.Ptr("PT10S"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT2S"),
+	// 		},
+	// 		RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+	// 			MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+	// 			MaxQueueWait: to.Ptr("PT5M"),
+	// 			RequestTimeout: to.Ptr("PT5M"),
+	// 		},
+	// 		ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+	// 			ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"appInsightsEnabled": false,
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"endpointComputeType": "Managed",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"instanceType": "string",
+	// 		"livenessProbe": {
+	// 			"failureThreshold": 1,
+	// 			"initialDelay": "PT5M",
+	// 			"period": "PT5M",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"model": "string",
+	// 		"modelMountPath": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"readinessProbe": {
+	// 			"failureThreshold": 30,
+	// 			"initialDelay": "PT1S",
+	// 			"period": "PT10S",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT2S"
+	// 		},
+	// 		"requestSettings": {
+	// 			"maxConcurrentRequestsPerInstance": 1,
+	// 			"maxQueueWait": "PT5M",
+	// 			"requestTimeout": "PT5M"
+	// 		},
+	// 		"scaleSettings": {
+	// 			"scaleType": "Default"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
@@ -144,6 +637,171 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateKubernetesOnlineDeployment
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		AppInsightsEnabled: to.Ptr(false),
+	// 		EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+	// 		InstanceType: to.Ptr("string"),
+	// 		LivenessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](1),
+	// 			InitialDelay: to.Ptr("PT5M"),
+	// 			Period: to.Ptr("PT5M"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Model: to.Ptr("string"),
+	// 		ModelMountPath: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+	// 			MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+	// 			MaxQueueWait: to.Ptr("PT5M"),
+	// 			RequestTimeout: to.Ptr("PT5M"),
+	// 		},
+	// 		ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+	// 			ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+	// 		},
+	// 		ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
+	// 			ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
+	// 				CPU: to.Ptr("\"1\""),
+	// 				Gpu: to.Ptr("\"1\""),
+	// 				Memory: to.Ptr("\"2Gi\""),
+	// 			},
+	// 			ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
+	// 				CPU: to.Ptr("\"1\""),
+	// 				Gpu: to.Ptr("\"1\""),
+	// 				Memory: to.Ptr("\"2Gi\""),
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"appInsightsEnabled": false,
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"containerResourceRequirements": {
+	// 			"containerResourceLimits": {
+	// 				"cpu": "\"1\"",
+	// 				"gpu": "\"1\"",
+	// 				"memory": "\"2Gi\""
+	// 			},
+	// 			"containerResourceRequests": {
+	// 				"cpu": "\"1\"",
+	// 				"gpu": "\"1\"",
+	// 				"memory": "\"2Gi\""
+	// 			}
+	// 		},
+	// 		"endpointComputeType": "Kubernetes",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"instanceType": "string",
+	// 		"livenessProbe": {
+	// 			"failureThreshold": 1,
+	// 			"initialDelay": "PT5M",
+	// 			"period": "PT5M",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"model": "string",
+	// 		"modelMountPath": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"requestSettings": {
+	// 			"maxConcurrentRequestsPerInstance": 1,
+	// 			"maxQueueWait": "PT5M",
+	// 			"requestTimeout": "PT5M"
+	// 		},
+	// 		"scaleSettings": {
+	// 			"scaleType": "Default"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
@@ -187,6 +845,161 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateManagedOnlineDeployment() 
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.ManagedOnlineDeployment{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		AppInsightsEnabled: to.Ptr(false),
+	// 		EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+	// 		InstanceType: to.Ptr("string"),
+	// 		LivenessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](1),
+	// 			InitialDelay: to.Ptr("PT5M"),
+	// 			Period: to.Ptr("PT5M"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Model: to.Ptr("string"),
+	// 		ModelMountPath: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		ReadinessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](30),
+	// 			InitialDelay: to.Ptr("PT1S"),
+	// 			Period: to.Ptr("PT10S"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT2S"),
+	// 		},
+	// 		RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+	// 			MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+	// 			MaxQueueWait: to.Ptr("PT5M"),
+	// 			RequestTimeout: to.Ptr("PT5M"),
+	// 		},
+	// 		ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+	// 			ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"appInsightsEnabled": false,
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"endpointComputeType": "Managed",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"instanceType": "string",
+	// 		"livenessProbe": {
+	// 			"failureThreshold": 1,
+	// 			"initialDelay": "PT5M",
+	// 			"period": "PT5M",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"model": "string",
+	// 		"modelMountPath": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"readinessProbe": {
+	// 			"failureThreshold": 30,
+	// 			"initialDelay": "PT1S",
+	// 			"period": "PT10S",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT2S"
+	// 		},
+	// 		"requestSettings": {
+	// 			"maxConcurrentRequestsPerInstance": 1,
+	// 			"maxQueueWait": "PT5M",
+	// 			"requestTimeout": "PT5M"
+	// 		},
+	// 		"scaleSettings": {
+	// 			"scaleType": "Default"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
@@ -273,6 +1086,171 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateKubernetes
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		AppInsightsEnabled: to.Ptr(false),
+	// 		EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+	// 		InstanceType: to.Ptr("string"),
+	// 		LivenessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](1),
+	// 			InitialDelay: to.Ptr("PT5M"),
+	// 			Period: to.Ptr("PT5M"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Model: to.Ptr("string"),
+	// 		ModelMountPath: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+	// 			MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+	// 			MaxQueueWait: to.Ptr("PT5M"),
+	// 			RequestTimeout: to.Ptr("PT5M"),
+	// 		},
+	// 		ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+	// 			ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+	// 		},
+	// 		ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
+	// 			ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
+	// 				CPU: to.Ptr("\"1\""),
+	// 				Gpu: to.Ptr("\"1\""),
+	// 				Memory: to.Ptr("\"2Gi\""),
+	// 			},
+	// 			ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
+	// 				CPU: to.Ptr("\"1\""),
+	// 				Gpu: to.Ptr("\"1\""),
+	// 				Memory: to.Ptr("\"2Gi\""),
+	// 			},
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"appInsightsEnabled": false,
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"containerResourceRequirements": {
+	// 			"containerResourceLimits": {
+	// 				"cpu": "\"1\"",
+	// 				"gpu": "\"1\"",
+	// 				"memory": "\"2Gi\""
+	// 			},
+	// 			"containerResourceRequests": {
+	// 				"cpu": "\"1\"",
+	// 				"gpu": "\"1\"",
+	// 				"memory": "\"2Gi\""
+	// 			}
+	// 		},
+	// 		"endpointComputeType": "Kubernetes",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"instanceType": "string",
+	// 		"livenessProbe": {
+	// 			"failureThreshold": 1,
+	// 			"initialDelay": "PT5M",
+	// 			"period": "PT5M",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"model": "string",
+	// 		"modelMountPath": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"requestSettings": {
+	// 			"maxConcurrentRequestsPerInstance": 1,
+	// 			"maxQueueWait": "PT5M",
+	// 			"requestTimeout": "PT5M"
+	// 		},
+	// 		"scaleSettings": {
+	// 			"scaleType": "Default"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
@@ -354,6 +1332,161 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateManagedOnl
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.ManagedOnlineDeployment{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		AppInsightsEnabled: to.Ptr(false),
+	// 		EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+	// 		InstanceType: to.Ptr("string"),
+	// 		LivenessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](1),
+	// 			InitialDelay: to.Ptr("PT5M"),
+	// 			Period: to.Ptr("PT5M"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 		Model: to.Ptr("string"),
+	// 		ModelMountPath: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		ReadinessProbe: &armmachinelearningservices.ProbeSettings{
+	// 			FailureThreshold: to.Ptr[int32](30),
+	// 			InitialDelay: to.Ptr("PT1S"),
+	// 			Period: to.Ptr("PT10S"),
+	// 			SuccessThreshold: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT2S"),
+	// 		},
+	// 		RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+	// 			MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+	// 			MaxQueueWait: to.Ptr("PT5M"),
+	// 			RequestTimeout: to.Ptr("PT5M"),
+	// 		},
+	// 		ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+	// 			ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"appInsightsEnabled": false,
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"endpointComputeType": "Managed",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"instanceType": "string",
+	// 		"livenessProbe": {
+	// 			"failureThreshold": 1,
+	// 			"initialDelay": "PT5M",
+	// 			"period": "PT5M",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT5M"
+	// 		},
+	// 		"model": "string",
+	// 		"modelMountPath": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"readinessProbe": {
+	// 			"failureThreshold": 30,
+	// 			"initialDelay": "PT1S",
+	// 			"period": "PT10S",
+	// 			"successThreshold": 1,
+	// 			"timeout": "PT2S"
+	// 		},
+	// 		"requestSettings": {
+	// 			"maxConcurrentRequestsPerInstance": 1,
+	// 			"maxQueueWait": "PT5M",
+	// 			"requestTimeout": "PT5M"
+	// 		},
+	// 		"scaleSettings": {
+	// 			"scaleType": "Default"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json
@@ -376,6 +1509,14 @@ func ExampleOnlineDeploymentsClient_GetLogs() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.DeploymentLogs = armmachinelearningservices.DeploymentLogs{
+	// 	Content: to.Ptr("string"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"content": "string"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
@@ -401,6 +1542,42 @@ func ExampleOnlineDeploymentsClient_NewListSKUsPager_listKubernetesOnlineDeploym
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SKUResourceArmPaginatedResult = armmachinelearningservices.SKUResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.SKUResource{
+		// 		{
+		// 			Capacity: &armmachinelearningservices.SKUCapacity{
+		// 				Default: to.Ptr[int32](1),
+		// 				Maximum: to.Ptr[int32](1),
+		// 				Minimum: to.Ptr[int32](1),
+		// 				ScaleType: to.Ptr(armmachinelearningservices.SKUScaleTypeAutomatic),
+		// 			},
+		// 			ResourceType: to.Ptr("Microsoft.MachineLearning.Services/endpoints/deployments"),
+		// 			SKU: &armmachinelearningservices.SKUSetting{
+		// 				Name: to.Ptr("string"),
+		// 				Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"capacity": {
+		// 				"default": 1,
+		// 				"maximum": 1,
+		// 				"minimum": 1,
+		// 				"scaleType": "Automatic"
+		// 			},
+		// 			"resourceType": "Microsoft.MachineLearning.Services/endpoints/deployments",
+		// 			"sku": {
+		// 				"name": "string",
+		// 				"tier": "Free"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -427,5 +1604,41 @@ func ExampleOnlineDeploymentsClient_NewListSKUsPager_listManagedOnlineDeployment
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SKUResourceArmPaginatedResult = armmachinelearningservices.SKUResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.SKUResource{
+		// 		{
+		// 			Capacity: &armmachinelearningservices.SKUCapacity{
+		// 				Default: to.Ptr[int32](1),
+		// 				Maximum: to.Ptr[int32](1),
+		// 				Minimum: to.Ptr[int32](1),
+		// 				ScaleType: to.Ptr(armmachinelearningservices.SKUScaleTypeAutomatic),
+		// 			},
+		// 			ResourceType: to.Ptr("Microsoft.MachineLearning.Services/endpoints/deployments"),
+		// 			SKU: &armmachinelearningservices.SKUSetting{
+		// 				Name: to.Ptr("string"),
+		// 				Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"capacity": {
+		// 				"default": 1,
+		// 				"maximum": 1,
+		// 				"minimum": 1,
+		// 				"scaleType": "Automatic"
+		// 			},
+		// 			"resourceType": "Microsoft.MachineLearning.Services/endpoints/deployments",
+		// 			"sku": {
+		// 				"name": "string",
+		// 				"tier": "Free"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

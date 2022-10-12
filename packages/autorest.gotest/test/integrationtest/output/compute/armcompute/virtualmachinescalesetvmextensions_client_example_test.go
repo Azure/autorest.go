@@ -71,6 +71,38 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSetVMExtension = armcompute.VirtualMachineScaleSetVMExtension{
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension"),
+	// 	Name: to.Ptr("myVMExtension"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions"),
+	// 	Properties: &armcompute.VirtualMachineExtensionProperties{
+	// 		Type: to.Ptr("extType"),
+	// 		AutoUpgradeMinorVersion: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		Publisher: to.Ptr("extPublisher"),
+	// 		Settings: map[string]interface{}{
+	// 			"UserName": "xyz@microsoft.com",
+	// 		},
+	// 		TypeHandlerVersion: to.Ptr("1.2"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVMExtension",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension",
+	// 	"properties": {
+	// 		"type": "extType",
+	// 		"autoUpgradeMinorVersion": true,
+	// 		"provisioningState": "Creating",
+	// 		"publisher": "extPublisher",
+	// 		"settings": {
+	// 			"UserName": "xyz@microsoft.com"
+	// 		},
+	// 		"typeHandlerVersion": "1.2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMExtensions.json
@@ -104,6 +136,38 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSetVMExtension = armcompute.VirtualMachineScaleSetVMExtension{
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension"),
+	// 	Name: to.Ptr("myVMExtension"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions"),
+	// 	Properties: &armcompute.VirtualMachineExtensionProperties{
+	// 		Type: to.Ptr("extType"),
+	// 		AutoUpgradeMinorVersion: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		Publisher: to.Ptr("extPublisher"),
+	// 		Settings: map[string]interface{}{
+	// 			"UserName": "xyz@microsoft.com",
+	// 		},
+	// 		TypeHandlerVersion: to.Ptr("1.2"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVMExtension",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension",
+	// 	"properties": {
+	// 		"type": "extType",
+	// 		"autoUpgradeMinorVersion": true,
+	// 		"provisioningState": "Creating",
+	// 		"publisher": "extPublisher",
+	// 		"settings": {
+	// 			"UserName": "xyz@microsoft.com"
+	// 		},
+	// 		"typeHandlerVersion": "1.2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMExtensions.json
@@ -144,6 +208,38 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSetVMExtension = armcompute.VirtualMachineScaleSetVMExtension{
+	// 	ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension"),
+	// 	Name: to.Ptr("myVMExtension"),
+	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions"),
+	// 	Properties: &armcompute.VirtualMachineExtensionProperties{
+	// 		Type: to.Ptr("extType"),
+	// 		AutoUpgradeMinorVersion: to.Ptr(true),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		Publisher: to.Ptr("extPublisher"),
+	// 		Settings: map[string]interface{}{
+	// 			"UserName": "xyz@microsoft.com",
+	// 		},
+	// 		TypeHandlerVersion: to.Ptr("1.2"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myVMExtension",
+	// 	"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions",
+	// 	"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension",
+	// 	"properties": {
+	// 		"type": "extType",
+	// 		"autoUpgradeMinorVersion": true,
+	// 		"provisioningState": "Creating",
+	// 		"publisher": "extPublisher",
+	// 		"settings": {
+	// 			"UserName": "xyz@microsoft.com"
+	// 		},
+	// 		"typeHandlerVersion": "1.2"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetVMExtensions.json
@@ -163,4 +259,73 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_List() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.VirtualMachineScaleSetVMExtensionsListResult = armcompute.VirtualMachineScaleSetVMExtensionsListResult{
+	// 	Value: []*armcompute.VirtualMachineScaleSetVMExtension{
+	// 		{
+	// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension"),
+	// 			Name: to.Ptr("myVMExtension"),
+	// 			Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions"),
+	// 			Properties: &armcompute.VirtualMachineExtensionProperties{
+	// 				Type: to.Ptr("extType"),
+	// 				AutoUpgradeMinorVersion: to.Ptr(true),
+	// 				ProvisioningState: to.Ptr("Succeeded"),
+	// 				Publisher: to.Ptr("extPublisher"),
+	// 				Settings: map[string]interface{}{
+	// 					"UserName": "xyz@microsoft.com",
+	// 				},
+	// 				TypeHandlerVersion: to.Ptr("1.2"),
+	// 			},
+	// 		},
+	// 		{
+	// 			ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension1"),
+	// 			Name: to.Ptr("myVMExtension1"),
+	// 			Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions"),
+	// 			Properties: &armcompute.VirtualMachineExtensionProperties{
+	// 				Type: to.Ptr("extType1"),
+	// 				AutoUpgradeMinorVersion: to.Ptr(true),
+	// 				ProvisioningState: to.Ptr("Succeeded"),
+	// 				Publisher: to.Ptr("extPublisher1"),
+	// 				Settings: map[string]interface{}{
+	// 					"UserName": "xyz@microsoft.com",
+	// 				},
+	// 				TypeHandlerVersion: to.Ptr("1.0"),
+	// 			},
+	// 	}},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"value": [
+	// 		{
+	// 			"name": "myVMExtension",
+	// 			"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions",
+	// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension",
+	// 			"properties": {
+	// 				"type": "extType",
+	// 				"autoUpgradeMinorVersion": true,
+	// 				"provisioningState": "Succeeded",
+	// 				"publisher": "extPublisher",
+	// 				"settings": {
+	// 					"UserName": "xyz@microsoft.com"
+	// 				},
+	// 				"typeHandlerVersion": "1.2"
+	// 			}
+	// 		},
+	// 		{
+	// 			"name": "myVMExtension1",
+	// 			"type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions",
+	// 			"id": "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/myvmScaleSet/virtualMachines/0/extensions/myVMExtension1",
+	// 			"properties": {
+	// 				"type": "extType1",
+	// 				"autoUpgradeMinorVersion": true,
+	// 				"provisioningState": "Succeeded",
+	// 				"publisher": "extPublisher1",
+	// 				"settings": {
+	// 					"UserName": "xyz@microsoft.com"
+	// 				},
+	// 				"typeHandlerVersion": "1.0"
+	// 			}
+	// 		}
+	// 	]
+	// }
 }

@@ -81,6 +81,116 @@ func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithMul
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudService = armcompute.CloudService{
+	// 	Name: to.Ptr("{cs-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.CloudServiceProperties{
+	// 		Configuration: to.Ptr("{ServiceConfiguration}"),
+	// 		NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+	// 			LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+	// 				{
+	// 					Name: to.Ptr("contosolb"),
+	// 					Properties: &armcompute.LoadBalancerConfigurationProperties{
+	// 						FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+	// 							{
+	// 								Name: to.Ptr("contosofe"),
+	// 								Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+	// 									PublicIPAddress: &armcompute.SubResource{
+	// 										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+	// 									},
+	// 								},
+	// 						}},
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.CloudServiceOsProfile{
+	// 			Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+	// 			},
+	// 		},
+	// 		PackageURL: to.Ptr("{PackageUrl}"),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RoleProfile: &armcompute.CloudServiceRoleProfile{
+	// 			Roles: []*armcompute.CloudServiceRoleProfileProperties{
+	// 				{
+	// 					Name: to.Ptr("ContosoFrontend"),
+	// 					SKU: &armcompute.CloudServiceRoleSKU{
+	// 						Name: to.Ptr("Standard_D1_v2"),
+	// 						Capacity: to.Ptr[int64](1),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("ContosoBackend"),
+	// 					SKU: &armcompute.CloudServiceRoleSKU{
+	// 						Name: to.Ptr("Standard_D1_v2"),
+	// 						Capacity: to.Ptr[int64](1),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 			}},
+	// 		},
+	// 		UniqueID: to.Ptr("7f3edf91-cb34-4a3e-971a-177dc3dd43cb"),
+	// 		UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{cs-name}",
+	// 	"type": "Microsoft.Compute/cloudServices",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"configuration": "{ServiceConfiguration}",
+	// 		"networkProfile": {
+	// 			"loadBalancerConfigurations": [
+	// 				{
+	// 					"name": "contosolb",
+	// 					"properties": {
+	// 						"frontendIPConfigurations": [
+	// 							{
+	// 								"name": "contosofe",
+	// 								"properties": {
+	// 									"publicIPAddress": {
+	// 										"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"
+	// 									}
+	// 								}
+	// 							}
+	// 						]
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"secrets": []
+	// 		},
+	// 		"packageUrl": "{PackageUrl}",
+	// 		"provisioningState": "Updating",
+	// 		"roleProfile": {
+	// 			"roles": [
+	// 				{
+	// 					"name": "ContosoFrontend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 1,
+	// 						"tier": "Standard"
+	// 					}
+	// 				},
+	// 				{
+	// 					"name": "ContosoBackend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 1,
+	// 						"tier": "Standard"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"uniqueId": "7f3edf91-cb34-4a3e-971a-177dc3dd43cb",
+	// 		"upgradeMode": "Auto"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRole.json
@@ -139,6 +249,100 @@ func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithSin
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudService = armcompute.CloudService{
+	// 	Name: to.Ptr("{cs-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices"),
+	// 	ID: to.Ptr("/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.CloudServiceProperties{
+	// 		Configuration: to.Ptr("{ServiceConfiguration}"),
+	// 		NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+	// 			LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+	// 				{
+	// 					Name: to.Ptr("myLoadBalancer"),
+	// 					Properties: &armcompute.LoadBalancerConfigurationProperties{
+	// 						FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+	// 							{
+	// 								Name: to.Ptr("myfe"),
+	// 								Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+	// 									PublicIPAddress: &armcompute.SubResource{
+	// 										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/myPublicIP"),
+	// 									},
+	// 								},
+	// 						}},
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.CloudServiceOsProfile{
+	// 			Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+	// 			},
+	// 		},
+	// 		PackageURL: to.Ptr("{PackageUrl}"),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RoleProfile: &armcompute.CloudServiceRoleProfile{
+	// 			Roles: []*armcompute.CloudServiceRoleProfileProperties{
+	// 				{
+	// 					Name: to.Ptr("ContosoFrontend"),
+	// 					SKU: &armcompute.CloudServiceRoleSKU{
+	// 						Name: to.Ptr("Standard_D1_v2"),
+	// 						Capacity: to.Ptr[int64](1),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 			}},
+	// 		},
+	// 		UniqueID: to.Ptr("14d10b45-ced7-42ef-a406-50a3df2cea7d"),
+	// 		UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{cs-name}",
+	// 	"type": "Microsoft.Compute/cloudServices",
+	// 	"id": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"configuration": "{ServiceConfiguration}",
+	// 		"networkProfile": {
+	// 			"loadBalancerConfigurations": [
+	// 				{
+	// 					"name": "myLoadBalancer",
+	// 					"properties": {
+	// 						"frontendIPConfigurations": [
+	// 							{
+	// 								"name": "myfe",
+	// 								"properties": {
+	// 									"publicIPAddress": {
+	// 										"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/myPublicIP"
+	// 									}
+	// 								}
+	// 							}
+	// 						]
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"secrets": []
+	// 		},
+	// 		"packageUrl": "{PackageUrl}",
+	// 		"provisioningState": "Updating",
+	// 		"roleProfile": {
+	// 			"roles": [
+	// 				{
+	// 					"name": "ContosoFrontend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 1,
+	// 						"tier": "Standard"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"uniqueId": "14d10b45-ced7-42ef-a406-50a3df2cea7d",
+	// 		"upgradeMode": "Auto"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndCertificate.json
@@ -209,6 +413,119 @@ func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithSin
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudService = armcompute.CloudService{
+	// 	Name: to.Ptr("{cs-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.CloudServiceProperties{
+	// 		Configuration: to.Ptr("{ServiceConfiguration}"),
+	// 		NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+	// 			LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+	// 				{
+	// 					Name: to.Ptr("contosolb"),
+	// 					Properties: &armcompute.LoadBalancerConfigurationProperties{
+	// 						FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+	// 							{
+	// 								Name: to.Ptr("contosofe"),
+	// 								Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+	// 									PublicIPAddress: &armcompute.SubResource{
+	// 										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+	// 									},
+	// 								},
+	// 						}},
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.CloudServiceOsProfile{
+	// 			Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+	// 				{
+	// 					SourceVault: &armcompute.SubResource{
+	// 						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.KeyVault/vaults/{keyvault-name}"),
+	// 					},
+	// 					VaultCertificates: []*armcompute.CloudServiceVaultCertificate{
+	// 						{
+	// 							CertificateURL: to.Ptr("https://{keyvault-name}.vault.azure.net:443/secrets/ContosoCertificate/{secret-id}"),
+	// 					}},
+	// 			}},
+	// 		},
+	// 		PackageURL: to.Ptr("{PackageUrl}"),
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RoleProfile: &armcompute.CloudServiceRoleProfile{
+	// 			Roles: []*armcompute.CloudServiceRoleProfileProperties{
+	// 				{
+	// 					Name: to.Ptr("ContosoFrontend"),
+	// 					SKU: &armcompute.CloudServiceRoleSKU{
+	// 						Name: to.Ptr("Standard_D1_v2"),
+	// 						Capacity: to.Ptr[int64](1),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 			}},
+	// 		},
+	// 		UniqueID: to.Ptr("60b6cd59-600b-4e02-b717-521b07aa94bf"),
+	// 		UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{cs-name}",
+	// 	"type": "Microsoft.Compute/cloudServices",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"configuration": "{ServiceConfiguration}",
+	// 		"networkProfile": {
+	// 			"loadBalancerConfigurations": [
+	// 				{
+	// 					"name": "contosolb",
+	// 					"properties": {
+	// 						"frontendIPConfigurations": [
+	// 							{
+	// 								"name": "contosofe",
+	// 								"properties": {
+	// 									"publicIPAddress": {
+	// 										"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"
+	// 									}
+	// 								}
+	// 							}
+	// 						]
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"secrets": [
+	// 				{
+	// 					"sourceVault": {
+	// 						"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.KeyVault/vaults/{keyvault-name}"
+	// 					},
+	// 					"vaultCertificates": [
+	// 						{
+	// 							"certificateUrl": "https://{keyvault-name}.vault.azure.net:443/secrets/ContosoCertificate/{secret-id}"
+	// 						}
+	// 					]
+	// 				}
+	// 			]
+	// 		},
+	// 		"packageUrl": "{PackageUrl}",
+	// 		"provisioningState": "Updating",
+	// 		"roleProfile": {
+	// 			"roles": [
+	// 				{
+	// 					"name": "ContosoFrontend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 1,
+	// 						"tier": "Standard"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"uniqueId": "60b6cd59-600b-4e02-b717-521b07aa94bf",
+	// 		"upgradeMode": "Auto"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndRDP.json
@@ -281,6 +598,134 @@ func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithSin
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudService = armcompute.CloudService{
+	// 	Name: to.Ptr("{cs-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+	// 	Location: to.Ptr("westus"),
+	// 	Properties: &armcompute.CloudServiceProperties{
+	// 		Configuration: to.Ptr("{ServiceConfiguration}"),
+	// 		ExtensionProfile: &armcompute.CloudServiceExtensionProfile{
+	// 			Extensions: []*armcompute.Extension{
+	// 				{
+	// 					Name: to.Ptr("RDPExtension"),
+	// 					Properties: &armcompute.CloudServiceExtensionProperties{
+	// 						Type: to.Ptr("RDP"),
+	// 						AutoUpgradeMinorVersion: to.Ptr(false),
+	// 						ProvisioningState: to.Ptr("Succeeded"),
+	// 						Publisher: to.Ptr("Microsoft.Windows.Azure.Extensions"),
+	// 						RolesAppliedTo: []*string{
+	// 							to.Ptr("*")},
+	// 							Settings: to.Ptr("<PublicConfig><UserName>UserAzure</UserName><Expiration>10/22/2021 15:05:45</Expiration></PublicConfig>"),
+	// 							TypeHandlerVersion: to.Ptr("1.2.1"),
+	// 						},
+	// 				}},
+	// 			},
+	// 			NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+	// 				LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+	// 					{
+	// 						Name: to.Ptr("contosolb"),
+	// 						Properties: &armcompute.LoadBalancerConfigurationProperties{
+	// 							FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("contosofe"),
+	// 									Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+	// 										PublicIPAddress: &armcompute.SubResource{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+	// 										},
+	// 									},
+	// 							}},
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.CloudServiceOsProfile{
+	// 				Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+	// 				},
+	// 			},
+	// 			PackageURL: to.Ptr("{PackageUrl}"),
+	// 			ProvisioningState: to.Ptr("Succeeded"),
+	// 			RoleProfile: &armcompute.CloudServiceRoleProfile{
+	// 				Roles: []*armcompute.CloudServiceRoleProfileProperties{
+	// 					{
+	// 						Name: to.Ptr("ContosoFrontend"),
+	// 						SKU: &armcompute.CloudServiceRoleSKU{
+	// 							Name: to.Ptr("Standard_D1_v2"),
+	// 							Capacity: to.Ptr[int64](1),
+	// 							Tier: to.Ptr("Standard"),
+	// 						},
+	// 				}},
+	// 			},
+	// 			UniqueID: to.Ptr("c948cccb-bbfa-4516-a250-c28abc4d0c15"),
+	// 			UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "{cs-name}",
+	// 	"type": "Microsoft.Compute/cloudServices",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+	// 	"location": "westus",
+	// 	"properties": {
+	// 		"configuration": "{ServiceConfiguration}",
+	// 		"extensionProfile": {
+	// 			"extensions": [
+	// 				{
+	// 					"name": "RDPExtension",
+	// 					"properties": {
+	// 						"type": "RDP",
+	// 						"autoUpgradeMinorVersion": false,
+	// 						"provisioningState": "Creating",
+	// 						"publisher": "Microsoft.Windows.Azure.Extensions",
+	// 						"rolesAppliedTo": [
+	// 							"*"
+	// 						],
+	// 						"settings": "<PublicConfig><UserName>UserAzure</UserName><Expiration>10/22/2021 15:05:45</Expiration></PublicConfig>",
+	// 						"typeHandlerVersion": "1.2.1"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"networkProfile": {
+	// 			"loadBalancerConfigurations": [
+	// 				{
+	// 					"name": "contosolb",
+	// 					"properties": {
+	// 						"frontendIPConfigurations": [
+	// 							{
+	// 								"name": "contosofe",
+	// 								"properties": {
+	// 									"publicIPAddress": {
+	// 										"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"
+	// 									}
+	// 								}
+	// 							}
+	// 						]
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"secrets": []
+	// 		},
+	// 		"packageUrl": "{PackageUrl}",
+	// 		"provisioningState": "Updating",
+	// 		"roleProfile": {
+	// 			"roles": [
+	// 				{
+	// 					"name": "ContosoFrontend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 1,
+	// 						"tier": "Standard"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"uniqueId": "c948cccb-bbfa-4516-a250-c28abc4d0c15",
+	// 		"upgradeMode": "Auto"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceToIncludeTags.json
@@ -308,6 +753,120 @@ func ExampleCloudServicesClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudService = armcompute.CloudService{
+	// 	Name: to.Ptr("{cs-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+	// 	Location: to.Ptr("eastus2euap"),
+	// 	Properties: &armcompute.CloudServiceProperties{
+	// 		Configuration: to.Ptr("{ServiceConfiguration}"),
+	// 		NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+	// 			LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+	// 				{
+	// 					Name: to.Ptr("contosolb"),
+	// 					Properties: &armcompute.LoadBalancerConfigurationProperties{
+	// 						FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+	// 							{
+	// 								Name: to.Ptr("contosofe"),
+	// 								Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+	// 									PublicIPAddress: &armcompute.SubResource{
+	// 										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+	// 									},
+	// 								},
+	// 						}},
+	// 					},
+	// 			}},
+	// 		},
+	// 		OSProfile: &armcompute.CloudServiceOsProfile{
+	// 			Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+	// 			},
+	// 		},
+	// 		ProvisioningState: to.Ptr("Succeeded"),
+	// 		RoleProfile: &armcompute.CloudServiceRoleProfile{
+	// 			Roles: []*armcompute.CloudServiceRoleProfileProperties{
+	// 				{
+	// 					Name: to.Ptr("ContosoFrontend"),
+	// 					SKU: &armcompute.CloudServiceRoleSKU{
+	// 						Name: to.Ptr("Standard_D1_v2"),
+	// 						Capacity: to.Ptr[int64](2),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 				},
+	// 				{
+	// 					Name: to.Ptr("ContosoBackend"),
+	// 					SKU: &armcompute.CloudServiceRoleSKU{
+	// 						Name: to.Ptr("Standard_D1_v2"),
+	// 						Capacity: to.Ptr[int64](2),
+	// 						Tier: to.Ptr("Standard"),
+	// 					},
+	// 			}},
+	// 		},
+	// 		UniqueID: to.Ptr("4ccb4323-4740-4545-bb81-780b27375947"),
+	// 		UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+	// 	},
+	// 	Tags: map[string]*string{
+	// 		"Documentation": to.Ptr("RestAPI"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "{cs-name}",
+	// 	"type": "Microsoft.Compute/cloudServices",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+	// 	"location": "eastus2euap",
+	// 	"properties": {
+	// 		"configuration": "{ServiceConfiguration}",
+	// 		"networkProfile": {
+	// 			"loadBalancerConfigurations": [
+	// 				{
+	// 					"name": "contosolb",
+	// 					"properties": {
+	// 						"frontendIPConfigurations": [
+	// 							{
+	// 								"name": "contosofe",
+	// 								"properties": {
+	// 									"publicIPAddress": {
+	// 										"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"
+	// 									}
+	// 								}
+	// 							}
+	// 						]
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Updating",
+	// 		"roleProfile": {
+	// 			"roles": [
+	// 				{
+	// 					"name": "ContosoFrontend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 2,
+	// 						"tier": "Standard"
+	// 					}
+	// 				},
+	// 				{
+	// 					"name": "ContosoBackend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 2,
+	// 						"tier": "Standard"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"uniqueId": "4ccb4323-4740-4545-bb81-780b27375947",
+	// 		"upgradeMode": "Auto"
+	// 	},
+	// 	"tags": {
+	// 		"Documentation": "RestAPI"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudService.json
@@ -348,6 +907,148 @@ func ExampleCloudServicesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudService = armcompute.CloudService{
+	// 	Name: to.Ptr("{cs-name}"),
+	// 	Type: to.Ptr("Microsoft.Compute/cloudServices"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+	// 	Location: to.Ptr("eastus2euap"),
+	// 	Properties: &armcompute.CloudServiceProperties{
+	// 		Configuration: to.Ptr("{ServiceConfiguration}"),
+	// 		ExtensionProfile: &armcompute.CloudServiceExtensionProfile{
+	// 			Extensions: []*armcompute.Extension{
+	// 				{
+	// 					Name: to.Ptr("RDPExtension"),
+	// 					Properties: &armcompute.CloudServiceExtensionProperties{
+	// 						Type: to.Ptr("RDP"),
+	// 						AutoUpgradeMinorVersion: to.Ptr(false),
+	// 						ProvisioningState: to.Ptr("Succeeded"),
+	// 						Publisher: to.Ptr("Microsoft.Windows.Azure.Extensions"),
+	// 						RolesAppliedTo: []*string{
+	// 							to.Ptr("*")},
+	// 							Settings: to.Ptr("<PublicConfig><UserName>userazure</UserName><Expiration>01/12/2022 16:29:02</Expiration></PublicConfig>"),
+	// 							TypeHandlerVersion: to.Ptr("1.2.1"),
+	// 						},
+	// 				}},
+	// 			},
+	// 			NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+	// 				LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+	// 					{
+	// 						Name: to.Ptr("contosolb"),
+	// 						Properties: &armcompute.LoadBalancerConfigurationProperties{
+	// 							FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+	// 								{
+	// 									Name: to.Ptr("contosofe"),
+	// 									Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+	// 										PublicIPAddress: &armcompute.SubResource{
+	// 											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+	// 										},
+	// 									},
+	// 							}},
+	// 						},
+	// 				}},
+	// 			},
+	// 			OSProfile: &armcompute.CloudServiceOsProfile{
+	// 				Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+	// 				},
+	// 			},
+	// 			ProvisioningState: to.Ptr("Succeeded"),
+	// 			RoleProfile: &armcompute.CloudServiceRoleProfile{
+	// 				Roles: []*armcompute.CloudServiceRoleProfileProperties{
+	// 					{
+	// 						Name: to.Ptr("ContosoFrontend"),
+	// 						SKU: &armcompute.CloudServiceRoleSKU{
+	// 							Name: to.Ptr("Standard_D1_v2"),
+	// 							Capacity: to.Ptr[int64](2),
+	// 							Tier: to.Ptr("Standard"),
+	// 						},
+	// 					},
+	// 					{
+	// 						Name: to.Ptr("ContosoBackend"),
+	// 						SKU: &armcompute.CloudServiceRoleSKU{
+	// 							Name: to.Ptr("Standard_D1_v2"),
+	// 							Capacity: to.Ptr[int64](2),
+	// 							Tier: to.Ptr("Standard"),
+	// 						},
+	// 				}},
+	// 			},
+	// 			UniqueID: to.Ptr("4ccb4323-4740-4545-bb81-780b27375947"),
+	// 			UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+	// 		},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"name": "{cs-name}",
+	// 	"type": "Microsoft.Compute/cloudServices",
+	// 	"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+	// 	"location": "eastus2euap",
+	// 	"properties": {
+	// 		"configuration": "{ServiceConfiguration}",
+	// 		"extensionProfile": {
+	// 			"extensions": [
+	// 				{
+	// 					"name": "RDPExtension",
+	// 					"properties": {
+	// 						"type": "RDP",
+	// 						"autoUpgradeMinorVersion": false,
+	// 						"provisioningState": "Succeeded",
+	// 						"publisher": "Microsoft.Windows.Azure.Extensions",
+	// 						"rolesAppliedTo": [
+	// 							"*"
+	// 						],
+	// 						"settings": "<PublicConfig><UserName>userazure</UserName><Expiration>01/12/2022 16:29:02</Expiration></PublicConfig>",
+	// 						"typeHandlerVersion": "1.2.1"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"networkProfile": {
+	// 			"loadBalancerConfigurations": [
+	// 				{
+	// 					"name": "contosolb",
+	// 					"properties": {
+	// 						"frontendIPConfigurations": [
+	// 							{
+	// 								"name": "contosofe",
+	// 								"properties": {
+	// 									"publicIPAddress": {
+	// 										"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"
+	// 									}
+	// 								}
+	// 							}
+	// 						]
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"osProfile": {
+	// 			"secrets": []
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"roleProfile": {
+	// 			"roles": [
+	// 				{
+	// 					"name": "ContosoFrontend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 2,
+	// 						"tier": "Standard"
+	// 					}
+	// 				},
+	// 				{
+	// 					"name": "ContosoBackend",
+	// 					"sku": {
+	// 						"name": "Standard_D1_v2",
+	// 						"capacity": 2,
+	// 						"tier": "Standard"
+	// 					}
+	// 				}
+	// 			]
+	// 		},
+	// 		"uniqueId": "4ccb4323-4740-4545-bb81-780b27375947",
+	// 		"upgradeMode": "Auto"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceInstanceViewWithMultiRole.json
@@ -367,6 +1068,97 @@ func ExampleCloudServicesClient_GetInstanceView() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CloudServiceInstanceView = armcompute.CloudServiceInstanceView{
+	// 	PrivateIDs: []*string{
+	// 		to.Ptr("3491bc0c-1f6c-444f-b1d0-ec0751a74e3e")},
+	// 		RoleInstance: &armcompute.InstanceViewStatusesSummary{
+	// 			StatusesSummary: []*armcompute.StatusCodeCount{
+	// 				{
+	// 					Code: to.Ptr("ProvisioningState/succeeded"),
+	// 					Count: to.Ptr[int32](4),
+	// 				},
+	// 				{
+	// 					Code: to.Ptr("PowerState/started"),
+	// 					Count: to.Ptr[int32](4),
+	// 				},
+	// 				{
+	// 					Code: to.Ptr("RoleState/RoleStateStarted"),
+	// 					Count: to.Ptr[int32](4),
+	// 			}},
+	// 		},
+	// 		SdkVersion: to.Ptr("2.9.6496.3"),
+	// 		Statuses: []*armcompute.ResourceInstanceViewStatus{
+	// 			{
+	// 				Code: to.Ptr("ProvisioningState/succeeded"),
+	// 				DisplayStatus: to.Ptr("Provisioning succeeded"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T16:50:07.0953535+05:30"); return t}()),
+	// 			},
+	// 			{
+	// 				Code: to.Ptr("PowerState/started"),
+	// 				DisplayStatus: to.Ptr("Started"),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T16:50:07.0953535+05:30"); return t}()),
+	// 			},
+	// 			{
+	// 				Code: to.Ptr("CurrentUpgradeDomain/-1"),
+	// 				DisplayStatus: to.Ptr("Current Upgrade Domain of cloud service is -1."),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 			},
+	// 			{
+	// 				Code: to.Ptr("MaxUpgradeDomain/1"),
+	// 				DisplayStatus: to.Ptr("Max Upgrade Domain of cloud service is 1."),
+	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
+	// 		}},
+	// 	}
+	// with the raw JSON response:
+	// {
+	// 	"privateIds": [
+	// 		"3491bc0c-1f6c-444f-b1d0-ec0751a74e3e"
+	// 	],
+	// 	"roleInstance": {
+	// 		"statusesSummary": [
+	// 			{
+	// 				"code": "ProvisioningState/succeeded",
+	// 				"count": 4
+	// 			},
+	// 			{
+	// 				"code": "PowerState/started",
+	// 				"count": 4
+	// 			},
+	// 			{
+	// 				"code": "RoleState/RoleStateStarted",
+	// 				"count": 4
+	// 			}
+	// 		]
+	// 	},
+	// 	"sdkVersion": "2.9.6496.3",
+	// 	"statuses": [
+	// 		{
+	// 			"code": "ProvisioningState/succeeded",
+	// 			"displayStatus": "Provisioning succeeded",
+	// 			"level": "Info",
+	// 			"time": "2021-01-12T16:50:07.0953535+05:30"
+	// 		},
+	// 		{
+	// 			"code": "PowerState/started",
+	// 			"displayStatus": "Started",
+	// 			"level": "Info",
+	// 			"time": "2021-01-12T16:50:07.0953535+05:30"
+	// 		},
+	// 		{
+	// 			"code": "CurrentUpgradeDomain/-1",
+	// 			"displayStatus": "Current Upgrade Domain of cloud service is -1.",
+	// 			"level": "Info"
+	// 		},
+	// 		{
+	// 			"code": "MaxUpgradeDomain/1",
+	// 			"displayStatus": "Max Upgrade Domain of cloud service is 1.",
+	// 			"level": "Info"
+	// 		}
+	// 	]
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServicesInSubscription.json
@@ -390,6 +1182,155 @@ func ExampleCloudServicesClient_NewListAllPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.CloudServiceListResult = armcompute.CloudServiceListResult{
+		// 	Value: []*armcompute.CloudService{
+		// 		{
+		// 			Name: to.Ptr("{cs-name}"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.CloudServiceProperties{
+		// 				Configuration: to.Ptr("{ServiceConfiguration}"),
+		// 				ExtensionProfile: &armcompute.CloudServiceExtensionProfile{
+		// 					Extensions: []*armcompute.Extension{
+		// 						{
+		// 							Name: to.Ptr("RDPExtension"),
+		// 							Properties: &armcompute.CloudServiceExtensionProperties{
+		// 								Type: to.Ptr("RDP"),
+		// 								AutoUpgradeMinorVersion: to.Ptr(false),
+		// 								ProvisioningState: to.Ptr("Succeeded"),
+		// 								Publisher: to.Ptr("Microsoft.Windows.Azure.Extensions"),
+		// 								RolesAppliedTo: []*string{
+		// 									to.Ptr("*")},
+		// 									Settings: to.Ptr("<PublicConfig><UserName>userazure</UserName><Expiration>01/12/2022 16:29:02</Expiration></PublicConfig>"),
+		// 									TypeHandlerVersion: to.Ptr("1.2.1"),
+		// 								},
+		// 						}},
+		// 					},
+		// 					NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+		// 						LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+		// 							{
+		// 								Name: to.Ptr("contosolb"),
+		// 								Properties: &armcompute.LoadBalancerConfigurationProperties{
+		// 									FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+		// 										{
+		// 											Name: to.Ptr("contosofe"),
+		// 											Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+		// 												PublicIPAddress: &armcompute.SubResource{
+		// 													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+		// 												},
+		// 											},
+		// 									}},
+		// 								},
+		// 						}},
+		// 					},
+		// 					OSProfile: &armcompute.CloudServiceOsProfile{
+		// 						Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+		// 						},
+		// 					},
+		// 					ProvisioningState: to.Ptr("Succeeded"),
+		// 					RoleProfile: &armcompute.CloudServiceRoleProfile{
+		// 						Roles: []*armcompute.CloudServiceRoleProfileProperties{
+		// 							{
+		// 								Name: to.Ptr("ContosoFrontend"),
+		// 								SKU: &armcompute.CloudServiceRoleSKU{
+		// 									Name: to.Ptr("Standard_D1_v2"),
+		// 									Capacity: to.Ptr[int64](2),
+		// 									Tier: to.Ptr("Standard"),
+		// 								},
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("ContosoBackend"),
+		// 								SKU: &armcompute.CloudServiceRoleSKU{
+		// 									Name: to.Ptr("Standard_D1_v2"),
+		// 									Capacity: to.Ptr[int64](2),
+		// 									Tier: to.Ptr("Standard"),
+		// 								},
+		// 						}},
+		// 					},
+		// 					UniqueID: to.Ptr("4ccb4323-4740-4545-bb81-780b27375947"),
+		// 					UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+		// 				},
+		// 		}},
+		// 	}
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "{cs-name}",
+		// 			"type": "Microsoft.Compute/cloudServices",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"configuration": "{ServiceConfiguration}",
+		// 				"extensionProfile": {
+		// 					"extensions": [
+		// 						{
+		// 							"name": "RDPExtension",
+		// 							"properties": {
+		// 								"type": "RDP",
+		// 								"autoUpgradeMinorVersion": false,
+		// 								"provisioningState": "Succeeded",
+		// 								"publisher": "Microsoft.Windows.Azure.Extensions",
+		// 								"rolesAppliedTo": [
+		// 									"*"
+		// 								],
+		// 								"settings": "<PublicConfig><UserName>userazure</UserName><Expiration>01/12/2022 16:29:02</Expiration></PublicConfig>",
+		// 								"typeHandlerVersion": "1.2.1"
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"networkProfile": {
+		// 					"loadBalancerConfigurations": [
+		// 						{
+		// 							"name": "contosolb",
+		// 							"properties": {
+		// 								"frontendIPConfigurations": [
+		// 									{
+		// 										"name": "contosofe",
+		// 										"properties": {
+		// 											"publicIPAddress": {
+		// 												"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"
+		// 											}
+		// 										}
+		// 									}
+		// 								]
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osProfile": {
+		// 					"secrets": []
+		// 				},
+		// 				"provisioningState": "Succeeded",
+		// 				"roleProfile": {
+		// 					"roles": [
+		// 						{
+		// 							"name": "ContosoFrontend",
+		// 							"sku": {
+		// 								"name": "Standard_D1_v2",
+		// 								"capacity": 2,
+		// 								"tier": "Standard"
+		// 							}
+		// 						},
+		// 						{
+		// 							"name": "ContosoBackend",
+		// 							"sku": {
+		// 								"name": "Standard_D1_v2",
+		// 								"capacity": 2,
+		// 								"tier": "Standard"
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"uniqueId": "4ccb4323-4740-4545-bb81-780b27375947",
+		// 				"upgradeMode": "Auto"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -414,6 +1355,155 @@ func ExampleCloudServicesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.CloudServiceListResult = armcompute.CloudServiceListResult{
+		// 	Value: []*armcompute.CloudService{
+		// 		{
+		// 			Name: to.Ptr("{cs-name}"),
+		// 			Type: to.Ptr("Microsoft.Compute/cloudServices"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}"),
+		// 			Location: to.Ptr("eastus2euap"),
+		// 			Properties: &armcompute.CloudServiceProperties{
+		// 				Configuration: to.Ptr("{ServiceConfiguration}"),
+		// 				ExtensionProfile: &armcompute.CloudServiceExtensionProfile{
+		// 					Extensions: []*armcompute.Extension{
+		// 						{
+		// 							Name: to.Ptr("RDPExtension"),
+		// 							Properties: &armcompute.CloudServiceExtensionProperties{
+		// 								Type: to.Ptr("RDP"),
+		// 								AutoUpgradeMinorVersion: to.Ptr(false),
+		// 								ProvisioningState: to.Ptr("Succeeded"),
+		// 								Publisher: to.Ptr("Microsoft.Windows.Azure.Extensions"),
+		// 								RolesAppliedTo: []*string{
+		// 									to.Ptr("*")},
+		// 									Settings: to.Ptr("<PublicConfig><UserName>userazure</UserName><Expiration>01/12/2022 16:29:02</Expiration></PublicConfig>"),
+		// 									TypeHandlerVersion: to.Ptr("1.2.1"),
+		// 								},
+		// 						}},
+		// 					},
+		// 					NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+		// 						LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+		// 							{
+		// 								Name: to.Ptr("contosolb"),
+		// 								Properties: &armcompute.LoadBalancerConfigurationProperties{
+		// 									FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+		// 										{
+		// 											Name: to.Ptr("contosofe"),
+		// 											Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+		// 												PublicIPAddress: &armcompute.SubResource{
+		// 													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+		// 												},
+		// 											},
+		// 									}},
+		// 								},
+		// 						}},
+		// 					},
+		// 					OSProfile: &armcompute.CloudServiceOsProfile{
+		// 						Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+		// 						},
+		// 					},
+		// 					ProvisioningState: to.Ptr("Succeeded"),
+		// 					RoleProfile: &armcompute.CloudServiceRoleProfile{
+		// 						Roles: []*armcompute.CloudServiceRoleProfileProperties{
+		// 							{
+		// 								Name: to.Ptr("ContosoFrontend"),
+		// 								SKU: &armcompute.CloudServiceRoleSKU{
+		// 									Name: to.Ptr("Standard_D1_v2"),
+		// 									Capacity: to.Ptr[int64](2),
+		// 									Tier: to.Ptr("Standard"),
+		// 								},
+		// 							},
+		// 							{
+		// 								Name: to.Ptr("ContosoBackend"),
+		// 								SKU: &armcompute.CloudServiceRoleSKU{
+		// 									Name: to.Ptr("Standard_D1_v2"),
+		// 									Capacity: to.Ptr[int64](2),
+		// 									Tier: to.Ptr("Standard"),
+		// 								},
+		// 						}},
+		// 					},
+		// 					UniqueID: to.Ptr("4ccb4323-4740-4545-bb81-780b27375947"),
+		// 					UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+		// 				},
+		// 		}},
+		// 	}
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "{cs-name}",
+		// 			"type": "Microsoft.Compute/cloudServices",
+		// 			"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}",
+		// 			"location": "eastus2euap",
+		// 			"properties": {
+		// 				"configuration": "{ServiceConfiguration}",
+		// 				"extensionProfile": {
+		// 					"extensions": [
+		// 						{
+		// 							"name": "RDPExtension",
+		// 							"properties": {
+		// 								"type": "RDP",
+		// 								"autoUpgradeMinorVersion": false,
+		// 								"provisioningState": "Succeeded",
+		// 								"publisher": "Microsoft.Windows.Azure.Extensions",
+		// 								"rolesAppliedTo": [
+		// 									"*"
+		// 								],
+		// 								"settings": "<PublicConfig><UserName>userazure</UserName><Expiration>01/12/2022 16:29:02</Expiration></PublicConfig>",
+		// 								"typeHandlerVersion": "1.2.1"
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"networkProfile": {
+		// 					"loadBalancerConfigurations": [
+		// 						{
+		// 							"name": "contosolb",
+		// 							"properties": {
+		// 								"frontendIPConfigurations": [
+		// 									{
+		// 										"name": "contosofe",
+		// 										"properties": {
+		// 											"publicIPAddress": {
+		// 												"id": "/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"
+		// 											}
+		// 										}
+		// 									}
+		// 								]
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"osProfile": {
+		// 					"secrets": []
+		// 				},
+		// 				"provisioningState": "Succeeded",
+		// 				"roleProfile": {
+		// 					"roles": [
+		// 						{
+		// 							"name": "ContosoFrontend",
+		// 							"sku": {
+		// 								"name": "Standard_D1_v2",
+		// 								"capacity": 2,
+		// 								"tier": "Standard"
+		// 							}
+		// 						},
+		// 						{
+		// 							"name": "ContosoBackend",
+		// 							"sku": {
+		// 								"name": "Standard_D1_v2",
+		// 								"capacity": 2,
+		// 								"tier": "Standard"
+		// 							}
+		// 						}
+		// 					]
+		// 				},
+		// 				"uniqueId": "4ccb4323-4740-4545-bb81-780b27375947",
+		// 				"upgradeMode": "Auto"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 

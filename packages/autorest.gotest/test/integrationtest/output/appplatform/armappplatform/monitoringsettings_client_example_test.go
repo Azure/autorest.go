@@ -34,6 +34,36 @@ func ExampleMonitoringSettingsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.MonitoringSettingResource = armappplatform.MonitoringSettingResource{
+	// 	Name: to.Ptr("default"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/monitoringSettings"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/monitoringSettings/default"),
+	// 	Properties: &armappplatform.MonitoringSettingProperties{
+	// 		AppInsightsAgentVersions: &armappplatform.ApplicationInsightsAgentVersions{
+	// 			Java: to.Ptr("3.0.0"),
+	// 		},
+	// 		AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 		AppInsightsSamplingRate: to.Ptr[float64](10),
+	// 		ProvisioningState: to.Ptr(armappplatform.MonitoringSettingStateSucceeded),
+	// 		TraceEnabled: to.Ptr(true),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "default",
+	// 	"type": "Microsoft.AppPlatform/Spring/monitoringSettings",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/monitoringSettings/default",
+	// 	"properties": {
+	// 		"appInsightsAgentVersions": {
+	// 			"java": "3.0.0"
+	// 		},
+	// 		"appInsightsInstrumentationKey": "00000000-0000-0000-0000-000000000000",
+	// 		"appInsightsSamplingRate": 10,
+	// 		"provisioningState": "Succeeded",
+	// 		"traceEnabled": true
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json
@@ -63,6 +93,36 @@ func ExampleMonitoringSettingsClient_BeginUpdatePut() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.MonitoringSettingResource = armappplatform.MonitoringSettingResource{
+	// 	Name: to.Ptr("default"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/monitoringSettings"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/monitoringSettings/default"),
+	// 	Properties: &armappplatform.MonitoringSettingProperties{
+	// 		AppInsightsAgentVersions: &armappplatform.ApplicationInsightsAgentVersions{
+	// 			Java: to.Ptr("3.0.0"),
+	// 		},
+	// 		AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 		AppInsightsSamplingRate: to.Ptr[float64](10),
+	// 		ProvisioningState: to.Ptr(armappplatform.MonitoringSettingStateSucceeded),
+	// 		TraceEnabled: to.Ptr(true),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "default",
+	// 	"type": "Microsoft.AppPlatform/Spring/monitoringSettings",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/monitoringSettings/default",
+	// 	"properties": {
+	// 		"appInsightsAgentVersions": {
+	// 			"java": "3.0.0"
+	// 		},
+	// 		"appInsightsInstrumentationKey": "00000000-0000-0000-0000-000000000000",
+	// 		"appInsightsSamplingRate": 10,
+	// 		"provisioningState": "Succeeded",
+	// 		"traceEnabled": true
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json
@@ -92,4 +152,34 @@ func ExampleMonitoringSettingsClient_BeginUpdatePatch() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.MonitoringSettingResource = armappplatform.MonitoringSettingResource{
+	// 	Name: to.Ptr("default"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/monitoringSettings"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/monitoringSettings/default"),
+	// 	Properties: &armappplatform.MonitoringSettingProperties{
+	// 		AppInsightsAgentVersions: &armappplatform.ApplicationInsightsAgentVersions{
+	// 			Java: to.Ptr("3.0.0"),
+	// 		},
+	// 		AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
+	// 		AppInsightsSamplingRate: to.Ptr[float64](10),
+	// 		ProvisioningState: to.Ptr(armappplatform.MonitoringSettingStateSucceeded),
+	// 		TraceEnabled: to.Ptr(true),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "default",
+	// 	"type": "Microsoft.AppPlatform/Spring/monitoringSettings",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/monitoringSettings/default",
+	// 	"properties": {
+	// 		"appInsightsAgentVersions": {
+	// 			"java": "3.0.0"
+	// 		},
+	// 		"appInsightsInstrumentationKey": "00000000-0000-0000-0000-000000000000",
+	// 		"appInsightsSamplingRate": 10,
+	// 		"provisioningState": "Succeeded",
+	// 		"traceEnabled": true
+	// 	}
+	// }
 }

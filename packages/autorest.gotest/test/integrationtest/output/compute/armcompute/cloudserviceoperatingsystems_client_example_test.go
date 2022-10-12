@@ -33,6 +33,36 @@ func ExampleCloudServiceOperatingSystemsClient_GetOSVersion() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OSVersion = armcompute.OSVersion{
+	// 	Name: to.Ptr("WA-GUEST-OS-3.90_202010-02"),
+	// 	Type: to.Ptr("Microsoft.Compute/locations/cloudServiceOsVersions"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSVersions/WA-GUEST-OS-3.90_202010-02"),
+	// 	Location: to.Ptr("westus2"),
+	// 	Properties: &armcompute.OSVersionProperties{
+	// 		Family: to.Ptr("3"),
+	// 		FamilyLabel: to.Ptr("Windows Server 2012"),
+	// 		IsActive: to.Ptr(true),
+	// 		IsDefault: to.Ptr(true),
+	// 		Label: to.Ptr("Windows Azure Guest OS 3.90 (Release 202010-02)"),
+	// 		Version: to.Ptr("WA-GUEST-OS-3.90_202010-02"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "WA-GUEST-OS-3.90_202010-02",
+	// 	"type": "Microsoft.Compute/locations/cloudServiceOsVersions",
+	// 	"id": "/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSVersions/WA-GUEST-OS-3.90_202010-02",
+	// 	"location": "westus2",
+	// 	"properties": {
+	// 		"family": "3",
+	// 		"familyLabel": "Windows Server 2012",
+	// 		"isActive": true,
+	// 		"isDefault": true,
+	// 		"label": "Windows Azure Guest OS 3.90 (Release 202010-02)",
+	// 		"version": "WA-GUEST-OS-3.90_202010-02"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceOSVersions.json
@@ -56,6 +86,71 @@ func ExampleCloudServiceOperatingSystemsClient_NewListOSVersionsPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.OSVersionListResult = armcompute.OSVersionListResult{
+		// 	Value: []*armcompute.OSVersion{
+		// 		{
+		// 			Name: to.Ptr("WA-GUEST-OS-3.90_202010-02"),
+		// 			Type: to.Ptr("Microsoft.Compute/locations/cloudServiceOsVersions"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSVersions/WA-GUEST-OS-3.90_202010-02"),
+		// 			Location: to.Ptr("westus2"),
+		// 			Properties: &armcompute.OSVersionProperties{
+		// 				Family: to.Ptr("3"),
+		// 				FamilyLabel: to.Ptr("Windows Server 2012"),
+		// 				IsActive: to.Ptr(true),
+		// 				IsDefault: to.Ptr(true),
+		// 				Label: to.Ptr("Windows Azure Guest OS 3.90 (Release 202010-02)"),
+		// 				Version: to.Ptr("WA-GUEST-OS-3.90_202010-02"),
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("WA-GUEST-OS-4.83_202010-02"),
+		// 			Type: to.Ptr("Microsoft.Compute/locations/cloudServiceOsVersions"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSVersions/WA-GUEST-OS-4.83_202010-02"),
+		// 			Location: to.Ptr("westus2"),
+		// 			Properties: &armcompute.OSVersionProperties{
+		// 				Family: to.Ptr("4"),
+		// 				FamilyLabel: to.Ptr("Windows Server 2012 R2"),
+		// 				IsActive: to.Ptr(true),
+		// 				IsDefault: to.Ptr(true),
+		// 				Label: to.Ptr("Windows Azure Guest OS 4.83 (Release 202010-02)"),
+		// 				Version: to.Ptr("WA-GUEST-OS-4.83_202010-02"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "WA-GUEST-OS-3.90_202010-02",
+		// 			"type": "Microsoft.Compute/locations/cloudServiceOsVersions",
+		// 			"id": "/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSVersions/WA-GUEST-OS-3.90_202010-02",
+		// 			"location": "westus2",
+		// 			"properties": {
+		// 				"family": "3",
+		// 				"familyLabel": "Windows Server 2012",
+		// 				"isActive": true,
+		// 				"isDefault": true,
+		// 				"label": "Windows Azure Guest OS 3.90 (Release 202010-02)",
+		// 				"version": "WA-GUEST-OS-3.90_202010-02"
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "WA-GUEST-OS-4.83_202010-02",
+		// 			"type": "Microsoft.Compute/locations/cloudServiceOsVersions",
+		// 			"id": "/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSVersions/WA-GUEST-OS-4.83_202010-02",
+		// 			"location": "westus2",
+		// 			"properties": {
+		// 				"family": "4",
+		// 				"familyLabel": "Windows Server 2012 R2",
+		// 				"isActive": true,
+		// 				"isDefault": true,
+		// 				"label": "Windows Azure Guest OS 4.83 (Release 202010-02)",
+		// 				"version": "WA-GUEST-OS-4.83_202010-02"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -76,6 +171,43 @@ func ExampleCloudServiceOperatingSystemsClient_GetOSFamily() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OSFamily = armcompute.OSFamily{
+	// 	Name: to.Ptr("3"),
+	// 	Type: to.Ptr("Microsoft.Compute/locations/cloudServiceOsFamilies"),
+	// 	ID: to.Ptr("/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSFamilies/3"),
+	// 	Location: to.Ptr("westus2"),
+	// 	Properties: &armcompute.OSFamilyProperties{
+	// 		Name: to.Ptr("3"),
+	// 		Label: to.Ptr("Windows Server 2012"),
+	// 		Versions: []*armcompute.OSVersionPropertiesBase{
+	// 			{
+	// 				IsActive: to.Ptr(true),
+	// 				IsDefault: to.Ptr(true),
+	// 				Label: to.Ptr("Windows Azure Guest OS 3.90 (Release 202010-02)"),
+	// 				Version: to.Ptr("WA-GUEST-OS-3.90_202010-02"),
+	// 		}},
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "3",
+	// 	"type": "Microsoft.Compute/locations/cloudServiceOsFamilies",
+	// 	"id": "/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSFamilies/3",
+	// 	"location": "westus2",
+	// 	"properties": {
+	// 		"name": "3",
+	// 		"label": "Windows Server 2012",
+	// 		"versions": [
+	// 			{
+	// 				"isActive": true,
+	// 				"isDefault": true,
+	// 				"label": "Windows Azure Guest OS 3.90 (Release 202010-02)",
+	// 				"version": "WA-GUEST-OS-3.90_202010-02"
+	// 			}
+	// 		]
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceOSFamilies.json
@@ -99,5 +231,84 @@ func ExampleCloudServiceOperatingSystemsClient_NewListOSFamiliesPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.OSFamilyListResult = armcompute.OSFamilyListResult{
+		// 	Value: []*armcompute.OSFamily{
+		// 		{
+		// 			Name: to.Ptr("3"),
+		// 			Type: to.Ptr("Microsoft.Compute/locations/cloudServiceOsFamilies"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSFamilies/3"),
+		// 			Location: to.Ptr("westus2"),
+		// 			Properties: &armcompute.OSFamilyProperties{
+		// 				Name: to.Ptr("3"),
+		// 				Label: to.Ptr("Windows Server 2012"),
+		// 				Versions: []*armcompute.OSVersionPropertiesBase{
+		// 					{
+		// 						IsActive: to.Ptr(true),
+		// 						IsDefault: to.Ptr(true),
+		// 						Label: to.Ptr("Windows Azure Guest OS 3.90 (Release 202010-02)"),
+		// 						Version: to.Ptr("WA-GUEST-OS-3.90_202010-02"),
+		// 				}},
+		// 			},
+		// 		},
+		// 		{
+		// 			Name: to.Ptr("4"),
+		// 			Type: to.Ptr("Microsoft.Compute/locations/cloudServiceOsFamilies"),
+		// 			ID: to.Ptr("/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSFamilies/4"),
+		// 			Location: to.Ptr("westus2"),
+		// 			Properties: &armcompute.OSFamilyProperties{
+		// 				Name: to.Ptr("4"),
+		// 				Label: to.Ptr("Windows Server 2012 R2"),
+		// 				Versions: []*armcompute.OSVersionPropertiesBase{
+		// 					{
+		// 						IsActive: to.Ptr(true),
+		// 						IsDefault: to.Ptr(true),
+		// 						Label: to.Ptr("Windows Azure Guest OS 4.83 (Release 202010-02)"),
+		// 						Version: to.Ptr("WA-GUEST-OS-4.83_202010-02"),
+		// 				}},
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "3",
+		// 			"type": "Microsoft.Compute/locations/cloudServiceOsFamilies",
+		// 			"id": "/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSFamilies/3",
+		// 			"location": "westus2",
+		// 			"properties": {
+		// 				"name": "3",
+		// 				"label": "Windows Server 2012",
+		// 				"versions": [
+		// 					{
+		// 						"isActive": true,
+		// 						"isDefault": true,
+		// 						"label": "Windows Azure Guest OS 3.90 (Release 202010-02)",
+		// 						"version": "WA-GUEST-OS-3.90_202010-02"
+		// 					}
+		// 				]
+		// 			}
+		// 		},
+		// 		{
+		// 			"name": "4",
+		// 			"type": "Microsoft.Compute/locations/cloudServiceOsFamilies",
+		// 			"id": "/subscriptions/{subscription-id}/providers/Microsoft.Compute/locations/westus2/cloudServiceOSFamilies/4",
+		// 			"location": "westus2",
+		// 			"properties": {
+		// 				"name": "4",
+		// 				"label": "Windows Server 2012 R2",
+		// 				"versions": [
+		// 					{
+		// 						"isActive": true,
+		// 						"isDefault": true,
+		// 						"label": "Windows Azure Guest OS 4.83 (Release 202010-02)",
+		// 						"version": "WA-GUEST-OS-4.83_202010-02"
+		// 					}
+		// 				]
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

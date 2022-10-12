@@ -45,6 +45,113 @@ func ExampleOnlineEndpointsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.OnlineEndpointTrackedResourceArmPaginatedResult = armmachinelearningservices.OnlineEndpointTrackedResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.OnlineEndpointData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Location: to.Ptr("string"),
+		// 			Tags: map[string]*string{
+		// 			},
+		// 			Identity: &armmachinelearningservices.ManagedServiceIdentity{
+		// 				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+		// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 				TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+		// 					"string": &armmachinelearningservices.UserAssignedIdentity{
+		// 						ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 						PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 					},
+		// 				},
+		// 			},
+		// 			Kind: to.Ptr("string"),
+		// 			Properties: &armmachinelearningservices.OnlineEndpointDetails{
+		// 				Description: to.Ptr("string"),
+		// 				AuthMode: to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				ScoringURI: to.Ptr("https://www.contoso.com/example"),
+		// 				SwaggerURI: to.Ptr("https://www.contoso.com/example"),
+		// 				Compute: to.Ptr("string"),
+		// 				ProvisioningState: to.Ptr(armmachinelearningservices.EndpointProvisioningStateSucceeded),
+		// 				Traffic: map[string]*int32{
+		// 					"string": to.Ptr[int32](1),
+		// 				},
+		// 			},
+		// 			SKU: &armmachinelearningservices.SKU{
+		// 				Name: to.Ptr("string"),
+		// 				Capacity: to.Ptr[int32](1),
+		// 				Family: to.Ptr("string"),
+		// 				Size: to.Ptr("string"),
+		// 				Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"identity": {
+		// 				"type": "SystemAssigned",
+		// 				"principalId": "00000000-1111-2222-3333-444444444444",
+		// 				"tenantId": "00000000-1111-2222-3333-444444444444",
+		// 				"userAssignedIdentities": {
+		// 					"string": {
+		// 						"clientId": "00000000-1111-2222-3333-444444444444",
+		// 						"principalId": "00000000-1111-2222-3333-444444444444"
+		// 					}
+		// 				}
+		// 			},
+		// 			"kind": "string",
+		// 			"location": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"authMode": "AMLToken",
+		// 				"compute": "string",
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"provisioningState": "Creating",
+		// 				"scoringUri": "https://www.contoso.com/example",
+		// 				"swaggerUri": "https://www.contoso.com/example",
+		// 				"traffic": {
+		// 					"string": 1
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "string",
+		// 				"capacity": 1,
+		// 				"family": "string",
+		// 				"size": "string",
+		// 				"tier": "Free"
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			},
+		// 			"tags": {}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -86,6 +193,105 @@ func ExampleOnlineEndpointsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineEndpointData = armmachinelearningservices.OnlineEndpointData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.OnlineEndpointDetails{
+	// 		Description: to.Ptr("string"),
+	// 		AuthMode: to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ScoringURI: to.Ptr("https://www.contoso.com/example"),
+	// 		SwaggerURI: to.Ptr("https://www.contoso.com/example"),
+	// 		Compute: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.EndpointProvisioningStateSucceeded),
+	// 		Traffic: map[string]*int32{
+	// 			"string": to.Ptr[int32](1),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"authMode": "AMLToken",
+	// 		"compute": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"scoringUri": "https://www.contoso.com/example",
+	// 		"swaggerUri": "https://www.contoso.com/example",
+	// 		"traffic": {
+	// 			"string": 1
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json
@@ -131,6 +337,105 @@ func ExampleOnlineEndpointsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineEndpointData = armmachinelearningservices.OnlineEndpointData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.OnlineEndpointDetails{
+	// 		Description: to.Ptr("string"),
+	// 		AuthMode: to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ScoringURI: to.Ptr("https://www.contoso.com/example"),
+	// 		SwaggerURI: to.Ptr("https://www.contoso.com/example"),
+	// 		Compute: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.EndpointProvisioningStateSucceeded),
+	// 		Traffic: map[string]*int32{
+	// 			"string": to.Ptr[int32](1),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"authMode": "AMLToken",
+	// 		"compute": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"scoringUri": "https://www.contoso.com/example",
+	// 		"swaggerUri": "https://www.contoso.com/example",
+	// 		"traffic": {
+	// 			"string": 1
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json
@@ -182,6 +487,105 @@ func ExampleOnlineEndpointsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.OnlineEndpointData = armmachinelearningservices.OnlineEndpointData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.OnlineEndpointDetails{
+	// 		Description: to.Ptr("string"),
+	// 		AuthMode: to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		ScoringURI: to.Ptr("https://www.contoso.com/example"),
+	// 		SwaggerURI: to.Ptr("https://www.contoso.com/example"),
+	// 		Compute: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.EndpointProvisioningStateSucceeded),
+	// 		Traffic: map[string]*int32{
+	// 			"string": to.Ptr[int32](1),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"authMode": "AMLToken",
+	// 		"compute": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"scoringUri": "https://www.contoso.com/example",
+	// 		"swaggerUri": "https://www.contoso.com/example",
+	// 		"traffic": {
+	// 			"string": 1
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json
@@ -201,6 +605,16 @@ func ExampleOnlineEndpointsClient_ListKeys() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.EndpointAuthKeys = armmachinelearningservices.EndpointAuthKeys{
+	// 	PrimaryKey: to.Ptr("string"),
+	// 	SecondaryKey: to.Ptr("string"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"primaryKey": "string",
+	// 	"secondaryKey": "string"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json
@@ -244,4 +658,18 @@ func ExampleOnlineEndpointsClient_GetToken() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.EndpointAuthToken = armmachinelearningservices.EndpointAuthToken{
+	// 	AccessToken: to.Ptr("string"),
+	// 	ExpiryTimeUTC: to.Ptr[int64](1),
+	// 	RefreshAfterTimeUTC: to.Ptr[int64](1),
+	// 	TokenType: to.Ptr("string"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"accessToken": "string",
+	// 	"expiryTimeUtc": 1,
+	// 	"refreshAfterTimeUtc": 1,
+	// 	"tokenType": "string"
+	// }
 }

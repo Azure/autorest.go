@@ -37,6 +37,50 @@ func ExampleSharedGalleryImagesClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.SharedGalleryImageList = armcompute.SharedGalleryImageList{
+		// 	Value: []*armcompute.SharedGalleryImage{
+		// 		{
+		// 			Name: to.Ptr("myGalleryImageName"),
+		// 			Location: to.Ptr("myLocation"),
+		// 			Identifier: &armcompute.SharedGalleryIdentifier{
+		// 				UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName/Images/myGalleryImageName"),
+		// 			},
+		// 			Properties: &armcompute.SharedGalleryImageProperties{
+		// 				HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+		// 				Identifier: &armcompute.GalleryImageIdentifier{
+		// 					Offer: to.Ptr("myOfferName"),
+		// 					Publisher: to.Ptr("myPublisherName"),
+		// 					SKU: to.Ptr("mySkuName"),
+		// 				},
+		// 				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "http://svchost:99/subscriptions/{subscription-Id}/providers/Microsoft.Compute/sharedGalleries/galleryUniqueName/images?$skiptoken={token}/Subscriptions/{subscription-Id}/galleries/galleryUniqueName/images/myGalleryImageName",
+		// 	"value": [
+		// 		{
+		// 			"name": "myGalleryImageName",
+		// 			"identifier": {
+		// 				"uniqueId": "/SharedGalleries/galleryUniqueName/Images/myGalleryImageName"
+		// 			},
+		// 			"location": "myLocation",
+		// 			"properties": {
+		// 				"hyperVGeneration": "V1",
+		// 				"identifier": {
+		// 					"offer": "myOfferName",
+		// 					"publisher": "myPublisherName",
+		// 					"sku": "mySkuName"
+		// 				},
+		// 				"osState": "Generalized",
+		// 				"osType": "Windows"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -57,4 +101,40 @@ func ExampleSharedGalleryImagesClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.SharedGalleryImage = armcompute.SharedGalleryImage{
+	// 	Name: to.Ptr("myGalleryImageName"),
+	// 	Location: to.Ptr("myLocation"),
+	// 	Identifier: &armcompute.SharedGalleryIdentifier{
+	// 		UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName/Images/myGalleryImageName"),
+	// 	},
+	// 	Properties: &armcompute.SharedGalleryImageProperties{
+	// 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+	// 		Identifier: &armcompute.GalleryImageIdentifier{
+	// 			Offer: to.Ptr("myOfferName"),
+	// 			Publisher: to.Ptr("myPublisherName"),
+	// 			SKU: to.Ptr("mySkuName"),
+	// 		},
+	// 		OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myGalleryImageName",
+	// 	"identifier": {
+	// 		"uniqueId": "/SharedGalleries/galleryUniqueName/Images/myGalleryImageName"
+	// 	},
+	// 	"location": "myLocation",
+	// 	"properties": {
+	// 		"hyperVGeneration": "V1",
+	// 		"identifier": {
+	// 			"offer": "myOfferName",
+	// 			"publisher": "myPublisherName",
+	// 			"sku": "mySkuName"
+	// 		},
+	// 		"osState": "Generalized",
+	// 		"osType": "Windows"
+	// 	}
+	// }
 }

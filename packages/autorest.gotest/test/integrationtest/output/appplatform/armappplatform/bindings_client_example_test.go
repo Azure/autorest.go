@@ -34,6 +34,42 @@ func ExampleBindingsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.BindingResource = armappplatform.BindingResource{
+	// 	Name: to.Ptr("mybinding"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
+	// 	Properties: &armappplatform.BindingResourceProperties{
+	// 		BindingParameters: map[string]interface{}{
+	// 			"apiType": "SQL",
+	// 			"databaseName": "db1",
+	// 		},
+	// 		CreatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+	// 		GeneratedProperties: to.Ptr("spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6"),
+	// 		ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+	// 		ResourceName: to.Ptr("my-cosmosdb-1"),
+	// 		ResourceType: to.Ptr("Microsoft.DocumentDB"),
+	// 		UpdatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mybinding",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/bindings",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding",
+	// 	"properties": {
+	// 		"bindingParameters": {
+	// 			"apiType": "SQL",
+	// 			"databaseName": "db1"
+	// 		},
+	// 		"createdAt": "2019-01-01T12:34:56.000Z",
+	// 		"generatedProperties": "spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6",
+	// 		"resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1",
+	// 		"resourceName": "my-cosmosdb-1",
+	// 		"resourceType": "Microsoft.DocumentDB",
+	// 		"updatedAt": "2019-01-01T12:34:56.000Z"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json
@@ -66,6 +102,42 @@ func ExampleBindingsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.BindingResource = armappplatform.BindingResource{
+	// 	Name: to.Ptr("mybinding"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
+	// 	Properties: &armappplatform.BindingResourceProperties{
+	// 		BindingParameters: map[string]interface{}{
+	// 			"apiType": "SQL",
+	// 			"databaseName": "db1",
+	// 		},
+	// 		CreatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+	// 		GeneratedProperties: to.Ptr("spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6"),
+	// 		ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+	// 		ResourceName: to.Ptr("my-cosmosdb-1"),
+	// 		ResourceType: to.Ptr("Microsoft.DocumentDB"),
+	// 		UpdatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mybinding",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/bindings",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding",
+	// 	"properties": {
+	// 		"bindingParameters": {
+	// 			"apiType": "SQL",
+	// 			"databaseName": "db1"
+	// 		},
+	// 		"createdAt": "2019-01-01T12:34:56.000Z",
+	// 		"generatedProperties": "spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6",
+	// 		"resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1",
+	// 		"resourceName": "my-cosmosdb-1",
+	// 		"resourceType": "Microsoft.DocumentDB",
+	// 		"updatedAt": "2019-01-01T12:34:56.000Z"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json
@@ -118,6 +190,42 @@ func ExampleBindingsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.BindingResource = armappplatform.BindingResource{
+	// 	Name: to.Ptr("mybinding"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
+	// 	Properties: &armappplatform.BindingResourceProperties{
+	// 		BindingParameters: map[string]interface{}{
+	// 			"apiType": "SQL",
+	// 			"databaseName": "db1",
+	// 		},
+	// 		CreatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+	// 		GeneratedProperties: to.Ptr("spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6"),
+	// 		ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+	// 		ResourceName: to.Ptr("my-cosmosdb-1"),
+	// 		ResourceType: to.Ptr("Microsoft.DocumentDB"),
+	// 		UpdatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "mybinding",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps/bindings",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding",
+	// 	"properties": {
+	// 		"bindingParameters": {
+	// 			"apiType": "SQL",
+	// 			"databaseName": "db1"
+	// 		},
+	// 		"createdAt": "2019-01-01T12:34:56.000Z",
+	// 		"generatedProperties": "spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6",
+	// 		"resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1",
+	// 		"resourceName": "my-cosmosdb-1",
+	// 		"resourceType": "Microsoft.DocumentDB",
+	// 		"updatedAt": "2019-01-01T12:34:56.000Z"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json
@@ -141,5 +249,48 @@ func ExampleBindingsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.BindingResourceCollection = armappplatform.BindingResourceCollection{
+		// 	Value: []*armappplatform.BindingResource{
+		// 		{
+		// 			Name: to.Ptr("mybinding"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
+		// 			Properties: &armappplatform.BindingResourceProperties{
+		// 				BindingParameters: map[string]interface{}{
+		// 					"apiType": "SQL",
+		// 					"databaseName": "db1",
+		// 				},
+		// 				CreatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+		// 				GeneratedProperties: to.Ptr("spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6"),
+		// 				ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+		// 				ResourceName: to.Ptr("my-cosmosdb-1"),
+		// 				ResourceType: to.Ptr("Microsoft.DocumentDB"),
+		// 				UpdatedAt: to.Ptr("2019-01-01T12:34:56.000Z"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "mybinding",
+		// 			"type": "Microsoft.AppPlatform/Spring/apps/bindings",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding",
+		// 			"properties": {
+		// 				"bindingParameters": {
+		// 					"apiType": "SQL",
+		// 					"databaseName": "db1"
+		// 				},
+		// 				"createdAt": "2019-01-01T12:34:56.000Z",
+		// 				"generatedProperties": "spring.datasource.url=jdbc:mysql://localhost:3306/test\nspring.datasource.username=root\nspring.datasource.password=1****6",
+		// 				"resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1",
+		// 				"resourceName": "my-cosmosdb-1",
+		// 				"resourceType": "Microsoft.DocumentDB",
+		// 				"updatedAt": "2019-01-01T12:34:56.000Z"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }

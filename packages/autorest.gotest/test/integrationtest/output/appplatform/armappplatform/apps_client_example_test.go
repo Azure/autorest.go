@@ -34,6 +34,66 @@ func ExampleAppsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.AppResource = armappplatform.AppResource{
+	// 	Name: to.Ptr("myapp"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp"),
+	// 	Identity: &armappplatform.ManagedIdentityProperties{
+	// 		Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("principalid"),
+	// 		TenantID: to.Ptr("tenantid"),
+	// 	},
+	// 	Location: to.Ptr("eastus"),
+	// 	Properties: &armappplatform.AppResourceProperties{
+	// 		ActiveDeploymentName: to.Ptr("mydeployment1"),
+	// 		EnableEndToEndTLS: to.Ptr(false),
+	// 		Fqdn: to.Ptr("myapp.mydomain.com"),
+	// 		HTTPSOnly: to.Ptr(false),
+	// 		PersistentDisk: &armappplatform.PersistentDisk{
+	// 			MountPath: to.Ptr("/mypersistentdisk"),
+	// 			SizeInGB: to.Ptr[int32](2),
+	// 			UsedInGB: to.Ptr[int32](1),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armappplatform.AppResourceProvisioningStateSucceeded),
+	// 		Public: to.Ptr(true),
+	// 		TemporaryDisk: &armappplatform.TemporaryDisk{
+	// 			MountPath: to.Ptr("/mytemporarydisk"),
+	// 			SizeInGB: to.Ptr[int32](2),
+	// 		},
+	// 		URL: to.Ptr("myapp.myservice.azuremicroservices.io"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myapp",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "principalid",
+	// 		"tenantId": "tenantid"
+	// 	},
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"activeDeploymentName": "mydeployment1",
+	// 		"enableEndToEndTLS": false,
+	// 		"fqdn": "myapp.mydomain.com",
+	// 		"httpsOnly": false,
+	// 		"persistentDisk": {
+	// 			"mountPath": "/mypersistentdisk",
+	// 			"sizeInGB": 2,
+	// 			"usedInGB": 1
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"public": true,
+	// 		"temporaryDisk": {
+	// 			"mountPath": "/mytemporarydisk",
+	// 			"sizeInGB": 2
+	// 		},
+	// 		"url": "myapp.myservice.azuremicroservices.io"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json
@@ -74,6 +134,66 @@ func ExampleAppsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.AppResource = armappplatform.AppResource{
+	// 	Name: to.Ptr("myapp"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp"),
+	// 	Identity: &armappplatform.ManagedIdentityProperties{
+	// 		Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("principalid"),
+	// 		TenantID: to.Ptr("tenantid"),
+	// 	},
+	// 	Location: to.Ptr("eastus"),
+	// 	Properties: &armappplatform.AppResourceProperties{
+	// 		ActiveDeploymentName: to.Ptr("mydeployment1"),
+	// 		EnableEndToEndTLS: to.Ptr(false),
+	// 		Fqdn: to.Ptr("myapp.mydomain.com"),
+	// 		HTTPSOnly: to.Ptr(false),
+	// 		PersistentDisk: &armappplatform.PersistentDisk{
+	// 			MountPath: to.Ptr("/mypersistentdisk"),
+	// 			SizeInGB: to.Ptr[int32](2),
+	// 			UsedInGB: to.Ptr[int32](1),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armappplatform.AppResourceProvisioningStateSucceeded),
+	// 		Public: to.Ptr(true),
+	// 		TemporaryDisk: &armappplatform.TemporaryDisk{
+	// 			MountPath: to.Ptr("/mytemporarydisk"),
+	// 			SizeInGB: to.Ptr[int32](2),
+	// 		},
+	// 		URL: to.Ptr("myapp.myservice.azuremicroservices.io"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myapp",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "principalid",
+	// 		"tenantId": "tenantid"
+	// 	},
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"activeDeploymentName": "mydeployment1",
+	// 		"enableEndToEndTLS": false,
+	// 		"fqdn": "myapp.mydomain.com",
+	// 		"httpsOnly": false,
+	// 		"persistentDisk": {
+	// 			"mountPath": "/mypersistentdisk",
+	// 			"sizeInGB": 2,
+	// 			"usedInGB": 1
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"public": true,
+	// 		"temporaryDisk": {
+	// 			"mountPath": "/mytemporarydisk",
+	// 			"sizeInGB": 2
+	// 		},
+	// 		"url": "myapp.myservice.azuremicroservices.io"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json
@@ -138,6 +258,66 @@ func ExampleAppsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.AppResource = armappplatform.AppResource{
+	// 	Name: to.Ptr("myapp"),
+	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps"),
+	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp"),
+	// 	Identity: &armappplatform.ManagedIdentityProperties{
+	// 		Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("principalid"),
+	// 		TenantID: to.Ptr("tenantid"),
+	// 	},
+	// 	Location: to.Ptr("eastus"),
+	// 	Properties: &armappplatform.AppResourceProperties{
+	// 		ActiveDeploymentName: to.Ptr("mydeployment1"),
+	// 		EnableEndToEndTLS: to.Ptr(false),
+	// 		Fqdn: to.Ptr("myapp.mydomain.com"),
+	// 		HTTPSOnly: to.Ptr(false),
+	// 		PersistentDisk: &armappplatform.PersistentDisk{
+	// 			MountPath: to.Ptr("/mypersistentdisk"),
+	// 			SizeInGB: to.Ptr[int32](2),
+	// 			UsedInGB: to.Ptr[int32](1),
+	// 		},
+	// 		ProvisioningState: to.Ptr(armappplatform.AppResourceProvisioningStateSucceeded),
+	// 		Public: to.Ptr(true),
+	// 		TemporaryDisk: &armappplatform.TemporaryDisk{
+	// 			MountPath: to.Ptr("/mytemporarydisk"),
+	// 			SizeInGB: to.Ptr[int32](2),
+	// 		},
+	// 		URL: to.Ptr("myapp.myservice.azuremicroservices.io"),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "myapp",
+	// 	"type": "Microsoft.AppPlatform/Spring/apps",
+	// 	"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "principalid",
+	// 		"tenantId": "tenantid"
+	// 	},
+	// 	"location": "eastus",
+	// 	"properties": {
+	// 		"activeDeploymentName": "mydeployment1",
+	// 		"enableEndToEndTLS": false,
+	// 		"fqdn": "myapp.mydomain.com",
+	// 		"httpsOnly": false,
+	// 		"persistentDisk": {
+	// 			"mountPath": "/mypersistentdisk",
+	// 			"sizeInGB": 2,
+	// 			"usedInGB": 1
+	// 		},
+	// 		"provisioningState": "Succeeded",
+	// 		"public": true,
+	// 		"temporaryDisk": {
+	// 			"mountPath": "/mytemporarydisk",
+	// 			"sizeInGB": 2
+	// 		},
+	// 		"url": "myapp.myservice.azuremicroservices.io"
+	// 	}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json
@@ -161,6 +341,73 @@ func ExampleAppsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.AppResourceCollection = armappplatform.AppResourceCollection{
+		// 	Value: []*armappplatform.AppResource{
+		// 		{
+		// 			Name: to.Ptr("myapp"),
+		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring/apps"),
+		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp"),
+		// 			Identity: &armappplatform.ManagedIdentityProperties{
+		// 				Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+		// 				PrincipalID: to.Ptr("principalid"),
+		// 				TenantID: to.Ptr("tenantid"),
+		// 			},
+		// 			Location: to.Ptr("eastus"),
+		// 			Properties: &armappplatform.AppResourceProperties{
+		// 				ActiveDeploymentName: to.Ptr("mydeployment1"),
+		// 				EnableEndToEndTLS: to.Ptr(false),
+		// 				Fqdn: to.Ptr("myapp.mydomain.com"),
+		// 				HTTPSOnly: to.Ptr(false),
+		// 				PersistentDisk: &armappplatform.PersistentDisk{
+		// 					MountPath: to.Ptr("/mypersistentdisk"),
+		// 					SizeInGB: to.Ptr[int32](2),
+		// 					UsedInGB: to.Ptr[int32](1),
+		// 				},
+		// 				ProvisioningState: to.Ptr(armappplatform.AppResourceProvisioningStateSucceeded),
+		// 				Public: to.Ptr(true),
+		// 				TemporaryDisk: &armappplatform.TemporaryDisk{
+		// 					MountPath: to.Ptr("/mytemporarydisk"),
+		// 					SizeInGB: to.Ptr[int32](2),
+		// 				},
+		// 				URL: to.Ptr("myapp.myservice.azuremicroservices.io"),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"value": [
+		// 		{
+		// 			"name": "myapp",
+		// 			"type": "Microsoft.AppPlatform/Spring/apps",
+		// 			"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp",
+		// 			"identity": {
+		// 				"type": "SystemAssigned",
+		// 				"principalId": "principalid",
+		// 				"tenantId": "tenantid"
+		// 			},
+		// 			"location": "eastus",
+		// 			"properties": {
+		// 				"activeDeploymentName": "mydeployment1",
+		// 				"enableEndToEndTLS": false,
+		// 				"fqdn": "myapp.mydomain.com",
+		// 				"httpsOnly": false,
+		// 				"persistentDisk": {
+		// 					"mountPath": "/mypersistentdisk",
+		// 					"sizeInGB": 2,
+		// 					"usedInGB": 1
+		// 				},
+		// 				"provisioningState": "Succeeded",
+		// 				"public": true,
+		// 				"temporaryDisk": {
+		// 					"mountPath": "/mytemporarydisk",
+		// 					"sizeInGB": 2
+		// 				},
+		// 				"url": "myapp.myservice.azuremicroservices.io"
+		// 			}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -181,6 +428,16 @@ func ExampleAppsClient_GetResourceUploadURL() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.ResourceUploadDefinition = armappplatform.ResourceUploadDefinition{
+	// 	RelativePath: to.Ptr("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777"),
+	// 	UploadURL: to.Ptr("https://springcloudstorageaccount.file.core.windows.net/bd172614181f42e2853f6fd90029cda8/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777?sv=2018-03-28&sr=f&sig=SampleSignature&se=2019-08-01T10%3A42%3A21Z&sp=w"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"relativePath": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777",
+	// 	"uploadUrl": "https://springcloudstorageaccount.file.core.windows.net/bd172614181f42e2853f6fd90029cda8/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777?sv=2018-03-28&sr=f&sig=SampleSignature&se=2019-08-01T10%3A42%3A21Z&sp=w"
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
@@ -202,4 +459,14 @@ func ExampleAppsClient_ValidateDomain() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.CustomDomainValidateResult = armappplatform.CustomDomainValidateResult{
+	// 	IsValid: to.Ptr(false),
+	// 	Message: to.Ptr("Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name"),
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"isValid": false,
+	// 	"message": "Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name"
+	// }
 }

@@ -41,6 +41,163 @@ func ExampleBatchDeploymentsClient_NewListPager() {
 			// TODO: use page item
 			_ = v
 		}
+		// For example, nextResult struct should like:
+		// nextResult.BatchDeploymentTrackedResourceArmPaginatedResult = armmachinelearningservices.BatchDeploymentTrackedResourceArmPaginatedResult{
+		// 	Value: []*armmachinelearningservices.BatchDeploymentData{
+		// 		{
+		// 			Name: to.Ptr("string"),
+		// 			Type: to.Ptr("string"),
+		// 			ID: to.Ptr("string"),
+		// 			SystemData: &armmachinelearningservices.SystemData{
+		// 				CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				CreatedBy: to.Ptr("string"),
+		// 				CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 				LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+		// 				LastModifiedBy: to.Ptr("string"),
+		// 				LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+		// 			},
+		// 			Location: to.Ptr("string"),
+		// 			Tags: map[string]*string{
+		// 			},
+		// 			Identity: &armmachinelearningservices.ManagedServiceIdentity{
+		// 				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+		// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 				TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+		// 					"string": &armmachinelearningservices.UserAssignedIdentity{
+		// 						ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 						PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+		// 					},
+		// 				},
+		// 			},
+		// 			Kind: to.Ptr("string"),
+		// 			Properties: &armmachinelearningservices.BatchDeploymentDetails{
+		// 				Description: to.Ptr("string"),
+		// 				CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+		// 					CodeID: to.Ptr("string"),
+		// 					ScoringScript: to.Ptr("string"),
+		// 				},
+		// 				EnvironmentID: to.Ptr("string"),
+		// 				EnvironmentVariables: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Properties: map[string]*string{
+		// 					"string": to.Ptr("string"),
+		// 				},
+		// 				Compute: to.Ptr("string"),
+		// 				ErrorThreshold: to.Ptr[int32](1),
+		// 				LoggingLevel: to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+		// 				MaxConcurrencyPerInstance: to.Ptr[int32](1),
+		// 				MiniBatchSize: to.Ptr[int64](1),
+		// 				Model: &armmachinelearningservices.IDAssetReference{
+		// 					ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+		// 					AssetID: to.Ptr("string"),
+		// 				},
+		// 				OutputAction: to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+		// 				OutputFileName: to.Ptr("string"),
+		// 				ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+		// 				Resources: &armmachinelearningservices.ResourceConfiguration{
+		// 					InstanceCount: to.Ptr[int32](1),
+		// 					InstanceType: to.Ptr("string"),
+		// 					Properties: map[string]interface{}{
+		// 						"string": map[string]interface{}{
+		// 							"a3c13e2e-a213-4cac-9f5a-b49966906ad6": nil,
+		// 						},
+		// 					},
+		// 				},
+		// 				RetrySettings: &armmachinelearningservices.BatchRetrySettings{
+		// 					MaxRetries: to.Ptr[int32](1),
+		// 					Timeout: to.Ptr("PT5M"),
+		// 				},
+		// 			},
+		// 			SKU: &armmachinelearningservices.SKU{
+		// 				Name: to.Ptr("string"),
+		// 				Capacity: to.Ptr[int32](1),
+		// 				Family: to.Ptr("string"),
+		// 				Size: to.Ptr("string"),
+		// 				Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+		// 			},
+		// 	}},
+		// }
+		// with the raw JSON response:
+		// {
+		// 	"nextLink": "string",
+		// 	"value": [
+		// 		{
+		// 			"name": "string",
+		// 			"type": "string",
+		// 			"id": "string",
+		// 			"identity": {
+		// 				"type": "SystemAssigned",
+		// 				"principalId": "00000000-1111-2222-3333-444444444444",
+		// 				"tenantId": "00000000-1111-2222-3333-444444444444",
+		// 				"userAssignedIdentities": {
+		// 					"string": {
+		// 						"clientId": "00000000-1111-2222-3333-444444444444",
+		// 						"principalId": "00000000-1111-2222-3333-444444444444"
+		// 					}
+		// 				}
+		// 			},
+		// 			"kind": "string",
+		// 			"location": "string",
+		// 			"properties": {
+		// 				"description": "string",
+		// 				"codeConfiguration": {
+		// 					"codeId": "string",
+		// 					"scoringScript": "string"
+		// 				},
+		// 				"compute": "string",
+		// 				"environmentId": "string",
+		// 				"environmentVariables": {
+		// 					"string": "string"
+		// 				},
+		// 				"errorThreshold": 1,
+		// 				"loggingLevel": "Info",
+		// 				"maxConcurrencyPerInstance": 1,
+		// 				"miniBatchSize": 1,
+		// 				"model": {
+		// 					"assetId": "string",
+		// 					"referenceType": "Id"
+		// 				},
+		// 				"outputAction": "SummaryOnly",
+		// 				"outputFileName": "string",
+		// 				"properties": {
+		// 					"string": "string"
+		// 				},
+		// 				"provisioningState": "Creating",
+		// 				"resources": {
+		// 					"instanceCount": 1,
+		// 					"instanceType": "string",
+		// 					"properties": {
+		// 						"string": {
+		// 							"a3c13e2e-a213-4cac-9f5a-b49966906ad6": null
+		// 						}
+		// 					}
+		// 				},
+		// 				"retrySettings": {
+		// 					"maxRetries": 1,
+		// 					"timeout": "PT5M"
+		// 				}
+		// 			},
+		// 			"sku": {
+		// 				"name": "string",
+		// 				"capacity": 1,
+		// 				"family": "string",
+		// 				"size": "string",
+		// 				"tier": "Free"
+		// 			},
+		// 			"systemData": {
+		// 				"createdAt": "2020-01-01T12:34:56.999Z",
+		// 				"createdBy": "string",
+		// 				"createdByType": "User",
+		// 				"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+		// 				"lastModifiedBy": "string",
+		// 				"lastModifiedByType": "User"
+		// 			},
+		// 			"tags": {}
+		// 		}
+		// 	]
+		// }
 	}
 }
 
@@ -82,6 +239,155 @@ func ExampleBatchDeploymentsClient_Get() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.BatchDeploymentData = armmachinelearningservices.BatchDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.BatchDeploymentDetails{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Compute: to.Ptr("string"),
+	// 		ErrorThreshold: to.Ptr[int32](1),
+	// 		LoggingLevel: to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+	// 		MaxConcurrencyPerInstance: to.Ptr[int32](1),
+	// 		MiniBatchSize: to.Ptr[int64](1),
+	// 		Model: &armmachinelearningservices.IDAssetReference{
+	// 			ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+	// 			AssetID: to.Ptr("string"),
+	// 		},
+	// 		OutputAction: to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+	// 		OutputFileName: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 			InstanceCount: to.Ptr[int32](1),
+	// 			InstanceType: to.Ptr("string"),
+	// 			Properties: map[string]interface{}{
+	// 				"string": map[string]interface{}{
+	// 					"843c2bb4-e5f1-4267-98c8-ba22a99dbb00": nil,
+	// 				},
+	// 			},
+	// 		},
+	// 		RetrySettings: &armmachinelearningservices.BatchRetrySettings{
+	// 			MaxRetries: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"compute": "string",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"errorThreshold": 1,
+	// 		"loggingLevel": "Info",
+	// 		"maxConcurrencyPerInstance": 1,
+	// 		"miniBatchSize": 1,
+	// 		"model": {
+	// 			"assetId": "string",
+	// 			"referenceType": "Id"
+	// 		},
+	// 		"outputAction": "SummaryOnly",
+	// 		"outputFileName": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"resources": {
+	// 			"instanceCount": 1,
+	// 			"instanceType": "string",
+	// 			"properties": {
+	// 				"string": {
+	// 					"843c2bb4-e5f1-4267-98c8-ba22a99dbb00": null
+	// 				}
+	// 			}
+	// 		},
+	// 		"retrySettings": {
+	// 			"maxRetries": 1,
+	// 			"timeout": "PT5M"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json
@@ -151,6 +457,155 @@ func ExampleBatchDeploymentsClient_BeginUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.BatchDeploymentData = armmachinelearningservices.BatchDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.BatchDeploymentDetails{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Compute: to.Ptr("string"),
+	// 		ErrorThreshold: to.Ptr[int32](1),
+	// 		LoggingLevel: to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+	// 		MaxConcurrencyPerInstance: to.Ptr[int32](1),
+	// 		MiniBatchSize: to.Ptr[int64](1),
+	// 		Model: &armmachinelearningservices.IDAssetReference{
+	// 			ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+	// 			AssetID: to.Ptr("string"),
+	// 		},
+	// 		OutputAction: to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+	// 		OutputFileName: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 			InstanceCount: to.Ptr[int32](1),
+	// 			InstanceType: to.Ptr("string"),
+	// 			Properties: map[string]interface{}{
+	// 				"string": map[string]interface{}{
+	// 					"1e5e1cf9-b0ea-4cf6-9764-e750bf85c10a": nil,
+	// 				},
+	// 			},
+	// 		},
+	// 		RetrySettings: &armmachinelearningservices.BatchRetrySettings{
+	// 			MaxRetries: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"compute": "string",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"errorThreshold": 1,
+	// 		"loggingLevel": "Info",
+	// 		"maxConcurrencyPerInstance": 1,
+	// 		"miniBatchSize": 1,
+	// 		"model": {
+	// 			"assetId": "string",
+	// 			"referenceType": "Id"
+	// 		},
+	// 		"outputAction": "SummaryOnly",
+	// 		"outputFileName": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"resources": {
+	// 			"instanceCount": 1,
+	// 			"instanceType": "string",
+	// 			"properties": {
+	// 				"string": {
+	// 					"1e5e1cf9-b0ea-4cf6-9764-e750bf85c10a": null
+	// 				}
+	// 			}
+	// 		},
+	// 		"retrySettings": {
+	// 			"maxRetries": 1,
+	// 			"timeout": "PT5M"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json
@@ -229,4 +684,153 @@ func ExampleBatchDeploymentsClient_BeginCreateOrUpdate() {
 	}
 	// TODO: use response item
 	_ = res
+	// For example, response struct should like:
+	// res.BatchDeploymentData = armmachinelearningservices.BatchDeploymentData{
+	// 	Name: to.Ptr("string"),
+	// 	Type: to.Ptr("string"),
+	// 	ID: to.Ptr("string"),
+	// 	SystemData: &armmachinelearningservices.SystemData{
+	// 		CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		CreatedBy: to.Ptr("string"),
+	// 		CreatedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 		LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t}()),
+	// 		LastModifiedBy: to.Ptr("string"),
+	// 		LastModifiedByType: to.Ptr(armmachinelearningservices.CreatedByTypeUser),
+	// 	},
+	// 	Location: to.Ptr("string"),
+	// 	Tags: map[string]*string{
+	// 	},
+	// 	Identity: &armmachinelearningservices.ManagedServiceIdentity{
+	// 		Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+	// 		PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 		UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+	// 			"string": &armmachinelearningservices.UserAssignedIdentity{
+	// 				ClientID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 				PrincipalID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+	// 			},
+	// 		},
+	// 	},
+	// 	Kind: to.Ptr("string"),
+	// 	Properties: &armmachinelearningservices.BatchDeploymentDetails{
+	// 		Description: to.Ptr("string"),
+	// 		CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+	// 			CodeID: to.Ptr("string"),
+	// 			ScoringScript: to.Ptr("string"),
+	// 		},
+	// 		EnvironmentID: to.Ptr("string"),
+	// 		EnvironmentVariables: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Properties: map[string]*string{
+	// 			"string": to.Ptr("string"),
+	// 		},
+	// 		Compute: to.Ptr("string"),
+	// 		ErrorThreshold: to.Ptr[int32](1),
+	// 		LoggingLevel: to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+	// 		MaxConcurrencyPerInstance: to.Ptr[int32](1),
+	// 		MiniBatchSize: to.Ptr[int64](1),
+	// 		Model: &armmachinelearningservices.IDAssetReference{
+	// 			ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+	// 			AssetID: to.Ptr("string"),
+	// 		},
+	// 		OutputAction: to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+	// 		OutputFileName: to.Ptr("string"),
+	// 		ProvisioningState: to.Ptr(armmachinelearningservices.DeploymentProvisioningStateSucceeded),
+	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
+	// 			InstanceCount: to.Ptr[int32](1),
+	// 			InstanceType: to.Ptr("string"),
+	// 			Properties: map[string]interface{}{
+	// 				"string": map[string]interface{}{
+	// 					"4939850d-8eae-4343-8566-0826259a2ad1": nil,
+	// 				},
+	// 			},
+	// 		},
+	// 		RetrySettings: &armmachinelearningservices.BatchRetrySettings{
+	// 			MaxRetries: to.Ptr[int32](1),
+	// 			Timeout: to.Ptr("PT5M"),
+	// 		},
+	// 	},
+	// 	SKU: &armmachinelearningservices.SKU{
+	// 		Name: to.Ptr("string"),
+	// 		Capacity: to.Ptr[int32](1),
+	// 		Family: to.Ptr("string"),
+	// 		Size: to.Ptr("string"),
+	// 		Tier: to.Ptr(armmachinelearningservices.SKUTierFree),
+	// 	},
+	// }
+	// with the raw JSON response:
+	// {
+	// 	"name": "string",
+	// 	"type": "string",
+	// 	"id": "string",
+	// 	"identity": {
+	// 		"type": "SystemAssigned",
+	// 		"principalId": "00000000-1111-2222-3333-444444444444",
+	// 		"tenantId": "00000000-1111-2222-3333-444444444444",
+	// 		"userAssignedIdentities": {
+	// 			"string": {
+	// 				"clientId": "00000000-1111-2222-3333-444444444444",
+	// 				"principalId": "00000000-1111-2222-3333-444444444444"
+	// 			}
+	// 		}
+	// 	},
+	// 	"kind": "string",
+	// 	"location": "string",
+	// 	"properties": {
+	// 		"description": "string",
+	// 		"codeConfiguration": {
+	// 			"codeId": "string",
+	// 			"scoringScript": "string"
+	// 		},
+	// 		"compute": "string",
+	// 		"environmentId": "string",
+	// 		"environmentVariables": {
+	// 			"string": "string"
+	// 		},
+	// 		"errorThreshold": 1,
+	// 		"loggingLevel": "Info",
+	// 		"maxConcurrencyPerInstance": 1,
+	// 		"miniBatchSize": 1,
+	// 		"model": {
+	// 			"assetId": "string",
+	// 			"referenceType": "Id"
+	// 		},
+	// 		"outputAction": "SummaryOnly",
+	// 		"outputFileName": "string",
+	// 		"properties": {
+	// 			"string": "string"
+	// 		},
+	// 		"provisioningState": "Creating",
+	// 		"resources": {
+	// 			"instanceCount": 1,
+	// 			"instanceType": "string",
+	// 			"properties": {
+	// 				"string": {
+	// 					"4939850d-8eae-4343-8566-0826259a2ad1": null
+	// 				}
+	// 			}
+	// 		},
+	// 		"retrySettings": {
+	// 			"maxRetries": 1,
+	// 			"timeout": "PT5M"
+	// 		}
+	// 	},
+	// 	"sku": {
+	// 		"name": "string",
+	// 		"capacity": 1,
+	// 		"family": "string",
+	// 		"size": "string",
+	// 		"tier": "Free"
+	// 	},
+	// 	"systemData": {
+	// 		"createdAt": "2020-01-01T12:34:56.999Z",
+	// 		"createdBy": "string",
+	// 		"createdByType": "User",
+	// 		"lastModifiedAt": "2020-01-01T12:34:56.999Z",
+	// 		"lastModifiedBy": "string",
+	// 		"lastModifiedByType": "User"
+	// 	},
+	// 	"tags": {}
+	// }
 }
