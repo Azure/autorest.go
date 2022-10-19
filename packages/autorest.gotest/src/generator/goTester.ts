@@ -24,7 +24,7 @@ export async function processRequest(host: AutorestExtensionHost): Promise<void>
   }
 
   // try to get commit/tree name from require config
-  const rpRegex = /Azure\/azure-rest-api-specs\/(blob\/|tree\/|)(?<swaggerCommit>[^\/]+)\//;
+  const rpRegex = /Azure\/azure-rest-api-specs\/(blob\/|tree\/|)(?<swaggerCommit>[^/]+)\//;
 
   let swaggerCommit = 'main';
   if (session.configuration?.require) {
