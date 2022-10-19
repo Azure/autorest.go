@@ -2,6 +2,7 @@
 // +build go1.18
 
 {{copyright}}
+// DO NOT EDIT.
 
 package {{packageName}}_test
 
@@ -18,7 +19,7 @@ import (
 {%- for example in exampleGroup.examples %}
 {%- if allExamples.indexOf(example.originalFile)<0 %}
 {%- set _ = allExamples.push(example.originalFile) %}
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/{{example.originalFile}}
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/{{swaggerCommit}}/{{example.originalFile}}
 func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}{% if exampleGroup.examples.length>1 %}_{{jsFunc.getExampleSuffix(example.name)}}{% endif %}() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -47,45 +48,39 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
     {%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}
     pager := client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
     for pager.More() {
-        nextResult, err := pager.NextPage(ctx)
+        page, err := pager.NextPage(ctx)
         if err != nil {
             log.Fatalf("failed to advance page: %v", err)
         }
-        for _, v := range nextResult.{{example.pageableItemName}} {
-            // TODO: use page item
+        for _, v := range page.{{example.pageableItemName}} {
+            // TODO: use page
             _ = v
         }
-        // For example, nextResult struct should like: 
-        // {% if example.responseTypePointer %}*{% endif %}nextResult{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
-        // with the raw JSON response: 
-        // {{jsFunc.getCommentRawResponseJSON(example)}}
+        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // page{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
     }
     {%- else %}
     client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
     {%- endif %}
     {%- if example.isLRO and example.isPageable and example.checkResponse %}
     for res.More() {
-        nextResult, err := res.NextPage(ctx)
+        page, err := res.NextPage(ctx)
         if err != nil {
             log.Fatalf("failed to advance page: %v", err)
         }
-        for _, v := range nextResult.{{example.pageableItemName}} {
-            // TODO: use page item
+        for _, v := range page.{{example.pageableItemName}} {
+            // TODO: use page
             _ = v
         }
-        // For example, nextResult struct should like: 
-        // {% if example.responseTypePointer %}*{% endif %}nextResult{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
-        // with the raw JSON response: 
-        // {{jsFunc.getCommentRawResponseJSON(example)}}
+        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // page{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
     }
     {%- endif %}
     {%- if example.checkResponse and not example.isPageable%}
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
-    // {% if example.responseTypePointer %}*{% endif %}res{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
-    // with the raw JSON response: 
-    // {{jsFunc.getCommentRawResponseJSON(example)}}
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // res{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
     {%- endif %}
 }
 {%- endif %}

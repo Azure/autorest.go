@@ -32,7 +32,7 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
         fileName = fileName.substring(0, fileName.length - 6) + '_client';
       }
 
-      this.renderAndWrite({ exampleGroups: exampleGroups }, 'exampleTest.go.njk', `${this.getFilePrefix(Config.exampleFilePrefix)}${fileName}_example_test.go`, extraParam, {
+      this.renderAndWrite({ exampleGroups: exampleGroups, swaggerCommit: this.context.swaggerCommit }, 'exampleTest.go.njk', `${this.getFilePrefix(Config.exampleFilePrefix)}${fileName}_example_test.go`, extraParam, {
         getParamsValue: (params: Array<ParameterOutput>) => {
           return params
             .map((p) => {
@@ -44,7 +44,6 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
           return camelCase(exampleKey);
         },
         getCommentResponseOutput: this.getCommentResponseOutput,
-        getCommentRawResponseJSON: this.getCommentRawResponseJSON,
       });
     }
   }
@@ -73,11 +72,5 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
       }
     }
     return _.trimEnd(result, '\n');
-  }
-
-  public getCommentRawResponseJSON(example: ExampleModel): string {
-    const resObj = example.operation.extensions['x-ms-examples'][example.name].responses['200'].body;
-    const resJson = JSON.stringify(resObj, null, '\t');
-    return _.trimEnd(resJson.split('\n').join('\n// '), '// ');
   }
 }

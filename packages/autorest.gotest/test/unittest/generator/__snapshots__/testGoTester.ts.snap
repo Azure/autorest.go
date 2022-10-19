@@ -6,6 +6,7 @@ Object {
 // +build go1.18
 
 
+// DO NOT EDIT.
 
 package armagrifood_test
 
@@ -25,7 +26,7 @@ import (
 )
 
 
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Create.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Create.json
 func ExampleExtensionsClient_Create() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -41,7 +42,7 @@ func ExampleExtensionsClient_Create() {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Get.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Get.json
 func ExampleExtensionsClient_Get() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -56,9 +57,9 @@ func ExampleExtensionsClient_Get() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.Extension = armagrifood.Extension{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
 // 	Name: to.Ptr(\\"provider.extension\\"),
@@ -79,29 +80,8 @@ func ExampleExtensionsClient_Get() {
 // 	},
 // 	ETag: to.Ptr(\\"7200b954-0000-0700-0000-603cbbc40000\\"),
 // }
-    // with the raw JSON response: 
-    // {
-// 	\\"name\\": \\"provider.extension\\",
-// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions\\",
-// 	\\"eTag\\": \\"7200b954-0000-0700-0000-603cbbc40000\\",
-// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\",
-// 	\\"properties\\": {
-// 		\\"extensionApiDocsLink\\": \\"https://docs.provider.com/documentation/extension\\",
-// 		\\"extensionAuthLink\\": \\"https://www.provider.com/extension/\\",
-// 		\\"extensionCategory\\": \\"Weather\\",
-// 		\\"installedExtensionVersion\\": \\"1.0\\"
-// 	},
-// 	\\"systemData\\": {
-// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"createdBy\\": \\"string\\",
-// 		\\"createdByType\\": \\"User\\",
-// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"lastModifiedBy\\": \\"string\\",
-// 		\\"lastModifiedByType\\": \\"User\\"
-// 	}
-// }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Update.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Update.json
 func ExampleExtensionsClient_Update() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -116,9 +96,9 @@ func ExampleExtensionsClient_Update() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.Extension = armagrifood.Extension{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
 // 	Name: to.Ptr(\\"provider.extension\\"),
@@ -139,29 +119,8 @@ func ExampleExtensionsClient_Update() {
 // 	},
 // 	ETag: to.Ptr(\\"7200b954-0000-0700-0000-603cbbc40000\\"),
 // }
-    // with the raw JSON response: 
-    // {
-// 	\\"name\\": \\"provider.extension\\",
-// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions\\",
-// 	\\"eTag\\": \\"7200b954-0000-0700-0000-603cbbc40000\\",
-// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\",
-// 	\\"properties\\": {
-// 		\\"extensionApiDocsLink\\": \\"https://docs.provider.com/documentation/extension\\",
-// 		\\"extensionAuthLink\\": \\"https://www.provider.com/extension/\\",
-// 		\\"extensionCategory\\": \\"Weather\\",
-// 		\\"installedExtensionVersion\\": \\"2.0\\"
-// 	},
-// 	\\"systemData\\": {
-// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"createdBy\\": \\"string\\",
-// 		\\"createdByType\\": \\"User\\",
-// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"lastModifiedBy\\": \\"string\\",
-// 		\\"lastModifiedByType\\": \\"User\\"
-// 	}
-// }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Delete.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Delete.json
 func ExampleExtensionsClient_Delete() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -177,7 +136,7 @@ func ExampleExtensionsClient_Delete() {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_ListByFarmBeats.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_ListByFarmBeats.json
 func ExampleExtensionsClient_NewListByFarmBeatsPager() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -194,16 +153,16 @@ MaxPageSize: nil,
 SkipToken: nil,
 })
     for pager.More() {
-        nextResult, err := pager.NextPage(ctx)
+        page, err := pager.NextPage(ctx)
         if err != nil {
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
-        for _, v := range nextResult.Value {
-            // TODO: use page item
+        for _, v := range page.Value {
+            // TODO: use page
             _ = v
         }
-        // For example, nextResult struct should like: 
-        // nextResult.ExtensionListResponse = armagrifood.ExtensionListResponse{
+        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // page.ExtensionListResponse = armagrifood.ExtensionListResponse{
 // 	Value: []*armagrifood.Extension{
 // 		{
 // 			ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
@@ -226,31 +185,6 @@ SkipToken: nil,
 // 			ETag: to.Ptr(\\"7200b954-0000-0700-0000-603cbbc40000\\"),
 // 	}},
 // }
-        // with the raw JSON response: 
-        // {
-// 	\\"value\\": [
-// 		{
-// 			\\"name\\": \\"provider.extension\\",
-// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions\\",
-// 			\\"eTag\\": \\"7200b954-0000-0700-0000-603cbbc40000\\",
-// 			\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\",
-// 			\\"properties\\": {
-// 				\\"extensionApiDocsLink\\": \\"https://docs.provider.com/documentation/extension\\",
-// 				\\"extensionAuthLink\\": \\"https://www.provider.com/extension/\\",
-// 				\\"extensionCategory\\": \\"Weather\\",
-// 				\\"installedExtensionVersion\\": \\"1.0\\"
-// 			},
-// 			\\"systemData\\": {
-// 				\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 				\\"createdBy\\": \\"string\\",
-// 				\\"createdByType\\": \\"User\\",
-// 				\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 				\\"lastModifiedBy\\": \\"string\\",
-// 				\\"lastModifiedByType\\": \\"User\\"
-// 			}
-// 		}
-// 	]
-// }
     }
 }
 ",
@@ -258,6 +192,7 @@ SkipToken: nil,
 // +build go1.18
 
 
+// DO NOT EDIT.
 
 package armagrifood_test
 
@@ -277,7 +212,7 @@ import (
 )
 
 
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_List.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_List.json
 func ExampleFarmBeatsExtensionsClient_NewListPager() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -295,16 +230,16 @@ PublisherIDs: []string{},
 MaxPageSize: nil,
 })
     for pager.More() {
-        nextResult, err := pager.NextPage(ctx)
+        page, err := pager.NextPage(ctx)
         if err != nil {
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
-        for _, v := range nextResult.Value {
-            // TODO: use page item
+        for _, v := range page.Value {
+            // TODO: use page
             _ = v
         }
-        // For example, nextResult struct should like: 
-        // nextResult.FarmBeatsExtensionListResponse = armagrifood.FarmBeatsExtensionListResponse{
+        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // page.FarmBeatsExtensionListResponse = armagrifood.FarmBeatsExtensionListResponse{
 // 	Value: []*armagrifood.FarmBeatsExtension{
 // 		{
 // 			ID: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\"),
@@ -523,248 +458,9 @@ MaxPageSize: nil,
 // 																			},
 // 																	}},
 // 																}
-        // with the raw JSON response: 
-        // {
-// 	\\"nextLink\\": \\"string\\",
-// 	\\"value\\": [
-// 		{
-// 			\\"name\\": \\"DTN.ContentServices\\",
-// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions\\",
-// 			\\"id\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\",
-// 			\\"properties\\": {
-// 				\\"detailedInformation\\": [
-// 					{
-// 						\\"apiInputParameters\\": [
-// 							\\"stationId\\",
-// 							\\"lat\\",
-// 							\\"lon\\",
-// 							\\"days\\",
-// 							\\"units\\",
-// 							\\"precision\\",
-// 							\\"sector\\"
-// 						],
-// 						\\"apiName\\": \\"GetDailyObservations\\",
-// 						\\"customParameters\\": [
-// 							\\"stationId\\",
-// 							\\"stationLatitude\\",
-// 							\\"stationLongitude\\",
-// 							\\"timeZone\\",
-// 							\\"sunrise\\",
-// 							\\"sunset\\",
-// 							\\"weatherCode\\",
-// 							\\"weatherDescription\\",
-// 							\\"maxTemperature\\",
-// 							\\"minTemperature\\",
-// 							\\"avgHeatIndex\\",
-// 							\\"maxHeatIndex\\",
-// 							\\"minHeatIndex\\",
-// 							\\"maxWindChill\\",
-// 							\\"minWindChill\\",
-// 							\\"maxFeelsLike\\",
-// 							\\"minFeelsLike\\",
-// 							\\"avgFeelsLike\\",
-// 							\\"maxWindSpeed\\",
-// 							\\"avgWetBulbGlobeTemp\\",
-// 							\\"maxWetBulbGlobeTemp\\",
-// 							\\"minWetBulbGlobeTemp\\",
-// 							\\"minutesOfSunshine\\",
-// 							\\"cornHeatUnit\\",
-// 							\\"evapotranspiration\\"
-// 						],
-// 						\\"platformParameters\\": [
-// 							\\"cloudCover\\",
-// 							\\"dewPoint\\",
-// 							\\"growingDegreeDay\\",
-// 							\\"precipitation\\",
-// 							\\"pressure\\",
-// 							\\"relativeHumidity\\",
-// 							\\"temperature\\",
-// 							\\"wetBulbTemperature\\",
-// 							\\"dateTime\\",
-// 							\\"windChill\\",
-// 							\\"windSpeed\\",
-// 							\\"windDirection\\"
-// 						],
-// 						\\"unitsSupported\\": {
-// 							\\"key\\": \\"units\\",
-// 							\\"values\\": [
-// 								\\"us\\",
-// 								\\"si\\"
-// 							]
-// 						}
-// 					},
-// 					{
-// 						\\"apiInputParameters\\": [
-// 							\\"stationId\\",
-// 							\\"lat\\",
-// 							\\"lon\\",
-// 							\\"hours\\",
-// 							\\"units\\",
-// 							\\"precision\\",
-// 							\\"sector\\"
-// 						],
-// 						\\"apiName\\": \\"GetHourlyObservations\\",
-// 						\\"customParameters\\": [
-// 							\\"stationId\\",
-// 							\\"stationLatitude\\",
-// 							\\"stationLongitude\\",
-// 							\\"timeZone\\",
-// 							\\"weatherCode\\",
-// 							\\"weatherDescription\\",
-// 							\\"feelsLike\\",
-// 							\\"visibilityWeatherCode\\",
-// 							\\"visibilityWeatherDescription\\",
-// 							\\"minutesOfSunshine\\"
-// 						],
-// 						\\"platformParameters\\": [
-// 							\\"cloudCover\\",
-// 							\\"dewPoint\\",
-// 							\\"precipitation\\",
-// 							\\"pressure\\",
-// 							\\"relativeHumidity\\",
-// 							\\"temperature\\",
-// 							\\"wetBulbTemperature\\",
-// 							\\"dateTime\\",
-// 							\\"visibility\\",
-// 							\\"windChill\\",
-// 							\\"windSpeed\\",
-// 							\\"windDirection\\",
-// 							\\"windGust\\"
-// 						],
-// 						\\"unitsSupported\\": {
-// 							\\"key\\": \\"units\\",
-// 							\\"values\\": [
-// 								\\"us\\",
-// 								\\"si\\"
-// 							]
-// 						}
-// 					},
-// 					{
-// 						\\"apiInputParameters\\": [
-// 							\\"stationId\\",
-// 							\\"lat\\",
-// 							\\"lon\\",
-// 							\\"days\\",
-// 							\\"units\\",
-// 							\\"precision\\",
-// 							\\"sector\\"
-// 						],
-// 						\\"apiName\\": \\"GetHourlyForecasts\\",
-// 						\\"customParameters\\": [
-// 							\\"stationId\\",
-// 							\\"stationLatitude\\",
-// 							\\"stationLongitude\\",
-// 							\\"timeZone\\",
-// 							\\"weatherCode\\",
-// 							\\"weatherDescription\\",
-// 							\\"feelsLike\\",
-// 							\\"visibilityWeatherCode\\",
-// 							\\"visibilityWeatherDescription\\",
-// 							\\"minutesOfSunshine\\"
-// 						],
-// 						\\"platformParameters\\": [
-// 							\\"cloudCover\\",
-// 							\\"dewPoint\\",
-// 							\\"precipitation\\",
-// 							\\"pressure\\",
-// 							\\"relativeHumidity\\",
-// 							\\"temperature\\",
-// 							\\"wetBulbTemperature\\",
-// 							\\"dateTime\\",
-// 							\\"visibility\\",
-// 							\\"windChill\\",
-// 							\\"windSpeed\\",
-// 							\\"windDirection\\",
-// 							\\"windGust\\"
-// 						],
-// 						\\"unitsSupported\\": {
-// 							\\"key\\": \\"units\\",
-// 							\\"values\\": [
-// 								\\"us\\",
-// 								\\"si\\"
-// 							]
-// 						}
-// 					},
-// 					{
-// 						\\"apiInputParameters\\": [
-// 							\\"stationId\\",
-// 							\\"lat\\",
-// 							\\"lon\\",
-// 							\\"days\\",
-// 							\\"units\\",
-// 							\\"precision\\",
-// 							\\"sector\\"
-// 						],
-// 						\\"apiName\\": \\"GetDailyForecasts\\",
-// 						\\"customParameters\\": [
-// 							\\"stationId\\",
-// 							\\"stationLatitude\\",
-// 							\\"stationLongitude\\",
-// 							\\"timeZone\\",
-// 							\\"sunrise\\",
-// 							\\"sunset\\",
-// 							\\"weatherCode\\",
-// 							\\"weatherDescription\\",
-// 							\\"maxTemperature\\",
-// 							\\"minTemperature\\",
-// 							\\"avgHeatIndex\\",
-// 							\\"maxHeatIndex\\",
-// 							\\"minHeatIndex\\",
-// 							\\"maxWindChill\\",
-// 							\\"minWindChill\\",
-// 							\\"maxFeelsLike\\",
-// 							\\"minFeelsLike\\",
-// 							\\"avgFeelsLike\\",
-// 							\\"maxWindSpeed\\",
-// 							\\"avgWetBulbGlobeTemp\\",
-// 							\\"maxWetBulbGlobeTemp\\",
-// 							\\"minWetBulbGlobeTemp\\",
-// 							\\"minutesOfSunshine\\",
-// 							\\"cornHeatUnit\\",
-// 							\\"evapotranspiration\\"
-// 						],
-// 						\\"platformParameters\\": [
-// 							\\"cloudCover\\",
-// 							\\"dewPoint\\",
-// 							\\"growingDegreeDay\\",
-// 							\\"precipitation\\",
-// 							\\"pressure\\",
-// 							\\"relativeHumidity\\",
-// 							\\"temperature\\",
-// 							\\"wetBulbTemperature\\",
-// 							\\"dateTime\\",
-// 							\\"windChill\\",
-// 							\\"windSpeed\\",
-// 							\\"windDirection\\"
-// 						],
-// 						\\"unitsSupported\\": {
-// 							\\"key\\": \\"units\\",
-// 							\\"values\\": [
-// 								\\"us\\",
-// 								\\"si\\"
-// 							]
-// 						}
-// 					}
-// 				],
-// 				\\"extensionApiDocsLink\\": \\"https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/\\",
-// 				\\"extensionAuthLink\\": \\"https://www.dtn.com/dtn-content-integration/\\",
-// 				\\"extensionCategory\\": \\"Weather\\",
-// 				\\"farmBeatsExtensionId\\": \\"DTN.ContentServices\\",
-// 				\\"farmBeatsExtensionName\\": \\"DTN\\",
-// 				\\"farmBeatsExtensionVersion\\": \\"1.0\\",
-// 				\\"publisherId\\": \\"dtn\\",
-// 				\\"targetResourceType\\": \\"FarmBeats\\"
-// 			},
-// 			\\"systemData\\": {
-// 				\\"createdAt\\": \\"2021-04-12T15:28:06Z\\",
-// 				\\"lastModifiedAt\\": \\"2021-04-12T15:30:01Z\\"
-// 			}
-// 		}
-// 	]
-// }
     }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_Get.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_Get.json
 func ExampleFarmBeatsExtensionsClient_Get() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -779,9 +475,9 @@ func ExampleFarmBeatsExtensionsClient_Get() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.FarmBeatsExtension = armagrifood.FarmBeatsExtension{
 // 	ID: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\"),
 // 	Name: to.Ptr(\\"DTN.ContentServices\\"),
@@ -998,246 +694,13 @@ func ExampleFarmBeatsExtensionsClient_Get() {
 // 																		}},
 // 																	},
 // 																}
-    // with the raw JSON response: 
-    // {
-// 	\\"name\\": \\"DTN.ContentServices\\",
-// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions\\",
-// 	\\"id\\": \\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\",
-// 	\\"properties\\": {
-// 		\\"detailedInformation\\": [
-// 			{
-// 				\\"apiInputParameters\\": [
-// 					\\"stationId\\",
-// 					\\"lat\\",
-// 					\\"lon\\",
-// 					\\"days\\",
-// 					\\"units\\",
-// 					\\"precision\\",
-// 					\\"sector\\"
-// 				],
-// 				\\"apiName\\": \\"GetDailyObservations\\",
-// 				\\"customParameters\\": [
-// 					\\"stationId\\",
-// 					\\"stationLatitude\\",
-// 					\\"stationLongitude\\",
-// 					\\"timeZone\\",
-// 					\\"sunrise\\",
-// 					\\"sunset\\",
-// 					\\"weatherCode\\",
-// 					\\"weatherDescription\\",
-// 					\\"maxTemperature\\",
-// 					\\"minTemperature\\",
-// 					\\"avgHeatIndex\\",
-// 					\\"maxHeatIndex\\",
-// 					\\"minHeatIndex\\",
-// 					\\"maxWindChill\\",
-// 					\\"minWindChill\\",
-// 					\\"maxFeelsLike\\",
-// 					\\"minFeelsLike\\",
-// 					\\"avgFeelsLike\\",
-// 					\\"maxWindSpeed\\",
-// 					\\"avgWetBulbGlobeTemp\\",
-// 					\\"maxWetBulbGlobeTemp\\",
-// 					\\"minWetBulbGlobeTemp\\",
-// 					\\"minutesOfSunshine\\",
-// 					\\"cornHeatUnit\\",
-// 					\\"evapotranspiration\\"
-// 				],
-// 				\\"platformParameters\\": [
-// 					\\"cloudCover\\",
-// 					\\"dewPoint\\",
-// 					\\"growingDegreeDay\\",
-// 					\\"precipitation\\",
-// 					\\"pressure\\",
-// 					\\"relativeHumidity\\",
-// 					\\"temperature\\",
-// 					\\"wetBulbTemperature\\",
-// 					\\"dateTime\\",
-// 					\\"windChill\\",
-// 					\\"windSpeed\\",
-// 					\\"windDirection\\"
-// 				],
-// 				\\"unitsSupported\\": {
-// 					\\"key\\": \\"units\\",
-// 					\\"values\\": [
-// 						\\"us\\",
-// 						\\"si\\"
-// 					]
-// 				}
-// 			},
-// 			{
-// 				\\"apiInputParameters\\": [
-// 					\\"stationId\\",
-// 					\\"lat\\",
-// 					\\"lon\\",
-// 					\\"hours\\",
-// 					\\"units\\",
-// 					\\"precision\\",
-// 					\\"sector\\"
-// 				],
-// 				\\"apiName\\": \\"GetHourlyObservations\\",
-// 				\\"customParameters\\": [
-// 					\\"stationId\\",
-// 					\\"stationLatitude\\",
-// 					\\"stationLongitude\\",
-// 					\\"timeZone\\",
-// 					\\"weatherCode\\",
-// 					\\"weatherDescription\\",
-// 					\\"feelsLike\\",
-// 					\\"visibilityWeatherCode\\",
-// 					\\"visibilityWeatherDescription\\",
-// 					\\"minutesOfSunshine\\"
-// 				],
-// 				\\"platformParameters\\": [
-// 					\\"cloudCover\\",
-// 					\\"dewPoint\\",
-// 					\\"precipitation\\",
-// 					\\"pressure\\",
-// 					\\"relativeHumidity\\",
-// 					\\"temperature\\",
-// 					\\"wetBulbTemperature\\",
-// 					\\"dateTime\\",
-// 					\\"visibility\\",
-// 					\\"windChill\\",
-// 					\\"windSpeed\\",
-// 					\\"windDirection\\",
-// 					\\"windGust\\"
-// 				],
-// 				\\"unitsSupported\\": {
-// 					\\"key\\": \\"units\\",
-// 					\\"values\\": [
-// 						\\"us\\",
-// 						\\"si\\"
-// 					]
-// 				}
-// 			},
-// 			{
-// 				\\"apiInputParameters\\": [
-// 					\\"stationId\\",
-// 					\\"lat\\",
-// 					\\"lon\\",
-// 					\\"days\\",
-// 					\\"units\\",
-// 					\\"precision\\",
-// 					\\"sector\\"
-// 				],
-// 				\\"apiName\\": \\"GetHourlyForecasts\\",
-// 				\\"customParameters\\": [
-// 					\\"stationId\\",
-// 					\\"stationLatitude\\",
-// 					\\"stationLongitude\\",
-// 					\\"timeZone\\",
-// 					\\"weatherCode\\",
-// 					\\"weatherDescription\\",
-// 					\\"feelsLike\\",
-// 					\\"visibilityWeatherCode\\",
-// 					\\"visibilityWeatherDescription\\",
-// 					\\"minutesOfSunshine\\"
-// 				],
-// 				\\"platformParameters\\": [
-// 					\\"cloudCover\\",
-// 					\\"dewPoint\\",
-// 					\\"precipitation\\",
-// 					\\"pressure\\",
-// 					\\"relativeHumidity\\",
-// 					\\"temperature\\",
-// 					\\"wetBulbTemperature\\",
-// 					\\"dateTime\\",
-// 					\\"visibility\\",
-// 					\\"windChill\\",
-// 					\\"windSpeed\\",
-// 					\\"windDirection\\",
-// 					\\"windGust\\"
-// 				],
-// 				\\"unitsSupported\\": {
-// 					\\"key\\": \\"units\\",
-// 					\\"values\\": [
-// 						\\"us\\",
-// 						\\"si\\"
-// 					]
-// 				}
-// 			},
-// 			{
-// 				\\"apiInputParameters\\": [
-// 					\\"stationId\\",
-// 					\\"lat\\",
-// 					\\"lon\\",
-// 					\\"days\\",
-// 					\\"units\\",
-// 					\\"precision\\",
-// 					\\"sector\\"
-// 				],
-// 				\\"apiName\\": \\"GetDailyForecasts\\",
-// 				\\"customParameters\\": [
-// 					\\"stationId\\",
-// 					\\"stationLatitude\\",
-// 					\\"stationLongitude\\",
-// 					\\"timeZone\\",
-// 					\\"sunrise\\",
-// 					\\"sunset\\",
-// 					\\"weatherCode\\",
-// 					\\"weatherDescription\\",
-// 					\\"maxTemperature\\",
-// 					\\"minTemperature\\",
-// 					\\"avgHeatIndex\\",
-// 					\\"maxHeatIndex\\",
-// 					\\"minHeatIndex\\",
-// 					\\"maxWindChill\\",
-// 					\\"minWindChill\\",
-// 					\\"maxFeelsLike\\",
-// 					\\"minFeelsLike\\",
-// 					\\"avgFeelsLike\\",
-// 					\\"maxWindSpeed\\",
-// 					\\"avgWetBulbGlobeTemp\\",
-// 					\\"maxWetBulbGlobeTemp\\",
-// 					\\"minWetBulbGlobeTemp\\",
-// 					\\"minutesOfSunshine\\",
-// 					\\"cornHeatUnit\\",
-// 					\\"evapotranspiration\\"
-// 				],
-// 				\\"platformParameters\\": [
-// 					\\"cloudCover\\",
-// 					\\"dewPoint\\",
-// 					\\"growingDegreeDay\\",
-// 					\\"precipitation\\",
-// 					\\"pressure\\",
-// 					\\"relativeHumidity\\",
-// 					\\"temperature\\",
-// 					\\"wetBulbTemperature\\",
-// 					\\"dateTime\\",
-// 					\\"windChill\\",
-// 					\\"windSpeed\\",
-// 					\\"windDirection\\"
-// 				],
-// 				\\"unitsSupported\\": {
-// 					\\"key\\": \\"units\\",
-// 					\\"values\\": [
-// 						\\"us\\",
-// 						\\"si\\"
-// 					]
-// 				}
-// 			}
-// 		],
-// 		\\"extensionApiDocsLink\\": \\"https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/\\",
-// 		\\"extensionAuthLink\\": \\"https://www.dtn.com/dtn-content-integration/\\",
-// 		\\"extensionCategory\\": \\"Weather\\",
-// 		\\"farmBeatsExtensionId\\": \\"DTN.ContentServices\\",
-// 		\\"farmBeatsExtensionName\\": \\"DTN\\",
-// 		\\"farmBeatsExtensionVersion\\": \\"1.0\\",
-// 		\\"publisherId\\": \\"dtn\\",
-// 		\\"targetResourceType\\": \\"FarmBeats\\"
-// 	},
-// 	\\"systemData\\": {
-// 		\\"createdAt\\": \\"2021-04-12T15:28:06Z\\",
-// 		\\"lastModifiedAt\\": \\"2021-04-12T15:30:01Z\\"
-// 	}
-// }
 }
 ",
   "farmbeatsmodels_client_example_test.go": "//go:build go1.18
 // +build go1.18
 
 
+// DO NOT EDIT.
 
 package armagrifood_test
 
@@ -1257,7 +720,7 @@ import (
 )
 
 
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Get.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Get.json
 func ExampleFarmBeatsModelsClient_Get() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1272,9 +735,9 @@ func ExampleFarmBeatsModelsClient_Get() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.FarmBeats = armagrifood.FarmBeats{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
 // 	Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
@@ -1297,31 +760,8 @@ func ExampleFarmBeatsModelsClient_Get() {
 // 		ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
 // 	},
 // }
-    // with the raw JSON response: 
-    // {
-// 	\\"name\\": \\"examples-farmBeatsResourceName\\",
-// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
-// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
-// 	\\"location\\": \\"eastus2\\",
-// 	\\"properties\\": {
-// 		\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
-// 		\\"provisioningState\\": \\"Succeeded\\"
-// 	},
-// 	\\"systemData\\": {
-// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"createdBy\\": \\"string\\",
-// 		\\"createdByType\\": \\"User\\",
-// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"lastModifiedBy\\": \\"string\\",
-// 		\\"lastModifiedByType\\": \\"User\\"
-// 	},
-// 	\\"tags\\": {
-// 		\\"key1\\": \\"value1\\",
-// 		\\"key2\\": \\"value2\\"
-// 	}
-// }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_CreateOrUpdate.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_CreateOrUpdate.json
 func ExampleFarmBeatsModelsClient_CreateOrUpdate() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1342,9 +782,9 @@ Location: to.Ptr(\\"eastus2\\"),
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.FarmBeats = armagrifood.FarmBeats{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
 // 	Name: to.Ptr(\\"examples-farmbeatsResourceName\\"),
@@ -1367,31 +807,8 @@ Location: to.Ptr(\\"eastus2\\"),
 // 		ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
 // 	},
 // }
-    // with the raw JSON response: 
-    // {
-// 	\\"name\\": \\"examples-farmbeatsResourceName\\",
-// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
-// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
-// 	\\"location\\": \\"eastus2\\",
-// 	\\"properties\\": {
-// 		\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
-// 		\\"provisioningState\\": \\"Succeeded\\"
-// 	},
-// 	\\"systemData\\": {
-// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"createdBy\\": \\"string\\",
-// 		\\"createdByType\\": \\"User\\",
-// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"lastModifiedBy\\": \\"string\\",
-// 		\\"lastModifiedByType\\": \\"User\\"
-// 	},
-// 	\\"tags\\": {
-// 		\\"key1\\": \\"value1\\",
-// 		\\"key2\\": \\"value2\\"
-// 	}
-// }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Update.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Update.json
 func ExampleFarmBeatsModelsClient_Update() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1411,9 +828,9 @@ Tags: map[string]*string{
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.FarmBeats = armagrifood.FarmBeats{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
 // 	Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
@@ -1436,31 +853,8 @@ Tags: map[string]*string{
 // 		ProvisioningState: to.Ptr(armagrifood.ProvisioningStateSucceeded),
 // 	},
 // }
-    // with the raw JSON response: 
-    // {
-// 	\\"name\\": \\"examples-farmBeatsResourceName\\",
-// 	\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
-// 	\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
-// 	\\"location\\": \\"eastus2\\",
-// 	\\"properties\\": {
-// 		\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
-// 		\\"provisioningState\\": \\"Succeeded\\"
-// 	},
-// 	\\"systemData\\": {
-// 		\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"createdBy\\": \\"string\\",
-// 		\\"createdByType\\": \\"User\\",
-// 		\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 		\\"lastModifiedBy\\": \\"string\\",
-// 		\\"lastModifiedByType\\": \\"User\\"
-// 	},
-// 	\\"tags\\": {
-// 		\\"key1\\": \\"value1\\",
-// 		\\"key2\\": \\"value2\\"
-// 	}
-// }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Delete.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Delete.json
 func ExampleFarmBeatsModelsClient_Delete() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1476,7 +870,7 @@ func ExampleFarmBeatsModelsClient_Delete() {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListBySubscription.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListBySubscription.json
 func ExampleFarmBeatsModelsClient_NewListBySubscriptionPager() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1491,16 +885,16 @@ func ExampleFarmBeatsModelsClient_NewListBySubscriptionPager() {
 SkipToken: nil,
 })
     for pager.More() {
-        nextResult, err := pager.NextPage(ctx)
+        page, err := pager.NextPage(ctx)
         if err != nil {
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
-        for _, v := range nextResult.Value {
-            // TODO: use page item
+        for _, v := range page.Value {
+            // TODO: use page
             _ = v
         }
-        // For example, nextResult struct should like: 
-        // nextResult.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
+        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // page.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
 // 	Value: []*armagrifood.FarmBeats{
 // 		{
 // 			ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
@@ -1525,36 +919,9 @@ SkipToken: nil,
 // 			},
 // 	}},
 // }
-        // with the raw JSON response: 
-        // {
-// 	\\"value\\": [
-// 		{
-// 			\\"name\\": \\"examples-farmBeatsResourceName\\",
-// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
-// 			\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
-// 			\\"location\\": \\"eastus2\\",
-// 			\\"properties\\": {
-// 				\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
-// 				\\"provisioningState\\": \\"Succeeded\\"
-// 			},
-// 			\\"systemData\\": {
-// 				\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 				\\"createdBy\\": \\"string\\",
-// 				\\"createdByType\\": \\"User\\",
-// 				\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 				\\"lastModifiedBy\\": \\"string\\",
-// 				\\"lastModifiedByType\\": \\"User\\"
-// 			},
-// 			\\"tags\\": {
-// 				\\"key1\\": \\"value1\\",
-// 				\\"key2\\": \\"value2\\"
-// 			}
-// 		}
-// 	]
-// }
     }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListByResourceGroup.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListByResourceGroup.json
 func ExampleFarmBeatsModelsClient_NewListByResourceGroupPager() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1569,16 +936,16 @@ func ExampleFarmBeatsModelsClient_NewListByResourceGroupPager() {
 SkipToken: nil,
 })
     for pager.More() {
-        nextResult, err := pager.NextPage(ctx)
+        page, err := pager.NextPage(ctx)
         if err != nil {
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
-        for _, v := range nextResult.Value {
-            // TODO: use page item
+        for _, v := range page.Value {
+            // TODO: use page
             _ = v
         }
-        // For example, nextResult struct should like: 
-        // nextResult.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
+        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // page.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
 // 	Value: []*armagrifood.FarmBeats{
 // 		{
 // 			ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
@@ -1603,33 +970,6 @@ SkipToken: nil,
 // 			},
 // 	}},
 // }
-        // with the raw JSON response: 
-        // {
-// 	\\"value\\": [
-// 		{
-// 			\\"name\\": \\"examples-farmBeatsResourceName\\",
-// 			\\"type\\": \\"Microsoft.AgFoodPlatform/farmBeats\\",
-// 			\\"id\\": \\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\",
-// 			\\"location\\": \\"eastus2\\",
-// 			\\"properties\\": {
-// 				\\"instanceUri\\": \\"https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net\\",
-// 				\\"provisioningState\\": \\"Succeeded\\"
-// 			},
-// 			\\"systemData\\": {
-// 				\\"createdAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 				\\"createdBy\\": \\"string\\",
-// 				\\"createdByType\\": \\"User\\",
-// 				\\"lastModifiedAt\\": \\"2020-02-01T01:01:01.1075056Z\\",
-// 				\\"lastModifiedBy\\": \\"string\\",
-// 				\\"lastModifiedByType\\": \\"User\\"
-// 			},
-// 			\\"tags\\": {
-// 				\\"key1\\": \\"value1\\",
-// 				\\"key2\\": \\"value2\\"
-// 			}
-// 		}
-// 	]
-// }
     }
 }
 ",
@@ -1637,6 +977,7 @@ SkipToken: nil,
 // +build go1.18
 
 
+// DO NOT EDIT.
 
 package armagrifood_test
 
@@ -1656,7 +997,7 @@ import (
 )
 
 
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json
 func ExampleLocationsClient_CheckNameAvailability_locationsCheckNameAvailabilityAlreadyExists() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1674,22 +1015,16 @@ Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.CheckNameAvailabilityResponse = armagrifood.CheckNameAvailabilityResponse{
 // 	NameAvailable: to.Ptr(false),
 // 	Reason: to.Ptr(armagrifood.CheckNameAvailabilityReasonAlreadyExists),
 // 	Message: to.Ptr(\\"An account named 'existingaccountname' is already in use.\\"),
 // }
-    // with the raw JSON response: 
-    // {
-// 	\\"message\\": \\"An account named 'existingaccountname' is already in use.\\",
-// 	\\"nameAvailable\\": false,
-// 	\\"reason\\": \\"AlreadyExists\\"
-// }
 }
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_Available.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_Available.json
 func ExampleLocationsClient_CheckNameAvailability_locationsCheckNameAvailabilityAvailable() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -1707,15 +1042,11 @@ Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response item
+    // TODO: use response
     _ = res
-    // For example, response struct should like: 
+    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
     // res.CheckNameAvailabilityResponse = armagrifood.CheckNameAvailabilityResponse{
 // 	NameAvailable: to.Ptr(true),
-// }
-    // with the raw JSON response: 
-    // {
-// 	\\"nameAvailable\\": true
 // }
 }
 ",
@@ -1983,6 +1314,7 @@ func (testsuite *MockTestSuite) TestOperations_List() {ctx := context.Background
 // +build go1.18
 
 
+// DO NOT EDIT.
 
 package armagrifood_test
 
@@ -2002,7 +1334,7 @@ import (
 )
 
 
-// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Operations_List.json
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Operations_List.json
 func ExampleOperationsClient_NewListPager() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)
     if err != nil {
@@ -2015,16 +1347,16 @@ func ExampleOperationsClient_NewListPager() {
     }
     pager := client.NewListPager(nil)
     for pager.More() {
-        nextResult, err := pager.NextPage(ctx)
+        page, err := pager.NextPage(ctx)
         if err != nil {
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
-        for _, v := range nextResult.Value {
-            // TODO: use page item
+        for _, v := range page.Value {
+            // TODO: use page
             _ = v
         }
-        // For example, nextResult struct should like: 
-        // nextResult.OperationListResult = armagrifood.OperationListResult{
+        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // page.OperationListResult = armagrifood.OperationListResult{
 // 	Value: []*armagrifood.Operation{
 // 		{
 // 			Name: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats/read\\"),
@@ -2106,92 +1438,6 @@ func ExampleOperationsClient_NewListPager() {
 // 				Description: to.Ptr(\\"Deletes an existing AgFoodPlatform Extensions resource.\\"),
 // 			},
 // 	}},
-// }
-        // with the raw JSON response: 
-        // {
-// 	\\"nextLink\\": \\"https://management.azure.com/providers/Microsoft.AgFoodPlatform/operations?$skiptoken={token}\\",
-// 	\\"value\\": [
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/read\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"Gets or Lists existing AgFoodPlatform FarmBeats resource(s).\\",
-// 				\\"operation\\": \\"Get or List AgFoodPlatform FarmBeats resource(s).\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"AgFoodPlatform FarmBeats\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		},
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/write\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"Creates or Updates AgFoodPlatform FarmBeats.\\",
-// 				\\"operation\\": \\"Create or Update AgFoodPlatform FarmBeats.\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"AgFoodPlatform FarmBeats\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		},
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/delete\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"Deletes an existing AgFoodPlatform FarmBeats resource.\\",
-// 				\\"operation\\": \\"Delete AgFoodPlatform FarmBeats resource.\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"AgFoodPlatform FarmBeats\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		},
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/locations/checkNameAvailability/action\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"Checks that resource name is valid and is not in use.\\",
-// 				\\"operation\\": \\"Check Name Availability\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"Locations\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		},
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/operations/read\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"List all operations in Microsoft AgFoodPlatform resource provider.\\",
-// 				\\"operation\\": \\"List all operations.\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"List all operations in Microsoft AgFoodPlatform resource provider.\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		},
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions/read\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"Gets or Lists existing AgFoodPlatform Extensions resource(s).\\",
-// 				\\"operation\\": \\"Get or List AgFoodPlatform Extensions resource(s).\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"AgFoodPlatform Extensions\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		},
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions/write\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"Creates or Updates AgFoodPlatform Extensions.\\",
-// 				\\"operation\\": \\"Create or Update AgFoodPlatform Extensions.\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"AgFoodPlatform Extensions\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		},
-// 		{
-// 			\\"name\\": \\"Microsoft.AgFoodPlatform/farmBeats/extensions/delete\\",
-// 			\\"display\\": {
-// 				\\"description\\": \\"Deletes an existing AgFoodPlatform Extensions resource.\\",
-// 				\\"operation\\": \\"Delete AgFoodPlatform Extensions resource.\\",
-// 				\\"provider\\": \\"Microsoft AgFoodPlatform\\",
-// 				\\"resource\\": \\"AgFoodPlatform Extensions\\"
-// 			},
-// 			\\"isDataAction\\": false
-// 		}
-// 	]
 // }
     }
 }
