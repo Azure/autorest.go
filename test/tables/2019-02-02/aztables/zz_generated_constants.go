@@ -9,11 +9,6 @@
 
 package aztables
 
-const (
-	moduleName    = "aztables"
-	moduleVersion = "v0.1.0"
-)
-
 type Enum0 string
 
 const (

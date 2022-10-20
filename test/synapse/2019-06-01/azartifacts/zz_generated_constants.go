@@ -9,11 +9,6 @@
 
 package azartifacts
 
-const (
-	moduleName    = "azartifacts"
-	moduleVersion = "v0.1.0"
-)
-
 type AvroCompressionCodec string
 
 const (

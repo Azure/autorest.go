@@ -12,7 +12,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,24 +19,16 @@ import (
 	"strings"
 )
 
-// TriggerRunClient contains the methods for the TriggerRun group.
-// Don't use this type directly, use NewTriggerRunClient() instead.
-type TriggerRunClient struct {
+type triggerRunClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// NewTriggerRunClient creates a new instance of TriggerRunClient with the specified values.
+// newTriggerRunClient creates a new instance of triggerRunClient with the specified values.
 //   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
-func NewTriggerRunClient(endpoint string, credential azcore.TokenCredential, options *TriggerRunClientOptions) *TriggerRunClient {
-	if options == nil {
-		options = &TriggerRunClientOptions{}
-	}
-	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
-	client := &TriggerRunClient{
+//   - pl - the pipeline used for sending requests and handling responses.
+func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient {
+	client := &triggerRunClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -50,9 +41,9 @@ func NewTriggerRunClient(endpoint string, credential azcore.TokenCredential, opt
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
 //   - runID - The pipeline run identifier.
-//   - options - TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
+//   - options - TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the triggerRunClient.CancelTriggerInstance
 //     method.
-func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (TriggerRunClientCancelTriggerInstanceResponse, error) {
+func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (TriggerRunClientCancelTriggerInstanceResponse, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
 		return TriggerRunClientCancelTriggerInstanceResponse{}, err
@@ -68,7 +59,7 @@ func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, trigg
 }
 
 // cancelTriggerInstanceCreateRequest creates the CancelTriggerInstance request.
-func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (*policy.Request, error) {
+func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/cancel"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -94,9 +85,9 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 //
 // Generated from API version 2019-06-01-preview
 //   - filterParameters - Parameters to filter the pipeline run.
-//   - options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
+//   - options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the triggerRunClient.QueryTriggerRunsByWorkspace
 //     method.
-func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
+func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
@@ -112,7 +103,7 @@ func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
-func (client *TriggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (*policy.Request, error) {
+func (client *triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryTriggerRuns"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -126,7 +117,7 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx con
 }
 
 // queryTriggerRunsByWorkspaceHandleResponse handles the QueryTriggerRunsByWorkspace response.
-func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *http.Response) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
+func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *http.Response) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
 	result := TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerRunsQueryResponse); err != nil {
 		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
@@ -140,9 +131,9 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
 //   - runID - The pipeline run identifier.
-//   - options - TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
+//   - options - TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the triggerRunClient.RerunTriggerInstance
 //     method.
-func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (TriggerRunClientRerunTriggerInstanceResponse, error) {
+func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (TriggerRunClientRerunTriggerInstanceResponse, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
 		return TriggerRunClientRerunTriggerInstanceResponse{}, err
@@ -158,7 +149,7 @@ func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 }
 
 // rerunTriggerInstanceCreateRequest creates the RerunTriggerInstance request.
-func (client *TriggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (*policy.Request, error) {
+func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/rerun"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")

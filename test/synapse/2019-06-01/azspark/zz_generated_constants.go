@@ -9,11 +9,6 @@
 
 package azspark
 
-const (
-	moduleName    = "azspark"
-	moduleVersion = "v0.1.0"
-)
-
 type PluginCurrentState string
 
 const (

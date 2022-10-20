@@ -12,7 +12,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,24 +19,16 @@ import (
 	"strings"
 )
 
-// TriggerClient contains the methods for the Trigger group.
-// Don't use this type directly, use NewTriggerClient() instead.
-type TriggerClient struct {
+type triggerClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// NewTriggerClient creates a new instance of TriggerClient with the specified values.
+// newTriggerClient creates a new instance of triggerClient with the specified values.
 //   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
-func NewTriggerClient(endpoint string, credential azcore.TokenCredential, options *TriggerClientOptions) *TriggerClient {
-	if options == nil {
-		options = &TriggerClientOptions{}
-	}
-	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
-	client := &TriggerClient{
+//   - pl - the pipeline used for sending requests and handling responses.
+func newTriggerClient(endpoint string, pl runtime.Pipeline) *triggerClient {
+	client := &triggerClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -50,9 +41,9 @@ func NewTriggerClient(endpoint string, credential azcore.TokenCredential, option
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
 //   - trigger - Trigger resource definition.
-//   - options - TriggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the TriggerClient.BeginCreateOrUpdateTrigger
+//   - options - TriggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the triggerClient.BeginCreateOrUpdateTrigger
 //     method.
-func (client *TriggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*runtime.Poller[TriggerClientCreateOrUpdateTriggerResponse], error) {
+func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*runtime.Poller[TriggerClientCreateOrUpdateTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateTrigger(ctx, triggerName, trigger, options)
 		if err != nil {
@@ -68,7 +59,7 @@ func (client *TriggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *TriggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*http.Response, error) {
+func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
 		return nil, err
@@ -84,7 +75,7 @@ func (client *TriggerClient) createOrUpdateTrigger(ctx context.Context, triggerN
 }
 
 // createOrUpdateTriggerCreateRequest creates the CreateOrUpdateTrigger request.
-func (client *TriggerClient) createOrUpdateTriggerCreateRequest(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*policy.Request, error) {
+func (client *triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -109,9 +100,9 @@ func (client *TriggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 //
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
-//   - options - TriggerClientBeginDeleteTriggerOptions contains the optional parameters for the TriggerClient.BeginDeleteTrigger
+//   - options - TriggerClientBeginDeleteTriggerOptions contains the optional parameters for the triggerClient.BeginDeleteTrigger
 //     method.
-func (client *TriggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*runtime.Poller[TriggerClientDeleteTriggerResponse], error) {
+func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*runtime.Poller[TriggerClientDeleteTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteTrigger(ctx, triggerName, options)
 		if err != nil {
@@ -127,7 +118,7 @@ func (client *TriggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *TriggerClient) deleteTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*http.Response, error) {
+func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*http.Response, error) {
 	req, err := client.deleteTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -143,7 +134,7 @@ func (client *TriggerClient) deleteTrigger(ctx context.Context, triggerName stri
 }
 
 // deleteTriggerCreateRequest creates the DeleteTrigger request.
-func (client *TriggerClient) deleteTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*policy.Request, error) {
+func (client *triggerClient) deleteTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -165,9 +156,9 @@ func (client *TriggerClient) deleteTriggerCreateRequest(ctx context.Context, tri
 //
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
-//   - options - TriggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the TriggerClient.GetEventSubscriptionStatus
+//   - options - TriggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the triggerClient.GetEventSubscriptionStatus
 //     method.
-func (client *TriggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerClientGetEventSubscriptionStatusOptions) (TriggerClientGetEventSubscriptionStatusResponse, error) {
+func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerClientGetEventSubscriptionStatusOptions) (TriggerClientGetEventSubscriptionStatusResponse, error) {
 	req, err := client.getEventSubscriptionStatusCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return TriggerClientGetEventSubscriptionStatusResponse{}, err
@@ -183,7 +174,7 @@ func (client *TriggerClient) GetEventSubscriptionStatus(ctx context.Context, tri
 }
 
 // getEventSubscriptionStatusCreateRequest creates the GetEventSubscriptionStatus request.
-func (client *TriggerClient) getEventSubscriptionStatusCreateRequest(ctx context.Context, triggerName string, options *TriggerClientGetEventSubscriptionStatusOptions) (*policy.Request, error) {
+func (client *triggerClient) getEventSubscriptionStatusCreateRequest(ctx context.Context, triggerName string, options *TriggerClientGetEventSubscriptionStatusOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/getEventSubscriptionStatus"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -201,7 +192,7 @@ func (client *TriggerClient) getEventSubscriptionStatusCreateRequest(ctx context
 }
 
 // getEventSubscriptionStatusHandleResponse handles the GetEventSubscriptionStatus response.
-func (client *TriggerClient) getEventSubscriptionStatusHandleResponse(resp *http.Response) (TriggerClientGetEventSubscriptionStatusResponse, error) {
+func (client *triggerClient) getEventSubscriptionStatusHandleResponse(resp *http.Response) (TriggerClientGetEventSubscriptionStatusResponse, error) {
 	result := TriggerClientGetEventSubscriptionStatusResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerSubscriptionOperationStatus); err != nil {
 		return TriggerClientGetEventSubscriptionStatusResponse{}, err
@@ -214,8 +205,8 @@ func (client *TriggerClient) getEventSubscriptionStatusHandleResponse(resp *http
 //
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
-//   - options - TriggerClientGetTriggerOptions contains the optional parameters for the TriggerClient.GetTrigger method.
-func (client *TriggerClient) GetTrigger(ctx context.Context, triggerName string, options *TriggerClientGetTriggerOptions) (TriggerClientGetTriggerResponse, error) {
+//   - options - TriggerClientGetTriggerOptions contains the optional parameters for the triggerClient.GetTrigger method.
+func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string, options *TriggerClientGetTriggerOptions) (TriggerClientGetTriggerResponse, error) {
 	req, err := client.getTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return TriggerClientGetTriggerResponse{}, err
@@ -231,7 +222,7 @@ func (client *TriggerClient) GetTrigger(ctx context.Context, triggerName string,
 }
 
 // getTriggerCreateRequest creates the GetTrigger request.
-func (client *TriggerClient) getTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientGetTriggerOptions) (*policy.Request, error) {
+func (client *triggerClient) getTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientGetTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -252,7 +243,7 @@ func (client *TriggerClient) getTriggerCreateRequest(ctx context.Context, trigge
 }
 
 // getTriggerHandleResponse handles the GetTrigger response.
-func (client *TriggerClient) getTriggerHandleResponse(resp *http.Response) (TriggerClientGetTriggerResponse, error) {
+func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (TriggerClientGetTriggerResponse, error) {
 	result := TriggerClientGetTriggerResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerResource); err != nil {
 		return TriggerClientGetTriggerResponse{}, err
@@ -263,9 +254,9 @@ func (client *TriggerClient) getTriggerHandleResponse(resp *http.Response) (Trig
 // NewGetTriggersByWorkspacePager - Lists triggers.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the TriggerClient.GetTriggersByWorkspace
+//   - options - TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
 //     method.
-func (client *TriggerClient) NewGetTriggersByWorkspacePager(options *TriggerClientGetTriggersByWorkspaceOptions) *runtime.Pager[TriggerClientGetTriggersByWorkspaceResponse] {
+func (client *triggerClient) NewGetTriggersByWorkspacePager(options *TriggerClientGetTriggersByWorkspaceOptions) *runtime.Pager[TriggerClientGetTriggersByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TriggerClientGetTriggersByWorkspaceResponse]{
 		More: func(page TriggerClientGetTriggersByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -294,7 +285,7 @@ func (client *TriggerClient) NewGetTriggersByWorkspacePager(options *TriggerClie
 }
 
 // getTriggersByWorkspaceCreateRequest creates the GetTriggersByWorkspace request.
-func (client *TriggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Context, options *TriggerClientGetTriggersByWorkspaceOptions) (*policy.Request, error) {
+func (client *triggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Context, options *TriggerClientGetTriggersByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/triggers"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -308,7 +299,7 @@ func (client *TriggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Con
 }
 
 // getTriggersByWorkspaceHandleResponse handles the GetTriggersByWorkspace response.
-func (client *TriggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Response) (TriggerClientGetTriggersByWorkspaceResponse, error) {
+func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Response) (TriggerClientGetTriggersByWorkspaceResponse, error) {
 	result := TriggerClientGetTriggersByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerListResponse); err != nil {
 		return TriggerClientGetTriggersByWorkspaceResponse{}, err
@@ -321,9 +312,9 @@ func (client *TriggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Res
 //
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
-//   - options - TriggerClientBeginStartTriggerOptions contains the optional parameters for the TriggerClient.BeginStartTrigger
+//   - options - TriggerClientBeginStartTriggerOptions contains the optional parameters for the triggerClient.BeginStartTrigger
 //     method.
-func (client *TriggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*runtime.Poller[TriggerClientStartTriggerResponse], error) {
+func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*runtime.Poller[TriggerClientStartTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.startTrigger(ctx, triggerName, options)
 		if err != nil {
@@ -339,7 +330,7 @@ func (client *TriggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *TriggerClient) startTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*http.Response, error) {
+func (client *triggerClient) startTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*http.Response, error) {
 	req, err := client.startTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -355,7 +346,7 @@ func (client *TriggerClient) startTrigger(ctx context.Context, triggerName strin
 }
 
 // startTriggerCreateRequest creates the StartTrigger request.
-func (client *TriggerClient) startTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*policy.Request, error) {
+func (client *triggerClient) startTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/start"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -377,9 +368,9 @@ func (client *TriggerClient) startTriggerCreateRequest(ctx context.Context, trig
 //
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
-//   - options - TriggerClientBeginStopTriggerOptions contains the optional parameters for the TriggerClient.BeginStopTrigger
+//   - options - TriggerClientBeginStopTriggerOptions contains the optional parameters for the triggerClient.BeginStopTrigger
 //     method.
-func (client *TriggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*runtime.Poller[TriggerClientStopTriggerResponse], error) {
+func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*runtime.Poller[TriggerClientStopTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.stopTrigger(ctx, triggerName, options)
 		if err != nil {
@@ -395,7 +386,7 @@ func (client *TriggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *TriggerClient) stopTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*http.Response, error) {
+func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*http.Response, error) {
 	req, err := client.stopTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -411,7 +402,7 @@ func (client *TriggerClient) stopTrigger(ctx context.Context, triggerName string
 }
 
 // stopTriggerCreateRequest creates the StopTrigger request.
-func (client *TriggerClient) stopTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*policy.Request, error) {
+func (client *triggerClient) stopTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/stop"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -433,9 +424,9 @@ func (client *TriggerClient) stopTriggerCreateRequest(ctx context.Context, trigg
 //
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
-//   - options - TriggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the TriggerClient.BeginSubscribeTriggerToEvents
+//   - options - TriggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the triggerClient.BeginSubscribeTriggerToEvents
 //     method.
-func (client *TriggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*runtime.Poller[TriggerClientSubscribeTriggerToEventsResponse], error) {
+func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*runtime.Poller[TriggerClientSubscribeTriggerToEventsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.subscribeTriggerToEvents(ctx, triggerName, options)
 		if err != nil {
@@ -451,7 +442,7 @@ func (client *TriggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *TriggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*http.Response, error) {
+func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*http.Response, error) {
 	req, err := client.subscribeTriggerToEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -467,7 +458,7 @@ func (client *TriggerClient) subscribeTriggerToEvents(ctx context.Context, trigg
 }
 
 // subscribeTriggerToEventsCreateRequest creates the SubscribeTriggerToEvents request.
-func (client *TriggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*policy.Request, error) {
+func (client *triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/subscribeToEvents"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -489,9 +480,9 @@ func (client *TriggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 //
 // Generated from API version 2019-06-01-preview
 //   - triggerName - The trigger name.
-//   - options - TriggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the TriggerClient.BeginUnsubscribeTriggerFromEvents
+//   - options - TriggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the triggerClient.BeginUnsubscribeTriggerFromEvents
 //     method.
-func (client *TriggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*runtime.Poller[TriggerClientUnsubscribeTriggerFromEventsResponse], error) {
+func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*runtime.Poller[TriggerClientUnsubscribeTriggerFromEventsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.unsubscribeTriggerFromEvents(ctx, triggerName, options)
 		if err != nil {
@@ -507,7 +498,7 @@ func (client *TriggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *TriggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*http.Response, error) {
+func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*http.Response, error) {
 	req, err := client.unsubscribeTriggerFromEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -523,7 +514,7 @@ func (client *TriggerClient) unsubscribeTriggerFromEvents(ctx context.Context, t
 }
 
 // unsubscribeTriggerFromEventsCreateRequest creates the UnsubscribeTriggerFromEvents request.
-func (client *TriggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*policy.Request, error) {
+func (client *triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/unsubscribeFromEvents"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")

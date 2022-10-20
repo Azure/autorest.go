@@ -8,7 +8,7 @@ import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, hasAdditionalProperties, hasOAuth2SecurityDefinition } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties } from '../common/helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
@@ -163,7 +163,7 @@ export async function namer(session: Session<CodeModel>) {
     clientNames.add(group.language.go!.clientName);
   }
 
-  const exportClient = session.model.language.go!.openApiType === 'arm' || exportClients || hasOAuth2SecurityDefinition(session.model.security);
+  const exportClient = session.model.language.go!.openApiType === 'arm' || exportClients;
   // fix up stuttering client names and operation names
   for (const group of values(model.operationGroups)) {
     const groupDetails = <Language>group.language.go;

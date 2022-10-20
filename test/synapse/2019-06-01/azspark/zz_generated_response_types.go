@@ -9,67 +9,67 @@
 
 package azspark
 
-// BatchClientCancelSparkBatchJobResponse contains the response from method BatchClient.CancelSparkBatchJob.
+// BatchClientCancelSparkBatchJobResponse contains the response from method batchClient.CancelSparkBatchJob.
 type BatchClientCancelSparkBatchJobResponse struct {
 	// placeholder for future response values
 }
 
-// BatchClientCreateSparkBatchJobResponse contains the response from method BatchClient.CreateSparkBatchJob.
+// BatchClientCreateSparkBatchJobResponse contains the response from method batchClient.CreateSparkBatchJob.
 type BatchClientCreateSparkBatchJobResponse struct {
 	BatchJob
 }
 
-// BatchClientGetSparkBatchJobResponse contains the response from method BatchClient.GetSparkBatchJob.
+// BatchClientGetSparkBatchJobResponse contains the response from method batchClient.GetSparkBatchJob.
 type BatchClientGetSparkBatchJobResponse struct {
 	BatchJob
 }
 
-// BatchClientGetSparkBatchJobsResponse contains the response from method BatchClient.GetSparkBatchJobs.
+// BatchClientGetSparkBatchJobsResponse contains the response from method batchClient.GetSparkBatchJobs.
 type BatchClientGetSparkBatchJobsResponse struct {
 	BatchJobCollection
 }
 
-// SessionClientCancelSparkSessionResponse contains the response from method SessionClient.CancelSparkSession.
+// SessionClientCancelSparkSessionResponse contains the response from method sessionClient.CancelSparkSession.
 type SessionClientCancelSparkSessionResponse struct {
 	// placeholder for future response values
 }
 
-// SessionClientCancelSparkStatementResponse contains the response from method SessionClient.CancelSparkStatement.
+// SessionClientCancelSparkStatementResponse contains the response from method sessionClient.CancelSparkStatement.
 type SessionClientCancelSparkStatementResponse struct {
 	StatementCancellationResult
 }
 
-// SessionClientCreateSparkSessionResponse contains the response from method SessionClient.CreateSparkSession.
+// SessionClientCreateSparkSessionResponse contains the response from method sessionClient.CreateSparkSession.
 type SessionClientCreateSparkSessionResponse struct {
 	Session
 }
 
-// SessionClientCreateSparkStatementResponse contains the response from method SessionClient.CreateSparkStatement.
+// SessionClientCreateSparkStatementResponse contains the response from method sessionClient.CreateSparkStatement.
 type SessionClientCreateSparkStatementResponse struct {
 	Statement
 }
 
-// SessionClientGetSparkSessionResponse contains the response from method SessionClient.GetSparkSession.
+// SessionClientGetSparkSessionResponse contains the response from method sessionClient.GetSparkSession.
 type SessionClientGetSparkSessionResponse struct {
 	Session
 }
 
-// SessionClientGetSparkSessionsResponse contains the response from method SessionClient.GetSparkSessions.
+// SessionClientGetSparkSessionsResponse contains the response from method sessionClient.GetSparkSessions.
 type SessionClientGetSparkSessionsResponse struct {
 	SessionCollection
 }
 
-// SessionClientGetSparkStatementResponse contains the response from method SessionClient.GetSparkStatement.
+// SessionClientGetSparkStatementResponse contains the response from method sessionClient.GetSparkStatement.
 type SessionClientGetSparkStatementResponse struct {
 	Statement
 }
 
-// SessionClientGetSparkStatementsResponse contains the response from method SessionClient.GetSparkStatements.
+// SessionClientGetSparkStatementsResponse contains the response from method sessionClient.GetSparkStatements.
 type SessionClientGetSparkStatementsResponse struct {
 	StatementCollection
 }
 
-// SessionClientResetSparkSessionTimeoutResponse contains the response from method SessionClient.ResetSparkSessionTimeout.
+// SessionClientResetSparkSessionTimeoutResponse contains the response from method sessionClient.ResetSparkSessionTimeout.
 type SessionClientResetSparkSessionTimeoutResponse struct {
 	// placeholder for future response values
 }
