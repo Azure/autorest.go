@@ -8,7 +8,7 @@ import { comment } from '@azure-tools/codegen';
 import { CodeModel, ChoiceValue, Schemas } from '@autorest/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
-import { commentLength, hasOAuth2SecurityDefinition } from '../common/helpers';
+import { commentLength } from '../common/helpers';
 
 async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
   const version = await session.getValue('module-version', '');
@@ -31,7 +31,7 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
     text += `const host = "${session.model.language.go!.host}"\n\n`;
   }
   // data-plane clients must manage their own constants for these values
-  if (<boolean>session.model.language.go!.azureARM || hasOAuth2SecurityDefinition(session.model.security)) {
+  if (<boolean>session.model.language.go!.azureARM) {
     const version = await getModuleVersion(session);
     text += `const (\n`;
     text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;

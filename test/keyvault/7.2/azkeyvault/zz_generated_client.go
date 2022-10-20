@@ -12,7 +12,6 @@ package azkeyvault
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -28,14 +27,8 @@ type Client struct {
 }
 
 // NewClient creates a new instance of Client with the specified values.
-//   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
-func NewClient(credential azcore.TokenCredential, options *ClientOptions) *Client {
-	if options == nil {
-		options = &ClientOptions{}
-	}
-	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://vault.azure.net/.default"}, nil)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
+//   - pl - the pipeline used for sending requests and handling responses.
+func NewClient(pl runtime.Pipeline) *Client {
 	client := &Client{
 		pl: pl,
 	}

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, BinaryResponse, ConstantSchema, DictionarySchema, OAuth2SecurityScheme, ObjectSchema, Operation, Parameter, Property, Response, Schema, SchemaContext, SchemaResponse, SchemaType, Security } from '@autorest/codemodel';
+import { ArraySchema, BinaryResponse, ConstantSchema, DictionarySchema, ObjectSchema, Operation, Parameter, Property, Response, Schema, SchemaContext, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
@@ -224,24 +224,4 @@ export function aggregateProperties(obj: ObjectSchema): Array<Property> {
     }
   }
   return allProps;
-}
-
-// judge whether has Oauth2 security definition
-export function hasOAuth2SecurityDefinition(security: Security) {
-  for (const securitySchema of security.schemes) {
-    if (securitySchema.type === 'OAuth2') {
-      return true;
-    }
-  }
-  return false;
-}
-
-// get Oauth2 security schema
-export function getOAuth2SecuritySchema(security: Security): OAuth2SecurityScheme {
-  for (const securitySchema of security.schemes) {
-    if (securitySchema.type === 'OAuth2') {
-      return <OAuth2SecurityScheme>securitySchema;
-    }
-  }
-  throw new Error(`can't find OAuth2 security schema: ${security}`)
 }

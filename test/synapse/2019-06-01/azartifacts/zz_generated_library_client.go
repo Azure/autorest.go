@@ -13,7 +13,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -23,24 +22,16 @@ import (
 	"strings"
 )
 
-// LibraryClient contains the methods for the Library group.
-// Don't use this type directly, use NewLibraryClient() instead.
-type LibraryClient struct {
+type libraryClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// NewLibraryClient creates a new instance of LibraryClient with the specified values.
+// newLibraryClient creates a new instance of libraryClient with the specified values.
 //   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
-func NewLibraryClient(endpoint string, credential azcore.TokenCredential, options *LibraryClientOptions) *LibraryClient {
-	if options == nil {
-		options = &LibraryClientOptions{}
-	}
-	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
-	client := &LibraryClient{
+//   - pl - the pipeline used for sending requests and handling responses.
+func newLibraryClient(endpoint string, pl runtime.Pipeline) *libraryClient {
+	client := &libraryClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -54,8 +45,8 @@ func NewLibraryClient(endpoint string, credential azcore.TokenCredential, option
 // Generated from API version 2019-06-01-preview
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - content - Library file chunk.
-//   - options - LibraryClientAppendOptions contains the optional parameters for the LibraryClient.Append method.
-func (client *LibraryClient) Append(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *LibraryClientAppendOptions) (LibraryClientAppendResponse, error) {
+//   - options - LibraryClientAppendOptions contains the optional parameters for the libraryClient.Append method.
+func (client *libraryClient) Append(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *LibraryClientAppendOptions) (LibraryClientAppendResponse, error) {
 	req, err := client.appendCreateRequest(ctx, libraryName, content, options)
 	if err != nil {
 		return LibraryClientAppendResponse{}, err
@@ -71,7 +62,7 @@ func (client *LibraryClient) Append(ctx context.Context, libraryName string, con
 }
 
 // appendCreateRequest creates the Append request.
-func (client *LibraryClient) appendCreateRequest(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *LibraryClientAppendOptions) (*policy.Request, error) {
+func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *LibraryClientAppendOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -96,8 +87,8 @@ func (client *LibraryClient) appendCreateRequest(ctx context.Context, libraryNam
 //
 // Generated from API version 2019-06-01-preview
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
-//   - options - LibraryClientBeginCreateOptions contains the optional parameters for the LibraryClient.BeginCreate method.
-func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*runtime.Poller[LibraryClientCreateResponse], error) {
+//   - options - LibraryClientBeginCreateOptions contains the optional parameters for the libraryClient.BeginCreate method.
+func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*runtime.Poller[LibraryClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.create(ctx, libraryName, options)
 		if err != nil {
@@ -113,7 +104,7 @@ func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *LibraryClient) create(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*http.Response, error) {
+func (client *libraryClient) create(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*http.Response, error) {
 	req, err := client.createCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return nil, err
@@ -129,7 +120,7 @@ func (client *LibraryClient) create(ctx context.Context, libraryName string, opt
 }
 
 // createCreateRequest creates the Create request.
-func (client *LibraryClient) createCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*policy.Request, error) {
+func (client *libraryClient) createCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -151,8 +142,8 @@ func (client *LibraryClient) createCreateRequest(ctx context.Context, libraryNam
 //
 // Generated from API version 2019-06-01-preview
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
-//   - options - LibraryClientBeginDeleteOptions contains the optional parameters for the LibraryClient.BeginDelete method.
-func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*runtime.Poller[LibraryClientDeleteResponse], error) {
+//   - options - LibraryClientBeginDeleteOptions contains the optional parameters for the libraryClient.BeginDelete method.
+func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*runtime.Poller[LibraryClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, libraryName, options)
 		if err != nil {
@@ -168,7 +159,7 @@ func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *LibraryClient) deleteOperation(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*http.Response, error) {
+func (client *libraryClient) deleteOperation(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return nil, err
@@ -184,7 +175,7 @@ func (client *LibraryClient) deleteOperation(ctx context.Context, libraryName st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *LibraryClient) deleteCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -206,8 +197,8 @@ func (client *LibraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 //
 // Generated from API version 2019-06-01-preview
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
-//   - options - LibraryClientBeginFlushOptions contains the optional parameters for the LibraryClient.BeginFlush method.
-func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*runtime.Poller[LibraryClientFlushResponse], error) {
+//   - options - LibraryClientBeginFlushOptions contains the optional parameters for the libraryClient.BeginFlush method.
+func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*runtime.Poller[LibraryClientFlushResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.flush(ctx, libraryName, options)
 		if err != nil {
@@ -223,7 +214,7 @@ func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *LibraryClient) flush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*http.Response, error) {
+func (client *libraryClient) flush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*http.Response, error) {
 	req, err := client.flushCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return nil, err
@@ -239,7 +230,7 @@ func (client *LibraryClient) flush(ctx context.Context, libraryName string, opti
 }
 
 // flushCreateRequest creates the Flush request.
-func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*policy.Request, error) {
+func (client *libraryClient) flushCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}/flush"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -261,8 +252,8 @@ func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName
 //
 // Generated from API version 2019-06-01-preview
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
-//   - options - LibraryClientGetOptions contains the optional parameters for the LibraryClient.Get method.
-func (client *LibraryClient) Get(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (LibraryClientGetResponse, error) {
+//   - options - LibraryClientGetOptions contains the optional parameters for the libraryClient.Get method.
+func (client *libraryClient) Get(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (LibraryClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return LibraryClientGetResponse{}, err
@@ -278,7 +269,7 @@ func (client *LibraryClient) Get(ctx context.Context, libraryName string, option
 }
 
 // getCreateRequest creates the Get request.
-func (client *LibraryClient) getCreateRequest(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (*policy.Request, error) {
+func (client *libraryClient) getCreateRequest(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -296,7 +287,7 @@ func (client *LibraryClient) getCreateRequest(ctx context.Context, libraryName s
 }
 
 // getHandleResponse handles the Get response.
-func (client *LibraryClient) getHandleResponse(resp *http.Response) (LibraryClientGetResponse, error) {
+func (client *libraryClient) getHandleResponse(resp *http.Response) (LibraryClientGetResponse, error) {
 	result := LibraryClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryResource); err != nil {
 		return LibraryClientGetResponse{}, err
@@ -309,9 +300,9 @@ func (client *LibraryClient) getHandleResponse(resp *http.Response) (LibraryClie
 //
 // Generated from API version 2019-06-01-preview
 //   - operationID - operation id for which status is requested
-//   - options - LibraryClientGetOperationResultOptions contains the optional parameters for the LibraryClient.GetOperationResult
+//   - options - LibraryClientGetOperationResultOptions contains the optional parameters for the libraryClient.GetOperationResult
 //     method.
-func (client *LibraryClient) GetOperationResult(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (LibraryClientGetOperationResultResponse, error) {
+func (client *libraryClient) GetOperationResult(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (LibraryClientGetOperationResultResponse, error) {
 	req, err := client.getOperationResultCreateRequest(ctx, operationID, options)
 	if err != nil {
 		return LibraryClientGetOperationResultResponse{}, err
@@ -327,7 +318,7 @@ func (client *LibraryClient) GetOperationResult(ctx context.Context, operationID
 }
 
 // getOperationResultCreateRequest creates the GetOperationResult request.
-func (client *LibraryClient) getOperationResultCreateRequest(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (*policy.Request, error) {
+func (client *libraryClient) getOperationResultCreateRequest(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (*policy.Request, error) {
 	urlPath := "/libraryOperationResults/{operationId}"
 	if operationID == "" {
 		return nil, errors.New("parameter operationID cannot be empty")
@@ -345,7 +336,7 @@ func (client *LibraryClient) getOperationResultCreateRequest(ctx context.Context
 }
 
 // getOperationResultHandleResponse handles the GetOperationResult response.
-func (client *LibraryClient) getOperationResultHandleResponse(resp *http.Response) (LibraryClientGetOperationResultResponse, error) {
+func (client *libraryClient) getOperationResultHandleResponse(resp *http.Response) (LibraryClientGetOperationResultResponse, error) {
 	result := LibraryClientGetOperationResultResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
@@ -369,8 +360,8 @@ func (client *LibraryClient) getOperationResultHandleResponse(resp *http.Respons
 // NewListPager - Lists Library.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - LibraryClientListOptions contains the optional parameters for the LibraryClient.List method.
-func (client *LibraryClient) NewListPager(options *LibraryClientListOptions) *runtime.Pager[LibraryClientListResponse] {
+//   - options - LibraryClientListOptions contains the optional parameters for the libraryClient.List method.
+func (client *libraryClient) NewListPager(options *LibraryClientListOptions) *runtime.Pager[LibraryClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LibraryClientListResponse]{
 		More: func(page LibraryClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -399,7 +390,7 @@ func (client *LibraryClient) NewListPager(options *LibraryClientListOptions) *ru
 }
 
 // listCreateRequest creates the List request.
-func (client *LibraryClient) listCreateRequest(ctx context.Context, options *LibraryClientListOptions) (*policy.Request, error) {
+func (client *libraryClient) listCreateRequest(ctx context.Context, options *LibraryClientListOptions) (*policy.Request, error) {
 	urlPath := "/libraries"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -413,7 +404,7 @@ func (client *LibraryClient) listCreateRequest(ctx context.Context, options *Lib
 }
 
 // listHandleResponse handles the List response.
-func (client *LibraryClient) listHandleResponse(resp *http.Response) (LibraryClientListResponse, error) {
+func (client *libraryClient) listHandleResponse(resp *http.Response) (LibraryClientListResponse, error) {
 	result := LibraryClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryListResponse); err != nil {
 		return LibraryClientListResponse{}, err

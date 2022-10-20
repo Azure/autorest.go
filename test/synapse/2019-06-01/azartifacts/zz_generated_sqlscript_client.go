@@ -12,7 +12,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,24 +19,16 @@ import (
 	"strings"
 )
 
-// SQLScriptClient contains the methods for the SQLScript group.
-// Don't use this type directly, use NewSQLScriptClient() instead.
-type SQLScriptClient struct {
+type sqlScriptClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// NewSQLScriptClient creates a new instance of SQLScriptClient with the specified values.
+// newSQLScriptClient creates a new instance of sqlScriptClient with the specified values.
 //   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
-func NewSQLScriptClient(endpoint string, credential azcore.TokenCredential, options *SQLScriptClientOptions) *SQLScriptClient {
-	if options == nil {
-		options = &SQLScriptClientOptions{}
-	}
-	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
-	client := &SQLScriptClient{
+//   - pl - the pipeline used for sending requests and handling responses.
+func newSQLScriptClient(endpoint string, pl runtime.Pipeline) *sqlScriptClient {
+	client := &sqlScriptClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -50,17 +41,17 @@ func NewSQLScriptClient(endpoint string, credential azcore.TokenCredential, opti
 // Generated from API version 2019-06-01-preview
 //   - sqlScriptName - The sql script name.
 //   - sqlScript - Sql Script resource definition.
-//   - options - SQLScriptClientBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginCreateOrUpdateSQLScript
+//   - options - SqlScriptClientBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginCreateOrUpdateSQLScript
 //     method.
-func (client *SQLScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptClientBeginCreateOrUpdateSQLScriptOptions) (*runtime.Poller[SQLScriptClientCreateOrUpdateSQLScriptResponse], error) {
+func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SqlScriptClientBeginCreateOrUpdateSQLScriptOptions) (*runtime.Poller[SqlScriptClientCreateOrUpdateSQLScriptResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SQLScriptClientCreateOrUpdateSQLScriptResponse](resp, client.pl, nil)
+		return runtime.NewPoller[SqlScriptClientCreateOrUpdateSQLScriptResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[SQLScriptClientCreateOrUpdateSQLScriptResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[SqlScriptClientCreateOrUpdateSQLScriptResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -68,7 +59,7 @@ func (client *SQLScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *SQLScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptClientBeginCreateOrUpdateSQLScriptOptions) (*http.Response, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SqlScriptClientBeginCreateOrUpdateSQLScriptOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateSQLScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
 		return nil, err
@@ -84,7 +75,7 @@ func (client *SQLScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlS
 }
 
 // createOrUpdateSQLScriptCreateRequest creates the CreateOrUpdateSQLScript request.
-func (client *SQLScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptClientBeginCreateOrUpdateSQLScriptOptions) (*policy.Request, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SqlScriptClientBeginCreateOrUpdateSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
@@ -109,17 +100,17 @@ func (client *SQLScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.
 //
 // Generated from API version 2019-06-01-preview
 //   - sqlScriptName - The sql script name.
-//   - options - SQLScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginDeleteSQLScript
+//   - options - SqlScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginDeleteSQLScript
 //     method.
-func (client *SQLScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptClientBeginDeleteSQLScriptOptions) (*runtime.Poller[SQLScriptClientDeleteSQLScriptResponse], error) {
+func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *SqlScriptClientBeginDeleteSQLScriptOptions) (*runtime.Poller[SqlScriptClientDeleteSQLScriptResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SQLScriptClientDeleteSQLScriptResponse](resp, client.pl, nil)
+		return runtime.NewPoller[SqlScriptClientDeleteSQLScriptResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[SQLScriptClientDeleteSQLScriptResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[SqlScriptClientDeleteSQLScriptResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -127,7 +118,7 @@ func (client *SQLScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *SQLScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptClientBeginDeleteSQLScriptOptions) (*http.Response, error) {
+func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SqlScriptClientBeginDeleteSQLScriptOptions) (*http.Response, error) {
 	req, err := client.deleteSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
 		return nil, err
@@ -143,7 +134,7 @@ func (client *SQLScriptClient) deleteSQLScript(ctx context.Context, sqlScriptNam
 }
 
 // deleteSQLScriptCreateRequest creates the DeleteSQLScript request.
-func (client *SQLScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptClientBeginDeleteSQLScriptOptions) (*policy.Request, error) {
+func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SqlScriptClientBeginDeleteSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
@@ -165,24 +156,24 @@ func (client *SQLScriptClient) deleteSQLScriptCreateRequest(ctx context.Context,
 //
 // Generated from API version 2019-06-01-preview
 //   - sqlScriptName - The sql script name.
-//   - options - SQLScriptClientGetSQLScriptOptions contains the optional parameters for the SQLScriptClient.GetSQLScript method.
-func (client *SQLScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptClientGetSQLScriptOptions) (SQLScriptClientGetSQLScriptResponse, error) {
+//   - options - SqlScriptClientGetSQLScriptOptions contains the optional parameters for the sqlScriptClient.GetSQLScript method.
+func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SqlScriptClientGetSQLScriptOptions) (SqlScriptClientGetSQLScriptResponse, error) {
 	req, err := client.getSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
-		return SQLScriptClientGetSQLScriptResponse{}, err
+		return SqlScriptClientGetSQLScriptResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SQLScriptClientGetSQLScriptResponse{}, err
+		return SqlScriptClientGetSQLScriptResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return SQLScriptClientGetSQLScriptResponse{}, runtime.NewResponseError(resp)
+		return SqlScriptClientGetSQLScriptResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSQLScriptHandleResponse(resp)
 }
 
 // getSQLScriptCreateRequest creates the GetSQLScript request.
-func (client *SQLScriptClient) getSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptClientGetSQLScriptOptions) (*policy.Request, error) {
+func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SqlScriptClientGetSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
@@ -203,10 +194,10 @@ func (client *SQLScriptClient) getSQLScriptCreateRequest(ctx context.Context, sq
 }
 
 // getSQLScriptHandleResponse handles the GetSQLScript response.
-func (client *SQLScriptClient) getSQLScriptHandleResponse(resp *http.Response) (SQLScriptClientGetSQLScriptResponse, error) {
-	result := SQLScriptClientGetSQLScriptResponse{}
+func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (SqlScriptClientGetSQLScriptResponse, error) {
+	result := SqlScriptClientGetSQLScriptResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptResource); err != nil {
-		return SQLScriptClientGetSQLScriptResponse{}, err
+		return SqlScriptClientGetSQLScriptResponse{}, err
 	}
 	return result, nil
 }
@@ -214,14 +205,14 @@ func (client *SQLScriptClient) getSQLScriptHandleResponse(resp *http.Response) (
 // NewGetSQLScriptsByWorkspacePager - Lists sql scripts.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - SQLScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the SQLScriptClient.GetSQLScriptsByWorkspace
+//   - options - SqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.GetSQLScriptsByWorkspace
 //     method.
-func (client *SQLScriptClient) NewGetSQLScriptsByWorkspacePager(options *SQLScriptClientGetSQLScriptsByWorkspaceOptions) *runtime.Pager[SQLScriptClientGetSQLScriptsByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PagingHandler[SQLScriptClientGetSQLScriptsByWorkspaceResponse]{
-		More: func(page SQLScriptClientGetSQLScriptsByWorkspaceResponse) bool {
+func (client *sqlScriptClient) NewGetSQLScriptsByWorkspacePager(options *SqlScriptClientGetSQLScriptsByWorkspaceOptions) *runtime.Pager[SqlScriptClientGetSQLScriptsByWorkspaceResponse] {
+	return runtime.NewPager(runtime.PagingHandler[SqlScriptClientGetSQLScriptsByWorkspaceResponse]{
+		More: func(page SqlScriptClientGetSQLScriptsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *SQLScriptClientGetSQLScriptsByWorkspaceResponse) (SQLScriptClientGetSQLScriptsByWorkspaceResponse, error) {
+		Fetcher: func(ctx context.Context, page *SqlScriptClientGetSQLScriptsByWorkspaceResponse) (SqlScriptClientGetSQLScriptsByWorkspaceResponse, error) {
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -230,14 +221,14 @@ func (client *SQLScriptClient) NewGetSQLScriptsByWorkspacePager(options *SQLScri
 				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
 			}
 			if err != nil {
-				return SQLScriptClientGetSQLScriptsByWorkspaceResponse{}, err
+				return SqlScriptClientGetSQLScriptsByWorkspaceResponse{}, err
 			}
 			resp, err := client.pl.Do(req)
 			if err != nil {
-				return SQLScriptClientGetSQLScriptsByWorkspaceResponse{}, err
+				return SqlScriptClientGetSQLScriptsByWorkspaceResponse{}, err
 			}
 			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return SQLScriptClientGetSQLScriptsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+				return SqlScriptClientGetSQLScriptsByWorkspaceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getSQLScriptsByWorkspaceHandleResponse(resp)
 		},
@@ -245,7 +236,7 @@ func (client *SQLScriptClient) NewGetSQLScriptsByWorkspacePager(options *SQLScri
 }
 
 // getSQLScriptsByWorkspaceCreateRequest creates the GetSQLScriptsByWorkspace request.
-func (client *SQLScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SQLScriptClientGetSQLScriptsByWorkspaceOptions) (*policy.Request, error) {
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SqlScriptClientGetSQLScriptsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -259,10 +250,10 @@ func (client *SQLScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context
 }
 
 // getSQLScriptsByWorkspaceHandleResponse handles the GetSQLScriptsByWorkspace response.
-func (client *SQLScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http.Response) (SQLScriptClientGetSQLScriptsByWorkspaceResponse, error) {
-	result := SQLScriptClientGetSQLScriptsByWorkspaceResponse{}
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http.Response) (SqlScriptClientGetSQLScriptsByWorkspaceResponse, error) {
+	result := SqlScriptClientGetSQLScriptsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptsListResponse); err != nil {
-		return SQLScriptClientGetSQLScriptsByWorkspaceResponse{}, err
+		return SqlScriptClientGetSQLScriptsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
@@ -273,17 +264,17 @@ func (client *SQLScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http
 // Generated from API version 2019-06-01-preview
 //   - sqlScriptName - The sql script name.
 //   - request - proposed new name.
-//   - options - SQLScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginRenameSQLScript
+//   - options - SqlScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginRenameSQLScript
 //     method.
-func (client *SQLScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptClientBeginRenameSQLScriptOptions) (*runtime.Poller[SQLScriptClientRenameSQLScriptResponse], error) {
+func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SqlScriptClientBeginRenameSQLScriptOptions) (*runtime.Poller[SqlScriptClientRenameSQLScriptResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SQLScriptClientRenameSQLScriptResponse](resp, client.pl, nil)
+		return runtime.NewPoller[SqlScriptClientRenameSQLScriptResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[SQLScriptClientRenameSQLScriptResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[SqlScriptClientRenameSQLScriptResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -291,7 +282,7 @@ func (client *SQLScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *SQLScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptClientBeginRenameSQLScriptOptions) (*http.Response, error) {
+func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SqlScriptClientBeginRenameSQLScriptOptions) (*http.Response, error) {
 	req, err := client.renameSQLScriptCreateRequest(ctx, sqlScriptName, request, options)
 	if err != nil {
 		return nil, err
@@ -307,7 +298,7 @@ func (client *SQLScriptClient) renameSQLScript(ctx context.Context, sqlScriptNam
 }
 
 // renameSQLScriptCreateRequest creates the RenameSQLScript request.
-func (client *SQLScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptClientBeginRenameSQLScriptOptions) (*policy.Request, error) {
+func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SqlScriptClientBeginRenameSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}/rename"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
