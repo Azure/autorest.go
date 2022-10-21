@@ -47,10 +47,9 @@ function getExtraOption(outputFolder: string) {
   return [`--output-folder=${outputFolder}`, '--use=@autorest/go@latest', '--track2', '--go', '--debug'];
 }
 
-async function runSingleTest(swaggerDir: string, rp: string, extraOption: Array<string>, outputFolder: string, tempOutputFolder: string): Promise<boolean> {
+async function runSingleTest(readmePath: string, extraOption: Array<string>, outputFolder: string, tempOutputFolder: string): Promise<boolean> {
   let result = true;
   let msg = '';
-  const readmePath = path.join(swaggerDir, 'specification', rp, 'resource-manager/readme.md');
   await runAutorest(readmePath, extraOption)
     .then((res) => {
       if (!res) {
@@ -97,8 +96,8 @@ describe('Run autorest and compare the output', () => {
 
     let finalResult = true;
     const allTests: Array<Promise<boolean>> = [];
-    for (const rp of ['appplatform', 'compute', 'signalr', 'machinelearningservices']) {
-      console.log('Start Processing: ' + rp);
+    for (const rp of ['appplatform', 'compute', 'signalr', 'machinelearningservices', 'agrifood']) {
+      console.log('Start Processing RP: ' + rp);
 
       // Remove tmpoutput
       const outputFolder = path.join(outputDir, rp, `arm${rp}`);
@@ -108,9 +107,14 @@ describe('Run autorest and compare the output', () => {
       // TODO: Need to add go.mod and make sure all the generated code can build and vet
       // fs.copyFileSync(path.join(outputDir, rp, `arm${rp}`, 'go.mod'), path.join(tempoutputDir, rp, `arm${rp}`, 'go.mod'));
 
-      const test = runSingleTest(swaggerDir, rp, getExtraOption(tempOutputFolder), outputFolder, tempOutputFolder);
+      let readmePath = path.join(swaggerDir, 'specification', rp, 'resource-manager/readme.md');
+      if (!fs.existsSync(readmePath)) {
+        readmePath = path.join(swaggerDir, 'sdk', rp, 'autorest.md');
+      }
+      const test = runSingleTest(readmePath, getExtraOption(tempOutputFolder), outputFolder, tempOutputFolder);
       allTests.push(test);
     }
+
     if ((process.env['PARALELL_TEST'] || 'false').toLowerCase() === 'true') {
       finalResult = (await Promise.all(allTests)).every((x) => x);
     } else {

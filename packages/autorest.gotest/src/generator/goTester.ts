@@ -17,12 +17,27 @@ import { TestConfig } from '@autorest/testmodeler/dist/src/common/testConfig';
 
 export async function processRequest(host: AutorestExtensionHost): Promise<void> {
   const session = await TestCodeModeler.getSessionFromHost(host);
+
   const config = new TestConfig(await session.getValue(''), configDefaults);
   if (config.getValue(Config.exportCodemodel)) {
     Helper.addCodeModelDump(session, 'go-tester-pre.yaml', false);
   }
 
-  const context = new GenerateContext(host, session.model, config);
+  // try to get commit/tree name from require config
+  const rpRegex = /Azure\/azure-rest-api-specs\/(blob\/|tree\/|)(?<swaggerCommit>[^/]+)\//;
+
+  let swaggerCommit = 'main';
+  if (session.configuration?.require) {
+    for (const config of session.configuration.require) {
+      const execResult = rpRegex.exec(config);
+      if (execResult?.groups['swaggerCommit']) {
+        swaggerCommit = execResult?.groups['swaggerCommit'];
+        break;
+      }
+    }
+  }
+
+  const context = new GenerateContext(host, session.model, config, swaggerCommit);
   const mockTestDataRender = new MockTestDataRender(context);
   mockTestDataRender.renderData();
 
