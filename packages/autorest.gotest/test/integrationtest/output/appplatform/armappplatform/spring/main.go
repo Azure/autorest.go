@@ -291,8 +291,7 @@ func springSample() {
 	if err != nil {
 		panic(err)
 	}
-	certificateName := "asc-certificate"
-	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, certificateName, armappplatform.CertificateResource{
+	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, "asc-certificate", armappplatform.CertificateResource{
 		Properties: &armappplatform.CertificateProperties{
 			KeyVaultCertName: to.Ptr("pfx-cert"),
 			VaultURI:         to.Ptr("https://integration-test-prod.vault.azure.net/"),
@@ -307,8 +306,7 @@ func springSample() {
 	}
 
 	// From step Certificates_Get
-	certificateName = "asc-certificate"
-	_, err = certificatesClient.Get(ctx, resourceGroupName, serviceName, certificateName, nil)
+	_, err = certificatesClient.Get(ctx, resourceGroupName, serviceName, "asc-certificate", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -465,8 +463,7 @@ func springSample() {
 	if err != nil {
 		panic(err)
 	}
-	deploymentName := "default"
-	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, deploymentName, armappplatform.DeploymentResource{
+	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, "default", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
 				CPU: to.Ptr[int32](1),
@@ -499,8 +496,7 @@ func springSample() {
 	}
 
 	// From step Deployments_Get
-	deploymentName = "default"
-	_, err = deploymentsClient.Get(ctx, resourceGroupName, serviceName, appName, deploymentName, nil)
+	_, err = deploymentsClient.Get(ctx, resourceGroupName, serviceName, appName, "default", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -580,8 +576,7 @@ func springSample() {
 	if err != nil {
 		panic(err)
 	}
-	bindingName := "mysql-binding"
-	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, bindingName, armappplatform.BindingResource{
+	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
 				"databaseName": "mysqldb",
@@ -600,8 +595,7 @@ func springSample() {
 	}
 
 	// From step Bindings_Update
-	bindingName = "mysql-binding"
-	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, bindingName, armappplatform.BindingResource{
+	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
 				"anotherLayer": map[string]interface{}{
@@ -621,8 +615,7 @@ func springSample() {
 	}
 
 	// From step Bindings_Get
-	bindingName = "mysql-binding"
-	_, err = bindingsClient.Get(ctx, resourceGroupName, serviceName, appName, bindingName, nil)
+	_, err = bindingsClient.Get(ctx, resourceGroupName, serviceName, appName, "mysql-binding", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -638,8 +631,7 @@ func springSample() {
 	}
 
 	// From step Bindings_Delete
-	bindingName = "mysql-binding"
-	bindingsClientDeleteResponsePoller, err := bindingsClient.BeginDelete(ctx, resourceGroupName, serviceName, appName, bindingName, nil)
+	bindingsClientDeleteResponsePoller, err := bindingsClient.BeginDelete(ctx, resourceGroupName, serviceName, appName, "mysql-binding", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -661,8 +653,7 @@ func springSample() {
 	if err != nil {
 		panic(err)
 	}
-	domainName := dnsCname + "." + customDomainName
-	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, domainName, armappplatform.CustomDomainResource{
+	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, dnsCname+"."+customDomainName, armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName: to.Ptr("asc-certificate"),
 		},
@@ -676,8 +667,7 @@ func springSample() {
 	}
 
 	// From step CustomDomains_Update
-	domainName = dnsCname + "." + customDomainName
-	customDomainsClientUpdateResponsePoller, err := customDomainsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, domainName, armappplatform.CustomDomainResource{
+	customDomainsClientUpdateResponsePoller, err := customDomainsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, dnsCname+"."+customDomainName, armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName: to.Ptr("asc-certificate"),
 		},
@@ -691,8 +681,7 @@ func springSample() {
 	}
 
 	// From step CustomDomains_Get
-	domainName = dnsCname + "." + customDomainName
-	_, err = customDomainsClient.Get(ctx, resourceGroupName, serviceName, appName, domainName, nil)
+	_, err = customDomainsClient.Get(ctx, resourceGroupName, serviceName, appName, dnsCname+"."+customDomainName, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -772,8 +761,7 @@ func springSample() {
 	_ = createDeployment("Upload_File", &deployment)
 
 	// From step Deployments_CreateOrUpdate
-	deploymentName = "blue"
-	deploymentsClientCreateOrUpdateResponsePoller, err = deploymentsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, deploymentName, armappplatform.DeploymentResource{
+	deploymentsClientCreateOrUpdateResponsePoller, err = deploymentsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, "blue", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
 				CPU: to.Ptr[int32](1),
@@ -836,8 +824,7 @@ func springSample() {
 	}
 
 	// From step Deployments_Restart
-	deploymentName = "blue"
-	deploymentsClientRestartResponsePoller, err := deploymentsClient.BeginRestart(ctx, resourceGroupName, serviceName, appName, deploymentName, nil)
+	deploymentsClientRestartResponsePoller, err := deploymentsClient.BeginRestart(ctx, resourceGroupName, serviceName, appName, "blue", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -847,8 +834,7 @@ func springSample() {
 	}
 
 	// From step Deployments_Stop
-	deploymentName = "blue"
-	deploymentsClientStopResponsePoller, err := deploymentsClient.BeginStop(ctx, resourceGroupName, serviceName, appName, deploymentName, nil)
+	deploymentsClientStopResponsePoller, err := deploymentsClient.BeginStop(ctx, resourceGroupName, serviceName, appName, "blue", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -858,8 +844,7 @@ func springSample() {
 	}
 
 	// From step Deployments_Start
-	deploymentName = "blue"
-	deploymentsClientStartResponsePoller, err := deploymentsClient.BeginStart(ctx, resourceGroupName, serviceName, appName, deploymentName, nil)
+	deploymentsClientStartResponsePoller, err := deploymentsClient.BeginStart(ctx, resourceGroupName, serviceName, appName, "blue", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -869,8 +854,7 @@ func springSample() {
 	}
 
 	// From step Deployments_GetLogFileUrl
-	deploymentName = "blue"
-	_, err = deploymentsClient.GetLogFileURL(ctx, resourceGroupName, serviceName, appName, deploymentName, nil)
+	_, err = deploymentsClient.GetLogFileURL(ctx, resourceGroupName, serviceName, appName, "blue", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -916,8 +900,7 @@ func springSample() {
 	}
 
 	// From step Deployments_Delete
-	deploymentName = "blue"
-	deploymentsClientDeleteResponsePoller, err := deploymentsClient.BeginDelete(ctx, resourceGroupName, serviceName, appName, deploymentName, nil)
+	deploymentsClientDeleteResponsePoller, err := deploymentsClient.BeginDelete(ctx, resourceGroupName, serviceName, appName, "blue", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -927,8 +910,7 @@ func springSample() {
 	}
 
 	// From step CustomDomains_Delete
-	domainName = dnsCname + "." + customDomainName
-	customDomainsClientDeleteResponsePoller, err := customDomainsClient.BeginDelete(ctx, resourceGroupName, serviceName, appName, domainName, nil)
+	customDomainsClientDeleteResponsePoller, err := customDomainsClient.BeginDelete(ctx, resourceGroupName, serviceName, appName, dnsCname+"."+customDomainName, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -938,8 +920,7 @@ func springSample() {
 	}
 
 	// From step Apps_Delete
-	appName := "app01"
-	appsClientDeleteResponsePoller, err := appsClient.BeginDelete(ctx, resourceGroupName, serviceName, appName, nil)
+	appsClientDeleteResponsePoller, err := appsClient.BeginDelete(ctx, resourceGroupName, serviceName, "app01", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -949,8 +930,7 @@ func springSample() {
 	}
 
 	// From step Certificates_Delete
-	certificateName = "asc-certificate"
-	certificatesClientDeleteResponsePoller, err := certificatesClient.BeginDelete(ctx, resourceGroupName, serviceName, certificateName, nil)
+	certificatesClientDeleteResponsePoller, err := certificatesClient.BeginDelete(ctx, resourceGroupName, serviceName, "asc-certificate", nil)
 	if err != nil {
 		panic(err)
 	}

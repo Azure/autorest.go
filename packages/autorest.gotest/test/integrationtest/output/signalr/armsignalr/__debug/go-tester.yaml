@@ -16367,7 +16367,6 @@ testModel:
               secretVariables: []
               step: Generate_Unique_Name
               variables: {}
-              variablesOutput: {}
             - type: restCall
               operationId: SignalR_CheckNameAvailability
               description: SignalR_CheckNameAvailability
@@ -16472,7 +16471,6 @@ testModel:
               secretVariables: []
               step: SignalR_CheckNameAvailability
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -16681,6 +16679,10 @@ testModel:
                               schema: *ref_113
                               rawValue: Enabled
                               language: *ref_426
+                            publicPort:
+                              schema: *ref_94
+                              rawValue: $(publicPort)
+                              language: *ref_427
                             tls:
                               schema: *ref_128
                               parentsValue: {}
@@ -16766,7 +16768,7 @@ testModel:
                   - paramName: parameters
                     paramOutput: |-
                       armsignalr.ResourceInfo{
-                      Location: to.Ptr(location),
+                      Location: to.Ptr(globalLocation + "-test2"),
                       Tags: map[string]*string{
                       "key1": to.Ptr("value1"),
                       },
@@ -16821,6 +16823,7 @@ testModel:
                       },
                       },
                       PublicNetworkAccess: to.Ptr("Enabled"),
+                      PublicPort: to.Ptr[int32](publicPort),
                       TLS: &armsignalr.TLSSettings{
                       ClientCertEnabled: to.Ptr(false),
                       },
@@ -16862,7 +16865,7 @@ testModel:
 
                   ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/" + resourceName),
 
-                  Location: to.Ptr("eastus"),
+                  Location: to.Ptr(globalLocation + "-test2" + "-test1"),
 
                   Tags: map[string]*string{
 
@@ -17031,7 +17034,7 @@ testModel:
 
                   PublicNetworkAccess: to.Ptr("Enabled"),
 
-                  PublicPort: to.Ptr[int32](443),
+                  PublicPort: to.Ptr[int32](publicPort),
 
                   ServerPort: to.Ptr[int32](443),
 
@@ -17119,7 +17122,7 @@ testModel:
                           properties:
                             location:
                               schema: *ref_85
-                              rawValue: eastus
+                              rawValue: $(location)-test1
                               language: *ref_384
                             tags:
                               schema: *ref_86
@@ -17390,7 +17393,7 @@ testModel:
                               language: *ref_426
                             publicPort:
                               schema: *ref_94
-                              rawValue: 443
+                              rawValue: $(publicPort)
                               language: *ref_427
                             serverPort:
                               schema: *ref_95
@@ -17504,7 +17507,7 @@ testModel:
                           properties:
                             location:
                               schema: *ref_85
-                              rawValue: eastus
+                              rawValue: $(location)-test1
                               language: *ref_384
                             tags:
                               schema: *ref_86
@@ -17775,7 +17778,7 @@ testModel:
                               language: *ref_426
                             publicPort:
                               schema: *ref_94
-                              rawValue: 443
+                              rawValue: $(publicPort)
                               language: *ref_427
                             serverPort:
                               schema: *ref_95
@@ -17915,6 +17918,7 @@ testModel:
                         allow:
                           - ClientConnection
                     publicNetworkAccess: Enabled
+                    publicPort: $(publicPort)
                     tls:
                       clientCertEnabled: false
                     upstream:
@@ -17940,8 +17944,10 @@ testModel:
               requiredVariablesDefault: {}
               secretVariables: []
               step: SignalR_CreateOrUpdate
-              variables: {}
-              variablesOutput: {}
+              variables:
+                location:
+                  type: string
+                  value: $(globalLocation)-test2
               responses:
                 '200':
                   body:
@@ -17953,7 +17959,7 @@ testModel:
                       principalId: $(subscriptionId)
                       tenantId: $(subscriptionId)
                     kind: SignalR
-                    location: eastus
+                    location: $(location)-test1
                     properties:
                       cors:
                         allowedOrigins:
@@ -18005,7 +18011,7 @@ testModel:
                             lastModifiedByType: User
                       provisioningState: Succeeded
                       publicNetworkAccess: Enabled
-                      publicPort: 443
+                      publicPort: $(publicPort)
                       serverPort: 443
                       tls:
                         clientCertEnabled: true
@@ -18037,7 +18043,7 @@ testModel:
                       principalId: 00000000-0000-0000-0000-000000000000
                       tenantId: 00000000-0000-0000-0000-000000000000
                     kind: SignalR
-                    location: eastus
+                    location: $(location)-test1
                     properties:
                       cors:
                         allowedOrigins:
@@ -18090,7 +18096,7 @@ testModel:
                             lastModifiedByType: User
                       provisioningState: Succeeded
                       publicNetworkAccess: Enabled
-                      publicPort: 443
+                      publicPort: $(publicPort)
                       serverPort: 443
                       tls:
                         clientCertEnabled: true
@@ -18798,7 +18804,6 @@ testModel:
               secretVariables: []
               step: SignalR_Get
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -19956,7 +19961,6 @@ testModel:
               secretVariables: []
               step: SignalR_Update
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -20118,7 +20122,6 @@ testModel:
               secretVariables: []
               step: SignalR_ListKeys
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body: {}
@@ -20212,7 +20215,6 @@ testModel:
               secretVariables: []
               step: SignalR_RegenerateKey
               variables: {}
-              variablesOutput: {}
               responses:
                 '202':
                   body: {}
@@ -20289,7 +20291,6 @@ testModel:
               secretVariables: []
               step: SignalR_Restart
               variables: {}
-              variablesOutput: {}
               responses:
                 '202':
                   body: *ref_586
@@ -20453,7 +20454,6 @@ testModel:
               secretVariables: []
               step: Usages_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -21160,7 +21160,6 @@ testModel:
               secretVariables: []
               step: SignalR_ListByResourceGroup
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -21927,7 +21926,6 @@ testModel:
               secretVariables: []
               step: SignalR_ListBySubscription
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -22121,7 +22119,6 @@ testModel:
               secretVariables: []
               step: Operations_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -22208,7 +22205,6 @@ testModel:
               secretVariables: []
               step: SignalR_Delete
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body: *ref_589
@@ -22224,8 +22220,20 @@ testModel:
       scope: ResourceGroup
       secretVariables: []
       useArmTemplate: true
-      variables: {}
-      variablesOutput: {}
+      variables:
+        globalLocation:
+          type: string
+          value: Global
+        publicPort:
+          type: int
+          value: 6910
+      variablesOutput:
+        globalLocation:
+          type: string
+          value: '"Global"'
+        publicPort:
+          type: int
+          value: '6910'
 language:
   default:
     name: SignalRManagementClient

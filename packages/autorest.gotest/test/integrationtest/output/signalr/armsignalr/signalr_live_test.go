@@ -27,6 +27,8 @@ type SignalRTestSuite struct {
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	options           *arm.ClientOptions
+	globalLocation    string
+	publicPort        int
 	location          string
 	resourceGroupName string
 	subscriptionId    string
@@ -37,6 +39,8 @@ func (testsuite *SignalRTestSuite) SetupSuite() {
 
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
+	testsuite.globalLocation = "Global"
+	testsuite.publicPort = 6910
 	testsuite.location = testutil.GetEnv("LOCATION", "westus")
 	testsuite.resourceGroupName = testutil.GetEnv("RESOURCE_GROUP_NAME", "scenarioTestTempGroup")
 	testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
@@ -101,7 +105,7 @@ func (testsuite *SignalRTestSuite) TestSignalR() {
 
 	// From step SignalR_CreateOrUpdate
 	clientCreateOrUpdateResponsePoller, err := client.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, armsignalr.ResourceInfo{
-		Location: to.Ptr(testsuite.location),
+		Location: to.Ptr(testsuite.globalLocation + "-test2"),
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
 		},
@@ -152,6 +156,7 @@ func (testsuite *SignalRTestSuite) TestSignalR() {
 				},
 			},
 			PublicNetworkAccess: to.Ptr("Enabled"),
+			PublicPort:          to.Ptr[int32](testsuite.publicPort),
 			TLS: &armsignalr.TLSSettings{
 				ClientCertEnabled: to.Ptr(false),
 			},

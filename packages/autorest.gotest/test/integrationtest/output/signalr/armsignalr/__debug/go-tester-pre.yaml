@@ -14552,6 +14552,10 @@ testModel:
                               schema: *ref_113
                               rawValue: Enabled
                               language: *ref_425
+                            publicPort:
+                              schema: *ref_94
+                              rawValue: $(publicPort)
+                              language: *ref_426
                             tls:
                               schema: *ref_128
                               parentsValue: {}
@@ -14658,7 +14662,7 @@ testModel:
                           properties:
                             location:
                               schema: *ref_85
-                              rawValue: eastus
+                              rawValue: $(location)-test1
                               language: *ref_383
                             tags:
                               schema: *ref_86
@@ -14929,7 +14933,7 @@ testModel:
                               language: *ref_425
                             publicPort:
                               schema: *ref_94
-                              rawValue: 443
+                              rawValue: $(publicPort)
                               language: *ref_426
                             serverPort:
                               schema: *ref_95
@@ -15043,7 +15047,7 @@ testModel:
                           properties:
                             location:
                               schema: *ref_85
-                              rawValue: eastus
+                              rawValue: $(location)-test1
                               language: *ref_383
                             tags:
                               schema: *ref_86
@@ -15314,7 +15318,7 @@ testModel:
                               language: *ref_425
                             publicPort:
                               schema: *ref_94
-                              rawValue: 443
+                              rawValue: $(publicPort)
                               language: *ref_426
                             serverPort:
                               schema: *ref_95
@@ -15452,6 +15456,7 @@ testModel:
                         allow:
                           - ClientConnection
                     publicNetworkAccess: Enabled
+                    publicPort: $(publicPort)
                     tls:
                       clientCertEnabled: false
                     upstream:
@@ -15477,7 +15482,10 @@ testModel:
               requiredVariablesDefault: {}
               secretVariables: []
               step: SignalR_CreateOrUpdate
-              variables: {}
+              variables:
+                location:
+                  type: string
+                  value: $(globalLocation)-test2
               responses:
                 '200':
                   body:
@@ -15489,7 +15497,7 @@ testModel:
                       principalId: $(subscriptionId)
                       tenantId: $(subscriptionId)
                     kind: SignalR
-                    location: eastus
+                    location: $(location)-test1
                     properties:
                       cors:
                         allowedOrigins:
@@ -15541,7 +15549,7 @@ testModel:
                             lastModifiedByType: User
                       provisioningState: Succeeded
                       publicNetworkAccess: Enabled
-                      publicPort: 443
+                      publicPort: $(publicPort)
                       serverPort: 443
                       tls:
                         clientCertEnabled: true
@@ -15573,7 +15581,7 @@ testModel:
                       principalId: 00000000-0000-0000-0000-000000000000
                       tenantId: 00000000-0000-0000-0000-000000000000
                     kind: SignalR
-                    location: eastus
+                    location: $(location)-test1
                     properties:
                       cors:
                         allowedOrigins:
@@ -15626,7 +15634,7 @@ testModel:
                             lastModifiedByType: User
                       provisioningState: Succeeded
                       publicNetworkAccess: Enabled
-                      publicPort: 443
+                      publicPort: $(publicPort)
                       serverPort: 443
                       tls:
                         clientCertEnabled: true
@@ -18483,7 +18491,13 @@ testModel:
       scope: ResourceGroup
       secretVariables: []
       useArmTemplate: true
-      variables: {}
+      variables:
+        globalLocation:
+          type: string
+          value: Global
+        publicPort:
+          type: int
+          value: 6910
 language:
   default:
     name: SignalRManagementClient

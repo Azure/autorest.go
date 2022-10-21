@@ -294,8 +294,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Certificates_CreateOrUpdate
 	certificatesClient, err := armappplatform.NewCertificatesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	certificateName := "asc-certificate"
-	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, certificateName, armappplatform.CertificateResource{
+	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "asc-certificate", armappplatform.CertificateResource{
 		Properties: &armappplatform.CertificateProperties{
 			KeyVaultCertName: to.Ptr("pfx-cert"),
 			VaultURI:         to.Ptr("https://integration-test-prod.vault.azure.net/"),
@@ -306,8 +305,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_Get
-	certificateName = "asc-certificate"
-	_, err = certificatesClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, certificateName, nil)
+	_, err = certificatesClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "asc-certificate", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_List
@@ -422,8 +420,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Deployments_CreateOrUpdate_Default
 	deploymentsClient, err := armappplatform.NewDeploymentsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	deploymentName := "default"
-	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, armappplatform.DeploymentResource{
+	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "default", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
 				CPU: to.Ptr[int32](1),
@@ -452,8 +449,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Get
-	deploymentName = "default"
-	_, err = deploymentsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
+	_, err = deploymentsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "default", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Update_ActiveDeployment
@@ -519,8 +515,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Bindings_Create
 	bindingsClient, err := armappplatform.NewBindingsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	bindingName := "mysql-binding"
-	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, armappplatform.BindingResource{
+	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
 				"databaseName": "mysqldb",
@@ -535,8 +530,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_Update
-	bindingName = "mysql-binding"
-	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, armappplatform.BindingResource{
+	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
 				"anotherLayer": map[string]interface{}{
@@ -552,8 +546,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_Get
-	bindingName = "mysql-binding"
-	_, err = bindingsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, nil)
+	_, err = bindingsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_List
@@ -565,8 +558,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Bindings_Delete
-	bindingName = "mysql-binding"
-	bindingsClientDeleteResponsePoller, err := bindingsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, nil)
+	bindingsClientDeleteResponsePoller, err := bindingsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, bindingsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
@@ -580,8 +572,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step CustomDomains_CreateOrUpdate
 	customDomainsClient, err := armappplatform.NewCustomDomainsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	domainName := testsuite.dnsCname + "." + testsuite.customDomainName
-	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, armappplatform.CustomDomainResource{
+	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName: to.Ptr("asc-certificate"),
 		},
@@ -591,8 +582,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Update
-	domainName = testsuite.dnsCname + "." + testsuite.customDomainName
-	customDomainsClientUpdateResponsePoller, err := customDomainsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, armappplatform.CustomDomainResource{
+	customDomainsClientUpdateResponsePoller, err := customDomainsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName: to.Ptr("asc-certificate"),
 		},
@@ -602,8 +592,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Get
-	domainName = testsuite.dnsCname + "." + testsuite.customDomainName
-	_, err = customDomainsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, nil)
+	_, err = customDomainsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_List
@@ -678,8 +667,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_CreateOrUpdate
-	deploymentName = "blue"
-	deploymentsClientCreateOrUpdateResponsePoller, err = deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, armappplatform.DeploymentResource{
+	deploymentsClientCreateOrUpdateResponsePoller, err = deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
 				CPU: to.Ptr[int32](1),
@@ -734,29 +722,25 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Restart
-	deploymentName = "blue"
-	deploymentsClientRestartResponsePoller, err := deploymentsClient.BeginRestart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
+	deploymentsClientRestartResponsePoller, err := deploymentsClient.BeginRestart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientRestartResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Stop
-	deploymentName = "blue"
-	deploymentsClientStopResponsePoller, err := deploymentsClient.BeginStop(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
+	deploymentsClientStopResponsePoller, err := deploymentsClient.BeginStop(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientStopResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Start
-	deploymentName = "blue"
-	deploymentsClientStartResponsePoller, err := deploymentsClient.BeginStart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
+	deploymentsClientStartResponsePoller, err := deploymentsClient.BeginStart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientStartResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_GetLogFileUrl
-	deploymentName = "blue"
-	_, err = deploymentsClient.GetLogFileURL(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
+	_, err = deploymentsClient.GetLogFileURL(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_List
@@ -792,29 +776,25 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Deployments_Delete
-	deploymentName = "blue"
-	deploymentsClientDeleteResponsePoller, err := deploymentsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
+	deploymentsClientDeleteResponsePoller, err := deploymentsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Delete
-	domainName = testsuite.dnsCname + "." + testsuite.customDomainName
-	customDomainsClientDeleteResponsePoller, err := customDomainsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, nil)
+	customDomainsClientDeleteResponsePoller, err := customDomainsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, customDomainsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Delete
-	testsuite.appName = "app01"
-	appsClientDeleteResponsePoller, err := appsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
+	appsClientDeleteResponsePoller, err := appsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "app01", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, appsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_Delete
-	certificateName = "asc-certificate"
-	certificatesClientDeleteResponsePoller, err := certificatesClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, certificateName, nil)
+	certificatesClientDeleteResponsePoller, err := certificatesClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "asc-certificate", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, certificatesClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)

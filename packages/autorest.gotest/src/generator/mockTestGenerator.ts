@@ -368,6 +368,14 @@ export class MockTestDataRender extends BaseDataRender {
     return Helper.quotedEscapeString(rawValue);
   }
 
+  protected getNumberValue(rawValue: any): string {
+    return `${Number(rawValue)}`;
+  }
+
+  protected getBoolValue(rawValue: any): string {
+    return rawValue.toString();
+  }
+
   protected rawValueToString(rawValue: any, schema: Schema, isPtr: boolean): string {
     let ret = JSON.stringify(rawValue);
     const goType = this.getLanguageName(schema);
@@ -377,10 +385,10 @@ export class MockTestDataRender extends BaseDataRender {
           const choiceValue = Helper.findChoiceValue(<ChoiceSchema>schema, rawValue);
           ret = this.context.packageName + '.' + this.getLanguageName(choiceValue);
         } catch (error) {
-          ret = `${this.context.packageName}.${this.getLanguageName(schema)}("${rawValue}")`;
+          ret = `${this.context.packageName}.${this.getLanguageName(schema)}(${this.getStringValue(rawValue)})`;
         }
       } else {
-        ret = `${this.context.packageName}.${this.getLanguageName(schema)}(${rawValue})`;
+        ret = `${this.context.packageName}.${this.getLanguageName(schema)}(${this.getNumberValue(rawValue)})`;
       }
     } else if (schema.type === SchemaType.SealedChoice) {
       const choiceValue = Helper.findChoiceValue(<ChoiceSchema>schema, rawValue);
@@ -390,18 +398,18 @@ export class MockTestDataRender extends BaseDataRender {
     } else if (schema.type === SchemaType.ByteArray) {
       ret = `[]byte(${this.getStringValue(rawValue)})`;
     } else if (['int32', 'int64', 'float32', 'float64'].indexOf(goType) >= 0) {
-      ret = `${Number(rawValue)}`;
+      ret = `${this.getNumberValue(rawValue)}`;
     } else if (goType === 'time.Time') {
       if (schema.type === SchemaType.UnixTime) {
         this.context.importManager.add('time');
-        ret = `time.Unix(${rawValue}, 0)`;
+        ret = `time.Unix(${this.getNumberValue(rawValue)}, 0)`;
       } else if (schema.type === SchemaType.Date) {
         this.context.importManager.add('time');
-        ret = `func() time.Time { t, _ := time.Parse("2006-01-02", "${rawValue}"); return t}()`;
+        ret = `func() time.Time { t, _ := time.Parse("2006-01-02", ${this.getStringValue(rawValue)}); return t}()`;
       } else {
         this.context.importManager.add('time');
         const timeFormat = (<DateTimeSchema>schema).format === 'date-time-rfc1123' ? 'time.RFC1123' : 'time.RFC3339Nano';
-        ret = `func() time.Time { t, _ := time.Parse(${timeFormat}, "${rawValue}"); return t}()`;
+        ret = `func() time.Time { t, _ := time.Parse(${timeFormat}, ${this.getStringValue(rawValue)}); return t}()`;
       }
     } else if (goType === 'map[string]interface{}') {
       ret = this.objectToString(rawValue);
@@ -410,11 +418,11 @@ export class MockTestDataRender extends BaseDataRender {
     } else if (goType === 'interface{}' && typeof rawValue === 'object') {
       ret = this.objectToString(rawValue);
     } else if (goType === 'interface{}' && _.isNumber(rawValue)) {
-      ret = `float64(${rawValue})`;
+      ret = `float64(${this.getNumberValue(rawValue)})`;
     } else if (goType === 'interface{}' && _.isString(rawValue)) {
       ret = this.getStringValue(rawValue);
     } else if (goType === 'bool') {
-      ret = rawValue.toString();
+      ret = this.getBoolValue(rawValue);
     }
 
     if (isPtr) {

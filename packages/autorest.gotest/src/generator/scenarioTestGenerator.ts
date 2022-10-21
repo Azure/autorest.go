@@ -15,6 +15,7 @@ import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { MockTestDataRender } from './mockTestGenerator';
 import { OavStepType } from '@autorest/testmodeler/dist/src/common/constant';
 import { Step, Variable } from 'oav/dist/lib/apiScenario/apiScenarioTypes';
+import { assert } from 'console';
 
 export class ScenarioTestDataRender extends MockTestDataRender {
   packagePrefixForGlobalVariables = 'testsuite.';
@@ -22,7 +23,6 @@ export class ScenarioTestDataRender extends MockTestDataRender {
   parentVariables: Record<string, string | Variable> = {};
   currentVariables: Record<string, string | Variable> = {};
   scenarioReferencedVariables: Set<string> = new Set<string>();
-  stepReferencedVariables: Set<string> = new Set<string>();
 
   public renderData(): void {
     for (const testDef of this.context.codeModel.testModel.scenarioTests) {
@@ -56,7 +56,6 @@ export class ScenarioTestDataRender extends MockTestDataRender {
       }
       this.scenarioReferencedVariables = new Set<string>();
       for (const step of scenario.steps) {
-        this.stepReferencedVariables = new Set<string>();
         // inner variable should overwrite outer ones
         this.parentVariables = {
           ...this.globalVariables,
@@ -152,17 +151,6 @@ export class ScenarioTestDataRender extends MockTestDataRender {
       }
       default:
     }
-    // remove useless variable
-    for (const variableName of Object.keys(step.variables || {})) {
-      if (!this.stepReferencedVariables.has(variableName)) {
-        delete step.variables[variableName];
-      }
-    }
-    // resolve step variables
-    step['variablesOutput'] = {};
-    for (const [key, value] of Object.entries(step.variables || {})) {
-      step['variablesOutput'][key] = this.variableValueToString(key, value);
-    }
   }
 
   protected toParametersOutput(
@@ -240,6 +228,49 @@ export class ScenarioTestDataRender extends MockTestDataRender {
     }
   }
 
+  protected getVariableValue(rawValue: any): string {
+    let ret = '';
+    const variable = rawValue.slice(2, -1);
+    if (Object.prototype.hasOwnProperty.call(this.currentVariables, variable)) {
+      const variableValue = this.currentVariables[variable];
+      if (typeof variableValue === 'string') {
+        return this.getStringValue(variableValue);
+      } else {
+        if (variableValue.type === 'string') {
+          return this.getStringValue(variableValue.value);
+        } else if (variableValue.type === 'int') {
+          return this.getNumberValue(variableValue.value);
+        } else if (variableValue.type === 'bool') {
+          return this.getBoolValue(variableValue.value);
+        }
+      }
+    } else {
+      if (Object.prototype.hasOwnProperty.call(this.globalVariables, variable)) {
+        ret = this.packagePrefixForGlobalVariables + variable;
+      } else {
+        ret = variable;
+      }
+      this.scenarioReferencedVariables.add(variable);
+    }
+    return ret;
+  }
+
+  protected getNumberValue(rawValue: any): string {
+    if (typeof rawValue === 'string' && rawValue.startsWith('$')) {
+      return this.getVariableValue(rawValue);
+    } else {
+      return `${Number(rawValue)}`;
+    }
+  }
+
+  protected getBoolValue(rawValue: any): string {
+    if (typeof rawValue === 'string' && rawValue.startsWith('$')) {
+      return this.getVariableValue(rawValue);
+    } else {
+      return rawValue.toString();
+    }
+  }
+
   // Pick out $(...) variables from normal string
   // For example: "a string with ${var} inside" => ['"a string with "', 'var', '" inside"']
   protected parseOavVariable(s: string, definedVariables: Record<string, string | Variable>): Array<string> {
@@ -260,14 +291,7 @@ export class ScenarioTestDataRender extends MockTestDataRender {
       if (p > 0) {
         ret.push(Helper.quotedEscapeString(s.substring(0, p)));
       }
-      const variable = placeHolder.slice(2, -1);
-      if (Object.prototype.hasOwnProperty.call(this.globalVariables, variable)) {
-        ret.push(this.packagePrefixForGlobalVariables + variable);
-      } else {
-        ret.push(variable);
-      }
-      this.scenarioReferencedVariables.add(variable);
-      this.stepReferencedVariables.add(variable);
+      ret.push(this.getVariableValue(placeHolder));
       s = s.substring(p + placeHolder.length);
     }
     if (s.length > 0) {

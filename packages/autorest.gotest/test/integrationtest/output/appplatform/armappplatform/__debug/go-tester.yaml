@@ -31395,8 +31395,13 @@ testModel:
           requiredVariablesDefault: {}
           secretVariables: []
           step: delete_cname_record
-          variables: {}
-          variablesOutput: {}
+          variables:
+            resourceGroupName:
+              type: string
+              value: $(dnsResourceGroup)
+            subscriptionId:
+              type: string
+              value: $(dnsSubscriptionId)
       prepareSteps:
         - type: armTemplateDeployment
           armTemplate: templates/generate_service_name.json
@@ -31443,7 +31448,6 @@ testModel:
           secretVariables: []
           step: Generate_Unique_ServiceName
           variables: {}
-          variablesOutput: {}
         - type: armTemplateDeployment
           armTemplate: templates/create_application_insights_instance.json
           armTemplateOutput: |-
@@ -31513,7 +31517,6 @@ testModel:
           secretVariables: []
           step: Create_Application_Insight_Instance
           variables: {}
-          variablesOutput: {}
         - type: armTemplateDeployment
           armTemplate: ''
           armTemplateOutput: >-
@@ -31685,8 +31688,13 @@ testModel:
           requiredVariablesDefault: {}
           secretVariables: []
           step: Add_Dns_Cname_Record
-          variables: {}
-          variablesOutput: {}
+          variables:
+            resourceGroupName:
+              type: string
+              value: $(dnsResourceGroup)
+            subscriptionId:
+              type: string
+              value: $(dnsSubscriptionId)
       requiredVariables:
         - customDomainName
         - mysqlKey
@@ -31836,7 +31844,6 @@ testModel:
               secretVariables: []
               step: Services_CheckNameAvailability
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -32489,7 +32496,6 @@ testModel:
               secretVariables: []
               step: Services_CreateOrUpdate
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -32876,7 +32882,6 @@ testModel:
               secretVariables: []
               step: Services_Get
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -33423,7 +33428,6 @@ testModel:
               secretVariables: []
               step: Services_Update
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -33571,7 +33575,6 @@ testModel:
               secretVariables: []
               step: Services_DisableTestEndpoint
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body: *ref_1252
@@ -33674,7 +33677,6 @@ testModel:
               secretVariables: []
               step: Services_EnableTestEndpoint
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -33799,7 +33801,6 @@ testModel:
               secretVariables: []
               step: Services_RegenerateTestKey
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -33907,7 +33908,6 @@ testModel:
               secretVariables: []
               step: Services_ListTestKeys
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -33982,7 +33982,7 @@ testModel:
                   - paramName: serviceName
                     paramOutput: serviceName
                   - paramName: certificateName
-                    paramOutput: certificateName
+                    paramOutput: '"asc-certificate"'
                   - paramName: certificateResource
                     paramOutput: |-
                       armappplatform.CertificateResource{
@@ -34000,9 +34000,9 @@ testModel:
                 pollerType: CertificatesClientCreateOrUpdateResponse
                 responseOutput: |-
                   armappplatform.CertificateResource{
-                  Name: to.Ptr(certificateName),
+                  Name: to.Ptr("asc-certificate"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/certificates"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/certificates/" + certificateName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/certificates/" + "asc-certificate"),
                   Properties: &armappplatform.CertificateProperties{
                   ActivateDate: to.Ptr("2019-02-22T07:40:42Z"),
                   DNSNames: []*string{
@@ -34269,10 +34269,6 @@ testModel:
                 certificateName:
                   type: string
                   value: asc-certificate
-              variablesOutput:
-                certificateName:
-                  type: string
-                  value: '"asc-certificate"'
               responses:
                 '200':
                   body:
@@ -34375,7 +34371,7 @@ testModel:
                   - paramName: serviceName
                     paramOutput: serviceName
                   - paramName: certificateName
-                    paramOutput: certificateName
+                    paramOutput: '"asc-certificate"'
                   - paramName: options
                     paramOutput: nil
                 opName: Get
@@ -34384,9 +34380,9 @@ testModel:
                 originalFile: ''
                 responseOutput: |-
                   armappplatform.CertificateResource{
-                  Name: to.Ptr(certificateName),
+                  Name: to.Ptr("asc-certificate"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/certificates"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/certificates/" + certificateName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/certificates/" + "asc-certificate"),
                   Properties: &armappplatform.CertificateProperties{
                   ActivateDate: to.Ptr("2019-02-22T07:40:42Z"),
                   CertVersion: to.Ptr("08a219d06d874795a96db47e06fbb01e"),
@@ -34504,10 +34500,6 @@ testModel:
                 certificateName:
                   type: string
                   value: asc-certificate
-              variablesOutput:
-                certificateName:
-                  type: string
-                  value: '"asc-certificate"'
               responses:
                 '200':
                   body:
@@ -34706,7 +34698,6 @@ testModel:
               secretVariables: []
               step: Certificates_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -34861,7 +34852,6 @@ testModel:
               secretVariables: []
               step: ConfigServers_Validate
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -35131,7 +35121,6 @@ testModel:
               secretVariables: []
               step: ConfigServers_UpdatePut
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -35387,7 +35376,6 @@ testModel:
               secretVariables: []
               step: ConfigServers_UpdatePatch
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -35553,7 +35541,6 @@ testModel:
               secretVariables: []
               step: ConfigServers_Get
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -35802,7 +35789,6 @@ testModel:
               secretVariables: []
               step: MonitoringSettings_UpdatePut
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -35966,7 +35952,6 @@ testModel:
               secretVariables: []
               step: MonitoringSettings_Get
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -36219,7 +36204,6 @@ testModel:
               secretVariables: []
               step: MonitoringSettings_UpdatePatch
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -36647,7 +36631,6 @@ testModel:
               secretVariables: []
               step: Apps_Create
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -36920,7 +36903,6 @@ testModel:
               secretVariables: []
               step: Apps_Get
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -37082,7 +37064,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"default"'
                   - paramName: deploymentResource
                     paramOutput: |-
                       armappplatform.DeploymentResource{
@@ -37118,9 +37100,9 @@ testModel:
                 pollerType: DeploymentsClientCreateOrUpdateResponse
                 responseOutput: |-
                   armappplatform.DeploymentResource{
-                  Name: to.Ptr(deploymentName),
+                  Name: to.Ptr("default"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/deployments/" + deploymentName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/deployments/" + "default"),
                   Properties: &armappplatform.DeploymentResourceProperties{
                   Active: to.Ptr(false),
                   AppName: to.Ptr(appName),
@@ -37611,10 +37593,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: default
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"default"'
               responses:
                 '200':
                   body:
@@ -37763,7 +37741,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"default"'
                   - paramName: options
                     paramOutput: nil
                 opName: Get
@@ -37772,9 +37750,9 @@ testModel:
                 originalFile: ''
                 responseOutput: |-
                   armappplatform.DeploymentResource{
-                  Name: to.Ptr(deploymentName),
+                  Name: to.Ptr("default"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/deployments/" + deploymentName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/deployments/" + "default"),
                   Properties: &armappplatform.DeploymentResourceProperties{
                   Active: to.Ptr(false),
                   AppName: to.Ptr(appName),
@@ -37970,10 +37948,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: default
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"default"'
               responses:
                 '200':
                   body:
@@ -38458,7 +38432,6 @@ testModel:
               secretVariables: []
               step: Apps_Update_ActiveDeployment
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -38963,7 +38936,6 @@ testModel:
               secretVariables: []
               step: Apps_Update_Disk
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -39232,7 +39204,6 @@ testModel:
               secretVariables: []
               step: Apps_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -39355,7 +39326,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: bindingName
-                    paramOutput: bindingName
+                    paramOutput: '"mysql-binding"'
                   - paramName: bindingResource
                     paramOutput: |-
                       armappplatform.BindingResource{
@@ -39377,9 +39348,9 @@ testModel:
                 pollerType: BindingsClientCreateOrUpdateResponse
                 responseOutput: |-
                   armappplatform.BindingResource{
-                  Name: to.Ptr(bindingName),
+                  Name: to.Ptr("mysql-binding"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + bindingName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + "mysql-binding"),
                   Properties: &armappplatform.BindingResourceProperties{
                   BindingParameters: map[string]interface{}{
                   "databaseName": "mysqldb",
@@ -39649,10 +39620,6 @@ testModel:
                 bindingName:
                   type: string
                   value: mysql-binding
-              variablesOutput:
-                bindingName:
-                  type: string
-                  value: '"mysql-binding"'
               responses:
                 '200':
                   body:
@@ -39801,7 +39768,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: bindingName
-                    paramOutput: bindingName
+                    paramOutput: '"mysql-binding"'
                   - paramName: bindingResource
                     paramOutput: |-
                       armappplatform.BindingResource{
@@ -39824,9 +39791,9 @@ testModel:
                 pollerType: BindingsClientUpdateResponse
                 responseOutput: |-
                   armappplatform.BindingResource{
-                  Name: to.Ptr(bindingName),
+                  Name: to.Ptr("mysql-binding"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + bindingName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + "mysql-binding"),
                   Properties: &armappplatform.BindingResourceProperties{
                   BindingParameters: map[string]interface{}{
                   "anotherLayer": map[string]interface{}{
@@ -40025,10 +39992,6 @@ testModel:
                 bindingName:
                   type: string
                   value: mysql-binding
-              variablesOutput:
-                bindingName:
-                  type: string
-                  value: '"mysql-binding"'
               responses:
                 '200':
                   body:
@@ -40121,7 +40084,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: bindingName
-                    paramOutput: bindingName
+                    paramOutput: '"mysql-binding"'
                   - paramName: options
                     paramOutput: nil
                 opName: Get
@@ -40130,9 +40093,9 @@ testModel:
                 originalFile: ''
                 responseOutput: |-
                   armappplatform.BindingResource{
-                  Name: to.Ptr(bindingName),
+                  Name: to.Ptr("mysql-binding"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + bindingName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + "mysql-binding"),
                   Properties: &armappplatform.BindingResourceProperties{
                   BindingParameters: map[string]interface{}{
                   "apiType": "SQL",
@@ -40239,10 +40202,6 @@ testModel:
                 bindingName:
                   type: string
                   value: mysql-binding
-              variablesOutput:
-                bindingName:
-                  type: string
-                  value: '"mysql-binding"'
               responses:
                 '200':
                   body:
@@ -40432,7 +40391,6 @@ testModel:
               secretVariables: []
               step: Bindings_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -40507,7 +40465,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: bindingName
-                    paramOutput: bindingName
+                    paramOutput: '"mysql-binding"'
                   - paramName: options
                     paramOutput: nil
                 opName: BeginDelete
@@ -40542,10 +40500,6 @@ testModel:
                 bindingName:
                   type: string
                   value: mysql-binding
-              variablesOutput:
-                bindingName:
-                  type: string
-                  value: '"mysql-binding"'
               responses:
                 '200':
                   body: *ref_1263
@@ -40660,7 +40614,6 @@ testModel:
               secretVariables: []
               step: Apps_ValidateDomain
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -40735,7 +40688,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: domainName
-                    paramOutput: domainName
+                    paramOutput: dnsCname + "." + customDomainName
                   - paramName: domainResource
                     paramOutput: |-
                       armappplatform.CustomDomainResource{
@@ -40752,9 +40705,9 @@ testModel:
                 pollerType: CustomDomainsClientCreateOrUpdateResponse
                 responseOutput: |-
                   armappplatform.CustomDomainResource{
-                  Name: to.Ptr(domainName),
+                  Name: to.Ptr(dnsCname + "." + customDomainName),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/domains"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/domains/" + domainName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/domains/" + dnsCname + "." + customDomainName),
                   Properties: &armappplatform.CustomDomainProperties{
                   AppName: to.Ptr(appName),
                   CertName: to.Ptr("asc-certificate"),
@@ -40909,10 +40862,6 @@ testModel:
                 domainName:
                   type: string
                   value: $(dnsCname).$(customDomainName)
-              variablesOutput:
-                domainName:
-                  type: string
-                  value: dnsCname + "." + customDomainName
               responses:
                 '200':
                   body:
@@ -41007,7 +40956,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: domainName
-                    paramOutput: domainName
+                    paramOutput: dnsCname + "." + customDomainName
                   - paramName: domainResource
                     paramOutput: |-
                       armappplatform.CustomDomainResource{
@@ -41024,9 +40973,9 @@ testModel:
                 pollerType: CustomDomainsClientUpdateResponse
                 responseOutput: |-
                   armappplatform.CustomDomainResource{
-                  Name: to.Ptr(domainName),
+                  Name: to.Ptr(dnsCname + "." + customDomainName),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/domains"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/domains/" + domainName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/domains/" + dnsCname + "." + customDomainName),
                   Properties: &armappplatform.CustomDomainProperties{
                   AppName: to.Ptr(appName),
                   CertName: to.Ptr("asc-certificate"),
@@ -41145,10 +41094,6 @@ testModel:
                 domainName:
                   type: string
                   value: $(dnsCname).$(customDomainName)
-              variablesOutput:
-                domainName:
-                  type: string
-                  value: dnsCname + "." + customDomainName
               responses:
                 '200':
                   body:
@@ -41221,7 +41166,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: domainName
-                    paramOutput: domainName
+                    paramOutput: dnsCname + "." + customDomainName
                   - paramName: options
                     paramOutput: nil
                 opName: Get
@@ -41230,9 +41175,9 @@ testModel:
                 originalFile: ''
                 responseOutput: |-
                   armappplatform.CustomDomainResource{
-                  Name: to.Ptr(domainName),
+                  Name: to.Ptr(dnsCname + "." + customDomainName),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/domains"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/domains/" + domainName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/domains/" + dnsCname + "." + customDomainName),
                   Properties: &armappplatform.CustomDomainProperties{
                   AppName: to.Ptr(appName),
                   CertName: to.Ptr("mycert"),
@@ -41307,10 +41252,6 @@ testModel:
                 domainName:
                   type: string
                   value: $(dnsCname).$(customDomainName)
-              variablesOutput:
-                domainName:
-                  type: string
-                  value: dnsCname + "." + customDomainName
               responses:
                 '200':
                   body:
@@ -41463,7 +41404,6 @@ testModel:
               secretVariables: []
               step: CustomDomains_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -41588,7 +41528,6 @@ testModel:
               secretVariables: []
               step: Apps_GetResourceUploadUrl
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -41636,7 +41575,6 @@ testModel:
               secretVariables: []
               step: Upload_File
               variables: {}
-              variablesOutput: {}
             - type: restCall
               operationId: Deployments_CreateOrUpdate
               description: Deployments_CreateOrUpdate
@@ -41772,7 +41710,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"blue"'
                   - paramName: deploymentResource
                     paramOutput: |-
                       armappplatform.DeploymentResource{
@@ -41808,9 +41746,9 @@ testModel:
                 pollerType: DeploymentsClientCreateOrUpdateResponse
                 responseOutput: |-
                   armappplatform.DeploymentResource{
-                  Name: to.Ptr(deploymentName),
+                  Name: to.Ptr("blue"),
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/deployments"),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/deployments/" + deploymentName),
+                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/deployments/" + "blue"),
                   Properties: &armappplatform.DeploymentResourceProperties{
                   Active: to.Ptr(false),
                   AppName: to.Ptr(appName),
@@ -42301,10 +42239,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: blue
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"blue"'
               responses:
                 '200':
                   body:
@@ -42851,7 +42785,6 @@ testModel:
               secretVariables: []
               step: Apps_Update
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -42958,7 +42891,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"blue"'
                   - paramName: options
                     paramOutput: nil
                 opName: BeginRestart
@@ -42994,10 +42927,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: blue
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"blue"'
               responses:
                 '200':
                   body: *ref_1267
@@ -43057,7 +42986,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"blue"'
                   - paramName: options
                     paramOutput: nil
                 opName: BeginStop
@@ -43093,10 +43022,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: blue
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"blue"'
               responses:
                 '200':
                   body: *ref_1270
@@ -43156,7 +43081,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"blue"'
                   - paramName: options
                     paramOutput: nil
                 opName: BeginStart
@@ -43192,10 +43117,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: blue
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"blue"'
               responses:
                 '200':
                   body: *ref_1273
@@ -43255,7 +43176,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"blue"'
                   - paramName: options
                     paramOutput: nil
                 opName: GetLogFileURL
@@ -43304,10 +43225,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: blue
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"blue"'
               responses:
                 '200':
                   body:
@@ -43575,7 +43492,6 @@ testModel:
               secretVariables: []
               step: Deployments_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -43863,7 +43779,6 @@ testModel:
               secretVariables: []
               step: Deployments_ListForCluster
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -44169,7 +44084,6 @@ testModel:
               secretVariables: []
               step: Services_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -44474,7 +44388,6 @@ testModel:
               secretVariables: []
               step: Services_ListBySubscription
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -44569,7 +44482,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: deploymentName
-                    paramOutput: deploymentName
+                    paramOutput: '"blue"'
                   - paramName: options
                     paramOutput: nil
                 opName: BeginDelete
@@ -44604,10 +44517,6 @@ testModel:
                 deploymentName:
                   type: string
                   value: blue
-              variablesOutput:
-                deploymentName:
-                  type: string
-                  value: '"blue"'
               responses:
                 '200':
                   body: *ref_1276
@@ -44667,7 +44576,7 @@ testModel:
                   - paramName: appName
                     paramOutput: appName
                   - paramName: domainName
-                    paramOutput: domainName
+                    paramOutput: dnsCname + "." + customDomainName
                   - paramName: options
                     paramOutput: nil
                 opName: BeginDelete
@@ -44702,10 +44611,6 @@ testModel:
                 domainName:
                   type: string
                   value: $(dnsCname).$(customDomainName)
-              variablesOutput:
-                domainName:
-                  type: string
-                  value: dnsCname + "." + customDomainName
               responses:
                 '200':
                   body: *ref_1278
@@ -44758,7 +44663,7 @@ testModel:
                   - paramName: serviceName
                     paramOutput: serviceName
                   - paramName: appName
-                    paramOutput: appName
+                    paramOutput: '"app01"'
                   - paramName: options
                     paramOutput: nil
                 opName: BeginDelete
@@ -44792,10 +44697,6 @@ testModel:
                 appName:
                   type: string
                   value: app01
-              variablesOutput:
-                appName:
-                  type: string
-                  value: '"app01"'
               responses:
                 '200':
                   body: *ref_1280
@@ -44848,7 +44749,7 @@ testModel:
                   - paramName: serviceName
                     paramOutput: serviceName
                   - paramName: certificateName
-                    paramOutput: certificateName
+                    paramOutput: '"asc-certificate"'
                   - paramName: options
                     paramOutput: nil
                 opName: BeginDelete
@@ -44882,10 +44783,6 @@ testModel:
                 certificateName:
                   type: string
                   value: asc-certificate
-              variablesOutput:
-                certificateName:
-                  type: string
-                  value: '"asc-certificate"'
               responses:
                 '200':
                   body: *ref_1282
@@ -44962,7 +44859,6 @@ testModel:
               secretVariables: []
               step: Services_Delete
               variables: {}
-              variablesOutput: {}
               responses:
                 '202':
                   body: *ref_1284
@@ -45118,7 +45014,6 @@ testModel:
               secretVariables: []
               step: Skus_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:
@@ -45254,7 +45149,6 @@ testModel:
               secretVariables: []
               step: Operations_List
               variables: {}
-              variablesOutput: {}
               responses:
                 '200':
                   body:

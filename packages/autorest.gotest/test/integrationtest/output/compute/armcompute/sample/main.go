@@ -127,11 +127,10 @@ func scenario0Sample() {
 	if err != nil {
 		panic(err)
 	}
-	fakeStepVar := "signalrswaggertest6"
 	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(ctx, resourceGroupName, "myVM", armcompute.VirtualMachine{
 		Location: to.Ptr(location),
 		Plan: &armcompute.Plan{
-			Name:      to.Ptr(fakeStepVar),
+			Name:      to.Ptr("signalrswaggertest6"),
 			Product:   to.Ptr("windows-data-science-vm"),
 			Publisher: to.Ptr("microsoft-ads"),
 		},

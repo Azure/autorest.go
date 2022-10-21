@@ -28,6 +28,8 @@ var (
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	letterRunes       = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	globalLocation    = "Global"
+	publicPort        = 6910
 	location          = getEnv("LOCATION", "westus")
 	resourceGroupName = getEnv("RESOURCE_GROUP_NAME", "scenarioTestTempGroup")
 	subscriptionId    = getEnv("AZURE_SUBSCRIPTION_ID", "")
@@ -92,7 +94,7 @@ func signalRSample() {
 
 	// From step SignalR_CreateOrUpdate
 	clientCreateOrUpdateResponsePoller, err := client.BeginCreateOrUpdate(ctx, resourceGroupName, resourceName, armsignalr.ResourceInfo{
-		Location: to.Ptr(location),
+		Location: to.Ptr(globalLocation + "-test2"),
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
 		},
@@ -143,6 +145,7 @@ func signalRSample() {
 				},
 			},
 			PublicNetworkAccess: to.Ptr("Enabled"),
+			PublicPort:          to.Ptr[int32](publicPort),
 			TLS: &armsignalr.TLSSettings{
 				ClientCertEnabled: to.Ptr(false),
 			},
