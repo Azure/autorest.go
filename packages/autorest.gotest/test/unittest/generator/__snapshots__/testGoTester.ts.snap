@@ -57,9 +57,8 @@ func ExampleExtensionsClient_Get() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.Extension = armagrifood.Extension{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
 // 	Name: to.Ptr(\\"provider.extension\\"),
@@ -96,9 +95,8 @@ func ExampleExtensionsClient_Update() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.Extension = armagrifood.Extension{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension\\"),
 // 	Name: to.Ptr(\\"provider.extension\\"),
@@ -158,10 +156,9 @@ SkipToken: nil,
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
         for _, v := range page.Value {
-            // TODO: use page
             _ = v
         }
-        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
         // page.ExtensionListResponse = armagrifood.ExtensionListResponse{
 // 	Value: []*armagrifood.Extension{
 // 		{
@@ -235,10 +232,9 @@ MaxPageSize: nil,
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
         for _, v := range page.Value {
-            // TODO: use page
             _ = v
         }
-        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
         // page.FarmBeatsExtensionListResponse = armagrifood.FarmBeatsExtensionListResponse{
 // 	Value: []*armagrifood.FarmBeatsExtension{
 // 		{
@@ -475,9 +471,8 @@ func ExampleFarmBeatsExtensionsClient_Get() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.FarmBeatsExtension = armagrifood.FarmBeatsExtension{
 // 	ID: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices\\"),
 // 	Name: to.Ptr(\\"DTN.ContentServices\\"),
@@ -735,9 +730,8 @@ func ExampleFarmBeatsModelsClient_Get() {
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.FarmBeats = armagrifood.FarmBeats{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
 // 	Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
@@ -782,9 +776,8 @@ Location: to.Ptr(\\"eastus2\\"),
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.FarmBeats = armagrifood.FarmBeats{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
 // 	Name: to.Ptr(\\"examples-farmbeatsResourceName\\"),
@@ -828,9 +821,8 @@ Tags: map[string]*string{
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.FarmBeats = armagrifood.FarmBeats{
 // 	ID: to.Ptr(\\"/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName\\"),
 // 	Name: to.Ptr(\\"examples-farmBeatsResourceName\\"),
@@ -890,10 +882,9 @@ SkipToken: nil,
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
         for _, v := range page.Value {
-            // TODO: use page
             _ = v
         }
-        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
         // page.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
 // 	Value: []*armagrifood.FarmBeats{
 // 		{
@@ -941,10 +932,9 @@ SkipToken: nil,
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
         for _, v := range page.Value {
-            // TODO: use page
             _ = v
         }
-        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
         // page.FarmBeatsListResponse = armagrifood.FarmBeatsListResponse{
 // 	Value: []*armagrifood.FarmBeats{
 // 		{
@@ -1015,9 +1005,8 @@ Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.CheckNameAvailabilityResponse = armagrifood.CheckNameAvailabilityResponse{
 // 	NameAvailable: to.Ptr(false),
 // 	Reason: to.Ptr(armagrifood.CheckNameAvailabilityReasonAlreadyExists),
@@ -1042,9 +1031,8 @@ Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
     if err != nil {
         log.Fatalf(\\"failed to finish the request: %v\\", err)
     }
-    // TODO: use response
     _ = res
-    // If HTTP returns as the '200' response defined in example definition, response struct should like: 
+    // If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
     // res.CheckNameAvailabilityResponse = armagrifood.CheckNameAvailabilityResponse{
 // 	NameAvailable: to.Ptr(true),
 // }
@@ -1352,10 +1340,9 @@ func ExampleOperationsClient_NewListPager() {
             log.Fatalf(\\"failed to advance page: %v\\", err)
         }
         for _, v := range page.Value {
-            // TODO: use page
             _ = v
         }
-        // If HTTP returns as the '200' response defined in example definition, page struct should like: 
+        // If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
         // page.OperationListResult = armagrifood.OperationListResult{
 // 	Value: []*armagrifood.Operation{
 // 		{

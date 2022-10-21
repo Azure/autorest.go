@@ -86,9 +86,8 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -225,9 +224,8 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -367,9 +365,8 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -501,9 +498,8 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -635,9 +631,8 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -730,9 +725,8 @@ func ExampleGalleryImageVersionsClient_BeginUpdate_updateASimpleGalleryImageVers
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -818,9 +812,8 @@ func ExampleGalleryImageVersionsClient_BeginUpdate_updateASimpleGalleryImageVers
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -886,9 +879,8 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithReplicatio
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -974,9 +966,8 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithSnapshotsA
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -1043,9 +1034,8 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithVhdAsASour
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -1114,9 +1104,8 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersion() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImageVersion = armcompute.GalleryImageVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -1210,10 +1199,9 @@ func ExampleGalleryImageVersionsClient_NewListByGalleryImagePager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.GalleryImageVersionList = armcompute.GalleryImageVersionList{
 		// 	Value: []*armcompute.GalleryImageVersion{
 		// 		{

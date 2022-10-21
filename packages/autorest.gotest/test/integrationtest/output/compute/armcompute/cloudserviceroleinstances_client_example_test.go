@@ -53,9 +53,8 @@ func ExampleCloudServiceRoleInstancesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.RoleInstance = armcompute.RoleInstance{
 	// 	Name: to.Ptr("{roleInstance-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/cloudServices/roleInstances"),
@@ -91,9 +90,8 @@ func ExampleCloudServiceRoleInstancesClient_GetInstanceView() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.RoleInstanceView = armcompute.RoleInstanceView{
 	// 	PlatformFaultDomain: to.Ptr[int32](0),
 	// 	PlatformUpdateDomain: to.Ptr[int32](0),
@@ -126,10 +124,9 @@ func ExampleCloudServiceRoleInstancesClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.RoleInstanceListResult = armcompute.RoleInstanceListResult{
 		// 	Value: []*armcompute.RoleInstance{
 		// 		{

@@ -35,10 +35,9 @@ func ExampleSKUsClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.ResourceSKUCollection = armappplatform.ResourceSKUCollection{
 		// 	Value: []*armappplatform.ResourceSKU{
 		// 		{

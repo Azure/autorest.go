@@ -38,10 +38,9 @@ func ExampleVirtualMachinesClient_NewListByLocationPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.VirtualMachineListResult = armcompute.VirtualMachineListResult{
 		// 	Value: []*armcompute.VirtualMachine{
 		// 		{
@@ -224,9 +223,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSe
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -344,9 +342,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSe
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -465,9 +462,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSe
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -587,9 +583,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUefiSettingsO
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -713,9 +708,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUserData() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("{vm-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -851,9 +845,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithNetworkInterf
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -970,9 +963,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1092,9 +1084,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1215,9 +1206,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1338,9 +1328,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatch
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1461,9 +1450,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchS
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1575,9 +1563,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createACustomImageVmFromAn
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1701,9 +1688,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAPlatformImageVmWith
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1829,9 +1815,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmFromACustomImage(
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -1935,9 +1920,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmFromAGeneralizedS
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2036,9 +2020,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmFromASpecializedS
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2140,9 +2123,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmInAVirtualMachine
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2259,9 +2241,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmInAnAvailabilityS
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2400,9 +2381,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithDiskEncryptio
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2544,9 +2524,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithHostEncryptio
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2676,9 +2655,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithScheduledEven
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2805,9 +2783,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithAMarketplaceI
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -2929,9 +2906,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithAnExtensionsT
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3054,9 +3030,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithBootDiagnosti
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3183,9 +3158,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEmptyDataDisk
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3321,9 +3295,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDi
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3451,9 +3424,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDi
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3580,9 +3552,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDi
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3705,9 +3676,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithManagedBootDi
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3822,9 +3792,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithPasswordAuthe
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -3934,9 +3903,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithPremiumStorag
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -4055,9 +4023,8 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithSshAuthentica
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -4185,9 +4152,8 @@ func ExampleVirtualMachinesClient_BeginUpdate_updateAVmByDetachingDataDisk() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -4329,9 +4295,8 @@ func ExampleVirtualMachinesClient_BeginUpdate_updateAVmByForceDetachingDataDisk(
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -4441,9 +4406,8 @@ func ExampleVirtualMachinesClient_Get_getAVirtualMachine() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -4568,9 +4532,8 @@ func ExampleVirtualMachinesClient_Get_getAVirtualMachinePlacedOnADedicatedHostGr
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachine = armcompute.VirtualMachine{
 	// 	Name: to.Ptr("myVM"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachines"),
@@ -4644,9 +4607,8 @@ func ExampleVirtualMachinesClient_InstanceView_getVirtualMachineInstanceView() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineInstanceView = armcompute.VirtualMachineInstanceView{
 	// 	BootDiagnostics: &armcompute.BootDiagnosticsInstanceView{
 	// 		ConsoleScreenshotBlobURI: to.Ptr("https://{myStorageAccount}.blob.core.windows.net/bootdiagnostics-myOsDisk/myOsDisk.screenshot.bmp"),
@@ -4785,9 +4747,8 @@ func ExampleVirtualMachinesClient_InstanceView_getInstanceViewOfAVirtualMachineP
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineInstanceView = armcompute.VirtualMachineInstanceView{
 	// 	AssignedHost: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/hostGroups/myHostGroup/hosts/myHost"),
 	// 	ComputerName: to.Ptr("myVM"),
@@ -4866,10 +4827,9 @@ func ExampleVirtualMachinesClient_NewListAvailableSizesPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.VirtualMachineSizeListResult = armcompute.VirtualMachineSizeListResult{
 		// 	Value: []*armcompute.VirtualMachineSize{
 		// 		{
@@ -4952,9 +4912,8 @@ func ExampleVirtualMachinesClient_RetrieveBootDiagnosticsData() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.RetrieveBootDiagnosticsDataResult = armcompute.RetrieveBootDiagnosticsDataResult{
 	// 	ConsoleScreenshotBlobURI: to.Ptr("https://storageuri/vm.screenshot.bmp?{sasKey}"),
 	// 	SerialConsoleLogBlobURI: to.Ptr("https://storageuri/vm.serialconsole.log?{sasKey}"),
@@ -4997,9 +4956,8 @@ func ExampleVirtualMachinesClient_BeginAssessPatches() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineAssessPatchesResult = armcompute.VirtualMachineAssessPatchesResult{
 	// 	AssessmentActivityID: to.Ptr("68f8b292-dfc2-4646-9781-33cc88631968"),
 	// 	AvailablePatches: []*armcompute.VirtualMachineSoftwarePatchProperties{
@@ -5065,9 +5023,8 @@ func ExampleVirtualMachinesClient_BeginInstallPatches() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineInstallPatchesResult = armcompute.VirtualMachineInstallPatchesResult{
 	// 	ExcludedPatchCount: to.Ptr[int32](0),
 	// 	FailedPatchCount: to.Ptr[int32](0),
@@ -5122,9 +5079,8 @@ func ExampleVirtualMachinesClient_BeginRunCommand() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.RunCommandResult = armcompute.RunCommandResult{
 	// 	Value: []*armcompute.InstanceViewStatus{
 	// 		{

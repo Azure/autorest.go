@@ -39,9 +39,8 @@ func ExampleDiskAccessesClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -78,9 +77,8 @@ func ExampleDiskAccessesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -108,9 +106,8 @@ func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResourceWithPri
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -159,9 +156,8 @@ func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResource() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -217,10 +213,9 @@ func ExampleDiskAccessesClient_NewListByResourceGroupPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.DiskAccessList = armcompute.DiskAccessList{
 		// 	Value: []*armcompute.DiskAccess{
 		// 		{
@@ -290,10 +285,9 @@ func ExampleDiskAccessesClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.DiskAccessList = armcompute.DiskAccessList{
 		// 	Value: []*armcompute.DiskAccess{
 		// 		{
@@ -360,9 +354,8 @@ func ExampleDiskAccessesClient_GetPrivateLinkResources() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.PrivateLinkResourceListResult = armcompute.PrivateLinkResourceListResult{
 	// 	Value: []*armcompute.PrivateLinkResource{
 	// 		{
@@ -406,9 +399,8 @@ func ExampleDiskAccessesClient_BeginUpdateAPrivateEndpointConnection() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.PrivateEndpointConnection = armcompute.PrivateEndpointConnection{
 	// 	Name: to.Ptr("myPrivateEndpointConnectionName"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
@@ -442,9 +434,8 @@ func ExampleDiskAccessesClient_GetAPrivateEndpointConnection() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.PrivateEndpointConnection = armcompute.PrivateEndpointConnection{
 	// 	Name: to.Ptr("myPrivateEndpointConnection"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
@@ -502,10 +493,9 @@ func ExampleDiskAccessesClient_NewListPrivateEndpointConnectionsPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.PrivateEndpointConnectionListResult = armcompute.PrivateEndpointConnectionListResult{
 		// 	Value: []*armcompute.PrivateEndpointConnection{
 		// 		{

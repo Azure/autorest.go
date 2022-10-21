@@ -36,10 +36,9 @@ func ExampleComputeClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.PaginatedComputeResourcesList = armmachinelearningservices.PaginatedComputeResourcesList{
 		// 	Value: []*armmachinelearningservices.ComputeResource{
 		// 		{
@@ -89,9 +88,8 @@ func ExampleComputeClient_Get_getAAksCompute() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.AKS{
 	// 		Description: to.Ptr("some compute"),
@@ -123,9 +121,8 @@ func ExampleComputeClient_Get_getAAmlCompute() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.AmlCompute{
 	// 		Properties: &armmachinelearningservices.AmlComputeProperties{
@@ -184,9 +181,8 @@ func ExampleComputeClient_Get_getAKubernetesCompute() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.Kubernetes{
 	// 		Description: to.Ptr("some compute"),
@@ -240,9 +236,8 @@ func ExampleComputeClient_Get_getAnComputeInstance() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.ComputeInstance{
 	// 		Description: to.Ptr("some compute"),
@@ -338,9 +333,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_attachAKubernetesCompute() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.Kubernetes{
 	// 		Description: to.Ptr("some compute"),
@@ -416,9 +410,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAAmlCompute() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.AmlCompute{
 	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
@@ -455,9 +448,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_createADataFactoryCompute() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.DataFactory{
 	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeDataFactory),
@@ -494,9 +486,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnAksCompute() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.AKS{
 	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
@@ -550,9 +541,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceCompute() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.ComputeInstance{
 	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
@@ -592,9 +582,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceComputeWith
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.ComputeInstance{
 	// 		ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
@@ -639,9 +628,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_updateAAmlCompute() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.AmlCompute{
 	// 		Properties: &armmachinelearningservices.AmlComputeProperties{
@@ -714,9 +702,8 @@ func ExampleComputeClient_BeginCreateOrUpdate_updateAnAksCompute() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.AKS{
 	// 		Properties: &armmachinelearningservices.AKSSchemaProperties{
@@ -763,9 +750,8 @@ func ExampleComputeClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ComputeResource = armmachinelearningservices.ComputeResource{
 	// 	Properties: &armmachinelearningservices.AmlCompute{
 	// 		Description: to.Ptr("some compute"),
@@ -818,10 +804,9 @@ func ExampleComputeClient_NewListNodesPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Nodes {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.AmlComputeNodesInformation = armmachinelearningservices.AmlComputeNodesInformation{
 		// 	Nodes: []*armmachinelearningservices.AmlComputeNodeInformation{
 		// 		{
@@ -858,9 +843,8 @@ func ExampleComputeClient_ListKeys() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmachinelearningservices.ComputeClientListKeysResponse{
 	// 	                            ComputeSecretsClassification: &armmachinelearningservices.AksComputeSecrets{
 	// 		AdminKubeConfig: to.Ptr("admin kube config..."),

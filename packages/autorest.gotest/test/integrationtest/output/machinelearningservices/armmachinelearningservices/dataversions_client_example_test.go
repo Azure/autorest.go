@@ -41,10 +41,9 @@ func ExampleDataVersionsClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.DataVersionBaseResourceArmPaginatedResult = armmachinelearningservices.DataVersionBaseResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.DataVersionBaseData{
 		// 		{
@@ -108,9 +107,8 @@ func ExampleDataVersionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DataVersionBaseData = armmachinelearningservices.DataVersionBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -166,9 +164,8 @@ func ExampleDataVersionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DataVersionBaseData = armmachinelearningservices.DataVersionBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),

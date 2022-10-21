@@ -49,9 +49,8 @@ func ExampleGalleryImagesClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImage = armcompute.GalleryImage{
 	// 	Name: to.Ptr("myGalleryImageName"),
 	// 	Location: to.Ptr("West US"),
@@ -99,9 +98,8 @@ func ExampleGalleryImagesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImage = armcompute.GalleryImage{
 	// 	Name: to.Ptr("myGalleryImageName"),
 	// 	Location: to.Ptr("West US"),
@@ -134,9 +132,8 @@ func ExampleGalleryImagesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryImage = armcompute.GalleryImage{
 	// 	Name: to.Ptr("myGalleryImageName"),
 	// 	Location: to.Ptr("West US"),
@@ -193,10 +190,9 @@ func ExampleGalleryImagesClient_NewListByGalleryPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.GalleryImageList = armcompute.GalleryImageList{
 		// 	Value: []*armcompute.GalleryImage{
 		// 		{

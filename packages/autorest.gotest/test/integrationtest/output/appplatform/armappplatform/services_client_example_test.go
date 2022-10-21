@@ -33,9 +33,8 @@ func ExampleServicesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ServiceResource = armappplatform.ServiceResource{
 	// 	Name: to.Ptr("myservice"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
@@ -116,9 +115,8 @@ func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ServiceResource = armappplatform.ServiceResource{
 	// 	Name: to.Ptr("myservice"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
@@ -207,9 +205,8 @@ func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdateVNetInjecti
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ServiceResource = armappplatform.ServiceResource{
 	// 	Name: to.Ptr("myservice"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
@@ -315,9 +312,8 @@ func ExampleServicesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ServiceResource = armappplatform.ServiceResource{
 	// 	Name: to.Ptr("myservice"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring"),
@@ -384,9 +380,8 @@ func ExampleServicesClient_ListTestKeys() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.TestKeys = armappplatform.TestKeys{
 	// 	Enabled: to.Ptr(true),
 	// 	PrimaryKey: to.Ptr("<primaryKey>"),
@@ -413,9 +408,8 @@ func ExampleServicesClient_RegenerateTestKey() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.TestKeys = armappplatform.TestKeys{
 	// 	Enabled: to.Ptr(true),
 	// 	PrimaryKey: to.Ptr("<primaryKey>"),
@@ -457,9 +451,8 @@ func ExampleServicesClient_EnableTestEndpoint() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.TestKeys = armappplatform.TestKeys{
 	// 	Enabled: to.Ptr(true),
 	// 	PrimaryKey: to.Ptr("<primaryKey>"),
@@ -487,9 +480,8 @@ func ExampleServicesClient_CheckNameAvailability() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.NameAvailability = armappplatform.NameAvailability{
 	// 	Message: to.Ptr("The name is already used."),
 	// 	NameAvailable: to.Ptr(false),
@@ -515,10 +507,9 @@ func ExampleServicesClient_NewListBySubscriptionPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.ServiceResourceList = armappplatform.ServiceResourceList{
 		// 	Value: []*armappplatform.ServiceResource{
 		// 		{
@@ -592,10 +583,9 @@ func ExampleServicesClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.ServiceResourceList = armappplatform.ServiceResourceList{
 		// 	Value: []*armappplatform.ServiceResource{
 		// 		{

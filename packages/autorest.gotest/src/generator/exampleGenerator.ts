@@ -28,7 +28,7 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
       }
 
       let fileName = exampleModel.operationGroup.language.go!.clientName.toLowerCase();
-      if (fileName !== 'client') {
+      if (fileName !== 'client' && fileName.endsWith('client')) {
         fileName = fileName.substring(0, fileName.length - 6) + '_client';
       }
 

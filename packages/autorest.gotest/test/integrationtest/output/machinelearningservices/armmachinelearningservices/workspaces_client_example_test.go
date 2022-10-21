@@ -33,9 +33,8 @@ func ExampleWorkspacesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Workspace = armmachinelearningservices.Workspace{
 	// 	Name: to.Ptr("testworkspace"),
 	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
@@ -165,9 +164,8 @@ func ExampleWorkspacesClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Workspace = armmachinelearningservices.Workspace{
 	// 	Name: to.Ptr("testworkspace"),
 	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
@@ -266,9 +264,8 @@ func ExampleWorkspacesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Workspace = armmachinelearningservices.Workspace{
 	// 	Name: to.Ptr("testworkspace"),
 	// 	Type: to.Ptr("Microsoft.MachineLearningServices/workspaces"),
@@ -310,10 +307,9 @@ func ExampleWorkspacesClient_NewListByResourceGroupPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.WorkspaceListResult = armmachinelearningservices.WorkspaceListResult{
 		// 	Value: []*armmachinelearningservices.Workspace{
 		// 		{
@@ -382,9 +378,8 @@ func ExampleWorkspacesClient_BeginDiagnose() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiagnoseResponseResult = armmachinelearningservices.DiagnoseResponseResult{
 	// 	Value: &armmachinelearningservices.DiagnoseResponseResultValue{
 	// 		ApplicationInsightsResults: []*armmachinelearningservices.DiagnoseResult{
@@ -428,9 +423,8 @@ func ExampleWorkspacesClient_ListKeys() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ListWorkspaceKeysResult = armmachinelearningservices.ListWorkspaceKeysResult{
 	// 	ContainerRegistryCredentials: &armmachinelearningservices.RegistryListCredentialsResult{
 	// 		Passwords: []*armmachinelearningservices.Password{
@@ -489,10 +483,9 @@ func ExampleWorkspacesClient_NewListBySubscriptionPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.WorkspaceListResult = armmachinelearningservices.WorkspaceListResult{
 		// 	Value: []*armmachinelearningservices.Workspace{
 		// 		{
@@ -544,9 +537,8 @@ func ExampleWorkspacesClient_ListNotebookAccessToken() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.NotebookAccessTokenResult = armmachinelearningservices.NotebookAccessTokenResult{
 	// 	ExpiresIn: to.Ptr[int32](28800),
 	// 	HostName: to.Ptr("Host product name"),
@@ -576,9 +568,8 @@ func ExampleWorkspacesClient_BeginPrepareNotebook() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.NotebookResourceInfo = armmachinelearningservices.NotebookResourceInfo{
 	// 	Fqdn: to.Ptr("testnotebook.notebooks.azure.com"),
 	// 	NotebookPreparationError: &armmachinelearningservices.NotebookPreparationError{
@@ -604,9 +595,8 @@ func ExampleWorkspacesClient_ListStorageAccountKeys() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ListStorageAccountKeysResult = armmachinelearningservices.ListStorageAccountKeysResult{
 	// }
 }
@@ -626,9 +616,8 @@ func ExampleWorkspacesClient_ListNotebookKeys() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ListNotebookKeysResult = armmachinelearningservices.ListNotebookKeysResult{
 	// }
 }
@@ -648,9 +637,8 @@ func ExampleWorkspacesClient_ListOutboundNetworkDependenciesEndpoints() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ExternalFQDNResponse = armmachinelearningservices.ExternalFQDNResponse{
 	// 	Value: []*armmachinelearningservices.FQDNEndpoints{
 	// 		{

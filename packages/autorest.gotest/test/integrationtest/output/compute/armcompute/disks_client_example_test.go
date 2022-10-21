@@ -47,9 +47,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDi
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -95,9 +94,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDi
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -141,9 +139,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByCopyingASnapshot
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -185,9 +182,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByImportingAnUnman
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -229,9 +225,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByImportingAnUnman
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -275,9 +270,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAPlatformImage
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -327,9 +321,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAnExistingMana
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk2"),
 	// 	Location: to.Ptr("West US"),
@@ -376,9 +369,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSecurityProfil
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("North Central US"),
@@ -428,9 +420,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSsdZrsAccountT
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -475,9 +466,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedUploadDisk() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -522,9 +512,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnEmptyManagedDiskInExtendedLo
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -569,9 +558,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnEmptyManagedDisk() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -616,9 +604,8 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnUltraManagedDiskWithLogicalS
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -661,9 +648,8 @@ func ExampleDisksClient_BeginUpdate_createOrUpdateABurstingEnabledManagedDisk() 
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -706,9 +692,8 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToAddPurchasePlan() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("westus"),
@@ -760,9 +745,8 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToAddSupportsHibernation()
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("westus"),
@@ -807,9 +791,8 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToChangeTier() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -846,9 +829,8 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToDisableBursting() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -884,9 +866,8 @@ func ExampleDisksClient_BeginUpdate_updateManagedDiskToRemoveDiskAccessResourceA
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myDisk"),
 	// 	Location: to.Ptr("West US"),
@@ -916,9 +897,8 @@ func ExampleDisksClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Disk = armcompute.Disk{
 	// 	Name: to.Ptr("myManagedDisk"),
 	// 	Type: to.Ptr("Microsoft.Compute/disks"),
@@ -996,10 +976,9 @@ func ExampleDisksClient_NewListByResourceGroupPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.DiskList = armcompute.DiskList{
 		// 	Value: []*armcompute.Disk{
 		// 		{
@@ -1126,10 +1105,9 @@ func ExampleDisksClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.DiskList = armcompute.DiskList{
 		// 	Value: []*armcompute.Disk{
 		// 		{

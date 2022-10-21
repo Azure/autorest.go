@@ -33,9 +33,8 @@ func ExampleAppsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.AppResource = armappplatform.AppResource{
 	// 	Name: to.Ptr("myapp"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps"),
@@ -103,9 +102,8 @@ func ExampleAppsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.AppResource = armappplatform.AppResource{
 	// 	Name: to.Ptr("myapp"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps"),
@@ -197,9 +195,8 @@ func ExampleAppsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.AppResource = armappplatform.AppResource{
 	// 	Name: to.Ptr("myapp"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps"),
@@ -249,10 +246,9 @@ func ExampleAppsClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
-			// TODO: use page
 			_ = v
 		}
-		// If HTTP returns as the '200' response defined in example definition, page struct should like:
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.AppResourceCollection = armappplatform.AppResourceCollection{
 		// 	Value: []*armappplatform.AppResource{
 		// 		{
@@ -303,9 +299,8 @@ func ExampleAppsClient_GetResourceUploadURL() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ResourceUploadDefinition = armappplatform.ResourceUploadDefinition{
 	// 	RelativePath: to.Ptr("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777"),
 	// 	UploadURL: to.Ptr("https://springcloudstorageaccount.file.core.windows.net/bd172614181f42e2853f6fd90029cda8/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777?sv=2018-03-28&sr=f&sig=SampleSignature&se=2019-08-01T10%3A42%3A21Z&sp=w"),
@@ -329,9 +324,8 @@ func ExampleAppsClient_ValidateDomain() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
-	// TODO: use response
 	_ = res
-	// If HTTP returns as the '200' response defined in example definition, response struct should like:
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.CustomDomainValidateResult = armappplatform.CustomDomainValidateResult{
 	// 	IsValid: to.Ptr(false),
 	// 	Message: to.Ptr("Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name"),
