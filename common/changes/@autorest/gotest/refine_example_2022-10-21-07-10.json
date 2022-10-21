@@ -2,8 +2,8 @@
   "changes": [
     {
       "packageName": "@autorest/gotest",
-      "comment": "Fix env and prefix string issue for API scenario test generation.",
-      "type": "patch"
+      "comment": "Refine example generation to provide more useful response info.",
+      "type": "minor"
     }
   ],
   "packageName": "@autorest/gotest"
