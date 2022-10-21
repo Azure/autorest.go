@@ -44,9 +44,10 @@ func ExampleJobsClient_NewListPager_listAutoMlJob() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.JobBaseData{
 		// 		{
@@ -171,9 +172,10 @@ func ExampleJobsClient_NewListPager_listCommandJob() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.JobBaseData{
 		// 		{
@@ -288,9 +290,10 @@ func ExampleJobsClient_NewListPager_listPipelineJob() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.JobBaseData{
 		// 		{
@@ -377,9 +380,10 @@ func ExampleJobsClient_NewListPager_listSweepJob() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.JobBaseResourceArmPaginatedResult = armmachinelearningservices.JobBaseResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.JobBaseData{
 		// 		{
@@ -504,8 +508,9 @@ func ExampleJobsClient_Get_getAutoMlJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -617,8 +622,9 @@ func ExampleJobsClient_Get_getCommandJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -720,8 +726,9 @@ func ExampleJobsClient_Get_getPipelineJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -795,8 +802,9 @@ func ExampleJobsClient_Get_getSweepJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -975,8 +983,9 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateAutoMlJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -1154,8 +1163,9 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateCommandJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -1297,8 +1307,9 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdatePipelineJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -1438,8 +1449,9 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateSweepJob() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.JobBaseData = armmachinelearningservices.JobBaseData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),

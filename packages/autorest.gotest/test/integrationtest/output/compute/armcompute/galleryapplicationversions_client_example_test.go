@@ -61,8 +61,9 @@ func ExampleGalleryApplicationVersionsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Type: to.Ptr("Microsoft.Compute/galleries/applications/versions"),
@@ -135,8 +136,9 @@ func ExampleGalleryApplicationVersionsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Type: to.Ptr("Microsoft.Compute/galleries/applications/versions"),
@@ -184,8 +186,9 @@ func ExampleGalleryApplicationVersionsClient_Get_getAGalleryApplicationVersionWi
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Location: to.Ptr("West US"),
@@ -241,8 +244,9 @@ func ExampleGalleryApplicationVersionsClient_Get_getAGalleryApplicationVersion()
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.GalleryApplicationVersion = armcompute.GalleryApplicationVersion{
 	// 	Name: to.Ptr("1.0.0"),
 	// 	Type: to.Ptr("Microsoft.Compute/galleries/applications/versions"),
@@ -314,9 +318,10 @@ func ExampleGalleryApplicationVersionsClient_NewListByGalleryApplicationPager() 
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.GalleryApplicationVersionList = armcompute.GalleryApplicationVersionList{
 		// 	Value: []*armcompute.GalleryApplicationVersion{
 		// 		{

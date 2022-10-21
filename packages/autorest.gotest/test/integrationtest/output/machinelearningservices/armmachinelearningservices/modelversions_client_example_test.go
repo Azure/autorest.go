@@ -46,9 +46,10 @@ func ExampleModelVersionsClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.ModelVersionResourceArmPaginatedResult = armmachinelearningservices.ModelVersionResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.ModelVersionData{
 		// 		{
@@ -119,8 +120,9 @@ func ExampleModelVersionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ModelVersionData = armmachinelearningservices.ModelVersionData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -190,8 +192,9 @@ func ExampleModelVersionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.ModelVersionData = armmachinelearningservices.ModelVersionData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),

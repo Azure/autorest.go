@@ -51,8 +51,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlob
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -108,8 +109,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlob
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -167,8 +169,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAMana
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -228,8 +231,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAMana
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -289,8 +293,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnap
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -350,8 +355,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnap
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -402,8 +408,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAnExi
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -467,8 +474,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -534,8 +542,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -605,8 +614,9 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -665,8 +675,9 @@ func ExampleImagesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -724,8 +735,9 @@ func ExampleImagesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.Image = armcompute.Image{
 	// 	Name: to.Ptr("myImage"),
 	// 	Type: to.Ptr("Microsoft.Compute/images"),
@@ -783,9 +795,10 @@ func ExampleImagesClient_NewListByResourceGroupPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.ImageListResult = armcompute.ImageListResult{
 		// 	Value: []*armcompute.Image{
 		// 		{
@@ -845,9 +858,10 @@ func ExampleImagesClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.ImageListResult = armcompute.ImageListResult{
 		// 	Value: []*armcompute.Image{
 		// 		{

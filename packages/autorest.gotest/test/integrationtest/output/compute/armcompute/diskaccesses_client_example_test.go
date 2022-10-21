@@ -39,8 +39,9 @@ func ExampleDiskAccessesClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -77,8 +78,9 @@ func ExampleDiskAccessesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -106,8 +108,9 @@ func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResourceWithPri
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -156,8 +159,9 @@ func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResource() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DiskAccess = armcompute.DiskAccess{
 	// 	Name: to.Ptr("myDiskAccess"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses"),
@@ -213,9 +217,10 @@ func ExampleDiskAccessesClient_NewListByResourceGroupPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.DiskAccessList = armcompute.DiskAccessList{
 		// 	Value: []*armcompute.DiskAccess{
 		// 		{
@@ -285,9 +290,10 @@ func ExampleDiskAccessesClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.DiskAccessList = armcompute.DiskAccessList{
 		// 	Value: []*armcompute.DiskAccess{
 		// 		{
@@ -354,8 +360,9 @@ func ExampleDiskAccessesClient_GetPrivateLinkResources() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.PrivateLinkResourceListResult = armcompute.PrivateLinkResourceListResult{
 	// 	Value: []*armcompute.PrivateLinkResource{
 	// 		{
@@ -399,8 +406,9 @@ func ExampleDiskAccessesClient_BeginUpdateAPrivateEndpointConnection() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.PrivateEndpointConnection = armcompute.PrivateEndpointConnection{
 	// 	Name: to.Ptr("myPrivateEndpointConnectionName"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
@@ -434,8 +442,9 @@ func ExampleDiskAccessesClient_GetAPrivateEndpointConnection() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.PrivateEndpointConnection = armcompute.PrivateEndpointConnection{
 	// 	Name: to.Ptr("myPrivateEndpointConnection"),
 	// 	Type: to.Ptr("Microsoft.Compute/diskAccesses/PrivateEndpointConnections"),
@@ -493,9 +502,10 @@ func ExampleDiskAccessesClient_NewListPrivateEndpointConnectionsPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.PrivateEndpointConnectionListResult = armcompute.PrivateEndpointConnectionListResult{
 		// 	Value: []*armcompute.PrivateEndpointConnection{
 		// 		{

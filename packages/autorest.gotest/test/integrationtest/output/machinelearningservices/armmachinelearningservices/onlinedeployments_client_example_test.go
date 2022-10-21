@@ -39,9 +39,10 @@ func ExampleOnlineDeploymentsClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.OnlineDeploymentTrackedResourceArmPaginatedResult = armmachinelearningservices.OnlineDeploymentTrackedResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.OnlineDeploymentData{
 		// 		{
@@ -166,8 +167,9 @@ func ExampleOnlineDeploymentsClient_Get_getKubernetesOnlineDeployment() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -267,8 +269,9 @@ func ExampleOnlineDeploymentsClient_Get_getManagedOnlineDeployment() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -387,8 +390,9 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateKubernetesOnlineDeployment
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -512,8 +516,9 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateManagedOnlineDeployment() 
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -675,8 +680,9 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateKubernetes
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -838,8 +844,9 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateManagedOnl
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.OnlineDeploymentData = armmachinelearningservices.OnlineDeploymentData{
 	// 	Name: to.Ptr("string"),
 	// 	Type: to.Ptr("string"),
@@ -937,8 +944,9 @@ func ExampleOnlineDeploymentsClient_GetLogs() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.DeploymentLogs = armmachinelearningservices.DeploymentLogs{
 	// 	Content: to.Ptr("string"),
 	// }
@@ -964,9 +972,10 @@ func ExampleOnlineDeploymentsClient_NewListSKUsPager_listKubernetesOnlineDeploym
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.SKUResourceArmPaginatedResult = armmachinelearningservices.SKUResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.SKUResource{
 		// 		{
@@ -1006,9 +1015,10 @@ func ExampleOnlineDeploymentsClient_NewListSKUsPager_listManagedOnlineDeployment
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.SKUResourceArmPaginatedResult = armmachinelearningservices.SKUResourceArmPaginatedResult{
 		// 	Value: []*armmachinelearningservices.SKUResource{
 		// 		{

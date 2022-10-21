@@ -36,9 +36,10 @@ func ExampleVirtualMachineScaleSetsClient_NewListByLocationPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.VirtualMachineScaleSetListResult = armcompute.VirtualMachineScaleSetListResult{
 		// 	Value: []*armcompute.VirtualMachineScaleSet{
 		// 		{
@@ -260,8 +261,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createACustomImage
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -409,8 +411,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAPlatformIma
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -555,8 +558,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -697,8 +701,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -834,8 +839,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -983,8 +989,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -1161,8 +1168,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -1337,8 +1345,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -1501,8 +1510,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -1662,8 +1672,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -1820,8 +1831,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -1987,8 +1999,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -2148,8 +2161,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -2307,8 +2321,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -2474,8 +2489,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -2652,8 +2668,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -2814,8 +2831,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -2991,8 +3009,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -3166,8 +3185,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -3320,8 +3340,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -3469,8 +3490,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -3627,8 +3649,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -3788,8 +3811,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -3944,8 +3968,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -4114,8 +4139,9 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("{vmss-name}"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -4250,8 +4276,9 @@ func ExampleVirtualMachineScaleSetsClient_Get_getAVirtualMachineScaleSetPlacedOn
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("myVirtualMachineScaleSet"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),
@@ -4348,8 +4375,9 @@ func ExampleVirtualMachineScaleSetsClient_Get_getAVirtualMachineScaleSetWithUser
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.VirtualMachineScaleSet = armcompute.VirtualMachineScaleSet{
 	// 	Name: to.Ptr("myVirtualMachineScaleSet"),
 	// 	Type: to.Ptr("Microsoft.Compute/virtualMachineScaleSets"),

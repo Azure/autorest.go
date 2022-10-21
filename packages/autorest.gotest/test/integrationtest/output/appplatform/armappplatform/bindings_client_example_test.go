@@ -33,8 +33,9 @@ func ExampleBindingsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.BindingResource = armappplatform.BindingResource{
 	// 	Name: to.Ptr("mybinding"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
@@ -82,8 +83,9 @@ func ExampleBindingsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.BindingResource = armappplatform.BindingResource{
 	// 	Name: to.Ptr("mybinding"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
@@ -151,8 +153,9 @@ func ExampleBindingsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
-	// If the HTTP response code is 200 as defined in example definition, your response structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res.BindingResource = armappplatform.BindingResource{
 	// 	Name: to.Ptr("mybinding"),
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
@@ -190,9 +193,10 @@ func ExampleBindingsClient_NewListPager() {
 			log.Fatalf("failed to advance page: %v", err)
 		}
 		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
-		// If the HTTP response code is 200 as defined in example definition, your page structure would look like this. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page.BindingResourceCollection = armappplatform.BindingResourceCollection{
 		// 	Value: []*armappplatform.BindingResource{
 		// 		{
