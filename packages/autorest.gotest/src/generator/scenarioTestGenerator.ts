@@ -15,7 +15,6 @@ import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { MockTestDataRender } from './mockTestGenerator';
 import { OavStepType } from '@autorest/testmodeler/dist/src/common/constant';
 import { Step, Variable } from 'oav/dist/lib/apiScenario/apiScenarioTypes';
-import { assert } from 'console';
 
 export class ScenarioTestDataRender extends MockTestDataRender {
   packagePrefixForGlobalVariables = 'testsuite.';
