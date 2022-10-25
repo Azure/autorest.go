@@ -1,6 +1,20 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Wed, 24 Aug 2022 06:43:47 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Oct 2022 03:01:04 GMT and should not be manually modified.
+
+## 4.4.0
+Tue, 25 Oct 2022 03:01:04 GMT
+
+### Minor changes
+
+- Support refer usage for all types of variables and enhance support for step variables.
+- Refine example generation to provide more useful response info.
+
+### Patches
+
+- Fix env and prefix string issue for API scenario test generation.
+- Fix parse problem for object param in example file.
+- Fix wrong camel and snake method.
 
 ## 4.3.0
 Wed, 24 Aug 2022 06:43:47 GMT
