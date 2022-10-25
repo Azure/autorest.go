@@ -131,11 +131,10 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 	// From step Create_a_vm_with_Host_Encryption_using_encryptionAtHost_property
 	virtualMachinesClient, err := armcompute.NewVirtualMachinesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	testsuite.fakeStepVar = "signalrswaggertest6"
 	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, "myVM", armcompute.VirtualMachine{
 		Location: to.Ptr(testsuite.location),
 		Plan: &armcompute.Plan{
-			Name:      to.Ptr(testsuite.fakeStepVar),
+			Name:      to.Ptr("signalrswaggertest6"),
 			Product:   to.Ptr("windows-data-science-vm"),
 			Publisher: to.Ptr("microsoft-ads"),
 		},

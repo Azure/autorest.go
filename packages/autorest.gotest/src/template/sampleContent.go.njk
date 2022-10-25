@@ -17,13 +17,6 @@
         {%- set _ = allVariables.push(clientVariable) %}
         {%- endif %}
     {%- endif %}
-    {%- for name, variable in step.variablesOutput %}
-        {%- if variable.type === "prefix-string" %}
-    {{name}} {%- if allVariables.indexOf(name)<0 %}:{%- set _ = allVariables.push(name) %}{%- endif %}= generateAlphaNumericID({{variable.value}}, 6)
-        {%- else %}
-    {{name}} {%- if allVariables.indexOf(name)<0 %}:{%- set _ = allVariables.push(name) %}{%- endif %}= {{variable.value}}
-        {%- endif %}
-    {%- endfor %}
     {%- if step.type == "restCall" %}        
         {%- if example.checkResponse %}
             {%- set resVariable = jsFunc.genVariableName(example.returnInfo[0]) %}

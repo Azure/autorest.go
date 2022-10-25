@@ -2,6 +2,32 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.4.0",
+      "tag": "@autorest/gotest_v4.4.0",
+      "date": "Tue, 25 Oct 2022 03:01:04 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix env and prefix string issue for API scenario test generation."
+          },
+          {
+            "comment": "Fix parse problem for object param in example file."
+          },
+          {
+            "comment": "Fix wrong camel and snake method."
+          }
+        ],
+        "minor": [
+          {
+            "comment": "Support refer usage for all types of variables and enhance support for step variables."
+          },
+          {
+            "comment": "Refine example generation to provide more useful response info."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.3.0",
       "tag": "@autorest/gotest_v4.3.0",
       "date": "Wed, 24 Aug 2022 06:43:47 GMT",

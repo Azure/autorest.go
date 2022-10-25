@@ -4,6 +4,12 @@ scope: ResourceGroup
 # variables:
 #   resourceName: signalrswaggertest4
 
+variables:
+  globalLocation: Global
+  publicPort:
+    type: int
+    value: 6910
+
 scenarios:
   - scenario: SignalR
     description: Microsoft.SignalRService/Basic_CRUD
@@ -22,6 +28,13 @@ scenarios:
       #     Also, some validations like for keys kike IP or pec ID needs to be suppressed
       - step: SignalR_CreateOrUpdate
         exampleFile: ../examples/SignalR_CreateOrUpdate.json
+        requestUpdate:
+          - replace: /parameters/properties/publicPort
+            value: $(publicPort)
+          - replace: /parameters/location
+            value: $(location)-test1
+        variables:
+          location: $(globalLocation)-test2
         outputVariables:
           signalRId:
             fromResponse: /id
