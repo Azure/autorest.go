@@ -21,7 +21,8 @@ export async function generateGoModFile(session: Session<CodeModel>, existingGoM
   if (existingGoMod === null) {
     // no preexisting go.mod file, generate the default one
     const modName = await session.getValue('module', 'none');
-    if (modName === 'none') {
+    const subPackage = await session.getValue('sub-package', '');
+    if (modName === 'none' || subPackage !== '') {
       return '';
     }
     let text = `module ${modName}\n\n`;

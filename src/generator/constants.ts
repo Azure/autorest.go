@@ -32,11 +32,14 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
   }
   // data-plane clients must manage their own constants for these values
   if (<boolean>session.model.language.go!.azureARM) {
-    const version = await getModuleVersion(session);
-    text += `const (\n`;
-    text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
-    text += `\tmoduleVersion = "v${version}"\n`;
-    text += ')\n\n';
+    const subPackage = await session.getValue('sub-package', '');
+    if (subPackage === '') {
+      const version = await getModuleVersion(session);
+      text += `const (\n`;
+      text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
+      text += `\tmoduleVersion = "v${version}"\n`;
+      text += ')\n\n';
+    }
   }
   for (const enm of values(getEnums(session.model.schemas))) {
     if (enm.desc) {

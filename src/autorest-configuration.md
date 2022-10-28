@@ -62,6 +62,9 @@ help-content:
       - key: module
         type: string
         description: The name of the Go module written to go.mod.  Omit to skip go.mod generation.
+      - key: sub-package
+        type: string
+        description: If you want to generate a sub package, you need to separate the sub-package path from the module path.
       - key: azcore-version
         description: Semantic version of azcore without the leading 'v' to use if different from the default version (e.g. 1.2.3).
         type: string

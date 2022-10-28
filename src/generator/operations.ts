@@ -207,12 +207,22 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '\t}\n';
     }
     if (azureARM) {
-      clientText += '\tep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint\n'
+      clientText += '\tep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint\n';
       clientText += '\tif c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {\n';
       clientText += '\t\tep = c.Endpoint\n';
       clientText += '\t}\n';
-      clientText += "\tpl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)\n"
-      clientText += "\tif err != nil {\n"
+      const subPackage = await session.getValue('sub-package', '');
+      if (subPackage === '') {
+        clientText += "\tpl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)\n";
+      } else {
+        const modName = await session.getValue('module', '');
+        if (modName === '') {
+          throw new Error(`cannot generate sub package without module specific`);
+        }
+        imports.add(`${modName}/internal`)
+        clientText += "\tpl, err := armruntime.NewPipeline(internal.ModuleName, internal.ModuleVersion, credential, runtime.PipelineOptions{}, options)\n";
+      }
+      clientText += "\tif err != nil {\n";
       clientText += '\t\treturn nil, err\n';
       clientText += '\t}\n';
     }
@@ -298,13 +308,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (azureARM) {
       clientText += `\t\t${group.language.go!.hostParamName}: ep,\n`;
       clientText += `pl: pl,\n`;
-    } else if (azureARM) {
-      let clientOpts = 'options'
-      if (optionsType != 'azcore.ClientOptions') {
-        // optionsType is a generated type which embeds azcore.ClientOptions
-        clientOpts = '&options.ClientOptions'
-      }
-      clientText += `\t\tpl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, ${clientOpts}),\n`;
     } else {
       clientText += '\t\tpl: pl,\n';
     }
