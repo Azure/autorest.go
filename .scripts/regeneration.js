@@ -147,7 +147,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
         console.log('generating ' + inputFile);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
+        exec('autorest --use=. --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
     });
 }
 
@@ -162,7 +162,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
         console.log('generating ' + readme);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
+        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
 }
 
@@ -176,7 +176,7 @@ function cleanGeneratedFiles(outputDir) {
         if (dirEnt === null) {
             break;
         }
-        if (dirEnt.isFile() && dirEnt.name.startsWith('zz_generated_')) {
+        if (dirEnt.isFile() && dirEnt.name.startsWith('zz_')) {
             fs.unlinkSync(dir.path + '/' + dirEnt.name);
         }
     }
