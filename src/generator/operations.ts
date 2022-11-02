@@ -947,6 +947,30 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
     text += '\treturn req, nil\n';
+  } else if (mediaType === 'form') {
+    const emitFormData = function (param: Parameter, setter: string): string {
+      let formDataText = '';
+      if (param.required === true) {
+        formDataText = `\t${setter}\n`;
+      } else {
+        formDataText = emitParamGroupCheck(<GroupProperty>param.language.go!.paramGroup, param);
+        formDataText += `\t\t${setter}\n`;
+        formDataText += `\t}\n`;
+      }
+      return formDataText;
+    }
+    imports.add('net/url');
+    imports.add('strings');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+    text += '\tformData := url.Values{}\n';
+    for (const param of values(aggregateParameters(op))) {
+      if (param.protocol.http?.in === 'body') {
+        const setter = `formData.Set("${param.language.go!.serializedName}", ${formatParamValue(param, imports)})`;
+        text += emitFormData(param, setter);
+      }
+    }
+    text += `\tbody := streaming.NopCloser(strings.NewReader(formData.Encode()))\n`;
+    text += `\treturn req, req.SetBody(body, "application/x-www-form-urlencoded")\n`;
   } else {
     text += `\treturn req, nil\n`;
   }

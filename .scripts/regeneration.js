@@ -120,6 +120,9 @@ generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consu
 const databoxedge = fullPath('test/databoxedge/2021-02-01/armdataboxedge/autorest.md');
 generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--remove-unreferenced-types');
 
+const acr = 'https://github.com/Azure/azure-rest-api-specs/blob/195cd610db0accd0422c3e00a72df739ab4de677/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
+generate("azacr", acr, 'test/acr/2021-07-01/azacr', '--module="azacr" --openapi-type="data-plane"');
+
 generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
 
 function should_generate(name) {
