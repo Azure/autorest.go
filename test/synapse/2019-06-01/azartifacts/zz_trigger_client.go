@@ -254,7 +254,7 @@ func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (Trig
 // NewGetTriggersByWorkspacePager - Lists triggers.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
+//   - options - TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.NewGetTriggersByWorkspacePager
 //     method.
 func (client *triggerClient) NewGetTriggersByWorkspacePager(options *TriggerClientGetTriggersByWorkspaceOptions) *runtime.Pager[TriggerClientGetTriggersByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TriggerClientGetTriggersByWorkspaceResponse]{

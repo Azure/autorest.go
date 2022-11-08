@@ -287,7 +287,7 @@ func (client *GalleryApplicationVersionsClient) getHandleResponse(resp *http.Res
 //   - galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 //   - galleryApplicationName - The name of the Shared Application Gallery Application Definition from which the Application Versions
 //     are to be listed.
-//   - options - GalleryApplicationVersionsClientListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersionsClient.ListByGalleryApplication
+//   - options - GalleryApplicationVersionsClientListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersionsClient.NewListByGalleryApplicationPager
 //     method.
 func (client *GalleryApplicationVersionsClient) NewListByGalleryApplicationPager(resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationVersionsClientListByGalleryApplicationOptions) *runtime.Pager[GalleryApplicationVersionsClientListByGalleryApplicationResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleryApplicationVersionsClientListByGalleryApplicationResponse]{

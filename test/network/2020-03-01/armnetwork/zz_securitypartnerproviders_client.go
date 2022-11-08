@@ -252,7 +252,7 @@ func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Respo
 // NewListPager - Gets all the Security Partner Providers in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
+//   - options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.NewListPager
 //     method.
 func (client *SecurityPartnerProvidersClient) NewListPager(options *SecurityPartnerProvidersClientListOptions) *runtime.Pager[SecurityPartnerProvidersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SecurityPartnerProvidersClientListResponse]{
@@ -313,7 +313,7 @@ func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Resp
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
+//   - options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.NewListByResourceGroupPager
 //     method.
 func (client *SecurityPartnerProvidersClient) NewListByResourceGroupPager(resourceGroupName string, options *SecurityPartnerProvidersClientListByResourceGroupOptions) *runtime.Pager[SecurityPartnerProvidersClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SecurityPartnerProvidersClientListByResourceGroupResponse]{

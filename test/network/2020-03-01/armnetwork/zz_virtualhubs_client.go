@@ -250,7 +250,7 @@ func (client *VirtualHubsClient) getHandleResponse(resp *http.Response) (Virtual
 // NewListPager - Lists all the VirtualHubs in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VirtualHubsClientListOptions contains the optional parameters for the VirtualHubsClient.List method.
+//   - options - VirtualHubsClientListOptions contains the optional parameters for the VirtualHubsClient.NewListPager method.
 func (client *VirtualHubsClient) NewListPager(options *VirtualHubsClientListOptions) *runtime.Pager[VirtualHubsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualHubsClientListResponse]{
 		More: func(page VirtualHubsClientListResponse) bool {
@@ -310,7 +310,7 @@ func (client *VirtualHubsClient) listHandleResponse(resp *http.Response) (Virtua
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The resource group name of the VirtualHub.
-//   - options - VirtualHubsClientListByResourceGroupOptions contains the optional parameters for the VirtualHubsClient.ListByResourceGroup
+//   - options - VirtualHubsClientListByResourceGroupOptions contains the optional parameters for the VirtualHubsClient.NewListByResourceGroupPager
 //     method.
 func (client *VirtualHubsClient) NewListByResourceGroupPager(resourceGroupName string, options *VirtualHubsClientListByResourceGroupOptions) *runtime.Pager[VirtualHubsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualHubsClientListByResourceGroupResponse]{

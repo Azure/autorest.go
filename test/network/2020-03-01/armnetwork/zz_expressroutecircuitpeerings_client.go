@@ -269,7 +269,7 @@ func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *http.Re
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - circuitName - The name of the express route circuit.
-//   - options - ExpressRouteCircuitPeeringsClientListOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.List
+//   - options - ExpressRouteCircuitPeeringsClientListOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.NewListPager
 //     method.
 func (client *ExpressRouteCircuitPeeringsClient) NewListPager(resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsClientListOptions) *runtime.Pager[ExpressRouteCircuitPeeringsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCircuitPeeringsClientListResponse]{

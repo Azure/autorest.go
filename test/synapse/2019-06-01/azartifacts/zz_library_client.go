@@ -360,7 +360,7 @@ func (client *libraryClient) getOperationResultHandleResponse(resp *http.Respons
 // NewListPager - Lists Library.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - LibraryClientListOptions contains the optional parameters for the libraryClient.List method.
+//   - options - LibraryClientListOptions contains the optional parameters for the libraryClient.NewListPager method.
 func (client *libraryClient) NewListPager(options *LibraryClientListOptions) *runtime.Pager[LibraryClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LibraryClientListResponse]{
 		More: func(page LibraryClientListResponse) bool {

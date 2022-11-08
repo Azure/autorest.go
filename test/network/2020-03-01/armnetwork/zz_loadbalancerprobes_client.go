@@ -123,7 +123,8 @@ func (client *LoadBalancerProbesClient) getHandleResponse(resp *http.Response) (
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
-//   - options - LoadBalancerProbesClientListOptions contains the optional parameters for the LoadBalancerProbesClient.List method.
+//   - options - LoadBalancerProbesClientListOptions contains the optional parameters for the LoadBalancerProbesClient.NewListPager
+//     method.
 func (client *LoadBalancerProbesClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesClientListOptions) *runtime.Pager[LoadBalancerProbesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancerProbesClientListResponse]{
 		More: func(page LoadBalancerProbesClientListResponse) bool {

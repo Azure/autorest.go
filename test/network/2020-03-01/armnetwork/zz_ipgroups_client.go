@@ -253,7 +253,7 @@ func (client *IPGroupsClient) getHandleResponse(resp *http.Response) (IPGroupsCl
 // NewListPager - Gets all IpGroups in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - IPGroupsClientListOptions contains the optional parameters for the IPGroupsClient.List method.
+//   - options - IPGroupsClientListOptions contains the optional parameters for the IPGroupsClient.NewListPager method.
 func (client *IPGroupsClient) NewListPager(options *IPGroupsClientListOptions) *runtime.Pager[IPGroupsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[IPGroupsClientListResponse]{
 		More: func(page IPGroupsClientListResponse) bool {
@@ -313,7 +313,7 @@ func (client *IPGroupsClient) listHandleResponse(resp *http.Response) (IPGroupsC
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - IPGroupsClientListByResourceGroupOptions contains the optional parameters for the IPGroupsClient.ListByResourceGroup
+//   - options - IPGroupsClientListByResourceGroupOptions contains the optional parameters for the IPGroupsClient.NewListByResourceGroupPager
 //     method.
 func (client *IPGroupsClient) NewListByResourceGroupPager(resourceGroupName string, options *IPGroupsClientListByResourceGroupOptions) *runtime.Pager[IPGroupsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[IPGroupsClientListByResourceGroupResponse]{

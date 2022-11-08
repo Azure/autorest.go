@@ -255,7 +255,7 @@ func (client *LoadBalancersClient) getHandleResponse(resp *http.Response) (LoadB
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - LoadBalancersClientListOptions contains the optional parameters for the LoadBalancersClient.List method.
+//   - options - LoadBalancersClientListOptions contains the optional parameters for the LoadBalancersClient.NewListPager method.
 func (client *LoadBalancersClient) NewListPager(resourceGroupName string, options *LoadBalancersClientListOptions) *runtime.Pager[LoadBalancersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancersClientListResponse]{
 		More: func(page LoadBalancersClientListResponse) bool {
@@ -318,7 +318,8 @@ func (client *LoadBalancersClient) listHandleResponse(resp *http.Response) (Load
 // NewListAllPager - Gets all the load balancers in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - LoadBalancersClientListAllOptions contains the optional parameters for the LoadBalancersClient.ListAll method.
+//   - options - LoadBalancersClientListAllOptions contains the optional parameters for the LoadBalancersClient.NewListAllPager
+//     method.
 func (client *LoadBalancersClient) NewListAllPager(options *LoadBalancersClientListAllOptions) *runtime.Pager[LoadBalancersClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancersClientListAllResponse]{
 		More: func(page LoadBalancersClientListAllResponse) bool {

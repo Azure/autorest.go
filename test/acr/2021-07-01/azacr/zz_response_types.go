@@ -184,7 +184,7 @@ type ContainerRegistryClientGetManifestResponse struct {
 	ManifestWrapper
 }
 
-// ContainerRegistryClientGetManifestsResponse contains the response from method containerRegistryClient.GetManifests.
+// ContainerRegistryClientGetManifestsResponse contains the response from method containerRegistryClient.NewGetManifestsPager.
 type ContainerRegistryClientGetManifestsResponse struct {
 	Manifests
 	// Link contains the information returned from the Link header response.
@@ -196,7 +196,7 @@ type ContainerRegistryClientGetPropertiesResponse struct {
 	ContainerRepositoryProperties
 }
 
-// ContainerRegistryClientGetRepositoriesResponse contains the response from method containerRegistryClient.GetRepositories.
+// ContainerRegistryClientGetRepositoriesResponse contains the response from method containerRegistryClient.NewGetRepositoriesPager.
 type ContainerRegistryClientGetRepositoriesResponse struct {
 	Repositories
 	// Link contains the information returned from the Link header response.
@@ -208,7 +208,7 @@ type ContainerRegistryClientGetTagPropertiesResponse struct {
 	ArtifactTagProperties
 }
 
-// ContainerRegistryClientGetTagsResponse contains the response from method containerRegistryClient.GetTags.
+// ContainerRegistryClientGetTagsResponse contains the response from method containerRegistryClient.NewGetTagsPager.
 type ContainerRegistryClientGetTagsResponse struct {
 	TagList
 	// Link contains the information returned from the Link header response.

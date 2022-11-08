@@ -61,7 +61,7 @@ func NewInterfaceLoadBalancersClient(subscriptionID string, credential azcore.To
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
-//   - options - InterfaceLoadBalancersClientListOptions contains the optional parameters for the InterfaceLoadBalancersClient.List
+//   - options - InterfaceLoadBalancersClientListOptions contains the optional parameters for the InterfaceLoadBalancersClient.NewListPager
 //     method.
 func (client *InterfaceLoadBalancersClient) NewListPager(resourceGroupName string, networkInterfaceName string, options *InterfaceLoadBalancersClientListOptions) *runtime.Pager[InterfaceLoadBalancersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InterfaceLoadBalancersClientListResponse]{

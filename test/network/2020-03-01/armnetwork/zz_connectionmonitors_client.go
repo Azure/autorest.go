@@ -268,7 +268,8 @@ func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group containing Network Watcher.
 //   - networkWatcherName - The name of the Network Watcher resource.
-//   - options - ConnectionMonitorsClientListOptions contains the optional parameters for the ConnectionMonitorsClient.List method.
+//   - options - ConnectionMonitorsClientListOptions contains the optional parameters for the ConnectionMonitorsClient.NewListPager
+//     method.
 func (client *ConnectionMonitorsClient) NewListPager(resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsClientListOptions) *runtime.Pager[ConnectionMonitorsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ConnectionMonitorsClientListResponse]{
 		More: func(page ConnectionMonitorsClientListResponse) bool {

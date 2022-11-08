@@ -185,7 +185,7 @@ func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx cont
 //   - resourceGroupName - The name of the resource group.
 //   - bastionHostName - The name of the Bastion Host.
 //   - sessionIDs - The list of sessionids to disconnect.
-//   - options - ManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the ManagementClient.DisconnectActiveSessions
+//   - options - ManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the ManagementClient.NewDisconnectActiveSessionsPager
 //     method.
 func (client *ManagementClient) NewDisconnectActiveSessionsPager(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *ManagementClientDisconnectActiveSessionsOptions) *runtime.Pager[ManagementClientDisconnectActiveSessionsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ManagementClientDisconnectActiveSessionsResponse]{
@@ -422,7 +422,7 @@ func (client *ManagementClient) getActiveSessionsHandleResponse(resp *http.Respo
 //   - resourceGroupName - The name of the resource group.
 //   - bastionHostName - The name of the Bastion Host.
 //   - bslRequest - Post request for all the Bastion Shareable Link endpoints.
-//   - options - ManagementClientGetBastionShareableLinkOptions contains the optional parameters for the ManagementClient.GetBastionShareableLink
+//   - options - ManagementClientGetBastionShareableLinkOptions contains the optional parameters for the ManagementClient.NewGetBastionShareableLinkPager
 //     method.
 func (client *ManagementClient) NewGetBastionShareableLinkPager(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientGetBastionShareableLinkOptions) *runtime.Pager[ManagementClientGetBastionShareableLinkResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ManagementClientGetBastionShareableLinkResponse]{

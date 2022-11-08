@@ -269,7 +269,7 @@ func (client *VirtualNetworkPeeringsClient) getHandleResponse(resp *http.Respons
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkName - The name of the virtual network.
-//   - options - VirtualNetworkPeeringsClientListOptions contains the optional parameters for the VirtualNetworkPeeringsClient.List
+//   - options - VirtualNetworkPeeringsClientListOptions contains the optional parameters for the VirtualNetworkPeeringsClient.NewListPager
 //     method.
 func (client *VirtualNetworkPeeringsClient) NewListPager(resourceGroupName string, virtualNetworkName string, options *VirtualNetworkPeeringsClientListOptions) *runtime.Pager[VirtualNetworkPeeringsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworkPeeringsClientListResponse]{

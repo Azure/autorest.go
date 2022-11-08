@@ -202,20 +202,20 @@ type AvailabilitySetsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
+// AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.NewListAvailableSizesPager
 // method.
 type AvailabilitySetsClientListAvailableSizesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
+// AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.NewListBySubscriptionPager
 // method.
 type AvailabilitySetsClientListBySubscriptionOptions struct {
 	// The expand expression to apply to the operation. Allowed values are 'instanceView'.
 	Expand *string
 }
 
-// AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
+// AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.NewListPager method.
 type AvailabilitySetsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -445,13 +445,13 @@ type ContainerServicesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
+// ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.NewListByResourceGroupPager
 // method.
 type ContainerServicesClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
+// ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.NewListPager method.
 type ContainerServicesClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -682,13 +682,13 @@ type DedicatedHostGroupsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.ListByResourceGroup
+// DedicatedHostGroupsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.NewListByResourceGroupPager
 // method.
 type DedicatedHostGroupsClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.ListBySubscription
+// DedicatedHostGroupsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.NewListBySubscriptionPager
 // method.
 type DedicatedHostGroupsClientListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
@@ -789,7 +789,7 @@ type DedicatedHostsClientGetOptions struct {
 	Expand *string
 }
 
-// DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup
+// DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.NewListByHostGroupPager
 // method.
 type DedicatedHostsClientListByHostGroupOptions struct {
 	// placeholder for future optional parameters
@@ -944,13 +944,13 @@ type DiskEncryptionSetsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsClientListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup
+// DiskEncryptionSetsClientListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.NewListByResourceGroupPager
 // method.
 type DiskEncryptionSetsClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsClientListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
+// DiskEncryptionSetsClientListOptions contains the optional parameters for the DiskEncryptionSetsClient.NewListPager method.
 type DiskEncryptionSetsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1144,12 +1144,13 @@ type DisksClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.ListByResourceGroup method.
+// DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.NewListByResourceGroupPager
+// method.
 type DisksClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksClientListOptions contains the optional parameters for the DisksClient.List method.
+// DisksClientListOptions contains the optional parameters for the DisksClient.NewListPager method.
 type DisksClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1251,13 +1252,13 @@ type GalleriesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup
+// GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.NewListByResourceGroupPager
 // method.
 type GalleriesClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleriesClientListOptions contains the optional parameters for the GalleriesClient.List method.
+// GalleriesClientListOptions contains the optional parameters for the GalleriesClient.NewListPager method.
 type GalleriesClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1476,7 +1477,7 @@ type GalleryApplicationVersionsClientGetOptions struct {
 	Expand *ReplicationStatusTypes
 }
 
-// GalleryApplicationVersionsClientListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersionsClient.ListByGalleryApplication
+// GalleryApplicationVersionsClientListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersionsClient.NewListByGalleryApplicationPager
 // method.
 type GalleryApplicationVersionsClientListByGalleryApplicationOptions struct {
 	// placeholder for future optional parameters
@@ -1508,7 +1509,7 @@ type GalleryApplicationsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationsClientListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.ListByGallery
+// GalleryApplicationsClientListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.NewListByGalleryPager
 // method.
 type GalleryApplicationsClientListByGalleryOptions struct {
 	// placeholder for future optional parameters
@@ -1778,7 +1779,7 @@ type GalleryImageVersionsClientGetOptions struct {
 	Expand *ReplicationStatusTypes
 }
 
-// GalleryImageVersionsClientListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.ListByGalleryImage
+// GalleryImageVersionsClientListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.NewListByGalleryImagePager
 // method.
 type GalleryImageVersionsClientListByGalleryImageOptions struct {
 	// placeholder for future optional parameters
@@ -1808,7 +1809,8 @@ type GalleryImagesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImagesClientListByGalleryOptions contains the optional parameters for the GalleryImagesClient.ListByGallery method.
+// GalleryImagesClientListByGalleryOptions contains the optional parameters for the GalleryImagesClient.NewListByGalleryPager
+// method.
 type GalleryImagesClientListByGalleryOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2111,12 +2113,13 @@ type ImagesClientGetOptions struct {
 	Expand *string
 }
 
-// ImagesClientListByResourceGroupOptions contains the optional parameters for the ImagesClient.ListByResourceGroup method.
+// ImagesClientListByResourceGroupOptions contains the optional parameters for the ImagesClient.NewListByResourceGroupPager
+// method.
 type ImagesClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImagesClientListOptions contains the optional parameters for the ImagesClient.List method.
+// ImagesClientListOptions contains the optional parameters for the ImagesClient.NewListPager method.
 type ImagesClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2475,7 +2478,7 @@ type OperationValueDisplay struct {
 	Resource *string `json:"resource,omitempty" azure:"ro"`
 }
 
-// OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+// OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2592,13 +2595,13 @@ type ProximityPlacementGroupsClientGetOptions struct {
 	IncludeColocationStatus *string
 }
 
-// ProximityPlacementGroupsClientListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroupsClient.ListByResourceGroup
+// ProximityPlacementGroupsClientListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroupsClient.NewListByResourceGroupPager
 // method.
 type ProximityPlacementGroupsClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ProximityPlacementGroupsClientListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroupsClient.ListBySubscription
+// ProximityPlacementGroupsClientListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroupsClient.NewListBySubscriptionPager
 // method.
 type ProximityPlacementGroupsClientListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
@@ -2824,7 +2827,7 @@ type ResourceSKUZoneDetails struct {
 	Name []*string `json:"name,omitempty" azure:"ro"`
 }
 
-// ResourceSKUsClientListOptions contains the optional parameters for the ResourceSKUsClient.List method.
+// ResourceSKUsClientListOptions contains the optional parameters for the ResourceSKUsClient.NewListPager method.
 type ResourceSKUsClientListOptions struct {
 	// The filter to apply on the operation. Only location filter is supported currently.
 	Filter *string
@@ -3146,13 +3149,13 @@ type SSHPublicKeysClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SSHPublicKeysClientListByResourceGroupOptions contains the optional parameters for the SSHPublicKeysClient.ListByResourceGroup
+// SSHPublicKeysClientListByResourceGroupOptions contains the optional parameters for the SSHPublicKeysClient.NewListByResourceGroupPager
 // method.
 type SSHPublicKeysClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SSHPublicKeysClientListBySubscriptionOptions contains the optional parameters for the SSHPublicKeysClient.ListBySubscription
+// SSHPublicKeysClientListBySubscriptionOptions contains the optional parameters for the SSHPublicKeysClient.NewListBySubscriptionPager
 // method.
 type SSHPublicKeysClientListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
@@ -3349,13 +3352,13 @@ type SnapshotsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsClientListByResourceGroupOptions contains the optional parameters for the SnapshotsClient.ListByResourceGroup
+// SnapshotsClientListByResourceGroupOptions contains the optional parameters for the SnapshotsClient.NewListByResourceGroupPager
 // method.
 type SnapshotsClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsClientListOptions contains the optional parameters for the SnapshotsClient.List method.
+// SnapshotsClientListOptions contains the optional parameters for the SnapshotsClient.NewListPager method.
 type SnapshotsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3524,7 +3527,7 @@ type Usage struct {
 	Unit *string `json:"unit,omitempty"`
 }
 
-// UsageClientListOptions contains the optional parameters for the UsageClient.List method.
+// UsageClientListOptions contains the optional parameters for the UsageClient.NewListPager method.
 type UsageClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4173,7 +4176,7 @@ type VirtualMachineRunCommandsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
+// VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.NewListPager
 // method.
 type VirtualMachineRunCommandsClientListOptions struct {
 	// placeholder for future optional parameters
@@ -4363,7 +4366,7 @@ type VirtualMachineScaleSetExtensionsClientGetOptions struct {
 	Expand *string
 }
 
-// VirtualMachineScaleSetExtensionsClientListOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.List
+// VirtualMachineScaleSetExtensionsClientListOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.NewListPager
 // method.
 type VirtualMachineScaleSetExtensionsClientListOptions struct {
 	// placeholder for future optional parameters
@@ -5475,7 +5478,7 @@ type VirtualMachineScaleSetVMsClientGetOptions struct {
 	Expand *string
 }
 
-// VirtualMachineScaleSetVMsClientListOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.List
+// VirtualMachineScaleSetVMsClientListOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.NewListPager
 // method.
 type VirtualMachineScaleSetVMsClientListOptions struct {
 	// The expand expression to apply to the operation. Allowed values are 'instanceView'.
@@ -5629,7 +5632,7 @@ type VirtualMachineScaleSetsClientGetInstanceViewOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsClientGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSetsClient.GetOSUpgradeHistory
+// VirtualMachineScaleSetsClientGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSetsClient.NewGetOSUpgradeHistoryPager
 // method.
 type VirtualMachineScaleSetsClientGetOSUpgradeHistoryOptions struct {
 	// placeholder for future optional parameters
@@ -5640,18 +5643,19 @@ type VirtualMachineScaleSetsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsClientListAllOptions contains the optional parameters for the VirtualMachineScaleSetsClient.ListAll
+// VirtualMachineScaleSetsClientListAllOptions contains the optional parameters for the VirtualMachineScaleSetsClient.NewListAllPager
 // method.
 type VirtualMachineScaleSetsClientListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsClientListOptions contains the optional parameters for the VirtualMachineScaleSetsClient.List method.
+// VirtualMachineScaleSetsClientListOptions contains the optional parameters for the VirtualMachineScaleSetsClient.NewListPager
+// method.
 type VirtualMachineScaleSetsClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsClientListSKUsOptions contains the optional parameters for the VirtualMachineScaleSetsClient.ListSKUs
+// VirtualMachineScaleSetsClientListSKUsOptions contains the optional parameters for the VirtualMachineScaleSetsClient.NewListSKUsPager
 // method.
 type VirtualMachineScaleSetsClientListSKUsOptions struct {
 	// placeholder for future optional parameters
@@ -5684,7 +5688,7 @@ type VirtualMachineSizeListResult struct {
 	Value []*VirtualMachineSize `json:"value,omitempty"`
 }
 
-// VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.List method.
+// VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.NewListPager method.
 type VirtualMachineSizesClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5832,25 +5836,25 @@ type VirtualMachinesClientInstanceViewOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesClientListAllOptions contains the optional parameters for the VirtualMachinesClient.ListAll method.
+// VirtualMachinesClientListAllOptions contains the optional parameters for the VirtualMachinesClient.NewListAllPager method.
 type VirtualMachinesClientListAllOptions struct {
 	// statusOnly=true enables fetching run time status of all Virtual Machines in the subscription.
 	StatusOnly *string
 }
 
-// VirtualMachinesClientListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.ListAvailableSizes
+// VirtualMachinesClientListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.NewListAvailableSizesPager
 // method.
 type VirtualMachinesClientListAvailableSizesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesClientListByLocationOptions contains the optional parameters for the VirtualMachinesClient.ListByLocation
+// VirtualMachinesClientListByLocationOptions contains the optional parameters for the VirtualMachinesClient.NewListByLocationPager
 // method.
 type VirtualMachinesClientListByLocationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesClientListOptions contains the optional parameters for the VirtualMachinesClient.List method.
+// VirtualMachinesClientListOptions contains the optional parameters for the VirtualMachinesClient.NewListPager method.
 type VirtualMachinesClientListOptions struct {
 	// placeholder for future optional parameters
 }

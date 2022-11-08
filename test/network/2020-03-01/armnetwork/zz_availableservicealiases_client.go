@@ -60,7 +60,7 @@ func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.T
 //
 // Generated from API version 2020-03-01
 //   - location - The location.
-//   - options - AvailableServiceAliasesClientListOptions contains the optional parameters for the AvailableServiceAliasesClient.List
+//   - options - AvailableServiceAliasesClientListOptions contains the optional parameters for the AvailableServiceAliasesClient.NewListPager
 //     method.
 func (client *AvailableServiceAliasesClient) NewListPager(location string, options *AvailableServiceAliasesClientListOptions) *runtime.Pager[AvailableServiceAliasesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableServiceAliasesClientListResponse]{
@@ -126,7 +126,7 @@ func (client *AvailableServiceAliasesClient) listHandleResponse(resp *http.Respo
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - location - The location.
-//   - options - AvailableServiceAliasesClientListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliasesClient.ListByResourceGroup
+//   - options - AvailableServiceAliasesClientListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliasesClient.NewListByResourceGroupPager
 //     method.
 func (client *AvailableServiceAliasesClient) NewListByResourceGroupPager(resourceGroupName string, location string, options *AvailableServiceAliasesClientListByResourceGroupOptions) *runtime.Pager[AvailableServiceAliasesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableServiceAliasesClientListByResourceGroupResponse]{

@@ -244,7 +244,7 @@ func (client *ProfilesClient) getHandleResponse(resp *http.Response) (ProfilesCl
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.List method.
+//   - options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.NewListPager method.
 func (client *ProfilesClient) NewListPager(resourceGroupName string, options *ProfilesClientListOptions) *runtime.Pager[ProfilesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ProfilesClientListResponse]{
 		More: func(page ProfilesClientListResponse) bool {
@@ -307,7 +307,7 @@ func (client *ProfilesClient) listHandleResponse(resp *http.Response) (ProfilesC
 // NewListAllPager - Gets all the network profiles in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
+//   - options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.NewListAllPager method.
 func (client *ProfilesClient) NewListAllPager(options *ProfilesClientListAllOptions) *runtime.Pager[ProfilesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ProfilesClientListAllResponse]{
 		More: func(page ProfilesClientListAllResponse) bool {

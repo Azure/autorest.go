@@ -269,7 +269,7 @@ func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *http.Response
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualRouterName - The name of the Virtual Router.
-//   - options - VirtualRouterPeeringsClientListOptions contains the optional parameters for the VirtualRouterPeeringsClient.List
+//   - options - VirtualRouterPeeringsClientListOptions contains the optional parameters for the VirtualRouterPeeringsClient.NewListPager
 //     method.
 func (client *VirtualRouterPeeringsClient) NewListPager(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsClientListOptions) *runtime.Pager[VirtualRouterPeeringsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualRouterPeeringsClientListResponse]{

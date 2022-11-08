@@ -223,7 +223,8 @@ func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (Av
 //
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
+//   - options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.NewListPager
+//     method.
 func (client *AvailabilitySetsClient) NewListPager(resourceGroupName string, options *AvailabilitySetsClientListOptions) *runtime.Pager[AvailabilitySetsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailabilitySetsClientListResponse]{
 		More: func(page AvailabilitySetsClientListResponse) bool {
@@ -289,7 +290,7 @@ func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (A
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - availabilitySetName - The name of the availability set.
-//   - options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
+//   - options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.NewListAvailableSizesPager
 //     method.
 func (client *AvailabilitySetsClient) NewListAvailableSizesPager(resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) *runtime.Pager[AvailabilitySetsClientListAvailableSizesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailabilitySetsClientListAvailableSizesResponse]{
@@ -351,7 +352,7 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *htt
 // NewListBySubscriptionPager - Lists all availability sets in a subscription.
 //
 // Generated from API version 2019-12-01
-//   - options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
+//   - options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.NewListBySubscriptionPager
 //     method.
 func (client *AvailabilitySetsClient) NewListBySubscriptionPager(options *AvailabilitySetsClientListBySubscriptionOptions) *runtime.Pager[AvailabilitySetsClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailabilitySetsClientListBySubscriptionResponse]{

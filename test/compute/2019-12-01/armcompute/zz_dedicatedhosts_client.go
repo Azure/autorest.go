@@ -267,7 +267,7 @@ func (client *DedicatedHostsClient) getHandleResponse(resp *http.Response) (Dedi
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - hostGroupName - The name of the dedicated host group.
-//   - options - DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup
+//   - options - DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.NewListByHostGroupPager
 //     method.
 func (client *DedicatedHostsClient) NewListByHostGroupPager(resourceGroupName string, hostGroupName string, options *DedicatedHostsClientListByHostGroupOptions) *runtime.Pager[DedicatedHostsClientListByHostGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DedicatedHostsClientListByHostGroupResponse]{

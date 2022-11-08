@@ -254,7 +254,7 @@ func (client *IPAllocationsClient) getHandleResponse(resp *http.Response) (IPAll
 // NewListPager - Gets all IpAllocations in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - IPAllocationsClientListOptions contains the optional parameters for the IPAllocationsClient.List method.
+//   - options - IPAllocationsClientListOptions contains the optional parameters for the IPAllocationsClient.NewListPager method.
 func (client *IPAllocationsClient) NewListPager(options *IPAllocationsClientListOptions) *runtime.Pager[IPAllocationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[IPAllocationsClientListResponse]{
 		More: func(page IPAllocationsClientListResponse) bool {
@@ -314,7 +314,7 @@ func (client *IPAllocationsClient) listHandleResponse(resp *http.Response) (IPAl
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - IPAllocationsClientListByResourceGroupOptions contains the optional parameters for the IPAllocationsClient.ListByResourceGroup
+//   - options - IPAllocationsClientListByResourceGroupOptions contains the optional parameters for the IPAllocationsClient.NewListByResourceGroupPager
 //     method.
 func (client *IPAllocationsClient) NewListByResourceGroupPager(resourceGroupName string, options *IPAllocationsClientListByResourceGroupOptions) *runtime.Pager[IPAllocationsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[IPAllocationsClientListByResourceGroupResponse]{

@@ -267,7 +267,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) getHandleResponse(resp *ht
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - vmScaleSetName - The name of the VM scale set containing the extension.
-//   - options - VirtualMachineScaleSetExtensionsClientListOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.List
+//   - options - VirtualMachineScaleSetExtensionsClientListOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.NewListPager
 //     method.
 func (client *VirtualMachineScaleSetExtensionsClient) NewListPager(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetExtensionsClientListOptions) *runtime.Pager[VirtualMachineScaleSetExtensionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachineScaleSetExtensionsClientListResponse]{

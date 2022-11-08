@@ -341,7 +341,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         // create a type named <OperationGroup><Operation>Options
         // the client might not be exported, but the options should be.
         const optionalParamsGroupName = `${capitalize(group.language.go!.clientName)}${opName}Options`;
-        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${opName} method.`;
+        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName} method.`;
         const gp = createGroupProperty(optionalParamsGroupName, desc);
         gp.language.go!.name = 'options';
         gp.required = false;
@@ -630,7 +630,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
   // first create the response envelope, each operation gets one
   const respEnvName = ensureUniqueModelName(codeModel, `${capitalize(group.language.go!.clientName)}${op.language.go!.name}Response`, 'Envelope');
-  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
+  const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
+  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName}.`);
   respEnv.language.go!.responseType = true;
   respEnv.properties = new Array<Property>();
   responseEnvelopes.push(respEnv);

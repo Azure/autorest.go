@@ -199,7 +199,7 @@ func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (Rol
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role assignments.
-//   - options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope
+//   - options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.NewListForScopePager
 //     method.
 func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, scope string, options *RoleAssignmentsClientListForScopeOptions) *runtime.Pager[RoleAssignmentsClientListForScopeResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RoleAssignmentsClientListForScopeResponse]{

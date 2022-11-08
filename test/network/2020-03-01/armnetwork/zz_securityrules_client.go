@@ -268,7 +268,7 @@ func (client *SecurityRulesClient) getHandleResponse(resp *http.Response) (Secur
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
-//   - options - SecurityRulesClientListOptions contains the optional parameters for the SecurityRulesClient.List method.
+//   - options - SecurityRulesClientListOptions contains the optional parameters for the SecurityRulesClient.NewListPager method.
 func (client *SecurityRulesClient) NewListPager(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesClientListOptions) *runtime.Pager[SecurityRulesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SecurityRulesClientListResponse]{
 		More: func(page SecurityRulesClientListResponse) bool {

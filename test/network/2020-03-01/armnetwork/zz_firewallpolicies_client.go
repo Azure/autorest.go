@@ -255,7 +255,8 @@ func (client *FirewallPoliciesClient) getHandleResponse(resp *http.Response) (Fi
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - FirewallPoliciesClientListOptions contains the optional parameters for the FirewallPoliciesClient.List method.
+//   - options - FirewallPoliciesClientListOptions contains the optional parameters for the FirewallPoliciesClient.NewListPager
+//     method.
 func (client *FirewallPoliciesClient) NewListPager(resourceGroupName string, options *FirewallPoliciesClientListOptions) *runtime.Pager[FirewallPoliciesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[FirewallPoliciesClientListResponse]{
 		More: func(page FirewallPoliciesClientListResponse) bool {
@@ -318,7 +319,7 @@ func (client *FirewallPoliciesClient) listHandleResponse(resp *http.Response) (F
 // NewListAllPager - Gets all the Firewall Policies in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - FirewallPoliciesClientListAllOptions contains the optional parameters for the FirewallPoliciesClient.ListAll
+//   - options - FirewallPoliciesClientListAllOptions contains the optional parameters for the FirewallPoliciesClient.NewListAllPager
 //     method.
 func (client *FirewallPoliciesClient) NewListAllPager(options *FirewallPoliciesClientListAllOptions) *runtime.Pager[FirewallPoliciesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[FirewallPoliciesClientListAllResponse]{

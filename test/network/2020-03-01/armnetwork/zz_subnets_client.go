@@ -270,7 +270,7 @@ func (client *SubnetsClient) getHandleResponse(resp *http.Response) (SubnetsClie
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkName - The name of the virtual network.
-//   - options - SubnetsClientListOptions contains the optional parameters for the SubnetsClient.List method.
+//   - options - SubnetsClientListOptions contains the optional parameters for the SubnetsClient.NewListPager method.
 func (client *SubnetsClient) NewListPager(resourceGroupName string, virtualNetworkName string, options *SubnetsClientListOptions) *runtime.Pager[SubnetsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SubnetsClientListResponse]{
 		More: func(page SubnetsClientListResponse) bool {

@@ -253,7 +253,7 @@ func (client *LocalNetworkGatewaysClient) getHandleResponse(resp *http.Response)
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - LocalNetworkGatewaysClientListOptions contains the optional parameters for the LocalNetworkGatewaysClient.List
+//   - options - LocalNetworkGatewaysClientListOptions contains the optional parameters for the LocalNetworkGatewaysClient.NewListPager
 //     method.
 func (client *LocalNetworkGatewaysClient) NewListPager(resourceGroupName string, options *LocalNetworkGatewaysClientListOptions) *runtime.Pager[LocalNetworkGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LocalNetworkGatewaysClientListResponse]{

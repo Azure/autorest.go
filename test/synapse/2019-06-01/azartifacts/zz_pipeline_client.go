@@ -267,7 +267,7 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (Pi
 // NewGetPipelinesByWorkspacePager - Lists pipelines.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
+//   - options - PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.NewGetPipelinesByWorkspacePager
 //     method.
 func (client *pipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[PipelineClientGetPipelinesByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PipelineClientGetPipelinesByWorkspaceResponse]{

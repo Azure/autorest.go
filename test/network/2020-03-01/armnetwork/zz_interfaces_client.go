@@ -469,7 +469,7 @@ func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleR
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - InterfacesClientListOptions contains the optional parameters for the InterfacesClient.List method.
+//   - options - InterfacesClientListOptions contains the optional parameters for the InterfacesClient.NewListPager method.
 func (client *InterfacesClient) NewListPager(resourceGroupName string, options *InterfacesClientListOptions) *runtime.Pager[InterfacesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListResponse]{
 		More: func(page InterfacesClientListResponse) bool {
@@ -532,7 +532,7 @@ func (client *InterfacesClient) listHandleResponse(resp *http.Response) (Interfa
 // NewListAllPager - Gets all network interfaces in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - InterfacesClientListAllOptions contains the optional parameters for the InterfacesClient.ListAll method.
+//   - options - InterfacesClientListAllOptions contains the optional parameters for the InterfacesClient.NewListAllPager method.
 func (client *InterfacesClient) NewListAllPager(options *InterfacesClientListAllOptions) *runtime.Pager[InterfacesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListAllResponse]{
 		More: func(page InterfacesClientListAllResponse) bool {
@@ -663,7 +663,7 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(
 //   - virtualMachineScaleSetName - The name of the virtual machine scale set.
 //   - virtualmachineIndex - The virtual machine index.
 //   - networkInterfaceName - The name of the network interface.
-//   - options - InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetIPConfigurations
+//   - options - InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the InterfacesClient.NewListVirtualMachineScaleSetIPConfigurationsPager
 //     method.
 func (client *InterfacesClient) NewListVirtualMachineScaleSetIPConfigurationsPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse]{
@@ -744,7 +744,7 @@ func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandle
 // Generated from API version 2018-10-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualMachineScaleSetName - The name of the virtual machine scale set.
-//   - options - InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces
+//   - options - InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the InterfacesClient.NewListVirtualMachineScaleSetNetworkInterfacesPager
 //     method.
 func (client *InterfacesClient) NewListVirtualMachineScaleSetNetworkInterfacesPager(resourceGroupName string, virtualMachineScaleSetName string, options *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse]{
@@ -817,7 +817,7 @@ func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandl
 //   - virtualMachineScaleSetName - The name of the virtual machine scale set.
 //   - virtualmachineIndex - The virtual machine index.
 //   - options - InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions contains the optional parameters for the
-//     InterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces method.
+//     InterfacesClient.NewListVirtualMachineScaleSetVMNetworkInterfacesPager method.
 func (client *InterfacesClient) NewListVirtualMachineScaleSetVMNetworkInterfacesPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse]{
 		More: func(page InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse) bool {

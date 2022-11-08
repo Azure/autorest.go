@@ -385,7 +385,7 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 // account
 //
 // Generated from API version 2020-06-12
-//   - options - ServiceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
+//   - options - ServiceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.NewListContainersSegmentPager
 //     method.
 func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *ServiceClientListContainersSegmentOptions) *runtime.Pager[ServiceClientListContainersSegmentResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ServiceClientListContainersSegmentResponse]{

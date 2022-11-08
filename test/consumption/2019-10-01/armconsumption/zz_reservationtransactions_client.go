@@ -56,7 +56,7 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 //
 // Generated from API version 2019-10-01
 //   - billingAccountID - BillingAccount ID
-//   - options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List
+//   - options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.NewListPager
 //     method.
 func (client *ReservationTransactionsClient) NewListPager(billingAccountID string, options *ReservationTransactionsClientListOptions) *runtime.Pager[ReservationTransactionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ReservationTransactionsClientListResponse]{
@@ -121,7 +121,7 @@ func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Respo
 // Generated from API version 2019-10-01
 //   - billingAccountID - BillingAccount ID
 //   - billingProfileID - Azure Billing Profile ID.
-//   - options - ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
+//   - options - ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.NewListByBillingProfilePager
 //     method.
 func (client *ReservationTransactionsClient) NewListByBillingProfilePager(billingAccountID string, billingProfileID string, options *ReservationTransactionsClientListByBillingProfileOptions) *runtime.Pager[ReservationTransactionsClientListByBillingProfileResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ReservationTransactionsClientListByBillingProfileResponse]{

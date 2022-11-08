@@ -637,7 +637,7 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 //
 // Generated from API version 2021-02-01
 //   - resourceGroupName - The resource group name.
-//   - options - DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup
+//   - options - DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.NewListByResourceGroupPager
 //     method.
 func (client *DevicesClient) NewListByResourceGroupPager(resourceGroupName string, options *DevicesClientListByResourceGroupOptions) *runtime.Pager[DevicesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DevicesClientListByResourceGroupResponse]{
@@ -704,7 +704,7 @@ func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Respon
 // NewListBySubscriptionPager - Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
 //
 // Generated from API version 2021-02-01
-//   - options - DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription
+//   - options - DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.NewListBySubscriptionPager
 //     method.
 func (client *DevicesClient) NewListBySubscriptionPager(options *DevicesClientListBySubscriptionOptions) *runtime.Pager[DevicesClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DevicesClientListBySubscriptionResponse]{

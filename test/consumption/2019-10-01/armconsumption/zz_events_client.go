@@ -58,7 +58,7 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 //   - scope - The scope associated with events operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 //     for Billing Profile scope, and
 //     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-//   - options - EventsClientListOptions contains the optional parameters for the EventsClient.List method.
+//   - options - EventsClientListOptions contains the optional parameters for the EventsClient.NewListPager method.
 func (client *EventsClient) NewListPager(startDate string, endDate string, scope string, options *EventsClientListOptions) *runtime.Pager[EventsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[EventsClientListResponse]{
 		More: func(page EventsClientListResponse) bool {

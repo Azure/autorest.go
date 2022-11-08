@@ -269,7 +269,7 @@ func (client *ContainersClient) getHandleResponse(resp *http.Response) (Containe
 //   - deviceName - The device name.
 //   - storageAccountName - The storage Account name.
 //   - resourceGroupName - The resource group name.
-//   - options - ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
+//   - options - ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.NewListByStorageAccountPager
 //     method.
 func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersClientListByStorageAccountOptions) *runtime.Pager[ContainersClientListByStorageAccountResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainersClientListByStorageAccountResponse]{

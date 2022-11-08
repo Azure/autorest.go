@@ -320,7 +320,7 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 // NewListPager - Lists all the disks under a subscription.
 //
 // Generated from API version 2019-11-01
-//   - options - DisksClientListOptions contains the optional parameters for the DisksClient.List method.
+//   - options - DisksClientListOptions contains the optional parameters for the DisksClient.NewListPager method.
 func (client *DisksClient) NewListPager(options *DisksClientListOptions) *runtime.Pager[DisksClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DisksClientListResponse]{
 		More: func(page DisksClientListResponse) bool {
@@ -380,7 +380,7 @@ func (client *DisksClient) listHandleResponse(resp *http.Response) (DisksClientL
 //
 // Generated from API version 2019-11-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.ListByResourceGroup
+//   - options - DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.NewListByResourceGroupPager
 //     method.
 func (client *DisksClient) NewListByResourceGroupPager(resourceGroupName string, options *DisksClientListByResourceGroupOptions) *runtime.Pager[DisksClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DisksClientListByResourceGroupResponse]{

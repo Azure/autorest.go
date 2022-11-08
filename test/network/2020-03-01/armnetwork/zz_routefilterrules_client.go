@@ -268,7 +268,7 @@ func (client *RouteFilterRulesClient) getHandleResponse(resp *http.Response) (Ro
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
-//   - options - RouteFilterRulesClientListByRouteFilterOptions contains the optional parameters for the RouteFilterRulesClient.ListByRouteFilter
+//   - options - RouteFilterRulesClientListByRouteFilterOptions contains the optional parameters for the RouteFilterRulesClient.NewListByRouteFilterPager
 //     method.
 func (client *RouteFilterRulesClient) NewListByRouteFilterPager(resourceGroupName string, routeFilterName string, options *RouteFilterRulesClientListByRouteFilterOptions) *runtime.Pager[RouteFilterRulesClientListByRouteFilterResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RouteFilterRulesClientListByRouteFilterResponse]{

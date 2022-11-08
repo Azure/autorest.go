@@ -61,7 +61,7 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 // Generated from API version 2020-03-01
 //   - location - The location of the domain name.
 //   - resourceGroupName - The name of the resource group.
-//   - options - AvailableResourceGroupDelegationsClientListOptions contains the optional parameters for the AvailableResourceGroupDelegationsClient.List
+//   - options - AvailableResourceGroupDelegationsClientListOptions contains the optional parameters for the AvailableResourceGroupDelegationsClient.NewListPager
 //     method.
 func (client *AvailableResourceGroupDelegationsClient) NewListPager(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsClientListOptions) *runtime.Pager[AvailableResourceGroupDelegationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableResourceGroupDelegationsClientListResponse]{

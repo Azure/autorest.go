@@ -313,7 +313,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyHandleResponse
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - VirtualNetworkGatewayConnectionsClientListOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.List
+//   - options - VirtualNetworkGatewayConnectionsClientListOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.NewListPager
 //     method.
 func (client *VirtualNetworkGatewayConnectionsClient) NewListPager(resourceGroupName string, options *VirtualNetworkGatewayConnectionsClientListOptions) *runtime.Pager[VirtualNetworkGatewayConnectionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworkGatewayConnectionsClientListResponse]{

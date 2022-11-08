@@ -44,7 +44,7 @@ type BudgetsClientGetResponse struct {
 	Budget
 }
 
-// BudgetsClientListResponse contains the response from method BudgetsClient.List.
+// BudgetsClientListResponse contains the response from method BudgetsClient.NewListPager.
 type BudgetsClientListResponse struct {
 	BudgetsListResult
 }
@@ -59,27 +59,27 @@ type CreditsClientGetResponse struct {
 	CreditSummary
 }
 
-// EventsClientListResponse contains the response from method EventsClient.List.
+// EventsClientListResponse contains the response from method EventsClient.NewListPager.
 type EventsClientListResponse struct {
 	Events
 }
 
-// ForecastsClientListResponse contains the response from method ForecastsClient.List.
+// ForecastsClientListResponse contains the response from method ForecastsClient.NewListPager.
 type ForecastsClientListResponse struct {
 	ForecastsListResult
 }
 
-// LotsClientListResponse contains the response from method LotsClient.List.
+// LotsClientListResponse contains the response from method LotsClient.NewListPager.
 type LotsClientListResponse struct {
 	Lots
 }
 
-// MarketplacesClientListResponse contains the response from method MarketplacesClient.List.
+// MarketplacesClientListResponse contains the response from method MarketplacesClient.NewListPager.
 type MarketplacesClientListResponse struct {
 	MarketplacesListResult
 }
 
-// OperationsClientListResponse contains the response from method OperationsClient.List.
+// OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
 type OperationsClientListResponse struct {
 	OperationListResult
 }
@@ -99,47 +99,47 @@ type ReservationRecommendationDetailsClientGetResponse struct {
 	ReservationRecommendationDetailsModel
 }
 
-// ReservationRecommendationsClientListResponse contains the response from method ReservationRecommendationsClient.List.
+// ReservationRecommendationsClientListResponse contains the response from method ReservationRecommendationsClient.NewListPager.
 type ReservationRecommendationsClientListResponse struct {
 	ReservationRecommendationsListResult
 }
 
-// ReservationTransactionsClientListByBillingProfileResponse contains the response from method ReservationTransactionsClient.ListByBillingProfile.
+// ReservationTransactionsClientListByBillingProfileResponse contains the response from method ReservationTransactionsClient.NewListByBillingProfilePager.
 type ReservationTransactionsClientListByBillingProfileResponse struct {
 	ModernReservationTransactionsListResult
 }
 
-// ReservationTransactionsClientListResponse contains the response from method ReservationTransactionsClient.List.
+// ReservationTransactionsClientListResponse contains the response from method ReservationTransactionsClient.NewListPager.
 type ReservationTransactionsClientListResponse struct {
 	ReservationTransactionsListResult
 }
 
-// ReservationsDetailsClientListByReservationOrderAndReservationResponse contains the response from method ReservationsDetailsClient.ListByReservationOrderAndReservation.
+// ReservationsDetailsClientListByReservationOrderAndReservationResponse contains the response from method ReservationsDetailsClient.NewListByReservationOrderAndReservationPager.
 type ReservationsDetailsClientListByReservationOrderAndReservationResponse struct {
 	ReservationDetailsListResult
 }
 
-// ReservationsDetailsClientListByReservationOrderResponse contains the response from method ReservationsDetailsClient.ListByReservationOrder.
+// ReservationsDetailsClientListByReservationOrderResponse contains the response from method ReservationsDetailsClient.NewListByReservationOrderPager.
 type ReservationsDetailsClientListByReservationOrderResponse struct {
 	ReservationDetailsListResult
 }
 
-// ReservationsDetailsClientListResponse contains the response from method ReservationsDetailsClient.List.
+// ReservationsDetailsClientListResponse contains the response from method ReservationsDetailsClient.NewListPager.
 type ReservationsDetailsClientListResponse struct {
 	ReservationDetailsListResult
 }
 
-// ReservationsSummariesClientListByReservationOrderAndReservationResponse contains the response from method ReservationsSummariesClient.ListByReservationOrderAndReservation.
+// ReservationsSummariesClientListByReservationOrderAndReservationResponse contains the response from method ReservationsSummariesClient.NewListByReservationOrderAndReservationPager.
 type ReservationsSummariesClientListByReservationOrderAndReservationResponse struct {
 	ReservationSummariesListResult
 }
 
-// ReservationsSummariesClientListByReservationOrderResponse contains the response from method ReservationsSummariesClient.ListByReservationOrder.
+// ReservationsSummariesClientListByReservationOrderResponse contains the response from method ReservationsSummariesClient.NewListByReservationOrderPager.
 type ReservationsSummariesClientListByReservationOrderResponse struct {
 	ReservationSummariesListResult
 }
 
-// ReservationsSummariesClientListResponse contains the response from method ReservationsSummariesClient.List.
+// ReservationsSummariesClientListResponse contains the response from method ReservationsSummariesClient.NewListPager.
 type ReservationsSummariesClientListResponse struct {
 	ReservationSummariesListResult
 }
@@ -149,7 +149,7 @@ type TagsClientGetResponse struct {
 	TagsResult
 }
 
-// UsageDetailsClientListResponse contains the response from method UsageDetailsClient.List.
+// UsageDetailsClientListResponse contains the response from method UsageDetailsClient.NewListPager.
 type UsageDetailsClientListResponse struct {
 	UsageDetailsListResult
 }

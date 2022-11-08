@@ -251,7 +251,8 @@ func (client *ExpressRoutePortsClient) getHandleResponse(resp *http.Response) (E
 // NewListPager - List all the ExpressRoutePort resources in the specified subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - ExpressRoutePortsClientListOptions contains the optional parameters for the ExpressRoutePortsClient.List method.
+//   - options - ExpressRoutePortsClientListOptions contains the optional parameters for the ExpressRoutePortsClient.NewListPager
+//     method.
 func (client *ExpressRoutePortsClient) NewListPager(options *ExpressRoutePortsClientListOptions) *runtime.Pager[ExpressRoutePortsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRoutePortsClientListResponse]{
 		More: func(page ExpressRoutePortsClientListResponse) bool {
@@ -311,7 +312,7 @@ func (client *ExpressRoutePortsClient) listHandleResponse(resp *http.Response) (
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - ExpressRoutePortsClientListByResourceGroupOptions contains the optional parameters for the ExpressRoutePortsClient.ListByResourceGroup
+//   - options - ExpressRoutePortsClientListByResourceGroupOptions contains the optional parameters for the ExpressRoutePortsClient.NewListByResourceGroupPager
 //     method.
 func (client *ExpressRoutePortsClient) NewListByResourceGroupPager(resourceGroupName string, options *ExpressRoutePortsClientListByResourceGroupOptions) *runtime.Pager[ExpressRoutePortsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRoutePortsClientListByResourceGroupResponse]{

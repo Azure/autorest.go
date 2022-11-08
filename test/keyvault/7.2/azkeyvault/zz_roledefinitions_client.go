@@ -200,7 +200,8 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role definition.
-//   - options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
+//   - options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.NewListPager
+//     method.
 func (client *RoleDefinitionsClient) NewListPager(vaultBaseURL string, scope string, options *RoleDefinitionsClientListOptions) *runtime.Pager[RoleDefinitionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RoleDefinitionsClientListResponse]{
 		More: func(page RoleDefinitionsClientListResponse) bool {

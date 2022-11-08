@@ -269,7 +269,7 @@ func (client *InterfaceTapConfigurationsClient) getHandleResponse(resp *http.Res
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
-//   - options - InterfaceTapConfigurationsClientListOptions contains the optional parameters for the InterfaceTapConfigurationsClient.List
+//   - options - InterfaceTapConfigurationsClientListOptions contains the optional parameters for the InterfaceTapConfigurationsClient.NewListPager
 //     method.
 func (client *InterfaceTapConfigurationsClient) NewListPager(resourceGroupName string, networkInterfaceName string, options *InterfaceTapConfigurationsClientListOptions) *runtime.Pager[InterfaceTapConfigurationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InterfaceTapConfigurationsClientListResponse]{

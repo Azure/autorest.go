@@ -269,7 +269,7 @@ func (client *AddonsClient) getHandleResponse(resp *http.Response) (AddonsClient
 //   - deviceName - The device name.
 //   - roleName - The role name.
 //   - resourceGroupName - The resource group name.
-//   - options - AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
+//   - options - AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.NewListByRolePager method.
 func (client *AddonsClient) NewListByRolePager(deviceName string, roleName string, resourceGroupName string, options *AddonsClientListByRoleOptions) *runtime.Pager[AddonsClientListByRoleResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AddonsClientListByRoleResponse]{
 		More: func(page AddonsClientListByRoleResponse) bool {

@@ -252,7 +252,7 @@ func (client *AzureFirewallsClient) getHandleResponse(resp *http.Response) (Azur
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - AzureFirewallsClientListOptions contains the optional parameters for the AzureFirewallsClient.List method.
+//   - options - AzureFirewallsClientListOptions contains the optional parameters for the AzureFirewallsClient.NewListPager method.
 func (client *AzureFirewallsClient) NewListPager(resourceGroupName string, options *AzureFirewallsClientListOptions) *runtime.Pager[AzureFirewallsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AzureFirewallsClientListResponse]{
 		More: func(page AzureFirewallsClientListResponse) bool {
@@ -315,7 +315,8 @@ func (client *AzureFirewallsClient) listHandleResponse(resp *http.Response) (Azu
 // NewListAllPager - Gets all the Azure Firewalls in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - AzureFirewallsClientListAllOptions contains the optional parameters for the AzureFirewallsClient.ListAll method.
+//   - options - AzureFirewallsClientListAllOptions contains the optional parameters for the AzureFirewallsClient.NewListAllPager
+//     method.
 func (client *AzureFirewallsClient) NewListAllPager(options *AzureFirewallsClientListAllOptions) *runtime.Pager[AzureFirewallsClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AzureFirewallsClientListAllResponse]{
 		More: func(page AzureFirewallsClientListAllResponse) bool {

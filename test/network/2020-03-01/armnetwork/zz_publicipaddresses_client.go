@@ -336,7 +336,8 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - PublicIPAddressesClientListOptions contains the optional parameters for the PublicIPAddressesClient.List method.
+//   - options - PublicIPAddressesClientListOptions contains the optional parameters for the PublicIPAddressesClient.NewListPager
+//     method.
 func (client *PublicIPAddressesClient) NewListPager(resourceGroupName string, options *PublicIPAddressesClientListOptions) *runtime.Pager[PublicIPAddressesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListResponse]{
 		More: func(page PublicIPAddressesClientListResponse) bool {
@@ -399,7 +400,7 @@ func (client *PublicIPAddressesClient) listHandleResponse(resp *http.Response) (
 // NewListAllPager - Gets all the public IP addresses in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - PublicIPAddressesClientListAllOptions contains the optional parameters for the PublicIPAddressesClient.ListAll
+//   - options - PublicIPAddressesClientListAllOptions contains the optional parameters for the PublicIPAddressesClient.NewListAllPager
 //     method.
 func (client *PublicIPAddressesClient) NewListAllPager(options *PublicIPAddressesClientListAllOptions) *runtime.Pager[PublicIPAddressesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListAllResponse]{
@@ -463,7 +464,7 @@ func (client *PublicIPAddressesClient) listAllHandleResponse(resp *http.Response
 //   - resourceGroupName - The name of the resource group.
 //   - virtualMachineScaleSetName - The name of the virtual machine scale set.
 //   - options - PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions contains the optional parameters for
-//     the PublicIPAddressesClient.ListVirtualMachineScaleSetPublicIPAddresses method.
+//     the PublicIPAddressesClient.NewListVirtualMachineScaleSetPublicIPAddressesPager method.
 func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetPublicIPAddressesPager(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse]{
 		More: func(page PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse) bool {
@@ -537,7 +538,7 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 //   - networkInterfaceName - The network interface name.
 //   - ipConfigurationName - The IP configuration name.
 //   - options - PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions contains the optional parameters
-//     for the PublicIPAddressesClient.ListVirtualMachineScaleSetVMPublicIPAddresses method.
+//     for the PublicIPAddressesClient.NewListVirtualMachineScaleSetVMPublicIPAddressesPager method.
 func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetVMPublicIPAddressesPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse]{
 		More: func(page PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse) bool {

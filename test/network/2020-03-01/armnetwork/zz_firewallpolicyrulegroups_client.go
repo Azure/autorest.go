@@ -269,7 +269,7 @@ func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *http.Respo
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - firewallPolicyName - The name of the Firewall Policy.
-//   - options - FirewallPolicyRuleGroupsClientListOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.List
+//   - options - FirewallPolicyRuleGroupsClientListOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.NewListPager
 //     method.
 func (client *FirewallPolicyRuleGroupsClient) NewListPager(resourceGroupName string, firewallPolicyName string, options *FirewallPolicyRuleGroupsClientListOptions) *runtime.Pager[FirewallPolicyRuleGroupsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[FirewallPolicyRuleGroupsClientListResponse]{

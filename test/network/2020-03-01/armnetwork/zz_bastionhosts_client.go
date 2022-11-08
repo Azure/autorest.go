@@ -251,7 +251,7 @@ func (client *BastionHostsClient) getHandleResponse(resp *http.Response) (Bastio
 // NewListPager - Lists all Bastion Hosts in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - BastionHostsClientListOptions contains the optional parameters for the BastionHostsClient.List method.
+//   - options - BastionHostsClientListOptions contains the optional parameters for the BastionHostsClient.NewListPager method.
 func (client *BastionHostsClient) NewListPager(options *BastionHostsClientListOptions) *runtime.Pager[BastionHostsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BastionHostsClientListResponse]{
 		More: func(page BastionHostsClientListResponse) bool {
@@ -311,7 +311,7 @@ func (client *BastionHostsClient) listHandleResponse(resp *http.Response) (Basti
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - BastionHostsClientListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.ListByResourceGroup
+//   - options - BastionHostsClientListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.NewListByResourceGroupPager
 //     method.
 func (client *BastionHostsClient) NewListByResourceGroupPager(resourceGroupName string, options *BastionHostsClientListByResourceGroupOptions) *runtime.Pager[BastionHostsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BastionHostsClientListByResourceGroupResponse]{

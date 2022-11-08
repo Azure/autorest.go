@@ -253,7 +253,8 @@ func (client *DiskEncryptionSetsClient) getHandleResponse(resp *http.Response) (
 // NewListPager - Lists all the disk encryption sets under a subscription.
 //
 // Generated from API version 2019-11-01
-//   - options - DiskEncryptionSetsClientListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
+//   - options - DiskEncryptionSetsClientListOptions contains the optional parameters for the DiskEncryptionSetsClient.NewListPager
+//     method.
 func (client *DiskEncryptionSetsClient) NewListPager(options *DiskEncryptionSetsClientListOptions) *runtime.Pager[DiskEncryptionSetsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DiskEncryptionSetsClientListResponse]{
 		More: func(page DiskEncryptionSetsClientListResponse) bool {
@@ -313,7 +314,7 @@ func (client *DiskEncryptionSetsClient) listHandleResponse(resp *http.Response) 
 //
 // Generated from API version 2019-11-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - DiskEncryptionSetsClientListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup
+//   - options - DiskEncryptionSetsClientListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.NewListByResourceGroupPager
 //     method.
 func (client *DiskEncryptionSetsClient) NewListByResourceGroupPager(resourceGroupName string, options *DiskEncryptionSetsClientListByResourceGroupOptions) *runtime.Pager[DiskEncryptionSetsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DiskEncryptionSetsClientListByResourceGroupResponse]{

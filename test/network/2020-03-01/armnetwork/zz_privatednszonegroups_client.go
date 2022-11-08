@@ -269,7 +269,7 @@ func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *http.Response)
 // Generated from API version 2020-03-01
 //   - privateEndpointName - The name of the private endpoint.
 //   - resourceGroupName - The name of the resource group.
-//   - options - PrivateDNSZoneGroupsClientListOptions contains the optional parameters for the PrivateDNSZoneGroupsClient.List
+//   - options - PrivateDNSZoneGroupsClientListOptions contains the optional parameters for the PrivateDNSZoneGroupsClient.NewListPager
 //     method.
 func (client *PrivateDNSZoneGroupsClient) NewListPager(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsClientListOptions) *runtime.Pager[PrivateDNSZoneGroupsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateDNSZoneGroupsClientListResponse]{

@@ -205,7 +205,7 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (
 // NewGetSQLScriptsByWorkspacePager - Lists sql scripts.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - SqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.GetSQLScriptsByWorkspace
+//   - options - SqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.NewGetSQLScriptsByWorkspacePager
 //     method.
 func (client *sqlScriptClient) NewGetSQLScriptsByWorkspacePager(options *SqlScriptClientGetSQLScriptsByWorkspaceOptions) *runtime.Pager[SqlScriptClientGetSQLScriptsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SqlScriptClientGetSQLScriptsByWorkspaceResponse]{

@@ -60,7 +60,7 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 //
 // Generated from API version 2020-03-01
 //   - location - The location of the subnet.
-//   - options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.List
+//   - options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.NewListPager
 //     method.
 func (client *AvailableDelegationsClient) NewListPager(location string, options *AvailableDelegationsClientListOptions) *runtime.Pager[AvailableDelegationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableDelegationsClientListResponse]{

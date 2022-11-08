@@ -855,7 +855,7 @@ func (client *WatchersClient) getVMSecurityRulesCreateRequest(ctx context.Contex
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - WatchersClientListOptions contains the optional parameters for the WatchersClient.List method.
+//   - options - WatchersClientListOptions contains the optional parameters for the WatchersClient.NewListPager method.
 func (client *WatchersClient) NewListPager(resourceGroupName string, options *WatchersClientListOptions) *runtime.Pager[WatchersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WatchersClientListResponse]{
 		More: func(page WatchersClientListResponse) bool {
@@ -912,7 +912,7 @@ func (client *WatchersClient) listHandleResponse(resp *http.Response) (WatchersC
 // NewListAllPager - Gets all network watchers by subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - WatchersClientListAllOptions contains the optional parameters for the WatchersClient.ListAll method.
+//   - options - WatchersClientListAllOptions contains the optional parameters for the WatchersClient.NewListAllPager method.
 func (client *WatchersClient) NewListAllPager(options *WatchersClientListAllOptions) *runtime.Pager[WatchersClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WatchersClientListAllResponse]{
 		More: func(page WatchersClientListAllResponse) bool {

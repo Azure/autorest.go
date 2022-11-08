@@ -251,7 +251,7 @@ func (client *DdosProtectionPlansClient) getHandleResponse(resp *http.Response) 
 // NewListPager - Gets all DDoS protection plans in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - DdosProtectionPlansClientListOptions contains the optional parameters for the DdosProtectionPlansClient.List
+//   - options - DdosProtectionPlansClientListOptions contains the optional parameters for the DdosProtectionPlansClient.NewListPager
 //     method.
 func (client *DdosProtectionPlansClient) NewListPager(options *DdosProtectionPlansClientListOptions) *runtime.Pager[DdosProtectionPlansClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DdosProtectionPlansClientListResponse]{
@@ -312,7 +312,7 @@ func (client *DdosProtectionPlansClient) listHandleResponse(resp *http.Response)
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - DdosProtectionPlansClientListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlansClient.ListByResourceGroup
+//   - options - DdosProtectionPlansClientListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlansClient.NewListByResourceGroupPager
 //     method.
 func (client *DdosProtectionPlansClient) NewListByResourceGroupPager(resourceGroupName string, options *DdosProtectionPlansClientListByResourceGroupOptions) *runtime.Pager[DdosProtectionPlansClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DdosProtectionPlansClientListByResourceGroupResponse]{

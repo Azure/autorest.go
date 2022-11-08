@@ -254,7 +254,8 @@ func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (V
 // NewListPager - Gets all Network Virtual Appliances in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
+//   - options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.NewListPager
+//     method.
 func (client *VirtualAppliancesClient) NewListPager(options *VirtualAppliancesClientListOptions) *runtime.Pager[VirtualAppliancesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualAppliancesClientListResponse]{
 		More: func(page VirtualAppliancesClientListResponse) bool {
@@ -314,7 +315,7 @@ func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
+//   - options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.NewListByResourceGroupPager
 //     method.
 func (client *VirtualAppliancesClient) NewListByResourceGroupPager(resourceGroupName string, options *VirtualAppliancesClientListByResourceGroupOptions) *runtime.Pager[VirtualAppliancesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualAppliancesClientListByResourceGroupResponse]{

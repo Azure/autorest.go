@@ -249,7 +249,7 @@ func (client *ImagesClient) getHandleResponse(resp *http.Response) (ImagesClient
 // of Images. Do this till nextLink is null to fetch all the Images.
 //
 // Generated from API version 2019-12-01
-//   - options - ImagesClientListOptions contains the optional parameters for the ImagesClient.List method.
+//   - options - ImagesClientListOptions contains the optional parameters for the ImagesClient.NewListPager method.
 func (client *ImagesClient) NewListPager(options *ImagesClientListOptions) *runtime.Pager[ImagesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ImagesClientListResponse]{
 		More: func(page ImagesClientListResponse) bool {
@@ -309,7 +309,7 @@ func (client *ImagesClient) listHandleResponse(resp *http.Response) (ImagesClien
 //
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - ImagesClientListByResourceGroupOptions contains the optional parameters for the ImagesClient.ListByResourceGroup
+//   - options - ImagesClientListByResourceGroupOptions contains the optional parameters for the ImagesClient.NewListByResourceGroupPager
 //     method.
 func (client *ImagesClient) NewListByResourceGroupPager(resourceGroupName string, options *ImagesClientListByResourceGroupOptions) *runtime.Pager[ImagesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ImagesClientListByResourceGroupResponse]{

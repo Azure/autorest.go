@@ -286,7 +286,7 @@ func (client *GalleryImageVersionsClient) getHandleResponse(resp *http.Response)
 //   - resourceGroupName - The name of the resource group.
 //   - galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 //   - galleryImageName - The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed.
-//   - options - GalleryImageVersionsClientListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.ListByGalleryImage
+//   - options - GalleryImageVersionsClientListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.NewListByGalleryImagePager
 //     method.
 func (client *GalleryImageVersionsClient) NewListByGalleryImagePager(resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsClientListByGalleryImageOptions) *runtime.Pager[GalleryImageVersionsClientListByGalleryImageResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleryImageVersionsClientListByGalleryImageResponse]{

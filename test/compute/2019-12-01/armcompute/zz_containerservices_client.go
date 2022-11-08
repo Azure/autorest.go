@@ -258,7 +258,8 @@ func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (C
 // masters and agents.
 //
 // Generated from API version 2017-01-31
-//   - options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
+//   - options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.NewListPager
+//     method.
 func (client *ContainerServicesClient) NewListPager(options *ContainerServicesClientListOptions) *runtime.Pager[ContainerServicesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerServicesClientListResponse]{
 		More: func(page ContainerServicesClientListResponse) bool {
@@ -320,7 +321,7 @@ func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (
 //
 // Generated from API version 2017-01-31
 //   - resourceGroupName - The name of the resource group.
-//   - options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
+//   - options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.NewListByResourceGroupPager
 //     method.
 func (client *ContainerServicesClient) NewListByResourceGroupPager(resourceGroupName string, options *ContainerServicesClientListByResourceGroupOptions) *runtime.Pager[ContainerServicesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerServicesClientListByResourceGroupResponse]{
