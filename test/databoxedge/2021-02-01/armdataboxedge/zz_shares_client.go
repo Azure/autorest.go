@@ -253,7 +253,7 @@ func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesClient
 // Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
-//   - options - SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
+//   - options - SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.NewListByDataBoxEdgeDevicePager
 //     method.
 func (client *SharesClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *SharesClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[SharesClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SharesClientListByDataBoxEdgeDeviceResponse]{

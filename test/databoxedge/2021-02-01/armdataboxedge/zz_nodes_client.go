@@ -60,7 +60,7 @@ func NewNodesClient(subscriptionID string, credential azcore.TokenCredential, op
 // Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
-//   - options - NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.ListByDataBoxEdgeDevice
+//   - options - NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.NewListByDataBoxEdgeDevicePager
 //     method.
 func (client *NodesClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *NodesClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[NodesClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NodesClientListByDataBoxEdgeDeviceResponse]{

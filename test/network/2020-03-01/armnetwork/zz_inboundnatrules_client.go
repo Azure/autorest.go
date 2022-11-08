@@ -271,7 +271,8 @@ func (client *InboundNatRulesClient) getHandleResponse(resp *http.Response) (Inb
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
-//   - options - InboundNatRulesClientListOptions contains the optional parameters for the InboundNatRulesClient.List method.
+//   - options - InboundNatRulesClientListOptions contains the optional parameters for the InboundNatRulesClient.NewListPager
+//     method.
 func (client *InboundNatRulesClient) NewListPager(resourceGroupName string, loadBalancerName string, options *InboundNatRulesClientListOptions) *runtime.Pager[InboundNatRulesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[InboundNatRulesClientListResponse]{
 		More: func(page InboundNatRulesClientListResponse) bool {

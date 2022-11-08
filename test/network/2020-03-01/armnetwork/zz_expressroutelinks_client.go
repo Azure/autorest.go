@@ -123,7 +123,8 @@ func (client *ExpressRouteLinksClient) getHandleResponse(resp *http.Response) (E
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - expressRoutePortName - The name of the ExpressRoutePort resource.
-//   - options - ExpressRouteLinksClientListOptions contains the optional parameters for the ExpressRouteLinksClient.List method.
+//   - options - ExpressRouteLinksClientListOptions contains the optional parameters for the ExpressRouteLinksClient.NewListPager
+//     method.
 func (client *ExpressRouteLinksClient) NewListPager(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksClientListOptions) *runtime.Pager[ExpressRouteLinksClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteLinksClientListResponse]{
 		More: func(page ExpressRouteLinksClientListResponse) bool {

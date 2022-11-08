@@ -374,7 +374,7 @@ func (client *ExpressRouteCircuitsClient) getStatsHandleResponse(resp *http.Resp
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - ExpressRouteCircuitsClientListOptions contains the optional parameters for the ExpressRouteCircuitsClient.List
+//   - options - ExpressRouteCircuitsClientListOptions contains the optional parameters for the ExpressRouteCircuitsClient.NewListPager
 //     method.
 func (client *ExpressRouteCircuitsClient) NewListPager(resourceGroupName string, options *ExpressRouteCircuitsClientListOptions) *runtime.Pager[ExpressRouteCircuitsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCircuitsClientListResponse]{
@@ -438,7 +438,7 @@ func (client *ExpressRouteCircuitsClient) listHandleResponse(resp *http.Response
 // NewListAllPager - Gets all the express route circuits in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - ExpressRouteCircuitsClientListAllOptions contains the optional parameters for the ExpressRouteCircuitsClient.ListAll
+//   - options - ExpressRouteCircuitsClientListAllOptions contains the optional parameters for the ExpressRouteCircuitsClient.NewListAllPager
 //     method.
 func (client *ExpressRouteCircuitsClient) NewListAllPager(options *ExpressRouteCircuitsClientListAllOptions) *runtime.Pager[ExpressRouteCircuitsClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCircuitsClientListAllResponse]{

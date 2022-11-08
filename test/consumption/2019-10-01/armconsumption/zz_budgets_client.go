@@ -232,7 +232,7 @@ func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClie
 //     '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
 //     for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
 //     for invoiceSection scope.
-//   - options - BudgetsClientListOptions contains the optional parameters for the BudgetsClient.List method.
+//   - options - BudgetsClientListOptions contains the optional parameters for the BudgetsClient.NewListPager method.
 func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientListOptions) *runtime.Pager[BudgetsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BudgetsClientListResponse]{
 		More: func(page BudgetsClientListResponse) bool {

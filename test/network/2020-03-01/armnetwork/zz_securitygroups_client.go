@@ -255,7 +255,7 @@ func (client *SecurityGroupsClient) getHandleResponse(resp *http.Response) (Secu
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - SecurityGroupsClientListOptions contains the optional parameters for the SecurityGroupsClient.List method.
+//   - options - SecurityGroupsClientListOptions contains the optional parameters for the SecurityGroupsClient.NewListPager method.
 func (client *SecurityGroupsClient) NewListPager(resourceGroupName string, options *SecurityGroupsClientListOptions) *runtime.Pager[SecurityGroupsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SecurityGroupsClientListResponse]{
 		More: func(page SecurityGroupsClientListResponse) bool {
@@ -318,7 +318,8 @@ func (client *SecurityGroupsClient) listHandleResponse(resp *http.Response) (Sec
 // NewListAllPager - Gets all network security groups in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - SecurityGroupsClientListAllOptions contains the optional parameters for the SecurityGroupsClient.ListAll method.
+//   - options - SecurityGroupsClientListAllOptions contains the optional parameters for the SecurityGroupsClient.NewListAllPager
+//     method.
 func (client *SecurityGroupsClient) NewListAllPager(options *SecurityGroupsClientListAllOptions) *runtime.Pager[SecurityGroupsClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SecurityGroupsClientListAllResponse]{
 		More: func(page SecurityGroupsClientListAllResponse) bool {

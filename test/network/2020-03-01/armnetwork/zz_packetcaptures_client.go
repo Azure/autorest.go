@@ -340,7 +340,7 @@ func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, 
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkWatcherName - The name of the Network Watcher resource.
-//   - options - PacketCapturesClientListOptions contains the optional parameters for the PacketCapturesClient.List method.
+//   - options - PacketCapturesClientListOptions contains the optional parameters for the PacketCapturesClient.NewListPager method.
 func (client *PacketCapturesClient) NewListPager(resourceGroupName string, networkWatcherName string, options *PacketCapturesClientListOptions) *runtime.Pager[PacketCapturesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PacketCapturesClientListResponse]{
 		More: func(page PacketCapturesClientListResponse) bool {

@@ -226,7 +226,7 @@ func (client *DedicatedHostGroupsClient) getHandleResponse(resp *http.Response) 
 //
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - DedicatedHostGroupsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.ListByResourceGroup
+//   - options - DedicatedHostGroupsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.NewListByResourceGroupPager
 //     method.
 func (client *DedicatedHostGroupsClient) NewListByResourceGroupPager(resourceGroupName string, options *DedicatedHostGroupsClientListByResourceGroupOptions) *runtime.Pager[DedicatedHostGroupsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DedicatedHostGroupsClientListByResourceGroupResponse]{
@@ -291,7 +291,7 @@ func (client *DedicatedHostGroupsClient) listByResourceGroupHandleResponse(resp 
 // response to get the next page of dedicated host groups.
 //
 // Generated from API version 2019-12-01
-//   - options - DedicatedHostGroupsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.ListBySubscription
+//   - options - DedicatedHostGroupsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.NewListBySubscriptionPager
 //     method.
 func (client *DedicatedHostGroupsClient) NewListBySubscriptionPager(options *DedicatedHostGroupsClientListBySubscriptionOptions) *runtime.Pager[DedicatedHostGroupsClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DedicatedHostGroupsClientListBySubscriptionResponse]{

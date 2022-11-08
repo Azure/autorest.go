@@ -528,7 +528,7 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedCreateReque
 // NewListPager - Lists all the P2SVpnGateways in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - P2SVPNGatewaysClientListOptions contains the optional parameters for the P2SVPNGatewaysClient.List method.
+//   - options - P2SVPNGatewaysClientListOptions contains the optional parameters for the P2SVPNGatewaysClient.NewListPager method.
 func (client *P2SVPNGatewaysClient) NewListPager(options *P2SVPNGatewaysClientListOptions) *runtime.Pager[P2SVPNGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[P2SVPNGatewaysClientListResponse]{
 		More: func(page P2SVPNGatewaysClientListResponse) bool {
@@ -588,7 +588,7 @@ func (client *P2SVPNGatewaysClient) listHandleResponse(resp *http.Response) (P2S
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The resource group name of the P2SVpnGateway.
-//   - options - P2SVPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the P2SVPNGatewaysClient.ListByResourceGroup
+//   - options - P2SVPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the P2SVPNGatewaysClient.NewListByResourceGroupPager
 //     method.
 func (client *P2SVPNGatewaysClient) NewListByResourceGroupPager(resourceGroupName string, options *P2SVPNGatewaysClientListByResourceGroupOptions) *runtime.Pager[P2SVPNGatewaysClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[P2SVPNGatewaysClientListByResourceGroupResponse]{

@@ -252,7 +252,7 @@ func (client *VPNServerConfigurationsClient) getHandleResponse(resp *http.Respon
 // NewListPager - Lists all the VpnServerConfigurations in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VPNServerConfigurationsClientListOptions contains the optional parameters for the VPNServerConfigurationsClient.List
+//   - options - VPNServerConfigurationsClientListOptions contains the optional parameters for the VPNServerConfigurationsClient.NewListPager
 //     method.
 func (client *VPNServerConfigurationsClient) NewListPager(options *VPNServerConfigurationsClientListOptions) *runtime.Pager[VPNServerConfigurationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNServerConfigurationsClientListResponse]{
@@ -313,7 +313,7 @@ func (client *VPNServerConfigurationsClient) listHandleResponse(resp *http.Respo
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The resource group name of the VpnServerConfiguration.
-//   - options - VPNServerConfigurationsClientListByResourceGroupOptions contains the optional parameters for the VPNServerConfigurationsClient.ListByResourceGroup
+//   - options - VPNServerConfigurationsClientListByResourceGroupOptions contains the optional parameters for the VPNServerConfigurationsClient.NewListByResourceGroupPager
 //     method.
 func (client *VPNServerConfigurationsClient) NewListByResourceGroupPager(resourceGroupName string, options *VPNServerConfigurationsClientListByResourceGroupOptions) *runtime.Pager[VPNServerConfigurationsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNServerConfigurationsClientListByResourceGroupResponse]{

@@ -191,7 +191,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 // "2020-02-18T19:53:33.123Z" } ] }
 //
 // Generated from API version 2.0
-//   - options - ClientListOptions contains the optional parameters for the client.List method.
+//   - options - ClientListOptions contains the optional parameters for the client.NewListPager method.
 func (client *client) NewListPager(options *ClientListOptions) *runtime.Pager[ClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ClientListResponse]{
 		More: func(page ClientListResponse) bool {

@@ -333,7 +333,7 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleResponse(res
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualMachineScaleSetName - The name of the VM scale set.
-//   - options - VirtualMachineScaleSetVMsClientListOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.List
+//   - options - VirtualMachineScaleSetVMsClientListOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.NewListPager
 //     method.
 func (client *VirtualMachineScaleSetVMsClient) NewListPager(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMsClientListOptions) *runtime.Pager[VirtualMachineScaleSetVMsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachineScaleSetVMsClientListResponse]{

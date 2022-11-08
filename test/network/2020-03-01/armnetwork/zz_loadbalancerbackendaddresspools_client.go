@@ -124,7 +124,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *htt
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
-//   - options - LoadBalancerBackendAddressPoolsClientListOptions contains the optional parameters for the LoadBalancerBackendAddressPoolsClient.List
+//   - options - LoadBalancerBackendAddressPoolsClientListOptions contains the optional parameters for the LoadBalancerBackendAddressPoolsClient.NewListPager
 //     method.
 func (client *LoadBalancerBackendAddressPoolsClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsClientListOptions) *runtime.Pager[LoadBalancerBackendAddressPoolsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancerBackendAddressPoolsClientListResponse]{

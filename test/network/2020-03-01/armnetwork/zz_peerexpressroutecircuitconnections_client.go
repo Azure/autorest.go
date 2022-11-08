@@ -130,7 +130,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) getHandleResponse(resp *
 //   - resourceGroupName - The name of the resource group.
 //   - circuitName - The name of the circuit.
 //   - peeringName - The name of the peering.
-//   - options - PeerExpressRouteCircuitConnectionsClientListOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.List
+//   - options - PeerExpressRouteCircuitConnectionsClientListOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.NewListPager
 //     method.
 func (client *PeerExpressRouteCircuitConnectionsClient) NewListPager(resourceGroupName string, circuitName string, peeringName string, options *PeerExpressRouteCircuitConnectionsClientListOptions) *runtime.Pager[PeerExpressRouteCircuitConnectionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PeerExpressRouteCircuitConnectionsClientListResponse]{

@@ -124,7 +124,7 @@ func (client *LoadBalancerOutboundRulesClient) getHandleResponse(resp *http.Resp
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
-//   - options - LoadBalancerOutboundRulesClientListOptions contains the optional parameters for the LoadBalancerOutboundRulesClient.List
+//   - options - LoadBalancerOutboundRulesClientListOptions contains the optional parameters for the LoadBalancerOutboundRulesClient.NewListPager
 //     method.
 func (client *LoadBalancerOutboundRulesClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesClientListOptions) *runtime.Pager[LoadBalancerOutboundRulesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancerOutboundRulesClientListResponse]{

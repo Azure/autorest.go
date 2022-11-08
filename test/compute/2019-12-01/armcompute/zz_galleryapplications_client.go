@@ -266,7 +266,7 @@ func (client *GalleryApplicationsClient) getHandleResponse(resp *http.Response) 
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - galleryName - The name of the Shared Application Gallery from which Application Definitions are to be listed.
-//   - options - GalleryApplicationsClientListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.ListByGallery
+//   - options - GalleryApplicationsClientListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.NewListByGalleryPager
 //     method.
 func (client *GalleryApplicationsClient) NewListByGalleryPager(resourceGroupName string, galleryName string, options *GalleryApplicationsClientListByGalleryOptions) *runtime.Pager[GalleryApplicationsClientListByGalleryResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleryApplicationsClientListByGalleryResponse]{

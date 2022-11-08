@@ -269,7 +269,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getHandleResponse(resp *ht
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - serviceEndpointPolicyName - The name of the service endpoint policy name.
-//   - options - ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.ListByResourceGroup
+//   - options - ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.NewListByResourceGroupPager
 //     method.
 func (client *ServiceEndpointPolicyDefinitionsClient) NewListByResourceGroupPager(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions) *runtime.Pager[ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse]{

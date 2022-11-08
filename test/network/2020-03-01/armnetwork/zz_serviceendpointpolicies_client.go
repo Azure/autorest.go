@@ -255,7 +255,7 @@ func (client *ServiceEndpointPoliciesClient) getHandleResponse(resp *http.Respon
 // NewListPager - Gets all the service endpoint policies in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - ServiceEndpointPoliciesClientListOptions contains the optional parameters for the ServiceEndpointPoliciesClient.List
+//   - options - ServiceEndpointPoliciesClientListOptions contains the optional parameters for the ServiceEndpointPoliciesClient.NewListPager
 //     method.
 func (client *ServiceEndpointPoliciesClient) NewListPager(options *ServiceEndpointPoliciesClientListOptions) *runtime.Pager[ServiceEndpointPoliciesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ServiceEndpointPoliciesClientListResponse]{
@@ -316,7 +316,7 @@ func (client *ServiceEndpointPoliciesClient) listHandleResponse(resp *http.Respo
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - ServiceEndpointPoliciesClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPoliciesClient.ListByResourceGroup
+//   - options - ServiceEndpointPoliciesClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPoliciesClient.NewListByResourceGroupPager
 //     method.
 func (client *ServiceEndpointPoliciesClient) NewListByResourceGroupPager(resourceGroupName string, options *ServiceEndpointPoliciesClientListByResourceGroupOptions) *runtime.Pager[ServiceEndpointPoliciesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ServiceEndpointPoliciesClientListByResourceGroupResponse]{

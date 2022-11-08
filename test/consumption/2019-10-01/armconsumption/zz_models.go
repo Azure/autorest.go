@@ -256,7 +256,7 @@ type BudgetsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BudgetsClientListOptions contains the optional parameters for the BudgetsClient.List method.
+// BudgetsClientListOptions contains the optional parameters for the BudgetsClient.NewListPager method.
 type BudgetsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -483,7 +483,7 @@ type Events struct {
 	Value []*EventSummary `json:"value,omitempty" azure:"ro"`
 }
 
-// EventsClientListOptions contains the optional parameters for the EventsClient.List method.
+// EventsClientListOptions contains the optional parameters for the EventsClient.NewListPager method.
 type EventsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -553,7 +553,7 @@ type ForecastSpend struct {
 	Unit *string `json:"unit,omitempty" azure:"ro"`
 }
 
-// ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
+// ForecastsClientListOptions contains the optional parameters for the ForecastsClient.NewListPager method.
 type ForecastsClientListOptions struct {
 	// May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter
 	// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
@@ -1023,7 +1023,7 @@ type Lots struct {
 	Value []*LotSummary `json:"value,omitempty" azure:"ro"`
 }
 
-// LotsClientListOptions contains the optional parameters for the LotsClient.List method.
+// LotsClientListOptions contains the optional parameters for the LotsClient.NewListPager method.
 type LotsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1184,7 +1184,7 @@ type MarketplaceProperties struct {
 	UsageStart *time.Time `json:"usageStart,omitempty" azure:"ro"`
 }
 
-// MarketplacesClientListOptions contains the optional parameters for the MarketplacesClient.List method.
+// MarketplacesClientListOptions contains the optional parameters for the MarketplacesClient.NewListPager method.
 type MarketplacesClientListOptions struct {
 	// May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup,
 	// properties/instanceName or properties/instanceId. The filter supports
@@ -1848,7 +1848,7 @@ type OperationListResult struct {
 	Value []*Operation `json:"value,omitempty" azure:"ro"`
 }
 
-// OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+// OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2207,7 +2207,7 @@ type ReservationRecommendationDetailsUsageProperties struct {
 	UsageGrain *string `json:"usageGrain,omitempty" azure:"ro"`
 }
 
-// ReservationRecommendationsClientListOptions contains the optional parameters for the ReservationRecommendationsClient.List
+// ReservationRecommendationsClientListOptions contains the optional parameters for the ReservationRecommendationsClient.NewListPager
 // method.
 type ReservationRecommendationsClientListOptions struct {
 	// May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default
@@ -2340,7 +2340,7 @@ type ReservationTransaction struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
+// ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.NewListByBillingProfilePager
 // method.
 type ReservationTransactionsClientListByBillingProfileOptions struct {
 	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
@@ -2348,7 +2348,8 @@ type ReservationTransactionsClientListByBillingProfileOptions struct {
 	Filter *string
 }
 
-// ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List method.
+// ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.NewListPager
+// method.
 type ReservationTransactionsClientListOptions struct {
 	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
 	// 'le' and 'ge'
@@ -2364,19 +2365,19 @@ type ReservationTransactionsListResult struct {
 	Value []*ReservationTransaction `json:"value,omitempty" azure:"ro"`
 }
 
-// ReservationsDetailsClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrderAndReservation
+// ReservationsDetailsClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetailsClient.NewListByReservationOrderAndReservationPager
 // method.
 type ReservationsDetailsClientListByReservationOrderAndReservationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrder
+// ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.NewListByReservationOrderPager
 // method.
 type ReservationsDetailsClientListByReservationOrderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.List method.
+// ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.NewListPager method.
 type ReservationsDetailsClientListOptions struct {
 	// End date. Only applicable when querying with billing profile
 	EndDate *string
@@ -2391,21 +2392,22 @@ type ReservationsDetailsClientListOptions struct {
 	StartDate *string
 }
 
-// ReservationsSummariesClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrderAndReservation
+// ReservationsSummariesClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsSummariesClient.NewListByReservationOrderAndReservationPager
 // method.
 type ReservationsSummariesClientListByReservationOrderAndReservationOptions struct {
 	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
 	Filter *string
 }
 
-// ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrder
+// ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.NewListByReservationOrderPager
 // method.
 type ReservationsSummariesClientListByReservationOrderOptions struct {
 	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
 	Filter *string
 }
 
-// ReservationsSummariesClientListOptions contains the optional parameters for the ReservationsSummariesClient.List method.
+// ReservationsSummariesClientListOptions contains the optional parameters for the ReservationsSummariesClient.NewListPager
+// method.
 type ReservationsSummariesClientListOptions struct {
 	// End date. Required only when querying with billing profile
 	EndDate *string
@@ -2507,7 +2509,7 @@ type UsageDetail struct {
 // GetUsageDetail implements the UsageDetailClassification interface for type UsageDetail.
 func (u *UsageDetail) GetUsageDetail() *UsageDetail { return u }
 
-// UsageDetailsClientListOptions contains the optional parameters for the UsageDetailsClient.List method.
+// UsageDetailsClientListOptions contains the optional parameters for the UsageDetailsClient.NewListPager method.
 type UsageDetailsClientListOptions struct {
 	// May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default,
 	// these fields are not included when listing usage details.

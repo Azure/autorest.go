@@ -269,7 +269,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleResponse(resp *h
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - circuitName - The name of the circuit.
-//   - options - ExpressRouteCircuitAuthorizationsClientListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.List
+//   - options - ExpressRouteCircuitAuthorizationsClientListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.NewListPager
 //     method.
 func (client *ExpressRouteCircuitAuthorizationsClient) NewListPager(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsClientListOptions) *runtime.Pager[ExpressRouteCircuitAuthorizationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCircuitAuthorizationsClientListResponse]{

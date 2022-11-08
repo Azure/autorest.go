@@ -321,7 +321,7 @@ func (client *SnapshotsClient) grantAccessCreateRequest(ctx context.Context, res
 // NewListPager - Lists snapshots under a subscription.
 //
 // Generated from API version 2019-11-01
-//   - options - SnapshotsClientListOptions contains the optional parameters for the SnapshotsClient.List method.
+//   - options - SnapshotsClientListOptions contains the optional parameters for the SnapshotsClient.NewListPager method.
 func (client *SnapshotsClient) NewListPager(options *SnapshotsClientListOptions) *runtime.Pager[SnapshotsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SnapshotsClientListResponse]{
 		More: func(page SnapshotsClientListResponse) bool {
@@ -381,7 +381,7 @@ func (client *SnapshotsClient) listHandleResponse(resp *http.Response) (Snapshot
 //
 // Generated from API version 2019-11-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - SnapshotsClientListByResourceGroupOptions contains the optional parameters for the SnapshotsClient.ListByResourceGroup
+//   - options - SnapshotsClientListByResourceGroupOptions contains the optional parameters for the SnapshotsClient.NewListByResourceGroupPager
 //     method.
 func (client *SnapshotsClient) NewListByResourceGroupPager(resourceGroupName string, options *SnapshotsClientListByResourceGroupOptions) *runtime.Pager[SnapshotsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SnapshotsClientListByResourceGroupResponse]{

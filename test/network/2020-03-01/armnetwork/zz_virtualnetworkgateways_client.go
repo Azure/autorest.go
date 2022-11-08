@@ -882,7 +882,7 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersCreateReq
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - VirtualNetworkGatewaysClientListOptions contains the optional parameters for the VirtualNetworkGatewaysClient.List
+//   - options - VirtualNetworkGatewaysClientListOptions contains the optional parameters for the VirtualNetworkGatewaysClient.NewListPager
 //     method.
 func (client *VirtualNetworkGatewaysClient) NewListPager(resourceGroupName string, options *VirtualNetworkGatewaysClientListOptions) *runtime.Pager[VirtualNetworkGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworkGatewaysClientListResponse]{
@@ -948,7 +948,7 @@ func (client *VirtualNetworkGatewaysClient) listHandleResponse(resp *http.Respon
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayName - The name of the virtual network gateway.
-//   - options - VirtualNetworkGatewaysClientListConnectionsOptions contains the optional parameters for the VirtualNetworkGatewaysClient.ListConnections
+//   - options - VirtualNetworkGatewaysClientListConnectionsOptions contains the optional parameters for the VirtualNetworkGatewaysClient.NewListConnectionsPager
 //     method.
 func (client *VirtualNetworkGatewaysClient) NewListConnectionsPager(resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientListConnectionsOptions) *runtime.Pager[VirtualNetworkGatewaysClientListConnectionsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworkGatewaysClientListConnectionsResponse]{

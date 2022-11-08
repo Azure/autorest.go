@@ -238,7 +238,7 @@ func (client *OrdersClient) getHandleResponse(resp *http.Response) (OrdersClient
 // Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
-//   - options - OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
+//   - options - OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.NewListByDataBoxEdgeDevicePager
 //     method.
 func (client *OrdersClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *OrdersClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[OrdersClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[OrdersClientListByDataBoxEdgeDeviceResponse]{

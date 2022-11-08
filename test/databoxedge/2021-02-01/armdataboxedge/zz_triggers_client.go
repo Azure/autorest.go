@@ -253,7 +253,7 @@ func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersCl
 // Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
-//   - options - TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
+//   - options - TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.NewListByDataBoxEdgeDevicePager
 //     method.
 func (client *TriggersClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *TriggersClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[TriggersClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TriggersClientListByDataBoxEdgeDeviceResponse]{

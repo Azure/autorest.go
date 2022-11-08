@@ -60,7 +60,7 @@ func NewVirtualMachineSizesClient(subscriptionID string, credential azcore.Token
 //
 // Generated from API version 2019-12-01
 //   - location - The location upon which virtual-machine-sizes is queried.
-//   - options - VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.List
+//   - options - VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.NewListPager
 //     method.
 func (client *VirtualMachineSizesClient) NewListPager(location string, options *VirtualMachineSizesClientListOptions) *runtime.Pager[VirtualMachineSizesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachineSizesClientListResponse]{

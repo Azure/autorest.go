@@ -205,7 +205,7 @@ func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (Da
 // NewGetDataFlowsByWorkspacePager - Lists data flows.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.GetDataFlowsByWorkspace
+//   - options - DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.NewGetDataFlowsByWorkspacePager
 //     method.
 func (client *dataFlowClient) NewGetDataFlowsByWorkspacePager(options *DataFlowClientGetDataFlowsByWorkspaceOptions) *runtime.Pager[DataFlowClientGetDataFlowsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DataFlowClientGetDataFlowsByWorkspaceResponse]{

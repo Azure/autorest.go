@@ -267,7 +267,7 @@ func (client *RoutesClient) getHandleResponse(resp *http.Response) (RoutesClient
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeTableName - The name of the route table.
-//   - options - RoutesClientListOptions contains the optional parameters for the RoutesClient.List method.
+//   - options - RoutesClientListOptions contains the optional parameters for the RoutesClient.NewListPager method.
 func (client *RoutesClient) NewListPager(resourceGroupName string, routeTableName string, options *RoutesClientListOptions) *runtime.Pager[RoutesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RoutesClientListResponse]{
 		More: func(page RoutesClientListResponse) bool {

@@ -255,7 +255,8 @@ func (client *PublicIPPrefixesClient) getHandleResponse(resp *http.Response) (Pu
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - PublicIPPrefixesClientListOptions contains the optional parameters for the PublicIPPrefixesClient.List method.
+//   - options - PublicIPPrefixesClientListOptions contains the optional parameters for the PublicIPPrefixesClient.NewListPager
+//     method.
 func (client *PublicIPPrefixesClient) NewListPager(resourceGroupName string, options *PublicIPPrefixesClientListOptions) *runtime.Pager[PublicIPPrefixesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPPrefixesClientListResponse]{
 		More: func(page PublicIPPrefixesClientListResponse) bool {
@@ -318,7 +319,7 @@ func (client *PublicIPPrefixesClient) listHandleResponse(resp *http.Response) (P
 // NewListAllPager - Gets all the public IP prefixes in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - PublicIPPrefixesClientListAllOptions contains the optional parameters for the PublicIPPrefixesClient.ListAll
+//   - options - PublicIPPrefixesClientListAllOptions contains the optional parameters for the PublicIPPrefixesClient.NewListAllPager
 //     method.
 func (client *PublicIPPrefixesClient) NewListAllPager(options *PublicIPPrefixesClientListAllOptions) *runtime.Pager[PublicIPPrefixesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPPrefixesClientListAllResponse]{

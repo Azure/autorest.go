@@ -40,7 +40,7 @@ type ClientGetScriptOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientListOptions contains the optional parameters for the client.List method.
+// ClientListOptions contains the optional parameters for the client.NewListPager method.
 type ClientListOptions struct {
 	GroupBy []LogMetricsGroupBy
 }

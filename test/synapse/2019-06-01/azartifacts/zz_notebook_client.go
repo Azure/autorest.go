@@ -205,7 +205,7 @@ func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (No
 // NewGetNotebookSummaryByWorkSpacePager - Lists a summary of Notebooks.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
+//   - options - NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.NewGetNotebookSummaryByWorkSpacePager
 //     method.
 func (client *notebookClient) NewGetNotebookSummaryByWorkSpacePager(options *NotebookClientGetNotebookSummaryByWorkSpaceOptions) *runtime.Pager[NotebookClientGetNotebookSummaryByWorkSpaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NotebookClientGetNotebookSummaryByWorkSpaceResponse]{
@@ -261,7 +261,7 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *
 // NewGetNotebooksByWorkspacePager - Lists Notebooks.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
+//   - options - NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.NewGetNotebooksByWorkspacePager
 //     method.
 func (client *notebookClient) NewGetNotebooksByWorkspacePager(options *NotebookClientGetNotebooksByWorkspaceOptions) *runtime.Pager[NotebookClientGetNotebooksByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NotebookClientGetNotebooksByWorkspaceResponse]{

@@ -390,7 +390,7 @@ func (client *containerRegistryClient) getManifestPropertiesHandleResponse(resp 
 //
 // Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
-//   - options - ContainerRegistryClientGetManifestsOptions contains the optional parameters for the containerRegistryClient.GetManifests
+//   - options - ContainerRegistryClientGetManifestsOptions contains the optional parameters for the containerRegistryClient.NewGetManifestsPager
 //     method.
 func (client *containerRegistryClient) NewGetManifestsPager(name string, options *ContainerRegistryClientGetManifestsOptions) *runtime.Pager[ContainerRegistryClientGetManifestsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerRegistryClientGetManifestsResponse]{
@@ -515,7 +515,7 @@ func (client *containerRegistryClient) getPropertiesHandleResponse(resp *http.Re
 // NewGetRepositoriesPager - List repositories
 //
 // Generated from API version 2021-07-01
-//   - options - ContainerRegistryClientGetRepositoriesOptions contains the optional parameters for the containerRegistryClient.GetRepositories
+//   - options - ContainerRegistryClientGetRepositoriesOptions contains the optional parameters for the containerRegistryClient.NewGetRepositoriesPager
 //     method.
 func (client *containerRegistryClient) NewGetRepositoriesPager(options *ContainerRegistryClientGetRepositoriesOptions) *runtime.Pager[ContainerRegistryClientGetRepositoriesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerRegistryClientGetRepositoriesResponse]{
@@ -639,7 +639,7 @@ func (client *containerRegistryClient) getTagPropertiesHandleResponse(resp *http
 //
 // Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
-//   - options - ContainerRegistryClientGetTagsOptions contains the optional parameters for the containerRegistryClient.GetTags
+//   - options - ContainerRegistryClientGetTagsOptions contains the optional parameters for the containerRegistryClient.NewGetTagsPager
 //     method.
 func (client *containerRegistryClient) NewGetTagsPager(name string, options *ContainerRegistryClientGetTagsOptions) *runtime.Pager[ContainerRegistryClientGetTagsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerRegistryClientGetTagsResponse]{

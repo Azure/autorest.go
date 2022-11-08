@@ -448,7 +448,7 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(re
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - ApplicationGatewaysClientListOptions contains the optional parameters for the ApplicationGatewaysClient.List
+//   - options - ApplicationGatewaysClientListOptions contains the optional parameters for the ApplicationGatewaysClient.NewListPager
 //     method.
 func (client *ApplicationGatewaysClient) NewListPager(resourceGroupName string, options *ApplicationGatewaysClientListOptions) *runtime.Pager[ApplicationGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ApplicationGatewaysClientListResponse]{
@@ -512,7 +512,7 @@ func (client *ApplicationGatewaysClient) listHandleResponse(resp *http.Response)
 // NewListAllPager - Gets all the application gateways in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - ApplicationGatewaysClientListAllOptions contains the optional parameters for the ApplicationGatewaysClient.ListAll
+//   - options - ApplicationGatewaysClientListAllOptions contains the optional parameters for the ApplicationGatewaysClient.NewListAllPager
 //     method.
 func (client *ApplicationGatewaysClient) NewListAllPager(options *ApplicationGatewaysClientListAllOptions) *runtime.Pager[ApplicationGatewaysClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ApplicationGatewaysClientListAllResponse]{
@@ -716,7 +716,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(r
 // NewListAvailableSSLPredefinedPoliciesPager - Lists all SSL predefined policies for configuring Ssl policy.
 //
 // Generated from API version 2020-03-01
-//   - options - ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLPredefinedPolicies
+//   - options - ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGatewaysClient.NewListAvailableSSLPredefinedPoliciesPager
 //     method.
 func (client *ApplicationGatewaysClient) NewListAvailableSSLPredefinedPoliciesPager(options *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions) *runtime.Pager[ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse]{

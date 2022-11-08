@@ -227,7 +227,7 @@ type ContainerRegistryClientGetManifestPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientGetManifestsOptions contains the optional parameters for the containerRegistryClient.GetManifests
+// ContainerRegistryClientGetManifestsOptions contains the optional parameters for the containerRegistryClient.NewGetManifestsPager
 // method.
 type ContainerRegistryClientGetManifestsOptions struct {
 	// Query parameter for the last item in previous query. Result set will include values lexically after last.
@@ -244,7 +244,7 @@ type ContainerRegistryClientGetPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientGetRepositoriesOptions contains the optional parameters for the containerRegistryClient.GetRepositories
+// ContainerRegistryClientGetRepositoriesOptions contains the optional parameters for the containerRegistryClient.NewGetRepositoriesPager
 // method.
 type ContainerRegistryClientGetRepositoriesOptions struct {
 	// Query parameter for the last item in previous query. Result set will include values lexically after last.
@@ -259,7 +259,8 @@ type ContainerRegistryClientGetTagPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientGetTagsOptions contains the optional parameters for the containerRegistryClient.GetTags method.
+// ContainerRegistryClientGetTagsOptions contains the optional parameters for the containerRegistryClient.NewGetTagsPager
+// method.
 type ContainerRegistryClientGetTagsOptions struct {
 	// filter by digest
 	Digest *string

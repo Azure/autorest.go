@@ -206,7 +206,7 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Res
 // NewGetLinkedServicesByWorkspacePager - Lists linked services.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
+//   - options - LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.NewGetLinkedServicesByWorkspacePager
 //     method.
 func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[LinkedServiceClientGetLinkedServicesByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LinkedServiceClientGetLinkedServicesByWorkspaceResponse]{

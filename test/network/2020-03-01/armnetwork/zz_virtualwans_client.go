@@ -250,7 +250,7 @@ func (client *VirtualWansClient) getHandleResponse(resp *http.Response) (Virtual
 // NewListPager - Lists all the VirtualWANs in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VirtualWansClientListOptions contains the optional parameters for the VirtualWansClient.List method.
+//   - options - VirtualWansClientListOptions contains the optional parameters for the VirtualWansClient.NewListPager method.
 func (client *VirtualWansClient) NewListPager(options *VirtualWansClientListOptions) *runtime.Pager[VirtualWansClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualWansClientListResponse]{
 		More: func(page VirtualWansClientListResponse) bool {
@@ -310,7 +310,7 @@ func (client *VirtualWansClient) listHandleResponse(resp *http.Response) (Virtua
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The resource group name of the VirtualWan.
-//   - options - VirtualWansClientListByResourceGroupOptions contains the optional parameters for the VirtualWansClient.ListByResourceGroup
+//   - options - VirtualWansClientListByResourceGroupOptions contains the optional parameters for the VirtualWansClient.NewListByResourceGroupPager
 //     method.
 func (client *VirtualWansClient) NewListByResourceGroupPager(resourceGroupName string, options *VirtualWansClientListByResourceGroupOptions) *runtime.Pager[VirtualWansClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualWansClientListByResourceGroupResponse]{

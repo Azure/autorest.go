@@ -255,7 +255,8 @@ func (client *PrivateEndpointsClient) getHandleResponse(resp *http.Response) (Pr
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - PrivateEndpointsClientListOptions contains the optional parameters for the PrivateEndpointsClient.List method.
+//   - options - PrivateEndpointsClientListOptions contains the optional parameters for the PrivateEndpointsClient.NewListPager
+//     method.
 func (client *PrivateEndpointsClient) NewListPager(resourceGroupName string, options *PrivateEndpointsClientListOptions) *runtime.Pager[PrivateEndpointsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateEndpointsClientListResponse]{
 		More: func(page PrivateEndpointsClientListResponse) bool {
@@ -318,7 +319,7 @@ func (client *PrivateEndpointsClient) listHandleResponse(resp *http.Response) (P
 // NewListBySubscriptionPager - Gets all private endpoints in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - PrivateEndpointsClientListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.ListBySubscription
+//   - options - PrivateEndpointsClientListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.NewListBySubscriptionPager
 //     method.
 func (client *PrivateEndpointsClient) NewListBySubscriptionPager(options *PrivateEndpointsClientListBySubscriptionOptions) *runtime.Pager[PrivateEndpointsClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateEndpointsClientListBySubscriptionResponse]{

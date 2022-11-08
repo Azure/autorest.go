@@ -251,7 +251,7 @@ func (client *VirtualNetworkTapsClient) getHandleResponse(resp *http.Response) (
 // NewListAllPager - Gets all the VirtualNetworkTaps in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VirtualNetworkTapsClientListAllOptions contains the optional parameters for the VirtualNetworkTapsClient.ListAll
+//   - options - VirtualNetworkTapsClientListAllOptions contains the optional parameters for the VirtualNetworkTapsClient.NewListAllPager
 //     method.
 func (client *VirtualNetworkTapsClient) NewListAllPager(options *VirtualNetworkTapsClientListAllOptions) *runtime.Pager[VirtualNetworkTapsClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworkTapsClientListAllResponse]{
@@ -312,7 +312,7 @@ func (client *VirtualNetworkTapsClient) listAllHandleResponse(resp *http.Respons
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - VirtualNetworkTapsClientListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTapsClient.ListByResourceGroup
+//   - options - VirtualNetworkTapsClientListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTapsClient.NewListByResourceGroupPager
 //     method.
 func (client *VirtualNetworkTapsClient) NewListByResourceGroupPager(resourceGroupName string, options *VirtualNetworkTapsClientListByResourceGroupOptions) *runtime.Pager[VirtualNetworkTapsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworkTapsClientListByResourceGroupResponse]{

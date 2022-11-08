@@ -60,7 +60,7 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 //
 // Generated from API version 2020-03-01
 //   - location - The location to check available endpoint services.
-//   - options - AvailableEndpointServicesClientListOptions contains the optional parameters for the AvailableEndpointServicesClient.List
+//   - options - AvailableEndpointServicesClientListOptions contains the optional parameters for the AvailableEndpointServicesClient.NewListPager
 //     method.
 func (client *AvailableEndpointServicesClient) NewListPager(location string, options *AvailableEndpointServicesClientListOptions) *runtime.Pager[AvailableEndpointServicesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableEndpointServicesClientListResponse]{

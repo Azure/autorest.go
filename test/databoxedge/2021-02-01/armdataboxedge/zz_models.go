@@ -67,7 +67,7 @@ type AddonsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
+// AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.NewListByRolePager method.
 type AddonsClientListByRoleOptions struct {
 	// placeholder for future optional parameters
 }
@@ -164,7 +164,7 @@ type AlertsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice
+// AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.NewListByDataBoxEdgeDevicePager
 // method.
 type AlertsClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -247,7 +247,7 @@ type Authentication struct {
 	SymmetricKey *SymmetricKey `json:"symmetricKey,omitempty"`
 }
 
-// AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.List method.
+// AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.NewListPager method.
 type AvailableSKUsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -316,7 +316,7 @@ type BandwidthSchedulesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
+// BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -493,7 +493,7 @@ type ContainersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
+// ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.NewListByStorageAccountPager
 // method.
 type ContainersClientListByStorageAccountOptions struct {
 	// placeholder for future optional parameters
@@ -765,14 +765,16 @@ type DevicesClientGetUpdateSummaryOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup method.
+// DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.NewListByResourceGroupPager
+// method.
 type DevicesClientListByResourceGroupOptions struct {
 	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
 	// page in the list.
 	Expand *string
 }
 
-// DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription method.
+// DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.NewListBySubscriptionPager
+// method.
 type DevicesClientListBySubscriptionOptions struct {
 	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
 	// page in the list.
@@ -1536,7 +1538,7 @@ type MonitoringConfigClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.List method.
+// MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.NewListPager method.
 type MonitoringConfigClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1735,7 +1737,7 @@ type NodeProperties struct {
 	NodeStatus *NodeStatus `json:"nodeStatus,omitempty" azure:"ro"`
 }
 
-// NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.ListByDataBoxEdgeDevice
+// NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type NodesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -1780,7 +1782,7 @@ type OperationProperties struct {
 	ServiceSpecification *ServiceSpecification `json:"serviceSpecification,omitempty"`
 }
 
-// OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+// OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1889,7 +1891,7 @@ type OrdersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
+// OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.NewListByDataBoxEdgeDevicePager
 // method.
 type OrdersClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -2089,7 +2091,7 @@ type RolesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice
+// RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type RolesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -2324,7 +2326,7 @@ type SharesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
+// SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type SharesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -2422,7 +2424,7 @@ type StorageAccountCredentialsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
+// StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager
 // method.
 type StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -2476,7 +2478,7 @@ type StorageAccountsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.ListByDataBoxEdgeDevice
+// StorageAccountsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.NewListByDataBoxEdgeDevicePager
 // method.
 type StorageAccountsClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
@@ -2628,7 +2630,7 @@ type TriggersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
+// TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.NewListByDataBoxEdgeDevicePager
 // method.
 type TriggersClientListByDataBoxEdgeDeviceOptions struct {
 	// Specify $filter='CustomContextTag eq ' to filter on custom context tag property
@@ -2892,7 +2894,7 @@ type UsersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UsersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.ListByDataBoxEdgeDevice
+// UsersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.NewListByDataBoxEdgeDevicePager
 // method.
 type UsersClientListByDataBoxEdgeDeviceOptions struct {
 	// Specify $filter='Type eq ' to filter on user type property

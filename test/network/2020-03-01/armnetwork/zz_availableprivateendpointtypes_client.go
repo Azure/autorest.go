@@ -61,7 +61,7 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 //
 // Generated from API version 2020-03-01
 //   - location - The location of the domain name.
-//   - options - AvailablePrivateEndpointTypesClientListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
+//   - options - AvailablePrivateEndpointTypesClientListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.NewListPager
 //     method.
 func (client *AvailablePrivateEndpointTypesClient) NewListPager(location string, options *AvailablePrivateEndpointTypesClientListOptions) *runtime.Pager[AvailablePrivateEndpointTypesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailablePrivateEndpointTypesClientListResponse]{
@@ -128,7 +128,7 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http
 // Generated from API version 2020-03-01
 //   - location - The location of the domain name.
 //   - resourceGroupName - The name of the resource group.
-//   - options - AvailablePrivateEndpointTypesClientListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.ListByResourceGroup
+//   - options - AvailablePrivateEndpointTypesClientListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.NewListByResourceGroupPager
 //     method.
 func (client *AvailablePrivateEndpointTypesClient) NewListByResourceGroupPager(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesClientListByResourceGroupOptions) *runtime.Pager[AvailablePrivateEndpointTypesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailablePrivateEndpointTypesClientListByResourceGroupResponse]{

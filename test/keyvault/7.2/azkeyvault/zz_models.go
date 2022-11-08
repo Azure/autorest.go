@@ -451,7 +451,7 @@ type ClientGetCertificateIssuerOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
+// ClientGetCertificateIssuersOptions contains the optional parameters for the Client.NewGetCertificateIssuersPager method.
 type ClientGetCertificateIssuersOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -472,13 +472,13 @@ type ClientGetCertificatePolicyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions method.
+// ClientGetCertificateVersionsOptions contains the optional parameters for the Client.NewGetCertificateVersionsPager method.
 type ClientGetCertificateVersionsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
 }
 
-// ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
+// ClientGetCertificatesOptions contains the optional parameters for the Client.NewGetCertificatesPager method.
 type ClientGetCertificatesOptions struct {
 	// Specifies whether to include certificates which are not completely provisioned.
 	IncludePending *bool
@@ -491,7 +491,7 @@ type ClientGetDeletedCertificateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
+// ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.NewGetDeletedCertificatesPager method.
 type ClientGetDeletedCertificatesOptions struct {
 	// Specifies whether to include certificates which are not completely provisioned.
 	IncludePending *bool
@@ -504,7 +504,7 @@ type ClientGetDeletedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
+// ClientGetDeletedKeysOptions contains the optional parameters for the Client.NewGetDeletedKeysPager method.
 type ClientGetDeletedKeysOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -515,7 +515,8 @@ type ClientGetDeletedSasDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions method.
+// ClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.NewGetDeletedSasDefinitionsPager
+// method.
 type ClientGetDeletedSasDefinitionsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -526,7 +527,7 @@ type ClientGetDeletedSecretOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
+// ClientGetDeletedSecretsOptions contains the optional parameters for the Client.NewGetDeletedSecretsPager method.
 type ClientGetDeletedSecretsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -537,7 +538,8 @@ type ClientGetDeletedStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts method.
+// ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.NewGetDeletedStorageAccountsPager
+// method.
 type ClientGetDeletedStorageAccountsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -548,13 +550,13 @@ type ClientGetKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
+// ClientGetKeyVersionsOptions contains the optional parameters for the Client.NewGetKeyVersionsPager method.
 type ClientGetKeyVersionsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
 }
 
-// ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
+// ClientGetKeysOptions contains the optional parameters for the Client.NewGetKeysPager method.
 type ClientGetKeysOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -565,7 +567,7 @@ type ClientGetSasDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
+// ClientGetSasDefinitionsOptions contains the optional parameters for the Client.NewGetSasDefinitionsPager method.
 type ClientGetSasDefinitionsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -576,13 +578,13 @@ type ClientGetSecretOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
+// ClientGetSecretVersionsOptions contains the optional parameters for the Client.NewGetSecretVersionsPager method.
 type ClientGetSecretVersionsOptions struct {
 	// Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
 	Maxresults *int32
 }
 
-// ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
+// ClientGetSecretsOptions contains the optional parameters for the Client.NewGetSecretsPager method.
 type ClientGetSecretsOptions struct {
 	// Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
 	Maxresults *int32
@@ -593,7 +595,7 @@ type ClientGetStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
+// ClientGetStorageAccountsOptions contains the optional parameters for the Client.NewGetStorageAccountsPager method.
 type ClientGetStorageAccountsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -1659,7 +1661,8 @@ type RoleAssignmentsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope method.
+// RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.NewListForScopePager
+// method.
 type RoleAssignmentsClientListForScopeOptions struct {
 	// The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId
 	// eq {id} to return all role assignments at, above or below the
@@ -1737,7 +1740,7 @@ type RoleDefinitionsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
+// RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.NewListPager method.
 type RoleDefinitionsClientListOptions struct {
 	// The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well.
 	Filter *string

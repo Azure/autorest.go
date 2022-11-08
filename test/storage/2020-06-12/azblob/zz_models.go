@@ -837,7 +837,7 @@ type ContainerClientGetPropertiesOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
+// ContainerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.NewListBlobFlatSegmentPager
 // method.
 type ContainerClientListBlobFlatSegmentOptions struct {
 	// Include this parameter to specify one or more datasets to include in the response.
@@ -864,7 +864,7 @@ type ContainerClientListBlobFlatSegmentOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.ListBlobHierarchySegment
+// ContainerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.NewListBlobHierarchySegmentPager
 // method.
 type ContainerClientListBlobHierarchySegmentOptions struct {
 	// Include this parameter to specify one or more datasets to include in the response.
@@ -1748,7 +1748,7 @@ type ServiceClientGetUserDelegationKeyOptions struct {
 	Timeout *int32
 }
 
-// ServiceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
+// ServiceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.NewListContainersSegmentPager
 // method.
 type ServiceClientListContainersSegmentOptions struct {
 	// Include this parameter to specify that the container's metadata be returned as part of the response body.

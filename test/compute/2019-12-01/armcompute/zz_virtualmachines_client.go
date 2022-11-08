@@ -572,7 +572,8 @@ func (client *VirtualMachinesClient) instanceViewHandleResponse(resp *http.Respo
 //
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - VirtualMachinesClientListOptions contains the optional parameters for the VirtualMachinesClient.List method.
+//   - options - VirtualMachinesClientListOptions contains the optional parameters for the VirtualMachinesClient.NewListPager
+//     method.
 func (client *VirtualMachinesClient) NewListPager(resourceGroupName string, options *VirtualMachinesClientListOptions) *runtime.Pager[VirtualMachinesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachinesClientListResponse]{
 		More: func(page VirtualMachinesClientListResponse) bool {
@@ -636,7 +637,8 @@ func (client *VirtualMachinesClient) listHandleResponse(resp *http.Response) (Vi
 // to get the next page of virtual machines.
 //
 // Generated from API version 2019-12-01
-//   - options - VirtualMachinesClientListAllOptions contains the optional parameters for the VirtualMachinesClient.ListAll method.
+//   - options - VirtualMachinesClientListAllOptions contains the optional parameters for the VirtualMachinesClient.NewListAllPager
+//     method.
 func (client *VirtualMachinesClient) NewListAllPager(options *VirtualMachinesClientListAllOptions) *runtime.Pager[VirtualMachinesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachinesClientListAllResponse]{
 		More: func(page VirtualMachinesClientListAllResponse) bool {
@@ -700,7 +702,7 @@ func (client *VirtualMachinesClient) listAllHandleResponse(resp *http.Response) 
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - vmName - The name of the virtual machine.
-//   - options - VirtualMachinesClientListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.ListAvailableSizes
+//   - options - VirtualMachinesClientListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.NewListAvailableSizesPager
 //     method.
 func (client *VirtualMachinesClient) NewListAvailableSizesPager(resourceGroupName string, vmName string, options *VirtualMachinesClientListAvailableSizesOptions) *runtime.Pager[VirtualMachinesClientListAvailableSizesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachinesClientListAvailableSizesResponse]{
@@ -763,7 +765,7 @@ func (client *VirtualMachinesClient) listAvailableSizesHandleResponse(resp *http
 //
 // Generated from API version 2019-12-01
 //   - location - The location for which virtual machines under the subscription are queried.
-//   - options - VirtualMachinesClientListByLocationOptions contains the optional parameters for the VirtualMachinesClient.ListByLocation
+//   - options - VirtualMachinesClientListByLocationOptions contains the optional parameters for the VirtualMachinesClient.NewListByLocationPager
 //     method.
 func (client *VirtualMachinesClient) NewListByLocationPager(location string, options *VirtualMachinesClientListByLocationOptions) *runtime.Pager[VirtualMachinesClientListByLocationResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachinesClientListByLocationResponse]{

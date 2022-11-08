@@ -244,7 +244,7 @@ func (client *WebApplicationFirewallPoliciesClient) getHandleResponse(resp *http
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - WebApplicationFirewallPoliciesClientListOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.List
+//   - options - WebApplicationFirewallPoliciesClientListOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.NewListPager
 //     method.
 func (client *WebApplicationFirewallPoliciesClient) NewListPager(resourceGroupName string, options *WebApplicationFirewallPoliciesClientListOptions) *runtime.Pager[WebApplicationFirewallPoliciesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebApplicationFirewallPoliciesClientListResponse]{
@@ -308,7 +308,7 @@ func (client *WebApplicationFirewallPoliciesClient) listHandleResponse(resp *htt
 // NewListAllPager - Gets all the WAF policies in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - WebApplicationFirewallPoliciesClientListAllOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.ListAll
+//   - options - WebApplicationFirewallPoliciesClientListAllOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.NewListAllPager
 //     method.
 func (client *WebApplicationFirewallPoliciesClient) NewListAllPager(options *WebApplicationFirewallPoliciesClientListAllOptions) *runtime.Pager[WebApplicationFirewallPoliciesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebApplicationFirewallPoliciesClientListAllResponse]{

@@ -254,7 +254,7 @@ func (client *RouteTablesClient) getHandleResponse(resp *http.Response) (RouteTa
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - RouteTablesClientListOptions contains the optional parameters for the RouteTablesClient.List method.
+//   - options - RouteTablesClientListOptions contains the optional parameters for the RouteTablesClient.NewListPager method.
 func (client *RouteTablesClient) NewListPager(resourceGroupName string, options *RouteTablesClientListOptions) *runtime.Pager[RouteTablesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RouteTablesClientListResponse]{
 		More: func(page RouteTablesClientListResponse) bool {
@@ -317,7 +317,7 @@ func (client *RouteTablesClient) listHandleResponse(resp *http.Response) (RouteT
 // NewListAllPager - Gets all route tables in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - RouteTablesClientListAllOptions contains the optional parameters for the RouteTablesClient.ListAll method.
+//   - options - RouteTablesClientListAllOptions contains the optional parameters for the RouteTablesClient.NewListAllPager method.
 func (client *RouteTablesClient) NewListAllPager(options *RouteTablesClientListAllOptions) *runtime.Pager[RouteTablesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RouteTablesClientListAllResponse]{
 		More: func(page RouteTablesClientListAllResponse) bool {

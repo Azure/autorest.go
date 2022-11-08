@@ -255,7 +255,8 @@ func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (Mo
 //   - deviceName - The device name.
 //   - roleName - The role name.
 //   - resourceGroupName - The resource group name.
-//   - options - MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.List method.
+//   - options - MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.NewListPager
+//     method.
 func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientListOptions) *runtime.Pager[MonitoringConfigClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[MonitoringConfigClientListResponse]{
 		More: func(page MonitoringConfigClientListResponse) bool {

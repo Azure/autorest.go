@@ -6261,7 +6261,7 @@ type DataFlowClientGetDataFlowOptions struct {
 	IfNoneMatch *string
 }
 
-// DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.GetDataFlowsByWorkspace
+// DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.NewGetDataFlowsByWorkspacePager
 // method.
 type DataFlowClientGetDataFlowsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -6392,7 +6392,7 @@ type DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace
+// DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the dataFlowDebugSessionClient.NewQueryDataFlowDebugSessionsByWorkspacePager
 // method.
 type DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -6945,7 +6945,7 @@ type DatasetClientGetDatasetOptions struct {
 	IfNoneMatch *string
 }
 
-// DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
+// DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.NewGetDatasetsByWorkspacePager
 // method.
 type DatasetClientGetDatasetsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -12916,7 +12916,7 @@ type LibraryClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LibraryClientListOptions contains the optional parameters for the libraryClient.List method.
+// LibraryClientListOptions contains the optional parameters for the libraryClient.NewListPager method.
 type LibraryClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13174,7 +13174,7 @@ type LinkedServiceClientGetLinkedServiceOptions struct {
 	IfNoneMatch *string
 }
 
-// LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
+// LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.NewGetLinkedServicesByWorkspacePager
 // method.
 type LinkedServiceClientGetLinkedServicesByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -14856,13 +14856,13 @@ type NotebookClientGetNotebookOptions struct {
 	IfNoneMatch *string
 }
 
-// NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
+// NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.NewGetNotebookSummaryByWorkSpacePager
 // method.
 type NotebookClientGetNotebookSummaryByWorkSpaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
+// NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.NewGetNotebooksByWorkspacePager
 // method.
 type NotebookClientGetNotebooksByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -16592,7 +16592,7 @@ type PipelineClientGetPipelineOptions struct {
 	IfNoneMatch *string
 }
 
-// PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
+// PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.NewGetPipelinesByWorkspacePager
 // method.
 type PipelineClientGetPipelinesByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -21506,7 +21506,7 @@ type SparkJobDefinitionClientGetSparkJobDefinitionOptions struct {
 	IfNoneMatch *string
 }
 
-// SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace
+// SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.NewGetSparkJobDefinitionsByWorkspacePager
 // method.
 type SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -21849,7 +21849,7 @@ type SqlScriptClientGetSQLScriptOptions struct {
 	IfNoneMatch *string
 }
 
-// SqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.GetSQLScriptsByWorkspace
+// SqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.NewGetSQLScriptsByWorkspacePager
 // method.
 type SqlScriptClientGetSQLScriptsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -22991,7 +22991,7 @@ type TriggerClientGetTriggerOptions struct {
 	IfNoneMatch *string
 }
 
-// TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
+// TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.NewGetTriggersByWorkspacePager
 // method.
 type TriggerClientGetTriggersByWorkspaceOptions struct {
 	// placeholder for future optional parameters

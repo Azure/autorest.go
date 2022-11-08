@@ -254,7 +254,7 @@ func (client *VirtualRoutersClient) getHandleResponse(resp *http.Response) (Virt
 // NewListPager - Gets all the Virtual Routers in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VirtualRoutersClientListOptions contains the optional parameters for the VirtualRoutersClient.List method.
+//   - options - VirtualRoutersClientListOptions contains the optional parameters for the VirtualRoutersClient.NewListPager method.
 func (client *VirtualRoutersClient) NewListPager(options *VirtualRoutersClientListOptions) *runtime.Pager[VirtualRoutersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualRoutersClientListResponse]{
 		More: func(page VirtualRoutersClientListResponse) bool {
@@ -314,7 +314,7 @@ func (client *VirtualRoutersClient) listHandleResponse(resp *http.Response) (Vir
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - VirtualRoutersClientListByResourceGroupOptions contains the optional parameters for the VirtualRoutersClient.ListByResourceGroup
+//   - options - VirtualRoutersClientListByResourceGroupOptions contains the optional parameters for the VirtualRoutersClient.NewListByResourceGroupPager
 //     method.
 func (client *VirtualRoutersClient) NewListByResourceGroupPager(resourceGroupName string, options *VirtualRoutersClientListByResourceGroupOptions) *runtime.Pager[VirtualRoutersClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualRoutersClientListByResourceGroupResponse]{

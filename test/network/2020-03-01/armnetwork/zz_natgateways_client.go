@@ -254,7 +254,7 @@ func (client *NatGatewaysClient) getHandleResponse(resp *http.Response) (NatGate
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - NatGatewaysClientListOptions contains the optional parameters for the NatGatewaysClient.List method.
+//   - options - NatGatewaysClientListOptions contains the optional parameters for the NatGatewaysClient.NewListPager method.
 func (client *NatGatewaysClient) NewListPager(resourceGroupName string, options *NatGatewaysClientListOptions) *runtime.Pager[NatGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NatGatewaysClientListResponse]{
 		More: func(page NatGatewaysClientListResponse) bool {
@@ -317,7 +317,7 @@ func (client *NatGatewaysClient) listHandleResponse(resp *http.Response) (NatGat
 // NewListAllPager - Gets all the Nat Gateways in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - NatGatewaysClientListAllOptions contains the optional parameters for the NatGatewaysClient.ListAll method.
+//   - options - NatGatewaysClientListAllOptions contains the optional parameters for the NatGatewaysClient.NewListAllPager method.
 func (client *NatGatewaysClient) NewListAllPager(options *NatGatewaysClientListAllOptions) *runtime.Pager[NatGatewaysClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NatGatewaysClientListAllResponse]{
 		More: func(page NatGatewaysClientListAllResponse) bool {

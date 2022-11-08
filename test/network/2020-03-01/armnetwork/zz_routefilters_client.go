@@ -254,7 +254,7 @@ func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteF
 // NewListPager - Gets all route filters in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - RouteFiltersClientListOptions contains the optional parameters for the RouteFiltersClient.List method.
+//   - options - RouteFiltersClientListOptions contains the optional parameters for the RouteFiltersClient.NewListPager method.
 func (client *RouteFiltersClient) NewListPager(options *RouteFiltersClientListOptions) *runtime.Pager[RouteFiltersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RouteFiltersClientListResponse]{
 		More: func(page RouteFiltersClientListResponse) bool {
@@ -314,7 +314,7 @@ func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (Route
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - RouteFiltersClientListByResourceGroupOptions contains the optional parameters for the RouteFiltersClient.ListByResourceGroup
+//   - options - RouteFiltersClientListByResourceGroupOptions contains the optional parameters for the RouteFiltersClient.NewListByResourceGroupPager
 //     method.
 func (client *RouteFiltersClient) NewListByResourceGroupPager(resourceGroupName string, options *RouteFiltersClientListByResourceGroupOptions) *runtime.Pager[RouteFiltersClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RouteFiltersClientListByResourceGroupResponse]{

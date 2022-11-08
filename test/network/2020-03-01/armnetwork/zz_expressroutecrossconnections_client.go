@@ -185,7 +185,7 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *http.R
 // NewListPager - Retrieves all the ExpressRouteCrossConnections in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - ExpressRouteCrossConnectionsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.List
+//   - options - ExpressRouteCrossConnectionsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.NewListPager
 //     method.
 func (client *ExpressRouteCrossConnectionsClient) NewListPager(options *ExpressRouteCrossConnectionsClientListOptions) *runtime.Pager[ExpressRouteCrossConnectionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCrossConnectionsClientListResponse]{
@@ -325,7 +325,7 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableCreateRequest(ctx 
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - ExpressRouteCrossConnectionsClientListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.ListByResourceGroup
+//   - options - ExpressRouteCrossConnectionsClientListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.NewListByResourceGroupPager
 //     method.
 func (client *ExpressRouteCrossConnectionsClient) NewListByResourceGroupPager(resourceGroupName string, options *ExpressRouteCrossConnectionsClientListByResourceGroupOptions) *runtime.Pager[ExpressRouteCrossConnectionsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCrossConnectionsClientListByResourceGroupResponse]{

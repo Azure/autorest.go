@@ -59,7 +59,7 @@ func NewReservationsDetailsClient(credential azcore.TokenCredential, options *ar
 //     for BillingAccount scope (legacy), and
 //     '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
 //     scope (modern).
-//   - options - ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.List
+//   - options - ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.NewListPager
 //     method.
 func (client *ReservationsDetailsClient) NewListPager(scope string, options *ReservationsDetailsClientListOptions) *runtime.Pager[ReservationsDetailsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ReservationsDetailsClientListResponse]{
@@ -134,7 +134,7 @@ func (client *ReservationsDetailsClient) listHandleResponse(resp *http.Response)
 //   - reservationOrderID - Order Id of the reservation
 //   - filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
 //     'le' and 'ge'
-//   - options - ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrder
+//   - options - ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.NewListByReservationOrderPager
 //     method.
 func (client *ReservationsDetailsClient) NewListByReservationOrderPager(reservationOrderID string, filter string, options *ReservationsDetailsClientListByReservationOrderOptions) *runtime.Pager[ReservationsDetailsClientListByReservationOrderResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ReservationsDetailsClientListByReservationOrderResponse]{
@@ -200,7 +200,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderHandleResponse(re
 //   - filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
 //     'le' and 'ge'
 //   - options - ReservationsDetailsClientListByReservationOrderAndReservationOptions contains the optional parameters for the
-//     ReservationsDetailsClient.ListByReservationOrderAndReservation method.
+//     ReservationsDetailsClient.NewListByReservationOrderAndReservationPager method.
 func (client *ReservationsDetailsClient) NewListByReservationOrderAndReservationPager(reservationOrderID string, reservationID string, filter string, options *ReservationsDetailsClientListByReservationOrderAndReservationOptions) *runtime.Pager[ReservationsDetailsClientListByReservationOrderAndReservationResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ReservationsDetailsClientListByReservationOrderAndReservationResponse]{
 		More: func(page ReservationsDetailsClientListByReservationOrderAndReservationResponse) bool {

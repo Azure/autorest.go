@@ -341,7 +341,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         // create a type named <OperationGroup><Operation>Options
         // the client might not be exported, but the options should be.
         const optionalParamsGroupName = `${capitalize(group.language.go!.clientName)}${opName}Options`;
-        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${opName} method.`;
+        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName} method.`;
         const gp = createGroupProperty(optionalParamsGroupName, desc);
         gp.language.go!.name = 'options';
         gp.required = false;

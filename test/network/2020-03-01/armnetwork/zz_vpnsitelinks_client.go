@@ -123,7 +123,7 @@ func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSit
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The resource group name of the VpnSite.
 //   - vpnSiteName - The name of the VpnSite.
-//   - options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite
+//   - options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.NewListByVPNSitePager
 //     method.
 func (client *VPNSiteLinksClient) NewListByVPNSitePager(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksClientListByVPNSiteOptions) *runtime.Pager[VPNSiteLinksClientListByVPNSiteResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNSiteLinksClientListByVPNSiteResponse]{

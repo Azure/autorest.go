@@ -118,7 +118,7 @@ func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Resp
 //
 // Generated from API version 2019-12-01
 //   - location - The location upon which run commands is queried.
-//   - options - VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
+//   - options - VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.NewListPager
 //     method.
 func (client *VirtualMachineRunCommandsClient) NewListPager(location string, options *VirtualMachineRunCommandsClientListOptions) *runtime.Pager[VirtualMachineRunCommandsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualMachineRunCommandsClientListResponse]{

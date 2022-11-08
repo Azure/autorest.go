@@ -527,7 +527,7 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleRespo
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - PrivateLinkServicesClientListOptions contains the optional parameters for the PrivateLinkServicesClient.List
+//   - options - PrivateLinkServicesClientListOptions contains the optional parameters for the PrivateLinkServicesClient.NewListPager
 //     method.
 func (client *PrivateLinkServicesClient) NewListPager(resourceGroupName string, options *PrivateLinkServicesClientListOptions) *runtime.Pager[PrivateLinkServicesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateLinkServicesClientListResponse]{
@@ -594,7 +594,7 @@ func (client *PrivateLinkServicesClient) listHandleResponse(resp *http.Response)
 // Generated from API version 2020-03-01
 //   - location - The location of the domain name.
 //   - options - PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesOptions contains the optional parameters for the
-//     PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServices method.
+//     PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesPager method.
 func (client *PrivateLinkServicesClient) NewListAutoApprovedPrivateLinkServicesPager(location string, options *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesOptions) *runtime.Pager[PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse]{
 		More: func(page PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse) bool {
@@ -661,7 +661,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHand
 //   - location - The location of the domain name.
 //   - resourceGroupName - The name of the resource group.
 //   - options - PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupOptions contains the optional parameters
-//     for the PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServicesByResourceGroup method.
+//     for the PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesByResourceGroupPager method.
 func (client *PrivateLinkServicesClient) NewListAutoApprovedPrivateLinkServicesByResourceGroupPager(location string, resourceGroupName string, options *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupOptions) *runtime.Pager[PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse]{
 		More: func(page PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse) bool {
@@ -728,7 +728,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 // NewListBySubscriptionPager - Gets all private link service in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - PrivateLinkServicesClientListBySubscriptionOptions contains the optional parameters for the PrivateLinkServicesClient.ListBySubscription
+//   - options - PrivateLinkServicesClientListBySubscriptionOptions contains the optional parameters for the PrivateLinkServicesClient.NewListBySubscriptionPager
 //     method.
 func (client *PrivateLinkServicesClient) NewListBySubscriptionPager(options *PrivateLinkServicesClientListBySubscriptionOptions) *runtime.Pager[PrivateLinkServicesClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateLinkServicesClientListBySubscriptionResponse]{
@@ -790,7 +790,7 @@ func (client *PrivateLinkServicesClient) listBySubscriptionHandleResponse(resp *
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - serviceName - The name of the private link service.
-//   - options - PrivateLinkServicesClientListPrivateEndpointConnectionsOptions contains the optional parameters for the PrivateLinkServicesClient.ListPrivateEndpointConnections
+//   - options - PrivateLinkServicesClientListPrivateEndpointConnectionsOptions contains the optional parameters for the PrivateLinkServicesClient.NewListPrivateEndpointConnectionsPager
 //     method.
 func (client *PrivateLinkServicesClient) NewListPrivateEndpointConnectionsPager(resourceGroupName string, serviceName string, options *PrivateLinkServicesClientListPrivateEndpointConnectionsOptions) *runtime.Pager[PrivateLinkServicesClientListPrivateEndpointConnectionsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateLinkServicesClientListPrivateEndpointConnectionsResponse]{

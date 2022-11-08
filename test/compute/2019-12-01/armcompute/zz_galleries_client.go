@@ -247,7 +247,7 @@ func (client *GalleriesClient) getHandleResponse(resp *http.Response) (Galleries
 // NewListPager - List galleries under a subscription.
 //
 // Generated from API version 2019-12-01
-//   - options - GalleriesClientListOptions contains the optional parameters for the GalleriesClient.List method.
+//   - options - GalleriesClientListOptions contains the optional parameters for the GalleriesClient.NewListPager method.
 func (client *GalleriesClient) NewListPager(options *GalleriesClientListOptions) *runtime.Pager[GalleriesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleriesClientListResponse]{
 		More: func(page GalleriesClientListResponse) bool {
@@ -307,7 +307,7 @@ func (client *GalleriesClient) listHandleResponse(resp *http.Response) (Gallerie
 //
 // Generated from API version 2019-12-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup
+//   - options - GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.NewListByResourceGroupPager
 //     method.
 func (client *GalleriesClient) NewListByResourceGroupPager(resourceGroupName string, options *GalleriesClientListByResourceGroupOptions) *runtime.Pager[GalleriesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleriesClientListByResourceGroupResponse]{

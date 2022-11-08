@@ -205,7 +205,7 @@ func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (Data
 // NewGetDatasetsByWorkspacePager - Lists datasets.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
+//   - options - DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.NewGetDatasetsByWorkspacePager
 //     method.
 func (client *datasetClient) NewGetDatasetsByWorkspacePager(options *DatasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[DatasetClientGetDatasetsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DatasetClientGetDatasetsByWorkspaceResponse]{

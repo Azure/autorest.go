@@ -318,7 +318,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp
 // NewGetSparkJobDefinitionsByWorkspacePager - Lists spark job definitions.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace
+//   - options - SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.NewGetSparkJobDefinitionsByWorkspacePager
 //     method.
 func (client *sparkJobDefinitionClient) NewGetSparkJobDefinitionsByWorkspacePager(options *SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions) *runtime.Pager[SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse]{

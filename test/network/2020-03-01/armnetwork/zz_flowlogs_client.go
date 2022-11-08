@@ -267,7 +267,7 @@ func (client *FlowLogsClient) getHandleResponse(resp *http.Response) (FlowLogsCl
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group containing Network Watcher.
 //   - networkWatcherName - The name of the Network Watcher resource.
-//   - options - FlowLogsClientListOptions contains the optional parameters for the FlowLogsClient.List method.
+//   - options - FlowLogsClientListOptions contains the optional parameters for the FlowLogsClient.NewListPager method.
 func (client *FlowLogsClient) NewListPager(resourceGroupName string, networkWatcherName string, options *FlowLogsClientListOptions) *runtime.Pager[FlowLogsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[FlowLogsClientListResponse]{
 		More: func(page FlowLogsClientListResponse) bool {

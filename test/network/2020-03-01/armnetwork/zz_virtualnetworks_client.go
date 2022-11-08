@@ -315,7 +315,8 @@ func (client *VirtualNetworksClient) getHandleResponse(resp *http.Response) (Vir
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
-//   - options - VirtualNetworksClientListOptions contains the optional parameters for the VirtualNetworksClient.List method.
+//   - options - VirtualNetworksClientListOptions contains the optional parameters for the VirtualNetworksClient.NewListPager
+//     method.
 func (client *VirtualNetworksClient) NewListPager(resourceGroupName string, options *VirtualNetworksClientListOptions) *runtime.Pager[VirtualNetworksClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworksClientListResponse]{
 		More: func(page VirtualNetworksClientListResponse) bool {
@@ -378,7 +379,8 @@ func (client *VirtualNetworksClient) listHandleResponse(resp *http.Response) (Vi
 // NewListAllPager - Gets all virtual networks in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VirtualNetworksClientListAllOptions contains the optional parameters for the VirtualNetworksClient.ListAll method.
+//   - options - VirtualNetworksClientListAllOptions contains the optional parameters for the VirtualNetworksClient.NewListAllPager
+//     method.
 func (client *VirtualNetworksClient) NewListAllPager(options *VirtualNetworksClientListAllOptions) *runtime.Pager[VirtualNetworksClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworksClientListAllResponse]{
 		More: func(page VirtualNetworksClientListAllResponse) bool {
@@ -439,7 +441,7 @@ func (client *VirtualNetworksClient) listAllHandleResponse(resp *http.Response) 
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkName - The name of the virtual network.
-//   - options - VirtualNetworksClientListUsageOptions contains the optional parameters for the VirtualNetworksClient.ListUsage
+//   - options - VirtualNetworksClientListUsageOptions contains the optional parameters for the VirtualNetworksClient.NewListUsagePager
 //     method.
 func (client *VirtualNetworksClient) NewListUsagePager(resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientListUsageOptions) *runtime.Pager[VirtualNetworksClientListUsageResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualNetworksClientListUsageResponse]{

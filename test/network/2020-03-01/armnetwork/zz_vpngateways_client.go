@@ -250,7 +250,7 @@ func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGate
 // NewListPager - Lists all the VpnGateways in a subscription.
 //
 // Generated from API version 2020-03-01
-//   - options - VPNGatewaysClientListOptions contains the optional parameters for the VPNGatewaysClient.List method.
+//   - options - VPNGatewaysClientListOptions contains the optional parameters for the VPNGatewaysClient.NewListPager method.
 func (client *VPNGatewaysClient) NewListPager(options *VPNGatewaysClientListOptions) *runtime.Pager[VPNGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNGatewaysClientListResponse]{
 		More: func(page VPNGatewaysClientListResponse) bool {
@@ -310,7 +310,7 @@ func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGat
 //
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The resource group name of the VpnGateway.
-//   - options - VPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.ListByResourceGroup
+//   - options - VPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.NewListByResourceGroupPager
 //     method.
 func (client *VPNGatewaysClient) NewListByResourceGroupPager(resourceGroupName string, options *VPNGatewaysClientListByResourceGroupOptions) *runtime.Pager[VPNGatewaysClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNGatewaysClientListByResourceGroupResponse]{

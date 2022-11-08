@@ -61,7 +61,7 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 //
 // Generated from API version 2019-12-01
 //   - location - The location for which resource usage is queried.
-//   - options - UsageClientListOptions contains the optional parameters for the UsageClient.List method.
+//   - options - UsageClientListOptions contains the optional parameters for the UsageClient.NewListPager method.
 func (client *UsageClient) NewListPager(location string, options *UsageClientListOptions) *runtime.Pager[UsageClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[UsageClientListResponse]{
 		More: func(page UsageClientListResponse) bool {

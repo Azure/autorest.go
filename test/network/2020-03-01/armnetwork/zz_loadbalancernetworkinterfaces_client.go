@@ -61,7 +61,7 @@ func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential az
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
-//   - options - LoadBalancerNetworkInterfacesClientListOptions contains the optional parameters for the LoadBalancerNetworkInterfacesClient.List
+//   - options - LoadBalancerNetworkInterfacesClientListOptions contains the optional parameters for the LoadBalancerNetworkInterfacesClient.NewListPager
 //     method.
 func (client *LoadBalancerNetworkInterfacesClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesClientListOptions) *runtime.Pager[LoadBalancerNetworkInterfacesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancerNetworkInterfacesClientListResponse]{

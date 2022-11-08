@@ -269,7 +269,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp 
 // Generated from API version 2020-03-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
-//   - options - ExpressRouteCrossConnectionPeeringsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.List
+//   - options - ExpressRouteCrossConnectionPeeringsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.NewListPager
 //     method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) NewListPager(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsClientListOptions) *runtime.Pager[ExpressRouteCrossConnectionPeeringsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCrossConnectionPeeringsClientListResponse]{

@@ -59,7 +59,7 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 // NewListPager - Gets the list of Microsoft.Compute SKUs available for your Subscription.
 //
 // Generated from API version 2019-04-01
-//   - options - ResourceSKUsClientListOptions contains the optional parameters for the ResourceSKUsClient.List method.
+//   - options - ResourceSKUsClientListOptions contains the optional parameters for the ResourceSKUsClient.NewListPager method.
 func (client *ResourceSKUsClient) NewListPager(options *ResourceSKUsClientListOptions) *runtime.Pager[ResourceSKUsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ResourceSKUsClientListResponse]{
 		More: func(page ResourceSKUsClientListResponse) bool {
