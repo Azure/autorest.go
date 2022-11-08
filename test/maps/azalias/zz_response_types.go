@@ -21,7 +21,7 @@ type ClientGetScriptResponse struct {
 	Value *string
 }
 
-// ClientListResponse contains the response from method client.List.
+// ClientListResponse contains the response from method client.NewListPager.
 type ClientListResponse struct {
 	ListResponse
 }

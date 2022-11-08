@@ -89,7 +89,7 @@ type ClientEncryptResponse struct {
 	KeyOperationResult
 }
 
-// ClientFullBackupResponse contains the response from method Client.FullBackup.
+// ClientFullBackupResponse contains the response from method Client.BeginFullBackup.
 type ClientFullBackupResponse struct {
 	FullBackupOperation
 }
@@ -99,7 +99,7 @@ type ClientFullBackupStatusResponse struct {
 	FullBackupOperation
 }
 
-// ClientFullRestoreOperationResponse contains the response from method Client.FullRestoreOperation.
+// ClientFullRestoreOperationResponse contains the response from method Client.BeginFullRestoreOperation.
 type ClientFullRestoreOperationResponse struct {
 	RestoreOperation
 }
@@ -114,7 +114,7 @@ type ClientGetCertificateIssuerResponse struct {
 	IssuerBundle
 }
 
-// ClientGetCertificateIssuersResponse contains the response from method Client.GetCertificateIssuers.
+// ClientGetCertificateIssuersResponse contains the response from method Client.NewGetCertificateIssuersPager.
 type ClientGetCertificateIssuersResponse struct {
 	CertificateIssuerListResult
 }
@@ -134,12 +134,12 @@ type ClientGetCertificateResponse struct {
 	CertificateBundle
 }
 
-// ClientGetCertificateVersionsResponse contains the response from method Client.GetCertificateVersions.
+// ClientGetCertificateVersionsResponse contains the response from method Client.NewGetCertificateVersionsPager.
 type ClientGetCertificateVersionsResponse struct {
 	CertificateListResult
 }
 
-// ClientGetCertificatesResponse contains the response from method Client.GetCertificates.
+// ClientGetCertificatesResponse contains the response from method Client.NewGetCertificatesPager.
 type ClientGetCertificatesResponse struct {
 	CertificateListResult
 }
@@ -149,7 +149,7 @@ type ClientGetDeletedCertificateResponse struct {
 	DeletedCertificateBundle
 }
 
-// ClientGetDeletedCertificatesResponse contains the response from method Client.GetDeletedCertificates.
+// ClientGetDeletedCertificatesResponse contains the response from method Client.NewGetDeletedCertificatesPager.
 type ClientGetDeletedCertificatesResponse struct {
 	DeletedCertificateListResult
 }
@@ -159,7 +159,7 @@ type ClientGetDeletedKeyResponse struct {
 	DeletedKeyBundle
 }
 
-// ClientGetDeletedKeysResponse contains the response from method Client.GetDeletedKeys.
+// ClientGetDeletedKeysResponse contains the response from method Client.NewGetDeletedKeysPager.
 type ClientGetDeletedKeysResponse struct {
 	DeletedKeyListResult
 }
@@ -169,7 +169,7 @@ type ClientGetDeletedSasDefinitionResponse struct {
 	DeletedSasDefinitionBundle
 }
 
-// ClientGetDeletedSasDefinitionsResponse contains the response from method Client.GetDeletedSasDefinitions.
+// ClientGetDeletedSasDefinitionsResponse contains the response from method Client.NewGetDeletedSasDefinitionsPager.
 type ClientGetDeletedSasDefinitionsResponse struct {
 	DeletedSasDefinitionListResult
 }
@@ -179,7 +179,7 @@ type ClientGetDeletedSecretResponse struct {
 	DeletedSecretBundle
 }
 
-// ClientGetDeletedSecretsResponse contains the response from method Client.GetDeletedSecrets.
+// ClientGetDeletedSecretsResponse contains the response from method Client.NewGetDeletedSecretsPager.
 type ClientGetDeletedSecretsResponse struct {
 	DeletedSecretListResult
 }
@@ -189,7 +189,7 @@ type ClientGetDeletedStorageAccountResponse struct {
 	DeletedStorageBundle
 }
 
-// ClientGetDeletedStorageAccountsResponse contains the response from method Client.GetDeletedStorageAccounts.
+// ClientGetDeletedStorageAccountsResponse contains the response from method Client.NewGetDeletedStorageAccountsPager.
 type ClientGetDeletedStorageAccountsResponse struct {
 	DeletedStorageListResult
 }
@@ -199,12 +199,12 @@ type ClientGetKeyResponse struct {
 	KeyBundle
 }
 
-// ClientGetKeyVersionsResponse contains the response from method Client.GetKeyVersions.
+// ClientGetKeyVersionsResponse contains the response from method Client.NewGetKeyVersionsPager.
 type ClientGetKeyVersionsResponse struct {
 	KeyListResult
 }
 
-// ClientGetKeysResponse contains the response from method Client.GetKeys.
+// ClientGetKeysResponse contains the response from method Client.NewGetKeysPager.
 type ClientGetKeysResponse struct {
 	KeyListResult
 }
@@ -214,7 +214,7 @@ type ClientGetSasDefinitionResponse struct {
 	SasDefinitionBundle
 }
 
-// ClientGetSasDefinitionsResponse contains the response from method Client.GetSasDefinitions.
+// ClientGetSasDefinitionsResponse contains the response from method Client.NewGetSasDefinitionsPager.
 type ClientGetSasDefinitionsResponse struct {
 	SasDefinitionListResult
 }
@@ -224,12 +224,12 @@ type ClientGetSecretResponse struct {
 	SecretBundle
 }
 
-// ClientGetSecretVersionsResponse contains the response from method Client.GetSecretVersions.
+// ClientGetSecretVersionsResponse contains the response from method Client.NewGetSecretVersionsPager.
 type ClientGetSecretVersionsResponse struct {
 	SecretListResult
 }
 
-// ClientGetSecretsResponse contains the response from method Client.GetSecrets.
+// ClientGetSecretsResponse contains the response from method Client.NewGetSecretsPager.
 type ClientGetSecretsResponse struct {
 	SecretListResult
 }
@@ -239,7 +239,7 @@ type ClientGetStorageAccountResponse struct {
 	StorageBundle
 }
 
-// ClientGetStorageAccountsResponse contains the response from method Client.GetStorageAccounts.
+// ClientGetStorageAccountsResponse contains the response from method Client.NewGetStorageAccountsPager.
 type ClientGetStorageAccountsResponse struct {
 	StorageListResult
 }
@@ -334,7 +334,7 @@ type ClientRestoreStorageAccountResponse struct {
 	StorageBundle
 }
 
-// ClientSelectiveKeyRestoreOperationResponse contains the response from method Client.SelectiveKeyRestoreOperation.
+// ClientSelectiveKeyRestoreOperationResponse contains the response from method Client.BeginSelectiveKeyRestoreOperation.
 type ClientSelectiveKeyRestoreOperationResponse struct {
 	SelectiveKeyRestoreOperation
 }
@@ -429,7 +429,7 @@ type HSMSecurityDomainClientDownloadPendingResponse struct {
 	SecurityDomainOperationStatus
 }
 
-// HSMSecurityDomainClientDownloadResponse contains the response from method HSMSecurityDomainClient.Download.
+// HSMSecurityDomainClientDownloadResponse contains the response from method HSMSecurityDomainClient.BeginDownload.
 type HSMSecurityDomainClientDownloadResponse struct {
 	SecurityDomainObject
 }
@@ -444,7 +444,7 @@ type HSMSecurityDomainClientUploadPendingResponse struct {
 	SecurityDomainOperationStatus
 }
 
-// HSMSecurityDomainClientUploadResponse contains the response from method HSMSecurityDomainClient.Upload.
+// HSMSecurityDomainClientUploadResponse contains the response from method HSMSecurityDomainClient.BeginUpload.
 type HSMSecurityDomainClientUploadResponse struct {
 	SecurityDomainOperationStatus
 }
@@ -464,7 +464,7 @@ type RoleAssignmentsClientGetResponse struct {
 	RoleAssignment
 }
 
-// RoleAssignmentsClientListForScopeResponse contains the response from method RoleAssignmentsClient.ListForScope.
+// RoleAssignmentsClientListForScopeResponse contains the response from method RoleAssignmentsClient.NewListForScopePager.
 type RoleAssignmentsClientListForScopeResponse struct {
 	RoleAssignmentListResult
 }
@@ -484,7 +484,7 @@ type RoleDefinitionsClientGetResponse struct {
 	RoleDefinition
 }
 
-// RoleDefinitionsClientListResponse contains the response from method RoleDefinitionsClient.List.
+// RoleDefinitionsClientListResponse contains the response from method RoleDefinitionsClient.NewListPager.
 type RoleDefinitionsClientListResponse struct {
 	RoleDefinitionListResult
 }

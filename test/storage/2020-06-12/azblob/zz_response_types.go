@@ -1477,7 +1477,7 @@ type ContainerClientGetPropertiesResponse struct {
 	Version *string
 }
 
-// ContainerClientListBlobFlatSegmentResponse contains the response from method containerClient.ListBlobFlatSegment.
+// ContainerClientListBlobFlatSegmentResponse contains the response from method containerClient.NewListBlobFlatSegmentPager.
 type ContainerClientListBlobFlatSegmentResponse struct {
 	ListBlobsFlatSegmentResponse
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
@@ -1496,7 +1496,7 @@ type ContainerClientListBlobFlatSegmentResponse struct {
 	Version *string `xml:"Version"`
 }
 
-// ContainerClientListBlobHierarchySegmentResponse contains the response from method containerClient.ListBlobHierarchySegment.
+// ContainerClientListBlobHierarchySegmentResponse contains the response from method containerClient.NewListBlobHierarchySegmentPager.
 type ContainerClientListBlobHierarchySegmentResponse struct {
 	ListBlobsHierarchySegmentResponse
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
@@ -2115,7 +2115,7 @@ type ServiceClientGetUserDelegationKeyResponse struct {
 	Version *string `xml:"Version"`
 }
 
-// ServiceClientListContainersSegmentResponse contains the response from method serviceClient.ListContainersSegment.
+// ServiceClientListContainersSegmentResponse contains the response from method serviceClient.NewListContainersSegmentPager.
 type ServiceClientListContainersSegmentResponse struct {
 	ListContainersSegmentResponse
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.

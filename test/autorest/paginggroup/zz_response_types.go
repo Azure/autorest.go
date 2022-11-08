@@ -9,107 +9,107 @@
 
 package paginggroup
 
-// PagingClientDuplicateParamsResponse contains the response from method PagingClient.DuplicateParams.
+// PagingClientDuplicateParamsResponse contains the response from method PagingClient.NewDuplicateParamsPager.
 type PagingClientDuplicateParamsResponse struct {
 	ProductResult
 }
 
-// PagingClientFirstResponseEmptyResponse contains the response from method PagingClient.FirstResponseEmpty.
+// PagingClientFirstResponseEmptyResponse contains the response from method PagingClient.NewFirstResponseEmptyPager.
 type PagingClientFirstResponseEmptyResponse struct {
 	ProductResultValue
 }
 
-// PagingClientGetMultiplePagesFailureResponse contains the response from method PagingClient.GetMultiplePagesFailure.
+// PagingClientGetMultiplePagesFailureResponse contains the response from method PagingClient.NewGetMultiplePagesFailurePager.
 type PagingClientGetMultiplePagesFailureResponse struct {
 	ProductResult
 }
 
-// PagingClientGetMultiplePagesFailureURIResponse contains the response from method PagingClient.GetMultiplePagesFailureURI.
+// PagingClientGetMultiplePagesFailureURIResponse contains the response from method PagingClient.NewGetMultiplePagesFailureURIPager.
 type PagingClientGetMultiplePagesFailureURIResponse struct {
 	ProductResult
 }
 
-// PagingClientGetMultiplePagesFragmentNextLinkResponse contains the response from method PagingClient.GetMultiplePagesFragmentNextLink.
+// PagingClientGetMultiplePagesFragmentNextLinkResponse contains the response from method PagingClient.NewGetMultiplePagesFragmentNextLinkPager.
 type PagingClientGetMultiplePagesFragmentNextLinkResponse struct {
 	ODataProductResult
 }
 
-// PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse contains the response from method PagingClient.GetMultiplePagesFragmentWithGroupingNextLink.
+// PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse contains the response from method PagingClient.NewGetMultiplePagesFragmentWithGroupingNextLinkPager.
 type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse struct {
 	ODataProductResult
 }
 
-// PagingClientGetMultiplePagesLROResponse contains the response from method PagingClient.GetMultiplePagesLRO.
+// PagingClientGetMultiplePagesLROResponse contains the response from method PagingClient.BeginGetMultiplePagesLRO.
 type PagingClientGetMultiplePagesLROResponse struct {
 	ProductResult
 }
 
-// PagingClientGetMultiplePagesResponse contains the response from method PagingClient.GetMultiplePages.
+// PagingClientGetMultiplePagesResponse contains the response from method PagingClient.NewGetMultiplePagesPager.
 type PagingClientGetMultiplePagesResponse struct {
 	ProductResult
 }
 
-// PagingClientGetMultiplePagesRetryFirstResponse contains the response from method PagingClient.GetMultiplePagesRetryFirst.
+// PagingClientGetMultiplePagesRetryFirstResponse contains the response from method PagingClient.NewGetMultiplePagesRetryFirstPager.
 type PagingClientGetMultiplePagesRetryFirstResponse struct {
 	ProductResult
 }
 
-// PagingClientGetMultiplePagesRetrySecondResponse contains the response from method PagingClient.GetMultiplePagesRetrySecond.
+// PagingClientGetMultiplePagesRetrySecondResponse contains the response from method PagingClient.NewGetMultiplePagesRetrySecondPager.
 type PagingClientGetMultiplePagesRetrySecondResponse struct {
 	ProductResult
 }
 
-// PagingClientGetMultiplePagesWithOffsetResponse contains the response from method PagingClient.GetMultiplePagesWithOffset.
+// PagingClientGetMultiplePagesWithOffsetResponse contains the response from method PagingClient.NewGetMultiplePagesWithOffsetPager.
 type PagingClientGetMultiplePagesWithOffsetResponse struct {
 	ProductResult
 }
 
-// PagingClientGetNoItemNamePagesResponse contains the response from method PagingClient.GetNoItemNamePages.
+// PagingClientGetNoItemNamePagesResponse contains the response from method PagingClient.NewGetNoItemNamePagesPager.
 type PagingClientGetNoItemNamePagesResponse struct {
 	ProductResultValue
 }
 
-// PagingClientGetNullNextLinkNamePagesResponse contains the response from method PagingClient.GetNullNextLinkNamePages.
+// PagingClientGetNullNextLinkNamePagesResponse contains the response from method PagingClient.NewGetNullNextLinkNamePagesPager.
 type PagingClientGetNullNextLinkNamePagesResponse struct {
 	ProductResult
 }
 
-// PagingClientGetODataMultiplePagesResponse contains the response from method PagingClient.GetODataMultiplePages.
+// PagingClientGetODataMultiplePagesResponse contains the response from method PagingClient.NewGetODataMultiplePagesPager.
 type PagingClientGetODataMultiplePagesResponse struct {
 	ODataProductResult
 }
 
-// PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse contains the response from method PagingClient.GetPagingModelWithItemNameWithXMSClientName.
+// PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse contains the response from method PagingClient.NewGetPagingModelWithItemNameWithXMSClientNamePager.
 type PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse struct {
 	ProductResultValueWithXMSClientName
 }
 
-// PagingClientGetSinglePagesFailureResponse contains the response from method PagingClient.GetSinglePagesFailure.
+// PagingClientGetSinglePagesFailureResponse contains the response from method PagingClient.NewGetSinglePagesFailurePager.
 type PagingClientGetSinglePagesFailureResponse struct {
 	ProductResult
 }
 
-// PagingClientGetSinglePagesResponse contains the response from method PagingClient.GetSinglePages.
+// PagingClientGetSinglePagesResponse contains the response from method PagingClient.NewGetSinglePagesPager.
 type PagingClientGetSinglePagesResponse struct {
 	ProductResult
 }
 
-// PagingClientGetWithQueryParamsResponse contains the response from method PagingClient.GetWithQueryParams.
+// PagingClientGetWithQueryParamsResponse contains the response from method PagingClient.NewGetWithQueryParamsPager.
 type PagingClientGetWithQueryParamsResponse struct {
 	ProductResult
 }
 
-// PagingClientNextFragmentResponse contains the response from method PagingClient.NextFragment.
+// PagingClientNextFragmentResponse contains the response from method PagingClient.NewNextFragmentPager.
 type PagingClientNextFragmentResponse struct {
 	ODataProductResult
 }
 
-// PagingClientNextFragmentWithGroupingResponse contains the response from method PagingClient.NextFragmentWithGrouping.
+// PagingClientNextFragmentWithGroupingResponse contains the response from method PagingClient.NewNextFragmentWithGroupingPager.
 type PagingClientNextFragmentWithGroupingResponse struct {
 	ODataProductResult
 }
 
-// PagingClientNextOperationWithQueryParamsResponse contains the response from method PagingClient.NextOperationWithQueryParams.
+// PagingClientNextOperationWithQueryParamsResponse contains the response from method PagingClient.NewNextOperationWithQueryParamsPager.
 type PagingClientNextOperationWithQueryParamsResponse struct {
 	ProductResult
 }
