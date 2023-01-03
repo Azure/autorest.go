@@ -19,7 +19,7 @@ import (
 )
 
 // MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
-func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (a AccessPolicy) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
@@ -30,11 +30,11 @@ func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Expiry: (*timeRFC3339)(a.Expiry),
 		Start:  (*timeRFC3339)(a.Start),
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type AccessPolicy.
-func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
@@ -43,7 +43,7 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}{
 		alias: (*alias)(a),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	a.Expiry = (*time.Time)(aux.Expiry)
@@ -83,7 +83,7 @@ func (e *EntityQueryResponse) UnmarshalJSON(data []byte) error {
 }
 
 // MarshalXML implements the xml.Marshaller interface for type GeoReplication.
-func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (g GeoReplication) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias GeoReplication
 	aux := &struct {
 		*alias
@@ -92,11 +92,11 @@ func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		alias:        (*alias)(&g),
 		LastSyncTime: (*timeRFC1123)(g.LastSyncTime),
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type GeoReplication.
-func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (g *GeoReplication) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias GeoReplication
 	aux := &struct {
 		*alias
@@ -104,7 +104,7 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}{
 		alias: (*alias)(g),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
@@ -279,7 +279,7 @@ func (s *ServiceError) UnmarshalJSON(data []byte) error {
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ServiceProperties.
-func (s ServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (s ServiceProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "StorageServiceProperties"
 	type alias ServiceProperties
 	aux := &struct {
@@ -291,7 +291,7 @@ func (s ServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	if s.Cors != nil {
 		aux.Cors = &s.Cors
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 func populate(m map[string]any, k string, v any) {
