@@ -385,7 +385,7 @@ function generateXMLMarshaller(structDef: StructDef, imports: ImportManager) {
   // only needed for types with time.Time or where the XML name doesn't match the type name
   const receiver = structDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${structDef.Language.name}.`;
-  let text = `func (${receiver} ${structDef.Language.name}) MarshalXML(e *xml.Encoder, start xml.StartElement) error {\n`;
+  let text = `func (${receiver} ${structDef.Language.name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
   if (structDef.Language.xmlWrapperName) {
     text += `\tstart.Name.Local = "${structDef.Language.xmlWrapperName}"\n`;
   }
@@ -407,7 +407,7 @@ function generateXMLMarshaller(structDef: StructDef, imports: ImportManager) {
       text += '\t}\n';
     }
   }
-  text += '\treturn e.EncodeElement(aux, start)\n';
+  text += '\treturn enc.EncodeElement(aux, start)\n';
   text += '}\n\n';
   structDef.SerDeMethods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
@@ -416,9 +416,9 @@ function generateXMLUnmarshaller(structDef: StructDef, imports: ImportManager) {
   // non-polymorphic case, must be something with time.Time
   const receiver = structDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${structDef.Language.name}.`;
-  let text = `func (${receiver} *${structDef.Language.name}) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {\n`;
+  let text = `func (${receiver} *${structDef.Language.name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
   text += generateAliasType(structDef, receiver, false);
-  text += '\tif err := d.DecodeElement(aux, &start); err != nil {\n';
+  text += '\tif err := dec.DecodeElement(aux, &start); err != nil {\n';
   text += '\t\treturn err\n';
   text += '\t}\n';
   for (const prop of values(structDef.Properties)) {

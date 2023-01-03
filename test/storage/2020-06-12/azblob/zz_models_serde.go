@@ -20,7 +20,7 @@ import (
 )
 
 // MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
-func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (a AccessPolicy) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
@@ -31,11 +31,11 @@ func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Expiry: (*timeRFC3339)(a.Expiry),
 		Start:  (*timeRFC3339)(a.Start),
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type AccessPolicy.
-func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
@@ -44,7 +44,7 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}{
 		alias: (*alias)(a),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	a.Expiry = (*time.Time)(aux.Expiry)
@@ -53,7 +53,7 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ArrowConfiguration.
-func (a ArrowConfiguration) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (a ArrowConfiguration) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ArrowConfiguration
 	aux := &struct {
 		*alias
@@ -64,11 +64,11 @@ func (a ArrowConfiguration) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	if a.Schema != nil {
 		aux.Schema = &a.Schema
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type BlockList.
-func (b BlockList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (b BlockList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias BlockList
 	aux := &struct {
 		*alias
@@ -83,11 +83,11 @@ func (b BlockList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if b.UncommittedBlocks != nil {
 		aux.UncommittedBlocks = &b.UncommittedBlocks
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type BlockLookupList.
-func (b BlockLookupList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (b BlockLookupList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "BlockList"
 	type alias BlockLookupList
 	aux := &struct {
@@ -107,11 +107,11 @@ func (b BlockLookupList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	if b.Uncommitted != nil {
 		aux.Uncommitted = &b.Uncommitted
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type ContainerItem.
-func (c *ContainerItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (c *ContainerItem) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias ContainerItem
 	aux := &struct {
 		*alias
@@ -119,7 +119,7 @@ func (c *ContainerItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}{
 		alias: (*alias)(c),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	c.Metadata = (map[string]*string)(aux.Metadata)
@@ -127,7 +127,7 @@ func (c *ContainerItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ContainerProperties.
-func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (c ContainerProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
@@ -138,11 +138,11 @@ func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		DeletedTime:  (*timeRFC1123)(c.DeletedTime),
 		LastModified: (*timeRFC1123)(c.LastModified),
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type ContainerProperties.
-func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (c *ContainerProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
@@ -151,7 +151,7 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}{
 		alias: (*alias)(c),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	c.DeletedTime = (*time.Time)(aux.DeletedTime)
@@ -218,7 +218,7 @@ func (d *DataLakeStorageErrorError) UnmarshalJSON(data []byte) error {
 }
 
 // MarshalXML implements the xml.Marshaller interface for type FilterBlobSegment.
-func (f FilterBlobSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (f FilterBlobSegment) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias FilterBlobSegment
 	aux := &struct {
 		*alias
@@ -229,11 +229,11 @@ func (f FilterBlobSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	if f.Blobs != nil {
 		aux.Blobs = &f.Blobs
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type FlatListSegment.
-func (f FlatListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (f FlatListSegment) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias FlatListSegment
 	aux := &struct {
 		*alias
@@ -244,11 +244,11 @@ func (f FlatListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	if f.BlobItems != nil {
 		aux.BlobItems = &f.BlobItems
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type GeoReplication.
-func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (g GeoReplication) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias GeoReplication
 	aux := &struct {
 		*alias
@@ -257,11 +257,11 @@ func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		alias:        (*alias)(&g),
 		LastSyncTime: (*timeRFC1123)(g.LastSyncTime),
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type GeoReplication.
-func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (g *GeoReplication) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias GeoReplication
 	aux := &struct {
 		*alias
@@ -269,7 +269,7 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}{
 		alias: (*alias)(g),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
@@ -277,7 +277,7 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 }
 
 // MarshalXML implements the xml.Marshaller interface for type HierarchyListSegment.
-func (h HierarchyListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (h HierarchyListSegment) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias HierarchyListSegment
 	aux := &struct {
 		*alias
@@ -292,11 +292,11 @@ func (h HierarchyListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	if h.BlobPrefixes != nil {
 		aux.BlobPrefixes = &h.BlobPrefixes
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type ItemInternal.
-func (i *ItemInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (i *ItemInternal) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias ItemInternal
 	aux := &struct {
 		*alias
@@ -304,7 +304,7 @@ func (i *ItemInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}{
 		alias: (*alias)(i),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	i.ObjectReplicationMetadata = (map[string]*string)(aux.ObjectReplicationMetadata)
@@ -312,7 +312,7 @@ func (i *ItemInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ListContainersSegmentResponse.
-func (l ListContainersSegmentResponse) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (l ListContainersSegmentResponse) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ListContainersSegmentResponse
 	aux := &struct {
 		*alias
@@ -323,11 +323,11 @@ func (l ListContainersSegmentResponse) MarshalXML(e *xml.Encoder, start xml.Star
 	if l.ContainerItems != nil {
 		aux.ContainerItems = &l.ContainerItems
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type PageList.
-func (p PageList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (p PageList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias PageList
 	aux := &struct {
 		*alias
@@ -342,11 +342,11 @@ func (p PageList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if p.PageRange != nil {
 		aux.PageRange = &p.PageRange
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type PropertiesInternal.
-func (p PropertiesInternal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (p PropertiesInternal) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias PropertiesInternal
 	aux := &struct {
 		*alias
@@ -374,11 +374,11 @@ func (p PropertiesInternal) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		encodedContentMD5 := runtime.EncodeByteArray(p.ContentMD5, runtime.Base64StdFormat)
 		aux.ContentMD5 = &encodedContentMD5
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type PropertiesInternal.
-func (p *PropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (p *PropertiesInternal) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias PropertiesInternal
 	aux := &struct {
 		*alias
@@ -394,7 +394,7 @@ func (p *PropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	}{
 		alias: (*alias)(p),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	p.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
@@ -414,7 +414,7 @@ func (p *PropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 }
 
 // MarshalXML implements the xml.Marshaller interface for type QueryRequest.
-func (q QueryRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (q QueryRequest) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "QueryRequest"
 	type alias QueryRequest
 	aux := &struct {
@@ -422,7 +422,7 @@ func (q QueryRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}{
 		alias: (*alias)(&q),
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalJSON implements the json.Marshaller interface for type StorageError.
@@ -453,7 +453,7 @@ func (s *StorageError) UnmarshalJSON(data []byte) error {
 }
 
 // MarshalXML implements the xml.Marshaller interface for type StorageServiceProperties.
-func (s StorageServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (s StorageServiceProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias StorageServiceProperties
 	aux := &struct {
 		*alias
@@ -464,11 +464,11 @@ func (s StorageServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 	if s.Cors != nil {
 		aux.Cors = &s.Cors
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type Tags.
-func (t Tags) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (t Tags) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "Tags"
 	type alias Tags
 	aux := &struct {
@@ -480,11 +480,11 @@ func (t Tags) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if t.BlobTagSet != nil {
 		aux.BlobTagSet = &t.BlobTagSet
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalXML implements the xml.Marshaller interface for type UserDelegationKey.
-func (u UserDelegationKey) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (u UserDelegationKey) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias UserDelegationKey
 	aux := &struct {
 		*alias
@@ -495,11 +495,11 @@ func (u UserDelegationKey) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		SignedExpiry: (*timeRFC3339)(u.SignedExpiry),
 		SignedStart:  (*timeRFC3339)(u.SignedStart),
 	}
-	return e.EncodeElement(aux, start)
+	return enc.EncodeElement(aux, start)
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type UserDelegationKey.
-func (u *UserDelegationKey) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (u *UserDelegationKey) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias UserDelegationKey
 	aux := &struct {
 		*alias
@@ -508,7 +508,7 @@ func (u *UserDelegationKey) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	}{
 		alias: (*alias)(u),
 	}
-	if err := d.DecodeElement(aux, &start); err != nil {
+	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
 	u.SignedExpiry = (*time.Time)(aux.SignedExpiry)
