@@ -85,9 +85,6 @@ export class StructDef {
         text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
       let elemByVal = false;
-      if (prop.schema.type === SchemaType.Dictionary && prop.extensions?.['x-ms-header-collection-prefix']) {
-        elemByVal = true;
-      }
       let typeName = substituteDiscriminator(prop.schema, elemByVal);
       if (prop.schema.type === SchemaType.Constant) {
         // for constants we use the underlying type name

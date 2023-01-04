@@ -651,13 +651,13 @@ type ClientDownloadResponse struct {
 	LegalHold *bool
 
 	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]string
+	Metadata map[string]*string
 
 	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
 	ObjectReplicationPolicyID *string
 
 	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
-	ObjectReplicationRules map[string]string
+	ObjectReplicationRules map[string]*string
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -849,13 +849,13 @@ type ClientGetPropertiesResponse struct {
 	LegalHold *bool
 
 	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]string
+	Metadata map[string]*string
 
 	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
 	ObjectReplicationPolicyID *string
 
 	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
-	ObjectReplicationRules map[string]string
+	ObjectReplicationRules map[string]*string
 
 	// RehydratePriority contains the information returned from the x-ms-rehydrate-priority header response.
 	RehydratePriority *string
@@ -985,7 +985,7 @@ type ClientQueryResponse struct {
 	LeaseStatus *LeaseStatusType
 
 	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]string
+	Metadata map[string]*string
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1468,7 +1468,7 @@ type ContainerClientGetPropertiesResponse struct {
 	LeaseStatus *LeaseStatusType
 
 	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]string
+	Metadata map[string]*string
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string

@@ -362,14 +362,15 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string, zeroResp: string): string {
   // dictionaries are handled slightly different so we do that first
   if (schema.type === SchemaType.Dictionary) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     imports.add('strings');
     const headerPrefix = schema.language.go!.headerCollectionPrefix;
     let text = '\tfor hh := range resp.Header {\n';
     text += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("${headerPrefix}")], "${headerPrefix}") {\n`;
     text += `\t\t\tif ${respObj}.Metadata == nil {\n`;
-    text += `\t\t\t\t${respObj}.Metadata = map[string]string{}\n`;
+    text += `\t\t\t\t${respObj}.Metadata = map[string]*string{}\n`;
     text += '\t\t\t}\n';
-    text += `\t\t\t${respObj}.Metadata[hh[len("${headerPrefix}"):]] = resp.Header.Get(hh)\n`;
+    text += `\t\t\t${respObj}.Metadata[hh[len("${headerPrefix}"):]] = to.Ptr(resp.Header.Get(hh))\n`;
     text += '\t\t}\n';
     text += '\t}\n';
     return text;
@@ -824,7 +825,9 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         }, imports);
       } else if (header.schema.language.go!.headerCollectionPrefix) {
         let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
-        headerText += `${prefix}\treq.Raw().Header["${header.schema.language.go!.headerCollectionPrefix}"+k] = []string{v}\n`;
+        headerText += `${prefix}\tif v != nil {\n`;
+        headerText += `${prefix}\t\treq.Raw().Header["${header.schema.language.go!.headerCollectionPrefix}"+k] = []string{*v}\n`;
+        headerText += `${prefix}}\n`;
         headerText += `${prefix}}\n`;
         return headerText;
       } else {

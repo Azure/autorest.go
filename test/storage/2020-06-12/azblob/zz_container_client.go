@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"io"
 	"net/http"
 	"strconv"
@@ -352,7 +353,9 @@ func (client *containerClient) createCreateRequest(ctx context.Context, restype 
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v}
+			if v != nil {
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
+			}
 		}
 	}
 	if options != nil && options.Access != nil {
@@ -678,9 +681,9 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 	for hh := range resp.Header {
 		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
-				result.Metadata = map[string]string{}
+				result.Metadata = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -1391,7 +1394,9 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, res
 	}
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v}
+			if v != nil {
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
+			}
 		}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {

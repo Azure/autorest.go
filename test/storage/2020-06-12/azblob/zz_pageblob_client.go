@@ -347,7 +347,9 @@ func (client *pageBlobClient) createCreateRequest(ctx context.Context, contentLe
 	}
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v}
+			if v != nil {
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
+			}
 		}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {

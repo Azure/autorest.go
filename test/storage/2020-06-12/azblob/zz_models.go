@@ -72,7 +72,7 @@ type AppendBlobClientCreateOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -163,7 +163,7 @@ type BlockBlobClientCommitBlockListOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -204,7 +204,7 @@ type BlockBlobClientPutBlobFromURLOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -265,7 +265,7 @@ type BlockBlobClientUploadOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -368,7 +368,7 @@ type ClientCopyFromURLOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -389,7 +389,7 @@ type ClientCreateSnapshotOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -650,7 +650,7 @@ type ClientSetMetadataOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -713,7 +713,7 @@ type ClientStartCopyFromURLOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Optional: Indicates the priority with which to rehydrate an archived blob.
 	RehydratePriority *RehydratePriority
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
@@ -793,7 +793,7 @@ type ContainerClientCreateOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -959,7 +959,7 @@ type ContainerClientSetMetadataOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -1456,7 +1456,7 @@ type PageBlobClientCreateOptions struct {
 	// is not copied from the source blob or file. Note that beginning with
 	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
 	// Blobs, and Metadata for more information.
-	Metadata map[string]string
+	Metadata map[string]*string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string

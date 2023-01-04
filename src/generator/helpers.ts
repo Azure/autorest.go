@@ -39,8 +39,6 @@ export function elementByValueForParam(param: Parameter): boolean {
   // isn't very useful as we'd just skip nil entries.  so disable it.
   if (param.schema.type === SchemaType.Array) {
     return param.protocol.http!.in === 'header' || param.protocol.http!.in === 'path' || param.protocol.http!.in === 'query';
-  } else if (param.schema.type === SchemaType.Dictionary) {
-    return param.extensions?.['x-ms-header-collection-prefix'];
   }
   return false;
 }
