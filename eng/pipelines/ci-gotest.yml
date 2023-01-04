@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         Linux_Go119:
-          vm.image: "ubuntu-18.04"
+          vm.image: "ubuntu-20.04"
           go.version: "1.19.1"
 
     pool:
