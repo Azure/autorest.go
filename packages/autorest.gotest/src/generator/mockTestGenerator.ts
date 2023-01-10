@@ -22,7 +22,6 @@ import { ExampleParameter, ExampleValue } from '@autorest/testmodeler/dist/src/c
 import { GoExampleModel, GoMockTestDefinitionModel, ParameterOutput } from '../common/model';
 import { GoHelper } from '../util/goHelper';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
-import { elementByValueForParam } from '@autorest/go/dist/generator/helpers';
 import { generateReturnsInfo, getAPIParametersSig, getClientParametersSig, getSchemaResponse } from '../util/codegenBridge';
 import { isLROOperation, isMultiRespOperation, isPageableOperation } from '@autorest/go/dist/common/helpers';
 import _ = require('lodash');
@@ -514,4 +513,14 @@ export class MockTestCodeGenerator extends BaseCodeGenerator {
       },
     });
   }
+}
+
+// returns true if the element type for a parameter should be passed by value
+export function elementByValueForParam(param: Parameter): boolean {
+  // passing nil for array elements in headers, paths, and query params
+  // isn't very useful as we'd just skip nil entries.  so disable it.
+  if (param.schema.type === SchemaType.Array) {
+    return param.protocol.http!.in === 'header' || param.protocol.http!.in === 'path' || param.protocol.http!.in === 'query';
+  }
+  return false;
 }
