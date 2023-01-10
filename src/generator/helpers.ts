@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { aggregateParameters, commentLength, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
-import { ArraySchema, ChoiceSchema, ChoiceValue, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SealedChoiceSchema, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
+import { ArraySchema, ChoiceSchema, ChoiceValue, CodeModel, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SealedChoiceSchema, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
@@ -33,19 +33,9 @@ export function sortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
-// returns true if the element type for a parameter should be passed by value
-export function elementByValueForParam(param: Parameter): boolean {
-  // passing nil for array elements in headers, paths, and query params
-  // isn't very useful as we'd just skip nil entries.  so disable it.
-  if (param.schema.type === SchemaType.Array) {
-    return param.protocol.http!.in === 'header' || param.protocol.http!.in === 'path' || param.protocol.http!.in === 'query';
-  }
-  return false;
-}
-
 // returns the type name with possible * prefix
 export function formatParameterTypeName(param: Parameter): string {
-  const typeName = substituteDiscriminator(param.schema, elementByValueForParam(param));
+  const typeName = param.schema.language.go!.name;
   // client params with default values are treated as optional
   if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
     return typeName;
@@ -70,35 +60,6 @@ export function sortParametersByRequired(a: Parameter, b: Parameter): number {
     return -1;
   }
   return 1;
-}
-
-// if a field is a discriminator use the interface type instead.
-// elemByValue is to support corner-cases where we explicitly want
-// the element type to be passed by value.
-export function substituteDiscriminator(schema: Schema, elemByVal: boolean): string {
-  switch (schema.type) {
-    case SchemaType.Array:
-      const arraySchema = <ArraySchema>schema;
-      const arrayElem = <Schema>arraySchema.elementType;
-      if (<boolean>arraySchema.language.go!.elementIsPtr && !elemByVal) {
-        return `[]*${substituteDiscriminator(arrayElem, elemByVal)}`;
-      }
-      return `[]${substituteDiscriminator(arrayElem, elemByVal)}`;
-    case SchemaType.Dictionary:
-      const dictSchema = <DictionarySchema>schema;
-      const dictElem = <Schema>dictSchema.elementType;
-      if (<boolean>dictSchema.language.go!.elementIsPtr && !elemByVal) {
-        return `map[string]*${substituteDiscriminator(dictElem, elemByVal)}`;
-      }
-      return `map[string]${substituteDiscriminator(dictElem, elemByVal)}`;
-    case SchemaType.Object:
-      if (schema.language.go!.discriminatorInterface) {
-        return schema.language.go!.discriminatorInterface;
-      }
-      return schema.language.go!.name;
-    default:
-      return schema.language.go!.name;
-  }
 }
 
 // if an LRO returns a discriminated type, unmarshall the response into the response envelope, else the property field

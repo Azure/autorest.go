@@ -5,7 +5,7 @@
 
 import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
-import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
+import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
 import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
@@ -46,7 +46,7 @@ async function process(session: Session<CodeModel>) {
   // this must happen before processing objects as we depend on the
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
-    dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, true);
+    dictionary.language.go!.name = schemaTypeToGoType(session.model, dictionary, 'Property');
     dictionary.language.go!.elementIsPtr = !isTypePassedByValue(dictionary.elementType);
     if (dictionary.language.go!.description) {
       dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
@@ -83,6 +83,7 @@ async function process(session: Session<CodeModel>) {
         }
       }
     }
+
     for (const prop of values(obj.properties)) {
       const descriptionMods = new Array<string>();
       if (prop.readOnly) {
@@ -104,7 +105,8 @@ async function process(session: Session<CodeModel>) {
       }
       prop.language.go!.description = descriptionMods.join('; ');
       const details = <Language>prop.schema.language.go;
-      details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
+      details.name = `${schemaTypeToGoType(session.model, prop.schema, 'InBody')}`;
+      prop.schema = substitueDiscriminator(prop);
       if (prop.schema.type === SchemaType.Any || prop.schema.type === SchemaType.AnyObject || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
         prop.language.go!.byValue = true;
       } else if (prop.schema.type === SchemaType.DateTime) {
@@ -147,20 +149,77 @@ async function process(session: Session<CodeModel>) {
   }
   // fix up enum types
   for (const choice of values(session.model.schemas.choices)) {
-    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, 'Property');
     if (choice.language.go!.description) {
       choice.language.go!.description = parseComments(choice.language.go!.description);
     }
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
-    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, 'Property');
     if (choice.language.go!.description) {
       choice.language.go!.description = parseComments(choice.language.go!.description);
     }
   }
 }
 
-function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
+// used by getDiscriminatorSchema and substitueDiscriminator
+const discriminatorSchemas = new Map<string, Schema>();
+
+// creates/gets an ObjectSchema for a discriminated type.
+// NOTE: assumes schema is a discriminator.
+function getDiscriminatorSchema(schema: ObjectSchema): Schema {
+  const discriminatorInterface = schema.language.go!.discriminatorInterface;
+  if (!discriminatorSchemas.has(discriminatorInterface)) {
+    const discriminatorSchema = new ObjectSchema(discriminatorInterface, 'discriminated type');
+    discriminatorSchema.language.go! = discriminatorSchema.language.default;
+    discriminatorSchema.language.go!.discriminatorInterface = discriminatorInterface;
+    // copy over fields from the original
+    discriminatorSchema.discriminator = schema.discriminator;
+    discriminatorSchema.children = schema.children;
+    discriminatorSchema.parents = schema.parents;
+    discriminatorSchemas.set(discriminatorInterface, discriminatorSchema);
+  }
+  return discriminatorSchemas.get(discriminatorInterface)!;
+}
+
+// replaces item's schema with the appropriate discriminator schema as required
+function substitueDiscriminator(item: Property | Parameter | SchemaResponse): Schema {
+  if (item.schema.type === SchemaType.Object && item.schema.language.go!.discriminatorInterface) {
+    item.language.go!.byValue = true;
+    return getDiscriminatorSchema(<ObjectSchema>item.schema);
+  } else if (item.schema.type === SchemaType.Array) {
+    let elementSchema = (<ArraySchema>item.schema).elementType;
+    if (elementSchema.type === SchemaType.Object && elementSchema.language.go!.discriminatorInterface) {
+      elementSchema = getDiscriminatorSchema(<ObjectSchema>elementSchema);
+      const sliceDiscriminators = `[]${elementSchema.language.go!.discriminatorInterface}`;
+      let discriminatorSchema: Schema;
+      if (!discriminatorSchemas.has(sliceDiscriminators)) {
+        discriminatorSchema = new ArraySchema(sliceDiscriminators, 'slice of discriminators', elementSchema);
+        discriminatorSchema.language.go! = discriminatorSchema.language.default;
+        discriminatorSchemas.set(sliceDiscriminators, discriminatorSchema);
+      }
+      return discriminatorSchemas.get(sliceDiscriminators)!;
+    }
+  } else if (item.schema.type === SchemaType.Dictionary) {
+    let elementSchema = (<DictionarySchema>item.schema).elementType;
+    if (elementSchema.type === SchemaType.Object && elementSchema.language.go!.discriminatorInterface) {
+      elementSchema = getDiscriminatorSchema(<ObjectSchema>elementSchema);
+      const mapDiscriminators = `map[string]${elementSchema.language.go!.name}`;
+      let discriminatorSchema: Schema;
+      if (!discriminatorSchemas.has(mapDiscriminators)) {
+        discriminatorSchema = new DictionarySchema(mapDiscriminators, 'map of discriminators', elementSchema);
+        discriminatorSchema.language.go! = discriminatorSchema.language.default;
+        discriminatorSchemas.set(mapDiscriminators, discriminatorSchema);
+      }
+      return discriminatorSchemas.get(mapDiscriminators)!;
+    }
+  }
+
+  // not a discriminator
+  return item.schema;
+}
+
+function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Property' | 'InBody' | 'HeaderParam' | 'PathParam' | 'QueryParam'): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'any';
@@ -170,8 +229,10 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       const arraySchema = <ArraySchema>schema;
       arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arraySchema.elementType);
       const arrayElem = <Schema>arraySchema.elementType;
-      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, inBody);
-      if (<boolean>arraySchema.language.go!.elementIsPtr) {
+      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, type);
+      // passing nil for array elements in headers, paths, and query params
+      // isn't very useful as we'd just skip nil entries.  so disable it.
+      if (<boolean>arraySchema.language.go!.elementIsPtr && (type === 'Property' || type === 'InBody')) {
         return `[]*${arrayElem.language.go!.name}`;
       }
       return `[]${arrayElem.language.go!.name}`;
@@ -185,11 +246,11 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'rune';
     case SchemaType.Constant:
       let constSchema = <ConstantSchema>schema;
-      constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, inBody);
+      constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, type);
       return constSchema.valueType.language.go!.name;
     case SchemaType.DateTime:
       // header/query param values are parsed separately so they don't need custom types
-      if (inBody) {
+      if (type === 'InBody') {
         // add a marker to the code model indicating that we need
         // to include support for marshalling/unmarshalling time.
         const dateTime = <DateTimeSchema>schema;
@@ -204,7 +265,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'time.Time';
     case SchemaType.UnixTime:
       codeModel.language.go!.hasUnixTime = true;
-      if (inBody) {
+      if (type === 'InBody') {
         schema.language.go!.internalTimeType = 'timeUnix';
       }
       return 'time.Time';
@@ -212,7 +273,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       const dictSchema = <DictionarySchema>schema;
       dictSchema.language.go!.elementIsPtr = !isTypePassedByValue(dictSchema.elementType);
       const dictElem = <Schema>dictSchema.elementType;
-      dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
+      dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, type);
       if (<boolean>dictSchema.language.go!.elementIsPtr) {
         return `map[string]*${dictElem.language.go!.name}`;
       }
@@ -235,7 +296,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
     case SchemaType.Uri:
       return 'string';
     case SchemaType.Date:
-      if (inBody) {
+      if (type === 'InBody') {
         codeModel.language.go!.hasDate = true;
         schema.language.go!.internalTimeType = 'dateType';
       }
@@ -330,7 +391,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
       if (op.requests![0].protocol.http!.headers) {
         for (const header of values(op.requests![0].protocol.http!.headers)) {
           const head = <HttpHeader>header;
-          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
+          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, 'Property');
         }
       }
       const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
@@ -385,11 +446,28 @@ async function processOperationRequests(session: Session<CodeModel>) {
             }
           }
         }
-        const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
-        param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
+        let paramType: 'Property' | 'InBody' | 'HeaderParam' | 'PathParam' | 'QueryParam';
+        switch (param.protocol.http?.in) {
+          case 'body':
+            paramType = 'InBody';
+            break;
+          case 'header':
+            paramType = 'HeaderParam';
+            break;
+          case 'path':
+            paramType = 'PathParam';
+            break;
+          case 'query':
+            paramType = 'QueryParam';
+            break;
+          default:
+            paramType = 'Property';
+        }
+        param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, paramType);
         if (isTypePassedByValue(param.schema)) {
           param.language.go!.byValue = true;
         }
+        param.schema = substitueDiscriminator(param);
         // check if this is a header collection
         if (param.extensions?.['x-ms-header-collection-prefix']) {
           param.schema.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
@@ -535,7 +613,7 @@ function processOperationResponses(session: Session<CodeModel>) {
             // callers read directly from the *http.Response.Body
             continue;
           }
-          resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true);
+          resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, 'InBody');
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
         if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
@@ -544,7 +622,7 @@ function processOperationResponses(session: Session<CodeModel>) {
         // fix up schema types for header responses
         const httpResponse = <HttpResponse>resp.protocol.http;
         for (const header of values(httpResponse.headers)) {
-          header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
+          header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, 'Property');
           // check if this is a header collection
           if (header.extensions?.['x-ms-header-collection-prefix']) {
             header.schema.language.go!.headerCollectionPrefix = header.extensions['x-ms-header-collection-prefix'];
@@ -697,7 +775,13 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     }
     // we want to pass integral types byref to maintain parity with struct fields
     const byValue = isTypePassedByValue(response.schema) || response.schema.type === SchemaType.Object;
-    const resultProp = newRespProperty(propName, response.schema.language.go!.description, response.schema, byValue);
+    const resultSchema = substitueDiscriminator(response);
+    const resultProp = newRespProperty(propName, response.schema.language.go!.description, resultSchema, byValue);
+    if (resultSchema.language.go!.discriminatorInterface) {
+      // if the schema is a discriminator we need to flag this on the property itself.
+      // this is so the correct unmarshaller is created for the response envelope.
+      resultProp.isDiscriminator = true;
+    }
     respEnv.properties.push(resultProp);
     respEnv.language.go!.resultProp = resultProp;
   } else if (isBinaryResponseOperation(op)) {

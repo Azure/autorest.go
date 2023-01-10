@@ -7,7 +7,7 @@ import { capitalize, comment } from '@azure-tools/codegen';
 import { ConstantSchema, ImplementationLocation, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isArraySchema } from '../common/helpers';
-import { elementByValueForParam, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
+import { hasDescription, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // represents a struct method
@@ -84,8 +84,7 @@ export class StructDef {
         }
         text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
-      let elemByVal = false;
-      let typeName = substituteDiscriminator(prop.schema, elemByVal);
+      let typeName = prop.schema.language.go!.name;
       if (prop.schema.type === SchemaType.Constant) {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
@@ -128,7 +127,7 @@ export class StructDef {
       if (param.required || param.language.go!.byValue === true) {
         pointer = '';
       }
-      const typeName = substituteDiscriminator(param.schema, elementByValueForParam(param));
+      const typeName = param.schema.language.go!.name;
       text += `\t${capitalize(param.language.go!.name)} ${pointer}${typeName}\n`;
     }
     text += '}\n\n';
@@ -169,7 +168,7 @@ export function generateStruct(imports: ImportManager, lang: Language, props?: P
   for (const prop of values(props)) {
     imports.addImportForSchemaType(prop.schema);
     if (prop.language.go!.embeddedType) {
-      st.ComposedOf.push(substituteDiscriminator(prop.schema, true));
+      st.ComposedOf.push(prop.schema.language.go!.name);
     }
   }
   return st;

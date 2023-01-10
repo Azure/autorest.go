@@ -9,7 +9,7 @@ import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, Con
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, formatConstantValue, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, elementByValueForParam, formatCommentAsBulletItem, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
+import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -90,7 +90,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       for (const clientParam of values(clientParams)) {
         clientText += `\t${clientParam.language.go!.name} `;
         if (clientParam.required) {
-          clientText += `${substituteDiscriminator(clientParam.schema, elementByValueForParam(clientParam))}\n`;
+          clientText += `${clientParam.schema.language.go!.name}\n`;
         } else {
           clientText += `${formatParameterTypeName(clientParam)}\n`;
         }
