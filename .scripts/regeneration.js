@@ -17,7 +17,7 @@ const goMappings = {
     'binarygroup': ['body-binary.json', '--remove-unreferenced-types'],
     'booleangroup': ['body-boolean.json', '--remove-unreferenced-types'],
     'bytegroup': ['body-byte.json', '--remove-unreferenced-types'],
-    'complexgroup': ['body-complex.json', '--remove-unreferenced-types'],
+    'complexgroup': ['body-complex.json', '--remove-unreferenced-types', '--rawjson-as-bytes'],
     'complexmodelgroup': ['complex-model.json', '--remove-unreferenced-types'],
     'custombaseurlgroup': ['custom-baseUrl.json', '--remove-unreferenced-types'],
     'dategroup': ['body-date.json', '--remove-unreferenced-types'],
@@ -42,7 +42,7 @@ const goMappings = {
     'nonstringenumgroup': ['non-string-enum.json', '--remove-unreferenced-types'],
     'noopsgroup': ['no-operations.json'],
     'numbergroup': ['body-number.json', '--remove-unreferenced-types'],
-    'objectgroup': ['object-type.json', '--remove-unreferenced-types'],
+    'objectgroup': ['object-type.json', '--remove-unreferenced-types', '--rawjson-as-bytes'],
     'optionalgroup': ['required-optional.json', '--remove-unreferenced-types'],
     'paginggroup': ['paging.json', '--remove-unreferenced-types'],
     'paramgroupinggroup': ['azure-parameter-grouping.json', '--remove-unreferenced-types'],
@@ -100,7 +100,7 @@ const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/22
 generateFromReadme("armnetwork", network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types');
 
 const compute = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/compute/resource-manager/readme.md';
-generateFromReadme("armcompute", compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types');
+generateFromReadme("armcompute", compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types -rawjson-as-bytes');
 
 const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/synapse/data-plane/readme.md';
 generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-2019-06-01-preview', 'test/synapse/2019-06-01/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
@@ -109,7 +109,7 @@ const synapseSpark = 'https://raw.githubusercontent.com/Azure/azure-rest-api-spe
 generateFromReadme("azspark", synapseSpark, 'package-spark-2019-11-01-preview', 'test/synapse/2019-06-01/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
 
 const tables = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/cosmos-db/data-plane/readme.md';
-generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table');
+generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table --rawjson-as-bytes');
 
 const keyvault = fullPath('test/keyvault/7.2/azkeyvault/autorest.md');
 generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault');
@@ -121,9 +121,9 @@ const databoxedge = fullPath('test/databoxedge/2021-02-01/armdataboxedge/autores
 generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--remove-unreferenced-types');
 
 const acr = 'https://github.com/Azure/azure-rest-api-specs/blob/195cd610db0accd0422c3e00a72df739ab4de677/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
-generate("azacr", acr, 'test/acr/2021-07-01/azacr', '--module="azacr" --openapi-type="data-plane"');
+generate("azacr", acr, 'test/acr/2021-07-01/azacr', '--module="azacr" --openapi-type="data-plane" --rawjson-as-bytes');
 
-generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
+generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane" --rawjson-as-bytes');
 
 function should_generate(name) {
     if (filter !== undefined) {

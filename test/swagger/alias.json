@@ -605,6 +605,18 @@
           "description": "a JSON object"
         }
       }
+    },
+    "TypeWithRawJSON": {
+      "type": "object",
+      "properties": {
+        "anything": {
+          "description": "any valid JSON"
+        },
+        "anyObject": {
+          "type": "object",
+          "description": "any JSON object"
+        }
+      }
     }
   }
 }

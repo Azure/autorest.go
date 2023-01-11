@@ -364,7 +364,7 @@ func (d *Descriptor) UnmarshalJSON(data []byte) error {
 func (e ErrorInfo) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "code", e.Code)
-	populate(objectMap, "detail", &e.Detail)
+	populate(objectMap, "detail", json.RawMessage(e.Detail))
 	populate(objectMap, "message", e.Message)
 	return json.Marshal(objectMap)
 }
@@ -382,7 +382,7 @@ func (e *ErrorInfo) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Code", &e.Code)
 			delete(rawMsg, key)
 		case "detail":
-			err = unpopulate(val, "Detail", &e.Detail)
+			e.Detail = val
 			delete(rawMsg, key)
 		case "message":
 			err = unpopulate(val, "Message", &e.Message)

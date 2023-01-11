@@ -130,9 +130,11 @@ func (client *containerRegistryClient) createManifestHandleResponse(resp *http.R
 		}
 		result.ContentLength = &contentLength
 	}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return ContainerRegistryClientCreateManifestResponse{}, err
 	}
+	result.RawJSON = body
 	return result, nil
 }
 

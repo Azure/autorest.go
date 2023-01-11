@@ -7611,7 +7611,7 @@ func (v VirtualMachineCaptureResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "contentVersion", v.ContentVersion)
 	populate(objectMap, "id", v.ID)
-	populate(objectMap, "parameters", &v.Parameters)
+	populate(objectMap, "parameters", json.RawMessage(v.Parameters))
 	populate(objectMap, "resources", v.Resources)
 	populate(objectMap, "$schema", v.Schema)
 	return json.Marshal(objectMap)
@@ -7633,7 +7633,7 @@ func (v *VirtualMachineCaptureResult) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ID", &v.ID)
 			delete(rawMsg, key)
 		case "parameters":
-			err = unpopulate(val, "Parameters", &v.Parameters)
+			v.Parameters = val
 			delete(rawMsg, key)
 		case "resources":
 			err = unpopulate(val, "Resources", &v.Resources)
@@ -7870,10 +7870,10 @@ func (v VirtualMachineExtensionProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "autoUpgradeMinorVersion", v.AutoUpgradeMinorVersion)
 	populate(objectMap, "forceUpdateTag", v.ForceUpdateTag)
 	populate(objectMap, "instanceView", v.InstanceView)
-	populate(objectMap, "protectedSettings", &v.ProtectedSettings)
+	populate(objectMap, "protectedSettings", json.RawMessage(v.ProtectedSettings))
 	populate(objectMap, "provisioningState", v.ProvisioningState)
 	populate(objectMap, "publisher", v.Publisher)
-	populate(objectMap, "settings", &v.Settings)
+	populate(objectMap, "settings", json.RawMessage(v.Settings))
 	populate(objectMap, "type", v.Type)
 	populate(objectMap, "typeHandlerVersion", v.TypeHandlerVersion)
 	return json.Marshal(objectMap)
@@ -7898,7 +7898,7 @@ func (v *VirtualMachineExtensionProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "InstanceView", &v.InstanceView)
 			delete(rawMsg, key)
 		case "protectedSettings":
-			err = unpopulate(val, "ProtectedSettings", &v.ProtectedSettings)
+			v.ProtectedSettings = val
 			delete(rawMsg, key)
 		case "provisioningState":
 			err = unpopulate(val, "ProvisioningState", &v.ProvisioningState)
@@ -7907,7 +7907,7 @@ func (v *VirtualMachineExtensionProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Publisher", &v.Publisher)
 			delete(rawMsg, key)
 		case "settings":
-			err = unpopulate(val, "Settings", &v.Settings)
+			v.Settings = val
 			delete(rawMsg, key)
 		case "type":
 			err = unpopulate(val, "Type", &v.Type)
@@ -7959,9 +7959,9 @@ func (v VirtualMachineExtensionUpdateProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "autoUpgradeMinorVersion", v.AutoUpgradeMinorVersion)
 	populate(objectMap, "forceUpdateTag", v.ForceUpdateTag)
-	populate(objectMap, "protectedSettings", &v.ProtectedSettings)
+	populate(objectMap, "protectedSettings", json.RawMessage(v.ProtectedSettings))
 	populate(objectMap, "publisher", v.Publisher)
-	populate(objectMap, "settings", &v.Settings)
+	populate(objectMap, "settings", json.RawMessage(v.Settings))
 	populate(objectMap, "type", v.Type)
 	populate(objectMap, "typeHandlerVersion", v.TypeHandlerVersion)
 	return json.Marshal(objectMap)
@@ -7983,13 +7983,13 @@ func (v *VirtualMachineExtensionUpdateProperties) UnmarshalJSON(data []byte) err
 			err = unpopulate(val, "ForceUpdateTag", &v.ForceUpdateTag)
 			delete(rawMsg, key)
 		case "protectedSettings":
-			err = unpopulate(val, "ProtectedSettings", &v.ProtectedSettings)
+			v.ProtectedSettings = val
 			delete(rawMsg, key)
 		case "publisher":
 			err = unpopulate(val, "Publisher", &v.Publisher)
 			delete(rawMsg, key)
 		case "settings":
-			err = unpopulate(val, "Settings", &v.Settings)
+			v.Settings = val
 			delete(rawMsg, key)
 		case "type":
 			err = unpopulate(val, "Type", &v.Type)
@@ -8671,11 +8671,11 @@ func (v VirtualMachineScaleSetExtensionProperties) MarshalJSON() ([]byte, error)
 	objectMap := make(map[string]any)
 	populate(objectMap, "autoUpgradeMinorVersion", v.AutoUpgradeMinorVersion)
 	populate(objectMap, "forceUpdateTag", v.ForceUpdateTag)
-	populate(objectMap, "protectedSettings", &v.ProtectedSettings)
+	populate(objectMap, "protectedSettings", json.RawMessage(v.ProtectedSettings))
 	populate(objectMap, "provisionAfterExtensions", v.ProvisionAfterExtensions)
 	populate(objectMap, "provisioningState", v.ProvisioningState)
 	populate(objectMap, "publisher", v.Publisher)
-	populate(objectMap, "settings", &v.Settings)
+	populate(objectMap, "settings", json.RawMessage(v.Settings))
 	populate(objectMap, "type", v.Type)
 	populate(objectMap, "typeHandlerVersion", v.TypeHandlerVersion)
 	return json.Marshal(objectMap)
@@ -8697,7 +8697,7 @@ func (v *VirtualMachineScaleSetExtensionProperties) UnmarshalJSON(data []byte) e
 			err = unpopulate(val, "ForceUpdateTag", &v.ForceUpdateTag)
 			delete(rawMsg, key)
 		case "protectedSettings":
-			err = unpopulate(val, "ProtectedSettings", &v.ProtectedSettings)
+			v.ProtectedSettings = val
 			delete(rawMsg, key)
 		case "provisionAfterExtensions":
 			err = unpopulate(val, "ProvisionAfterExtensions", &v.ProvisionAfterExtensions)
@@ -8709,7 +8709,7 @@ func (v *VirtualMachineScaleSetExtensionProperties) UnmarshalJSON(data []byte) e
 			err = unpopulate(val, "Publisher", &v.Publisher)
 			delete(rawMsg, key)
 		case "settings":
-			err = unpopulate(val, "Settings", &v.Settings)
+			v.Settings = val
 			delete(rawMsg, key)
 		case "type":
 			err = unpopulate(val, "Type", &v.Type)

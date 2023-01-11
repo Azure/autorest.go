@@ -95,7 +95,7 @@ func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
-	populate(objectMap, "properties", &g.Properties)
+	populate(objectMap, "properties", json.RawMessage(g.Properties))
 	if g.Setting == nil {
 		g.Setting = to.Ptr(DataSettingTwo)
 	}
@@ -120,7 +120,7 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ID", &g.ID)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, "Properties", &g.Properties)
+			g.Properties = val
 			delete(rawMsg, key)
 		case "setting":
 			err = unpopulate(val, "Setting", &g.Setting)
@@ -144,7 +144,7 @@ func (g GeoJSONFeatureData) MarshalJSON() ([]byte, error) {
 	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
-	populate(objectMap, "properties", &g.Properties)
+	populate(objectMap, "properties", json.RawMessage(g.Properties))
 	if g.Setting == nil {
 		g.Setting = to.Ptr(DataSettingTwo)
 	}
@@ -168,7 +168,7 @@ func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ID", &g.ID)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, "Properties", &g.Properties)
+			g.Properties = val
 			delete(rawMsg, key)
 		case "setting":
 			err = unpopulate(val, "Setting", &g.Setting)
@@ -285,7 +285,7 @@ func (l *ListResponse) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type ParameterMetadataValue.
 func (p ParameterMetadataValue) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "value", &p.Value)
+	populate(objectMap, "value", json.RawMessage(p.Value))
 	return json.Marshal(objectMap)
 }
 
@@ -299,7 +299,7 @@ func (p *ParameterMetadataValue) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = unpopulate(val, "Value", &p.Value)
+			p.Value = val
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -312,7 +312,7 @@ func (p *ParameterMetadataValue) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type ParameterValuesValue.
 func (p ParameterValuesValue) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "value", &p.Value)
+	populate(objectMap, "value", json.RawMessage(p.Value))
 	return json.Marshal(objectMap)
 }
 
@@ -326,7 +326,7 @@ func (p *ParameterValuesValue) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = unpopulate(val, "Value", &p.Value)
+			p.Value = val
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -376,7 +376,7 @@ func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "aliases", s.Aliases)
 	populate(objectMap, "description", s.Description)
-	populate(objectMap, "interval", &s.Interval)
+	populate(objectMap, "interval", json.RawMessage(s.Interval))
 	populateTimeRFC3339(objectMap, "startTime", s.StartTime)
 	return json.Marshal(objectMap)
 }
@@ -397,7 +397,7 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Description", &s.Description)
 			delete(rawMsg, key)
 		case "interval":
-			err = unpopulate(val, "Interval", &s.Interval)
+			s.Interval = val
 			delete(rawMsg, key)
 		case "startTime":
 			err = unpopulateTimeRFC3339(val, "StartTime", &s.StartTime)
@@ -405,6 +405,37 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", s, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TypeWithRawJSON.
+func (t TypeWithRawJSON) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "anyObject", json.RawMessage(t.AnyObject))
+	populate(objectMap, "anything", json.RawMessage(t.Anything))
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TypeWithRawJSON.
+func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", t, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "anyObject":
+			t.AnyObject = val
+			delete(rawMsg, key)
+		case "anything":
+			t.Anything = val
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", t, err)
 		}
 	}
 	return nil
