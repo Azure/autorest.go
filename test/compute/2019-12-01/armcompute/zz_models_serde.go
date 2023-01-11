@@ -7612,7 +7612,7 @@ func (v VirtualMachineCaptureResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "contentVersion", v.ContentVersion)
 	populate(objectMap, "id", v.ID)
 	populate(objectMap, "parameters", json.RawMessage(v.Parameters))
-	populate(objectMap, "resources", v.Resources)
+	populate(objectMap, "resources", json.RawMessage(v.Resources))
 	populate(objectMap, "$schema", v.Schema)
 	return json.Marshal(objectMap)
 }
@@ -7636,7 +7636,7 @@ func (v *VirtualMachineCaptureResult) UnmarshalJSON(data []byte) error {
 			v.Parameters = val
 			delete(rawMsg, key)
 		case "resources":
-			err = unpopulate(val, "Resources", &v.Resources)
+			v.Resources = val
 			delete(rawMsg, key)
 		case "$schema":
 			err = unpopulate(val, "Schema", &v.Schema)

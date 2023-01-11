@@ -897,7 +897,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       body = 'aux';
     }
     let setBody = `runtime.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, `req, ${body}`)}`;
-    if (bodyParam!.schema.language.go!.rawJSONAsBytes && (bodyParam!.schema.type === SchemaType.Any || bodyParam!.schema.type === SchemaType.AnyObject)) {
+    if (bodyParam!.schema.language.go!.rawJSONAsBytes) {
       imports.add('bytes');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
       setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${mediaType.toLowerCase()}")`;
@@ -1075,7 +1075,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   }
   const mediaType = getMediaType(response.protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
-    if (response.schema.language.go!.rawJSONAsBytes && (response.schema.type === SchemaType.Any || response.schema.type === SchemaType.AnyObject)) {
+    if (response.schema.language.go!.rawJSONAsBytes) {
       unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
       unmarshallerText += '\tif err != nil {\n';
       unmarshallerText += `\t\treturn ${zeroValue}, err\n`;

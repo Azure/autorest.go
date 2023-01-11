@@ -245,7 +245,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
       if (rawJSONAsBytes && (arrayElem.type === SchemaType.Any || arrayElem.type === SchemaType.AnyObject)) {
-        return 'any';
+        schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
+        return '[]byte';
       }
       arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arrayElem);
       arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, type);

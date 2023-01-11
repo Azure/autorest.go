@@ -3688,7 +3688,7 @@ type VirtualMachineCaptureResult struct {
 	Parameters []byte `json:"parameters,omitempty" azure:"ro"`
 
 	// READ-ONLY; a list of resource items of the captured virtual machine
-	Resources any `json:"resources,omitempty" azure:"ro"`
+	Resources []byte `json:"resources,omitempty" azure:"ro"`
 
 	// READ-ONLY; the schema of the captured virtual machine
 	Schema *string `json:"$schema,omitempty" azure:"ro"`
