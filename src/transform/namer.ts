@@ -88,6 +88,8 @@ export async function namer(session: Session<CodeModel>) {
   const groupParameters = await session.getValue('group-parameters', true);
   model.language.go!.groupParameters = groupParameters;
   const honorBodyPlacement = await session.getValue('honor-body-placement', false);
+  const rawJSONAsBytes = await session.getValue('rawjson-as-bytes', false);
+  model.language.go!.rawJSONAsBytes = rawJSONAsBytes;
 
   // fix up type names
   const structNames = new Set<string>();

@@ -347,7 +347,7 @@ type ErrorInfo struct {
 	Code *string `json:"code,omitempty"`
 
 	// Error details
-	Detail any `json:"detail,omitempty"`
+	Detail []byte `json:"detail,omitempty"`
 
 	// Error message
 	Message *string `json:"message,omitempty"`

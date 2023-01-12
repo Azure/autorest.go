@@ -14,16 +14,16 @@ func TestPolicyAssignmentProperties(t *testing.T) {
 	if err := json.Unmarshal([]byte(payload), &paprops); err != nil {
 		t.Fatal(err)
 	}
-	s, ok := paprops.Parameters["effect"].Value.(string)
-	if !ok {
-		t.Fatalf("unexpected type %T", paprops.Parameters["effect"].Value)
+	var s string
+	if err := json.Unmarshal(paprops.Parameters["effect"].Value, &s); err != nil {
+		t.Fatal(err)
 	}
 	if s != "Audit" {
 		t.Fatalf("got %s, want Audit", s)
 	}
-	sl, ok := paprops.Parameters["listOfResourceTypesNotAllowed"].Value.([]interface{})
-	if !ok {
-		t.Fatalf("unexpected type %T", paprops.Parameters["listOfResourceTypesNotAllowed"].Value)
+	sl := []string{}
+	if err := json.Unmarshal(paprops.Parameters["listOfResourceTypesNotAllowed"].Value, &sl); err != nil {
+		t.Fatal(err)
 	}
 	if len(sl) != 1 {
 		t.Fatal("unexpected slice len")
@@ -35,9 +35,9 @@ func TestPolicyAssignmentProperties(t *testing.T) {
 	if !ok {
 		t.Fatal("missing one")
 	}
-	mm, ok := m.Value.(map[string]interface{})
-	if !ok {
-		t.Fatalf("unexpected type %T", m.Value)
+	mm := map[string]any{}
+	if err := json.Unmarshal(m.Value, &mm); err != nil {
+		t.Fatal(err)
 	}
 	if v := mm["key"]; v != "value" {
 		t.Fatalf("got %s want value", v)

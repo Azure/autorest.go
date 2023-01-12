@@ -102,6 +102,9 @@ async function process(session: Session<CodeModel>) {
       }
       if (prop.language.go!.description) {
         descriptionMods.push(parseComments(prop.language.go!.description));
+      } else if (prop.schema.language.go!.rawJSONAsBytes) {
+        // add a basic description if one isn't available
+        descriptionMods.push('The contents of this field are raw JSON.');
       }
       prop.language.go!.description = descriptionMods.join('; ');
       const details = <Language>prop.schema.language.go;
@@ -219,16 +222,33 @@ function substitueDiscriminator(item: Property | Parameter | SchemaResponse): Sc
   return item.schema;
 }
 
+const dictionaryElementAnySchema = new AnySchema('any schema for maps');
+dictionaryElementAnySchema.language.go = dictionaryElementAnySchema.language.default;
+dictionaryElementAnySchema.language.go!.name = 'any';
+
 function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Property' | 'InBody' | 'HeaderParam' | 'PathParam' | 'QueryParam'): string {
+  const rawJSONAsBytes = <boolean>codeModel.language.go!.rawJSONAsBytes;
   switch (schema.type) {
     case SchemaType.Any:
+      if (rawJSONAsBytes) {
+        schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
+        return '[]byte';
+      }
       return 'any';
     case SchemaType.AnyObject:
+      if (rawJSONAsBytes) {
+        schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
+        return '[]byte';
+      }
       return 'map[string]any';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
-      arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arraySchema.elementType);
       const arrayElem = <Schema>arraySchema.elementType;
+      if (rawJSONAsBytes && (arrayElem.type === SchemaType.Any || arrayElem.type === SchemaType.AnyObject)) {
+        schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
+        return '[]byte';
+      }
+      arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arrayElem);
       arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, type);
       // passing nil for array elements in headers, paths, and query params
       // isn't very useful as we'd just skip nil entries.  so disable it.
@@ -271,8 +291,12 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
-      dictSchema.language.go!.elementIsPtr = !isTypePassedByValue(dictSchema.elementType);
       const dictElem = <Schema>dictSchema.elementType;
+      if (rawJSONAsBytes && (dictElem.type === SchemaType.Any || dictElem.type === SchemaType.AnyObject)) {
+        dictSchema.elementType = dictionaryElementAnySchema;
+        return `map[string]${dictionaryElementAnySchema.language.go!.name}`;
+      }
+      dictSchema.language.go!.elementIsPtr = !isTypePassedByValue(dictSchema.elementType);
       dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, type);
       if (<boolean>dictSchema.language.go!.elementIsPtr) {
         return `map[string]*${dictElem.language.go!.name}`;
@@ -754,6 +778,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   const response = getSchemaResponse(op);
   // if the response defines a schema then add it to the response envelope
   if (response) {
+    const rawJSONAsBytes = <boolean>codeModel.language.go!.rawJSONAsBytes;
     // propagate marshalling format to the response envelope
     respEnv.language.go!.marshallingFormat = response.schema.language.go!.marshallingFormat;
     // for operations that return scalar types we use a fixed field name
@@ -764,6 +789,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     } else if (response.schema.type === SchemaType.Array) {
       // for array types use the element type's name
       propName = recursiveTypeName(response.schema);
+    } else if (rawJSONAsBytes && (response.schema.type === SchemaType.Any || response.schema.type === SchemaType.AnyObject)) {
+      propName = 'RawJSON';
     } else if (response.schema.type === SchemaType.Any) {
       propName = 'Interface';
     } else if (response.schema.type === SchemaType.AnyObject) {
@@ -883,10 +910,17 @@ function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
 }
 
 function recursiveTypeName(schema: Schema): string {
+  const rawJSON = 'RawJSON';
   switch (schema.type) {
     case SchemaType.Any:
+      if (schema.language.go!.rawJSONAsBytes) {
+        return rawJSON;
+      }
       return 'Interface';
     case SchemaType.AnyObject:
+      if (schema.language.go!.rawJSONAsBytes) {
+        return rawJSON;
+      }
       return 'Object';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;

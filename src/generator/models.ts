@@ -254,6 +254,8 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
       marshaller += `\tpopulate(objectMap, "${prop.serializedName}", aux)\n`;
     } else if (prop.schema.type === SchemaType.Constant) {
       marshaller += `\tobjectMap["${prop.serializedName}"] = ${formatConstantValue(<ConstantSchema>prop.schema)}\n`;
+    } else if (prop.schema.language.go!.rawJSONAsBytes) {
+      marshaller += `\tpopulate(objectMap, "${prop.serializedName}", json.RawMessage(${receiver}.${prop.language.go!.name}))\n`;
     } else {
       if (prop.clientDefaultValue) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
@@ -363,6 +365,8 @@ function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManag
       }
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
+    } else if (prop.schema.language.go!.rawJSONAsBytes) {
+      unmarshalBody += `\t\t\t${receiver}.${prop.language.go!.name} = val\n`;
     } else {
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
     }

@@ -12,7 +12,7 @@ package objectgroup
 // ObjectTypeClientGetResponse contains the response from method ObjectTypeClient.Get.
 type ObjectTypeClientGetResponse struct {
 	// Anything
-	Interface any
+	RawJSON []byte
 }
 
 // ObjectTypeClientPutResponse contains the response from method ObjectTypeClient.Put.

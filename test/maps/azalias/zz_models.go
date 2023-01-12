@@ -75,7 +75,7 @@ type GeoJSONFeature struct {
 	ID *string `json:"id,omitempty"`
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties any `json:"properties,omitempty"`
+	Properties []byte `json:"properties,omitempty"`
 
 	// test enum with a default
 	Setting *DataSetting `json:"setting,omitempty"`
@@ -98,7 +98,7 @@ type GeoJSONFeatureData struct {
 	ID *string `json:"id,omitempty"`
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties any `json:"properties,omitempty"`
+	Properties []byte `json:"properties,omitempty"`
 
 	// test enum with a default
 	Setting *DataSetting `json:"setting,omitempty"`
@@ -153,13 +153,13 @@ type ListResponse struct {
 
 type ParameterMetadataValue struct {
 	// a JSON object
-	Value any `json:"value,omitempty"`
+	Value []byte `json:"value,omitempty"`
 }
 
 // ParameterValuesValue - The value of a parameter.
 type ParameterValuesValue struct {
 	// The value of the parameter.
-	Value any `json:"value,omitempty"`
+	Value []byte `json:"value,omitempty"`
 }
 
 type PolicyAssignmentProperties struct {
@@ -182,8 +182,16 @@ type ScheduleCreateOrUpdateProperties struct {
 	Description *string `json:"description,omitempty"`
 
 	// Gets or sets the interval of the schedule.
-	Interval any `json:"interval,omitempty"`
+	Interval []byte `json:"interval,omitempty"`
 
 	// Gets or sets the start time of the schedule.
 	StartTime *time.Time `json:"startTime,omitempty"`
+}
+
+type TypeWithRawJSON struct {
+	// any JSON object
+	AnyObject []byte `json:"anyObject,omitempty"`
+
+	// any valid JSON
+	Anything []byte `json:"anything,omitempty"`
 }

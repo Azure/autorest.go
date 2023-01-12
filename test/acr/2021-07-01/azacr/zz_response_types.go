@@ -152,11 +152,11 @@ type ContainerRegistryClientCreateManifestResponse struct {
 	// DockerContentDigest contains the information returned from the Docker-Content-Digest header response.
 	DockerContentDigest *string
 
-	// Anything
-	Interface any
-
 	// Location contains the information returned from the Location header response.
 	Location *string
+
+	// Anything
+	RawJSON []byte
 }
 
 // ContainerRegistryClientDeleteManifestResponse contains the response from method containerRegistryClient.DeleteManifest.

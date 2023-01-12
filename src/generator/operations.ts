@@ -896,11 +896,17 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += '\t}\n';
       body = 'aux';
     }
+    let setBody = `runtime.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, `req, ${body}`)}`;
+    if (bodyParam!.schema.language.go!.rawJSONAsBytes) {
+      imports.add('bytes');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+      setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${mediaType.toLowerCase()}")`;
+    }
     if (bodyParam!.required || bodyParam!.schema.type === SchemaType.Constant) {
-      text += `\treturn req, runtime.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, `req, ${body}`)}\n`;
+      text += `\treturn req, ${setBody}\n`;
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
-      text += `\t\treturn req, runtime.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, `req, ${body}`)}\n`;
+      text += `\t\treturn req, ${setBody}\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
@@ -1069,9 +1075,17 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   }
   const mediaType = getMediaType(response.protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
-    unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaFormat(response.schema, mediaType, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-    unmarshallerText += '\t}\n';
+    if (response.schema.language.go!.rawJSONAsBytes) {
+      unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
+      unmarshallerText += '\tif err != nil {\n';
+      unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+      unmarshallerText += '\t}\n';
+      unmarshallerText += `\t${unmarshalTarget} = body\n`;
+    } else {
+      unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaFormat(response.schema, mediaType, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
+      unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+      unmarshallerText += '\t}\n';
+    }
   } else if (mediaType === 'text') {
     unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
     unmarshallerText += '\tif err != nil {\n';

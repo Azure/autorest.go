@@ -23,18 +23,14 @@ func TestGet(t *testing.T) {
 	client := newObjectTypeClient()
 	resp, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.Interface, map[string]interface{}{
-		"message": "An object was successfully returned",
-	}); r != "" {
+	if r := cmp.Diff(string(resp.RawJSON), `{ "message": "An object was successfully returned" }`); r != "" {
 		t.Fatal(r)
 	}
 }
 
 func TestPut(t *testing.T) {
 	client := newObjectTypeClient()
-	result, err := client.Put(context.Background(), map[string]interface{}{
-		"foo": "bar",
-	}, nil)
+	result, err := client.Put(context.Background(), []byte(`{ "foo": "bar" }`), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }

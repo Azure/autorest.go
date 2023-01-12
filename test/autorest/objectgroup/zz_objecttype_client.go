@@ -10,9 +10,11 @@
 package objectgroup
 
 import (
+	"bytes"
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
 )
 
@@ -65,9 +67,11 @@ func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *O
 // getHandleResponse handles the Get response.
 func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTypeClientGetResponse, error) {
 	result := ObjectTypeClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
+	result.RawJSON = body
 	return result, nil
 }
 
@@ -77,7 +81,7 @@ func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTy
 // Generated from API version 1.0.0
 //   - putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
 //   - options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
-func (client *ObjectTypeClient) Put(ctx context.Context, putObject any, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
+func (client *ObjectTypeClient) Put(ctx context.Context, putObject []byte, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {
 		return ObjectTypeClientPutResponse{}, err
@@ -93,12 +97,12 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject any, options 
 }
 
 // putCreateRequest creates the Put request.
-func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject any, options *ObjectTypeClientPutOptions) (*policy.Request, error) {
+func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject []byte, options *ObjectTypeClientPutOptions) (*policy.Request, error) {
 	urlPath := "/objectType/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, putObject)
+	return req, req.SetBody(streaming.NopCloser(bytes.NewReader(putObject)), "application/json")
 }
