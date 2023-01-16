@@ -8,7 +8,7 @@
       "comments": {
         "minor": [
           {
-            "comment": "Upgrade to @autorest/go_4.0.0-preview.45 and do some cooresponding chagne to test generation."
+            "comment": "Upgrade to @autorest/go_4.0.0-preview.45 and do some corresponding change to test generation."
           }
         ]
       }

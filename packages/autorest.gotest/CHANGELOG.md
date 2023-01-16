@@ -7,7 +7,7 @@ Mon, 16 Jan 2023 06:25:05 GMT
 
 ### Minor changes
 
-- Upgrade to @autorest/go_4.0.0-preview.45 and do some cooresponding chagne to test generation.
+- Upgrade to @autorest/go_4.0.0-preview.45 and do some corresponding change to test generation.
 
 ## 4.4.0
 Tue, 25 Oct 2022 03:01:04 GMT
