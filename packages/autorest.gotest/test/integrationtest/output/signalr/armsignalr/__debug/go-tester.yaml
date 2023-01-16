@@ -1788,7 +1788,7 @@ schemas:
           name: any
           description: Anything
         go:
-          name: interface{}
+          name: any
           description: Anything
       protocol: {}
   dateTimes:
@@ -5113,7 +5113,7 @@ operationGroups:
                 language:
                   default: &ref_177
                     name: OperationsClientListOptions
-                    description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                    description: OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
                   go: *ref_177
                 protocol: {}
               originalParameter: []
@@ -5122,7 +5122,7 @@ operationGroups:
               language:
                 default: &ref_178
                   name: options
-                  description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                  description: OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
                 go: *ref_178
               protocol: {}
             paging: &ref_367
@@ -5148,7 +5148,7 @@ operationGroups:
               language:
                 default: &ref_181
                   name: OperationsClientListResponse
-                  description: OperationsClientListResponse contains the response from method OperationsClient.List.
+                  description: OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_180
@@ -5540,7 +5540,7 @@ operationGroups:
                 language:
                   default: &ref_194
                     name: ClientListBySubscriptionOptions
-                    description: ClientListBySubscriptionOptions contains the optional parameters for the Client.ListBySubscription method.
+                    description: ClientListBySubscriptionOptions contains the optional parameters for the Client.NewListBySubscriptionPager method.
                   go: *ref_194
                 protocol: {}
               originalParameter: []
@@ -5549,7 +5549,7 @@ operationGroups:
               language:
                 default: &ref_195
                   name: options
-                  description: ClientListBySubscriptionOptions contains the optional parameters for the Client.ListBySubscription method.
+                  description: ClientListBySubscriptionOptions contains the optional parameters for the Client.NewListBySubscriptionPager method.
                 go: *ref_195
               protocol: {}
             paging: &ref_444
@@ -5575,7 +5575,7 @@ operationGroups:
               language:
                 default: &ref_198
                   name: ClientListBySubscriptionResponse
-                  description: ClientListBySubscriptionResponse contains the response from method Client.ListBySubscription.
+                  description: ClientListBySubscriptionResponse contains the response from method Client.NewListBySubscriptionPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_197
@@ -5786,7 +5786,7 @@ operationGroups:
                 language:
                   default: &ref_200
                     name: ClientListByResourceGroupOptions
-                    description: ClientListByResourceGroupOptions contains the optional parameters for the Client.ListByResourceGroup method.
+                    description: ClientListByResourceGroupOptions contains the optional parameters for the Client.NewListByResourceGroupPager method.
                   go: *ref_200
                 protocol: {}
               originalParameter: []
@@ -5795,7 +5795,7 @@ operationGroups:
               language:
                 default: &ref_201
                   name: options
-                  description: ClientListByResourceGroupOptions contains the optional parameters for the Client.ListByResourceGroup method.
+                  description: ClientListByResourceGroupOptions contains the optional parameters for the Client.NewListByResourceGroupPager method.
                 go: *ref_201
               protocol: {}
             paging: &ref_448
@@ -5821,7 +5821,7 @@ operationGroups:
               language:
                 default: &ref_204
                   name: ClientListByResourceGroupResponse
-                  description: ClientListByResourceGroupResponse contains the response from method Client.ListByResourceGroup.
+                  description: ClientListByResourceGroupResponse contains the response from method Client.NewListByResourceGroupPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_203
@@ -6548,7 +6548,7 @@ operationGroups:
               language:
                 default: &ref_222
                   name: ClientCreateOrUpdateResponse
-                  description: ClientCreateOrUpdateResponse contains the response from method Client.CreateOrUpdate.
+                  description: ClientCreateOrUpdateResponse contains the response from method Client.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -6751,7 +6751,7 @@ operationGroups:
               language:
                 default: &ref_229
                   name: ClientDeleteResponse
-                  description: ClientDeleteResponse contains the response from method Client.Delete.
+                  description: ClientDeleteResponse contains the response from method Client.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_229
@@ -7116,7 +7116,7 @@ operationGroups:
               language:
                 default: &ref_240
                   name: ClientUpdateResponse
-                  description: ClientUpdateResponse contains the response from method Client.Update.
+                  description: ClientUpdateResponse contains the response from method Client.BeginUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -7514,7 +7514,7 @@ operationGroups:
               language:
                 default: &ref_260
                   name: ClientRegenerateKeyResponse
-                  description: ClientRegenerateKeyResponse contains the response from method Client.RegenerateKey.
+                  description: ClientRegenerateKeyResponse contains the response from method Client.BeginRegenerateKey.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -7707,7 +7707,7 @@ operationGroups:
               language:
                 default: &ref_267
                   name: ClientRestartResponse
-                  description: ClientRestartResponse contains the response from method Client.Restart.
+                  description: ClientRestartResponse contains the response from method Client.BeginRestart.
                   forLRO: true
                   responseType: true
                 go: *ref_267
@@ -7864,7 +7864,7 @@ operationGroups:
                 language:
                   default: &ref_270
                     name: UsagesClientListOptions
-                    description: UsagesClientListOptions contains the optional parameters for the UsagesClient.List method.
+                    description: UsagesClientListOptions contains the optional parameters for the UsagesClient.NewListPager method.
                   go: *ref_270
                 protocol: {}
               originalParameter: []
@@ -7873,7 +7873,7 @@ operationGroups:
               language:
                 default: &ref_271
                   name: options
-                  description: UsagesClientListOptions contains the optional parameters for the UsagesClient.List method.
+                  description: UsagesClientListOptions contains the optional parameters for the UsagesClient.NewListPager method.
                 go: *ref_271
               protocol: {}
             paging: &ref_506
@@ -7899,7 +7899,7 @@ operationGroups:
               language:
                 default: &ref_274
                   name: UsagesClientListResponse
-                  description: UsagesClientListResponse contains the response from method UsagesClient.List.
+                  description: UsagesClientListResponse contains the response from method UsagesClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_273
@@ -8078,7 +8078,7 @@ operationGroups:
                 language:
                   default: &ref_278
                     name: PrivateEndpointConnectionsClientListOptions
-                    description: PrivateEndpointConnectionsClientListOptions contains the optional parameters for the PrivateEndpointConnectionsClient.List method.
+                    description: PrivateEndpointConnectionsClientListOptions contains the optional parameters for the PrivateEndpointConnectionsClient.NewListPager method.
                   go: *ref_278
                 protocol: {}
               originalParameter: []
@@ -8087,7 +8087,7 @@ operationGroups:
               language:
                 default: &ref_279
                   name: options
-                  description: PrivateEndpointConnectionsClientListOptions contains the optional parameters for the PrivateEndpointConnectionsClient.List method.
+                  description: PrivateEndpointConnectionsClientListOptions contains the optional parameters for the PrivateEndpointConnectionsClient.NewListPager method.
                 go: *ref_279
               protocol: {}
             paging: &ref_513
@@ -8113,7 +8113,7 @@ operationGroups:
               language:
                 default: &ref_282
                   name: PrivateEndpointConnectionsClientListResponse
-                  description: PrivateEndpointConnectionsClientListResponse contains the response from method PrivateEndpointConnectionsClient.List.
+                  description: PrivateEndpointConnectionsClientListResponse contains the response from method PrivateEndpointConnectionsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_281
@@ -8789,7 +8789,7 @@ operationGroups:
               language:
                 default: &ref_308
                   name: PrivateEndpointConnectionsClientDeleteResponse
-                  description: PrivateEndpointConnectionsClientDeleteResponse contains the response from method PrivateEndpointConnectionsClient.Delete.
+                  description: PrivateEndpointConnectionsClientDeleteResponse contains the response from method PrivateEndpointConnectionsClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_308
@@ -8965,7 +8965,7 @@ operationGroups:
                 language:
                   default: &ref_312
                     name: PrivateLinkResourcesClientListOptions
-                    description: PrivateLinkResourcesClientListOptions contains the optional parameters for the PrivateLinkResourcesClient.List method.
+                    description: PrivateLinkResourcesClientListOptions contains the optional parameters for the PrivateLinkResourcesClient.NewListPager method.
                   go: *ref_312
                 protocol: {}
               originalParameter: []
@@ -8974,7 +8974,7 @@ operationGroups:
               language:
                 default: &ref_313
                   name: options
-                  description: PrivateLinkResourcesClientListOptions contains the optional parameters for the PrivateLinkResourcesClient.List method.
+                  description: PrivateLinkResourcesClientListOptions contains the optional parameters for the PrivateLinkResourcesClient.NewListPager method.
                 go: *ref_313
               protocol: {}
             paging: &ref_548
@@ -9000,7 +9000,7 @@ operationGroups:
               language:
                 default: &ref_316
                   name: PrivateLinkResourcesClientListResponse
-                  description: PrivateLinkResourcesClientListResponse contains the response from method PrivateLinkResourcesClient.List.
+                  description: PrivateLinkResourcesClientListResponse contains the response from method PrivateLinkResourcesClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_315
@@ -9170,7 +9170,7 @@ operationGroups:
                 language:
                   default: &ref_320
                     name: SharedPrivateLinkResourcesClientListOptions
-                    description: SharedPrivateLinkResourcesClientListOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.List method.
+                    description: SharedPrivateLinkResourcesClientListOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.NewListPager method.
                   go: *ref_320
                 protocol: {}
               originalParameter: []
@@ -9179,7 +9179,7 @@ operationGroups:
               language:
                 default: &ref_321
                   name: options
-                  description: SharedPrivateLinkResourcesClientListOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.List method.
+                  description: SharedPrivateLinkResourcesClientListOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.NewListPager method.
                 go: *ref_321
               protocol: {}
             paging: &ref_561
@@ -9205,7 +9205,7 @@ operationGroups:
               language:
                 default: &ref_324
                   name: SharedPrivateLinkResourcesClientListResponse
-                  description: SharedPrivateLinkResourcesClientListResponse contains the response from method SharedPrivateLinkResourcesClient.List.
+                  description: SharedPrivateLinkResourcesClientListResponse contains the response from method SharedPrivateLinkResourcesClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_323
@@ -9683,7 +9683,7 @@ operationGroups:
               language:
                 default: &ref_344
                   name: SharedPrivateLinkResourcesClientCreateOrUpdateResponse
-                  description: SharedPrivateLinkResourcesClientCreateOrUpdateResponse contains the response from method SharedPrivateLinkResourcesClient.CreateOrUpdate.
+                  description: SharedPrivateLinkResourcesClientCreateOrUpdateResponse contains the response from method SharedPrivateLinkResourcesClient.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -9904,7 +9904,7 @@ operationGroups:
               language:
                 default: &ref_352
                   name: SharedPrivateLinkResourcesClientDeleteResponse
-                  description: SharedPrivateLinkResourcesClientDeleteResponse contains the response from method SharedPrivateLinkResourcesClient.Delete.
+                  description: SharedPrivateLinkResourcesClientDeleteResponse contains the response from method SharedPrivateLinkResourcesClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_352
@@ -16326,21 +16326,21 @@ testModel:
             - type: armTemplateDeployment
               armTemplate: ./peArmTemplate/Generate_Unique_name_template.json
               armTemplateOutput: |-
-                map[string]interface{}{
+                map[string]any{
                 "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
                 "contentVersion": "1.0.0.0",
-                "outputs":map[string]interface{}{
-                "resourceName":map[string]interface{}{
+                "outputs":map[string]any{
+                "resourceName":map[string]any{
                 "type": "string",
                 "value": "[variables('name').value]",
                 },
                 },
-                "resources":[]interface{}{
+                "resources":[]any{
                 },
-                "variables":map[string]interface{}{
-                "name":map[string]interface{}{
+                "variables":map[string]any{
+                "name":map[string]any{
                 "type": "string",
-                "metadata":map[string]interface{}{
+                "metadata":map[string]any{
                 "description": "Name of the SignalR service.",
                 },
                 "value": "[concat('sw',uniqueString(resourceGroup().id))]",
@@ -22270,6 +22270,7 @@ language:
       - *ref_609
       - *ref_610
       - *ref_611
+    rawJSONAsBytes: false
     responseEnvelopes:
       - *ref_612
       - *ref_613

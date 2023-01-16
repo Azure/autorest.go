@@ -5073,7 +5073,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Get() {
 					AutoUpgradeMinorVersion: to.Ptr(true),
 					ProvisioningState:       to.Ptr("Succeeded"),
 					Publisher:               to.Ptr("Microsoft.Compute"),
-					Settings:                map[string]interface{}{},
+					Settings:                map[string]any{},
 					TypeHandlerVersion:      to.Ptr("1.9"),
 				},
 			}},
@@ -8424,7 +8424,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 								Type:                    to.Ptr("{extension-Type}"),
 								AutoUpgradeMinorVersion: to.Ptr(false),
 								Publisher:               to.Ptr("{extension-Publisher}"),
-								Settings:                map[string]interface{}{},
+								Settings:                map[string]any{},
 								TypeHandlerVersion:      to.Ptr("{handler-version}"),
 							},
 						}},
@@ -8509,7 +8509,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 								Type:                    to.Ptr("{extension-Type}"),
 								AutoUpgradeMinorVersion: to.Ptr(false),
 								Publisher:               to.Ptr("{extension-Publisher}"),
-								Settings:                map[string]interface{}{},
+								Settings:                map[string]any{},
 								TypeHandlerVersion:      to.Ptr("{handler-version}"),
 							},
 						}},
@@ -11195,20 +11195,20 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrU
 			Type:                    to.Ptr("extType"),
 			AutoUpgradeMinorVersion: to.Ptr(true),
 			Publisher:               to.Ptr("extPublisher"),
-			Settings: map[string]interface{}{
+			Settings: map[string]any{
 				"UserName": "xyz@microsoft.com",
-				"items": []interface{}{
-					map[string]interface{}{
+				"items": []any{
+					map[string]any{
 						"name": "text - 2",
 						"type": float64(1),
-						"content": map[string]interface{}{
+						"content": map[string]any{
 							"json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe've included a basic analytics query to get you started. Use the `Edit` button below each section to configure it or add more sections.",
 						},
 					},
-					map[string]interface{}{
+					map[string]any{
 						"name": "query - 2",
 						"type": float64(3),
-						"content": map[string]interface{}{
+						"content": map[string]any{
 							"exportToExcelOptions": "visible",
 							"query":                "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
 							"queryType":            float64(0),
@@ -11218,7 +11218,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrU
 						},
 					},
 				},
-				"styleSettings": map[string]interface{}{},
+				"styleSettings": map[string]any{},
 				"test":          float64(1),
 			},
 			TypeHandlerVersion: to.Ptr("1.2"),
@@ -11237,7 +11237,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrU
 			AutoUpgradeMinorVersion: to.Ptr(true),
 			ProvisioningState:       to.Ptr("Succeeded"),
 			Publisher:               to.Ptr("extPublisher"),
-			Settings: map[string]interface{}{
+			Settings: map[string]any{
 				"UserName": "xyz@microsoft.com",
 			},
 			TypeHandlerVersion: to.Ptr("1.2"),
@@ -11263,7 +11263,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_Update() 
 			Type:                    to.Ptr("extType"),
 			AutoUpgradeMinorVersion: to.Ptr(true),
 			Publisher:               to.Ptr("extPublisher"),
-			Settings: map[string]interface{}{
+			Settings: map[string]any{
 				"UserName": "xyz@microsoft.com",
 			},
 			TypeHandlerVersion: to.Ptr("1.2"),
@@ -11282,7 +11282,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_Update() 
 			AutoUpgradeMinorVersion: to.Ptr(true),
 			ProvisioningState:       to.Ptr("Succeeded"),
 			Publisher:               to.Ptr("extPublisher"),
-			Settings: map[string]interface{}{
+			Settings: map[string]any{
 				"UserName": "xyz@microsoft.com",
 			},
 			TypeHandlerVersion: to.Ptr("1.2"),
@@ -11329,7 +11329,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_Get() {
 			AutoUpgradeMinorVersion: to.Ptr(true),
 			ProvisioningState:       to.Ptr("Succeeded"),
 			Publisher:               to.Ptr("extPublisher"),
-			Settings: map[string]interface{}{
+			Settings: map[string]any{
 				"UserName": "xyz@microsoft.com",
 			},
 			TypeHandlerVersion: to.Ptr("1.2"),
@@ -11364,7 +11364,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_List() {
 					AutoUpgradeMinorVersion: to.Ptr(true),
 					ProvisioningState:       to.Ptr("Succeeded"),
 					Publisher:               to.Ptr("extPublisher"),
-					Settings: map[string]interface{}{
+					Settings: map[string]any{
 						"UserName": "xyz@microsoft.com",
 					},
 					TypeHandlerVersion: to.Ptr("1.2"),
@@ -11379,7 +11379,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_List() {
 					AutoUpgradeMinorVersion: to.Ptr(true),
 					ProvisioningState:       to.Ptr("Succeeded"),
 					Publisher:               to.Ptr("extPublisher1"),
-					Settings: map[string]interface{}{
+					Settings: map[string]any{
 						"UserName": "xyz@microsoft.com",
 					},
 					TypeHandlerVersion: to.Ptr("1.0"),
@@ -11543,7 +11543,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_Get() {
 					AutoUpgradeMinorVersion: to.Ptr(true),
 					ProvisioningState:       to.Ptr("Succeeded"),
 					Publisher:               to.Ptr("Microsoft.Compute"),
-					Settings:                map[string]interface{}{},
+					Settings:                map[string]any{},
 					TypeHandlerVersion:      to.Ptr("1.9"),
 				},
 			}},

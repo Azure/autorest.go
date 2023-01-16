@@ -206,8 +206,8 @@ func ExampleOnlineEndpointsClient_BeginUpdate() {
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),

@@ -114,8 +114,8 @@ func ExampleJobsClient_NewListPager_listAutoMlJob() {
 		// 				Resources: &armmachinelearningservices.ResourceConfiguration{
 		// 					InstanceCount: to.Ptr[int32](1),
 		// 					InstanceType: to.Ptr("string"),
-		// 					Properties: map[string]interface{}{
-		// 						"string": map[string]interface{}{
+		// 					Properties: map[string]any{
+		// 						"string": map[string]any{
 		// 							"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 		// 						},
 		// 					},
@@ -248,14 +248,14 @@ func ExampleJobsClient_NewListPager_listCommandJob() {
 		// 						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 		// 					},
 		// 				},
-		// 				Parameters: map[string]interface{}{
+		// 				Parameters: map[string]any{
 		// 					"string": "string",
 		// 				},
 		// 				Resources: &armmachinelearningservices.ResourceConfiguration{
 		// 					InstanceCount: to.Ptr[int32](1),
 		// 					InstanceType: to.Ptr("string"),
-		// 					Properties: map[string]interface{}{
-		// 						"string": map[string]interface{}{
+		// 					Properties: map[string]any{
+		// 						"string": map[string]any{
 		// 							"7aad5998-6c83-4ca9-b50a-b44dfc43f420": nil,
 		// 						},
 		// 					},
@@ -348,7 +348,7 @@ func ExampleJobsClient_NewListPager_listPipelineJob() {
 		// 						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 		// 					},
 		// 				},
-		// 				Settings: map[string]interface{}{
+		// 				Settings: map[string]any{
 		// 				},
 		// 			},
 		// 	}},
@@ -441,8 +441,8 @@ func ExampleJobsClient_NewListPager_listSweepJob() {
 		// 				SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 		// 					SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 		// 				},
-		// 				SearchSpace: map[string]interface{}{
-		// 					"string":map[string]interface{}{
+		// 				SearchSpace: map[string]any{
+		// 					"string":map[string]any{
 		// 					},
 		// 				},
 		// 				Trial: &armmachinelearningservices.TrialComponent{
@@ -459,8 +459,8 @@ func ExampleJobsClient_NewListPager_listSweepJob() {
 		// 					Resources: &armmachinelearningservices.ResourceConfiguration{
 		// 						InstanceCount: to.Ptr[int32](1),
 		// 						InstanceType: to.Ptr("string"),
-		// 						Properties: map[string]interface{}{
-		// 							"string": map[string]interface{}{
+		// 						Properties: map[string]any{
+		// 							"string": map[string]any{
 		// 								"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 		// 							},
 		// 						},
@@ -575,8 +575,8 @@ func ExampleJobsClient_Get_getAutoMlJob() {
 	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 			InstanceCount: to.Ptr[int32](1),
 	// 			InstanceType: to.Ptr("string"),
-	// 			Properties: map[string]interface{}{
-	// 				"string": map[string]interface{}{
+	// 			Properties: map[string]any{
+	// 				"string": map[string]any{
 	// 					"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 	// 				},
 	// 			},
@@ -695,14 +695,14 @@ func ExampleJobsClient_Get_getCommandJob() {
 	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 	// 			},
 	// 		},
-	// 		Parameters: map[string]interface{}{
+	// 		Parameters: map[string]any{
 	// 			"string": "string",
 	// 		},
 	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 			InstanceCount: to.Ptr[int32](1),
 	// 			InstanceType: to.Ptr("string"),
-	// 			Properties: map[string]interface{}{
-	// 				"string": map[string]interface{}{
+	// 			Properties: map[string]any{
+	// 				"string": map[string]any{
 	// 					"8385cf05-78c0-41ef-b31d-36796a678e19": nil,
 	// 				},
 	// 			},
@@ -781,7 +781,7 @@ func ExampleJobsClient_Get_getPipelineJob() {
 	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 	// 			},
 	// 		},
-	// 		Settings: map[string]interface{}{
+	// 		Settings: map[string]any{
 	// 		},
 	// 	},
 	// }
@@ -860,8 +860,8 @@ func ExampleJobsClient_Get_getSweepJob() {
 	// 		SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 	// 			SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 	// 		},
-	// 		SearchSpace: map[string]interface{}{
-	// 			"string":map[string]interface{}{
+	// 		SearchSpace: map[string]any{
+	// 			"string":map[string]any{
 	// 			},
 	// 		},
 	// 		Trial: &armmachinelearningservices.TrialComponent{
@@ -878,8 +878,8 @@ func ExampleJobsClient_Get_getSweepJob() {
 	// 			Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 				InstanceCount: to.Ptr[int32](1),
 	// 				InstanceType: to.Ptr("string"),
-	// 				Properties: map[string]interface{}{
-	// 					"string": map[string]interface{}{
+	// 				Properties: map[string]any{
+	// 					"string": map[string]any{
 	// 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 	// 					},
 	// 				},
@@ -950,8 +950,8 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateAutoMlJob() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 					},
 				},
@@ -1050,8 +1050,8 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateAutoMlJob() {
 	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 			InstanceCount: to.Ptr[int32](1),
 	// 			InstanceType: to.Ptr("string"),
-	// 			Properties: map[string]interface{}{
-	// 				"string": map[string]interface{}{
+	// 			Properties: map[string]any{
+	// 				"string": map[string]any{
 	// 					"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 	// 				},
 	// 			},
@@ -1152,8 +1152,8 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateCommandJob() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 					},
 				},
@@ -1236,14 +1236,14 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateCommandJob() {
 	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 	// 			},
 	// 		},
-	// 		Parameters: map[string]interface{}{
+	// 		Parameters: map[string]any{
 	// 			"string": "string",
 	// 		},
 	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 			InstanceCount: to.Ptr[int32](1),
 	// 			InstanceType: to.Ptr("string"),
-	// 			Properties: map[string]interface{}{
-	// 				"string": map[string]interface{}{
+	// 			Properties: map[string]any{
+	// 				"string": map[string]any{
 	// 					"a0847709-f5aa-4561-8ba5-d915d403fdcf": nil,
 	// 				},
 	// 			},
@@ -1301,7 +1301,7 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdatePipelineJob() {
 					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 				},
 			},
-			Settings: map[string]interface{}{},
+			Settings: map[string]any{},
 		},
 	}, nil)
 	if err != nil {
@@ -1362,7 +1362,7 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdatePipelineJob() {
 	// 				JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 	// 			},
 	// 		},
-	// 		Settings: map[string]interface{}{
+	// 		Settings: map[string]any{
 	// 		},
 	// 	},
 	// }
@@ -1420,8 +1420,8 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateSweepJob() {
 			SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 				SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 			},
-			SearchSpace: map[string]interface{}{
-				"string": map[string]interface{}{},
+			SearchSpace: map[string]any{
+				"string": map[string]any{},
 			},
 			Trial: &armmachinelearningservices.TrialComponent{
 				CodeID:  to.Ptr("string"),
@@ -1437,8 +1437,8 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateSweepJob() {
 				Resources: &armmachinelearningservices.ResourceConfiguration{
 					InstanceCount: to.Ptr[int32](1),
 					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
+					Properties: map[string]any{
+						"string": map[string]any{
 							"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 						},
 					},
@@ -1507,8 +1507,8 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateSweepJob() {
 	// 		SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 	// 			SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 	// 		},
-	// 		SearchSpace: map[string]interface{}{
-	// 			"string":map[string]interface{}{
+	// 		SearchSpace: map[string]any{
+	// 			"string":map[string]any{
 	// 			},
 	// 		},
 	// 		Trial: &armmachinelearningservices.TrialComponent{
@@ -1525,8 +1525,8 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateSweepJob() {
 	// 			Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 				InstanceCount: to.Ptr[int32](1),
 	// 				InstanceType: to.Ptr("string"),
-	// 				Properties: map[string]interface{}{
-	// 					"string": map[string]interface{}{
+	// 				Properties: map[string]any{
+	// 					"string": map[string]any{
 	// 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 	// 					},
 	// 				},

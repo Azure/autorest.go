@@ -169,7 +169,7 @@ func ExampleVirtualMachineScaleSetVMsClient_Get() {
 	// 				AutoUpgradeMinorVersion: to.Ptr(true),
 	// 				ProvisioningState: to.Ptr("Succeeded"),
 	// 				Publisher: to.Ptr("Microsoft.Compute"),
-	// 				Settings: map[string]interface{}{
+	// 				Settings: map[string]any{
 	// 				},
 	// 				TypeHandlerVersion: to.Ptr("1.9"),
 	// 			},

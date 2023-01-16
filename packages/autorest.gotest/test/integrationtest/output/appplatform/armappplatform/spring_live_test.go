@@ -10,6 +10,7 @@ package armappplatform_test
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -81,23 +82,23 @@ func TestSpringTestSuite(t *testing.T) {
 func (testsuite *SpringTestSuite) Prepare() {
 	var err error
 	// From step Generate_Unique_ServiceName
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"outputs": map[string]interface{}{
-			"serviceName": map[string]interface{}{
+		"outputs": map[string]any{
+			"serviceName": map[string]any{
 				"type":  "string",
 				"value": "[substring(variables('serviceNameLong'), 0, 12)]",
 			},
 		},
-		"parameters": map[string]interface{}{
-			"serviceNamePrefix": map[string]interface{}{
+		"parameters": map[string]any{
+			"serviceNamePrefix": map[string]any{
 				"type":         "string",
 				"defaultValue": "asc-",
 			},
 		},
-		"resources": []interface{}{},
-		"variables": map[string]interface{}{
+		"resources": []any{},
+		"variables": map[string]any{
 			"serviceNameLong": "[concat(parameters('serviceNamePrefix'), uniqueString(resourceGroup().id))]",
 		},
 	}
@@ -112,37 +113,37 @@ func (testsuite *SpringTestSuite) Prepare() {
 	testsuite.serviceName = deploymentExtend.Properties.Outputs.(map[string]interface{})["serviceName"].(map[string]interface{})["value"].(string)
 
 	// From step Create_Application_Insight_Instance
-	template = map[string]interface{}{
+	template = map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"outputs": map[string]interface{}{
-			"insightsInstrumentationKey": map[string]interface{}{
+		"outputs": map[string]any{
+			"insightsInstrumentationKey": map[string]any{
 				"type":  "string",
 				"value": "[reference(resourceId('Microsoft.Insights/components', parameters('name')), '2014-04-01').InstrumentationKey]",
 			},
 		},
-		"parameters": map[string]interface{}{
-			"name": map[string]interface{}{
+		"parameters": map[string]any{
+			"name": map[string]any{
 				"type":         "string",
 				"defaultValue": "asc-api-ai-instance",
-				"metadata": map[string]interface{}{
+				"metadata": map[string]any{
 					"description": "Name of Application Insights resource.",
 				},
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "[parameters('name')]",
 				"type":       "microsoft.insights/components",
 				"apiVersion": "2014-04-01",
 				"location":   "eastus",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"ApplicationId":    "[parameters('name')]",
 					"Application_Type": "web",
 					"Flow_Type":        "Redfield",
 					"Request_Source":   "CustomDeployment",
 				},
-				"tags": map[string]interface{}{},
+				"tags": map[string]any{},
 			},
 		},
 	}
@@ -157,49 +158,49 @@ func (testsuite *SpringTestSuite) Prepare() {
 	testsuite.insightsInstrumentationKey = deploymentExtend.Properties.Outputs.(map[string]interface{})["insightsInstrumentationKey"].(map[string]interface{})["value"].(string)
 
 	// From step Add_Dns_Cname_Record
-	template = map[string]interface{}{
+	template = map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"parameters": map[string]interface{}{
-			"userAssignedIdentity": map[string]interface{}{
+		"parameters": map[string]any{
+			"userAssignedIdentity": map[string]any{
 				"type":         "string",
 				"defaultValue": testsuite.userAssignedIdentity,
 			},
-			"utcValue": map[string]interface{}{
+			"utcValue": map[string]any{
 				"type":         "string",
 				"defaultValue": "[utcNow()]",
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "Add_Dns_Cname_Record",
 				"type":       "Microsoft.Resources/deploymentScripts",
 				"apiVersion": "2020-10-01",
-				"identity": map[string]interface{}{
+				"identity": map[string]any{
 					"type": "UserAssigned",
-					"userAssignedIdentities": map[string]interface{}{
-						"[parameters('userAssignedIdentity')]": map[string]interface{}{},
+					"userAssignedIdentities": map[string]any{
+						"[parameters('userAssignedIdentity')]": map[string]any{},
 					},
 				},
 				"kind":     "AzurePowerShell",
 				"location": "[resourceGroup().location]",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"azPowerShellVersion": "6.2",
 					"cleanupPreference":   "OnSuccess",
-					"environmentVariables": []interface{}{
-						map[string]interface{}{
+					"environmentVariables": []any{
+						map[string]any{
 							"name":  "resourceGroupName",
 							"value": testsuite.dnsResourceGroup,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsZoneName",
 							"value": testsuite.customDomainName,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsCname",
 							"value": testsuite.dnsCname,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsCnameAlias",
 							"value": testsuite.serviceName + testsuite.ascDomainName,
 						},
@@ -228,6 +229,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	var uploadUrl string
 	var err error
 	// From step Services_CheckNameAvailability
+	fmt.Println("Call operation: Services_CheckNameAvailability")
 	servicesClient, err := armappplatform.NewServicesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	_, err = servicesClient.CheckNameAvailability(testsuite.ctx, testsuite.location, armappplatform.NameAvailabilityParameters{
@@ -237,6 +239,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Services_CreateOrUpdate
+	fmt.Println("Call operation: Services_CreateOrUpdate")
 	servicesClientCreateOrUpdateResponsePoller, err := servicesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ServiceResource{
 		Location: to.Ptr(testsuite.location),
 		Tags: map[string]*string{
@@ -253,10 +256,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Services_Get
+	fmt.Println("Call operation: Services_Get")
 	_, err = servicesClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_Update
+	fmt.Println("Call operation: Services_Update")
 	servicesClientUpdateResponsePoller, err := servicesClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ServiceResource{
 		Location: to.Ptr(testsuite.location),
 		Tags: map[string]*string{
@@ -274,24 +279,29 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Services_DisableTestEndpoint
+	fmt.Println("Call operation: Services_DisableTestEndpoint")
 	_, err = servicesClient.DisableTestEndpoint(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_EnableTestEndpoint
+	fmt.Println("Call operation: Services_EnableTestEndpoint")
 	_, err = servicesClient.EnableTestEndpoint(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_RegenerateTestKey
+	fmt.Println("Call operation: Services_RegenerateTestKey")
 	_, err = servicesClient.RegenerateTestKey(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.RegenerateTestKeyRequestPayload{
 		KeyType: to.Ptr(armappplatform.TestKeyTypePrimary),
 	}, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_ListTestKeys
+	fmt.Println("Call operation: Services_ListTestKeys")
 	_, err = servicesClient.ListTestKeys(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_CreateOrUpdate
+	fmt.Println("Call operation: Certificates_CreateOrUpdate")
 	certificatesClient, err := armappplatform.NewCertificatesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "asc-certificate", armappplatform.CertificateResource{
@@ -305,10 +315,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_Get
+	fmt.Println("Call operation: Certificates_Get")
 	_, err = certificatesClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "asc-certificate", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_List
+	fmt.Println("Call operation: Certificates_List")
 	certificatesClientNewListPager := certificatesClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, nil)
 	for certificatesClientNewListPager.More() {
 		_, err := certificatesClientNewListPager.NextPage(testsuite.ctx)
@@ -317,6 +329,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step ConfigServers_Validate
+	fmt.Println("Call operation: ConfigServers_Validate")
 	configServersClient, err := armappplatform.NewConfigServersClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	configServersClientValidateResponsePoller, err := configServersClient.BeginValidate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ConfigServerSettings{
@@ -332,6 +345,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step ConfigServers_UpdatePut
+	fmt.Println("Call operation: ConfigServers_UpdatePut")
 	configServersClientUpdatePutResponsePoller, err := configServersClient.BeginUpdatePut(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ConfigServerResource{
 		Properties: &armappplatform.ConfigServerProperties{
 			ConfigServer: &armappplatform.ConfigServerSettings{
@@ -349,6 +363,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step ConfigServers_UpdatePatch
+	fmt.Println("Call operation: ConfigServers_UpdatePatch")
 	configServersClientUpdatePatchResponsePoller, err := configServersClient.BeginUpdatePatch(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ConfigServerResource{
 		Properties: &armappplatform.ConfigServerProperties{
 			ConfigServer: &armappplatform.ConfigServerSettings{
@@ -363,10 +378,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step ConfigServers_Get
+	fmt.Println("Call operation: ConfigServers_Get")
 	_, err = configServersClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step MonitoringSettings_UpdatePut
+	fmt.Println("Call operation: MonitoringSettings_UpdatePut")
 	monitoringSettingsClient, err := armappplatform.NewMonitoringSettingsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	monitoringSettingsClientUpdatePutResponsePoller, err := monitoringSettingsClient.BeginUpdatePut(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.MonitoringSettingResource{
@@ -381,10 +398,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step MonitoringSettings_Get
+	fmt.Println("Call operation: MonitoringSettings_Get")
 	_, err = monitoringSettingsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step MonitoringSettings_UpdatePatch
+	fmt.Println("Call operation: MonitoringSettings_UpdatePatch")
 	monitoringSettingsClientUpdatePatchResponsePoller, err := monitoringSettingsClient.BeginUpdatePatch(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.MonitoringSettingResource{
 		Properties: &armappplatform.MonitoringSettingProperties{
 			AppInsightsInstrumentationKey: to.Ptr(testsuite.subscriptionId),
@@ -397,6 +416,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Create
+	fmt.Println("Call operation: Apps_CreateOrUpdate")
 	appsClient, err := armappplatform.NewAppsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	appsClientCreateOrUpdateResponsePoller, err := appsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
@@ -414,10 +434,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Get
+	fmt.Println("Call operation: Apps_Get")
 	_, err = appsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, &armappplatform.AppsClientGetOptions{SyncStatus: nil})
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_CreateOrUpdate_Default
+	fmt.Println("Call operation: Deployments_CreateOrUpdate")
 	deploymentsClient, err := armappplatform.NewDeploymentsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "default", armappplatform.DeploymentResource{
@@ -449,10 +471,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Get
+	fmt.Println("Call operation: Deployments_Get")
 	_, err = deploymentsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "default", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Update_ActiveDeployment
+	fmt.Println("Call operation: Apps_Update")
 	appsClientUpdateResponsePoller, err := appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
 			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
@@ -479,6 +503,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Update_Disk
+	fmt.Println("Call operation: Apps_Update")
 	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
 			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
@@ -505,6 +530,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Apps_List
+	fmt.Println("Call operation: Apps_List")
 	appsClientNewListPager := appsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, nil)
 	for appsClientNewListPager.More() {
 		_, err := appsClientNewListPager.NextPage(testsuite.ctx)
@@ -513,11 +539,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Bindings_Create
+	fmt.Println("Call operation: Bindings_CreateOrUpdate")
 	bindingsClient, err := armappplatform.NewBindingsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"databaseName": "mysqldb",
 				"username":     testsuite.mysqlKey,
 			},
@@ -530,10 +557,11 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_Update
+	fmt.Println("Call operation: Bindings_Update")
 	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
-				"anotherLayer": map[string]interface{}{
+			BindingParameters: map[string]any{
+				"anotherLayer": map[string]any{
 					"databaseName": "mysqldb2",
 					"username":     testsuite.mysqlKey,
 				},
@@ -546,10 +574,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_Get
+	fmt.Println("Call operation: Bindings_Get")
 	_, err = bindingsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_List
+	fmt.Println("Call operation: Bindings_List")
 	bindingsClientNewListPager := bindingsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
 	for bindingsClientNewListPager.More() {
 		_, err := bindingsClientNewListPager.NextPage(testsuite.ctx)
@@ -558,18 +588,21 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Bindings_Delete
+	fmt.Println("Call operation: Bindings_Delete")
 	bindingsClientDeleteResponsePoller, err := bindingsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, bindingsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_ValidateDomain
+	fmt.Println("Call operation: Apps_ValidateDomain")
 	_, err = appsClient.ValidateDomain(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.CustomDomainValidatePayload{
 		Name: to.Ptr(testsuite.customDomainName),
 	}, nil)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_CreateOrUpdate
+	fmt.Println("Call operation: CustomDomains_CreateOrUpdate")
 	customDomainsClient, err := armappplatform.NewCustomDomainsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, armappplatform.CustomDomainResource{
@@ -582,6 +615,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Update
+	fmt.Println("Call operation: CustomDomains_Update")
 	customDomainsClientUpdateResponsePoller, err := customDomainsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName: to.Ptr("asc-certificate"),
@@ -592,10 +626,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Get
+	fmt.Println("Call operation: CustomDomains_Get")
 	_, err = customDomainsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_List
+	fmt.Println("Call operation: CustomDomains_List")
 	customDomainsClientNewListPager := customDomainsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
 	for customDomainsClientNewListPager.More() {
 		_, err := customDomainsClientNewListPager.NextPage(testsuite.ctx)
@@ -604,47 +640,48 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Apps_GetResourceUploadUrl
+	fmt.Println("Call operation: Apps_GetResourceUploadURL")
 	appsClientGetResourceUploadURLResponse, err := appsClient.GetResourceUploadURL(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
 	testsuite.Require().NoError(err)
 	relativePath = *appsClientGetResourceUploadURLResponse.RelativePath
 	uploadUrl = *appsClientGetResourceUploadURLResponse.UploadURL
 
 	// From step Upload_File
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"parameters": map[string]interface{}{
-			"userAssignedIdentity": map[string]interface{}{
+		"parameters": map[string]any{
+			"userAssignedIdentity": map[string]any{
 				"type":         "string",
 				"defaultValue": testsuite.userAssignedIdentity,
 			},
-			"utcValue": map[string]interface{}{
+			"utcValue": map[string]any{
 				"type":         "string",
 				"defaultValue": "[utcNow()]",
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "Upload_File",
 				"type":       "Microsoft.Resources/deploymentScripts",
 				"apiVersion": "2020-10-01",
-				"identity": map[string]interface{}{
+				"identity": map[string]any{
 					"type": "UserAssigned",
-					"userAssignedIdentities": map[string]interface{}{
-						"[parameters('userAssignedIdentity')]": map[string]interface{}{},
+					"userAssignedIdentities": map[string]any{
+						"[parameters('userAssignedIdentity')]": map[string]any{},
 					},
 				},
 				"kind":     "AzurePowerShell",
 				"location": "[resourceGroup().location]",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"azPowerShellVersion": "6.2",
 					"cleanupPreference":   "OnSuccess",
-					"environmentVariables": []interface{}{
-						map[string]interface{}{
+					"environmentVariables": []any{
+						map[string]any{
 							"name":        "uploadUrl",
 							"secureValue": uploadUrl,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":        "blobUrl",
 							"secureValue": testsuite.blobUrl,
 						},
@@ -667,6 +704,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_CreateOrUpdate
+	fmt.Println("Call operation: Deployments_CreateOrUpdate")
 	deploymentsClientCreateOrUpdateResponsePoller, err = deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
@@ -696,6 +734,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Update
+	fmt.Println("Call operation: Apps_Update")
 	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
 			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
@@ -722,28 +761,33 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Restart
+	fmt.Println("Call operation: Deployments_Restart")
 	deploymentsClientRestartResponsePoller, err := deploymentsClient.BeginRestart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientRestartResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Stop
+	fmt.Println("Call operation: Deployments_Stop")
 	deploymentsClientStopResponsePoller, err := deploymentsClient.BeginStop(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientStopResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Start
+	fmt.Println("Call operation: Deployments_Start")
 	deploymentsClientStartResponsePoller, err := deploymentsClient.BeginStart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientStartResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_GetLogFileUrl
+	fmt.Println("Call operation: Deployments_GetLogFileURL")
 	_, err = deploymentsClient.GetLogFileURL(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_List
+	fmt.Println("Call operation: Deployments_List")
 	deploymentsClientNewListPager := deploymentsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, &armappplatform.DeploymentsClientListOptions{Version: []string{}})
 	for deploymentsClientNewListPager.More() {
 		_, err := deploymentsClientNewListPager.NextPage(testsuite.ctx)
@@ -752,6 +796,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Deployments_ListForCluster
+	fmt.Println("Call operation: Deployments_ListForCluster")
 	deploymentsClientNewListForClusterPager := deploymentsClient.NewListForClusterPager(testsuite.resourceGroupName, testsuite.serviceName, &armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
 	for deploymentsClientNewListForClusterPager.More() {
 		_, err := deploymentsClientNewListForClusterPager.NextPage(testsuite.ctx)
@@ -760,6 +805,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Services_List
+	fmt.Println("Call operation: Services_List")
 	servicesClientNewListPager := servicesClient.NewListPager(testsuite.resourceGroupName, nil)
 	for servicesClientNewListPager.More() {
 		_, err := servicesClientNewListPager.NextPage(testsuite.ctx)
@@ -768,6 +814,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Services_ListBySubscription
+	fmt.Println("Call operation: Services_ListBySubscription")
 	servicesClientNewListBySubscriptionPager := servicesClient.NewListBySubscriptionPager(nil)
 	for servicesClientNewListBySubscriptionPager.More() {
 		_, err := servicesClientNewListBySubscriptionPager.NextPage(testsuite.ctx)
@@ -776,36 +823,42 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Deployments_Delete
+	fmt.Println("Call operation: Deployments_Delete")
 	deploymentsClientDeleteResponsePoller, err := deploymentsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "blue", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Delete
+	fmt.Println("Call operation: CustomDomains_Delete")
 	customDomainsClientDeleteResponsePoller, err := customDomainsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, customDomainsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Delete
+	fmt.Println("Call operation: Apps_Delete")
 	appsClientDeleteResponsePoller, err := appsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "app01", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, appsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_Delete
+	fmt.Println("Call operation: Certificates_Delete")
 	certificatesClientDeleteResponsePoller, err := certificatesClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "asc-certificate", nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, certificatesClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Services_Delete
+	fmt.Println("Call operation: Services_Delete")
 	servicesClientDeleteResponsePoller, err := servicesClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, servicesClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Skus_List
+	fmt.Println("Call operation: SKUs_List")
 	sKUsClient, err := armappplatform.NewSKUsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	sKUsClientNewListPager := sKUsClient.NewListPager(nil)
@@ -816,6 +869,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Operations_List
+	fmt.Println("Call operation: Operations_List")
 	operationsClient, err := armappplatform.NewOperationsClient(testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	operationsClientNewListPager := operationsClient.NewListPager(nil)
@@ -829,45 +883,45 @@ func (testsuite *SpringTestSuite) TestSpring() {
 func (testsuite *SpringTestSuite) Cleanup() {
 	var err error
 	// From step delete_cname_record
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"parameters": map[string]interface{}{
-			"userAssignedIdentity": map[string]interface{}{
+		"parameters": map[string]any{
+			"userAssignedIdentity": map[string]any{
 				"type":         "string",
 				"defaultValue": testsuite.userAssignedIdentity,
 			},
-			"utcValue": map[string]interface{}{
+			"utcValue": map[string]any{
 				"type":         "string",
 				"defaultValue": "[utcNow()]",
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "delete_cname_record",
 				"type":       "Microsoft.Resources/deploymentScripts",
 				"apiVersion": "2020-10-01",
-				"identity": map[string]interface{}{
+				"identity": map[string]any{
 					"type": "UserAssigned",
-					"userAssignedIdentities": map[string]interface{}{
-						"[parameters('userAssignedIdentity')]": map[string]interface{}{},
+					"userAssignedIdentities": map[string]any{
+						"[parameters('userAssignedIdentity')]": map[string]any{},
 					},
 				},
 				"kind":     "AzurePowerShell",
 				"location": "[resourceGroup().location]",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"azPowerShellVersion": "6.2",
 					"cleanupPreference":   "OnSuccess",
-					"environmentVariables": []interface{}{
-						map[string]interface{}{
+					"environmentVariables": []any{
+						map[string]any{
 							"name":  "resourceGroupName",
 							"value": testsuite.dnsResourceGroup,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsCname",
 							"value": testsuite.dnsCname,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsZoneName",
 							"value": testsuite.customDomainName,
 						},

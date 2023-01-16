@@ -100,8 +100,8 @@ func ExampleBatchDeploymentsClient_NewListPager() {
 		// 				Resources: &armmachinelearningservices.ResourceConfiguration{
 		// 					InstanceCount: to.Ptr[int32](1),
 		// 					InstanceType: to.Ptr("string"),
-		// 					Properties: map[string]interface{}{
-		// 						"string": map[string]interface{}{
+		// 					Properties: map[string]any{
+		// 						"string": map[string]any{
 		// 							"a3c13e2e-a213-4cac-9f5a-b49966906ad6": nil,
 		// 						},
 		// 					},
@@ -217,8 +217,8 @@ func ExampleBatchDeploymentsClient_Get() {
 	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 			InstanceCount: to.Ptr[int32](1),
 	// 			InstanceType: to.Ptr("string"),
-	// 			Properties: map[string]interface{}{
-	// 				"string": map[string]interface{}{
+	// 			Properties: map[string]any{
+	// 				"string": map[string]any{
 	// 					"843c2bb4-e5f1-4267-98c8-ba22a99dbb00": nil,
 	// 				},
 	// 			},
@@ -252,8 +252,8 @@ func ExampleBatchDeploymentsClient_BeginUpdate() {
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),
@@ -361,8 +361,8 @@ func ExampleBatchDeploymentsClient_BeginUpdate() {
 	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 			InstanceCount: to.Ptr[int32](1),
 	// 			InstanceType: to.Ptr("string"),
-	// 			Properties: map[string]interface{}{
-	// 				"string": map[string]interface{}{
+	// 			Properties: map[string]any{
+	// 				"string": map[string]any{
 	// 					"1e5e1cf9-b0ea-4cf6-9764-e750bf85c10a": nil,
 	// 				},
 	// 			},
@@ -430,8 +430,8 @@ func ExampleBatchDeploymentsClient_BeginCreateOrUpdate() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"cd3c37dc-2876-4ca4-8a54-21bd7619724a": nil,
 					},
 				},
@@ -514,8 +514,8 @@ func ExampleBatchDeploymentsClient_BeginCreateOrUpdate() {
 	// 		Resources: &armmachinelearningservices.ResourceConfiguration{
 	// 			InstanceCount: to.Ptr[int32](1),
 	// 			InstanceType: to.Ptr("string"),
-	// 			Properties: map[string]interface{}{
-	// 				"string": map[string]interface{}{
+	// 			Properties: map[string]any{
+	// 				"string": map[string]any{
 	// 					"4939850d-8eae-4343-8566-0826259a2ad1": nil,
 	// 				},
 	// 			},

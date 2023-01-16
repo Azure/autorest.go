@@ -1300,7 +1300,7 @@ schemas:
           name: any
           description: Anything
         go:
-          name: interface{}
+          name: any
           description: Anything
       protocol: {}
   dateTimes:
@@ -3544,7 +3544,7 @@ schemas:
           name: ArrayOfGet4ItemsItem
           description: Array of Get4ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get4ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -3558,7 +3558,7 @@ schemas:
           name: ArrayOfGet5ItemsItem
           description: Array of Get5ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get5ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -3573,7 +3573,7 @@ schemas:
           name: ArrayOfGet0ItemsItem
           description: Array of Get0ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get0ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -3587,7 +3587,7 @@ schemas:
           name: ArrayOfGet1ItemsItem
           description: Array of Get1ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get1ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -3601,7 +3601,7 @@ schemas:
           name: ArrayOfGet2ItemsItem
           description: Array of Get2ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get2ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -3615,7 +3615,7 @@ schemas:
           name: ArrayOfGet3ItemsItem
           description: Array of Get3ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get3ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -4560,7 +4560,7 @@ operationGroups:
                     language:
                       default: &ref_160
                         name: ExtensionsClientListByFarmBeatsOptions
-                        description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the ExtensionsClient.ListByFarmBeats method.
+                        description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the ExtensionsClient.NewListByFarmBeatsPager method.
                       go: *ref_160
                     protocol: {}
                   originalParameter:
@@ -4621,7 +4621,7 @@ operationGroups:
                   language:
                     default: &ref_165
                       name: options
-                      description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the ExtensionsClient.ListByFarmBeats method.
+                      description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the ExtensionsClient.NewListByFarmBeatsPager method.
                     go: *ref_165
                   protocol: {}
                 serializedName: extensionIds
@@ -4771,7 +4771,7 @@ operationGroups:
               language:
                 default: &ref_174
                   name: ExtensionsClientListByFarmBeatsResponse
-                  description: ExtensionsClientListByFarmBeatsResponse contains the response from method ExtensionsClient.ListByFarmBeats.
+                  description: ExtensionsClientListByFarmBeatsResponse contains the response from method ExtensionsClient.NewListByFarmBeatsPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_173
@@ -4815,7 +4815,7 @@ operationGroups:
                     language:
                       default: &ref_176
                         name: FarmBeatsExtensionsClientListOptions
-                        description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the FarmBeatsExtensionsClient.List method.
+                        description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the FarmBeatsExtensionsClient.NewListPager method.
                       go: *ref_176
                     protocol: {}
                   originalParameter:
@@ -4898,7 +4898,7 @@ operationGroups:
                   language:
                     default: &ref_182
                       name: options
-                      description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the FarmBeatsExtensionsClient.List method.
+                      description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the FarmBeatsExtensionsClient.NewListPager method.
                     go: *ref_182
                   protocol: {}
                 serializedName: farmBeatsExtensionIds
@@ -5231,7 +5231,7 @@ operationGroups:
               language:
                 default: &ref_190
                   name: FarmBeatsExtensionsClientListResponse
-                  description: FarmBeatsExtensionsClientListResponse contains the response from method FarmBeatsExtensionsClient.List.
+                  description: FarmBeatsExtensionsClientListResponse contains the response from method FarmBeatsExtensionsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_189
@@ -6350,7 +6350,7 @@ operationGroups:
               language:
                 default: &ref_225
                   name: FarmBeatsModelsClientUpdateResponse
-                  description: FarmBeatsModelsClientUpdateResponse contains the response from method FarmBeatsModelsClient.Update.
+                  description: FarmBeatsModelsClientUpdateResponse contains the response from method FarmBeatsModelsClient.BeginUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -6548,7 +6548,7 @@ operationGroups:
                     language:
                       default: &ref_231
                         name: FarmBeatsModelsClientListBySubscriptionOptions
-                        description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the FarmBeatsModelsClient.ListBySubscription method.
+                        description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the FarmBeatsModelsClient.NewListBySubscriptionPager method.
                       go: *ref_231
                     protocol: {}
                   originalParameter:
@@ -6574,7 +6574,7 @@ operationGroups:
                   language:
                     default: &ref_235
                       name: options
-                      description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the FarmBeatsModelsClient.ListBySubscription method.
+                      description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the FarmBeatsModelsClient.NewListBySubscriptionPager method.
                     go: *ref_235
                   protocol: {}
                 serializedName: $maxPageSize
@@ -6718,7 +6718,7 @@ operationGroups:
               language:
                 default: &ref_240
                   name: FarmBeatsModelsClientListBySubscriptionResponse
-                  description: FarmBeatsModelsClientListBySubscriptionResponse contains the response from method FarmBeatsModelsClient.ListBySubscription.
+                  description: FarmBeatsModelsClientListBySubscriptionResponse contains the response from method FarmBeatsModelsClient.NewListBySubscriptionPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_239
@@ -6747,7 +6747,7 @@ operationGroups:
                     language:
                       default: &ref_241
                         name: FarmBeatsModelsClientListByResourceGroupOptions
-                        description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the FarmBeatsModelsClient.ListByResourceGroup method.
+                        description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the FarmBeatsModelsClient.NewListByResourceGroupPager method.
                       go: *ref_241
                     protocol: {}
                   originalParameter:
@@ -6773,7 +6773,7 @@ operationGroups:
                   language:
                     default: &ref_244
                       name: options
-                      description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the FarmBeatsModelsClient.ListByResourceGroup method.
+                      description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the FarmBeatsModelsClient.NewListByResourceGroupPager method.
                     go: *ref_244
                   protocol: {}
                 serializedName: $maxPageSize
@@ -6935,7 +6935,7 @@ operationGroups:
               language:
                 default: &ref_249
                   name: FarmBeatsModelsClientListByResourceGroupResponse
-                  description: FarmBeatsModelsClientListByResourceGroupResponse contains the response from method FarmBeatsModelsClient.ListByResourceGroup.
+                  description: FarmBeatsModelsClientListByResourceGroupResponse contains the response from method FarmBeatsModelsClient.NewListByResourceGroupPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_248
@@ -7503,7 +7503,7 @@ operationGroups:
                 language:
                   default: &ref_270
                     name: OperationsClientListOptions
-                    description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                    description: OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
                   go: *ref_270
                 protocol: {}
               originalParameter: []
@@ -7512,7 +7512,7 @@ operationGroups:
               language:
                 default: &ref_271
                   name: options
-                  description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                  description: OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
                 go: *ref_271
               protocol: {}
             paging:
@@ -7538,7 +7538,7 @@ operationGroups:
               language:
                 default: &ref_274
                   name: OperationsClientListResponse
-                  description: OperationsClientListResponse contains the response from method OperationsClient.List.
+                  description: OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_273
@@ -8240,7 +8240,7 @@ operationGroups:
               language:
                 default: &ref_300
                   name: PrivateEndpointConnectionsClientDeleteResponse
-                  description: PrivateEndpointConnectionsClientDeleteResponse contains the response from method PrivateEndpointConnectionsClient.Delete.
+                  description: PrivateEndpointConnectionsClientDeleteResponse contains the response from method PrivateEndpointConnectionsClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_300
@@ -8407,7 +8407,7 @@ operationGroups:
                 language:
                   default: &ref_304
                     name: PrivateEndpointConnectionsClientListByResourceOptions
-                    description: PrivateEndpointConnectionsClientListByResourceOptions contains the optional parameters for the PrivateEndpointConnectionsClient.ListByResource method.
+                    description: PrivateEndpointConnectionsClientListByResourceOptions contains the optional parameters for the PrivateEndpointConnectionsClient.NewListByResourcePager method.
                   go: *ref_304
                 protocol: {}
               originalParameter: []
@@ -8416,7 +8416,7 @@ operationGroups:
               language:
                 default: &ref_305
                   name: options
-                  description: PrivateEndpointConnectionsClientListByResourceOptions contains the optional parameters for the PrivateEndpointConnectionsClient.ListByResource method.
+                  description: PrivateEndpointConnectionsClientListByResourceOptions contains the optional parameters for the PrivateEndpointConnectionsClient.NewListByResourcePager method.
                 go: *ref_305
               protocol: {}
             paging:
@@ -8442,7 +8442,7 @@ operationGroups:
               language:
                 default: &ref_308
                   name: PrivateEndpointConnectionsClientListByResourceResponse
-                  description: PrivateEndpointConnectionsClientListByResourceResponse contains the response from method PrivateEndpointConnectionsClient.ListByResource.
+                  description: PrivateEndpointConnectionsClientListByResourceResponse contains the response from method PrivateEndpointConnectionsClient.NewListByResourcePager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_307
@@ -8611,7 +8611,7 @@ operationGroups:
                 language:
                   default: &ref_312
                     name: PrivateLinkResourcesClientListByResourceOptions
-                    description: PrivateLinkResourcesClientListByResourceOptions contains the optional parameters for the PrivateLinkResourcesClient.ListByResource method.
+                    description: PrivateLinkResourcesClientListByResourceOptions contains the optional parameters for the PrivateLinkResourcesClient.NewListByResourcePager method.
                   go: *ref_312
                 protocol: {}
               originalParameter: []
@@ -8620,7 +8620,7 @@ operationGroups:
               language:
                 default: &ref_313
                   name: options
-                  description: PrivateLinkResourcesClientListByResourceOptions contains the optional parameters for the PrivateLinkResourcesClient.ListByResource method.
+                  description: PrivateLinkResourcesClientListByResourceOptions contains the optional parameters for the PrivateLinkResourcesClient.NewListByResourcePager method.
                 go: *ref_313
               protocol: {}
             paging:
@@ -8646,7 +8646,7 @@ operationGroups:
               language:
                 default: &ref_316
                   name: PrivateLinkResourcesClientListByResourceResponse
-                  description: PrivateLinkResourcesClientListByResourceResponse contains the response from method PrivateLinkResourcesClient.ListByResource.
+                  description: PrivateLinkResourcesClientListByResourceResponse contains the response from method PrivateLinkResourcesClient.NewListByResourcePager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_315
@@ -8932,6 +8932,7 @@ language:
       - *ref_341
       - *ref_342
       - *ref_343
+    rawJSONAsBytes: false
     responseEnvelopes:
       - *ref_344
       - *ref_345

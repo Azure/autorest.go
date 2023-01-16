@@ -203,12 +203,12 @@ export class ScenarioTestDataRender extends MockTestDataRender {
         value = variable.value + '';
       }
     } else if (variable.type === 'array') {
-      type = '[]interface{}';
+      type = '[]any';
       if (variable.value !== undefined) {
         value = this.arrayToString(variable.value);
       }
     } else if (variable.type === 'object' || variable.type === 'secureObject') {
-      type = 'map[string]interface{}';
+      type = 'map[string]any';
       if (variable.value !== undefined) {
         value = this.objectToString(variable.value);
       }
