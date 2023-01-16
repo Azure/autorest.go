@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Tue, 25 Oct 2022 03:01:04 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Jan 2023 06:25:05 GMT and should not be manually modified.
+
+## 4.5.0
+Mon, 16 Jan 2023 06:25:05 GMT
+
+### Minor changes
+
+- Upgrade to @autorest/go_4.0.0-preview.45 and do some cooresponding chagne to test generation.
 
 ## 4.4.0
 Tue, 25 Oct 2022 03:01:04 GMT

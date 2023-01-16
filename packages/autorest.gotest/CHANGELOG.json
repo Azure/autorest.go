@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.5.0",
+      "tag": "@autorest/gotest_v4.5.0",
+      "date": "Mon, 16 Jan 2023 06:25:05 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Upgrade to @autorest/go_4.0.0-preview.45 and do some cooresponding chagne to test generation."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.4.0",
       "tag": "@autorest/gotest_v4.4.0",
       "date": "Tue, 25 Oct 2022 03:01:04 GMT",
