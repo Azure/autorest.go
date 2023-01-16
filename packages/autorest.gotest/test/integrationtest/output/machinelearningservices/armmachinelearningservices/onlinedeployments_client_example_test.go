@@ -365,8 +365,8 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateKubernetesOnlineDeployment
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),
@@ -491,8 +491,8 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateManagedOnlineDeployment() 
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),

@@ -410,15 +410,15 @@ export class MockTestDataRender extends BaseDataRender {
         const timeFormat = (<DateTimeSchema>schema).format === 'date-time-rfc1123' ? 'time.RFC1123' : 'time.RFC3339Nano';
         ret = `func() time.Time { t, _ := time.Parse(${timeFormat}, ${this.getStringValue(rawValue)}); return t}()`;
       }
-    } else if (goType === 'map[string]interface{}') {
+    } else if (goType === 'map[string]any') {
       ret = this.objectToString(rawValue);
-    } else if (goType === 'interface{}' && Array.isArray(rawValue)) {
+    } else if (goType === 'any' && Array.isArray(rawValue)) {
       ret = this.arrayToString(rawValue);
-    } else if (goType === 'interface{}' && typeof rawValue === 'object') {
+    } else if (goType === 'any' && typeof rawValue === 'object') {
       ret = this.objectToString(rawValue);
-    } else if (goType === 'interface{}' && _.isNumber(rawValue)) {
+    } else if (goType === 'any' && _.isNumber(rawValue)) {
       ret = `float64(${this.getNumberValue(rawValue)})`;
-    } else if (goType === 'interface{}' && _.isString(rawValue)) {
+    } else if (goType === 'any' && _.isString(rawValue)) {
       ret = this.getStringValue(rawValue);
     } else if (goType === 'bool') {
       ret = this.getBoolValue(rawValue);
@@ -453,7 +453,7 @@ export class MockTestDataRender extends BaseDataRender {
   }
 
   protected objectToString(rawValue: any): string {
-    let ret = 'map[string]interface{}{\n';
+    let ret = 'map[string]any{\n';
     for (const [key, value] of Object.entries(rawValue)) {
       if (_.isArray(value)) {
         ret += `"${key}":`;
@@ -478,7 +478,7 @@ export class MockTestDataRender extends BaseDataRender {
   }
 
   protected arrayToString(rawValue: any): string {
-    let ret = '[]interface{}{\n';
+    let ret = '[]any{\n';
     for (const item of rawValue) {
       if (_.isArray(item)) {
         ret += this.arrayToString(item);

@@ -1456,6 +1456,7 @@ package test_test
 
 import (
     \\"context\\"
+    \\"fmt\\"
     \\"testing\\"
 
     \\"github.com/Azure/azure-sdk-for-go/sdk/azcore\\"
@@ -1516,21 +1517,21 @@ func (testsuite *SignalRTestSuite) TestSignalR() {
     var resourceName 
 var err error
     // From step Generate_Unique_Name
-    template:= map[string]interface{}{
+    template:= map[string]any{
 \\"$schema\\": \\"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#\\",
 \\"contentVersion\\": \\"1.0.0.0\\",
-\\"outputs\\":map[string]interface{}{
-\\"resourceName\\":map[string]interface{}{
+\\"outputs\\":map[string]any{
+\\"resourceName\\":map[string]any{
 \\"type\\": \\"string\\",
 \\"value\\": \\"[variables('name').value]\\",
 },
 },
-\\"resources\\":[]interface{}{
+\\"resources\\":[]any{
 },
-\\"variables\\":map[string]interface{}{
-\\"name\\":map[string]interface{}{
+\\"variables\\":map[string]any{
+\\"name\\":map[string]any{
 \\"type\\": \\"string\\",
-\\"metadata\\":map[string]interface{}{
+\\"metadata\\":map[string]any{
 \\"description\\": \\"Name of the SignalR service.\\",
 },
 \\"value\\": \\"[concat('sw',uniqueString(resourceGroup().id))]\\",
@@ -1549,6 +1550,7 @@ var err error
 
     
     // From step SignalR_CheckNameAvailability
+    fmt.Println(\\"Call operation: SignalR_CheckNameAvailability\\")
     signalRClient, err := test.NewSignalRClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
     testsuite.Require().NoError(err)
                 _, err = signalRClient.CheckNameAvailability(testsuite.ctx, testsuite.location, test.NameAvailabilityParameters{
@@ -1559,6 +1561,7 @@ Type: to.Ptr(\\"Microsoft.SignalRService/SignalR\\"),
 
     
     // From step SignalR_CreateOrUpdate
+    fmt.Println(\\"Call operation: SignalR_CreateOrUpdate\\")
                 signalRClientCreateOrUpdateResponsePoller, err:= signalRClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, test.ResourceInfo{
 Location: to.Ptr(testsuite.location),
 Tags: map[string]*string{
@@ -1646,11 +1649,13 @@ Tier: to.Ptr(test.SignalRSKUTierStandard),
 
     
     // From step SignalR_Get
+    fmt.Println(\\"Call operation: SignalR_Get\\")
                 _, err = signalRClient.Get(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_Update
+    fmt.Println(\\"Call operation: SignalR_Update\\")
                 signalRClientUpdateResponsePoller, err:= signalRClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, test.ResourceInfo{
 Location: to.Ptr(testsuite.location),
 Tags: map[string]*string{
@@ -1738,11 +1743,13 @@ Tier: to.Ptr(test.SignalRSKUTierStandard),
 
     
     // From step SignalR_ListKeys
+    fmt.Println(\\"Call operation: SignalR_ListKeys\\")
                 _, err = signalRClient.ListKeys(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_RegenerateKey
+    fmt.Println(\\"Call operation: SignalR_RegenerateKey\\")
                 signalRClientRegenerateKeyResponsePoller, err:= signalRClient.BeginRegenerateKey(testsuite.ctx, testsuite.resourceGroupName, resourceName, test.RegenerateKeyParameters{
 KeyType: to.Ptr(test.KeyTypePrimary),
 }, nil)
@@ -1752,6 +1759,7 @@ KeyType: to.Ptr(test.KeyTypePrimary),
 
     
     // From step SignalR_Restart
+    fmt.Println(\\"Call operation: SignalR_Restart\\")
                 signalRClientRestartResponsePoller, err:= signalRClient.BeginRestart(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
             _, err = testutil.PollForTest(testsuite.ctx, signalRClientRestartResponsePoller)
@@ -1759,6 +1767,7 @@ KeyType: to.Ptr(test.KeyTypePrimary),
 
     
     // From step Usages_List
+    fmt.Println(\\"Call operation: Usages_List\\")
     usagesClient, err := test.NewUsagesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
     testsuite.Require().NoError(err)
             usagesClientNewListPager:= usagesClient.NewListPager(testsuite.location, nil)
@@ -1770,6 +1779,7 @@ KeyType: to.Ptr(test.KeyTypePrimary),
 
     
     // From step SignalR_ListByResourceGroup
+    fmt.Println(\\"Call operation: SignalR_ListByResourceGroup\\")
             signalRClientNewListByResourceGroupPager:= signalRClient.NewListByResourceGroupPager(testsuite.resourceGroupName, nil)
             for signalRClientNewListByResourceGroupPager.More() {
                 _, err := signalRClientNewListByResourceGroupPager.NextPage(testsuite.ctx)
@@ -1779,6 +1789,7 @@ KeyType: to.Ptr(test.KeyTypePrimary),
 
     
     // From step SignalR_ListBySubscription
+    fmt.Println(\\"Call operation: SignalR_ListBySubscription\\")
             signalRClientNewListBySubscriptionPager:= signalRClient.NewListBySubscriptionPager(nil)
             for signalRClientNewListBySubscriptionPager.More() {
                 _, err := signalRClientNewListBySubscriptionPager.NextPage(testsuite.ctx)
@@ -1788,6 +1799,7 @@ KeyType: to.Ptr(test.KeyTypePrimary),
 
     
     // From step Operations_List
+    fmt.Println(\\"Call operation: Operations_List\\")
     operationsClient, err := test.NewOperationsClient(testsuite.cred, testsuite.options)
     testsuite.Require().NoError(err)
             operationsClientNewListPager:= operationsClient.NewListPager(nil)
@@ -1799,6 +1811,7 @@ KeyType: to.Ptr(test.KeyTypePrimary),
 
     
     // From step SignalR_Delete
+    fmt.Println(\\"Call operation: SignalR_Delete\\")
                 signalRClientDeleteResponsePoller, err:= signalRClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
             _, err = testutil.PollForTest(testsuite.ctx, signalRClientDeleteResponsePoller)

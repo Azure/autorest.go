@@ -2950,7 +2950,7 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 								Type:                    to.Ptr("{extension-Type}"),
 								AutoUpgradeMinorVersion: to.Ptr(false),
 								Publisher:               to.Ptr("{extension-Publisher}"),
-								Settings:                map[string]interface{}{},
+								Settings:                map[string]any{},
 								TypeHandlerVersion:      to.Ptr("{handler-version}"),
 							},
 						}},
@@ -3041,7 +3041,7 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 	// 							Type: to.Ptr("{extension-Type}"),
 	// 							AutoUpgradeMinorVersion: to.Ptr(false),
 	// 							Publisher: to.Ptr("{extension-Publisher}"),
-	// 							Settings: map[string]interface{}{
+	// 							Settings: map[string]any{
 	// 							},
 	// 							TypeHandlerVersion: to.Ptr("{handler-version}"),
 	// 						},

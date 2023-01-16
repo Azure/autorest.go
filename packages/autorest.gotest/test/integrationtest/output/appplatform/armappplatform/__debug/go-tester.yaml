@@ -2819,7 +2819,7 @@ schemas:
             name: any
             description: Anything
           go:
-            name: interface{}
+            name: any
             description: Anything
         protocol: {}
       language:
@@ -2827,7 +2827,7 @@ schemas:
           name: BindingResourcePropertiesBindingParameters
           description: Binding parameters of the Binding resource
         go:
-          name: map[string]interface{}
+          name: map[string]any
           description: Binding parameters of the Binding resource
           elementIsPtr: false
           marshallingFormat: json
@@ -7523,7 +7523,7 @@ schemas:
           name: ArrayOfGet5ItemsItem
           description: Array of Get5ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get5ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -7538,7 +7538,7 @@ schemas:
           name: ArrayOfGet4ItemsItem
           description: Array of Get4ItemsItem
         go:
-          name: '[]*string'
+          name: '[]string'
           description: Array of Get4ItemsItem
           elementIsPtr: true
       protocol: {}
@@ -8340,7 +8340,7 @@ operationGroups:
               language:
                 default: &ref_301
                   name: ServicesClientCreateOrUpdateResponse
-                  description: ServicesClientCreateOrUpdateResponse contains the response from method ServicesClient.CreateOrUpdate.
+                  description: ServicesClientCreateOrUpdateResponse contains the response from method ServicesClient.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -8532,7 +8532,7 @@ operationGroups:
               language:
                 default: &ref_308
                   name: ServicesClientDeleteResponse
-                  description: ServicesClientDeleteResponse contains the response from method ServicesClient.Delete.
+                  description: ServicesClientDeleteResponse contains the response from method ServicesClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_308
@@ -8849,7 +8849,7 @@ operationGroups:
               language:
                 default: &ref_319
                   name: ServicesClientUpdateResponse
-                  description: ServicesClientUpdateResponse contains the response from method ServicesClient.Update.
+                  description: ServicesClientUpdateResponse contains the response from method ServicesClient.BeginUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -9906,7 +9906,7 @@ operationGroups:
                 language:
                   default: &ref_361
                     name: ServicesClientListBySubscriptionOptions
-                    description: ServicesClientListBySubscriptionOptions contains the optional parameters for the ServicesClient.ListBySubscription method.
+                    description: ServicesClientListBySubscriptionOptions contains the optional parameters for the ServicesClient.NewListBySubscriptionPager method.
                   go: *ref_361
                 protocol: {}
               originalParameter: []
@@ -9915,7 +9915,7 @@ operationGroups:
               language:
                 default: &ref_362
                   name: options
-                  description: ServicesClientListBySubscriptionOptions contains the optional parameters for the ServicesClient.ListBySubscription method.
+                  description: ServicesClientListBySubscriptionOptions contains the optional parameters for the ServicesClient.NewListBySubscriptionPager method.
                 go: *ref_362
               protocol: {}
             paging: &ref_861
@@ -9941,7 +9941,7 @@ operationGroups:
               language:
                 default: &ref_365
                   name: ServicesClientListBySubscriptionResponse
-                  description: ServicesClientListBySubscriptionResponse contains the response from method ServicesClient.ListBySubscription.
+                  description: ServicesClientListBySubscriptionResponse contains the response from method ServicesClient.NewListBySubscriptionPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_364
@@ -10105,7 +10105,7 @@ operationGroups:
                 language:
                   default: &ref_367
                     name: ServicesClientListOptions
-                    description: ServicesClientListOptions contains the optional parameters for the ServicesClient.List method.
+                    description: ServicesClientListOptions contains the optional parameters for the ServicesClient.NewListPager method.
                   go: *ref_367
                 protocol: {}
               originalParameter: []
@@ -10114,7 +10114,7 @@ operationGroups:
               language:
                 default: &ref_368
                   name: options
-                  description: ServicesClientListOptions contains the optional parameters for the ServicesClient.List method.
+                  description: ServicesClientListOptions contains the optional parameters for the ServicesClient.NewListPager method.
                 go: *ref_368
               protocol: {}
             paging: &ref_865
@@ -10140,7 +10140,7 @@ operationGroups:
               language:
                 default: &ref_371
                   name: ServicesClientListResponse
-                  description: ServicesClientListResponse contains the response from method ServicesClient.List.
+                  description: ServicesClientListResponse contains the response from method ServicesClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_370
@@ -10605,7 +10605,7 @@ operationGroups:
               language:
                 default: &ref_389
                   name: ConfigServersClientUpdatePutResponse
-                  description: ConfigServersClientUpdatePutResponse contains the response from method ConfigServersClient.UpdatePut.
+                  description: ConfigServersClientUpdatePutResponse contains the response from method ConfigServersClient.BeginUpdatePut.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -10874,7 +10874,7 @@ operationGroups:
               language:
                 default: &ref_400
                   name: ConfigServersClientUpdatePatchResponse
-                  description: ConfigServersClientUpdatePatchResponse contains the response from method ConfigServersClient.UpdatePatch.
+                  description: ConfigServersClientUpdatePatchResponse contains the response from method ConfigServersClient.BeginUpdatePatch.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -11120,7 +11120,7 @@ operationGroups:
               language:
                 default: &ref_412
                   name: ConfigServersClientValidateResponse
-                  description: ConfigServersClientValidateResponse contains the response from method ConfigServersClient.Validate.
+                  description: ConfigServersClientValidateResponse contains the response from method ConfigServersClient.BeginValidate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -11580,7 +11580,7 @@ operationGroups:
               language:
                 default: &ref_430
                   name: MonitoringSettingsClientUpdatePutResponse
-                  description: MonitoringSettingsClientUpdatePutResponse contains the response from method MonitoringSettingsClient.UpdatePut.
+                  description: MonitoringSettingsClientUpdatePutResponse contains the response from method MonitoringSettingsClient.BeginUpdatePut.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -11844,7 +11844,7 @@ operationGroups:
               language:
                 default: &ref_441
                   name: MonitoringSettingsClientUpdatePatchResponse
-                  description: MonitoringSettingsClientUpdatePatchResponse contains the response from method MonitoringSettingsClient.UpdatePatch.
+                  description: MonitoringSettingsClientUpdatePatchResponse contains the response from method MonitoringSettingsClient.BeginUpdatePatch.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -12447,7 +12447,7 @@ operationGroups:
               language:
                 default: &ref_463
                   name: AppsClientCreateOrUpdateResponse
-                  description: AppsClientCreateOrUpdateResponse contains the response from method AppsClient.CreateOrUpdate.
+                  description: AppsClientCreateOrUpdateResponse contains the response from method AppsClient.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -12667,7 +12667,7 @@ operationGroups:
               language:
                 default: &ref_471
                   name: AppsClientDeleteResponse
-                  description: AppsClientDeleteResponse contains the response from method AppsClient.Delete.
+                  description: AppsClientDeleteResponse contains the response from method AppsClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_471
@@ -12986,7 +12986,7 @@ operationGroups:
               language:
                 default: &ref_483
                   name: AppsClientUpdateResponse
-                  description: AppsClientUpdateResponse contains the response from method AppsClient.Update.
+                  description: AppsClientUpdateResponse contains the response from method AppsClient.BeginUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -13156,7 +13156,7 @@ operationGroups:
                 language:
                   default: &ref_487
                     name: AppsClientListOptions
-                    description: AppsClientListOptions contains the optional parameters for the AppsClient.List method.
+                    description: AppsClientListOptions contains the optional parameters for the AppsClient.NewListPager method.
                   go: *ref_487
                 protocol: {}
               originalParameter: []
@@ -13165,7 +13165,7 @@ operationGroups:
               language:
                 default: &ref_488
                   name: options
-                  description: AppsClientListOptions contains the optional parameters for the AppsClient.List method.
+                  description: AppsClientListOptions contains the optional parameters for the AppsClient.NewListPager method.
                 go: *ref_488
               protocol: {}
             paging: &ref_976
@@ -13191,7 +13191,7 @@ operationGroups:
               language:
                 default: &ref_491
                   name: AppsClientListResponse
-                  description: AppsClientListResponse contains the response from method AppsClient.List.
+                  description: AppsClientListResponse contains the response from method AppsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_490
@@ -14195,7 +14195,7 @@ operationGroups:
               language:
                 default: &ref_534
                   name: BindingsClientCreateOrUpdateResponse
-                  description: BindingsClientCreateOrUpdateResponse contains the response from method BindingsClient.CreateOrUpdate.
+                  description: BindingsClientCreateOrUpdateResponse contains the response from method BindingsClient.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -14433,7 +14433,7 @@ operationGroups:
               language:
                 default: &ref_543
                   name: BindingsClientDeleteResponse
-                  description: BindingsClientDeleteResponse contains the response from method BindingsClient.Delete.
+                  description: BindingsClientDeleteResponse contains the response from method BindingsClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_543
@@ -14747,7 +14747,7 @@ operationGroups:
               language:
                 default: &ref_556
                   name: BindingsClientUpdateResponse
-                  description: BindingsClientUpdateResponse contains the response from method BindingsClient.Update.
+                  description: BindingsClientUpdateResponse contains the response from method BindingsClient.BeginUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -14928,7 +14928,7 @@ operationGroups:
                 language:
                   default: &ref_561
                     name: BindingsClientListOptions
-                    description: BindingsClientListOptions contains the optional parameters for the BindingsClient.List method.
+                    description: BindingsClientListOptions contains the optional parameters for the BindingsClient.NewListPager method.
                   go: *ref_561
                 protocol: {}
               originalParameter: []
@@ -14937,7 +14937,7 @@ operationGroups:
               language:
                 default: &ref_562
                   name: options
-                  description: BindingsClientListOptions contains the optional parameters for the BindingsClient.List method.
+                  description: BindingsClientListOptions contains the optional parameters for the BindingsClient.NewListPager method.
                 go: *ref_562
               protocol: {}
             paging: &ref_1038
@@ -14963,7 +14963,7 @@ operationGroups:
               language:
                 default: &ref_565
                   name: BindingsClientListResponse
-                  description: BindingsClientListResponse contains the response from method BindingsClient.List.
+                  description: BindingsClientListResponse contains the response from method BindingsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_564
@@ -15513,7 +15513,7 @@ operationGroups:
               language:
                 default: &ref_585
                   name: CertificatesClientCreateOrUpdateResponse
-                  description: CertificatesClientCreateOrUpdateResponse contains the response from method CertificatesClient.CreateOrUpdate.
+                  description: CertificatesClientCreateOrUpdateResponse contains the response from method CertificatesClient.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -15733,7 +15733,7 @@ operationGroups:
               language:
                 default: &ref_593
                   name: CertificatesClientDeleteResponse
-                  description: CertificatesClientDeleteResponse contains the response from method CertificatesClient.Delete.
+                  description: CertificatesClientDeleteResponse contains the response from method CertificatesClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_593
@@ -15896,7 +15896,7 @@ operationGroups:
                 language:
                   default: &ref_597
                     name: CertificatesClientListOptions
-                    description: CertificatesClientListOptions contains the optional parameters for the CertificatesClient.List method.
+                    description: CertificatesClientListOptions contains the optional parameters for the CertificatesClient.NewListPager method.
                   go: *ref_597
                 protocol: {}
               originalParameter: []
@@ -15905,7 +15905,7 @@ operationGroups:
               language:
                 default: &ref_598
                   name: options
-                  description: CertificatesClientListOptions contains the optional parameters for the CertificatesClient.List method.
+                  description: CertificatesClientListOptions contains the optional parameters for the CertificatesClient.NewListPager method.
                 go: *ref_598
               protocol: {}
             paging: &ref_1074
@@ -15931,7 +15931,7 @@ operationGroups:
               language:
                 default: &ref_601
                   name: CertificatesClientListResponse
-                  description: CertificatesClientListResponse contains the response from method CertificatesClient.List.
+                  description: CertificatesClientListResponse contains the response from method CertificatesClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_600
@@ -16476,7 +16476,7 @@ operationGroups:
               language:
                 default: &ref_623
                   name: CustomDomainsClientCreateOrUpdateResponse
-                  description: CustomDomainsClientCreateOrUpdateResponse contains the response from method CustomDomainsClient.CreateOrUpdate.
+                  description: CustomDomainsClientCreateOrUpdateResponse contains the response from method CustomDomainsClient.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -16714,7 +16714,7 @@ operationGroups:
               language:
                 default: &ref_632
                   name: CustomDomainsClientDeleteResponse
-                  description: CustomDomainsClientDeleteResponse contains the response from method CustomDomainsClient.Delete.
+                  description: CustomDomainsClientDeleteResponse contains the response from method CustomDomainsClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_632
@@ -17005,7 +17005,7 @@ operationGroups:
               language:
                 default: &ref_645
                   name: CustomDomainsClientUpdateResponse
-                  description: CustomDomainsClientUpdateResponse contains the response from method CustomDomainsClient.Update.
+                  description: CustomDomainsClientUpdateResponse contains the response from method CustomDomainsClient.BeginUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -17178,7 +17178,7 @@ operationGroups:
                 language:
                   default: &ref_650
                     name: CustomDomainsClientListOptions
-                    description: CustomDomainsClientListOptions contains the optional parameters for the CustomDomainsClient.List method.
+                    description: CustomDomainsClientListOptions contains the optional parameters for the CustomDomainsClient.NewListPager method.
                   go: *ref_650
                 protocol: {}
               originalParameter: []
@@ -17187,7 +17187,7 @@ operationGroups:
               language:
                 default: &ref_651
                   name: options
-                  description: CustomDomainsClientListOptions contains the optional parameters for the CustomDomainsClient.List method.
+                  description: CustomDomainsClientListOptions contains the optional parameters for the CustomDomainsClient.NewListPager method.
                 go: *ref_651
               protocol: {}
             paging: &ref_1116
@@ -17213,7 +17213,7 @@ operationGroups:
               language:
                 default: &ref_654
                   name: CustomDomainsClientListResponse
-                  description: CustomDomainsClientListResponse contains the response from method CustomDomainsClient.List.
+                  description: CustomDomainsClientListResponse contains the response from method CustomDomainsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_653
@@ -17861,7 +17861,7 @@ operationGroups:
               language:
                 default: &ref_676
                   name: DeploymentsClientCreateOrUpdateResponse
-                  description: DeploymentsClientCreateOrUpdateResponse contains the response from method DeploymentsClient.CreateOrUpdate.
+                  description: DeploymentsClientCreateOrUpdateResponse contains the response from method DeploymentsClient.BeginCreateOrUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -18099,7 +18099,7 @@ operationGroups:
               language:
                 default: &ref_685
                   name: DeploymentsClientDeleteResponse
-                  description: DeploymentsClientDeleteResponse contains the response from method DeploymentsClient.Delete.
+                  description: DeploymentsClientDeleteResponse contains the response from method DeploymentsClient.BeginDelete.
                   forLRO: true
                   responseType: true
                 go: *ref_685
@@ -18438,7 +18438,7 @@ operationGroups:
               language:
                 default: &ref_698
                   name: DeploymentsClientUpdateResponse
-                  description: DeploymentsClientUpdateResponse contains the response from method DeploymentsClient.Update.
+                  description: DeploymentsClientUpdateResponse contains the response from method DeploymentsClient.BeginUpdate.
                   forLRO: true
                   marshallingFormat: json
                   responseType: true
@@ -18520,7 +18520,7 @@ operationGroups:
                     language:
                       default: &ref_700
                         name: DeploymentsClientListOptions
-                        description: DeploymentsClientListOptions contains the optional parameters for the DeploymentsClient.List method.
+                        description: DeploymentsClientListOptions contains the optional parameters for the DeploymentsClient.NewListPager method.
                       go: *ref_700
                     protocol: {}
                   originalParameter:
@@ -18530,7 +18530,7 @@ operationGroups:
                   language:
                     default: &ref_702
                       name: options
-                      description: DeploymentsClientListOptions contains the optional parameters for the DeploymentsClient.List method.
+                      description: DeploymentsClientListOptions contains the optional parameters for the DeploymentsClient.NewListPager method.
                     go: *ref_702
                   protocol: {}
                 serializedName: version
@@ -18688,7 +18688,7 @@ operationGroups:
               language:
                 default: &ref_710
                   name: DeploymentsClientListResponse
-                  description: DeploymentsClientListResponse contains the response from method DeploymentsClient.List.
+                  description: DeploymentsClientListResponse contains the response from method DeploymentsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_709
@@ -18753,7 +18753,7 @@ operationGroups:
                     language:
                       default: &ref_712
                         name: DeploymentsClientListForClusterOptions
-                        description: DeploymentsClientListForClusterOptions contains the optional parameters for the DeploymentsClient.ListForCluster method.
+                        description: DeploymentsClientListForClusterOptions contains the optional parameters for the DeploymentsClient.NewListForClusterPager method.
                       go: *ref_712
                     protocol: {}
                   originalParameter:
@@ -18763,7 +18763,7 @@ operationGroups:
                   language:
                     default: &ref_714
                       name: options
-                      description: DeploymentsClientListForClusterOptions contains the optional parameters for the DeploymentsClient.ListForCluster method.
+                      description: DeploymentsClientListForClusterOptions contains the optional parameters for the DeploymentsClient.NewListForClusterPager method.
                     go: *ref_714
                   protocol: {}
                 serializedName: version
@@ -18920,7 +18920,7 @@ operationGroups:
               language:
                 default: &ref_720
                   name: DeploymentsClientListForClusterResponse
-                  description: DeploymentsClientListForClusterResponse contains the response from method DeploymentsClient.ListForCluster.
+                  description: DeploymentsClientListForClusterResponse contains the response from method DeploymentsClient.NewListForClusterPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_719
@@ -19147,7 +19147,7 @@ operationGroups:
               language:
                 default: &ref_729
                   name: DeploymentsClientStartResponse
-                  description: DeploymentsClientStartResponse contains the response from method DeploymentsClient.Start.
+                  description: DeploymentsClientStartResponse contains the response from method DeploymentsClient.BeginStart.
                   forLRO: true
                   responseType: true
                 go: *ref_729
@@ -19373,7 +19373,7 @@ operationGroups:
               language:
                 default: &ref_738
                   name: DeploymentsClientStopResponse
-                  description: DeploymentsClientStopResponse contains the response from method DeploymentsClient.Stop.
+                  description: DeploymentsClientStopResponse contains the response from method DeploymentsClient.BeginStop.
                   forLRO: true
                   responseType: true
                 go: *ref_738
@@ -19599,7 +19599,7 @@ operationGroups:
               language:
                 default: &ref_747
                   name: DeploymentsClientRestartResponse
-                  description: DeploymentsClientRestartResponse contains the response from method DeploymentsClient.Restart.
+                  description: DeploymentsClientRestartResponse contains the response from method DeploymentsClient.BeginRestart.
                   forLRO: true
                   responseType: true
                 go: *ref_747
@@ -19958,7 +19958,7 @@ operationGroups:
                 language:
                   default: &ref_759
                     name: OperationsClientListOptions
-                    description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                    description: OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
                   go: *ref_759
                 protocol: {}
               originalParameter: []
@@ -19967,7 +19967,7 @@ operationGroups:
               language:
                 default: &ref_760
                   name: options
-                  description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                  description: OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
                 go: *ref_760
               protocol: {}
             paging: &ref_1222
@@ -19993,7 +19993,7 @@ operationGroups:
               language:
                 default: &ref_763
                   name: OperationsClientListResponse
-                  description: OperationsClientListResponse contains the response from method OperationsClient.List.
+                  description: OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_762
@@ -20292,7 +20292,7 @@ operationGroups:
                 language:
                   default: &ref_771
                     name: SKUsClientListOptions
-                    description: SKUsClientListOptions contains the optional parameters for the SKUsClient.List method.
+                    description: SKUsClientListOptions contains the optional parameters for the SKUsClient.NewListPager method.
                   go: *ref_771
                 protocol: {}
               originalParameter: []
@@ -20301,7 +20301,7 @@ operationGroups:
               language:
                 default: &ref_772
                   name: options
-                  description: SKUsClientListOptions contains the optional parameters for the SKUsClient.List method.
+                  description: SKUsClientListOptions contains the optional parameters for the SKUsClient.NewListPager method.
                 go: *ref_772
               protocol: {}
             paging: &ref_1248
@@ -20327,7 +20327,7 @@ operationGroups:
               language:
                 default: &ref_775
                   name: SKUsClientListResponse
-                  description: SKUsClientListResponse contains the response from method SKUsClient.List.
+                  description: SKUsClientListResponse contains the response from method SKUsClient.NewListPager.
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_774
@@ -26313,7 +26313,7 @@ testModel:
               Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
               ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
               Properties: &armappplatform.BindingResourceProperties{
-              BindingParameters: map[string]interface{}{
+              BindingParameters: map[string]any{
               "apiType": "SQL",
               "databaseName": "db1",
               },
@@ -26500,7 +26500,7 @@ testModel:
                 paramOutput: |-
                   armappplatform.BindingResource{
                   Properties: &armappplatform.BindingResourceProperties{
-                  BindingParameters: map[string]interface{}{
+                  BindingParameters: map[string]any{
                   "apiType": "SQL",
                   "databaseName": "db1",
                   },
@@ -26521,7 +26521,7 @@ testModel:
               Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
               ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
               Properties: &armappplatform.BindingResourceProperties{
-              BindingParameters: map[string]interface{}{
+              BindingParameters: map[string]any{
               "apiType": "SQL",
               "databaseName": "db1",
               },
@@ -26912,7 +26912,7 @@ testModel:
                 paramOutput: |-
                   armappplatform.BindingResource{
                   Properties: &armappplatform.BindingResourceProperties{
-                  BindingParameters: map[string]interface{}{
+                  BindingParameters: map[string]any{
                   "apiType": "SQL",
                   "databaseName": "db1",
                   },
@@ -26932,7 +26932,7 @@ testModel:
               Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
               ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
               Properties: &armappplatform.BindingResourceProperties{
-              BindingParameters: map[string]interface{}{
+              BindingParameters: map[string]any{
               "apiType": "SQL",
               "databaseName": "db1",
               },
@@ -27152,7 +27152,7 @@ testModel:
               Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
               ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
               Properties: &armappplatform.BindingResourceProperties{
-              BindingParameters: map[string]interface{}{
+              BindingParameters: map[string]any{
               "apiType": "SQL",
               "databaseName": "db1",
               },
@@ -31242,15 +31242,15 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: ''
           armTemplateOutput: >-
-            map[string]interface{}{
+            map[string]any{
 
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 
             "contentVersion": "1.0.0.0",
 
-            "parameters":map[string]interface{}{
+            "parameters":map[string]any{
 
-            "userAssignedIdentity":map[string]interface{}{
+            "userAssignedIdentity":map[string]any{
 
             "type": "string",
 
@@ -31258,7 +31258,7 @@ testModel:
 
             },
 
-            "utcValue":map[string]interface{}{
+            "utcValue":map[string]any{
 
             "type": "string",
 
@@ -31268,9 +31268,9 @@ testModel:
 
             },
 
-            "resources":[]interface{}{
+            "resources":[]any{
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "delete_cname_record",
 
@@ -31278,13 +31278,13 @@ testModel:
 
             "apiVersion": "2020-10-01",
 
-            "identity":map[string]interface{}{
+            "identity":map[string]any{
 
             "type": "UserAssigned",
 
-            "userAssignedIdentities":map[string]interface{}{
+            "userAssignedIdentities":map[string]any{
 
-            "[parameters('userAssignedIdentity')]":map[string]interface{}{
+            "[parameters('userAssignedIdentity')]":map[string]any{
 
             },
 
@@ -31296,15 +31296,15 @@ testModel:
 
             "location": "[resourceGroup().location]",
 
-            "properties":map[string]interface{}{
+            "properties":map[string]any{
 
             "azPowerShellVersion": "6.2",
 
             "cleanupPreference": "OnSuccess",
 
-            "environmentVariables":[]interface{}{
+            "environmentVariables":[]any{
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "resourceGroupName",
 
@@ -31312,7 +31312,7 @@ testModel:
 
             },
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "dnsCname",
 
@@ -31320,7 +31320,7 @@ testModel:
 
             },
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "dnsZoneName",
 
@@ -31406,24 +31406,24 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: templates/generate_service_name.json
           armTemplateOutput: |-
-            map[string]interface{}{
+            map[string]any{
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
-            "outputs":map[string]interface{}{
-            "serviceName":map[string]interface{}{
+            "outputs":map[string]any{
+            "serviceName":map[string]any{
             "type": "string",
             "value": "[substring(variables('serviceNameLong'), 0, 12)]",
             },
             },
-            "parameters":map[string]interface{}{
-            "serviceNamePrefix":map[string]interface{}{
+            "parameters":map[string]any{
+            "serviceNamePrefix":map[string]any{
             "type": "string",
             "defaultValue": "asc-",
             },
             },
-            "resources":[]interface{}{
+            "resources":[]any{
             },
-            "variables":map[string]interface{}{
+            "variables":map[string]any{
             "serviceNameLong": "[concat(parameters('serviceNamePrefix'), uniqueString(resourceGroup().id))]",
             },
             }
@@ -31451,37 +31451,37 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: templates/create_application_insights_instance.json
           armTemplateOutput: |-
-            map[string]interface{}{
+            map[string]any{
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
-            "outputs":map[string]interface{}{
-            "insightsInstrumentationKey":map[string]interface{}{
+            "outputs":map[string]any{
+            "insightsInstrumentationKey":map[string]any{
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Insights/components', parameters('name')), '2014-04-01').InstrumentationKey]",
             },
             },
-            "parameters":map[string]interface{}{
-            "name":map[string]interface{}{
+            "parameters":map[string]any{
+            "name":map[string]any{
             "type": "string",
             "defaultValue": "asc-api-ai-instance",
-            "metadata":map[string]interface{}{
+            "metadata":map[string]any{
             "description": "Name of Application Insights resource.",
             },
             },
             },
-            "resources":[]interface{}{
-            map[string]interface{}{
+            "resources":[]any{
+            map[string]any{
             "name": "[parameters('name')]",
             "type": "microsoft.insights/components",
             "apiVersion": "2014-04-01",
             "location": "eastus",
-            "properties":map[string]interface{}{
+            "properties":map[string]any{
             "ApplicationId": "[parameters('name')]",
             "Application_Type": "web",
             "Flow_Type": "Redfield",
             "Request_Source": "CustomDeployment",
             },
-            "tags":map[string]interface{}{
+            "tags":map[string]any{
             },
             },
             },
@@ -31520,15 +31520,15 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: ''
           armTemplateOutput: >-
-            map[string]interface{}{
+            map[string]any{
 
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 
             "contentVersion": "1.0.0.0",
 
-            "parameters":map[string]interface{}{
+            "parameters":map[string]any{
 
-            "userAssignedIdentity":map[string]interface{}{
+            "userAssignedIdentity":map[string]any{
 
             "type": "string",
 
@@ -31536,7 +31536,7 @@ testModel:
 
             },
 
-            "utcValue":map[string]interface{}{
+            "utcValue":map[string]any{
 
             "type": "string",
 
@@ -31546,9 +31546,9 @@ testModel:
 
             },
 
-            "resources":[]interface{}{
+            "resources":[]any{
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "Add_Dns_Cname_Record",
 
@@ -31556,13 +31556,13 @@ testModel:
 
             "apiVersion": "2020-10-01",
 
-            "identity":map[string]interface{}{
+            "identity":map[string]any{
 
             "type": "UserAssigned",
 
-            "userAssignedIdentities":map[string]interface{}{
+            "userAssignedIdentities":map[string]any{
 
-            "[parameters('userAssignedIdentity')]":map[string]interface{}{
+            "[parameters('userAssignedIdentity')]":map[string]any{
 
             },
 
@@ -31574,15 +31574,15 @@ testModel:
 
             "location": "[resourceGroup().location]",
 
-            "properties":map[string]interface{}{
+            "properties":map[string]any{
 
             "azPowerShellVersion": "6.2",
 
             "cleanupPreference": "OnSuccess",
 
-            "environmentVariables":[]interface{}{
+            "environmentVariables":[]any{
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "resourceGroupName",
 
@@ -31590,7 +31590,7 @@ testModel:
 
             },
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "dnsZoneName",
 
@@ -31598,7 +31598,7 @@ testModel:
 
             },
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "dnsCname",
 
@@ -31606,7 +31606,7 @@ testModel:
 
             },
 
-            map[string]interface{}{
+            map[string]any{
 
             "name": "dnsCnameAlias",
 
@@ -39331,7 +39331,7 @@ testModel:
                     paramOutput: |-
                       armappplatform.BindingResource{
                       Properties: &armappplatform.BindingResourceProperties{
-                      BindingParameters: map[string]interface{}{
+                      BindingParameters: map[string]any{
                       "databaseName": "mysqldb",
                       "username": mysqlKey,
                       },
@@ -39352,7 +39352,7 @@ testModel:
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
                   ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + "mysql-binding"),
                   Properties: &armappplatform.BindingResourceProperties{
-                  BindingParameters: map[string]interface{}{
+                  BindingParameters: map[string]any{
                   "databaseName": "mysqldb",
                   "username": mysqlKey,
                   },
@@ -39773,8 +39773,8 @@ testModel:
                     paramOutput: |-
                       armappplatform.BindingResource{
                       Properties: &armappplatform.BindingResourceProperties{
-                      BindingParameters: map[string]interface{}{
-                      "anotherLayer": map[string]interface{}{
+                      BindingParameters: map[string]any{
+                      "anotherLayer": map[string]any{
                       "databaseName": "mysqldb2",
                       "username": mysqlKey,
                       },
@@ -39795,8 +39795,8 @@ testModel:
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
                   ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + "mysql-binding"),
                   Properties: &armappplatform.BindingResourceProperties{
-                  BindingParameters: map[string]interface{}{
-                  "anotherLayer": map[string]interface{}{
+                  BindingParameters: map[string]any{
+                  "anotherLayer": map[string]any{
                   "databaseName": "mysqldb2",
                   "username": mysqlKey,
                   },
@@ -40097,7 +40097,7 @@ testModel:
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
                   ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/" + "mysql-binding"),
                   Properties: &armappplatform.BindingResourceProperties{
-                  BindingParameters: map[string]interface{}{
+                  BindingParameters: map[string]any{
                   "apiType": "SQL",
                   "databaseName": "db1",
                   },
@@ -40283,7 +40283,7 @@ testModel:
                   Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
                   ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.AppPlatform/Spring/" + serviceName + "/apps/" + appName + "/bindings/mybinding"),
                   Properties: &armappplatform.BindingResourceProperties{
-                  BindingParameters: map[string]interface{}{
+                  BindingParameters: map[string]any{
                   "apiType": "SQL",
                   "databaseName": "db1",
                   },
@@ -41536,7 +41536,7 @@ testModel:
                       https://springcloudstorageaccount.file.core.windows.net/bd172614181f42e2853f6fd90029cda8/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777?sv=2018-03-28&sr=f&sig=SampleSignature&se=2019-08-01T10%3A42%3A21Z&sp=w
             - type: armTemplateDeployment
               armTemplate: ''
-              armTemplateOutput: "map[string]interface{}{\n\"$schema\": \"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#\",\n\"contentVersion\": \"1.0.0.0\",\n\"parameters\":map[string]interface{}{\n\"userAssignedIdentity\":map[string]interface{}{\n\"type\": \"string\",\n\"defaultValue\": userAssignedIdentity,\n},\n\"utcValue\":map[string]interface{}{\n\"type\": \"string\",\n\"defaultValue\": \"[utcNow()]\",\n},\n},\n\"resources\":[]interface{}{\nmap[string]interface{}{\n\"name\": \"Upload_File\",\n\"type\": \"Microsoft.Resources/deploymentScripts\",\n\"apiVersion\": \"2020-10-01\",\n\"identity\":map[string]interface{}{\n\"type\": \"UserAssigned\",\n\"userAssignedIdentities\":map[string]interface{}{\n\"[parameters('userAssignedIdentity')]\":map[string]interface{}{\n},\n},\n},\n\"kind\": \"AzurePowerShell\",\n\"location\": \"[resourceGroup().location]\",\n\"properties\":map[string]interface{}{\n\"azPowerShellVersion\": \"6.2\",\n\"cleanupPreference\": \"OnSuccess\",\n\"environmentVariables\":[]interface{}{\nmap[string]interface{}{\n\"name\": \"uploadUrl\",\n\"secureValue\": uploadUrl,\n},\nmap[string]interface{}{\n\"name\": \"blobUrl\",\n\"secureValue\": blobUrl,\n},\n},\n\"forceUpdateTag\": \"[parameters('utcValue')]\",\n\"retentionInterval\": \"P1D\",\n\"scriptContent\": \"$uploadUri = ${Env:uploadUrl}\\n$blobUri = ${Env:blobUrl}\\n$localFilePath = '/tmp/temp.file'\\nfunction DownloadJarFromBlob([string]$blobUri, [string]$localOutputFilePath) {\\n\t$BlobFile = [Microsoft.WindowsAzure.Storage.Blob.CloudBlob]::new($blobUri)\\n\t$DownLoadTask = $BlobFile.DownloadToFileAsync($localOutputFilePath, 4)\\n\t$DownLoadTask\\n}\\n\\nfunction UploadToFileShare([string]$uploadUri, [string]$localFilePath) {\\n\t$CloudFile = [Microsoft.WindowsAzure.Storage.File.CloudFile]::New($uploadUri)\\n\t$UploadTask = $CloudFile.UploadFromFileAsync($localFilePath)\\n\t$UploadTask\\n}\\n\\nConnect-AzAccount -Identity\\nDownloadJarFromBlob $blobUri $localFilePath\\nUploadToFileShare $uploadUri $localFilePath\",\n\"timeout\": \"PT1H\",\n},\n},\n},\n}"
+              armTemplateOutput: "map[string]any{\n\"$schema\": \"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#\",\n\"contentVersion\": \"1.0.0.0\",\n\"parameters\":map[string]any{\n\"userAssignedIdentity\":map[string]any{\n\"type\": \"string\",\n\"defaultValue\": userAssignedIdentity,\n},\n\"utcValue\":map[string]any{\n\"type\": \"string\",\n\"defaultValue\": \"[utcNow()]\",\n},\n},\n\"resources\":[]any{\nmap[string]any{\n\"name\": \"Upload_File\",\n\"type\": \"Microsoft.Resources/deploymentScripts\",\n\"apiVersion\": \"2020-10-01\",\n\"identity\":map[string]any{\n\"type\": \"UserAssigned\",\n\"userAssignedIdentities\":map[string]any{\n\"[parameters('userAssignedIdentity')]\":map[string]any{\n},\n},\n},\n\"kind\": \"AzurePowerShell\",\n\"location\": \"[resourceGroup().location]\",\n\"properties\":map[string]any{\n\"azPowerShellVersion\": \"6.2\",\n\"cleanupPreference\": \"OnSuccess\",\n\"environmentVariables\":[]any{\nmap[string]any{\n\"name\": \"uploadUrl\",\n\"secureValue\": uploadUrl,\n},\nmap[string]any{\n\"name\": \"blobUrl\",\n\"secureValue\": blobUrl,\n},\n},\n\"forceUpdateTag\": \"[parameters('utcValue')]\",\n\"retentionInterval\": \"P1D\",\n\"scriptContent\": \"$uploadUri = ${Env:uploadUrl}\\n$blobUri = ${Env:blobUrl}\\n$localFilePath = '/tmp/temp.file'\\nfunction DownloadJarFromBlob([string]$blobUri, [string]$localOutputFilePath) {\\n\t$BlobFile = [Microsoft.WindowsAzure.Storage.Blob.CloudBlob]::new($blobUri)\\n\t$DownLoadTask = $BlobFile.DownloadToFileAsync($localOutputFilePath, 4)\\n\t$DownLoadTask\\n}\\n\\nfunction UploadToFileShare([string]$uploadUri, [string]$localFilePath) {\\n\t$CloudFile = [Microsoft.WindowsAzure.Storage.File.CloudFile]::New($uploadUri)\\n\t$UploadTask = $CloudFile.UploadFromFileAsync($localFilePath)\\n\t$UploadTask\\n}\\n\\nConnect-AzAccount -Identity\\nDownloadJarFromBlob $blobUri $localFilePath\\nUploadToFileShare $uploadUri $localFilePath\",\n\"timeout\": \"PT1H\",\n},\n},\n},\n}"
               armTemplatePayload:
                 $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
                 contentVersion: 1.0.0.0
@@ -45300,6 +45300,7 @@ language:
       - *ref_1332
       - *ref_1333
       - *ref_1334
+    rawJSONAsBytes: false
     responseEnvelopes:
       - *ref_1335
       - *ref_1336

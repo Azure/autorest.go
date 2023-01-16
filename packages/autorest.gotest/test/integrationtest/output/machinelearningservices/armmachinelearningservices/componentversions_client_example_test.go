@@ -67,7 +67,7 @@ func ExampleComponentVersionsClient_NewListPager() {
 		// 					"string": to.Ptr("string"),
 		// 				},
 		// 				IsAnonymous: to.Ptr(false),
-		// 				ComponentSpec: map[string]interface{}{
+		// 				ComponentSpec: map[string]any{
 		// 					"50acbce5-cccc-475a-8ac6-c4da402afbd8": nil,
 		// 				},
 		// 			},
@@ -132,7 +132,7 @@ func ExampleComponentVersionsClient_Get() {
 	// 			"string": to.Ptr("string"),
 	// 		},
 	// 		IsAnonymous: to.Ptr(false),
-	// 		ComponentSpec: map[string]interface{}{
+	// 		ComponentSpec: map[string]any{
 	// 			"1a7c40b5-2029-4f5f-a8d6-fd0822038773": nil,
 	// 		},
 	// 	},
@@ -160,7 +160,7 @@ func ExampleComponentVersionsClient_CreateOrUpdate() {
 				"string": to.Ptr("string"),
 			},
 			IsAnonymous: to.Ptr(false),
-			ComponentSpec: map[string]interface{}{
+			ComponentSpec: map[string]any{
 				"8ced901b-d826-477d-bfef-329da9672513": nil,
 			},
 		},
@@ -192,7 +192,7 @@ func ExampleComponentVersionsClient_CreateOrUpdate() {
 	// 			"string": to.Ptr("string"),
 	// 		},
 	// 		IsAnonymous: to.Ptr(false),
-	// 		ComponentSpec: map[string]interface{}{
+	// 		ComponentSpec: map[string]any{
 	// 			"2de2e74e-457d-4447-a581-933abc2b9d96": nil,
 	// 		},
 	// 	},

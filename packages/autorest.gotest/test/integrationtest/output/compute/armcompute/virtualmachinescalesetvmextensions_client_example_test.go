@@ -34,20 +34,20 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginCreateOrUpdate() {
 			Type:                    to.Ptr("extType"),
 			AutoUpgradeMinorVersion: to.Ptr(true),
 			Publisher:               to.Ptr("extPublisher"),
-			Settings: map[string]interface{}{
+			Settings: map[string]any{
 				"UserName": "xyz@microsoft.com",
-				"items": []interface{}{
-					map[string]interface{}{
+				"items": []any{
+					map[string]any{
 						"name": "text - 2",
 						"type": float64(1),
-						"content": map[string]interface{}{
+						"content": map[string]any{
 							"json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe've included a basic analytics query to get you started. Use the `Edit` button below each section to configure it or add more sections.",
 						},
 					},
-					map[string]interface{}{
+					map[string]any{
 						"name": "query - 2",
 						"type": float64(3),
-						"content": map[string]interface{}{
+						"content": map[string]any{
 							"exportToExcelOptions": "visible",
 							"query":                "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
 							"queryType":            float64(0),
@@ -57,7 +57,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginCreateOrUpdate() {
 						},
 					},
 				},
-				"styleSettings": map[string]interface{}{},
+				"styleSettings": map[string]any{},
 				"test":          float64(1),
 			},
 			TypeHandlerVersion: to.Ptr("1.2"),
@@ -82,7 +82,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginCreateOrUpdate() {
 	// 		AutoUpgradeMinorVersion: to.Ptr(true),
 	// 		ProvisioningState: to.Ptr("Succeeded"),
 	// 		Publisher: to.Ptr("extPublisher"),
-	// 		Settings: map[string]interface{}{
+	// 		Settings: map[string]any{
 	// 			"UserName": "xyz@microsoft.com",
 	// 		},
 	// 		TypeHandlerVersion: to.Ptr("1.2"),
@@ -106,7 +106,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginUpdate() {
 			Type:                    to.Ptr("extType"),
 			AutoUpgradeMinorVersion: to.Ptr(true),
 			Publisher:               to.Ptr("extPublisher"),
-			Settings: map[string]interface{}{
+			Settings: map[string]any{
 				"UserName": "xyz@microsoft.com",
 			},
 			TypeHandlerVersion: to.Ptr("1.2"),
@@ -131,7 +131,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginUpdate() {
 	// 		AutoUpgradeMinorVersion: to.Ptr(true),
 	// 		ProvisioningState: to.Ptr("Succeeded"),
 	// 		Publisher: to.Ptr("extPublisher"),
-	// 		Settings: map[string]interface{}{
+	// 		Settings: map[string]any{
 	// 			"UserName": "xyz@microsoft.com",
 	// 		},
 	// 		TypeHandlerVersion: to.Ptr("1.2"),
@@ -187,7 +187,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_Get() {
 	// 		AutoUpgradeMinorVersion: to.Ptr(true),
 	// 		ProvisioningState: to.Ptr("Succeeded"),
 	// 		Publisher: to.Ptr("extPublisher"),
-	// 		Settings: map[string]interface{}{
+	// 		Settings: map[string]any{
 	// 			"UserName": "xyz@microsoft.com",
 	// 		},
 	// 		TypeHandlerVersion: to.Ptr("1.2"),
@@ -224,7 +224,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_List() {
 	// 				AutoUpgradeMinorVersion: to.Ptr(true),
 	// 				ProvisioningState: to.Ptr("Succeeded"),
 	// 				Publisher: to.Ptr("extPublisher"),
-	// 				Settings: map[string]interface{}{
+	// 				Settings: map[string]any{
 	// 					"UserName": "xyz@microsoft.com",
 	// 				},
 	// 				TypeHandlerVersion: to.Ptr("1.2"),
@@ -239,7 +239,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_List() {
 	// 				AutoUpgradeMinorVersion: to.Ptr(true),
 	// 				ProvisioningState: to.Ptr("Succeeded"),
 	// 				Publisher: to.Ptr("extPublisher1"),
-	// 				Settings: map[string]interface{}{
+	// 				Settings: map[string]any{
 	// 					"UserName": "xyz@microsoft.com",
 	// 				},
 	// 				TypeHandlerVersion: to.Ptr("1.0"),

@@ -58,23 +58,23 @@ func main() {
 
 func prepare() {
 	// From step Generate_Unique_ServiceName
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"outputs": map[string]interface{}{
-			"serviceName": map[string]interface{}{
+		"outputs": map[string]any{
+			"serviceName": map[string]any{
 				"type":  "string",
 				"value": "[substring(variables('serviceNameLong'), 0, 12)]",
 			},
 		},
-		"parameters": map[string]interface{}{
-			"serviceNamePrefix": map[string]interface{}{
+		"parameters": map[string]any{
+			"serviceNamePrefix": map[string]any{
 				"type":         "string",
 				"defaultValue": "asc-",
 			},
 		},
-		"resources": []interface{}{},
-		"variables": map[string]interface{}{
+		"resources": []any{},
+		"variables": map[string]any{
 			"serviceNameLong": "[concat(parameters('serviceNamePrefix'), uniqueString(resourceGroup().id))]",
 		},
 	}
@@ -88,37 +88,37 @@ func prepare() {
 	serviceName = deploymentExtend.Properties.Outputs.(map[string]interface{})["serviceName"].(map[string]interface{})["value"].(string)
 
 	// From step Create_Application_Insight_Instance
-	template = map[string]interface{}{
+	template = map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"outputs": map[string]interface{}{
-			"insightsInstrumentationKey": map[string]interface{}{
+		"outputs": map[string]any{
+			"insightsInstrumentationKey": map[string]any{
 				"type":  "string",
 				"value": "[reference(resourceId('Microsoft.Insights/components', parameters('name')), '2014-04-01').InstrumentationKey]",
 			},
 		},
-		"parameters": map[string]interface{}{
-			"name": map[string]interface{}{
+		"parameters": map[string]any{
+			"name": map[string]any{
 				"type":         "string",
 				"defaultValue": "asc-api-ai-instance",
-				"metadata": map[string]interface{}{
+				"metadata": map[string]any{
 					"description": "Name of Application Insights resource.",
 				},
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "[parameters('name')]",
 				"type":       "microsoft.insights/components",
 				"apiVersion": "2014-04-01",
 				"location":   "eastus",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"ApplicationId":    "[parameters('name')]",
 					"Application_Type": "web",
 					"Flow_Type":        "Redfield",
 					"Request_Source":   "CustomDeployment",
 				},
-				"tags": map[string]interface{}{},
+				"tags": map[string]any{},
 			},
 		},
 	}
@@ -132,49 +132,49 @@ func prepare() {
 	insightsInstrumentationKey = deploymentExtend.Properties.Outputs.(map[string]interface{})["insightsInstrumentationKey"].(map[string]interface{})["value"].(string)
 
 	// From step Add_Dns_Cname_Record
-	template = map[string]interface{}{
+	template = map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"parameters": map[string]interface{}{
-			"userAssignedIdentity": map[string]interface{}{
+		"parameters": map[string]any{
+			"userAssignedIdentity": map[string]any{
 				"type":         "string",
 				"defaultValue": userAssignedIdentity,
 			},
-			"utcValue": map[string]interface{}{
+			"utcValue": map[string]any{
 				"type":         "string",
 				"defaultValue": "[utcNow()]",
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "Add_Dns_Cname_Record",
 				"type":       "Microsoft.Resources/deploymentScripts",
 				"apiVersion": "2020-10-01",
-				"identity": map[string]interface{}{
+				"identity": map[string]any{
 					"type": "UserAssigned",
-					"userAssignedIdentities": map[string]interface{}{
-						"[parameters('userAssignedIdentity')]": map[string]interface{}{},
+					"userAssignedIdentities": map[string]any{
+						"[parameters('userAssignedIdentity')]": map[string]any{},
 					},
 				},
 				"kind":     "AzurePowerShell",
 				"location": "[resourceGroup().location]",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"azPowerShellVersion": "6.2",
 					"cleanupPreference":   "OnSuccess",
-					"environmentVariables": []interface{}{
-						map[string]interface{}{
+					"environmentVariables": []any{
+						map[string]any{
 							"name":  "resourceGroupName",
 							"value": dnsResourceGroup,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsZoneName",
 							"value": customDomainName,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsCname",
 							"value": dnsCname,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsCnameAlias",
 							"value": serviceName + ascDomainName,
 						},
@@ -578,7 +578,7 @@ func springSample() {
 	}
 	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"databaseName": "mysqldb",
 				"username":     mysqlKey,
 			},
@@ -597,8 +597,8 @@ func springSample() {
 	// From step Bindings_Update
 	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
-				"anotherLayer": map[string]interface{}{
+			BindingParameters: map[string]any{
+				"anotherLayer": map[string]any{
 					"databaseName": "mysqldb2",
 					"username":     mysqlKey,
 				},
@@ -705,41 +705,41 @@ func springSample() {
 	uploadUrl = *appsClientGetResourceUploadURLResponse.UploadURL
 
 	// From step Upload_File
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"parameters": map[string]interface{}{
-			"userAssignedIdentity": map[string]interface{}{
+		"parameters": map[string]any{
+			"userAssignedIdentity": map[string]any{
 				"type":         "string",
 				"defaultValue": userAssignedIdentity,
 			},
-			"utcValue": map[string]interface{}{
+			"utcValue": map[string]any{
 				"type":         "string",
 				"defaultValue": "[utcNow()]",
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "Upload_File",
 				"type":       "Microsoft.Resources/deploymentScripts",
 				"apiVersion": "2020-10-01",
-				"identity": map[string]interface{}{
+				"identity": map[string]any{
 					"type": "UserAssigned",
-					"userAssignedIdentities": map[string]interface{}{
-						"[parameters('userAssignedIdentity')]": map[string]interface{}{},
+					"userAssignedIdentities": map[string]any{
+						"[parameters('userAssignedIdentity')]": map[string]any{},
 					},
 				},
 				"kind":     "AzurePowerShell",
 				"location": "[resourceGroup().location]",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"azPowerShellVersion": "6.2",
 					"cleanupPreference":   "OnSuccess",
-					"environmentVariables": []interface{}{
-						map[string]interface{}{
+					"environmentVariables": []any{
+						map[string]any{
 							"name":        "uploadUrl",
 							"secureValue": uploadUrl,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":        "blobUrl",
 							"secureValue": blobUrl,
 						},
@@ -980,45 +980,45 @@ func springSample() {
 
 func cleanup() {
 	// From step delete_cname_record
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"parameters": map[string]interface{}{
-			"userAssignedIdentity": map[string]interface{}{
+		"parameters": map[string]any{
+			"userAssignedIdentity": map[string]any{
 				"type":         "string",
 				"defaultValue": userAssignedIdentity,
 			},
-			"utcValue": map[string]interface{}{
+			"utcValue": map[string]any{
 				"type":         "string",
 				"defaultValue": "[utcNow()]",
 			},
 		},
-		"resources": []interface{}{
-			map[string]interface{}{
+		"resources": []any{
+			map[string]any{
 				"name":       "delete_cname_record",
 				"type":       "Microsoft.Resources/deploymentScripts",
 				"apiVersion": "2020-10-01",
-				"identity": map[string]interface{}{
+				"identity": map[string]any{
 					"type": "UserAssigned",
-					"userAssignedIdentities": map[string]interface{}{
-						"[parameters('userAssignedIdentity')]": map[string]interface{}{},
+					"userAssignedIdentities": map[string]any{
+						"[parameters('userAssignedIdentity')]": map[string]any{},
 					},
 				},
 				"kind":     "AzurePowerShell",
 				"location": "[resourceGroup().location]",
-				"properties": map[string]interface{}{
+				"properties": map[string]any{
 					"azPowerShellVersion": "6.2",
 					"cleanupPreference":   "OnSuccess",
-					"environmentVariables": []interface{}{
-						map[string]interface{}{
+					"environmentVariables": []any{
+						map[string]any{
 							"name":  "resourceGroupName",
 							"value": dnsResourceGroup,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsCname",
 							"value": dnsCname,
 						},
-						map[string]interface{}{
+						map[string]any{
 							"name":  "dnsZoneName",
 							"value": customDomainName,
 						},

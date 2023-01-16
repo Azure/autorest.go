@@ -41,7 +41,7 @@ func ExampleBindingsClient_Get() {
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 	// 	Properties: &armappplatform.BindingResourceProperties{
-	// 		BindingParameters: map[string]interface{}{
+	// 		BindingParameters: map[string]any{
 	// 			"apiType": "SQL",
 	// 			"databaseName": "db1",
 	// 		},
@@ -68,7 +68,7 @@ func ExampleBindingsClient_BeginCreateOrUpdate() {
 	}
 	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"apiType":      "SQL",
 				"databaseName": "db1",
 			},
@@ -91,7 +91,7 @@ func ExampleBindingsClient_BeginCreateOrUpdate() {
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 	// 	Properties: &armappplatform.BindingResourceProperties{
-	// 		BindingParameters: map[string]interface{}{
+	// 		BindingParameters: map[string]any{
 	// 			"apiType": "SQL",
 	// 			"databaseName": "db1",
 	// 		},
@@ -139,7 +139,7 @@ func ExampleBindingsClient_BeginUpdate() {
 	}
 	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"apiType":      "SQL",
 				"databaseName": "db1",
 			},
@@ -161,7 +161,7 @@ func ExampleBindingsClient_BeginUpdate() {
 	// 	Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 	// 	ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 	// 	Properties: &armappplatform.BindingResourceProperties{
-	// 		BindingParameters: map[string]interface{}{
+	// 		BindingParameters: map[string]any{
 	// 			"apiType": "SQL",
 	// 			"databaseName": "db1",
 	// 		},
@@ -204,7 +204,7 @@ func ExampleBindingsClient_NewListPager() {
 		// 			Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 		// 			ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 		// 			Properties: &armappplatform.BindingResourceProperties{
-		// 				BindingParameters: map[string]interface{}{
+		// 				BindingParameters: map[string]any{
 		// 					"apiType": "SQL",
 		// 					"databaseName": "db1",
 		// 				},

@@ -438,15 +438,15 @@ func (testsuite *MockTestSuite) TestWorkspaces_Diagnose() {
 	testsuite.Require().NoError(err, "Failed to create client")
 	poller, err := client.BeginDiagnose(ctx, "workspace-1234", "testworkspace", &armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
 		Value: &armmachinelearningservices.DiagnoseRequestProperties{
-			ApplicationInsights: map[string]interface{}{},
-			ContainerRegistry:   map[string]interface{}{},
-			DNSResolution:       map[string]interface{}{},
-			KeyVault:            map[string]interface{}{},
-			Nsg:                 map[string]interface{}{},
-			Others:              map[string]interface{}{},
-			ResourceLock:        map[string]interface{}{},
-			StorageAccount:      map[string]interface{}{},
-			Udr:                 map[string]interface{}{},
+			ApplicationInsights: map[string]any{},
+			ContainerRegistry:   map[string]any{},
+			DNSResolution:       map[string]any{},
+			KeyVault:            map[string]any{},
+			Nsg:                 map[string]any{},
+			Others:              map[string]any{},
+			ResourceLock:        map[string]any{},
+			StorageAccount:      map[string]any{},
+			Udr:                 map[string]any{},
 		},
 	},
 	})
@@ -3242,8 +3242,8 @@ func (testsuite *MockTestSuite) TestBatchEndpoints_Update() {
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialBatchEndpointPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),
@@ -3507,8 +3507,8 @@ func (testsuite *MockTestSuite) TestBatchDeployments_List() {
 						Resources: &armmachinelearningservices.ResourceConfiguration{
 							InstanceCount: to.Ptr[int32](1),
 							InstanceType:  to.Ptr("string"),
-							Properties: map[string]interface{}{
-								"string": map[string]interface{}{
+							Properties: map[string]any{
+								"string": map[string]any{
 									"a3c13e2e-a213-4cac-9f5a-b49966906ad6": nil,
 								},
 							},
@@ -3614,8 +3614,8 @@ func (testsuite *MockTestSuite) TestBatchDeployments_Get() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"843c2bb4-e5f1-4267-98c8-ba22a99dbb00": nil,
 					},
 				},
@@ -3651,8 +3651,8 @@ func (testsuite *MockTestSuite) TestBatchDeployments_Update() {
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),
@@ -3753,8 +3753,8 @@ func (testsuite *MockTestSuite) TestBatchDeployments_Update() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"1e5e1cf9-b0ea-4cf6-9764-e750bf85c10a": nil,
 					},
 				},
@@ -3824,8 +3824,8 @@ func (testsuite *MockTestSuite) TestBatchDeployments_CreateOrUpdate() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"cd3c37dc-2876-4ca4-8a54-21bd7619724a": nil,
 					},
 				},
@@ -3901,8 +3901,8 @@ func (testsuite *MockTestSuite) TestBatchDeployments_CreateOrUpdate() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"4939850d-8eae-4343-8566-0826259a2ad1": nil,
 					},
 				},
@@ -4436,7 +4436,7 @@ func (testsuite *MockTestSuite) TestComponentVersions_List() {
 							"string": to.Ptr("string"),
 						},
 						IsAnonymous: to.Ptr(false),
-						ComponentSpec: map[string]interface{}{
+						ComponentSpec: map[string]any{
 							"50acbce5-cccc-475a-8ac6-c4da402afbd8": nil,
 						},
 					},
@@ -4494,7 +4494,7 @@ func (testsuite *MockTestSuite) TestComponentVersions_Get() {
 				"string": to.Ptr("string"),
 			},
 			IsAnonymous: to.Ptr(false),
-			ComponentSpec: map[string]interface{}{
+			ComponentSpec: map[string]any{
 				"1a7c40b5-2029-4f5f-a8d6-fd0822038773": nil,
 			},
 		},
@@ -4524,7 +4524,7 @@ func (testsuite *MockTestSuite) TestComponentVersions_CreateOrUpdate() {
 				"string": to.Ptr("string"),
 			},
 			IsAnonymous: to.Ptr(false),
-			ComponentSpec: map[string]interface{}{
+			ComponentSpec: map[string]any{
 				"8ced901b-d826-477d-bfef-329da9672513": nil,
 			},
 		},
@@ -4552,7 +4552,7 @@ func (testsuite *MockTestSuite) TestComponentVersions_CreateOrUpdate() {
 				"string": to.Ptr("string"),
 			},
 			IsAnonymous: to.Ptr(false),
-			ComponentSpec: map[string]interface{}{
+			ComponentSpec: map[string]any{
 				"2de2e74e-457d-4447-a581-933abc2b9d96": nil,
 			},
 		},
@@ -5794,8 +5794,8 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 						Resources: &armmachinelearningservices.ResourceConfiguration{
 							InstanceCount: to.Ptr[int32](1),
 							InstanceType:  to.Ptr("string"),
-							Properties: map[string]interface{}{
-								"string": map[string]interface{}{
+							Properties: map[string]any{
+								"string": map[string]any{
 									"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 								},
 							},
@@ -5921,14 +5921,14 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 								JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 							},
 						},
-						Parameters: map[string]interface{}{
+						Parameters: map[string]any{
 							"string": "string",
 						},
 						Resources: &armmachinelearningservices.ResourceConfiguration{
 							InstanceCount: to.Ptr[int32](1),
 							InstanceType:  to.Ptr("string"),
-							Properties: map[string]interface{}{
-								"string": map[string]interface{}{
+							Properties: map[string]any{
+								"string": map[string]any{
 									"7aad5998-6c83-4ca9-b50a-b44dfc43f420": nil,
 								},
 							},
@@ -6014,7 +6014,7 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 								JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 							},
 						},
-						Settings: map[string]interface{}{},
+						Settings: map[string]any{},
 					},
 				}},
 		}
@@ -6099,8 +6099,8 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 						SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 							SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 						},
-						SearchSpace: map[string]interface{}{
-							"string": map[string]interface{}{},
+						SearchSpace: map[string]any{
+							"string": map[string]any{},
 						},
 						Trial: &armmachinelearningservices.TrialComponent{
 							CodeID:  to.Ptr("string"),
@@ -6116,8 +6116,8 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 							Resources: &armmachinelearningservices.ResourceConfiguration{
 								InstanceCount: to.Ptr[int32](1),
 								InstanceType:  to.Ptr("string"),
-								Properties: map[string]interface{}{
-									"string": map[string]interface{}{
+								Properties: map[string]any{
+									"string": map[string]any{
 										"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 									},
 								},
@@ -6223,8 +6223,8 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 					},
 				},
@@ -6338,14 +6338,14 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 				},
 			},
-			Parameters: map[string]interface{}{
+			Parameters: map[string]any{
 				"string": "string",
 			},
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"8385cf05-78c0-41ef-b31d-36796a678e19": nil,
 					},
 				},
@@ -6419,7 +6419,7 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 				},
 			},
-			Settings: map[string]interface{}{},
+			Settings: map[string]any{},
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.JobBaseData) {
@@ -6492,8 +6492,8 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 			SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 				SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 			},
-			SearchSpace: map[string]interface{}{
-				"string": map[string]interface{}{},
+			SearchSpace: map[string]any{
+				"string": map[string]any{},
 			},
 			Trial: &armmachinelearningservices.TrialComponent{
 				CodeID:  to.Ptr("string"),
@@ -6509,8 +6509,8 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 				Resources: &armmachinelearningservices.ResourceConfiguration{
 					InstanceCount: to.Ptr[int32](1),
 					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
+					Properties: map[string]any{
+						"string": map[string]any{
 							"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 						},
 					},
@@ -6583,8 +6583,8 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 					},
 				},
@@ -6679,8 +6679,8 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
 					},
 				},
@@ -6780,8 +6780,8 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 					},
 				},
@@ -6860,14 +6860,14 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 				},
 			},
-			Parameters: map[string]interface{}{
+			Parameters: map[string]any{
 				"string": "string",
 			},
 			Resources: &armmachinelearningservices.ResourceConfiguration{
 				InstanceCount: to.Ptr[int32](1),
 				InstanceType:  to.Ptr("string"),
-				Properties: map[string]interface{}{
-					"string": map[string]interface{}{
+				Properties: map[string]any{
+					"string": map[string]any{
 						"a0847709-f5aa-4561-8ba5-d915d403fdcf": nil,
 					},
 				},
@@ -6924,7 +6924,7 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 				},
 			},
-			Settings: map[string]interface{}{},
+			Settings: map[string]any{},
 		},
 	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json")
@@ -6981,7 +6981,7 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 				},
 			},
-			Settings: map[string]interface{}{},
+			Settings: map[string]any{},
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.JobBaseData) {
@@ -7037,8 +7037,8 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 			SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 				SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 			},
-			SearchSpace: map[string]interface{}{
-				"string": map[string]interface{}{},
+			SearchSpace: map[string]any{
+				"string": map[string]any{},
 			},
 			Trial: &armmachinelearningservices.TrialComponent{
 				CodeID:  to.Ptr("string"),
@@ -7054,8 +7054,8 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 				Resources: &armmachinelearningservices.ResourceConfiguration{
 					InstanceCount: to.Ptr[int32](1),
 					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
+					Properties: map[string]any{
+						"string": map[string]any{
 							"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 						},
 					},
@@ -7120,8 +7120,8 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 			SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
 				SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
 			},
-			SearchSpace: map[string]interface{}{
-				"string": map[string]interface{}{},
+			SearchSpace: map[string]any{
+				"string": map[string]any{},
 			},
 			Trial: &armmachinelearningservices.TrialComponent{
 				CodeID:  to.Ptr("string"),
@@ -7137,8 +7137,8 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 				Resources: &armmachinelearningservices.ResourceConfiguration{
 					InstanceCount: to.Ptr[int32](1),
 					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
+					Properties: map[string]any{
+						"string": map[string]any{
 							"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 						},
 					},
@@ -7676,8 +7676,8 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_Update() {
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),
@@ -8237,8 +8237,8 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_Update() {
 	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),
@@ -8355,8 +8355,8 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_Update() {
 	poller, err = client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-			UserAssignedIdentities: map[string]interface{}{
-				"string": map[string]interface{}{},
+			UserAssignedIdentities: map[string]any{
+				"string": map[string]any{},
 			},
 		},
 		Kind:     to.Ptr("string"),

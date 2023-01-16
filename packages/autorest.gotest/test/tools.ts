@@ -1042,7 +1042,7 @@ schemas:
           name: any
           description: Anything
         go:
-          name: interface{}
+          name: any
           description: Anything
       protocol: {}
   dateTimes:

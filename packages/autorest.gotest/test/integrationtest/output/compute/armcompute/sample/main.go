@@ -66,24 +66,24 @@ func scenario0Sample() {
 	fakeScenarioVar := "signalrswaggertest5"
 	resourceName := resourceName
 	// From step Generate_Unique_Name
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"outputs": map[string]interface{}{
-			"name": map[string]interface{}{
+		"outputs": map[string]any{
+			"name": map[string]any{
 				"type":  "string",
 				"value": "[variables('name').value]",
 			},
-			"resourceName": map[string]interface{}{
+			"resourceName": map[string]any{
 				"type":  "string",
 				"value": "[variables('name').value]",
 			},
 		},
-		"resources": []interface{}{},
-		"variables": map[string]interface{}{
-			"name": map[string]interface{}{
+		"resources": []any{},
+		"variables": map[string]any{
+			"name": map[string]any{
 				"type": "string",
-				"metadata": map[string]interface{}{
+				"metadata": map[string]any{
 					"description": "Name of the SignalR service.",
 				},
 				"value": "[concat('sw',uniqueString(resourceGroup().id))]",

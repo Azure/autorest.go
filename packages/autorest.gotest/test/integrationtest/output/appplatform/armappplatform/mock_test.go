@@ -1215,7 +1215,7 @@ func (testsuite *MockTestSuite) TestBindings_Get() {
 		Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 		ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"apiType":      "SQL",
 				"databaseName": "db1",
 			},
@@ -1244,7 +1244,7 @@ func (testsuite *MockTestSuite) TestBindings_CreateOrUpdate() {
 	testsuite.Require().NoError(err, "Failed to create client")
 	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"apiType":      "SQL",
 				"databaseName": "db1",
 			},
@@ -1261,7 +1261,7 @@ func (testsuite *MockTestSuite) TestBindings_CreateOrUpdate() {
 		Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 		ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"apiType":      "SQL",
 				"databaseName": "db1",
 			},
@@ -1304,7 +1304,7 @@ func (testsuite *MockTestSuite) TestBindings_Update() {
 	testsuite.Require().NoError(err, "Failed to create client")
 	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"apiType":      "SQL",
 				"databaseName": "db1",
 			},
@@ -1320,7 +1320,7 @@ func (testsuite *MockTestSuite) TestBindings_Update() {
 		Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 		ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 		Properties: &armappplatform.BindingResourceProperties{
-			BindingParameters: map[string]interface{}{
+			BindingParameters: map[string]any{
 				"apiType":      "SQL",
 				"databaseName": "db1",
 			},
@@ -1359,7 +1359,7 @@ func (testsuite *MockTestSuite) TestBindings_List() {
 					Type: to.Ptr("Microsoft.AppPlatform/Spring/apps/bindings"),
 					ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding"),
 					Properties: &armappplatform.BindingResourceProperties{
-						BindingParameters: map[string]interface{}{
+						BindingParameters: map[string]any{
 							"apiType":      "SQL",
 							"databaseName": "db1",
 						},

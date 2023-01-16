@@ -10,6 +10,7 @@ package armcompute_test
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -65,6 +66,7 @@ func TestSampleTestSuite(t *testing.T) {
 func (testsuite *SampleTestSuite) Prepare() {
 	var err error
 	// From step Delete-proximity-placement-group
+	fmt.Println("Call operation: ProximityPlacementGroups_Delete")
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)
@@ -77,24 +79,24 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 	resourceName := testsuite.resourceName
 	var err error
 	// From step Generate_Unique_Name
-	template := map[string]interface{}{
+	template := map[string]any{
 		"$schema":        "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 		"contentVersion": "1.0.0.0",
-		"outputs": map[string]interface{}{
-			"name": map[string]interface{}{
+		"outputs": map[string]any{
+			"name": map[string]any{
 				"type":  "string",
 				"value": "[variables('name').value]",
 			},
-			"resourceName": map[string]interface{}{
+			"resourceName": map[string]any{
 				"type":  "string",
 				"value": "[variables('name').value]",
 			},
 		},
-		"resources": []interface{}{},
-		"variables": map[string]interface{}{
-			"name": map[string]interface{}{
+		"resources": []any{},
+		"variables": map[string]any{
+			"name": map[string]any{
 				"type": "string",
-				"metadata": map[string]interface{}{
+				"metadata": map[string]any{
 					"description": "Name of the SignalR service.",
 				},
 				"value": "[concat('sw',uniqueString(resourceGroup().id))]",
@@ -113,6 +115,7 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 	testsuite.resourceName = deploymentExtend.Properties.Outputs.(map[string]interface{})["resourceName"].(map[string]interface{})["value"].(string)
 
 	// From step Create-or-Update-a-proximity-placement-group
+	fmt.Println("Call operation: ProximityPlacementGroups_CreateOrUpdate")
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	proximityPlacementGroupsClientCreateOrUpdateResponse, err := proximityPlacementGroupsClient.CreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, armcompute.ProximityPlacementGroup{
@@ -125,10 +128,12 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 	fakeScenarioVar = *proximityPlacementGroupsClientCreateOrUpdateResponse.ID
 
 	// From step Delete-proximity_placement_group
+	fmt.Println("Call operation: ProximityPlacementGroups_Delete")
 	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Create_a_vm_with_Host_Encryption_using_encryptionAtHost_property
+	fmt.Println("Call operation: VirtualMachines_CreateOrUpdate")
 	virtualMachinesClient, err := armcompute.NewVirtualMachinesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, "myVM", armcompute.VirtualMachine{
@@ -186,6 +191,7 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 func (testsuite *SampleTestSuite) TestScenario1() {
 	var err error
 	// From step Delete_proximity_placement_group
+	fmt.Println("Call operation: ProximityPlacementGroups_Delete")
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)

@@ -363,15 +363,15 @@ func ExampleWorkspacesClient_BeginDiagnose() {
 	}
 	poller, err := client.BeginDiagnose(ctx, "workspace-1234", "testworkspace", &armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
 		Value: &armmachinelearningservices.DiagnoseRequestProperties{
-			ApplicationInsights: map[string]interface{}{},
-			ContainerRegistry:   map[string]interface{}{},
-			DNSResolution:       map[string]interface{}{},
-			KeyVault:            map[string]interface{}{},
-			Nsg:                 map[string]interface{}{},
-			Others:              map[string]interface{}{},
-			ResourceLock:        map[string]interface{}{},
-			StorageAccount:      map[string]interface{}{},
-			Udr:                 map[string]interface{}{},
+			ApplicationInsights: map[string]any{},
+			ContainerRegistry:   map[string]any{},
+			DNSResolution:       map[string]any{},
+			KeyVault:            map[string]any{},
+			Nsg:                 map[string]any{},
+			Others:              map[string]any{},
+			ResourceLock:        map[string]any{},
+			StorageAccount:      map[string]any{},
+			Udr:                 map[string]any{},
 		},
 	},
 	})

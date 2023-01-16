@@ -8,6 +8,7 @@ var err error
     // Unsupported step
 {%- else %}
     {%- if step.type == "restCall" %}
+    fmt.Println("Call operation: {{step.exampleModel.operationGroup.language.go.name}}_{{step.exampleModel.operation.language.go.name}}")
         {%- set example = step.exampleModel %}
         {%- set clientVariable = jsFunc.lowerFirst(example.operationGroup.language.go.clientName) %}
         {%- if allVariables.indexOf(clientVariable)<0 %}
