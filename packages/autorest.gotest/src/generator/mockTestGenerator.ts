@@ -410,15 +410,15 @@ export class MockTestDataRender extends BaseDataRender {
         const timeFormat = (<DateTimeSchema>schema).format === 'date-time-rfc1123' ? 'time.RFC1123' : 'time.RFC3339Nano';
         ret = `func() time.Time { t, _ := time.Parse(${timeFormat}, ${this.getStringValue(rawValue)}); return t}()`;
       }
-    } else if (goType === 'map[string]any') {
+    } else if (goType === 'map[string]any' || goType === 'map[string]interface{}') {
       ret = this.objectToString(rawValue);
-    } else if (goType === 'any' && Array.isArray(rawValue)) {
+    } else if ((goType === 'any' || goType === 'interface{}') && Array.isArray(rawValue)) {
       ret = this.arrayToString(rawValue);
-    } else if (goType === 'any' && typeof rawValue === 'object') {
+    } else if ((goType === 'any' || goType === 'interface{}') && typeof rawValue === 'object') {
       ret = this.objectToString(rawValue);
-    } else if (goType === 'any' && _.isNumber(rawValue)) {
+    } else if ((goType === 'any' || goType === 'interface{}') && _.isNumber(rawValue)) {
       ret = `float64(${this.getNumberValue(rawValue)})`;
-    } else if (goType === 'any' && _.isString(rawValue)) {
+    } else if ((goType === 'any' || goType === 'interface{}') && _.isString(rawValue)) {
       ret = this.getStringValue(rawValue);
     } else if (goType === 'bool') {
       ret = this.getBoolValue(rawValue);

@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Mon, 16 Jan 2023 06:25:05 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Jan 2023 05:21:21 GMT and should not be manually modified.
+
+## 4.5.1
+Tue, 17 Jan 2023 05:21:21 GMT
+
+### Patches
+
+- Fix test generation problem of any type.
 
 ## 4.5.0
 Mon, 16 Jan 2023 06:25:05 GMT
