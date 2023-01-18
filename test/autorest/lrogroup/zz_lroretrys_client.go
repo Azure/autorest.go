@@ -11,24 +11,16 @@ package lrogroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // LRORetrysClient contains the methods for the LRORetrys group.
-// Don't use this type directly, use NewLRORetrysClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type LRORetrysClient struct {
-	pl runtime.Pipeline
-}
-
-// NewLRORetrysClient creates a new instance of LRORetrysClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewLRORetrysClient(pl runtime.Pipeline) *LRORetrysClient {
-	client := &LRORetrysClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return
@@ -44,9 +36,9 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LRORetrysClientDelete202Retry200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LRORetrysClientDelete202Retry200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LRORetrysClientDelete202Retry200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LRORetrysClientDelete202Retry200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -60,7 +52,7 @@ func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -94,9 +86,9 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -110,7 +102,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -146,9 +138,9 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -164,7 +156,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -198,9 +190,9 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LRORetrysClientPost202Retry200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LRORetrysClientPost202Retry200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LRORetrysClientPost202Retry200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LRORetrysClientPost202Retry200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -214,7 +206,7 @@ func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -252,9 +244,9 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LRORetrysClientPostAsyncRelativeRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LRORetrysClientPostAsyncRelativeRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LRORetrysClientPostAsyncRelativeRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LRORetrysClientPostAsyncRelativeRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -269,7 +261,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -308,9 +300,9 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LRORetrysClientPut201CreatingSucceeded200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LRORetrysClientPut201CreatingSucceeded200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LRORetrysClientPut201CreatingSucceeded200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LRORetrysClientPut201CreatingSucceeded200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -325,7 +317,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, p
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -361,9 +353,9 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LRORetrysClientPutAsyncRelativeRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LRORetrysClientPutAsyncRelativeRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LRORetrysClientPutAsyncRelativeRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LRORetrysClientPutAsyncRelativeRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -378,7 +370,7 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

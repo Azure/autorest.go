@@ -11,6 +11,7 @@ package aztables
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,24 +20,11 @@ import (
 )
 
 // ServiceClient contains the methods for the Service group.
-// Don't use this type directly, use NewServiceClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ServiceClient struct {
+	internal *azcore.Client
 	endpoint string
 	version  Enum0
-	pl       runtime.Pipeline
-}
-
-// NewServiceClient creates a new instance of ServiceClient with the specified values.
-//   - endpoint - The URL of the service account or table that is the target of the desired operation.
-//   - version - Specifies the version of the operation to use for this request.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *ServiceClient {
-	client := &ServiceClient{
-		endpoint: endpoint,
-		version:  version,
-		pl:       pl,
-	}
-	return client
 }
 
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin
@@ -52,7 +40,7 @@ func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, c
 	if err != nil {
 		return ServiceClientGetPropertiesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientGetPropertiesResponse{}, err
 	}
@@ -114,7 +102,7 @@ func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, c
 	if err != nil {
 		return ServiceClientGetStatisticsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientGetStatisticsResponse{}, err
 	}
@@ -184,7 +172,7 @@ func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, c
 	if err != nil {
 		return ServiceClientSetPropertiesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientSetPropertiesResponse{}, err
 	}

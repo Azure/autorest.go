@@ -7,7 +7,6 @@ import (
 	"context"
 	"generatortests"
 	"io"
-	"io/ioutil"
 	"strings"
 	"testing"
 
@@ -17,17 +16,26 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newFormdataClient() *FormdataClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewFormdataClient(pl)
+func newFormdataClient(t *testing.T) *FormdataClient {
+	client, err := NewFormdataClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewFormdataClient(options *azcore.ClientOptions) (*FormdataClient, error) {
+	client, err := azcore.NewClient("formdatagroup.FormdataClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &FormdataClient{internal: client}, nil
 }
 
 func TestUploadFile(t *testing.T) {
-	client := newFormdataClient()
+	client := newFormdataClient(t)
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFile(context.Background(), streaming.NopCloser(s), "sample", nil)
 	require.NoError(t, err)
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))
@@ -35,11 +43,11 @@ func TestUploadFile(t *testing.T) {
 }
 
 func TestUploadFileViaBody(t *testing.T) {
-	client := newFormdataClient()
+	client := newFormdataClient(t)
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFileViaBody(context.Background(), streaming.NopCloser(s), nil)
 	require.NoError(t, err)
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))
@@ -48,7 +56,7 @@ func TestUploadFileViaBody(t *testing.T) {
 
 func TestUploadFiles(t *testing.T) {
 	t.Skip("missing route in test server")
-	client := newFormdataClient()
+	client := newFormdataClient(t)
 	s1 := strings.NewReader("the data")
 	s2 := strings.NewReader(" to be uploaded")
 	resp, err := client.UploadFiles(context.Background(), []io.ReadSeekCloser{
@@ -56,7 +64,7 @@ func TestUploadFiles(t *testing.T) {
 		streaming.NopCloser(s2),
 	}, nil)
 	require.NoError(t, err)
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))

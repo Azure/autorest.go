@@ -14,13 +14,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newQueriesClient() *QueriesClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewQueriesClient(pl)
+func newQueriesClient(t *testing.T) *QueriesClient {
+	client, err := NewQueriesClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewQueriesClient(options *azcore.ClientOptions) (*QueriesClient, error) {
+	client, err := azcore.NewClient("urlmultigroup.QueriesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &QueriesClient{internal: client}, nil
 }
 
 func TestURLMultiArrayStringMultiEmpty(t *testing.T) {
-	client := newQueriesClient()
+	client := newQueriesClient(t)
 	result, err := client.ArrayStringMultiEmpty(context.Background(), &QueriesClientArrayStringMultiEmptyOptions{
 		ArrayQuery: []string{},
 	})
@@ -29,7 +38,7 @@ func TestURLMultiArrayStringMultiEmpty(t *testing.T) {
 }
 
 func TestURLMultiArrayStringMultiNull(t *testing.T) {
-	client := newQueriesClient()
+	client := newQueriesClient(t)
 	result, err := client.ArrayStringMultiNull(context.Background(), &QueriesClientArrayStringMultiNullOptions{
 		ArrayQuery: nil,
 	})
@@ -39,7 +48,7 @@ func TestURLMultiArrayStringMultiNull(t *testing.T) {
 
 func TestURLMultiArrayStringMultiValid(t *testing.T) {
 	t.Skip("Cannot set nil for string value in string slice")
-	client := newQueriesClient()
+	client := newQueriesClient(t)
 	result, err := client.ArrayStringMultiValid(context.Background(), &QueriesClientArrayStringMultiValidOptions{
 		ArrayQuery: []string{
 			"ArrayQuery1",

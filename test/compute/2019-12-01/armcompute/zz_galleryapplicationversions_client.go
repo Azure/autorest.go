@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,9 +24,8 @@ import (
 // GalleryApplicationVersionsClient contains the methods for the GalleryApplicationVersions group.
 // Don't use this type directly, use NewGalleryApplicationVersionsClient() instead.
 type GalleryApplicationVersionsClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewGalleryApplicationVersionsClient creates a new instance of GalleryApplicationVersionsClient with the specified values.
@@ -37,21 +34,13 @@ type GalleryApplicationVersionsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewGalleryApplicationVersionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*GalleryApplicationVersionsClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armcompute.GalleryApplicationVersionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &GalleryApplicationVersionsClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -75,9 +64,9 @@ func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleryApplicationVersionsClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[GalleryApplicationVersionsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleryApplicationVersionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[GalleryApplicationVersionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -90,7 +79,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +112,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateCreateRequest(ctx 
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -150,9 +139,9 @@ func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleryApplicationVersionsClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[GalleryApplicationVersionsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleryApplicationVersionsClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[GalleryApplicationVersionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -165,7 +154,7 @@ func (client *GalleryApplicationVersionsClient) deleteOperation(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +187,7 @@ func (client *GalleryApplicationVersionsClient) deleteCreateRequest(ctx context.
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +213,7 @@ func (client *GalleryApplicationVersionsClient) Get(ctx context.Context, resourc
 	if err != nil {
 		return GalleryApplicationVersionsClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return GalleryApplicationVersionsClientGetResponse{}, err
 	}
@@ -257,7 +246,7 @@ func (client *GalleryApplicationVersionsClient) getCreateRequest(ctx context.Con
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -305,7 +294,7 @@ func (client *GalleryApplicationVersionsClient) NewListByGalleryApplicationPager
 			if err != nil {
 				return GalleryApplicationVersionsClientListByGalleryApplicationResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return GalleryApplicationVersionsClientListByGalleryApplicationResponse{}, err
 			}
@@ -336,7 +325,7 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationCreateRe
 		return nil, errors.New("parameter galleryApplicationName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationName}", url.PathEscape(galleryApplicationName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -375,9 +364,9 @@ func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleryApplicationVersionsClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[GalleryApplicationVersionsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleryApplicationVersionsClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[GalleryApplicationVersionsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -390,7 +379,7 @@ func (client *GalleryApplicationVersionsClient) update(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -423,7 +412,7 @@ func (client *GalleryApplicationVersionsClient) updateCreateRequest(ctx context.
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

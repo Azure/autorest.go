@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,9 +24,8 @@ import (
 // VirtualMachineScaleSetVMExtensionsClient contains the methods for the VirtualMachineScaleSetVMExtensions group.
 // Don't use this type directly, use NewVirtualMachineScaleSetVMExtensionsClient() instead.
 type VirtualMachineScaleSetVMExtensionsClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewVirtualMachineScaleSetVMExtensionsClient creates a new instance of VirtualMachineScaleSetVMExtensionsClient with the specified values.
@@ -37,21 +34,13 @@ type VirtualMachineScaleSetVMExtensionsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualMachineScaleSetVMExtensionsClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armcompute.VirtualMachineScaleSetVMExtensionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &VirtualMachineScaleSetVMExtensionsClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -73,9 +62,9 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -88,7 +77,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +110,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateCreateRequ
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,9 +137,9 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -163,7 +152,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteOperation(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +185,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteCreateRequest(ctx 
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +211,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context,
 	if err != nil {
 		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, err
 	}
@@ -255,7 +244,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) getCreateRequest(ctx con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +281,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, err
 	}
@@ -321,7 +310,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listCreateRequest(ctx co
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -361,9 +350,9 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -376,7 +365,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -409,7 +398,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) updateCreateRequest(ctx 
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

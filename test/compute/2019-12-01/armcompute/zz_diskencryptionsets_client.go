@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,9 +24,8 @@ import (
 // DiskEncryptionSetsClient contains the methods for the DiskEncryptionSets group.
 // Don't use this type directly, use NewDiskEncryptionSetsClient() instead.
 type DiskEncryptionSetsClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewDiskEncryptionSetsClient creates a new instance of DiskEncryptionSetsClient with the specified values.
@@ -37,21 +34,13 @@ type DiskEncryptionSetsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDiskEncryptionSetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DiskEncryptionSetsClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armcompute.DiskEncryptionSetsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &DiskEncryptionSetsClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -73,9 +62,9 @@ func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiskEncryptionSetsClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DiskEncryptionSetsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -88,7 +77,7 @@ func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +102,7 @@ func (client *DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.
 		return nil, errors.New("parameter diskEncryptionSetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskEncryptionSetName}", url.PathEscape(diskEncryptionSetName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -140,9 +129,9 @@ func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiskEncryptionSetsClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DiskEncryptionSetsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -155,7 +144,7 @@ func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +169,7 @@ func (client *DiskEncryptionSetsClient) deleteCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter diskEncryptionSetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskEncryptionSetName}", url.PathEscape(diskEncryptionSetName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +194,7 @@ func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return DiskEncryptionSetsClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DiskEncryptionSetsClientGetResponse{}, err
 	}
@@ -230,7 +219,7 @@ func (client *DiskEncryptionSetsClient) getCreateRequest(ctx context.Context, re
 		return nil, errors.New("parameter diskEncryptionSetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskEncryptionSetName}", url.PathEscape(diskEncryptionSetName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +260,7 @@ func (client *DiskEncryptionSetsClient) NewListPager(options *DiskEncryptionSets
 			if err != nil {
 				return DiskEncryptionSetsClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return DiskEncryptionSetsClientListResponse{}, err
 			}
@@ -290,7 +279,7 @@ func (client *DiskEncryptionSetsClient) listCreateRequest(ctx context.Context, o
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +321,7 @@ func (client *DiskEncryptionSetsClient) NewListByResourceGroupPager(resourceGrou
 			if err != nil {
 				return DiskEncryptionSetsClientListByResourceGroupResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return DiskEncryptionSetsClientListByResourceGroupResponse{}, err
 			}
@@ -355,7 +344,7 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupCreateRequest(ctx con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -392,9 +381,9 @@ func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiskEncryptionSetsClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DiskEncryptionSetsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -407,7 +396,7 @@ func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -432,7 +421,7 @@ func (client *DiskEncryptionSetsClient) updateCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter diskEncryptionSetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskEncryptionSetName}", url.PathEscape(diskEncryptionSetName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

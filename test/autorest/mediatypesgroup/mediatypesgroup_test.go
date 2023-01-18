@@ -16,13 +16,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newMediaTypesClient() *MediaTypesClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewMediaTypesClient(pl)
+func newMediaTypesClient(t *testing.T) *MediaTypesClient {
+	client, err := NewMediaTypesClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewMediaTypesClient(options *azcore.ClientOptions) (*MediaTypesClient, error) {
+	client, err := azcore.NewClient("mediatypesgroup.MediaTypesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &MediaTypesClient{internal: client}, nil
 }
 
 func TestAnalyzeBody(t *testing.T) {
-	client := newMediaTypesClient()
+	client := newMediaTypesClient(t)
 	body := streaming.NopCloser(bytes.NewReader([]byte("PDF")))
 	result, err := client.AnalyzeBody(context.Background(), ContentTypeApplicationPDF, &MediaTypesClientAnalyzeBodyOptions{
 		Input: body,
@@ -34,7 +43,7 @@ func TestAnalyzeBody(t *testing.T) {
 }
 
 func TestAnalyzeBodyWithJSON(t *testing.T) {
-	client := newMediaTypesClient()
+	client := newMediaTypesClient(t)
 	body := SourcePath{
 		Source: to.Ptr("test"),
 	}
@@ -46,7 +55,7 @@ func TestAnalyzeBodyWithJSON(t *testing.T) {
 }
 
 func TestContentTypeWithEncoding(t *testing.T) {
-	client := newMediaTypesClient()
+	client := newMediaTypesClient(t)
 	result, err := client.ContentTypeWithEncoding(context.Background(), &MediaTypesClientContentTypeWithEncodingOptions{
 		Input: to.Ptr("foo"),
 	})

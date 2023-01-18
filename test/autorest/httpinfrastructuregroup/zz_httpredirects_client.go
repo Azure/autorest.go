@@ -11,24 +11,16 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // HTTPRedirectsClient contains the methods for the HTTPRedirects group.
-// Don't use this type directly, use NewHTTPRedirectsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type HTTPRedirectsClient struct {
-	pl runtime.Pipeline
-}
-
-// NewHTTPRedirectsClient creates a new instance of HTTPRedirectsClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewHTTPRedirectsClient(pl runtime.Pipeline) *HTTPRedirectsClient {
-	client := &HTTPRedirectsClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect
@@ -41,7 +33,7 @@ func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPR
 	if err != nil {
 		return HTTPRedirectsClientDelete307Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientDelete307Response{}, err
 	}
@@ -72,7 +64,7 @@ func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsClientGet300Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet300Response{}, err
 	}
@@ -115,7 +107,7 @@ func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsClientGet301Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet301Response{}, err
 	}
@@ -146,7 +138,7 @@ func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsClientGet302Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet302Response{}, err
 	}
@@ -177,7 +169,7 @@ func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsClientGet307Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet307Response{}, err
 	}
@@ -207,7 +199,7 @@ func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead300Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead300Response{}, err
 	}
@@ -247,7 +239,7 @@ func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead301Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead301Response{}, err
 	}
@@ -277,7 +269,7 @@ func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead302Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead302Response{}, err
 	}
@@ -307,7 +299,7 @@ func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead307Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead307Response{}, err
 	}
@@ -339,7 +331,7 @@ func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPRedirectsClientOptions307Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientOptions307Response{}, err
 	}
@@ -371,7 +363,7 @@ func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRe
 	if err != nil {
 		return HTTPRedirectsClientPatch302Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPatch302Response{}, err
 	}
@@ -411,7 +403,7 @@ func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRe
 	if err != nil {
 		return HTTPRedirectsClientPatch307Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPatch307Response{}, err
 	}
@@ -443,7 +435,7 @@ func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientPost303Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPost303Response{}, err
 	}
@@ -483,7 +475,7 @@ func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientPost307Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPost307Response{}, err
 	}
@@ -515,7 +507,7 @@ func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsClientPut301Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPut301Response{}, err
 	}
@@ -555,7 +547,7 @@ func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsClientPut307Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPut307Response{}, err
 	}

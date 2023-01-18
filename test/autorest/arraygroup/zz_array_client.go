@@ -11,6 +11,7 @@ package arraygroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // ArrayClient contains the methods for the Array group.
-// Don't use this type directly, use NewArrayClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ArrayClient struct {
-	pl runtime.Pipeline
-}
-
-// NewArrayClient creates a new instance of ArrayClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewArrayClient(pl runtime.Pipeline) *ArrayClient {
-	client := &ArrayClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetArrayEmpty - Get an empty array []
@@ -42,7 +34,7 @@ func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayClie
 	if err != nil {
 		return ArrayClientGetArrayEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayEmptyResponse{}, err
 	}
@@ -82,7 +74,7 @@ func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
@@ -122,7 +114,7 @@ func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayC
 	if err != nil {
 		return ArrayClientGetArrayItemNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayItemNullResponse{}, err
 	}
@@ -162,7 +154,7 @@ func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayClien
 	if err != nil {
 		return ArrayClientGetArrayNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayNullResponse{}, err
 	}
@@ -202,7 +194,7 @@ func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayClie
 	if err != nil {
 		return ArrayClientGetArrayValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayValidResponse{}, err
 	}
@@ -243,7 +235,7 @@ func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayClien
 	if err != nil {
 		return ArrayClientGetBase64URLResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBase64URLResponse{}, err
 	}
@@ -284,7 +276,7 @@ func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *A
 	if err != nil {
 		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
@@ -325,7 +317,7 @@ func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options 
 	if err != nil {
 		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
@@ -365,7 +357,7 @@ func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayCli
 	if err != nil {
 		return ArrayClientGetBooleanTfftResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBooleanTfftResponse{}, err
 	}
@@ -406,7 +398,7 @@ func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
@@ -446,7 +438,7 @@ func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayClien
 	if err != nil {
 		return ArrayClientGetByteValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetByteValidResponse{}, err
 	}
@@ -486,7 +478,7 @@ func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayCl
 	if err != nil {
 		return ArrayClientGetComplexEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexEmptyResponse{}, err
 	}
@@ -528,7 +520,7 @@ func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
@@ -570,7 +562,7 @@ func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayClientGetComplexItemNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexItemNullResponse{}, err
 	}
@@ -610,7 +602,7 @@ func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayCli
 	if err != nil {
 		return ArrayClientGetComplexNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexNullResponse{}, err
 	}
@@ -651,7 +643,7 @@ func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayCl
 	if err != nil {
 		return ArrayClientGetComplexValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexValidResponse{}, err
 	}
@@ -692,7 +684,7 @@ func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
@@ -739,7 +731,7 @@ func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
@@ -786,7 +778,7 @@ func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options 
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
@@ -833,7 +825,7 @@ func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
@@ -881,7 +873,7 @@ func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options 
 	if err != nil {
 		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
@@ -927,7 +919,7 @@ func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayC
 	if err != nil {
 		return ArrayClientGetDateTimeValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeValidResponse{}, err
 	}
@@ -973,7 +965,7 @@ func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayClien
 	if err != nil {
 		return ArrayClientGetDateValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateValidResponse{}, err
 	}
@@ -1020,7 +1012,7 @@ func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
@@ -1062,7 +1054,7 @@ func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *
 	if err != nil {
 		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
@@ -1104,7 +1096,7 @@ func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *A
 	if err != nil {
 		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
@@ -1144,7 +1136,7 @@ func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayClientGetDictionaryNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryNullResponse{}, err
 	}
@@ -1186,7 +1178,7 @@ func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayClientGetDictionaryValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryValidResponse{}, err
 	}
@@ -1227,7 +1219,7 @@ func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *Ar
 	if err != nil {
 		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
@@ -1268,7 +1260,7 @@ func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *
 	if err != nil {
 		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
@@ -1308,7 +1300,7 @@ func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayCli
 	if err != nil {
 		return ArrayClientGetDoubleValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDoubleValidResponse{}, err
 	}
@@ -1348,7 +1340,7 @@ func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayC
 	if err != nil {
 		return ArrayClientGetDurationValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDurationValidResponse{}, err
 	}
@@ -1388,7 +1380,7 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGet
 	if err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
@@ -1428,7 +1420,7 @@ func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayClien
 	if err != nil {
 		return ArrayClientGetEnumValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetEnumValidResponse{}, err
 	}
@@ -1469,7 +1461,7 @@ func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
@@ -1510,7 +1502,7 @@ func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *A
 	if err != nil {
 		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
@@ -1550,7 +1542,7 @@ func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayClie
 	if err != nil {
 		return ArrayClientGetFloatValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetFloatValidResponse{}, err
 	}
@@ -1590,7 +1582,7 @@ func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
@@ -1631,7 +1623,7 @@ func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
@@ -1671,7 +1663,7 @@ func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayCl
 	if err != nil {
 		return ArrayClientGetIntegerValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetIntegerValidResponse{}, err
 	}
@@ -1711,7 +1703,7 @@ func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayClientG
 	if err != nil {
 		return ArrayClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetInvalidResponse{}, err
 	}
@@ -1752,7 +1744,7 @@ func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
@@ -1793,7 +1785,7 @@ func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *Ar
 	if err != nil {
 		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
@@ -1833,7 +1825,7 @@ func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayClien
 	if err != nil {
 		return ArrayClientGetLongValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetLongValidResponse{}, err
 	}
@@ -1873,7 +1865,7 @@ func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayClientGetN
 	if err != nil {
 		return ArrayClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetNullResponse{}, err
 	}
@@ -1914,7 +1906,7 @@ func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayClientGetStringEnumValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringEnumValidResponse{}, err
 	}
@@ -1954,7 +1946,7 @@ func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayCli
 	if err != nil {
 		return ArrayClientGetStringValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringValidResponse{}, err
 	}
@@ -1995,7 +1987,7 @@ func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *Ar
 	if err != nil {
 		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
@@ -2035,7 +2027,7 @@ func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayClientGetStringWithNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringWithNullResponse{}, err
 	}
@@ -2076,7 +2068,7 @@ func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
@@ -2116,7 +2108,7 @@ func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayClien
 	if err != nil {
 		return ArrayClientGetUUIDValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetUUIDValidResponse{}, err
 	}
@@ -2156,7 +2148,7 @@ func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*str
 	if err != nil {
 		return ArrayClientPutArrayValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutArrayValidResponse{}, err
 	}
@@ -2187,7 +2179,7 @@ func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool
 	if err != nil {
 		return ArrayClientPutBooleanTfftResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutBooleanTfftResponse{}, err
 	}
@@ -2219,7 +2211,7 @@ func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte,
 	if err != nil {
 		return ArrayClientPutByteValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutByteValidResponse{}, err
 	}
@@ -2251,7 +2243,7 @@ func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Pro
 	if err != nil {
 		return ArrayClientPutComplexValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutComplexValidResponse{}, err
 	}
@@ -2284,7 +2276,7 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 	if err != nil {
 		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
@@ -2319,7 +2311,7 @@ func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*ti
 	if err != nil {
 		return ArrayClientPutDateTimeValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDateTimeValidResponse{}, err
 	}
@@ -2350,7 +2342,7 @@ func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.T
 	if err != nil {
 		return ArrayClientPutDateValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDateValidResponse{}, err
 	}
@@ -2387,7 +2379,7 @@ func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []m
 	if err != nil {
 		return ArrayClientPutDictionaryValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDictionaryValidResponse{}, err
 	}
@@ -2418,7 +2410,7 @@ func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*floa
 	if err != nil {
 		return ArrayClientPutDoubleValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDoubleValidResponse{}, err
 	}
@@ -2449,7 +2441,7 @@ func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*st
 	if err != nil {
 		return ArrayClientPutDurationValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDurationValidResponse{}, err
 	}
@@ -2480,7 +2472,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, op
 	if err != nil {
 		return ArrayClientPutEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutEmptyResponse{}, err
 	}
@@ -2511,7 +2503,7 @@ func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnu
 	if err != nil {
 		return ArrayClientPutEnumValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutEnumValidResponse{}, err
 	}
@@ -2542,7 +2534,7 @@ func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float
 	if err != nil {
 		return ArrayClientPutFloatValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutFloatValidResponse{}, err
 	}
@@ -2573,7 +2565,7 @@ func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int
 	if err != nil {
 		return ArrayClientPutIntegerValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutIntegerValidResponse{}, err
 	}
@@ -2604,7 +2596,7 @@ func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64,
 	if err != nil {
 		return ArrayClientPutLongValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutLongValidResponse{}, err
 	}
@@ -2636,7 +2628,7 @@ func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*
 	if err != nil {
 		return ArrayClientPutStringEnumValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutStringEnumValidResponse{}, err
 	}
@@ -2667,7 +2659,7 @@ func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*stri
 	if err != nil {
 		return ArrayClientPutStringValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutStringValidResponse{}, err
 	}
@@ -2698,7 +2690,7 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string
 	if err != nil {
 		return ArrayClientPutUUIDValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutUUIDValidResponse{}, err
 	}

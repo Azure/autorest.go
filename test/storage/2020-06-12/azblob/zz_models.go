@@ -23,7 +23,7 @@ type AccessPolicy struct {
 	Start *time.Time `xml:"Start"`
 }
 
-// AppendBlobClientAppendBlockFromURLOptions contains the optional parameters for the appendBlobClient.AppendBlockFromURL
+// AppendBlobClientAppendBlockFromURLOptions contains the optional parameters for the AppendBlobClient.AppendBlockFromURL
 // method.
 type AppendBlobClientAppendBlockFromURLOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
@@ -42,7 +42,7 @@ type AppendBlobClientAppendBlockFromURLOptions struct {
 	TransactionalContentMD5 []byte
 }
 
-// AppendBlobClientAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock method.
+// AppendBlobClientAppendBlockOptions contains the optional parameters for the AppendBlobClient.AppendBlock method.
 type AppendBlobClientAppendBlockOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -56,7 +56,7 @@ type AppendBlobClientAppendBlockOptions struct {
 	TransactionalContentMD5 []byte
 }
 
-// AppendBlobClientCreateOptions contains the optional parameters for the appendBlobClient.Create method.
+// AppendBlobClientCreateOptions contains the optional parameters for the AppendBlobClient.Create method.
 type AppendBlobClientCreateOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -81,7 +81,7 @@ type AppendBlobClientCreateOptions struct {
 	Timeout *int32
 }
 
-// AppendBlobClientSealOptions contains the optional parameters for the appendBlobClient.Seal method.
+// AppendBlobClientSealOptions contains the optional parameters for the AppendBlobClient.Seal method.
 type AppendBlobClientSealOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -91,7 +91,7 @@ type AppendBlobClientSealOptions struct {
 	Timeout *int32
 }
 
-// AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock method.
+// AppendPositionAccessConditions contains a group of parameters for the AppendBlobClient.AppendBlock method.
 type AppendPositionAccessConditions struct {
 	// Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare.
 	// Append Block will succeed only if the append position is equal to this number. If
@@ -119,7 +119,7 @@ type ArrowField struct {
 	Scale     *int32  `xml:"Scale"`
 }
 
-// BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+// BlobHTTPHeaders contains a group of parameters for the Client.SetHTTPHeaders method.
 type BlobHTTPHeaders struct {
 	// Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request.
 	BlobCacheControl *string
@@ -147,7 +147,7 @@ type Block struct {
 	Size *int64 `xml:"Size"`
 }
 
-// BlockBlobClientCommitBlockListOptions contains the optional parameters for the blockBlobClient.CommitBlockList method.
+// BlockBlobClientCommitBlockListOptions contains the optional parameters for the BlockBlobClient.CommitBlockList method.
 type BlockBlobClientCommitBlockListOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -178,7 +178,7 @@ type BlockBlobClientCommitBlockListOptions struct {
 	TransactionalContentMD5 []byte
 }
 
-// BlockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList method.
+// BlockBlobClientGetBlockListOptions contains the optional parameters for the BlockBlobClient.GetBlockList method.
 type BlockBlobClientGetBlockListOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -192,7 +192,7 @@ type BlockBlobClientGetBlockListOptions struct {
 	Timeout *int32
 }
 
-// BlockBlobClientPutBlobFromURLOptions contains the optional parameters for the blockBlobClient.PutBlobFromURL method.
+// BlockBlobClientPutBlobFromURLOptions contains the optional parameters for the BlockBlobClient.PutBlobFromURL method.
 type BlockBlobClientPutBlobFromURLOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -219,7 +219,7 @@ type BlockBlobClientPutBlobFromURLOptions struct {
 	TransactionalContentMD5 []byte
 }
 
-// BlockBlobClientStageBlockFromURLOptions contains the optional parameters for the blockBlobClient.StageBlockFromURL method.
+// BlockBlobClientStageBlockFromURLOptions contains the optional parameters for the BlockBlobClient.StageBlockFromURL method.
 type BlockBlobClientStageBlockFromURLOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -235,7 +235,7 @@ type BlockBlobClientStageBlockFromURLOptions struct {
 	Timeout *int32
 }
 
-// BlockBlobClientStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock method.
+// BlockBlobClientStageBlockOptions contains the optional parameters for the BlockBlobClient.StageBlock method.
 type BlockBlobClientStageBlockOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -249,7 +249,7 @@ type BlockBlobClientStageBlockOptions struct {
 	TransactionalContentMD5 []byte
 }
 
-// BlockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
+// BlockBlobClientUploadOptions contains the optional parameters for the BlockBlobClient.Upload method.
 type BlockBlobClientUploadOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -297,7 +297,7 @@ type ClearRange struct {
 	Start *int64 `xml:"Start"`
 }
 
-// ClientAbortCopyFromURLOptions contains the optional parameters for the client.AbortCopyFromURL method.
+// ClientAbortCopyFromURLOptions contains the optional parameters for the Client.AbortCopyFromURL method.
 type ClientAbortCopyFromURLOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -307,7 +307,7 @@ type ClientAbortCopyFromURLOptions struct {
 	Timeout *int32
 }
 
-// ClientAcquireLeaseOptions contains the optional parameters for the client.AcquireLease method.
+// ClientAcquireLeaseOptions contains the optional parameters for the Client.AcquireLease method.
 type ClientAcquireLeaseOptions struct {
 	// Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease
 	// can be between 15 and 60 seconds. A lease duration cannot be changed using
@@ -325,7 +325,7 @@ type ClientAcquireLeaseOptions struct {
 	Timeout *int32
 }
 
-// ClientBreakLeaseOptions contains the optional parameters for the client.BreakLease method.
+// ClientBreakLeaseOptions contains the optional parameters for the Client.BreakLease method.
 type ClientBreakLeaseOptions struct {
 	// For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This
 	// break period is only used if it is shorter than the time remaining on the
@@ -342,7 +342,7 @@ type ClientBreakLeaseOptions struct {
 	Timeout *int32
 }
 
-// ClientChangeLeaseOptions contains the optional parameters for the client.ChangeLease method.
+// ClientChangeLeaseOptions contains the optional parameters for the Client.ChangeLease method.
 type ClientChangeLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -352,7 +352,7 @@ type ClientChangeLeaseOptions struct {
 	Timeout *int32
 }
 
-// ClientCopyFromURLOptions contains the optional parameters for the client.CopyFromURL method.
+// ClientCopyFromURLOptions contains the optional parameters for the Client.CopyFromURL method.
 type ClientCopyFromURLOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -381,7 +381,7 @@ type ClientCopyFromURLOptions struct {
 	Timeout *int32
 }
 
-// ClientCreateSnapshotOptions contains the optional parameters for the client.CreateSnapshot method.
+// ClientCreateSnapshotOptions contains the optional parameters for the Client.CreateSnapshot method.
 type ClientCreateSnapshotOptions struct {
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
 	// operation will copy the metadata from the source blob or file to the destination
@@ -398,7 +398,7 @@ type ClientCreateSnapshotOptions struct {
 	Timeout *int32
 }
 
-// ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the client.DeleteImmutabilityPolicy method.
+// ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the Client.DeleteImmutabilityPolicy method.
 type ClientDeleteImmutabilityPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -408,7 +408,7 @@ type ClientDeleteImmutabilityPolicyOptions struct {
 	Timeout *int32
 }
 
-// ClientDeleteOptions contains the optional parameters for the client.Delete method.
+// ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 type ClientDeleteOptions struct {
 	// Optional. Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled..
 	// Specifying any value will set the value to Permanent.
@@ -432,7 +432,7 @@ type ClientDeleteOptions struct {
 	VersionID *string
 }
 
-// ClientDownloadOptions contains the optional parameters for the client.Download method.
+// ClientDownloadOptions contains the optional parameters for the Client.Download method.
 type ClientDownloadOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
@@ -457,7 +457,7 @@ type ClientDownloadOptions struct {
 	VersionID *string
 }
 
-// ClientGetAccessControlOptions contains the optional parameters for the client.GetAccessControl method.
+// ClientGetAccessControlOptions contains the optional parameters for the Client.GetAccessControl method.
 type ClientGetAccessControlOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -472,12 +472,12 @@ type ClientGetAccessControlOptions struct {
 	Upn *bool
 }
 
-// ClientGetAccountInfoOptions contains the optional parameters for the client.GetAccountInfo method.
+// ClientGetAccountInfoOptions contains the optional parameters for the Client.GetAccountInfo method.
 type ClientGetAccountInfoOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetPropertiesOptions contains the optional parameters for the client.GetProperties method.
+// ClientGetPropertiesOptions contains the optional parameters for the Client.GetProperties method.
 type ClientGetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -494,7 +494,7 @@ type ClientGetPropertiesOptions struct {
 	VersionID *string
 }
 
-// ClientGetTagsOptions contains the optional parameters for the client.GetTags method.
+// ClientGetTagsOptions contains the optional parameters for the Client.GetTags method.
 type ClientGetTagsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -511,7 +511,7 @@ type ClientGetTagsOptions struct {
 	VersionID *string
 }
 
-// ClientQueryOptions contains the optional parameters for the client.Query method.
+// ClientQueryOptions contains the optional parameters for the Client.Query method.
 type ClientQueryOptions struct {
 	// the query request
 	QueryRequest *QueryRequest
@@ -527,7 +527,7 @@ type ClientQueryOptions struct {
 	Timeout *int32
 }
 
-// ClientReleaseLeaseOptions contains the optional parameters for the client.ReleaseLease method.
+// ClientReleaseLeaseOptions contains the optional parameters for the Client.ReleaseLease method.
 type ClientReleaseLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -537,7 +537,7 @@ type ClientReleaseLeaseOptions struct {
 	Timeout *int32
 }
 
-// ClientRenameOptions contains the optional parameters for the client.Rename method.
+// ClientRenameOptions contains the optional parameters for the Client.Rename method.
 type ClientRenameOptions struct {
 	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name
 	// and value pairs "n1=v1, n2=v2, …", where each value is base64 encoded.
@@ -563,7 +563,7 @@ type ClientRenameOptions struct {
 	Timeout *int32
 }
 
-// ClientRenewLeaseOptions contains the optional parameters for the client.RenewLease method.
+// ClientRenewLeaseOptions contains the optional parameters for the Client.RenewLease method.
 type ClientRenewLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -573,7 +573,7 @@ type ClientRenewLeaseOptions struct {
 	Timeout *int32
 }
 
-// ClientSetAccessControlOptions contains the optional parameters for the client.SetAccessControl method.
+// ClientSetAccessControlOptions contains the optional parameters for the Client.SetAccessControl method.
 type ClientSetAccessControlOptions struct {
 	// Optional. The owning group of the blob or directory.
 	Group *string
@@ -596,7 +596,7 @@ type ClientSetAccessControlOptions struct {
 	Timeout *int32
 }
 
-// ClientSetExpiryOptions contains the optional parameters for the client.SetExpiry method.
+// ClientSetExpiryOptions contains the optional parameters for the Client.SetExpiry method.
 type ClientSetExpiryOptions struct {
 	// The time to set the blob to expiry
 	ExpiresOn *string
@@ -608,7 +608,7 @@ type ClientSetExpiryOptions struct {
 	Timeout *int32
 }
 
-// ClientSetHTTPHeadersOptions contains the optional parameters for the client.SetHTTPHeaders method.
+// ClientSetHTTPHeadersOptions contains the optional parameters for the Client.SetHTTPHeaders method.
 type ClientSetHTTPHeadersOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -618,7 +618,7 @@ type ClientSetHTTPHeadersOptions struct {
 	Timeout *int32
 }
 
-// ClientSetImmutabilityPolicyOptions contains the optional parameters for the client.SetImmutabilityPolicy method.
+// ClientSetImmutabilityPolicyOptions contains the optional parameters for the Client.SetImmutabilityPolicy method.
 type ClientSetImmutabilityPolicyOptions struct {
 	// Specifies the date time when the blobs immutability policy is set to expire.
 	ImmutabilityPolicyExpiry *time.Time
@@ -632,7 +632,7 @@ type ClientSetImmutabilityPolicyOptions struct {
 	Timeout *int32
 }
 
-// ClientSetLegalHoldOptions contains the optional parameters for the client.SetLegalHold method.
+// ClientSetLegalHoldOptions contains the optional parameters for the Client.SetLegalHold method.
 type ClientSetLegalHoldOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -642,7 +642,7 @@ type ClientSetLegalHoldOptions struct {
 	Timeout *int32
 }
 
-// ClientSetMetadataOptions contains the optional parameters for the client.SetMetadata method.
+// ClientSetMetadataOptions contains the optional parameters for the Client.SetMetadata method.
 type ClientSetMetadataOptions struct {
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
 	// operation will copy the metadata from the source blob or file to the destination
@@ -659,7 +659,7 @@ type ClientSetMetadataOptions struct {
 	Timeout *int32
 }
 
-// ClientSetTagsOptions contains the optional parameters for the client.SetTags method.
+// ClientSetTagsOptions contains the optional parameters for the Client.SetTags method.
 type ClientSetTagsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -678,7 +678,7 @@ type ClientSetTagsOptions struct {
 	VersionID *string
 }
 
-// ClientSetTierOptions contains the optional parameters for the client.SetTier method.
+// ClientSetTierOptions contains the optional parameters for the Client.SetTier method.
 type ClientSetTierOptions struct {
 	// Optional: Indicates the priority with which to rehydrate an archived blob.
 	RehydratePriority *RehydratePriority
@@ -697,7 +697,7 @@ type ClientSetTierOptions struct {
 	VersionID *string
 }
 
-// ClientStartCopyFromURLOptions contains the optional parameters for the client.StartCopyFromURL method.
+// ClientStartCopyFromURLOptions contains the optional parameters for the Client.StartCopyFromURL method.
 type ClientStartCopyFromURLOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -728,7 +728,7 @@ type ClientStartCopyFromURLOptions struct {
 	Timeout *int32
 }
 
-// ClientUndeleteOptions contains the optional parameters for the client.Undelete method.
+// ClientUndeleteOptions contains the optional parameters for the Client.Undelete method.
 type ClientUndeleteOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -738,7 +738,7 @@ type ClientUndeleteOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientAcquireLeaseOptions contains the optional parameters for the containerClient.AcquireLease method.
+// ContainerClientAcquireLeaseOptions contains the optional parameters for the ContainerClient.AcquireLease method.
 type ContainerClientAcquireLeaseOptions struct {
 	// Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease
 	// can be between 15 and 60 seconds. A lease duration cannot be changed using
@@ -756,7 +756,7 @@ type ContainerClientAcquireLeaseOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientBreakLeaseOptions contains the optional parameters for the containerClient.BreakLease method.
+// ContainerClientBreakLeaseOptions contains the optional parameters for the ContainerClient.BreakLease method.
 type ContainerClientBreakLeaseOptions struct {
 	// For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This
 	// break period is only used if it is shorter than the time remaining on the
@@ -773,7 +773,7 @@ type ContainerClientBreakLeaseOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientChangeLeaseOptions contains the optional parameters for the containerClient.ChangeLease method.
+// ContainerClientChangeLeaseOptions contains the optional parameters for the ContainerClient.ChangeLease method.
 type ContainerClientChangeLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -783,7 +783,7 @@ type ContainerClientChangeLeaseOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientCreateOptions contains the optional parameters for the containerClient.Create method.
+// ContainerClientCreateOptions contains the optional parameters for the ContainerClient.Create method.
 type ContainerClientCreateOptions struct {
 	// Specifies whether data in the container may be accessed publicly and the level of access
 	Access *PublicAccessType
@@ -802,7 +802,7 @@ type ContainerClientCreateOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientDeleteOptions contains the optional parameters for the containerClient.Delete method.
+// ContainerClientDeleteOptions contains the optional parameters for the ContainerClient.Delete method.
 type ContainerClientDeleteOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -812,7 +812,7 @@ type ContainerClientDeleteOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientGetAccessPolicyOptions contains the optional parameters for the containerClient.GetAccessPolicy method.
+// ContainerClientGetAccessPolicyOptions contains the optional parameters for the ContainerClient.GetAccessPolicy method.
 type ContainerClientGetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -822,12 +822,12 @@ type ContainerClientGetAccessPolicyOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientGetAccountInfoOptions contains the optional parameters for the containerClient.GetAccountInfo method.
+// ContainerClientGetAccountInfoOptions contains the optional parameters for the ContainerClient.GetAccountInfo method.
 type ContainerClientGetAccountInfoOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerClientGetPropertiesOptions contains the optional parameters for the containerClient.GetProperties method.
+// ContainerClientGetPropertiesOptions contains the optional parameters for the ContainerClient.GetProperties method.
 type ContainerClientGetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -837,7 +837,7 @@ type ContainerClientGetPropertiesOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.NewListBlobFlatSegmentPager
+// ContainerClientListBlobFlatSegmentOptions contains the optional parameters for the ContainerClient.NewListBlobFlatSegmentPager
 // method.
 type ContainerClientListBlobFlatSegmentOptions struct {
 	// Include this parameter to specify one or more datasets to include in the response.
@@ -864,7 +864,7 @@ type ContainerClientListBlobFlatSegmentOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.NewListBlobHierarchySegmentPager
+// ContainerClientListBlobHierarchySegmentOptions contains the optional parameters for the ContainerClient.NewListBlobHierarchySegmentPager
 // method.
 type ContainerClientListBlobHierarchySegmentOptions struct {
 	// Include this parameter to specify one or more datasets to include in the response.
@@ -891,7 +891,7 @@ type ContainerClientListBlobHierarchySegmentOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientReleaseLeaseOptions contains the optional parameters for the containerClient.ReleaseLease method.
+// ContainerClientReleaseLeaseOptions contains the optional parameters for the ContainerClient.ReleaseLease method.
 type ContainerClientReleaseLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -901,7 +901,7 @@ type ContainerClientReleaseLeaseOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientRenameOptions contains the optional parameters for the containerClient.Rename method.
+// ContainerClientRenameOptions contains the optional parameters for the ContainerClient.Rename method.
 type ContainerClientRenameOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -913,7 +913,7 @@ type ContainerClientRenameOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientRenewLeaseOptions contains the optional parameters for the containerClient.RenewLease method.
+// ContainerClientRenewLeaseOptions contains the optional parameters for the ContainerClient.RenewLease method.
 type ContainerClientRenewLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -923,7 +923,7 @@ type ContainerClientRenewLeaseOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientRestoreOptions contains the optional parameters for the containerClient.Restore method.
+// ContainerClientRestoreOptions contains the optional parameters for the ContainerClient.Restore method.
 type ContainerClientRestoreOptions struct {
 	// Optional. Version 2019-12-12 and later. Specifies the name of the deleted container to restore.
 	DeletedContainerName *string
@@ -937,7 +937,7 @@ type ContainerClientRestoreOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientSetAccessPolicyOptions contains the optional parameters for the containerClient.SetAccessPolicy method.
+// ContainerClientSetAccessPolicyOptions contains the optional parameters for the ContainerClient.SetAccessPolicy method.
 type ContainerClientSetAccessPolicyOptions struct {
 	// Specifies whether data in the container may be accessed publicly and the level of access
 	Access *PublicAccessType
@@ -951,7 +951,7 @@ type ContainerClientSetAccessPolicyOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientSetMetadataOptions contains the optional parameters for the containerClient.SetMetadata method.
+// ContainerClientSetMetadataOptions contains the optional parameters for the ContainerClient.SetMetadata method.
 type ContainerClientSetMetadataOptions struct {
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
 	// operation will copy the metadata from the source blob or file to the destination
@@ -968,7 +968,7 @@ type ContainerClientSetMetadataOptions struct {
 	Timeout *int32
 }
 
-// ContainerClientSubmitBatchOptions contains the optional parameters for the containerClient.SubmitBatch method.
+// ContainerClientSubmitBatchOptions contains the optional parameters for the ContainerClient.SubmitBatch method.
 type ContainerClientSubmitBatchOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -978,7 +978,7 @@ type ContainerClientSubmitBatchOptions struct {
 	Timeout *int32
 }
 
-// ContainerCpkScopeInfo contains a group of parameters for the containerClient.Create method.
+// ContainerCpkScopeInfo contains a group of parameters for the ContainerClient.Create method.
 type ContainerCpkScopeInfo struct {
 	// Optional. Version 2019-07-07 and later. Specifies the default encryption scope to set on the container and use for all
 	// future writes.
@@ -1049,7 +1049,7 @@ type CorsRule struct {
 	MaxAgeInSeconds *int32 `xml:"MaxAgeInSeconds"`
 }
 
-// CpkInfo contains a group of parameters for the client.Download method.
+// CpkInfo contains a group of parameters for the Client.Download method.
 type CpkInfo struct {
 	// The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided
 	// if the x-ms-encryption-key header is provided.. Specifying any value will set the value to AES256.
@@ -1062,7 +1062,7 @@ type CpkInfo struct {
 	EncryptionKeySHA256 *string
 }
 
-// CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+// CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
 type CpkScopeInfo struct {
 	// Optional. Version 2019-07-07 and later. Specifies the name of the encryption scope to use to encrypt the data provided
 	// in the request. If not specified, encryption is performed with the default
@@ -1102,7 +1102,7 @@ type DelimitedTextConfiguration struct {
 	RecordSeparator *string `xml:"RecordSeparator"`
 }
 
-// DirectoryClientCreateOptions contains the optional parameters for the directoryClient.Create method.
+// DirectoryClientCreateOptions contains the optional parameters for the DirectoryClient.Create method.
 type DirectoryClientCreateOptions struct {
 	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name
 	// and value pairs "n1=v1, n2=v2, …", where each value is base64 encoded.
@@ -1126,7 +1126,7 @@ type DirectoryClientCreateOptions struct {
 	Timeout *int32
 }
 
-// DirectoryClientDeleteOptions contains the optional parameters for the directoryClient.Delete method.
+// DirectoryClientDeleteOptions contains the optional parameters for the DirectoryClient.Delete method.
 type DirectoryClientDeleteOptions struct {
 	// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths
 	// to be renamed exceeds this limit, a continuation token is returned in this
@@ -1141,7 +1141,7 @@ type DirectoryClientDeleteOptions struct {
 	Timeout *int32
 }
 
-// DirectoryClientGetAccessControlOptions contains the optional parameters for the directoryClient.GetAccessControl method.
+// DirectoryClientGetAccessControlOptions contains the optional parameters for the DirectoryClient.GetAccessControl method.
 type DirectoryClientGetAccessControlOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1156,7 +1156,7 @@ type DirectoryClientGetAccessControlOptions struct {
 	Upn *bool
 }
 
-// DirectoryClientRenameOptions contains the optional parameters for the directoryClient.Rename method.
+// DirectoryClientRenameOptions contains the optional parameters for the DirectoryClient.Rename method.
 type DirectoryClientRenameOptions struct {
 	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name
 	// and value pairs "n1=v1, n2=v2, …", where each value is base64 encoded.
@@ -1187,7 +1187,7 @@ type DirectoryClientRenameOptions struct {
 	Timeout *int32
 }
 
-// DirectoryClientSetAccessControlOptions contains the optional parameters for the directoryClient.SetAccessControl method.
+// DirectoryClientSetAccessControlOptions contains the optional parameters for the DirectoryClient.SetAccessControl method.
 type DirectoryClientSetAccessControlOptions struct {
 	// Optional. The owning group of the blob or directory.
 	Group *string
@@ -1210,7 +1210,7 @@ type DirectoryClientSetAccessControlOptions struct {
 	Timeout *int32
 }
 
-// DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
+// DirectoryHTTPHeaders contains a group of parameters for the DirectoryClient.Create method.
 type DirectoryHTTPHeaders struct {
 	// Cache control for given resource
 	CacheControl *string
@@ -1310,7 +1310,7 @@ type KeyInfo struct {
 	Start *string `xml:"Start"`
 }
 
-// LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 type LeaseAccessConditions struct {
 	// If specified, the operation only succeeds if the resource's lease is active and matches this ID.
 	LeaseID *string
@@ -1401,7 +1401,7 @@ type Metrics struct {
 	Version *string `xml:"Version"`
 }
 
-// ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+// ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 type ModifiedAccessConditions struct {
 	// Specify an ETag value to operate only on blobs with a matching value.
 	IfMatch *string
@@ -1415,7 +1415,7 @@ type ModifiedAccessConditions struct {
 	IfUnmodifiedSince *time.Time
 }
 
-// PageBlobClientClearPagesOptions contains the optional parameters for the pageBlobClient.ClearPages method.
+// PageBlobClientClearPagesOptions contains the optional parameters for the PageBlobClient.ClearPages method.
 type PageBlobClientClearPagesOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
@@ -1427,7 +1427,7 @@ type PageBlobClientClearPagesOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientCopyIncrementalOptions contains the optional parameters for the pageBlobClient.CopyIncremental method.
+// PageBlobClientCopyIncrementalOptions contains the optional parameters for the PageBlobClient.CopyIncremental method.
 type PageBlobClientCopyIncrementalOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1437,7 +1437,7 @@ type PageBlobClientCopyIncrementalOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientCreateOptions contains the optional parameters for the pageBlobClient.Create method.
+// PageBlobClientCreateOptions contains the optional parameters for the PageBlobClient.Create method.
 type PageBlobClientCreateOptions struct {
 	// Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of
 	// the sequence number must be between 0 and 2^63 - 1.
@@ -1467,7 +1467,7 @@ type PageBlobClientCreateOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientGetPageRangesDiffOptions contains the optional parameters for the pageBlobClient.GetPageRangesDiff method.
+// PageBlobClientGetPageRangesDiffOptions contains the optional parameters for the PageBlobClient.GetPageRangesDiff method.
 type PageBlobClientGetPageRangesDiffOptions struct {
 	// Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot
 	// of the target blob. The response will only contain pages that were changed
@@ -1493,7 +1493,7 @@ type PageBlobClientGetPageRangesDiffOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientGetPageRangesOptions contains the optional parameters for the pageBlobClient.GetPageRanges method.
+// PageBlobClientGetPageRangesOptions contains the optional parameters for the PageBlobClient.GetPageRanges method.
 type PageBlobClientGetPageRangesOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
@@ -1509,7 +1509,7 @@ type PageBlobClientGetPageRangesOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientResizeOptions contains the optional parameters for the pageBlobClient.Resize method.
+// PageBlobClientResizeOptions contains the optional parameters for the PageBlobClient.Resize method.
 type PageBlobClientResizeOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1519,7 +1519,7 @@ type PageBlobClientResizeOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientUpdateSequenceNumberOptions contains the optional parameters for the pageBlobClient.UpdateSequenceNumber
+// PageBlobClientUpdateSequenceNumberOptions contains the optional parameters for the PageBlobClient.UpdateSequenceNumber
 // method.
 type PageBlobClientUpdateSequenceNumberOptions struct {
 	// Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of
@@ -1533,7 +1533,7 @@ type PageBlobClientUpdateSequenceNumberOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientUploadPagesFromURLOptions contains the optional parameters for the pageBlobClient.UploadPagesFromURL method.
+// PageBlobClientUploadPagesFromURLOptions contains the optional parameters for the PageBlobClient.UploadPagesFromURL method.
 type PageBlobClientUploadPagesFromURLOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1547,7 +1547,7 @@ type PageBlobClientUploadPagesFromURLOptions struct {
 	Timeout *int32
 }
 
-// PageBlobClientUploadPagesOptions contains the optional parameters for the pageBlobClient.UploadPages method.
+// PageBlobClientUploadPagesOptions contains the optional parameters for the PageBlobClient.UploadPages method.
 type PageBlobClientUploadPagesOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
@@ -1679,7 +1679,7 @@ type RetentionPolicy struct {
 	Days *int32 `xml:"Days"`
 }
 
-// SequenceNumberAccessConditions contains a group of parameters for the pageBlobClient.UploadPages method.
+// SequenceNumberAccessConditions contains a group of parameters for the PageBlobClient.UploadPages method.
 type SequenceNumberAccessConditions struct {
 	// Specify this header value to operate only on a blob if it has the specified sequence number.
 	IfSequenceNumberEqualTo *int64
@@ -1689,7 +1689,7 @@ type SequenceNumberAccessConditions struct {
 	IfSequenceNumberLessThanOrEqualTo *int64
 }
 
-// ServiceClientFilterBlobsOptions contains the optional parameters for the serviceClient.FilterBlobs method.
+// ServiceClientFilterBlobsOptions contains the optional parameters for the ServiceClient.FilterBlobs method.
 type ServiceClientFilterBlobsOptions struct {
 	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The
 	// operation returns the NextMarker value within the response body if the listing
@@ -1713,12 +1713,12 @@ type ServiceClientFilterBlobsOptions struct {
 	Where *string
 }
 
-// ServiceClientGetAccountInfoOptions contains the optional parameters for the serviceClient.GetAccountInfo method.
+// ServiceClientGetAccountInfoOptions contains the optional parameters for the ServiceClient.GetAccountInfo method.
 type ServiceClientGetAccountInfoOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServiceClientGetPropertiesOptions contains the optional parameters for the serviceClient.GetProperties method.
+// ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
 type ServiceClientGetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1728,7 +1728,7 @@ type ServiceClientGetPropertiesOptions struct {
 	Timeout *int32
 }
 
-// ServiceClientGetStatisticsOptions contains the optional parameters for the serviceClient.GetStatistics method.
+// ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
 type ServiceClientGetStatisticsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1738,7 +1738,7 @@ type ServiceClientGetStatisticsOptions struct {
 	Timeout *int32
 }
 
-// ServiceClientGetUserDelegationKeyOptions contains the optional parameters for the serviceClient.GetUserDelegationKey method.
+// ServiceClientGetUserDelegationKeyOptions contains the optional parameters for the ServiceClient.GetUserDelegationKey method.
 type ServiceClientGetUserDelegationKeyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1748,7 +1748,7 @@ type ServiceClientGetUserDelegationKeyOptions struct {
 	Timeout *int32
 }
 
-// ServiceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.NewListContainersSegmentPager
+// ServiceClientListContainersSegmentOptions contains the optional parameters for the ServiceClient.NewListContainersSegmentPager
 // method.
 type ServiceClientListContainersSegmentOptions struct {
 	// Include this parameter to specify that the container's metadata be returned as part of the response body.
@@ -1775,7 +1775,7 @@ type ServiceClientListContainersSegmentOptions struct {
 	Timeout *int32
 }
 
-// ServiceClientSetPropertiesOptions contains the optional parameters for the serviceClient.SetProperties method.
+// ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 type ServiceClientSetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1785,7 +1785,7 @@ type ServiceClientSetPropertiesOptions struct {
 	Timeout *int32
 }
 
-// ServiceClientSubmitBatchOptions contains the optional parameters for the serviceClient.SubmitBatch method.
+// ServiceClientSubmitBatchOptions contains the optional parameters for the ServiceClient.SubmitBatch method.
 type ServiceClientSubmitBatchOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1804,7 +1804,7 @@ type SignedIdentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename method.
+// SourceModifiedAccessConditions contains a group of parameters for the DirectoryClient.Rename method.
 type SourceModifiedAccessConditions struct {
 	// Specify an ETag value to operate only on blobs with a matching value.
 	SourceIfMatch *string

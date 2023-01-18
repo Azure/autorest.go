@@ -14,13 +14,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newObjectTypeClient() *ObjectTypeClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewObjectTypeClient(pl)
+func newObjectTypeClient(t *testing.T) *ObjectTypeClient {
+	client, err := NewObjectTypeClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewObjectTypeClient(options *azcore.ClientOptions) (*ObjectTypeClient, error) {
+	client, err := azcore.NewClient("objectgroup.ObjectTypeClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ObjectTypeClient{internal: client}, nil
 }
 
 func TestGet(t *testing.T) {
-	client := newObjectTypeClient()
+	client := newObjectTypeClient(t)
 	resp, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(string(resp.RawJSON), `{ "message": "An object was successfully returned" }`); r != "" {
@@ -29,7 +38,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestPut(t *testing.T) {
-	client := newObjectTypeClient()
+	client := newObjectTypeClient(t)
 	result, err := client.Put(context.Background(), []byte(`{ "foo": "bar" }`), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

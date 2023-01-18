@@ -14,13 +14,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newNumberClient() *NumberClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewNumberClient(pl)
+func newNumberClient(t *testing.T) *NumberClient {
+	client, err := NewNumberClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewNumberClient(options *azcore.ClientOptions) (*NumberClient, error) {
+	client, err := azcore.NewClient("numbergroup.NumberClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &NumberClient{internal: client}, nil
 }
 
 func TestNumberGetBigDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetBigDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	val := 2.5976931e+101
@@ -30,7 +39,7 @@ func TestNumberGetBigDecimal(t *testing.T) {
 }
 
 func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetBigDecimalNegativeDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	val := -99999999.99
@@ -40,7 +49,7 @@ func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
 }
 
 func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetBigDecimalPositiveDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	val := 99999999.99
@@ -50,7 +59,7 @@ func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
 }
 
 func TestNumberGetBigDouble(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetBigDouble(context.Background(), nil)
 	require.NoError(t, err)
 	val := 2.5976931e+101
@@ -60,7 +69,7 @@ func TestNumberGetBigDouble(t *testing.T) {
 }
 
 func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetBigDoubleNegativeDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	val := -99999999.99
@@ -70,7 +79,7 @@ func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
 }
 
 func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetBigDoublePositiveDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	val := 99999999.99
@@ -80,7 +89,7 @@ func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
 }
 
 func TestNumberGetBigFloat(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetBigFloat(context.Background(), nil)
 	require.NoError(t, err)
 	val := float32(3.402823e+20)
@@ -90,28 +99,28 @@ func TestNumberGetBigFloat(t *testing.T) {
 }
 
 func TestNumberGetInvalidDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetInvalidDecimal(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberGetInvalidDouble(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetInvalidDouble(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberGetInvalidFloat(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetInvalidFloat(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberGetNull(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, (*float32)(nil)); r != "" {
@@ -120,7 +129,7 @@ func TestNumberGetNull(t *testing.T) {
 }
 
 func TestNumberGetSmallDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetSmallDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	val := 2.5976931e-101
@@ -130,7 +139,7 @@ func TestNumberGetSmallDecimal(t *testing.T) {
 }
 
 func TestNumberGetSmallDouble(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetSmallDouble(context.Background(), nil)
 	require.NoError(t, err)
 	val := 2.5976931e-101
@@ -140,7 +149,7 @@ func TestNumberGetSmallDouble(t *testing.T) {
 }
 
 func TestNumberGetSmallFloat(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.GetSmallFloat(context.Background(), nil)
 	require.NoError(t, err)
 	val := 3.402823e-20
@@ -150,70 +159,70 @@ func TestNumberGetSmallFloat(t *testing.T) {
 }
 
 func TestNumberPutBigDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutBigDecimal(context.Background(), 2.5976931e+101, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutBigDecimalNegativeDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutBigDecimalPositiveDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutBigDouble(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutBigDouble(context.Background(), 2.5976931e+101, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutBigDoubleNegativeDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutBigDoublePositiveDecimal(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutBigFloat(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutBigFloat(context.Background(), 3.402823e+20, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutSmallDecimal(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutSmallDecimal(context.Background(), 2.5976931e-101, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutSmallDouble(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutSmallDouble(context.Background(), 2.5976931e-101, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestNumberPutSmallFloat(t *testing.T) {
-	client := newNumberClient()
+	client := newNumberClient(t)
 	result, err := client.PutSmallFloat(context.Background(), 3.402823e-20, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

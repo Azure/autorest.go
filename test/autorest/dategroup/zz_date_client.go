@@ -11,6 +11,7 @@ package dategroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // DateClient contains the methods for the Date group.
-// Don't use this type directly, use NewDateClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type DateClient struct {
-	pl runtime.Pipeline
-}
-
-// NewDateClient creates a new instance of DateClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewDateClient(pl runtime.Pipeline) *DateClient {
-	client := &DateClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetInvalidDate - Get invalid date value
@@ -42,7 +34,7 @@ func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateClien
 	if err != nil {
 		return DateClientGetInvalidDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientGetInvalidDateResponse{}, err
 	}
@@ -84,7 +76,7 @@ func (client *DateClient) GetMaxDate(ctx context.Context, options *DateClientGet
 	if err != nil {
 		return DateClientGetMaxDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientGetMaxDateResponse{}, err
 	}
@@ -126,7 +118,7 @@ func (client *DateClient) GetMinDate(ctx context.Context, options *DateClientGet
 	if err != nil {
 		return DateClientGetMinDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientGetMinDateResponse{}, err
 	}
@@ -168,7 +160,7 @@ func (client *DateClient) GetNull(ctx context.Context, options *DateClientGetNul
 	if err != nil {
 		return DateClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientGetNullResponse{}, err
 	}
@@ -210,7 +202,7 @@ func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateClie
 	if err != nil {
 		return DateClientGetOverflowDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientGetOverflowDateResponse{}, err
 	}
@@ -252,7 +244,7 @@ func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateCli
 	if err != nil {
 		return DateClientGetUnderflowDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientGetUnderflowDateResponse{}, err
 	}
@@ -295,7 +287,7 @@ func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, op
 	if err != nil {
 		return DateClientPutMaxDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientPutMaxDateResponse{}, err
 	}
@@ -327,7 +319,7 @@ func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, op
 	if err != nil {
 		return DateClientPutMinDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DateClientPutMinDateResponse{}, err
 	}

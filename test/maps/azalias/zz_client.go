@@ -12,45 +12,20 @@ package azalias
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
-type client struct {
+// Client contains the methods for the Alias group.
+// Don't use this type directly, use a constructor function instead.
+type Client struct {
+	internal      *azcore.Client
 	endpoint      string
 	clientVersion string
 	clientIndex   int32
-	pl            runtime.Pipeline
-}
-
-// newClient creates a new instance of client with the specified values.
-//   - geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
-//   - clientVersion - Version number of Azure Maps API.
-//   - clientIndex - Index number of Azure Maps API.
-//   - pl - the pipeline used for sending requests and handling responses.
-func newClient(geography *Geography, clientVersion *string, clientIndex *int32, pl runtime.Pipeline) *client {
-	hostURL := "https://{geography}.atlas.microsoft.com"
-	if geography == nil {
-		defaultValue := GeographyUs
-		geography = &defaultValue
-	}
-	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
-	client := &client{
-		clientVersion: "2.0",
-		clientIndex:   int32(567),
-		endpoint:      hostURL,
-		pl:            pl,
-	}
-	if clientVersion != nil {
-		client.clientVersion = *clientVersion
-	}
-	if clientIndex != nil {
-		client.clientIndex = *clientIndex
-	}
-	return client
 }
 
 // Create - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
@@ -70,13 +45,13 @@ func newClient(geography *Geography, clientVersion *string, clientIndex *int32, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-//   - options - ClientCreateOptions contains the optional parameters for the client.Create method.
-func (client *client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
+//   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
+func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
@@ -87,7 +62,7 @@ func (client *client) Create(ctx context.Context, options *ClientCreateOptions) 
 }
 
 // createCreateRequest creates the Create request.
-func (client *client) createCreateRequest(ctx context.Context, options *ClientCreateOptions) (*policy.Request, error) {
+func (client *Client) createCreateRequest(ctx context.Context, options *ClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -117,7 +92,7 @@ func (client *client) createCreateRequest(ctx context.Context, options *ClientCr
 }
 
 // createHandleResponse handles the Create response.
-func (client *client) createHandleResponse(resp *http.Response) (ClientCreateResponse, error) {
+func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateResponse, error) {
 	result := ClientCreateResponse{}
 	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
 		result.AccessControlExposeHeaders = &val
@@ -132,13 +107,13 @@ func (client *client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-//   - options - ClientGetScriptOptions contains the optional parameters for the client.GetScript method.
-func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+//   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
+func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
 		return ClientGetScriptResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetScriptResponse{}, err
 	}
@@ -149,7 +124,7 @@ func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCol
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *client) getScriptCreateRequest(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (*policy.Request, error) {
+func (client *Client) getScriptCreateRequest(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -160,7 +135,7 @@ func (client *client) getScriptCreateRequest(ctx context.Context, props GeoJSONO
 }
 
 // getScriptHandleResponse handles the GetScript response.
-func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScriptResponse, error) {
+func (client *Client) getScriptHandleResponse(resp *http.Response) (ClientGetScriptResponse, error) {
 	result := ClientGetScriptResponse{}
 	body, err := runtime.Payload(resp)
 	if err != nil {
@@ -191,8 +166,8 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 // "2020-02-18T19:53:33.123Z" } ] }
 //
 // Generated from API version 2.0
-//   - options - ClientListOptions contains the optional parameters for the client.NewListPager method.
-func (client *client) NewListPager(options *ClientListOptions) *runtime.Pager[ClientListResponse] {
+//   - options - ClientListOptions contains the optional parameters for the Client.NewListPager method.
+func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[ClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ClientListResponse]{
 		More: func(page ClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -208,7 +183,7 @@ func (client *client) NewListPager(options *ClientListOptions) *runtime.Pager[Cl
 			if err != nil {
 				return ClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientListResponse{}, err
 			}
@@ -221,7 +196,7 @@ func (client *client) NewListPager(options *ClientListOptions) *runtime.Pager[Cl
 }
 
 // listCreateRequest creates the List request.
-func (client *client) listCreateRequest(ctx context.Context, options *ClientListOptions) (*policy.Request, error) {
+func (client *Client) listCreateRequest(ctx context.Context, options *ClientListOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -240,7 +215,7 @@ func (client *client) listCreateRequest(ctx context.Context, options *ClientList
 }
 
 // listHandleResponse handles the List response.
-func (client *client) listHandleResponse(resp *http.Response) (ClientListResponse, error) {
+func (client *Client) listHandleResponse(resp *http.Response) (ClientListResponse, error) {
 	result := ClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
 		return ClientListResponse{}, err
@@ -252,13 +227,13 @@ func (client *client) listHandleResponse(resp *http.Response) (ClientListRespons
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-//   - options - ClientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
-func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
+//   - options - ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
+func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
 	if err != nil {
 		return ClientPolicyAssignmentResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientPolicyAssignmentResponse{}, err
 	}
@@ -269,7 +244,7 @@ func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreate
 }
 
 // policyAssignmentCreateRequest creates the PolicyAssignment request.
-func (client *client) policyAssignmentCreateRequest(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (*policy.Request, error) {
+func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (*policy.Request, error) {
 	urlPath := "/policy"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -280,7 +255,7 @@ func (client *client) policyAssignmentCreateRequest(ctx context.Context, props S
 }
 
 // policyAssignmentHandleResponse handles the PolicyAssignment response.
-func (client *client) policyAssignmentHandleResponse(resp *http.Response) (ClientPolicyAssignmentResponse, error) {
+func (client *Client) policyAssignmentHandleResponse(resp *http.Response) (ClientPolicyAssignmentResponse, error) {
 	result := ClientPolicyAssignmentResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PolicyAssignmentProperties); err != nil {
 		return ClientPolicyAssignmentResponse{}, err

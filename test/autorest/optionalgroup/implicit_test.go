@@ -13,13 +13,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newImplicitClient() *ImplicitClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewImplicitClient("", "", nil, pl)
+func newImplicitClient(t *testing.T) *ImplicitClient {
+	client, err := NewImplicitClient("", "", nil, nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewImplicitClient(equiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, options *azcore.ClientOptions) (*ImplicitClient, error) {
+	client, err := azcore.NewClient("optionalgroup.ImplicitClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ImplicitClient{internal: client}, nil
 }
 
 func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
-	client := newImplicitClient()
+	client := newImplicitClient(t)
 	result, err := client.GetOptionalGlobalQuery(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -27,7 +36,7 @@ func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
 
 func TestImplicitGetRequiredGlobalPath(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
-	client := newImplicitClient()
+	client := newImplicitClient(t)
 	result, err := client.GetRequiredGlobalPath(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -35,7 +44,7 @@ func TestImplicitGetRequiredGlobalPath(t *testing.T) {
 
 func TestImplicitGetRequiredGlobalQuery(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
-	client := newImplicitClient()
+	client := newImplicitClient(t)
 	result, err := client.GetRequiredGlobalQuery(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -43,28 +52,28 @@ func TestImplicitGetRequiredGlobalQuery(t *testing.T) {
 
 func TestImplicitGetRequiredPath(t *testing.T) {
 	t.Skip("Cannot set nil for string parameter so test invalid for Go")
-	client := newImplicitClient()
+	client := newImplicitClient(t)
 	result, err := client.GetRequiredPath(context.Background(), "", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestImplicitPutOptionalBody(t *testing.T) {
-	client := newImplicitClient()
+	client := newImplicitClient(t)
 	result, err := client.PutOptionalBody(context.Background(), "", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestImplicitPutOptionalHeader(t *testing.T) {
-	client := newImplicitClient()
+	client := newImplicitClient(t)
 	result, err := client.PutOptionalHeader(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestImplicitPutOptionalQuery(t *testing.T) {
-	client := newImplicitClient()
+	client := newImplicitClient(t)
 	result, err := client.PutOptionalQuery(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

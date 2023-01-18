@@ -11,6 +11,7 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // SkipURLEncodingClient contains the methods for the SkipURLEncoding group.
-// Don't use this type directly, use NewSkipURLEncodingClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type SkipURLEncodingClient struct {
-	pl runtime.Pipeline
-}
-
-// NewSkipURLEncodingClient creates a new instance of SkipURLEncodingClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewSkipURLEncodingClient(pl runtime.Pipeline) *SkipURLEncodingClient {
-	client := &SkipURLEncodingClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
@@ -44,7 +36,7 @@ func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, une
 	if err != nil {
 		return SkipURLEncodingClientGetMethodPathValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SkipURLEncodingClientGetMethodPathValidResponse{}, err
 	}
@@ -77,7 +69,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, opt
 	if err != nil {
 		return SkipURLEncodingClientGetMethodQueryNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SkipURLEncodingClientGetMethodQueryNullResponse{}, err
 	}
@@ -115,7 +107,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1
 	if err != nil {
 		return SkipURLEncodingClientGetMethodQueryValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SkipURLEncodingClientGetMethodQueryValidResponse{}, err
 	}
@@ -151,7 +143,7 @@ func (client *SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 s
 	if err != nil {
 		return SkipURLEncodingClientGetPathQueryValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SkipURLEncodingClientGetPathQueryValidResponse{}, err
 	}
@@ -187,7 +179,7 @@ func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencoded
 	if err != nil {
 		return SkipURLEncodingClientGetPathValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SkipURLEncodingClientGetPathValidResponse{}, err
 	}
@@ -220,7 +212,7 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context, op
 	if err != nil {
 		return SkipURLEncodingClientGetSwaggerPathValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SkipURLEncodingClientGetSwaggerPathValidResponse{}, err
 	}
@@ -253,7 +245,7 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context, o
 	if err != nil {
 		return SkipURLEncodingClientGetSwaggerQueryValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SkipURLEncodingClientGetSwaggerQueryValidResponse{}, err
 	}

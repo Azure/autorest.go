@@ -11,24 +11,16 @@ package headgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // HTTPSuccessClient contains the methods for the HTTPSuccess group.
-// Don't use this type directly, use NewHTTPSuccessClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type HTTPSuccessClient struct {
-	pl runtime.Pipeline
-}
-
-// NewHTTPSuccessClient creates a new instance of HTTPSuccessClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewHTTPSuccessClient(pl runtime.Pipeline) *HTTPSuccessClient {
-	client := &HTTPSuccessClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Head200 - Return 200 status code if successful
@@ -40,7 +32,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead200Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPSuccessClientHead200Response{}, err
 	}
@@ -69,7 +61,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead204Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPSuccessClientHead204Response{}, err
 	}
@@ -98,7 +90,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead404Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPSuccessClientHead404Response{}, err
 	}

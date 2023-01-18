@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,28 +24,19 @@ import (
 // ReservationTransactionsClient contains the methods for the ReservationTransactions group.
 // Don't use this type directly, use NewReservationTransactionsClient() instead.
 type ReservationTransactionsClient struct {
-	host string
-	pl   runtime.Pipeline
+	internal *arm.Client
 }
 
 // NewReservationTransactionsClient creates a new instance of ReservationTransactionsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewReservationTransactionsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ReservationTransactionsClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armconsumption.ReservationTransactionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &ReservationTransactionsClient{
-		host: ep,
-		pl:   pl,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -74,7 +63,7 @@ func (client *ReservationTransactionsClient) NewListPager(billingAccountID strin
 			if err != nil {
 				return ReservationTransactionsClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ReservationTransactionsClientListResponse{}, err
 			}
@@ -93,7 +82,7 @@ func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter billingAccountID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingAccountId}", url.PathEscape(billingAccountID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +128,7 @@ func (client *ReservationTransactionsClient) NewListByBillingProfilePager(billin
 			if err != nil {
 				return ReservationTransactionsClientListByBillingProfileResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ReservationTransactionsClientListByBillingProfileResponse{}, err
 			}
@@ -162,7 +151,7 @@ func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(c
 		return nil, errors.New("parameter billingProfileID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingProfileId}", url.PathEscape(billingProfileID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -16,16 +16,28 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newLRORetrysClient() *LRORetrysClient {
+func newLRORetrysClient(t *testing.T) *LRORetrysClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
-	return NewLRORetrysClient(pl)
+	client, err := NewLRORetrysClient(&options)
+	require.NoError(t, err)
+	return client
+}
+
+func NewLRORetrysClient(options *azcore.ClientOptions) (*LRORetrysClient, error) {
+	cl, err := azcore.NewClient("lrogroup.LRORetrysClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	client := &LRORetrysClient{
+		internal: cl,
+	}
+	return client, nil
 }
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
-	op := newLRORetrysClient()
+	op := newLRORetrysClient(t)
 	poller, err := op.BeginDelete202Retry200(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -40,7 +52,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 }
 
 func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
-	op := newLRORetrysClient()
+	op := newLRORetrysClient(t)
 	poller, err := op.BeginDeleteAsyncRelativeRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -54,7 +66,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 }
 
 func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
-	op := newLRORetrysClient()
+	op := newLRORetrysClient(t)
 	poller, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -77,7 +89,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 }
 
 func TestLRORetrysBeginPost202Retry200(t *testing.T) {
-	op := newLRORetrysClient()
+	op := newLRORetrysClient(t)
 	poller, err := op.BeginPost202Retry200(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -91,7 +103,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 }
 
 func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
-	op := newLRORetrysClient()
+	op := newLRORetrysClient(t)
 	poller, err := op.BeginPostAsyncRelativeRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -105,7 +117,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 }
 
 func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
-	op := newLRORetrysClient()
+	op := newLRORetrysClient(t)
 	poller, err := op.BeginPut201CreatingSucceeded200(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -128,7 +140,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 }
 
 func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
-	op := newLRORetrysClient()
+	op := newLRORetrysClient(t)
 	poller, err := op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()

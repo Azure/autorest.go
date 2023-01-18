@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // PolymorphismClient contains the methods for the Polymorphism group.
-// Don't use this type directly, use NewPolymorphismClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PolymorphismClient struct {
-	pl runtime.Pipeline
-}
-
-// NewPolymorphismClient creates a new instance of PolymorphismClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPolymorphismClient(pl runtime.Pipeline) *PolymorphismClient {
-	client := &PolymorphismClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
@@ -42,7 +34,7 @@ func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *P
 	if err != nil {
 		return PolymorphismClientGetComplicatedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientGetComplicatedResponse{}, err
 	}
@@ -85,7 +77,7 @@ func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Conte
 	if err != nil {
 		return PolymorphismClientGetComposedWithDiscriminatorResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientGetComposedWithDiscriminatorResponse{}, err
 	}
@@ -128,7 +120,7 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Co
 	if err != nil {
 		return PolymorphismClientGetComposedWithoutDiscriminatorResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientGetComposedWithoutDiscriminatorResponse{}, err
 	}
@@ -169,7 +161,7 @@ func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *Pol
 	if err != nil {
 		return PolymorphismClientGetDotSyntaxResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientGetDotSyntaxResponse{}, err
 	}
@@ -209,7 +201,7 @@ func (client *PolymorphismClient) GetValid(ctx context.Context, options *Polymor
 	if err != nil {
 		return PolymorphismClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientGetValidResponse{}, err
 	}
@@ -250,7 +242,7 @@ func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBod
 	if err != nil {
 		return PolymorphismClientPutComplicatedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientPutComplicatedResponse{}, err
 	}
@@ -282,7 +274,7 @@ func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, c
 	if err != nil {
 		return PolymorphismClientPutMissingDiscriminatorResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientPutMissingDiscriminatorResponse{}, err
 	}
@@ -328,7 +320,7 @@ func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody Fish
 	if err != nil {
 		return PolymorphismClientPutValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientPutValidResponse{}, err
 	}
@@ -366,7 +358,7 @@ func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, c
 	if err != nil {
 		return PolymorphismClientPutValidMissingRequiredResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphismClientPutValidMissingRequiredResponse{}, err
 	}

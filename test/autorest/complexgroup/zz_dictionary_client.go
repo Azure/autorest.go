@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // DictionaryClient contains the methods for the Dictionary group.
-// Don't use this type directly, use NewDictionaryClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type DictionaryClient struct {
-	pl runtime.Pipeline
-}
-
-// NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewDictionaryClient(pl runtime.Pipeline) *DictionaryClient {
-	client := &DictionaryClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetEmpty - Get complex types with dictionary property which is empty
@@ -41,7 +33,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 	if err != nil {
 		return DictionaryClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetEmptyResponse{}, err
 	}
@@ -82,7 +74,7 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *Dic
 	if err != nil {
 		return DictionaryClientGetNotProvidedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetNotProvidedResponse{}, err
 	}
@@ -122,7 +114,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 	if err != nil {
 		return DictionaryClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetNullResponse{}, err
 	}
@@ -162,7 +154,7 @@ func (client *DictionaryClient) GetValid(ctx context.Context, options *Dictionar
 	if err != nil {
 		return DictionaryClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetValidResponse{}, err
 	}
@@ -203,7 +195,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return DictionaryClientPutEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutEmptyResponse{}, err
 	}
@@ -236,7 +228,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return DictionaryClientPutValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutValidResponse{}, err
 	}

@@ -12,6 +12,7 @@ package azkeyvault
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,18 +21,9 @@ import (
 )
 
 // RoleDefinitionsClient contains the methods for the RoleDefinitions group.
-// Don't use this type directly, use NewRoleDefinitionsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type RoleDefinitionsClient struct {
-	pl runtime.Pipeline
-}
-
-// NewRoleDefinitionsClient creates a new instance of RoleDefinitionsClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewRoleDefinitionsClient(pl runtime.Pipeline) *RoleDefinitionsClient {
-	client := &RoleDefinitionsClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // CreateOrUpdate - Creates or updates a custom role definition.
@@ -49,7 +41,7 @@ func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBa
 	if err != nil {
 		return RoleDefinitionsClientCreateOrUpdateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return RoleDefinitionsClientCreateOrUpdateResponse{}, err
 	}
@@ -102,7 +94,7 @@ func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return RoleDefinitionsClientDeleteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return RoleDefinitionsClientDeleteResponse{}, err
 	}
@@ -155,7 +147,7 @@ func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return RoleDefinitionsClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return RoleDefinitionsClientGetResponse{}, err
 	}
@@ -218,7 +210,7 @@ func (client *RoleDefinitionsClient) NewListPager(vaultBaseURL string, scope str
 			if err != nil {
 				return RoleDefinitionsClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return RoleDefinitionsClientListResponse{}, err
 			}

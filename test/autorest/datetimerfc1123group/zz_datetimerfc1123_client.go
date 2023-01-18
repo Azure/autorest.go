@@ -11,6 +11,7 @@ package datetimerfc1123group
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // Datetimerfc1123Client contains the methods for the Datetimerfc1123 group.
-// Don't use this type directly, use NewDatetimerfc1123Client() instead.
+// Don't use this type directly, use a constructor function instead.
 type Datetimerfc1123Client struct {
-	pl runtime.Pipeline
-}
-
-// NewDatetimerfc1123Client creates a new instance of Datetimerfc1123Client with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewDatetimerfc1123Client(pl runtime.Pipeline) *Datetimerfc1123Client {
-	client := &Datetimerfc1123Client{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetInvalid - Get invalid datetime value
@@ -43,7 +35,7 @@ func (client *Datetimerfc1123Client) GetInvalid(ctx context.Context, options *Da
 	if err != nil {
 		return Datetimerfc1123ClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientGetInvalidResponse{}, err
 	}
@@ -85,7 +77,7 @@ func (client *Datetimerfc1123Client) GetNull(ctx context.Context, options *Datet
 	if err != nil {
 		return Datetimerfc1123ClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientGetNullResponse{}, err
 	}
@@ -128,7 +120,7 @@ func (client *Datetimerfc1123Client) GetOverflow(ctx context.Context, options *D
 	if err != nil {
 		return Datetimerfc1123ClientGetOverflowResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientGetOverflowResponse{}, err
 	}
@@ -171,7 +163,7 @@ func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTime(ctx context.Cont
 	if err != nil {
 		return Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResponse{}, err
 	}
@@ -214,7 +206,7 @@ func (client *Datetimerfc1123Client) GetUTCMinDateTime(ctx context.Context, opti
 	if err != nil {
 		return Datetimerfc1123ClientGetUTCMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientGetUTCMinDateTimeResponse{}, err
 	}
@@ -257,7 +249,7 @@ func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTime(ctx context.Cont
 	if err != nil {
 		return Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResponse{}, err
 	}
@@ -300,7 +292,7 @@ func (client *Datetimerfc1123Client) GetUnderflow(ctx context.Context, options *
 	if err != nil {
 		return Datetimerfc1123ClientGetUnderflowResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientGetUnderflowResponse{}, err
 	}
@@ -344,7 +336,7 @@ func (client *Datetimerfc1123Client) PutUTCMaxDateTime(ctx context.Context, date
 	if err != nil {
 		return Datetimerfc1123ClientPutUTCMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientPutUTCMaxDateTimeResponse{}, err
 	}
@@ -378,7 +370,7 @@ func (client *Datetimerfc1123Client) PutUTCMinDateTime(ctx context.Context, date
 	if err != nil {
 		return Datetimerfc1123ClientPutUTCMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123ClientPutUTCMinDateTimeResponse{}, err
 	}

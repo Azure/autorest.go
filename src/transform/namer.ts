@@ -81,8 +81,6 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.openApiType = specType;
   const azureARM = await session.getValue('azure-arm', false);
   model.language.go!.azureARM = azureARM;
-  const exportClients = await session.getValue('export-clients', false);
-  model.language.go!.exportClients = exportClients;
   const headAsBoolean = await session.getValue('head-as-boolean', false);
   model.language.go!.headAsBoolean = headAsBoolean;
   const groupParameters = await session.getValue('group-parameters', true);
@@ -165,7 +163,6 @@ export async function namer(session: Session<CodeModel>) {
     clientNames.add(group.language.go!.clientName);
   }
 
-  const exportClient = session.model.language.go!.openApiType === 'arm' || exportClients;
   // fix up stuttering client names and operation names
   for (const group of values(model.operationGroups)) {
     const groupDetails = <Language>group.language.go;
@@ -176,10 +173,6 @@ export async function namer(session: Session<CodeModel>) {
       throw new Error(`client ${originalName} was renamed to ${groupDetails.clientName} which collides with an existing client name`);
     }
     groupDetails.clientCtorName = `New${groupDetails.clientName}`;
-    if (!exportClient) {
-      groupDetails.clientName = ensureNameCase(groupDetails.clientName, true);
-      groupDetails.clientCtorName = uncapitalize(groupDetails.clientCtorName);
-    }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       // propagate these settings to each operation for ease of access

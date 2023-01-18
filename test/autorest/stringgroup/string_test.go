@@ -15,13 +15,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newStringClient() *StringClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewStringClient(pl)
+func newStringClient(t *testing.T) *StringClient {
+	client, err := NewStringClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewStringClient(options *azcore.ClientOptions) (*StringClient, error) {
+	client, err := azcore.NewClient("stringgroup.StringClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &StringClient{internal: client}, nil
 }
 
 func TestStringGetMBCS(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetMBCS(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.Ptr("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")); r != "" {
@@ -30,14 +39,14 @@ func TestStringGetMBCS(t *testing.T) {
 }
 
 func TestStringPutMBCS(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.PutMBCS(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestStringGetBase64Encoded(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetBase64Encoded(context.Background(), nil)
 	require.NoError(t, err)
 	val := []byte("a string that gets encoded with base64")
@@ -47,7 +56,7 @@ func TestStringGetBase64Encoded(t *testing.T) {
 }
 
 func TestStringGetBase64URLEncoded(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetBase64URLEncoded(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, []byte("a string that gets encoded with base64url")); r != "" {
@@ -56,7 +65,7 @@ func TestStringGetBase64URLEncoded(t *testing.T) {
 }
 
 func TestStringGetEmpty(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.Ptr("")); r != "" {
@@ -65,21 +74,21 @@ func TestStringGetEmpty(t *testing.T) {
 }
 
 func TestStringGetNotProvided(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetNotProvided(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestStringGetNull(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestStringGetNullBase64URLEncoded(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetNullBase64URLEncoded(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, ([]byte)(nil)); r != "" {
@@ -88,7 +97,7 @@ func TestStringGetNullBase64URLEncoded(t *testing.T) {
 }
 
 func TestStringGetWhitespace(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.GetWhitespace(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.Ptr("    Now is the time for all good men to come to the aid of their country    ")); r != "" {
@@ -97,14 +106,14 @@ func TestStringGetWhitespace(t *testing.T) {
 }
 
 func TestStringPutBase64URLEncoded(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.PutBase64URLEncoded(context.Background(), []byte("a string that gets encoded with base64url"), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestStringPutEmpty(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.PutEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -112,14 +121,14 @@ func TestStringPutEmpty(t *testing.T) {
 
 func TestStringPutNull(t *testing.T) {
 	t.Skip("missing x-nullable")
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.PutNull(context.Background(), "", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestStringPutWhitespace(t *testing.T) {
-	client := newStringClient()
+	client := newStringClient(t)
 	result, err := client.PutWhitespace(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

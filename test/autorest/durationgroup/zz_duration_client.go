@@ -11,24 +11,16 @@ package durationgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // DurationClient contains the methods for the Duration group.
-// Don't use this type directly, use NewDurationClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type DurationClient struct {
-	pl runtime.Pipeline
-}
-
-// NewDurationClient creates a new instance of DurationClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewDurationClient(pl runtime.Pipeline) *DurationClient {
-	client := &DurationClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetInvalid - Get an invalid duration value
@@ -41,7 +33,7 @@ func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationC
 	if err != nil {
 		return DurationClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DurationClientGetInvalidResponse{}, err
 	}
@@ -81,7 +73,7 @@ func (client *DurationClient) GetNull(ctx context.Context, options *DurationClie
 	if err != nil {
 		return DurationClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DurationClientGetNullResponse{}, err
 	}
@@ -122,7 +114,7 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *
 	if err != nil {
 		return DurationClientGetPositiveDurationResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DurationClientGetPositiveDurationResponse{}, err
 	}
@@ -164,7 +156,7 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 	if err != nil {
 		return DurationClientPutPositiveDurationResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DurationClientPutPositiveDurationResponse{}, err
 	}

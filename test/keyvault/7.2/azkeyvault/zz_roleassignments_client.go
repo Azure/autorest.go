@@ -12,6 +12,7 @@ package azkeyvault
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,18 +21,9 @@ import (
 )
 
 // RoleAssignmentsClient contains the methods for the RoleAssignments group.
-// Don't use this type directly, use NewRoleAssignmentsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type RoleAssignmentsClient struct {
-	pl runtime.Pipeline
-}
-
-// NewRoleAssignmentsClient creates a new instance of RoleAssignmentsClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
-	client := &RoleAssignmentsClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Create - Creates a role assignment.
@@ -48,7 +40,7 @@ func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return RoleAssignmentsClientCreateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return RoleAssignmentsClientCreateResponse{}, err
 	}
@@ -101,7 +93,7 @@ func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return RoleAssignmentsClientDeleteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return RoleAssignmentsClientDeleteResponse{}, err
 	}
@@ -154,7 +146,7 @@ func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return RoleAssignmentsClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return RoleAssignmentsClientGetResponse{}, err
 	}
@@ -217,7 +209,7 @@ func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, s
 			if err != nil {
 				return RoleAssignmentsClientListForScopeResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return RoleAssignmentsClientListForScopeResponse{}, err
 			}

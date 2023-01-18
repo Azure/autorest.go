@@ -11,6 +11,7 @@ package formdatagroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -18,18 +19,9 @@ import (
 )
 
 // FormdataClient contains the methods for the Formdata group.
-// Don't use this type directly, use NewFormdataClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type FormdataClient struct {
-	pl runtime.Pipeline
-}
-
-// NewFormdataClient creates a new instance of FormdataClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewFormdataClient(pl runtime.Pipeline) *FormdataClient {
-	client := &FormdataClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // UploadFile - Upload file
@@ -44,7 +36,7 @@ func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.Rea
 	if err != nil {
 		return FormdataClientUploadFileResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FormdataClientUploadFileResponse{}, err
 	}
@@ -84,7 +76,7 @@ func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent
 	if err != nil {
 		return FormdataClientUploadFileViaBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FormdataClientUploadFileViaBodyResponse{}, err
 	}
@@ -117,7 +109,7 @@ func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.
 	if err != nil {
 		return FormdataClientUploadFilesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FormdataClientUploadFilesResponse{}, err
 	}

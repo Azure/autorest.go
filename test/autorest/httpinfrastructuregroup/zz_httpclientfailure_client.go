@@ -11,24 +11,16 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // HTTPClientFailureClient contains the methods for the HTTPClientFailure group.
-// Don't use this type directly, use NewHTTPClientFailureClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type HTTPClientFailureClient struct {
-	pl runtime.Pipeline
-}
-
-// NewHTTPClientFailureClient creates a new instance of HTTPClientFailureClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewHTTPClientFailureClient(pl runtime.Pipeline) *HTTPClientFailureClient {
-	client := &HTTPClientFailureClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Delete400 - Return 400 status code - should be represented in the client as an error
@@ -42,7 +34,7 @@ func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *H
 	if err != nil {
 		return HTTPClientFailureClientDelete400Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientDelete400Response{}, err
 	}
@@ -74,7 +66,7 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *H
 	if err != nil {
 		return HTTPClientFailureClientDelete407Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientDelete407Response{}, err
 	}
@@ -106,7 +98,7 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *H
 	if err != nil {
 		return HTTPClientFailureClientDelete417Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientDelete417Response{}, err
 	}
@@ -138,7 +130,7 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientGet400Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet400Response{}, err
 	}
@@ -170,7 +162,7 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientGet402Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet402Response{}, err
 	}
@@ -202,7 +194,7 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientGet403Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet403Response{}, err
 	}
@@ -234,7 +226,7 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientGet411Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet411Response{}, err
 	}
@@ -266,7 +258,7 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientGet412Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet412Response{}, err
 	}
@@ -298,7 +290,7 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientGet416Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet416Response{}, err
 	}
@@ -329,7 +321,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead400Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead400Response{}, err
 	}
@@ -360,7 +352,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead401Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead401Response{}, err
 	}
@@ -391,7 +383,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead410Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead410Response{}, err
 	}
@@ -422,7 +414,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead429Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead429Response{}, err
 	}
@@ -454,7 +446,7 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 	if err != nil {
 		return HTTPClientFailureClientOptions400Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientOptions400Response{}, err
 	}
@@ -486,7 +478,7 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 	if err != nil {
 		return HTTPClientFailureClientOptions403Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientOptions403Response{}, err
 	}
@@ -518,7 +510,7 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 	if err != nil {
 		return HTTPClientFailureClientOptions412Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientOptions412Response{}, err
 	}
@@ -550,7 +542,7 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 	if err != nil {
 		return HTTPClientFailureClientPatch400Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPatch400Response{}, err
 	}
@@ -582,7 +574,7 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 	if err != nil {
 		return HTTPClientFailureClientPatch405Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPatch405Response{}, err
 	}
@@ -614,7 +606,7 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 	if err != nil {
 		return HTTPClientFailureClientPatch414Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPatch414Response{}, err
 	}
@@ -646,7 +638,7 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientPost400Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPost400Response{}, err
 	}
@@ -678,7 +670,7 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientPost406Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPost406Response{}, err
 	}
@@ -710,7 +702,7 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientPost415Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPost415Response{}, err
 	}
@@ -742,7 +734,7 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientPut400Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut400Response{}, err
 	}
@@ -774,7 +766,7 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientPut404Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut404Response{}, err
 	}
@@ -806,7 +798,7 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientPut409Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut409Response{}, err
 	}
@@ -838,7 +830,7 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureClientPut413Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut413Response{}, err
 	}

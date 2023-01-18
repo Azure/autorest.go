@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // FlattencomplexClient contains the methods for the Flattencomplex group.
-// Don't use this type directly, use NewFlattencomplexClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type FlattencomplexClient struct {
-	pl runtime.Pipeline
-}
-
-// NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewFlattencomplexClient(pl runtime.Pipeline) *FlattencomplexClient {
-	client := &FlattencomplexClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetValid -
@@ -41,7 +33,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 	if err != nil {
 		return FlattencomplexClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FlattencomplexClientGetValidResponse{}, err
 	}

@@ -11,24 +11,16 @@ package nonstringenumgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // FloatClient contains the methods for the Float group.
-// Don't use this type directly, use NewFloatClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type FloatClient struct {
-	pl runtime.Pipeline
-}
-
-// NewFloatClient creates a new instance of FloatClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewFloatClient(pl runtime.Pipeline) *FloatClient {
-	client := &FloatClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Get - Get a float enum
@@ -41,7 +33,7 @@ func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptio
 	if err != nil {
 		return FloatClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FloatClientGetResponse{}, err
 	}
@@ -82,7 +74,7 @@ func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *Fl
 	if err != nil {
 		return FloatClientPutResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FloatClientPutResponse{}, err
 	}

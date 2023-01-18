@@ -16,14 +16,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPolymorphicrecursiveClient() *PolymorphicrecursiveClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewPolymorphicrecursiveClient(pl)
+func newPolymorphicrecursiveClient(t *testing.T) *PolymorphicrecursiveClient {
+	client, err := NewPolymorphicrecursiveClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) (*PolymorphicrecursiveClient, error) {
+	client, err := azcore.NewClient("complexgroup.PolymorphicrecursiveClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &PolymorphicrecursiveClient{internal: client}, nil
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
 func TestGetValid(t *testing.T) {
-	client := newPolymorphicrecursiveClient()
+	client := newPolymorphicrecursiveClient(t)
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
@@ -94,7 +103,7 @@ func TestGetValid(t *testing.T) {
 
 // PutValid - Put complex types that are polymorphic and have recursive references
 func TestPutValid(t *testing.T) {
-	client := newPolymorphicrecursiveClient()
+	client := newPolymorphicrecursiveClient(t)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
 	result, err := client.PutValid(context.Background(), &Salmon{

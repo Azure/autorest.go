@@ -11,24 +11,16 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // APIVersionLocalClient contains the methods for the APIVersionLocal group.
-// Don't use this type directly, use NewAPIVersionLocalClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type APIVersionLocalClient struct {
-	pl runtime.Pipeline
-}
-
-// NewAPIVersionLocalClient creates a new instance of APIVersionLocalClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewAPIVersionLocalClient(pl runtime.Pipeline) *APIVersionLocalClient {
-	client := &APIVersionLocalClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
@@ -42,7 +34,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, opt
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalNullResponse{}, err
 	}
@@ -79,7 +71,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalValidResponse{}, err
 	}
@@ -114,7 +106,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 	if err != nil {
 		return APIVersionLocalClientGetPathLocalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetPathLocalValidResponse{}, err
 	}
@@ -149,7 +141,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 	if err != nil {
 		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, err
 	}

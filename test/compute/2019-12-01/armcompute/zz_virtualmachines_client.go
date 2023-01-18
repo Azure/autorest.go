@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -27,9 +25,8 @@ import (
 // VirtualMachinesClient contains the methods for the VirtualMachines group.
 // Don't use this type directly, use NewVirtualMachinesClient() instead.
 type VirtualMachinesClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewVirtualMachinesClient creates a new instance of VirtualMachinesClient with the specified values.
@@ -38,21 +35,13 @@ type VirtualMachinesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualMachinesClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armcompute.VirtualMachinesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &VirtualMachinesClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -73,11 +62,11 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[VirtualMachinesClientCaptureResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachinesClientCaptureResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientCaptureResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientCaptureResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -91,7 +80,7 @@ func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +105,7 @@ func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, r
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,9 +134,9 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientConvertToManagedDisksResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientConvertToManagedDisksResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientConvertToManagedDisksResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientConvertToManagedDisksResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -164,7 +153,7 @@ func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +178,7 @@ func (client *VirtualMachinesClient) convertToManagedDisksCreateRequest(ctx cont
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -215,9 +204,9 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -231,7 +220,7 @@ func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +245,7 @@ func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -282,9 +271,9 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientDeallocateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientDeallocateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientDeallocateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientDeallocateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -298,7 +287,7 @@ func (client *VirtualMachinesClient) deallocate(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -323,7 +312,7 @@ func (client *VirtualMachinesClient) deallocateCreateRequest(ctx context.Context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -347,9 +336,9 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientDeleteResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -362,7 +351,7 @@ func (client *VirtualMachinesClient) deleteOperation(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -387,7 +376,7 @@ func (client *VirtualMachinesClient) deleteCreateRequest(ctx context.Context, re
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -414,7 +403,7 @@ func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGro
 	if err != nil {
 		return VirtualMachinesClientGeneralizeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachinesClientGeneralizeResponse{}, err
 	}
@@ -439,7 +428,7 @@ func (client *VirtualMachinesClient) generalizeCreateRequest(ctx context.Context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -461,7 +450,7 @@ func (client *VirtualMachinesClient) Get(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return VirtualMachinesClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachinesClientGetResponse{}, err
 	}
@@ -486,7 +475,7 @@ func (client *VirtualMachinesClient) getCreateRequest(ctx context.Context, resou
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -522,7 +511,7 @@ func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesClientInstanceViewResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachinesClientInstanceViewResponse{}, err
 	}
@@ -547,7 +536,7 @@ func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -590,7 +579,7 @@ func (client *VirtualMachinesClient) NewListPager(resourceGroupName string, opti
 			if err != nil {
 				return VirtualMachinesClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return VirtualMachinesClientListResponse{}, err
 			}
@@ -613,7 +602,7 @@ func (client *VirtualMachinesClient) listCreateRequest(ctx context.Context, reso
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -655,7 +644,7 @@ func (client *VirtualMachinesClient) NewListAllPager(options *VirtualMachinesCli
 			if err != nil {
 				return VirtualMachinesClientListAllResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return VirtualMachinesClientListAllResponse{}, err
 			}
@@ -674,7 +663,7 @@ func (client *VirtualMachinesClient) listAllCreateRequest(ctx context.Context, o
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -714,7 +703,7 @@ func (client *VirtualMachinesClient) NewListAvailableSizesPager(resourceGroupNam
 			if err != nil {
 				return VirtualMachinesClientListAvailableSizesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return VirtualMachinesClientListAvailableSizesResponse{}, err
 			}
@@ -741,7 +730,7 @@ func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -783,7 +772,7 @@ func (client *VirtualMachinesClient) NewListByLocationPager(location string, opt
 			if err != nil {
 				return VirtualMachinesClientListByLocationResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return VirtualMachinesClientListByLocationResponse{}, err
 			}
@@ -806,7 +795,7 @@ func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -841,9 +830,9 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientPerformMaintenanceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientPerformMaintenanceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientPerformMaintenanceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientPerformMaintenanceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -857,7 +846,7 @@ func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -882,7 +871,7 @@ func (client *VirtualMachinesClient) performMaintenanceCreateRequest(ctx context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -907,9 +896,9 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientPowerOffResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientPowerOffResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientPowerOffResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientPowerOffResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -923,7 +912,7 @@ func (client *VirtualMachinesClient) powerOff(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -948,7 +937,7 @@ func (client *VirtualMachinesClient) powerOffCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -975,9 +964,9 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientReapplyResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientReapplyResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientReapplyResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientReapplyResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -990,7 +979,7 @@ func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1015,7 +1004,7 @@ func (client *VirtualMachinesClient) reapplyCreateRequest(ctx context.Context, r
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1040,9 +1029,9 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientRedeployResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientRedeployResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientRedeployResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientRedeployResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1055,7 +1044,7 @@ func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1080,7 +1069,7 @@ func (client *VirtualMachinesClient) redeployCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1104,9 +1093,9 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientReimageResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientReimageResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientReimageResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientReimageResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1119,7 +1108,7 @@ func (client *VirtualMachinesClient) reimage(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1144,7 +1133,7 @@ func (client *VirtualMachinesClient) reimageCreateRequest(ctx context.Context, r
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1171,9 +1160,9 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientRestartResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientRestartResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientRestartResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientRestartResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1186,7 +1175,7 @@ func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1211,7 +1200,7 @@ func (client *VirtualMachinesClient) restartCreateRequest(ctx context.Context, r
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1236,11 +1225,11 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[VirtualMachinesClientRunCommandResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachinesClientRunCommandResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientRunCommandResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientRunCommandResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1253,7 +1242,7 @@ func (client *VirtualMachinesClient) runCommand(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1278,7 +1267,7 @@ func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1303,7 +1292,7 @@ func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resou
 	if err != nil {
 		return VirtualMachinesClientSimulateEvictionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachinesClientSimulateEvictionResponse{}, err
 	}
@@ -1328,7 +1317,7 @@ func (client *VirtualMachinesClient) simulateEvictionCreateRequest(ctx context.C
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1352,9 +1341,9 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientStartResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientStartResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientStartResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientStartResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1367,7 +1356,7 @@ func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1392,7 +1381,7 @@ func (client *VirtualMachinesClient) startCreateRequest(ctx context.Context, res
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1417,9 +1406,9 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachinesClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachinesClientUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachinesClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachinesClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1432,7 +1421,7 @@ func (client *VirtualMachinesClient) update(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1457,7 +1446,7 @@ func (client *VirtualMachinesClient) updateCreateRequest(ctx context.Context, re
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

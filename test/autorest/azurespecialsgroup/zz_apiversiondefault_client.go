@@ -11,24 +11,16 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // APIVersionDefaultClient contains the methods for the APIVersionDefault group.
-// Don't use this type directly, use NewAPIVersionDefaultClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type APIVersionDefaultClient struct {
-	pl runtime.Pipeline
-}
-
-// NewAPIVersionDefaultClient creates a new instance of APIVersionDefaultClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewAPIVersionDefaultClient(pl runtime.Pipeline) *APIVersionDefaultClient {
-	client := &APIVersionDefaultClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
@@ -42,7 +34,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx conte
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, err
 	}
@@ -77,7 +69,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context,
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, err
 	}
@@ -112,7 +104,7 @@ func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, o
 	if err != nil {
 		return APIVersionDefaultClientGetPathGlobalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetPathGlobalValidResponse{}, err
 	}
@@ -147,7 +139,7 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context
 	if err != nil {
 		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, err
 	}

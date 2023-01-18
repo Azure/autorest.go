@@ -13,25 +13,34 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newComplexModelClient() *ComplexModelClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewComplexModelClient(pl)
+func newComplexModelClient(t *testing.T) *ComplexModelClient {
+	client, err := NewComplexModelClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewComplexModelClient(options *azcore.ClientOptions) (*ComplexModelClient, error) {
+	client, err := azcore.NewClient("complexmodelgroup.ComplexModelClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ComplexModelClient{internal: client}, nil
 }
 
 func TestCreate(t *testing.T) {
-	client := newComplexModelClient()
+	client := newComplexModelClient(t)
 	_, err := client.Create(context.Background(), "sub", "rg", CatalogDictionaryOfArray{}, nil)
 	require.Error(t, err)
 }
 
 func TestList(t *testing.T) {
-	client := newComplexModelClient()
+	client := newComplexModelClient(t)
 	_, err := client.List(context.Background(), "", nil)
 	require.Error(t, err)
 }
 
 func TestUpdate(t *testing.T) {
-	client := newComplexModelClient()
+	client := newComplexModelClient(t)
 	_, err := client.Update(context.Background(), "", "", CatalogArrayOfDictionary{}, nil)
 	require.Error(t, err)
 }

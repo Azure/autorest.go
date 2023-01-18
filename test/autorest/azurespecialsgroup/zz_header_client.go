@@ -11,24 +11,16 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // HeaderClient contains the methods for the Header group.
-// Don't use this type directly, use NewHeaderClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type HeaderClient struct {
-	pl runtime.Pipeline
-}
-
-// NewHeaderClient creates a new instance of HeaderClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewHeaderClient(pl runtime.Pipeline) *HeaderClient {
-	client := &HeaderClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
@@ -43,7 +35,7 @@ func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientR
 	if err != nil {
 		return HeaderClientCustomNamedRequestIDResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HeaderClientCustomNamedRequestIDResponse{}, err
 	}
@@ -85,7 +77,7 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 	if err != nil {
 		return HeaderClientCustomNamedRequestIDHeadResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HeaderClientCustomNamedRequestIDHeadResponse{}, err
 	}
@@ -131,7 +123,7 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 	if err != nil {
 		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, err
 	}

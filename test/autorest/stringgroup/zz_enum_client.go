@@ -11,24 +11,16 @@ package stringgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // EnumClient contains the methods for the Enum group.
-// Don't use this type directly, use NewEnumClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type EnumClient struct {
-	pl runtime.Pipeline
-}
-
-// NewEnumClient creates a new instance of EnumClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewEnumClient(pl runtime.Pipeline) *EnumClient {
-	client := &EnumClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
@@ -41,7 +33,7 @@ func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumCli
 	if err != nil {
 		return EnumClientGetNotExpandableResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientGetNotExpandableResponse{}, err
 	}
@@ -81,7 +73,7 @@ func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumClient
 	if err != nil {
 		return EnumClientGetReferencedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientGetReferencedResponse{}, err
 	}
@@ -122,7 +114,7 @@ func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *En
 	if err != nil {
 		return EnumClientGetReferencedConstantResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientGetReferencedConstantResponse{}, err
 	}
@@ -163,7 +155,7 @@ func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Color
 	if err != nil {
 		return EnumClientPutNotExpandableResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientPutNotExpandableResponse{}, err
 	}
@@ -195,7 +187,7 @@ func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colo
 	if err != nil {
 		return EnumClientPutReferencedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientPutReferencedResponse{}, err
 	}
@@ -228,7 +220,7 @@ func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringB
 	if err != nil {
 		return EnumClientPutReferencedConstantResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientPutReferencedConstantResponse{}, err
 	}

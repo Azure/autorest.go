@@ -11,24 +11,16 @@ package migroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // MultipleInheritanceServiceClient contains the methods for the MultipleInheritanceServiceClient group.
-// Don't use this type directly, use NewMultipleInheritanceServiceClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type MultipleInheritanceServiceClient struct {
-	pl runtime.Pipeline
-}
-
-// NewMultipleInheritanceServiceClient creates a new instance of MultipleInheritanceServiceClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewMultipleInheritanceServiceClient(pl runtime.Pipeline) *MultipleInheritanceServiceClient {
-	client := &MultipleInheritanceServiceClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
@@ -42,7 +34,7 @@ func (client *MultipleInheritanceServiceClient) GetCat(ctx context.Context, opti
 	if err != nil {
 		return MultipleInheritanceServiceClientGetCatResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetCatResponse{}, err
 	}
@@ -83,7 +75,7 @@ func (client *MultipleInheritanceServiceClient) GetFeline(ctx context.Context, o
 	if err != nil {
 		return MultipleInheritanceServiceClientGetFelineResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetFelineResponse{}, err
 	}
@@ -124,7 +116,7 @@ func (client *MultipleInheritanceServiceClient) GetHorse(ctx context.Context, op
 	if err != nil {
 		return MultipleInheritanceServiceClientGetHorseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetHorseResponse{}, err
 	}
@@ -165,7 +157,7 @@ func (client *MultipleInheritanceServiceClient) GetKitten(ctx context.Context, o
 	if err != nil {
 		return MultipleInheritanceServiceClientGetKittenResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetKittenResponse{}, err
 	}
@@ -206,7 +198,7 @@ func (client *MultipleInheritanceServiceClient) GetPet(ctx context.Context, opti
 	if err != nil {
 		return MultipleInheritanceServiceClientGetPetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetPetResponse{}, err
 	}
@@ -248,7 +240,7 @@ func (client *MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat 
 	if err != nil {
 		return MultipleInheritanceServiceClientPutCatResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutCatResponse{}, err
 	}
@@ -290,7 +282,7 @@ func (client *MultipleInheritanceServiceClient) PutFeline(ctx context.Context, f
 	if err != nil {
 		return MultipleInheritanceServiceClientPutFelineResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutFelineResponse{}, err
 	}
@@ -332,7 +324,7 @@ func (client *MultipleInheritanceServiceClient) PutHorse(ctx context.Context, ho
 	if err != nil {
 		return MultipleInheritanceServiceClientPutHorseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutHorseResponse{}, err
 	}
@@ -374,7 +366,7 @@ func (client *MultipleInheritanceServiceClient) PutKitten(ctx context.Context, k
 	if err != nil {
 		return MultipleInheritanceServiceClientPutKittenResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutKittenResponse{}, err
 	}
@@ -416,7 +408,7 @@ func (client *MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet 
 	if err != nil {
 		return MultipleInheritanceServiceClientPutPetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutPetResponse{}, err
 	}

@@ -12,24 +12,16 @@ package xmlgroup
 import (
 	"context"
 	"encoding/xml"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // XMLClient contains the methods for the XML group.
-// Don't use this type directly, use NewXMLClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type XMLClient struct {
-	pl runtime.Pipeline
-}
-
-// NewXMLClient creates a new instance of XMLClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewXMLClient(pl runtime.Pipeline) *XMLClient {
-	client := &XMLClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetACLs - Gets storage ACLs for a container.
@@ -42,7 +34,7 @@ func (client *XMLClient) GetACLs(ctx context.Context, options *XMLClientGetACLsO
 	if err != nil {
 		return XMLClientGetACLsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetACLsResponse{}, err
 	}
@@ -86,7 +78,7 @@ func (client *XMLClient) GetBytes(ctx context.Context, options *XMLClientGetByte
 	if err != nil {
 		return XMLClientGetBytesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetBytesResponse{}, err
 	}
@@ -127,7 +119,7 @@ func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *X
 	if err != nil {
 		return XMLClientGetComplexTypeRefNoMetaResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetComplexTypeRefNoMetaResponse{}, err
 	}
@@ -168,7 +160,7 @@ func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options 
 	if err != nil {
 		return XMLClientGetComplexTypeRefWithMetaResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetComplexTypeRefWithMetaResponse{}, err
 	}
@@ -209,7 +201,7 @@ func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLC
 	if err != nil {
 		return XMLClientGetEmptyChildElementResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyChildElementResponse{}, err
 	}
@@ -249,7 +241,7 @@ func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLClientGet
 	if err != nil {
 		return XMLClientGetEmptyListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyListResponse{}, err
 	}
@@ -289,7 +281,7 @@ func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLClien
 	if err != nil {
 		return XMLClientGetEmptyRootListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyRootListResponse{}, err
 	}
@@ -330,7 +322,7 @@ func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLC
 	if err != nil {
 		return XMLClientGetEmptyWrappedListsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyWrappedListsResponse{}, err
 	}
@@ -370,7 +362,7 @@ func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLClientGetHe
 	if err != nil {
 		return XMLClientGetHeadersResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetHeadersResponse{}, err
 	}
@@ -409,7 +401,7 @@ func (client *XMLClient) GetRootList(ctx context.Context, options *XMLClientGetR
 	if err != nil {
 		return XMLClientGetRootListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetRootListResponse{}, err
 	}
@@ -450,7 +442,7 @@ func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XML
 	if err != nil {
 		return XMLClientGetRootListSingleItemResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetRootListSingleItemResponse{}, err
 	}
@@ -491,7 +483,7 @@ func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLC
 	if err != nil {
 		return XMLClientGetServicePropertiesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetServicePropertiesResponse{}, err
 	}
@@ -535,7 +527,7 @@ func (client *XMLClient) GetSimple(ctx context.Context, options *XMLClientGetSim
 	if err != nil {
 		return XMLClientGetSimpleResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetSimpleResponse{}, err
 	}
@@ -575,7 +567,7 @@ func (client *XMLClient) GetURI(ctx context.Context, options *XMLClientGetURIOpt
 	if err != nil {
 		return XMLClientGetURIResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetURIResponse{}, err
 	}
@@ -615,7 +607,7 @@ func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLClient
 	if err != nil {
 		return XMLClientGetWrappedListsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetWrappedListsResponse{}, err
 	}
@@ -656,7 +648,7 @@ func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLClientGetXM
 	if err != nil {
 		return XMLClientGetXMsTextResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetXMsTextResponse{}, err
 	}
@@ -696,7 +688,7 @@ func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, op
 	if err != nil {
 		return XMLClientJSONInputResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientJSONInputResponse{}, err
 	}
@@ -726,7 +718,7 @@ func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLClientJSONO
 	if err != nil {
 		return XMLClientJSONOutputResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientJSONOutputResponse{}, err
 	}
@@ -766,7 +758,7 @@ func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLClientListBl
 	if err != nil {
 		return XMLClientListBlobsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientListBlobsResponse{}, err
 	}
@@ -810,7 +802,7 @@ func (client *XMLClient) ListContainers(ctx context.Context, options *XMLClientL
 	if err != nil {
 		return XMLClientListContainersResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientListContainersResponse{}, err
 	}
@@ -853,7 +845,7 @@ func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdenti
 	if err != nil {
 		return XMLClientPutACLsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutACLsResponse{}, err
 	}
@@ -891,7 +883,7 @@ func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteP
 	if err != nil {
 		return XMLClientPutBinaryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutBinaryResponse{}, err
 	}
@@ -923,7 +915,7 @@ func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model Root
 	if err != nil {
 		return XMLClientPutComplexTypeRefNoMetaResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutComplexTypeRefNoMetaResponse{}, err
 	}
@@ -954,7 +946,7 @@ func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model Ro
 	if err != nil {
 		return XMLClientPutComplexTypeRefWithMetaResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutComplexTypeRefWithMetaResponse{}, err
 	}
@@ -985,7 +977,7 @@ func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana
 	if err != nil {
 		return XMLClientPutEmptyChildElementResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyChildElementResponse{}, err
 	}
@@ -1015,7 +1007,7 @@ func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, 
 	if err != nil {
 		return XMLClientPutEmptyListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyListResponse{}, err
 	}
@@ -1045,7 +1037,7 @@ func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana
 	if err != nil {
 		return XMLClientPutEmptyRootListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyRootListResponse{}, err
 	}
@@ -1080,7 +1072,7 @@ func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel A
 	if err != nil {
 		return XMLClientPutEmptyWrappedListsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyWrappedListsResponse{}, err
 	}
@@ -1110,7 +1102,7 @@ func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, opt
 	if err != nil {
 		return XMLClientPutRootListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutRootListResponse{}, err
 	}
@@ -1145,7 +1137,7 @@ func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*B
 	if err != nil {
 		return XMLClientPutRootListSingleItemResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutRootListSingleItemResponse{}, err
 	}
@@ -1180,7 +1172,7 @@ func (client *XMLClient) PutServiceProperties(ctx context.Context, properties St
 	if err != nil {
 		return XMLClientPutServicePropertiesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutServicePropertiesResponse{}, err
 	}
@@ -1214,7 +1206,7 @@ func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, opt
 	if err != nil {
 		return XMLClientPutSimpleResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutSimpleResponse{}, err
 	}
@@ -1245,7 +1237,7 @@ func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty,
 	if err != nil {
 		return XMLClientPutURIResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutURIResponse{}, err
 	}
@@ -1276,7 +1268,7 @@ func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists Apple
 	if err != nil {
 		return XMLClientPutWrappedListsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutWrappedListsResponse{}, err
 	}

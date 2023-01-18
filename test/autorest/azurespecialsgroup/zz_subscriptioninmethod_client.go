@@ -12,6 +12,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,18 +21,9 @@ import (
 )
 
 // SubscriptionInMethodClient contains the methods for the SubscriptionInMethod group.
-// Don't use this type directly, use NewSubscriptionInMethodClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type SubscriptionInMethodClient struct {
-	pl runtime.Pipeline
-}
-
-// NewSubscriptionInMethodClient creates a new instance of SubscriptionInMethodClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewSubscriptionInMethodClient(pl runtime.Pipeline) *SubscriptionInMethodClient {
-	client := &SubscriptionInMethodClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side
@@ -47,7 +39,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 	if err != nil {
 		return SubscriptionInMethodClientPostMethodLocalNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInMethodClientPostMethodLocalNullResponse{}, err
 	}
@@ -85,7 +77,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 	if err != nil {
 		return SubscriptionInMethodClientPostMethodLocalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInMethodClientPostMethodLocalValidResponse{}, err
 	}
@@ -123,7 +115,7 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 	if err != nil {
 		return SubscriptionInMethodClientPostPathLocalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInMethodClientPostPathLocalValidResponse{}, err
 	}
@@ -161,7 +153,7 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 	if err != nil {
 		return SubscriptionInMethodClientPostSwaggerLocalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInMethodClientPostSwaggerLocalValidResponse{}, err
 	}

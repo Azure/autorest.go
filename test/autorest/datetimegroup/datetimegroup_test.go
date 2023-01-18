@@ -15,19 +15,28 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newDatetimeClient() *DatetimeClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewDatetimeClient(pl)
+func newDatetimeClient(t *testing.T) *DatetimeClient {
+	client, err := NewDatetimeClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewDatetimeClient(options *azcore.ClientOptions) (*DatetimeClient, error) {
+	client, err := azcore.NewClient("datetimegroup.DatetimeClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &DatetimeClient{internal: client}, nil
 }
 
 func TestGetInvalid(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	_, err := client.GetInvalid(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestGetLocalNegativeOffsetLowercaseMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetLocalNegativeOffsetLowercaseMaxDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999-14:00")
@@ -38,7 +47,7 @@ func TestGetLocalNegativeOffsetLowercaseMaxDateTime(t *testing.T) {
 }
 
 func TestGetLocalNegativeOffsetMinDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetLocalNegativeOffsetMinDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00-14:00")
@@ -49,7 +58,7 @@ func TestGetLocalNegativeOffsetMinDateTime(t *testing.T) {
 }
 
 func TestGetLocalNegativeOffsetUppercaseMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetLocalNegativeOffsetUppercaseMaxDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999-14:00")
@@ -60,7 +69,7 @@ func TestGetLocalNegativeOffsetUppercaseMaxDateTime(t *testing.T) {
 }
 
 func TestGetLocalPositiveOffsetLowercaseMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetLocalPositiveOffsetLowercaseMaxDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999+14:00")
@@ -71,7 +80,7 @@ func TestGetLocalPositiveOffsetLowercaseMaxDateTime(t *testing.T) {
 }
 
 func TestGetLocalPositiveOffsetMinDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetLocalPositiveOffsetMinDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00+14:00")
@@ -82,7 +91,7 @@ func TestGetLocalPositiveOffsetMinDateTime(t *testing.T) {
 }
 
 func TestGetLocalNoOffsetMinDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetLocalNoOffsetMinDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
@@ -93,7 +102,7 @@ func TestGetLocalNoOffsetMinDateTime(t *testing.T) {
 }
 
 func TestGetLocalPositiveOffsetUppercaseMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetLocalPositiveOffsetUppercaseMaxDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999+14:00")
@@ -104,7 +113,7 @@ func TestGetLocalPositiveOffsetUppercaseMaxDateTime(t *testing.T) {
 }
 
 func TestGetNull(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	if result.Value != nil {
@@ -114,19 +123,19 @@ func TestGetNull(t *testing.T) {
 
 func TestGetOverflow(t *testing.T) {
 	t.Skip("API doesn't actually overflow")
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	_, err := client.GetOverflow(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestGetUnderflow(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	_, err := client.GetUnderflow(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetUTCLowercaseMaxDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999Z")
@@ -137,7 +146,7 @@ func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
 }
 
 func TestGetUTCMinDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetUTCMinDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
@@ -148,7 +157,7 @@ func TestGetUTCMinDateTime(t *testing.T) {
 }
 
 func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetUTCUppercaseMaxDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999Z")
@@ -159,7 +168,7 @@ func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
 }
 
 func TestGetUTCUppercaseMaxDateTime7Digits(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	result, err := client.GetUTCUppercaseMaxDateTime7Digits(context.Background(), nil)
 	require.NoError(t, err)
 	expected, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.9999999Z")
@@ -170,7 +179,7 @@ func TestGetUTCUppercaseMaxDateTime7Digits(t *testing.T) {
 }
 
 func TestPutLocalNegativeOffsetMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	body, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999-14:00")
 	require.NoError(t, err)
 	result, err := client.PutLocalNegativeOffsetMaxDateTime(context.Background(), body, nil)
@@ -179,7 +188,7 @@ func TestPutLocalNegativeOffsetMaxDateTime(t *testing.T) {
 }
 
 func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	body, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00-14:00")
 	require.NoError(t, err)
 	result, err := client.PutLocalNegativeOffsetMinDateTime(context.Background(), body, nil)
@@ -188,7 +197,7 @@ func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
 }
 
 func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	body, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999+14:00")
 	require.NoError(t, err)
 	result, err := client.PutLocalPositiveOffsetMaxDateTime(context.Background(), body, nil)
@@ -197,7 +206,7 @@ func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
 }
 
 func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	body, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00+14:00")
 	require.NoError(t, err)
 	result, err := client.PutLocalPositiveOffsetMinDateTime(context.Background(), body, nil)
@@ -206,7 +215,7 @@ func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
 }
 
 func TestPutUTCMaxDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	body, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.999Z")
 	require.NoError(t, err)
 	result, err := client.PutUTCMaxDateTime(context.Background(), body, nil)
@@ -215,7 +224,7 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 }
 
 func TestPutUTCMaxDateTime7Digits(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	body, err := time.Parse(time.RFC3339, "9999-12-31T23:59:59.9999999Z")
 	require.NoError(t, err)
 	result, err := client.PutUTCMaxDateTime7Digits(context.Background(), body, nil)
@@ -224,7 +233,7 @@ func TestPutUTCMaxDateTime7Digits(t *testing.T) {
 }
 
 func TestPutUTCMinDateTime(t *testing.T) {
-	client := newDatetimeClient()
+	client := newDatetimeClient(t)
 	body, err := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
 	require.NoError(t, err)
 	result, err := client.PutUTCMinDateTime(context.Background(), body, nil)

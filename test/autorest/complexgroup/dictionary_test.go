@@ -14,13 +14,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newDictionaryClient() *DictionaryClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewDictionaryClient(pl)
+func newDictionaryClient(t *testing.T) *DictionaryClient {
+	client, err := NewDictionaryClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewDictionaryClient(options *azcore.ClientOptions) (*DictionaryClient, error) {
+	client, err := azcore.NewClient("complexgroup.DictionaryClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &DictionaryClient{internal: client}, nil
 }
 
 func TestDictionaryGetEmpty(t *testing.T) {
-	client := newDictionaryClient()
+	client := newDictionaryClient(t)
 	result, err := client.GetEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{DefaultProgram: map[string]*string{}}); r != "" {
@@ -29,7 +38,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 }
 
 func TestDictionaryGetNotProvided(t *testing.T) {
-	client := newDictionaryClient()
+	client := newDictionaryClient(t)
 	result, err := client.GetNotProvided(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{}); r != "" {
@@ -38,7 +47,7 @@ func TestDictionaryGetNotProvided(t *testing.T) {
 }
 
 func TestDictionaryGetNull(t *testing.T) {
-	client := newDictionaryClient()
+	client := newDictionaryClient(t)
 	result, err := client.GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{}); r != "" {
@@ -47,7 +56,7 @@ func TestDictionaryGetNull(t *testing.T) {
 }
 
 func TestDictionaryGetValid(t *testing.T) {
-	client := newDictionaryClient()
+	client := newDictionaryClient(t)
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
@@ -58,14 +67,14 @@ func TestDictionaryGetValid(t *testing.T) {
 }
 
 func TestDictionaryPutEmpty(t *testing.T) {
-	client := newDictionaryClient()
+	client := newDictionaryClient(t)
 	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: map[string]*string{}}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestDictionaryPutValid(t *testing.T) {
-	client := newDictionaryClient()
+	client := newDictionaryClient(t)
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
 	result, err := client.PutValid(context.Background(), DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}, nil)
 	require.NoError(t, err)

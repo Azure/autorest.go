@@ -13,14 +13,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newHTTPSuccessOperationsClient() *HTTPSuccessClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewHTTPSuccessClient(pl)
+func newHTTPSuccessClient(t *testing.T) *HTTPSuccessClient {
+	client, err := NewHTTPSuccessClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewHTTPSuccessClient(options *azcore.ClientOptions) (*HTTPSuccessClient, error) {
+	client, err := azcore.NewClient("headgroup.HTTPSuccessClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &HTTPSuccessClient{internal: client}, nil
 }
 
 // Head200 - Return 200 status code if successful
 func TestHead200(t *testing.T) {
-	client := newHTTPSuccessOperationsClient()
+	client := newHTTPSuccessClient(t)
 	resp, err := client.Head200(context.Background(), nil)
 	require.NoError(t, err)
 	if !resp.Success {
@@ -30,7 +39,7 @@ func TestHead200(t *testing.T) {
 
 // Head204 - Return 204 status code if successful
 func TestHead204(t *testing.T) {
-	client := newHTTPSuccessOperationsClient()
+	client := newHTTPSuccessClient(t)
 	resp, err := client.Head204(context.Background(), nil)
 	require.NoError(t, err)
 	if !resp.Success {
@@ -40,7 +49,7 @@ func TestHead204(t *testing.T) {
 
 // Head404 - Return 404 status code if successful
 func TestHead404(t *testing.T) {
-	client := newHTTPSuccessOperationsClient()
+	client := newHTTPSuccessClient(t)
 	resp, err := client.Head404(context.Background(), nil)
 	require.NoError(t, err)
 	if resp.Success {

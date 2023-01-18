@@ -16,14 +16,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newArrayClient() *ArrayClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewArrayClient(pl)
+func newArrayClient(t *testing.T) *ArrayClient {
+	client, err := NewArrayClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+// NewArrayClient creates a new instance of ArrayClient with the specified values.
+func NewArrayClient(options *azcore.ClientOptions) (*ArrayClient, error) {
+	cl, err := azcore.NewClient("arraygroup.ArrayClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayClient{
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetArrayEmpty - Get an empty array []
 func TestGetArrayEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetArrayEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.StringArrayArray)
@@ -34,7 +47,7 @@ func TestGetArrayEmpty(t *testing.T) {
 
 // GetArrayItemEmpty - Get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
 func TestGetArrayItemEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetArrayItemEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
@@ -48,7 +61,7 @@ func TestGetArrayItemEmpty(t *testing.T) {
 
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
 func TestGetArrayItemNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetArrayItemNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
@@ -62,7 +75,7 @@ func TestGetArrayItemNull(t *testing.T) {
 
 // GetArrayNull - Get a null array
 func TestGetArrayNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetArrayNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.Nil(t, resp.StringArrayArray)
@@ -70,7 +83,7 @@ func TestGetArrayNull(t *testing.T) {
 
 // GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 func TestGetArrayValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetArrayValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
@@ -85,7 +98,7 @@ func TestGetArrayValid(t *testing.T) {
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
 func TestGetBase64URL(t *testing.T) {
 	t.Skip("decoding fails")
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetBase64URL(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ByteArrayArray, [][]byte{
@@ -100,7 +113,7 @@ func TestGetBase64URL(t *testing.T) {
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
 func TestGetBooleanInvalidNull(t *testing.T) {
 	t.Skip("unmarshalling succeeds")
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetBooleanInvalidNull(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -108,7 +121,7 @@ func TestGetBooleanInvalidNull(t *testing.T) {
 
 // GetBooleanInvalidString - Get boolean array value [true, 'boolean', false]
 func TestGetBooleanInvalidString(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetBooleanInvalidString(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -116,7 +129,7 @@ func TestGetBooleanInvalidString(t *testing.T) {
 
 // GetBooleanTfft - Get boolean array value [true, false, false, true]
 func TestGetBooleanTfft(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetBooleanTfft(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.BoolArray, to.SliceOfPtrs(true, false, false, true)); r != "" {
@@ -127,7 +140,7 @@ func TestGetBooleanTfft(t *testing.T) {
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
 func TestGetByteInvalidNull(t *testing.T) {
 	t.Skip("needs investigation")
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetByteInvalidNull(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -135,7 +148,7 @@ func TestGetByteInvalidNull(t *testing.T) {
 
 // GetByteValid - Get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in base64
 func TestGetByteValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetByteValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ByteArrayArray, [][]byte{
@@ -149,7 +162,7 @@ func TestGetByteValid(t *testing.T) {
 
 // GetComplexEmpty - Get empty array of complex type []
 func TestGetComplexEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetComplexEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.ProductArray)
@@ -160,7 +173,7 @@ func TestGetComplexEmpty(t *testing.T) {
 
 // GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
 func TestGetComplexItemEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetComplexItemEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ProductArray, []*Product{
@@ -174,7 +187,7 @@ func TestGetComplexItemEmpty(t *testing.T) {
 
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
 func TestGetComplexItemNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetComplexItemNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ProductArray, []*Product{
@@ -188,7 +201,7 @@ func TestGetComplexItemNull(t *testing.T) {
 
 // GetComplexNull - Get array of complex type null value
 func TestGetComplexNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetComplexNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.Nil(t, resp.ProductArray)
@@ -196,7 +209,7 @@ func TestGetComplexNull(t *testing.T) {
 
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 func TestGetComplexValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetComplexValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ProductArray, []*Product{
@@ -210,7 +223,7 @@ func TestGetComplexValid(t *testing.T) {
 
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
 func TestGetDateInvalidChars(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDateInvalidChars(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -218,7 +231,7 @@ func TestGetDateInvalidChars(t *testing.T) {
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
 func TestGetDateInvalidNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDateInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	v1 := time.Date(2012, 1, 1, 0, 0, 0, 0, time.UTC)
@@ -234,7 +247,7 @@ func TestGetDateInvalidNull(t *testing.T) {
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
 func TestGetDateTimeInvalidChars(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDateTimeInvalidChars(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -242,7 +255,7 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 
 // GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
 func TestGetDateTimeInvalidNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDateTimeInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
@@ -256,7 +269,7 @@ func TestGetDateTimeInvalidNull(t *testing.T) {
 
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 func TestGetDateTimeRFC1123Valid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDateTimeRFC1123Valid(context.Background(), nil)
 	require.NoError(t, err)
 	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
@@ -273,7 +286,7 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 func TestGetDateTimeValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDateTimeValid(context.Background(), nil)
 	require.NoError(t, err)
 	v1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
@@ -290,7 +303,7 @@ func TestGetDateTimeValid(t *testing.T) {
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
 func TestGetDateValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDateValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.TimeArray, to.SliceOfPtrs(
@@ -304,7 +317,7 @@ func TestGetDateValid(t *testing.T) {
 
 // GetDictionaryEmpty - Get an array of Dictionaries of type <string, string> with value []
 func TestGetDictionaryEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDictionaryEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{}); r != "" {
@@ -314,7 +327,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func TestGetDictionaryItemEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDictionaryItemEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
@@ -336,7 +349,7 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 
 // GetDictionaryItemNull - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func TestGetDictionaryItemNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDictionaryItemNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
@@ -358,7 +371,7 @@ func TestGetDictionaryItemNull(t *testing.T) {
 
 // GetDictionaryNull - Get an array of Dictionaries with value null
 func TestGetDictionaryNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDictionaryNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.Nil(t, resp.MapOfStringArray)
@@ -366,7 +379,7 @@ func TestGetDictionaryNull(t *testing.T) {
 
 // GetDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func TestGetDictionaryValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDictionaryValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
@@ -392,7 +405,7 @@ func TestGetDictionaryValid(t *testing.T) {
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 func TestGetDoubleInvalidNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Float64Array, []*float64{
@@ -406,7 +419,7 @@ func TestGetDoubleInvalidNull(t *testing.T) {
 
 // GetDoubleInvalidString - Get boolean array value [1.0, 'number', 0.0]
 func TestGetDoubleInvalidString(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDoubleInvalidString(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -414,7 +427,7 @@ func TestGetDoubleInvalidString(t *testing.T) {
 
 // GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
 func TestGetDoubleValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDoubleValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Float64Array, to.SliceOfPtrs[float64](0, -0.01, -1.2e20)); r != "" {
@@ -424,7 +437,7 @@ func TestGetDoubleValid(t *testing.T) {
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func TestGetDurationValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetDurationValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArray, to.SliceOfPtrs("P123DT22H14M12.011S", "P5DT1H0M0S")); r != "" {
@@ -434,7 +447,7 @@ func TestGetDurationValid(t *testing.T) {
 
 // GetEmpty - Get empty array value []
 func TestGetEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Int32Array)
@@ -445,7 +458,7 @@ func TestGetEmpty(t *testing.T) {
 
 // GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 func TestGetEnumValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetEnumValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.FooEnumArray, []*FooEnum{
@@ -456,7 +469,7 @@ func TestGetEnumValid(t *testing.T) {
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
 func TestGetFloatInvalidNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Float32Array, []*float32{
@@ -470,7 +483,7 @@ func TestGetFloatInvalidNull(t *testing.T) {
 
 // GetFloatInvalidString - Get boolean array value [1.0, 'number', 0.0]
 func TestGetFloatInvalidString(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetFloatInvalidString(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -478,7 +491,7 @@ func TestGetFloatInvalidString(t *testing.T) {
 
 // GetFloatValid - Get float array value [0, -0.01, 1.2e20]
 func TestGetFloatValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetFloatValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Float32Array, to.SliceOfPtrs[float32](0, -0.01, -1.2e20)); r != "" {
@@ -488,7 +501,7 @@ func TestGetFloatValid(t *testing.T) {
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
 func TestGetIntInvalidNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetIntInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Int32Array, []*int32{
@@ -502,7 +515,7 @@ func TestGetIntInvalidNull(t *testing.T) {
 
 // GetIntInvalidString - Get integer array value [1, 'integer', 0]
 func TestGetIntInvalidString(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetIntInvalidString(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -510,7 +523,7 @@ func TestGetIntInvalidString(t *testing.T) {
 
 // GetIntegerValid - Get integer array value [1, -1, 3, 300]
 func TestGetIntegerValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetIntegerValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Int32Array, to.SliceOfPtrs[int32](1, -1, 3, 300)); r != "" {
@@ -520,7 +533,7 @@ func TestGetIntegerValid(t *testing.T) {
 
 // GetInvalid - Get invalid array [1, 2, 3
 func TestGetInvalid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetInvalid(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -528,7 +541,7 @@ func TestGetInvalid(t *testing.T) {
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
 func TestGetLongInvalidNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetLongInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Int64Array, []*int64{
@@ -542,7 +555,7 @@ func TestGetLongInvalidNull(t *testing.T) {
 
 // GetLongInvalidString - Get long array value [1, 'integer', 0]
 func TestGetLongInvalidString(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetLongInvalidString(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -550,7 +563,7 @@ func TestGetLongInvalidString(t *testing.T) {
 
 // GetLongValid - Get integer array value [1, -1, 3, 300]
 func TestGetLongValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetLongValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Int64Array, to.SliceOfPtrs[int64](1, -1, 3, 300)); r != "" {
@@ -560,7 +573,7 @@ func TestGetLongValid(t *testing.T) {
 
 // GetNull - Get null array value
 func TestGetNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.Nil(t, resp.Int32Array)
@@ -568,7 +581,7 @@ func TestGetNull(t *testing.T) {
 
 // GetStringEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 func TestGetStringEnumValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetStringEnumValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Enum0Array, []*Enum0{
@@ -579,7 +592,7 @@ func TestGetStringEnumValid(t *testing.T) {
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
 func TestGetStringValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetStringValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArray, to.SliceOfPtrs("foo1", "foo2", "foo3")); r != "" {
@@ -589,7 +602,7 @@ func TestGetStringValid(t *testing.T) {
 
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
 func TestGetStringWithInvalid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetStringWithInvalid(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
@@ -597,7 +610,7 @@ func TestGetStringWithInvalid(t *testing.T) {
 
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
 func TestGetStringWithNull(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetStringWithNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArray, []*string{to.Ptr("foo"), nil, to.Ptr("foo2")}); r != "" {
@@ -612,7 +625,7 @@ func TestGetUUIDInvalidChars(t *testing.T) {
 
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func TestGetUUIDValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.GetUUIDValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArray, to.SliceOfPtrs("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205")); r != "" {
@@ -622,7 +635,7 @@ func TestGetUUIDValid(t *testing.T) {
 
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 func TestPutArrayValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutArrayValid(context.Background(), [][]*string{
 		to.SliceOfPtrs("1", "2", "3"),
 		to.SliceOfPtrs("4", "5", "6"),
@@ -634,7 +647,7 @@ func TestPutArrayValid(t *testing.T) {
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
 func TestPutBooleanTfft(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutBooleanTfft(context.Background(), to.SliceOfPtrs(true, false, false, true), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -642,7 +655,7 @@ func TestPutBooleanTfft(t *testing.T) {
 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
 func TestPutByteValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutByteValid(context.Background(), [][]byte{
 		{0xFF, 0xFF, 0xFF, 0xFA},
 		{0x01, 0x02, 0x03},
@@ -654,7 +667,7 @@ func TestPutByteValid(t *testing.T) {
 
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 func TestPutComplexValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutComplexValid(context.Background(), []*Product{
 		{Integer: to.Ptr[int32](1), String: to.Ptr("2")},
 		{Integer: to.Ptr[int32](3), String: to.Ptr("4")},
@@ -666,7 +679,7 @@ func TestPutComplexValid(t *testing.T) {
 
 // PutDateTimeRFC1123Valid - Set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 func TestPutDateTimeRFC1123Valid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	v2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	v3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
@@ -677,7 +690,7 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 
 // PutDateTimeValid - Set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 func TestPutDateTimeValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	v1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	v2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35Z")
 	v3, _ := time.Parse(time.RFC3339, "1492-10-12T10:15:01Z")
@@ -688,7 +701,7 @@ func TestPutDateTimeValid(t *testing.T) {
 
 // PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 func TestPutDateValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutDateValid(context.Background(), to.SliceOfPtrs(time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC),
 		time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC),
 		time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)), nil)
@@ -698,7 +711,7 @@ func TestPutDateValid(t *testing.T) {
 
 // PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func TestPutDictionaryValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutDictionaryValid(context.Background(), []map[string]*string{
 		{
 			"1": to.Ptr("one"),
@@ -722,7 +735,7 @@ func TestPutDictionaryValid(t *testing.T) {
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 func TestPutDoubleValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutDoubleValid(context.Background(), to.SliceOfPtrs[float64](0, -0.01, -1.2e20), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -730,7 +743,7 @@ func TestPutDoubleValid(t *testing.T) {
 
 // PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func TestPutDurationValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutDurationValid(context.Background(), to.SliceOfPtrs("P123DT22H14M12.011S", "P5DT1H"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -738,7 +751,7 @@ func TestPutDurationValid(t *testing.T) {
 
 // PutEmpty - Set array value empty []
 func TestPutEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutEmpty(context.Background(), []*string{}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -746,7 +759,7 @@ func TestPutEmpty(t *testing.T) {
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutEnumValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutEnumValid(context.Background(), []*FooEnum{
 		to.Ptr(FooEnumFoo1), to.Ptr(FooEnumFoo2), to.Ptr(FooEnumFoo3)}, nil)
 	require.NoError(t, err)
@@ -755,7 +768,7 @@ func TestPutEnumValid(t *testing.T) {
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
 func TestPutFloatValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutFloatValid(context.Background(), to.SliceOfPtrs[float32](0, -0.01, -1.2e20), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -763,7 +776,7 @@ func TestPutFloatValid(t *testing.T) {
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
 func TestPutIntegerValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutIntegerValid(context.Background(), to.SliceOfPtrs[int32](1, -1, 3, 300), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -771,7 +784,7 @@ func TestPutIntegerValid(t *testing.T) {
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
 func TestPutLongValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutLongValid(context.Background(), to.SliceOfPtrs[int64](1, -1, 3, 300), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -779,7 +792,7 @@ func TestPutLongValid(t *testing.T) {
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutStringEnumValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutStringEnumValid(context.Background(), []*Enum1{
 		to.Ptr(Enum1Foo1), to.Ptr(Enum1Foo2), to.Ptr(Enum1Foo3)}, nil)
 	require.NoError(t, err)
@@ -788,7 +801,7 @@ func TestPutStringEnumValid(t *testing.T) {
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutStringValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutStringValid(context.Background(), to.SliceOfPtrs("foo1", "foo2", "foo3"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -796,7 +809,7 @@ func TestPutStringValid(t *testing.T) {
 
 // PutUUIDValid - Set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func TestPutUUIDValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	resp, err := client.PutUUIDValid(context.Background(), to.SliceOfPtrs("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

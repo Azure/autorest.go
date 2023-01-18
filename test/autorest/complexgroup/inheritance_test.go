@@ -15,13 +15,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newInheritanceClient() *InheritanceClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewInheritanceClient(pl)
+func newInheritanceClient(t *testing.T) *InheritanceClient {
+	client, err := NewInheritanceClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewInheritanceClient(options *azcore.ClientOptions) (*InheritanceClient, error) {
+	client, err := azcore.NewClient("complexgroup.InheritanceClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &InheritanceClient{internal: client}, nil
 }
 
 func TestInheritanceGetValid(t *testing.T) {
-	client := newInheritanceClient()
+	client := newInheritanceClient(t)
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Siamese, Siamese{
@@ -47,7 +56,7 @@ func TestInheritanceGetValid(t *testing.T) {
 }
 
 func TestInheritancePutValid(t *testing.T) {
-	client := newInheritanceClient()
+	client := newInheritanceClient(t)
 	result, err := client.PutValid(context.Background(), Siamese{
 		ID:    to.Ptr[int32](2),
 		Name:  to.Ptr("Siameeee"),

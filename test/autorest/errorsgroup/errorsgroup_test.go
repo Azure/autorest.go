@@ -17,16 +17,25 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPetClient() *PetClient {
+func newPetClient(t *testing.T) *PetClient {
 	options := azcore.ClientOptions{}
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
-	return NewPetClient(pl)
+	client, err := NewPetClient(&options)
+	require.NoError(t, err)
+	return client
+}
+
+func NewPetClient(options *azcore.ClientOptions) (*PetClient, error) {
+	client, err := azcore.NewClient("errorsgroup.PetClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &PetClient{internal: client}, nil
 }
 
 // DoSomething - Asks pet to do something
 func TestDoSomethingSuccess(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.DoSomething(context.Background(), "stay", nil)
 	require.NoError(t, err)
 	// bug in test server, route returns wrong JSON model so PetAction is empty
@@ -36,7 +45,7 @@ func TestDoSomethingSuccess(t *testing.T) {
 }
 
 func TestDoSomethingError1(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.DoSomething(context.Background(), "jump", nil)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
@@ -62,7 +71,7 @@ ERROR CODE UNAVAILABLE
 }
 
 func TestDoSomethingError2(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.DoSomething(context.Background(), "fetch", nil)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
@@ -89,7 +98,7 @@ ERROR CODE UNAVAILABLE
 }
 
 func TestDoSomethingError3(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.DoSomething(context.Background(), "unknown", nil)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
@@ -114,7 +123,7 @@ ERROR CODE UNAVAILABLE
 
 // GetPetByID - Gets pets by id.
 func TestGetPetByIDSuccess1(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetPetByID(context.Background(), "tommy", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
@@ -126,14 +135,14 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 }
 
 func TestGetPetByIDSuccess2(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetPetByID(context.Background(), "django", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestGetPetByIDError1(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetPetByID(context.Background(), "coyoteUgly", nil)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
@@ -159,7 +168,7 @@ ERROR CODE UNAVAILABLE
 }
 
 func TestGetPetByIDError2(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetPetByID(context.Background(), "weirdAlYankovic", nil)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
@@ -185,7 +194,7 @@ ERROR CODE UNAVAILABLE
 }
 
 func TestGetPetByIDError3(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetPetByID(context.Background(), "ringo", nil)
 	require.Error(t, err)
 	var respErr *azcore.ResponseError
@@ -207,7 +216,7 @@ ERROR CODE UNAVAILABLE
 }
 
 func TestGetPetByIDError4(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetPetByID(context.Background(), "alien123", nil)
 	require.Error(t, err)
 	var respErr *azcore.ResponseError
@@ -229,7 +238,7 @@ ERROR CODE UNAVAILABLE
 }
 
 func TestGetPetByIDError5(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetPetByID(context.Background(), "unknown", nil)
 	// default generic error (no schema)
 	var respErr *azcore.ResponseError

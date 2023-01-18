@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -27,9 +25,8 @@ import (
 // PriceSheetClient contains the methods for the PriceSheet group.
 // Don't use this type directly, use NewPriceSheetClient() instead.
 type PriceSheetClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewPriceSheetClient creates a new instance of PriceSheetClient with the specified values.
@@ -37,21 +34,13 @@ type PriceSheetClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PriceSheetClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armconsumption.PriceSheetClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &PriceSheetClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -67,7 +56,7 @@ func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClie
 	if err != nil {
 		return PriceSheetClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PriceSheetClientGetResponse{}, err
 	}
@@ -84,7 +73,7 @@ func (client *PriceSheetClient) getCreateRequest(ctx context.Context, options *P
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +115,7 @@ func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingP
 	if err != nil {
 		return PriceSheetClientGetByBillingPeriodResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PriceSheetClientGetByBillingPeriodResponse{}, err
 	}
@@ -147,7 +136,7 @@ func (client *PriceSheetClient) getByBillingPeriodCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter billingPeriodName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingPeriodName}", url.PathEscape(billingPeriodName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

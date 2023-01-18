@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,9 +24,8 @@ import (
 // ContainersClient contains the methods for the Containers group.
 // Don't use this type directly, use NewContainersClient() instead.
 type ContainersClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewContainersClient creates a new instance of ContainersClient with the specified values.
@@ -36,21 +33,13 @@ type ContainersClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewContainersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ContainersClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armdataboxedge.ContainersClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &ContainersClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -72,9 +61,9 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ContainersClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainersClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[ContainersClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainersClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -87,7 +76,7 @@ func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +106,7 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -143,9 +132,9 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ContainersClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainersClientDeleteResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[ContainersClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainersClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -158,7 +147,7 @@ func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +177,7 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -213,7 +202,7 @@ func (client *ContainersClient) Get(ctx context.Context, deviceName string, stor
 	if err != nil {
 		return ContainersClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainersClientGetResponse{}, err
 	}
@@ -243,7 +232,7 @@ func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +276,7 @@ func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, 
 			if err != nil {
 				return ContainersClientListByStorageAccountResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ContainersClientListByStorageAccountResponse{}, err
 			}
@@ -315,7 +304,7 @@ func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Co
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -350,9 +339,9 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ContainersClientRefreshResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainersClientRefreshResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[ContainersClientRefreshResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainersClientRefreshResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -365,7 +354,7 @@ func (client *ContainersClient) refresh(ctx context.Context, deviceName string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -395,7 +384,7 @@ func (client *ContainersClient) refreshCreateRequest(ctx context.Context, device
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

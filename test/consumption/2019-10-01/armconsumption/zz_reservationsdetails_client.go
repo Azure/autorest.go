@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,28 +24,19 @@ import (
 // ReservationsDetailsClient contains the methods for the ReservationsDetails group.
 // Don't use this type directly, use NewReservationsDetailsClient() instead.
 type ReservationsDetailsClient struct {
-	host string
-	pl   runtime.Pipeline
+	internal *arm.Client
 }
 
 // NewReservationsDetailsClient creates a new instance of ReservationsDetailsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewReservationsDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ReservationsDetailsClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armconsumption.ReservationsDetailsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &ReservationsDetailsClient{
-		host: ep,
-		pl:   pl,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -77,7 +66,7 @@ func (client *ReservationsDetailsClient) NewListPager(scope string, options *Res
 			if err != nil {
 				return ReservationsDetailsClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ReservationsDetailsClientListResponse{}, err
 			}
@@ -93,7 +82,7 @@ func (client *ReservationsDetailsClient) NewListPager(scope string, options *Res
 func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, scope string, options *ReservationsDetailsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/reservationDetails"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +141,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderPager(reservat
 			if err != nil {
 				return ReservationsDetailsClientListByReservationOrderResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ReservationsDetailsClientListByReservationOrderResponse{}, err
 			}
@@ -171,7 +160,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx
 		return nil, errors.New("parameter reservationOrderID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{reservationOrderId}", url.PathEscape(reservationOrderID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -217,7 +206,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderAndReservation
 			if err != nil {
 				return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
 			}
@@ -240,7 +229,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCre
 		return nil, errors.New("parameter reservationID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{reservationId}", url.PathEscape(reservationID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

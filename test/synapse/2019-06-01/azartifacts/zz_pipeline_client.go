@@ -12,6 +12,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,20 +21,11 @@ import (
 	"strings"
 )
 
-type pipelineClient struct {
+// PipelineClient contains the methods for the Pipeline group.
+// Don't use this type directly, use a constructor function instead.
+type PipelineClient struct {
+	internal *azcore.Client
 	endpoint string
-	pl       runtime.Pipeline
-}
-
-// newPipelineClient creates a new instance of pipelineClient with the specified values.
-//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - pl - the pipeline used for sending requests and handling responses.
-func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
-	client := &pipelineClient{
-		endpoint: endpoint,
-		pl:       pl,
-	}
-	return client
 }
 
 // BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
@@ -42,17 +34,17 @@ func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
 // Generated from API version 2019-06-01-preview
 //   - pipelineName - The pipeline name.
 //   - pipeline - Pipeline resource definition.
-//   - options - PipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the pipelineClient.BeginCreateOrUpdatePipeline
+//   - options - PipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the PipelineClient.BeginCreateOrUpdatePipeline
 //     method.
-func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*runtime.Poller[PipelineClientCreateOrUpdatePipelineResponse], error) {
+func (client *PipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*runtime.Poller[PipelineClientCreateOrUpdatePipelineResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[PipelineClientCreateOrUpdatePipelineResponse](resp, client.pl, nil)
+		return runtime.NewPoller[PipelineClientCreateOrUpdatePipelineResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[PipelineClientCreateOrUpdatePipelineResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[PipelineClientCreateOrUpdatePipelineResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -60,12 +52,12 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*http.Response, error) {
+func (client *PipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*http.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +68,7 @@ func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipeli
 }
 
 // createOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
-func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*policy.Request, error) {
+func (client *PipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -101,14 +93,14 @@ func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 //
 // Generated from API version 2019-06-01-preview
 //   - pipelineName - The pipeline name.
-//   - options - PipelineClientCreatePipelineRunOptions contains the optional parameters for the pipelineClient.CreatePipelineRun
+//   - options - PipelineClientCreatePipelineRunOptions contains the optional parameters for the PipelineClient.CreatePipelineRun
 //     method.
-func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineClientCreatePipelineRunOptions) (PipelineClientCreatePipelineRunResponse, error) {
+func (client *PipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineClientCreatePipelineRunOptions) (PipelineClientCreatePipelineRunResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return PipelineClientCreatePipelineRunResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PipelineClientCreatePipelineRunResponse{}, err
 	}
@@ -119,7 +111,7 @@ func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineNam
 }
 
 // createPipelineRunCreateRequest creates the CreatePipelineRun request.
-func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context, pipelineName string, options *PipelineClientCreatePipelineRunOptions) (*policy.Request, error) {
+func (client *PipelineClient) createPipelineRunCreateRequest(ctx context.Context, pipelineName string, options *PipelineClientCreatePipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/createRun"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -149,7 +141,7 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 }
 
 // createPipelineRunHandleResponse handles the CreatePipelineRun response.
-func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Response) (PipelineClientCreatePipelineRunResponse, error) {
+func (client *PipelineClient) createPipelineRunHandleResponse(resp *http.Response) (PipelineClientCreatePipelineRunResponse, error) {
 	result := PipelineClientCreatePipelineRunResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CreateRunResponse); err != nil {
 		return PipelineClientCreatePipelineRunResponse{}, err
@@ -162,17 +154,17 @@ func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Respons
 //
 // Generated from API version 2019-06-01-preview
 //   - pipelineName - The pipeline name.
-//   - options - PipelineClientBeginDeletePipelineOptions contains the optional parameters for the pipelineClient.BeginDeletePipeline
+//   - options - PipelineClientBeginDeletePipelineOptions contains the optional parameters for the PipelineClient.BeginDeletePipeline
 //     method.
-func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*runtime.Poller[PipelineClientDeletePipelineResponse], error) {
+func (client *PipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*runtime.Poller[PipelineClientDeletePipelineResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deletePipeline(ctx, pipelineName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[PipelineClientDeletePipelineResponse](resp, client.pl, nil)
+		return runtime.NewPoller[PipelineClientDeletePipelineResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[PipelineClientDeletePipelineResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[PipelineClientDeletePipelineResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -180,12 +172,12 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*http.Response, error) {
+func (client *PipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*http.Response, error) {
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +188,7 @@ func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName s
 }
 
 // deletePipelineCreateRequest creates the DeletePipeline request.
-func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*policy.Request, error) {
+func (client *PipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -218,13 +210,13 @@ func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 //
 // Generated from API version 2019-06-01-preview
 //   - pipelineName - The pipeline name.
-//   - options - PipelineClientGetPipelineOptions contains the optional parameters for the pipelineClient.GetPipeline method.
-func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineClientGetPipelineOptions) (PipelineClientGetPipelineResponse, error) {
+//   - options - PipelineClientGetPipelineOptions contains the optional parameters for the PipelineClient.GetPipeline method.
+func (client *PipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineClientGetPipelineOptions) (PipelineClientGetPipelineResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return PipelineClientGetPipelineResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PipelineClientGetPipelineResponse{}, err
 	}
@@ -235,7 +227,7 @@ func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName stri
 }
 
 // getPipelineCreateRequest creates the GetPipeline request.
-func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineClientGetPipelineOptions) (*policy.Request, error) {
+func (client *PipelineClient) getPipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineClientGetPipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -256,7 +248,7 @@ func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 }
 
 // getPipelineHandleResponse handles the GetPipeline response.
-func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (PipelineClientGetPipelineResponse, error) {
+func (client *PipelineClient) getPipelineHandleResponse(resp *http.Response) (PipelineClientGetPipelineResponse, error) {
 	result := PipelineClientGetPipelineResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineResource); err != nil {
 		return PipelineClientGetPipelineResponse{}, err
@@ -267,9 +259,9 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (Pi
 // NewGetPipelinesByWorkspacePager - Lists pipelines.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.NewGetPipelinesByWorkspacePager
+//   - options - PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the PipelineClient.NewGetPipelinesByWorkspacePager
 //     method.
-func (client *pipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[PipelineClientGetPipelinesByWorkspaceResponse] {
+func (client *PipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[PipelineClientGetPipelinesByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PipelineClientGetPipelinesByWorkspaceResponse]{
 		More: func(page PipelineClientGetPipelinesByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -285,7 +277,7 @@ func (client *pipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineC
 			if err != nil {
 				return PipelineClientGetPipelinesByWorkspaceResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PipelineClientGetPipelinesByWorkspaceResponse{}, err
 			}
@@ -298,7 +290,7 @@ func (client *pipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineC
 }
 
 // getPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
-func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineClientGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
+func (client *PipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineClientGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/pipelines"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -312,7 +304,7 @@ func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.C
 }
 
 // getPipelinesByWorkspaceHandleResponse handles the GetPipelinesByWorkspace response.
-func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.Response) (PipelineClientGetPipelinesByWorkspaceResponse, error) {
+func (client *PipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.Response) (PipelineClientGetPipelinesByWorkspaceResponse, error) {
 	result := PipelineClientGetPipelinesByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineListResponse); err != nil {
 		return PipelineClientGetPipelinesByWorkspaceResponse{}, err
@@ -326,17 +318,17 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.R
 // Generated from API version 2019-06-01-preview
 //   - pipelineName - The pipeline name.
 //   - request - proposed new name.
-//   - options - PipelineClientBeginRenamePipelineOptions contains the optional parameters for the pipelineClient.BeginRenamePipeline
+//   - options - PipelineClientBeginRenamePipelineOptions contains the optional parameters for the PipelineClient.BeginRenamePipeline
 //     method.
-func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*runtime.Poller[PipelineClientRenamePipelineResponse], error) {
+func (client *PipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*runtime.Poller[PipelineClientRenamePipelineResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renamePipeline(ctx, pipelineName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[PipelineClientRenamePipelineResponse](resp, client.pl, nil)
+		return runtime.NewPoller[PipelineClientRenamePipelineResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[PipelineClientRenamePipelineResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[PipelineClientRenamePipelineResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -344,12 +336,12 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*http.Response, error) {
+func (client *PipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*http.Response, error) {
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -360,7 +352,7 @@ func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName s
 }
 
 // renamePipelineCreateRequest creates the RenamePipeline request.
-func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*policy.Request, error) {
+func (client *PipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/rename"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")

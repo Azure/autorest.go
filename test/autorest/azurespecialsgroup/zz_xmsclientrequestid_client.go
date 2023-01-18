@@ -11,24 +11,16 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // XMSClientRequestIDClient contains the methods for the XMSClientRequestID group.
-// Don't use this type directly, use NewXMSClientRequestIDClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type XMSClientRequestIDClient struct {
-	pl runtime.Pipeline
-}
-
-// NewXMSClientRequestIDClient creates a new instance of XMSClientRequestIDClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewXMSClientRequestIDClient(pl runtime.Pipeline) *XMSClientRequestIDClient {
-	client := &XMSClientRequestIDClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
@@ -41,7 +33,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 	if err != nil {
 		return XMSClientRequestIDClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMSClientRequestIDClientGetResponse{}, err
 	}
@@ -73,7 +65,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientR
 	if err != nil {
 		return XMSClientRequestIDClientParamGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMSClientRequestIDClientParamGetResponse{}, err
 	}

@@ -11,24 +11,16 @@ package azurereportgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // AutoRestReportServiceForAzureClient contains the methods for the AutoRestReportServiceForAzure group.
-// Don't use this type directly, use NewAutoRestReportServiceForAzureClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type AutoRestReportServiceForAzureClient struct {
-	pl runtime.Pipeline
-}
-
-// NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewAutoRestReportServiceForAzureClient(pl runtime.Pipeline) *AutoRestReportServiceForAzureClient {
-	client := &AutoRestReportServiceForAzureClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetReport - Get test coverage report
@@ -42,7 +34,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 	if err != nil {
 		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}

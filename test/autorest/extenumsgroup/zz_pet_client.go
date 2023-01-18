@@ -12,6 +12,7 @@ package extenumsgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,18 +21,9 @@ import (
 )
 
 // PetClient contains the methods for the Pet group.
-// Don't use this type directly, use NewPetClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PetClient struct {
-	pl runtime.Pipeline
-}
-
-// NewPetClient creates a new instance of PetClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPetClient(pl runtime.Pipeline) *PetClient {
-	client := &PetClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // AddPet - add pet
@@ -44,7 +36,7 @@ func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOpt
 	if err != nil {
 		return PetClientAddPetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetClientAddPetResponse{}, err
 	}
@@ -88,7 +80,7 @@ func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *
 	if err != nil {
 		return PetClientGetByPetIDResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetClientGetByPetIDResponse{}, err
 	}

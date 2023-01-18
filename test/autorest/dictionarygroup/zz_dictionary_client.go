@@ -11,6 +11,7 @@ package dictionarygroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // DictionaryClient contains the methods for the Dictionary group.
-// Don't use this type directly, use NewDictionaryClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type DictionaryClient struct {
-	pl runtime.Pipeline
-}
-
-// NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewDictionaryClient(pl runtime.Pipeline) *DictionaryClient {
-	client := &DictionaryClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetArrayEmpty - Get an empty dictionary {}
@@ -43,7 +35,7 @@ func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *Dict
 	if err != nil {
 		return DictionaryClientGetArrayEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetArrayEmptyResponse{}, err
 	}
@@ -84,7 +76,7 @@ func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *
 	if err != nil {
 		return DictionaryClientGetArrayItemEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetArrayItemEmptyResponse{}, err
 	}
@@ -125,7 +117,7 @@ func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *D
 	if err != nil {
 		return DictionaryClientGetArrayItemNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetArrayItemNullResponse{}, err
 	}
@@ -165,7 +157,7 @@ func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *Dicti
 	if err != nil {
 		return DictionaryClientGetArrayNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetArrayNullResponse{}, err
 	}
@@ -206,7 +198,7 @@ func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *Dict
 	if err != nil {
 		return DictionaryClientGetArrayValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetArrayValidResponse{}, err
 	}
@@ -247,7 +239,7 @@ func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *Dicti
 	if err != nil {
 		return DictionaryClientGetBase64URLResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetBase64URLResponse{}, err
 	}
@@ -288,7 +280,7 @@ func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, optio
 	if err != nil {
 		return DictionaryClientGetBooleanInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetBooleanInvalidNullResponse{}, err
 	}
@@ -329,7 +321,7 @@ func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, opt
 	if err != nil {
 		return DictionaryClientGetBooleanInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetBooleanInvalidStringResponse{}, err
 	}
@@ -370,7 +362,7 @@ func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *Dic
 	if err != nil {
 		return DictionaryClientGetBooleanTfftResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetBooleanTfftResponse{}, err
 	}
@@ -411,7 +403,7 @@ func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options 
 	if err != nil {
 		return DictionaryClientGetByteInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetByteInvalidNullResponse{}, err
 	}
@@ -452,7 +444,7 @@ func (client *DictionaryClient) GetByteValid(ctx context.Context, options *Dicti
 	if err != nil {
 		return DictionaryClientGetByteValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetByteValidResponse{}, err
 	}
@@ -493,7 +485,7 @@ func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *Di
 	if err != nil {
 		return DictionaryClientGetComplexEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetComplexEmptyResponse{}, err
 	}
@@ -535,7 +527,7 @@ func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options
 	if err != nil {
 		return DictionaryClientGetComplexItemEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetComplexItemEmptyResponse{}, err
 	}
@@ -577,7 +569,7 @@ func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options 
 	if err != nil {
 		return DictionaryClientGetComplexItemNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetComplexItemNullResponse{}, err
 	}
@@ -618,7 +610,7 @@ func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *Dic
 	if err != nil {
 		return DictionaryClientGetComplexNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetComplexNullResponse{}, err
 	}
@@ -660,7 +652,7 @@ func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *Di
 	if err != nil {
 		return DictionaryClientGetComplexValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetComplexValidResponse{}, err
 	}
@@ -701,7 +693,7 @@ func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options
 	if err != nil {
 		return DictionaryClientGetDateInvalidCharsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDateInvalidCharsResponse{}, err
 	}
@@ -748,7 +740,7 @@ func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options 
 	if err != nil {
 		return DictionaryClientGetDateInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDateInvalidNullResponse{}, err
 	}
@@ -795,7 +787,7 @@ func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, opt
 	if err != nil {
 		return DictionaryClientGetDateTimeInvalidCharsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDateTimeInvalidCharsResponse{}, err
 	}
@@ -842,7 +834,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, opti
 	if err != nil {
 		return DictionaryClientGetDateTimeInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDateTimeInvalidNullResponse{}, err
 	}
@@ -890,7 +882,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, opt
 	if err != nil {
 		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, err
 	}
@@ -938,7 +930,7 @@ func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *D
 	if err != nil {
 		return DictionaryClientGetDateTimeValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDateTimeValidResponse{}, err
 	}
@@ -984,7 +976,7 @@ func (client *DictionaryClient) GetDateValid(ctx context.Context, options *Dicti
 	if err != nil {
 		return DictionaryClientGetDateValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDateValidResponse{}, err
 	}
@@ -1031,7 +1023,7 @@ func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options 
 	if err != nil {
 		return DictionaryClientGetDictionaryEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDictionaryEmptyResponse{}, err
 	}
@@ -1073,7 +1065,7 @@ func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, opti
 	if err != nil {
 		return DictionaryClientGetDictionaryItemEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDictionaryItemEmptyResponse{}, err
 	}
@@ -1115,7 +1107,7 @@ func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, optio
 	if err != nil {
 		return DictionaryClientGetDictionaryItemNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDictionaryItemNullResponse{}, err
 	}
@@ -1156,7 +1148,7 @@ func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *
 	if err != nil {
 		return DictionaryClientGetDictionaryNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDictionaryNullResponse{}, err
 	}
@@ -1198,7 +1190,7 @@ func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options 
 	if err != nil {
 		return DictionaryClientGetDictionaryValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDictionaryValidResponse{}, err
 	}
@@ -1239,7 +1231,7 @@ func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, option
 	if err != nil {
 		return DictionaryClientGetDoubleInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDoubleInvalidNullResponse{}, err
 	}
@@ -1280,7 +1272,7 @@ func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, opti
 	if err != nil {
 		return DictionaryClientGetDoubleInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDoubleInvalidStringResponse{}, err
 	}
@@ -1321,7 +1313,7 @@ func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *Dic
 	if err != nil {
 		return DictionaryClientGetDoubleValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDoubleValidResponse{}, err
 	}
@@ -1362,7 +1354,7 @@ func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *D
 	if err != nil {
 		return DictionaryClientGetDurationValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetDurationValidResponse{}, err
 	}
@@ -1402,7 +1394,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 	if err != nil {
 		return DictionaryClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetEmptyResponse{}, err
 	}
@@ -1443,7 +1435,7 @@ func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *
 	if err != nil {
 		return DictionaryClientGetEmptyStringKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetEmptyStringKeyResponse{}, err
 	}
@@ -1484,7 +1476,7 @@ func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options
 	if err != nil {
 		return DictionaryClientGetFloatInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetFloatInvalidNullResponse{}, err
 	}
@@ -1525,7 +1517,7 @@ func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, optio
 	if err != nil {
 		return DictionaryClientGetFloatInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetFloatInvalidStringResponse{}, err
 	}
@@ -1566,7 +1558,7 @@ func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *Dict
 	if err != nil {
 		return DictionaryClientGetFloatValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetFloatValidResponse{}, err
 	}
@@ -1607,7 +1599,7 @@ func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *
 	if err != nil {
 		return DictionaryClientGetIntInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetIntInvalidNullResponse{}, err
 	}
@@ -1648,7 +1640,7 @@ func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options
 	if err != nil {
 		return DictionaryClientGetIntInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetIntInvalidStringResponse{}, err
 	}
@@ -1689,7 +1681,7 @@ func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *Di
 	if err != nil {
 		return DictionaryClientGetIntegerValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetIntegerValidResponse{}, err
 	}
@@ -1729,7 +1721,7 @@ func (client *DictionaryClient) GetInvalid(ctx context.Context, options *Diction
 	if err != nil {
 		return DictionaryClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetInvalidResponse{}, err
 	}
@@ -1770,7 +1762,7 @@ func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options 
 	if err != nil {
 		return DictionaryClientGetLongInvalidNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetLongInvalidNullResponse{}, err
 	}
@@ -1811,7 +1803,7 @@ func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, option
 	if err != nil {
 		return DictionaryClientGetLongInvalidStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetLongInvalidStringResponse{}, err
 	}
@@ -1851,7 +1843,7 @@ func (client *DictionaryClient) GetLongValid(ctx context.Context, options *Dicti
 	if err != nil {
 		return DictionaryClientGetLongValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetLongValidResponse{}, err
 	}
@@ -1891,7 +1883,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 	if err != nil {
 		return DictionaryClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetNullResponse{}, err
 	}
@@ -1931,7 +1923,7 @@ func (client *DictionaryClient) GetNullKey(ctx context.Context, options *Diction
 	if err != nil {
 		return DictionaryClientGetNullKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetNullKeyResponse{}, err
 	}
@@ -1971,7 +1963,7 @@ func (client *DictionaryClient) GetNullValue(ctx context.Context, options *Dicti
 	if err != nil {
 		return DictionaryClientGetNullValueResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetNullValueResponse{}, err
 	}
@@ -2012,7 +2004,7 @@ func (client *DictionaryClient) GetStringValid(ctx context.Context, options *Dic
 	if err != nil {
 		return DictionaryClientGetStringValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetStringValidResponse{}, err
 	}
@@ -2053,7 +2045,7 @@ func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, option
 	if err != nil {
 		return DictionaryClientGetStringWithInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetStringWithInvalidResponse{}, err
 	}
@@ -2094,7 +2086,7 @@ func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *
 	if err != nil {
 		return DictionaryClientGetStringWithNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientGetStringWithNullResponse{}, err
 	}
@@ -2135,7 +2127,7 @@ func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map
 	if err != nil {
 		return DictionaryClientPutArrayValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutArrayValidResponse{}, err
 	}
@@ -2167,7 +2159,7 @@ func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody ma
 	if err != nil {
 		return DictionaryClientPutBooleanTfftResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutBooleanTfftResponse{}, err
 	}
@@ -2199,7 +2191,7 @@ func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[
 	if err != nil {
 		return DictionaryClientPutByteValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutByteValidResponse{}, err
 	}
@@ -2232,7 +2224,7 @@ func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody m
 	if err != nil {
 		return DictionaryClientPutComplexValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutComplexValidResponse{}, err
 	}
@@ -2265,7 +2257,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arr
 	if err != nil {
 		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, err
 	}
@@ -2301,7 +2293,7 @@ func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody 
 	if err != nil {
 		return DictionaryClientPutDateTimeValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutDateTimeValidResponse{}, err
 	}
@@ -2336,7 +2328,7 @@ func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[
 	if err != nil {
 		return DictionaryClientPutDateValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutDateValidResponse{}, err
 	}
@@ -2373,7 +2365,7 @@ func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBod
 	if err != nil {
 		return DictionaryClientPutDictionaryValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutDictionaryValidResponse{}, err
 	}
@@ -2405,7 +2397,7 @@ func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody ma
 	if err != nil {
 		return DictionaryClientPutDoubleValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutDoubleValidResponse{}, err
 	}
@@ -2437,7 +2429,7 @@ func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody 
 	if err != nil {
 		return DictionaryClientPutDurationValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutDurationValidResponse{}, err
 	}
@@ -2468,7 +2460,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[stri
 	if err != nil {
 		return DictionaryClientPutEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutEmptyResponse{}, err
 	}
@@ -2500,7 +2492,7 @@ func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map
 	if err != nil {
 		return DictionaryClientPutFloatValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutFloatValidResponse{}, err
 	}
@@ -2532,7 +2524,7 @@ func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody m
 	if err != nil {
 		return DictionaryClientPutIntegerValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutIntegerValidResponse{}, err
 	}
@@ -2563,7 +2555,7 @@ func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[
 	if err != nil {
 		return DictionaryClientPutLongValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutLongValidResponse{}, err
 	}
@@ -2595,7 +2587,7 @@ func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody ma
 	if err != nil {
 		return DictionaryClientPutStringValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryClientPutStringValidResponse{}, err
 	}

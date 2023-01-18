@@ -70,7 +70,7 @@ help-content:
         description: Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
       - key: export-clients
         type: boolean
-        description: Indicates if generated clients are to be exported.  Default to true for ARM, false for data-plane.
+        description: Indicates if generated clients are to be exported.  Default is true.
       - key: module-version
         description: When --azure-arm is true, semantic version to include in generated telemetryInfo constant without the leading 'v' (e.g. 1.2.3).
         type: string

@@ -13,14 +13,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newSkipURLEncodingClient() *SkipURLEncodingClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewSkipURLEncodingClient(pl)
+func newSkipURLEncodingClient(t *testing.T) *SkipURLEncodingClient {
+	client, err := NewSkipURLEncodingClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewSkipURLEncodingClient(options *azcore.ClientOptions) (*SkipURLEncodingClient, error) {
+	client, err := azcore.NewClient("azurespecialsgroup.SkipURLEncodingClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &SkipURLEncodingClient{internal: client}, nil
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetMethodPathValid(t *testing.T) {
-	client := newSkipURLEncodingClient()
+	client := newSkipURLEncodingClient(t)
 	result, err := client.GetMethodPathValid(context.Background(), "path1/path2/path3", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -28,7 +37,7 @@ func TestGetMethodPathValid(t *testing.T) {
 
 // GetMethodQueryNull - Get method with unencoded query parameter with value null
 func TestGetMethodQueryNull(t *testing.T) {
-	client := newSkipURLEncodingClient()
+	client := newSkipURLEncodingClient(t)
 	result, err := client.GetMethodQueryNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -36,7 +45,7 @@ func TestGetMethodQueryNull(t *testing.T) {
 
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetMethodQueryValid(t *testing.T) {
-	client := newSkipURLEncodingClient()
+	client := newSkipURLEncodingClient(t)
 	result, err := client.GetMethodQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -44,7 +53,7 @@ func TestGetMethodQueryValid(t *testing.T) {
 
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetPathQueryValid(t *testing.T) {
-	client := newSkipURLEncodingClient()
+	client := newSkipURLEncodingClient(t)
 	result, err := client.GetPathQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -52,7 +61,7 @@ func TestGetPathQueryValid(t *testing.T) {
 
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetPathValid(t *testing.T) {
-	client := newSkipURLEncodingClient()
+	client := newSkipURLEncodingClient(t)
 	result, err := client.GetPathValid(context.Background(), "path1/path2/path3", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -60,7 +69,7 @@ func TestGetPathValid(t *testing.T) {
 
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 func TestGetSwaggerPathValid(t *testing.T) {
-	client := newSkipURLEncodingClient()
+	client := newSkipURLEncodingClient(t)
 	result, err := client.GetSwaggerPathValid(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -68,7 +77,7 @@ func TestGetSwaggerPathValid(t *testing.T) {
 
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 func TestGetSwaggerQueryValid(t *testing.T) {
-	client := newSkipURLEncodingClient()
+	client := newSkipURLEncodingClient(t)
 	result, err := client.GetSwaggerQueryValid(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

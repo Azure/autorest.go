@@ -11,6 +11,7 @@ package custombaseurlgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,24 +19,10 @@ import (
 )
 
 // PathsClient contains the methods for the Paths group.
-// Don't use this type directly, use NewPathsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PathsClient struct {
-	host string
-	pl   runtime.Pipeline
-}
-
-// NewPathsClient creates a new instance of PathsClient with the specified values.
-//   - host - A string value that is used as a global part of the parameterized host
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPathsClient(host *string, pl runtime.Pipeline) *PathsClient {
-	client := &PathsClient{
-		host: "host",
-		pl:   pl,
-	}
-	if host != nil {
-		client.host = *host
-	}
-	return client
+	internal *azcore.Client
+	host     string
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -49,7 +36,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, opt
 	if err != nil {
 		return PathsClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetEmptyResponse{}, err
 	}

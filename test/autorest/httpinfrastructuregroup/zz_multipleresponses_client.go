@@ -12,24 +12,16 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // MultipleResponsesClient contains the methods for the MultipleResponses group.
-// Don't use this type directly, use NewMultipleResponsesClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type MultipleResponsesClient struct {
-	pl runtime.Pipeline
-}
-
-// NewMultipleResponsesClient creates a new instance of MultipleResponsesClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewMultipleResponsesClient(pl runtime.Pipeline) *MultipleResponsesClient {
-	client := &MultipleResponsesClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -43,7 +35,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(c
 	if err != nil {
 		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 	}
@@ -98,7 +90,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(c
 	if err != nil {
 		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 	}
@@ -152,7 +144,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(c
 	if err != nil {
 		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 	}
@@ -206,7 +198,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
@@ -247,7 +239,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Inval
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
@@ -288,7 +280,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
@@ -329,7 +321,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
@@ -371,7 +363,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
@@ -412,7 +404,7 @@ func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Contex
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
@@ -454,7 +446,7 @@ func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, 
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
@@ -495,7 +487,7 @@ func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context,
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
@@ -536,7 +528,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 	}
@@ -596,7 +588,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 	}
@@ -657,7 +649,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 	}
@@ -717,7 +709,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 	}
@@ -777,7 +769,7 @@ func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context,
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
@@ -818,7 +810,7 @@ func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Contex
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
@@ -859,7 +851,7 @@ func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, 
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
@@ -900,7 +892,7 @@ func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context,
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
@@ -941,7 +933,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx 
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, err
 	}
@@ -973,7 +965,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx 
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, err
 	}
@@ -1005,7 +997,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, err
 	}
@@ -1037,7 +1029,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ct
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, err
 	}
@@ -1068,7 +1060,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx c
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, err
 	}
@@ -1099,7 +1091,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ct
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, err
 	}
@@ -1130,7 +1122,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx c
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, err
 	}
@@ -1161,7 +1153,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Conte
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
@@ -1202,7 +1194,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Cont
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
@@ -1243,7 +1235,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Conte
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, err
 	}
@@ -1275,7 +1267,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Cont
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, err
 	}
@@ -1307,7 +1299,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Cont
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, err
 	}
@@ -1338,7 +1330,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, err
 	}
@@ -1369,7 +1361,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Cont
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, err
 	}
@@ -1400,7 +1392,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, err
 	}

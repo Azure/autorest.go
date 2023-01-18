@@ -14,9 +14,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newSubscriptionInMethodClient() *SubscriptionInMethodClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewSubscriptionInMethodClient(pl)
+func newSubscriptionInMethodClient(t *testing.T) *SubscriptionInMethodClient {
+	client, err := NewSubscriptionInMethodClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewSubscriptionInMethodClient(options *azcore.ClientOptions) (*SubscriptionInMethodClient, error) {
+	client, err := azcore.NewClient("azurespecialsgroup.SubscriptionInMethodClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &SubscriptionInMethodClient{internal: client}, nil
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method.  pass in subscription id = null, client-side validation should prevent you from making this call
@@ -26,7 +35,7 @@ func TestPostMethodLocalNull(t *testing.T) {
 
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostMethodLocalValid(t *testing.T) {
-	client := newSubscriptionInMethodClient()
+	client := newSubscriptionInMethodClient(t)
 	result, err := client.PostMethodLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
@@ -36,7 +45,7 @@ func TestPostMethodLocalValid(t *testing.T) {
 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostPathLocalValid(t *testing.T) {
-	client := newSubscriptionInMethodClient()
+	client := newSubscriptionInMethodClient(t)
 	result, err := client.PostPathLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
@@ -46,7 +55,7 @@ func TestPostPathLocalValid(t *testing.T) {
 
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostSwaggerLocalValid(t *testing.T) {
-	client := newSubscriptionInMethodClient()
+	client := newSubscriptionInMethodClient(t)
 	result, err := client.PostSwaggerLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)

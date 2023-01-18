@@ -12,6 +12,7 @@ package paginggroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -21,18 +22,9 @@ import (
 )
 
 // PagingClient contains the methods for the Paging group.
-// Don't use this type directly, use NewPagingClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PagingClient struct {
-	pl runtime.Pipeline
-}
-
-// NewPagingClient creates a new instance of PagingClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPagingClient(pl runtime.Pipeline) *PagingClient {
-	client := &PagingClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // NewDuplicateParamsPager - Define filter as a query param for all calls. However, the returned next link will also include
@@ -57,7 +49,7 @@ func (client *PagingClient) NewDuplicateParamsPager(options *PagingClientDuplica
 			if err != nil {
 				return PagingClientDuplicateParamsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientDuplicateParamsResponse{}, err
 			}
@@ -116,7 +108,7 @@ func (client *PagingClient) NewFirstResponseEmptyPager(options *PagingClientFirs
 			if err != nil {
 				return PagingClientFirstResponseEmptyResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientFirstResponseEmptyResponse{}, err
 			}
@@ -169,7 +161,7 @@ func (client *PagingClient) NewGetMultiplePagesPager(options *PagingClientGetMul
 			if err != nil {
 				return PagingClientGetMultiplePagesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesResponse{}, err
 			}
@@ -231,7 +223,7 @@ func (client *PagingClient) NewGetMultiplePagesFailurePager(options *PagingClien
 			if err != nil {
 				return PagingClientGetMultiplePagesFailureResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesFailureResponse{}, err
 			}
@@ -284,7 +276,7 @@ func (client *PagingClient) NewGetMultiplePagesFailureURIPager(options *PagingCl
 			if err != nil {
 				return PagingClientGetMultiplePagesFailureURIResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesFailureURIResponse{}, err
 			}
@@ -339,7 +331,7 @@ func (client *PagingClient) NewGetMultiplePagesFragmentNextLinkPager(apiVersion 
 			if err != nil {
 				return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 			}
@@ -402,7 +394,7 @@ func (client *PagingClient) NewGetMultiplePagesFragmentWithGroupingNextLinkPager
 			if err != nil {
 				return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 			}
@@ -456,7 +448,7 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 			if err != nil {
 				return PagingClientGetMultiplePagesLROResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesLROResponse{}, err
 			}
@@ -471,11 +463,11 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.pl, &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
 		})
 	}
@@ -489,7 +481,7 @@ func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *Pa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -550,7 +542,7 @@ func (client *PagingClient) NewGetMultiplePagesRetryFirstPager(options *PagingCl
 			if err != nil {
 				return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 			}
@@ -604,7 +596,7 @@ func (client *PagingClient) NewGetMultiplePagesRetrySecondPager(options *PagingC
 			if err != nil {
 				return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 			}
@@ -657,7 +649,7 @@ func (client *PagingClient) NewGetMultiplePagesWithOffsetPager(options PagingCli
 			if err != nil {
 				return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 			}
@@ -720,7 +712,7 @@ func (client *PagingClient) NewGetNoItemNamePagesPager(options *PagingClientGetN
 			if err != nil {
 				return PagingClientGetNoItemNamePagesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetNoItemNamePagesResponse{}, err
 			}
@@ -767,7 +759,7 @@ func (client *PagingClient) NewGetNullNextLinkNamePagesPager(options *PagingClie
 			if err != nil {
 				return PagingClientGetNullNextLinkNamePagesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetNullNextLinkNamePagesResponse{}, err
 			}
@@ -820,7 +812,7 @@ func (client *PagingClient) NewGetODataMultiplePagesPager(options *PagingClientG
 			if err != nil {
 				return PagingClientGetODataMultiplePagesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetODataMultiplePagesResponse{}, err
 			}
@@ -883,7 +875,7 @@ func (client *PagingClient) NewGetPagingModelWithItemNameWithXMSClientNamePager(
 			if err != nil {
 				return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 			}
@@ -936,7 +928,7 @@ func (client *PagingClient) NewGetSinglePagesPager(options *PagingClientGetSingl
 			if err != nil {
 				return PagingClientGetSinglePagesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetSinglePagesResponse{}, err
 			}
@@ -989,7 +981,7 @@ func (client *PagingClient) NewGetSinglePagesFailurePager(options *PagingClientG
 			if err != nil {
 				return PagingClientGetSinglePagesFailureResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetSinglePagesFailureResponse{}, err
 			}
@@ -1044,7 +1036,7 @@ func (client *PagingClient) NewGetWithQueryParamsPager(requiredQueryParameter in
 			if err != nil {
 				return PagingClientGetWithQueryParamsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return PagingClientGetWithQueryParamsResponse{}, err
 			}

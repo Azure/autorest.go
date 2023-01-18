@@ -16,14 +16,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPetsClient() *PetsClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewPetsClient(pl)
+func newPetsClient(t *testing.T) *PetsClient {
+	client, err := NewPetsClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+// NewPetsClient creates a new instance of PetsClient with the specified values.
+func NewPetsClient(options *azcore.ClientOptions) (*PetsClient, error) {
+	cl, err := azcore.NewClient("additionalpropsgroup.PetsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	client := &PetsClient{
+		internal: cl,
+	}
+	return client, nil
 }
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.
 func TestCreateAPInProperties(t *testing.T) {
-	client := newPetsClient()
+	client := newPetsClient(t)
 	result, err := client.CreateAPInProperties(context.Background(), PetAPInProperties{
 		ID:   to.Ptr[int32](4),
 		Name: to.Ptr("Bunny"),
@@ -50,7 +63,7 @@ func TestCreateAPInProperties(t *testing.T) {
 
 // CreateAPInPropertiesWithAPString - Create a Pet which contains more properties than what is defined.
 func TestCreateAPInPropertiesWithAPString(t *testing.T) {
-	client := newPetsClient()
+	client := newPetsClient(t)
 	result, err := client.CreateAPInPropertiesWithAPString(context.Background(), PetAPInPropertiesWithAPString{
 		ID:            to.Ptr[int32](5),
 		Name:          to.Ptr("Funny"),
@@ -89,7 +102,7 @@ func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 
 // CreateAPObject - Create a Pet which contains more properties than what is defined.
 func TestCreateAPObject(t *testing.T) {
-	client := newPetsClient()
+	client := newPetsClient(t)
 	result, err := client.CreateAPObject(context.Background(), PetAPObject{
 		ID:   to.Ptr[int32](2),
 		Name: to.Ptr("Hira"),
@@ -132,7 +145,7 @@ func TestCreateAPObject(t *testing.T) {
 
 // CreateAPString - Create a Pet which contains more properties than what is defined.
 func TestCreateAPString(t *testing.T) {
-	client := newPetsClient()
+	client := newPetsClient(t)
 	result, err := client.CreateAPString(context.Background(), PetAPString{
 		ID:   to.Ptr[int32](3),
 		Name: to.Ptr("Tommy"),
@@ -159,7 +172,7 @@ func TestCreateAPString(t *testing.T) {
 
 // CreateAPTrue - Create a Pet which contains more properties than what is defined.
 func TestCreateAPTrue(t *testing.T) {
-	client := newPetsClient()
+	client := newPetsClient(t)
 	result, err := client.CreateAPTrue(context.Background(), PetAPTrue{
 		ID:   to.Ptr[int32](1),
 		Name: to.Ptr("Puppy"),
@@ -188,7 +201,7 @@ func TestCreateAPTrue(t *testing.T) {
 
 // CreateCatAPTrue - Create a CatAPTrue which contains more properties than what is defined.
 func TestCreateCatAPTrue(t *testing.T) {
-	client := newPetsClient()
+	client := newPetsClient(t)
 	result, err := client.CreateCatAPTrue(context.Background(), CatAPTrue{
 		ID:   to.Ptr[int32](1),
 		Name: to.Ptr("Lisa"),

@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // PolymorphicrecursiveClient contains the methods for the Polymorphicrecursive group.
-// Don't use this type directly, use NewPolymorphicrecursiveClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PolymorphicrecursiveClient struct {
-	pl runtime.Pipeline
-}
-
-// NewPolymorphicrecursiveClient creates a new instance of PolymorphicrecursiveClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPolymorphicrecursiveClient(pl runtime.Pipeline) *PolymorphicrecursiveClient {
-	client := &PolymorphicrecursiveClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
@@ -42,7 +34,7 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options 
 	if err != nil {
 		return PolymorphicrecursiveClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphicrecursiveClientGetValidResponse{}, err
 	}
@@ -90,7 +82,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 	if err != nil {
 		return PolymorphicrecursiveClientPutValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PolymorphicrecursiveClientPutValidResponse{}, err
 	}

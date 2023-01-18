@@ -14,13 +14,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newFilesClient() *FilesClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewFilesClient(pl)
+func newFilesClient(t *testing.T) *FilesClient {
+	client, err := NewFilesClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewFilesClient(options *azcore.ClientOptions) (*FilesClient, error) {
+	client, err := azcore.NewClient("filegroup.FilesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &FilesClient{internal: client}, nil
 }
 
 func TestGetEmptyFile(t *testing.T) {
-	client := newFilesClient()
+	client := newFilesClient(t)
 	result, err := client.GetEmptyFile(context.Background(), nil)
 	require.NoError(t, err)
 	if result.Body == nil {
@@ -30,7 +39,7 @@ func TestGetEmptyFile(t *testing.T) {
 }
 
 func TestGetFile(t *testing.T) {
-	client := newFilesClient()
+	client := newFilesClient(t)
 	result, err := client.GetFile(context.Background(), nil)
 	require.NoError(t, err)
 	if result.Body == nil {
@@ -46,7 +55,7 @@ func TestGetFile(t *testing.T) {
 
 func TestGetFileLarge(t *testing.T) {
 	t.Skip("test is unreliable, can fail when running on a machine with low memory")
-	client := newFilesClient()
+	client := newFilesClient(t)
 	result, err := client.GetFileLarge(context.Background(), nil)
 	require.NoError(t, err)
 	if result.Body == nil {
