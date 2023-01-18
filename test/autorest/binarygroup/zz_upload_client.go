@@ -11,6 +11,7 @@ package binarygroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -18,18 +19,9 @@ import (
 )
 
 // UploadClient contains the methods for the Upload group.
-// Don't use this type directly, use NewUploadClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type UploadClient struct {
-	pl runtime.Pipeline
-}
-
-// NewUploadClient creates a new instance of UploadClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewUploadClient(pl runtime.Pipeline) *UploadClient {
-	client := &UploadClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Binary - Uploading binary file
@@ -43,7 +35,7 @@ func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekClo
 	if err != nil {
 		return UploadClientBinaryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return UploadClientBinaryResponse{}, err
 	}
@@ -74,7 +66,7 @@ func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekClose
 	if err != nil {
 		return UploadClientFileResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return UploadClientFileResponse{}, err
 	}

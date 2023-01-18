@@ -15,13 +15,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newReadonlypropertyClient() *ReadonlypropertyClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewReadonlypropertyClient(pl)
+func newReadonlypropertyClient(t *testing.T) *ReadonlypropertyClient {
+	client, err := NewReadonlypropertyClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewReadonlypropertyClient(options *azcore.ClientOptions) (*ReadonlypropertyClient, error) {
+	client, err := azcore.NewClient("complexgroup.ReadonlypropertyClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ReadonlypropertyClient{internal: client}, nil
 }
 
 func TestReadonlypropertyGetValid(t *testing.T) {
-	client := newReadonlypropertyClient()
+	client := newReadonlypropertyClient(t)
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.ReadonlyObj, ReadonlyObj{ID: to.Ptr("1234"), Size: to.Ptr[int32](2)}); r != "" {
@@ -30,9 +39,8 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 }
 
 func TestReadonlypropertyPutValid(t *testing.T) {
-	client := newReadonlypropertyClient()
-	id, size := "1234", int32(2)
-	result, err := client.PutValid(context.Background(), ReadonlyObj{ID: &id, Size: &size}, nil)
+	client := newReadonlypropertyClient(t)
+	result, err := client.PutValid(context.Background(), ReadonlyObj{Size: to.Ptr[int32](2)}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }

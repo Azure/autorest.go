@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,9 +24,8 @@ import (
 // SupportPackagesClient contains the methods for the SupportPackages group.
 // Don't use this type directly, use NewSupportPackagesClient() instead.
 type SupportPackagesClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewSupportPackagesClient creates a new instance of SupportPackagesClient with the specified values.
@@ -36,21 +33,13 @@ type SupportPackagesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SupportPackagesClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armdataboxedge.SupportPackagesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &SupportPackagesClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -70,9 +59,9 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SupportPackagesClientTriggerSupportPackageResponse](resp, client.pl, nil)
+		return runtime.NewPoller[SupportPackagesClientTriggerSupportPackageResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[SupportPackagesClientTriggerSupportPackageResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[SupportPackagesClientTriggerSupportPackageResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -85,7 +74,7 @@ func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +96,7 @@ func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx cont
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

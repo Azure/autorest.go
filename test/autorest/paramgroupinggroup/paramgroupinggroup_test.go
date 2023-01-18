@@ -13,14 +13,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newParameterGroupingClient() *ParameterGroupingClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewParameterGroupingClient(pl)
+func newParameterGroupingClient(t *testing.T) *ParameterGroupingClient {
+	client, err := NewParameterGroupingClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewParameterGroupingClient(options *azcore.ClientOptions) (*ParameterGroupingClient, error) {
+	client, err := azcore.NewClient("paramgroupinggroup.ParameterGroupingClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ParameterGroupingClient{internal: client}, nil
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 func TestPostMultiParamGroups(t *testing.T) {
-	client := newParameterGroupingClient()
+	client := newParameterGroupingClient(t)
 	result, err := client.PostMultiParamGroups(context.Background(), nil, nil, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -28,7 +37,7 @@ func TestPostMultiParamGroups(t *testing.T) {
 
 // PostOptional - Post a bunch of optional parameters grouped
 func TestPostOptional(t *testing.T) {
-	client := newParameterGroupingClient()
+	client := newParameterGroupingClient(t)
 	result, err := client.PostOptional(context.Background(), nil, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -36,7 +45,7 @@ func TestPostOptional(t *testing.T) {
 
 // PostRequired - Post a bunch of required parameters grouped
 func TestPostRequired(t *testing.T) {
-	client := newParameterGroupingClient()
+	client := newParameterGroupingClient(t)
 	result, err := client.PostRequired(context.Background(), ParameterGroupingClientPostRequiredParameters{
 		Body: 1234,
 		Path: "path",
@@ -47,7 +56,7 @@ func TestPostRequired(t *testing.T) {
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 func TestPostSharedParameterGroupObject(t *testing.T) {
-	client := newParameterGroupingClient()
+	client := newParameterGroupingClient(t)
 	result, err := client.PostSharedParameterGroupObject(context.Background(), nil, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

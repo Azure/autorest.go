@@ -12,6 +12,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,20 +20,11 @@ import (
 	"strings"
 )
 
-type linkedServiceClient struct {
+// LinkedServiceClient contains the methods for the LinkedService group.
+// Don't use this type directly, use a constructor function instead.
+type LinkedServiceClient struct {
+	internal *azcore.Client
 	endpoint string
-	pl       runtime.Pipeline
-}
-
-// newLinkedServiceClient creates a new instance of linkedServiceClient with the specified values.
-//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - pl - the pipeline used for sending requests and handling responses.
-func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedServiceClient {
-	client := &linkedServiceClient{
-		endpoint: endpoint,
-		pl:       pl,
-	}
-	return client
 }
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
@@ -41,17 +33,17 @@ func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedService
 // Generated from API version 2019-06-01-preview
 //   - linkedServiceName - The linked service name.
 //   - linkedService - Linked service resource definition.
-//   - options - LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginCreateOrUpdateLinkedService
+//   - options - LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginCreateOrUpdateLinkedService
 //     method.
-func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse], error) {
+func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -59,12 +51,12 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
+func (client *LinkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +67,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Conte
 }
 
 // createOrUpdateLinkedServiceCreateRequest creates the CreateOrUpdateLinkedService request.
-func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
@@ -100,17 +92,17 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 //
 // Generated from API version 2019-06-01-preview
 //   - linkedServiceName - The linked service name.
-//   - options - LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginDeleteLinkedService
+//   - options - LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginDeleteLinkedService
 //     method.
-func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientDeleteLinkedServiceResponse], error) {
+func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientDeleteLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LinkedServiceClientDeleteLinkedServiceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LinkedServiceClientDeleteLinkedServiceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LinkedServiceClientDeleteLinkedServiceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientDeleteLinkedServiceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -118,12 +110,12 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*http.Response, error) {
+func (client *LinkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +126,7 @@ func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, link
 }
 
 // deleteLinkedServiceCreateRequest creates the DeleteLinkedService request.
-func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
@@ -156,14 +148,14 @@ func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 //
 // Generated from API version 2019-06-01-preview
 //   - linkedServiceName - The linked service name.
-//   - options - LinkedServiceClientGetLinkedServiceOptions contains the optional parameters for the linkedServiceClient.GetLinkedService
+//   - options - LinkedServiceClientGetLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.GetLinkedService
 //     method.
-func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientGetLinkedServiceOptions) (LinkedServiceClientGetLinkedServiceResponse, error) {
+func (client *LinkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientGetLinkedServiceOptions) (LinkedServiceClientGetLinkedServiceResponse, error) {
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
 		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
@@ -174,7 +166,7 @@ func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedS
 }
 
 // getLinkedServiceCreateRequest creates the GetLinkedService request.
-func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceClientGetLinkedServiceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) getLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceClientGetLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
@@ -195,7 +187,7 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 }
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
-func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (LinkedServiceClientGetLinkedServiceResponse, error) {
+func (client *LinkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (LinkedServiceClientGetLinkedServiceResponse, error) {
 	result := LinkedServiceClientGetLinkedServiceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceResource); err != nil {
 		return LinkedServiceClientGetLinkedServiceResponse{}, err
@@ -206,9 +198,9 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Res
 // NewGetLinkedServicesByWorkspacePager - Lists linked services.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.NewGetLinkedServicesByWorkspacePager
+//   - options - LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the LinkedServiceClient.NewGetLinkedServicesByWorkspacePager
 //     method.
-func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[LinkedServiceClientGetLinkedServicesByWorkspaceResponse] {
+func (client *LinkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[LinkedServiceClientGetLinkedServicesByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LinkedServiceClientGetLinkedServicesByWorkspaceResponse]{
 		More: func(page LinkedServiceClientGetLinkedServicesByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -224,7 +216,7 @@ func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options 
 			if err != nil {
 				return LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
 			}
@@ -237,7 +229,7 @@ func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options 
 }
 
 // getLinkedServicesByWorkspaceCreateRequest creates the GetLinkedServicesByWorkspace request.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -251,7 +243,7 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 }
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (LinkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
+func (client *LinkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (LinkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
 	result := LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceListResponse); err != nil {
 		return LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
@@ -265,17 +257,17 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 // Generated from API version 2019-06-01-preview
 //   - linkedServiceName - The linked service name.
 //   - request - proposed new name.
-//   - options - LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginRenameLinkedService
+//   - options - LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginRenameLinkedService
 //     method.
-func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientRenameLinkedServiceResponse], error) {
+func (client *LinkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientRenameLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LinkedServiceClientRenameLinkedServiceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LinkedServiceClientRenameLinkedServiceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LinkedServiceClientRenameLinkedServiceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientRenameLinkedServiceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -283,12 +275,12 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*http.Response, error) {
+func (client *LinkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -299,7 +291,7 @@ func (client *linkedServiceClient) renameLinkedService(ctx context.Context, link
 }
 
 // renameLinkedServiceCreateRequest creates the RenameLinkedService request.
-func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}/rename"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")

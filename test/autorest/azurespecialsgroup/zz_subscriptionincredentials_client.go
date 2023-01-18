@@ -12,6 +12,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,21 +21,10 @@ import (
 )
 
 // SubscriptionInCredentialsClient contains the methods for the SubscriptionInCredentials group.
-// Don't use this type directly, use NewSubscriptionInCredentialsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type SubscriptionInCredentialsClient struct {
+	internal       *azcore.Client
 	subscriptionID string
-	pl             runtime.Pipeline
-}
-
-// NewSubscriptionInCredentialsClient creates a new instance of SubscriptionInCredentialsClient with the specified values.
-//   - subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewSubscriptionInCredentialsClient(subscriptionID string, pl runtime.Pipeline) *SubscriptionInCredentialsClient {
-	client := &SubscriptionInCredentialsClient{
-		subscriptionID: subscriptionID,
-		pl:             pl,
-	}
-	return client
 }
 
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId
@@ -49,7 +39,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(
 	if err != nil {
 		return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{}, err
 	}
@@ -89,7 +79,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.
 	if err != nil {
 		return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{}, err
 	}
@@ -126,7 +116,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context
 	if err != nil {
 		return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{}, err
 	}
@@ -163,7 +153,7 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.C
 	if err != nil {
 		return SubscriptionInCredentialsClientPostPathGlobalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInCredentialsClientPostPathGlobalValidResponse{}, err
 	}
@@ -200,7 +190,7 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx contex
 	if err != nil {
 		return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{}, err
 	}

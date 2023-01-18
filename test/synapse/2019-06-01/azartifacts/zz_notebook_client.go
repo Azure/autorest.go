@@ -12,6 +12,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,20 +20,11 @@ import (
 	"strings"
 )
 
-type notebookClient struct {
+// NotebookClient contains the methods for the Notebook group.
+// Don't use this type directly, use a constructor function instead.
+type NotebookClient struct {
+	internal *azcore.Client
 	endpoint string
-	pl       runtime.Pipeline
-}
-
-// newNotebookClient creates a new instance of notebookClient with the specified values.
-//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - pl - the pipeline used for sending requests and handling responses.
-func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
-	client := &notebookClient{
-		endpoint: endpoint,
-		pl:       pl,
-	}
-	return client
 }
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
@@ -41,17 +33,17 @@ func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
 // Generated from API version 2019-06-01-preview
 //   - notebookName - The notebook name.
 //   - notebook - Note book resource definition.
-//   - options - NotebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the notebookClient.BeginCreateOrUpdateNotebook
+//   - options - NotebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the NotebookClient.BeginCreateOrUpdateNotebook
 //     method.
-func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*runtime.Poller[NotebookClientCreateOrUpdateNotebookResponse], error) {
+func (client *NotebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*runtime.Poller[NotebookClientCreateOrUpdateNotebookResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[NotebookClientCreateOrUpdateNotebookResponse](resp, client.pl, nil)
+		return runtime.NewPoller[NotebookClientCreateOrUpdateNotebookResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[NotebookClientCreateOrUpdateNotebookResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[NotebookClientCreateOrUpdateNotebookResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -59,12 +51,12 @@ func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*http.Response, error) {
+func (client *NotebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +67,7 @@ func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebo
 }
 
 // createOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
-func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*policy.Request, error) {
+func (client *NotebookClient) createOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")
@@ -100,17 +92,17 @@ func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Co
 //
 // Generated from API version 2019-06-01-preview
 //   - notebookName - The notebook name.
-//   - options - NotebookClientBeginDeleteNotebookOptions contains the optional parameters for the notebookClient.BeginDeleteNotebook
+//   - options - NotebookClientBeginDeleteNotebookOptions contains the optional parameters for the NotebookClient.BeginDeleteNotebook
 //     method.
-func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*runtime.Poller[NotebookClientDeleteNotebookResponse], error) {
+func (client *NotebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*runtime.Poller[NotebookClientDeleteNotebookResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteNotebook(ctx, notebookName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[NotebookClientDeleteNotebookResponse](resp, client.pl, nil)
+		return runtime.NewPoller[NotebookClientDeleteNotebookResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[NotebookClientDeleteNotebookResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[NotebookClientDeleteNotebookResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -118,12 +110,12 @@ func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*http.Response, error) {
+func (client *NotebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*http.Response, error) {
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +126,7 @@ func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName s
 }
 
 // deleteNotebookCreateRequest creates the DeleteNotebook request.
-func (client *notebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*policy.Request, error) {
+func (client *NotebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")
@@ -156,13 +148,13 @@ func (client *notebookClient) deleteNotebookCreateRequest(ctx context.Context, n
 //
 // Generated from API version 2019-06-01-preview
 //   - notebookName - The notebook name.
-//   - options - NotebookClientGetNotebookOptions contains the optional parameters for the notebookClient.GetNotebook method.
-func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookClientGetNotebookOptions) (NotebookClientGetNotebookResponse, error) {
+//   - options - NotebookClientGetNotebookOptions contains the optional parameters for the NotebookClient.GetNotebook method.
+func (client *NotebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookClientGetNotebookOptions) (NotebookClientGetNotebookResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return NotebookClientGetNotebookResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return NotebookClientGetNotebookResponse{}, err
 	}
@@ -173,7 +165,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 }
 
 // getNotebookCreateRequest creates the GetNotebook request.
-func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookClientGetNotebookOptions) (*policy.Request, error) {
+func (client *NotebookClient) getNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookClientGetNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")
@@ -194,7 +186,7 @@ func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, note
 }
 
 // getNotebookHandleResponse handles the GetNotebook response.
-func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (NotebookClientGetNotebookResponse, error) {
+func (client *NotebookClient) getNotebookHandleResponse(resp *http.Response) (NotebookClientGetNotebookResponse, error) {
 	result := NotebookClientGetNotebookResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookResource); err != nil {
 		return NotebookClientGetNotebookResponse{}, err
@@ -205,9 +197,9 @@ func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (No
 // NewGetNotebookSummaryByWorkSpacePager - Lists a summary of Notebooks.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.NewGetNotebookSummaryByWorkSpacePager
+//   - options - NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the NotebookClient.NewGetNotebookSummaryByWorkSpacePager
 //     method.
-func (client *notebookClient) NewGetNotebookSummaryByWorkSpacePager(options *NotebookClientGetNotebookSummaryByWorkSpaceOptions) *runtime.Pager[NotebookClientGetNotebookSummaryByWorkSpaceResponse] {
+func (client *NotebookClient) NewGetNotebookSummaryByWorkSpacePager(options *NotebookClientGetNotebookSummaryByWorkSpaceOptions) *runtime.Pager[NotebookClientGetNotebookSummaryByWorkSpaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NotebookClientGetNotebookSummaryByWorkSpaceResponse]{
 		More: func(page NotebookClientGetNotebookSummaryByWorkSpaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -223,7 +215,7 @@ func (client *notebookClient) NewGetNotebookSummaryByWorkSpacePager(options *Not
 			if err != nil {
 				return NotebookClientGetNotebookSummaryByWorkSpaceResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return NotebookClientGetNotebookSummaryByWorkSpaceResponse{}, err
 			}
@@ -236,7 +228,7 @@ func (client *notebookClient) NewGetNotebookSummaryByWorkSpacePager(options *Not
 }
 
 // getNotebookSummaryByWorkSpaceCreateRequest creates the GetNotebookSummaryByWorkSpace request.
-func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookClientGetNotebookSummaryByWorkSpaceOptions) (*policy.Request, error) {
+func (client *NotebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookClientGetNotebookSummaryByWorkSpaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/summary"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -250,7 +242,7 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx con
 }
 
 // getNotebookSummaryByWorkSpaceHandleResponse handles the GetNotebookSummaryByWorkSpace response.
-func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *http.Response) (NotebookClientGetNotebookSummaryByWorkSpaceResponse, error) {
+func (client *NotebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *http.Response) (NotebookClientGetNotebookSummaryByWorkSpaceResponse, error) {
 	result := NotebookClientGetNotebookSummaryByWorkSpaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookListResponse); err != nil {
 		return NotebookClientGetNotebookSummaryByWorkSpaceResponse{}, err
@@ -261,9 +253,9 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *
 // NewGetNotebooksByWorkspacePager - Lists Notebooks.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.NewGetNotebooksByWorkspacePager
+//   - options - NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the NotebookClient.NewGetNotebooksByWorkspacePager
 //     method.
-func (client *notebookClient) NewGetNotebooksByWorkspacePager(options *NotebookClientGetNotebooksByWorkspaceOptions) *runtime.Pager[NotebookClientGetNotebooksByWorkspaceResponse] {
+func (client *NotebookClient) NewGetNotebooksByWorkspacePager(options *NotebookClientGetNotebooksByWorkspaceOptions) *runtime.Pager[NotebookClientGetNotebooksByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NotebookClientGetNotebooksByWorkspaceResponse]{
 		More: func(page NotebookClientGetNotebooksByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -279,7 +271,7 @@ func (client *notebookClient) NewGetNotebooksByWorkspacePager(options *NotebookC
 			if err != nil {
 				return NotebookClientGetNotebooksByWorkspaceResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return NotebookClientGetNotebooksByWorkspaceResponse{}, err
 			}
@@ -292,7 +284,7 @@ func (client *notebookClient) NewGetNotebooksByWorkspacePager(options *NotebookC
 }
 
 // getNotebooksByWorkspaceCreateRequest creates the GetNotebooksByWorkspace request.
-func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookClientGetNotebooksByWorkspaceOptions) (*policy.Request, error) {
+func (client *NotebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookClientGetNotebooksByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooks"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -306,7 +298,7 @@ func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.C
 }
 
 // getNotebooksByWorkspaceHandleResponse handles the GetNotebooksByWorkspace response.
-func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.Response) (NotebookClientGetNotebooksByWorkspaceResponse, error) {
+func (client *NotebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.Response) (NotebookClientGetNotebooksByWorkspaceResponse, error) {
 	result := NotebookClientGetNotebooksByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookListResponse); err != nil {
 		return NotebookClientGetNotebooksByWorkspaceResponse{}, err
@@ -320,17 +312,17 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.R
 // Generated from API version 2019-06-01-preview
 //   - notebookName - The notebook name.
 //   - request - proposed new name.
-//   - options - NotebookClientBeginRenameNotebookOptions contains the optional parameters for the notebookClient.BeginRenameNotebook
+//   - options - NotebookClientBeginRenameNotebookOptions contains the optional parameters for the NotebookClient.BeginRenameNotebook
 //     method.
-func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*runtime.Poller[NotebookClientRenameNotebookResponse], error) {
+func (client *NotebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*runtime.Poller[NotebookClientRenameNotebookResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renameNotebook(ctx, notebookName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[NotebookClientRenameNotebookResponse](resp, client.pl, nil)
+		return runtime.NewPoller[NotebookClientRenameNotebookResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[NotebookClientRenameNotebookResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[NotebookClientRenameNotebookResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -338,12 +330,12 @@ func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-func (client *notebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*http.Response, error) {
+func (client *NotebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*http.Response, error) {
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -354,7 +346,7 @@ func (client *notebookClient) renameNotebook(ctx context.Context, notebookName s
 }
 
 // renameNotebookCreateRequest creates the RenameNotebook request.
-func (client *notebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*policy.Request, error) {
+func (client *NotebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}/rename"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")

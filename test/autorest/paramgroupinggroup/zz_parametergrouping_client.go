@@ -12,6 +12,7 @@ package paramgroupinggroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -21,18 +22,9 @@ import (
 )
 
 // ParameterGroupingClient contains the methods for the ParameterGrouping group.
-// Don't use this type directly, use NewParameterGroupingClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ParameterGroupingClient struct {
-	pl runtime.Pipeline
-}
-
-// NewParameterGroupingClient creates a new instance of ParameterGroupingClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewParameterGroupingClient(pl runtime.Pipeline) *ParameterGroupingClient {
-	client := &ParameterGroupingClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
@@ -50,7 +42,7 @@ func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context,
 	if err != nil {
 		return ParameterGroupingClientPostMultiParamGroupsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ParameterGroupingClientPostMultiParamGroupsResponse{}, err
 	}
@@ -98,7 +90,7 @@ func (client *ParameterGroupingClient) PostOptional(ctx context.Context, paramet
 	if err != nil {
 		return ParameterGroupingClientPostOptionalResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ParameterGroupingClientPostOptionalResponse{}, err
 	}
@@ -140,7 +132,7 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 	if err != nil {
 		return ParameterGroupingClientPostRequiredResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ParameterGroupingClientPostRequiredResponse{}, err
 	}
@@ -186,7 +178,7 @@ func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, pa
 	if err != nil {
 		return ParameterGroupingClientPostReservedWordsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ParameterGroupingClientPostReservedWordsResponse{}, err
 	}
@@ -228,7 +220,7 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx contex
 	if err != nil {
 		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, err
 	}

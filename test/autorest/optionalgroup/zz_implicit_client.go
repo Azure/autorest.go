@@ -12,6 +12,7 @@ package optionalgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -23,27 +24,12 @@ import (
 )
 
 // ImplicitClient contains the methods for the Implicit group.
-// Don't use this type directly, use NewImplicitClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ImplicitClient struct {
+	internal            *azcore.Client
 	requiredGlobalPath  string
 	requiredGlobalQuery string
 	optionalGlobalQuery *int32
-	pl                  runtime.Pipeline
-}
-
-// NewImplicitClient creates a new instance of ImplicitClient with the specified values.
-//   - requiredGlobalPath - number of items to skip
-//   - requiredGlobalQuery - number of items to skip
-//   - optionalGlobalQuery - number of items to skip
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, pl runtime.Pipeline) *ImplicitClient {
-	client := &ImplicitClient{
-		requiredGlobalPath:  requiredGlobalPath,
-		requiredGlobalQuery: requiredGlobalQuery,
-		optionalGlobalQuery: optionalGlobalQuery,
-		pl:                  pl,
-	}
-	return client
 }
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
@@ -57,7 +43,7 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, option
 	if err != nil {
 		return ImplicitClientGetOptionalGlobalQueryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetOptionalGlobalQueryResponse{}, err
 	}
@@ -94,7 +80,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalPathResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalPathResponse{}, err
 	}
@@ -130,7 +116,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalQueryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalQueryResponse{}, err
 	}
@@ -165,7 +151,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 	if err != nil {
 		return ImplicitClientGetRequiredPathResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetRequiredPathResponse{}, err
 	}
@@ -201,7 +187,7 @@ func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyPar
 	if err != nil {
 		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
@@ -233,7 +219,7 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter
 	if err != nil {
 		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
@@ -266,7 +252,7 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *Im
 	if err != nil {
 		return ImplicitClientPutOptionalHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalHeaderResponse{}, err
 	}
@@ -301,7 +287,7 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *Imp
 	if err != nil {
 		return ImplicitClientPutOptionalQueryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalQueryResponse{}, err
 	}

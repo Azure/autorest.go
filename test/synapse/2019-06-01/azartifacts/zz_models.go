@@ -4219,12 +4219,12 @@ type BigDataPoolResourceProperties struct {
 	LastSucceededTimestamp *time.Time `json:"lastSucceededTimestamp,omitempty" azure:"ro"`
 }
 
-// BigDataPoolsClientGetOptions contains the optional parameters for the bigDataPoolsClient.Get method.
+// BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
 type BigDataPoolsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BigDataPoolsClientListOptions contains the optional parameters for the bigDataPoolsClient.List method.
+// BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
 type BigDataPoolsClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -6232,7 +6232,7 @@ type DataFlow struct {
 // GetDataFlow implements the DataFlowClassification interface for type DataFlow.
 func (d *DataFlow) GetDataFlow() *DataFlow { return d }
 
-// DataFlowClientBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the dataFlowClient.BeginCreateOrUpdateDataFlow
+// DataFlowClientBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlowClient.BeginCreateOrUpdateDataFlow
 // method.
 type DataFlowClientBeginCreateOrUpdateDataFlowOptions struct {
 	// ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be
@@ -6242,26 +6242,26 @@ type DataFlowClientBeginCreateOrUpdateDataFlowOptions struct {
 	ResumeToken string
 }
 
-// DataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the dataFlowClient.BeginDeleteDataFlow method.
+// DataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the DataFlowClient.BeginDeleteDataFlow method.
 type DataFlowClientBeginDeleteDataFlowOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// DataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the dataFlowClient.BeginRenameDataFlow method.
+// DataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the DataFlowClient.BeginRenameDataFlow method.
 type DataFlowClientBeginRenameDataFlowOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// DataFlowClientGetDataFlowOptions contains the optional parameters for the dataFlowClient.GetDataFlow method.
+// DataFlowClientGetDataFlowOptions contains the optional parameters for the DataFlowClient.GetDataFlow method.
 type DataFlowClientGetDataFlowOptions struct {
 	// ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
 	// provided, then no content will be returned.
 	IfNoneMatch *string
 }
 
-// DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.NewGetDataFlowsByWorkspacePager
+// DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the DataFlowClient.NewGetDataFlowsByWorkspacePager
 // method.
 type DataFlowClientGetDataFlowsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -6366,33 +6366,33 @@ type DataFlowDebugResultResponse struct {
 	Status *string `json:"status,omitempty"`
 }
 
-// DataFlowDebugSessionClientAddDataFlowOptions contains the optional parameters for the dataFlowDebugSessionClient.AddDataFlow
+// DataFlowDebugSessionClientAddDataFlowOptions contains the optional parameters for the DataFlowDebugSessionClient.AddDataFlow
 // method.
 type DataFlowDebugSessionClientAddDataFlowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
+// DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 // method.
 type DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// DataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginExecuteCommand
+// DataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginExecuteCommand
 // method.
 type DataFlowDebugSessionClientBeginExecuteCommandOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.DeleteDataFlowDebugSession
+// DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.DeleteDataFlowDebugSession
 // method.
 type DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the dataFlowDebugSessionClient.NewQueryDataFlowDebugSessionsByWorkspacePager
+// DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the DataFlowDebugSessionClient.NewQueryDataFlowDebugSessionsByWorkspacePager
 // method.
 type DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -6916,7 +6916,7 @@ func (d *DatasetBZip2Compression) GetDatasetCompression() *DatasetCompression {
 	}
 }
 
-// DatasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the datasetClient.BeginCreateOrUpdateDataset
+// DatasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the DatasetClient.BeginCreateOrUpdateDataset
 // method.
 type DatasetClientBeginCreateOrUpdateDatasetOptions struct {
 	// ETag of the dataset entity. Should only be specified for update, for which it should match existing entity or can be *
@@ -6926,26 +6926,26 @@ type DatasetClientBeginCreateOrUpdateDatasetOptions struct {
 	ResumeToken string
 }
 
-// DatasetClientBeginDeleteDatasetOptions contains the optional parameters for the datasetClient.BeginDeleteDataset method.
+// DatasetClientBeginDeleteDatasetOptions contains the optional parameters for the DatasetClient.BeginDeleteDataset method.
 type DatasetClientBeginDeleteDatasetOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// DatasetClientBeginRenameDatasetOptions contains the optional parameters for the datasetClient.BeginRenameDataset method.
+// DatasetClientBeginRenameDatasetOptions contains the optional parameters for the DatasetClient.BeginRenameDataset method.
 type DatasetClientBeginRenameDatasetOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// DatasetClientGetDatasetOptions contains the optional parameters for the datasetClient.GetDataset method.
+// DatasetClientGetDatasetOptions contains the optional parameters for the DatasetClient.GetDataset method.
 type DatasetClientGetDatasetOptions struct {
 	// ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
 	// provided, then no content will be returned.
 	IfNoneMatch *string
 }
 
-// DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.NewGetDatasetsByWorkspacePager
+// DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the DatasetClient.NewGetDatasetsByWorkspacePager
 // method.
 type DatasetClientGetDatasetsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -12499,12 +12499,12 @@ type IntegrationRuntimeVNetProperties struct {
 	VNetID *string `json:"vNetId,omitempty"`
 }
 
-// IntegrationRuntimesClientGetOptions contains the optional parameters for the integrationRuntimesClient.Get method.
+// IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
 type IntegrationRuntimesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IntegrationRuntimesClientListOptions contains the optional parameters for the integrationRuntimesClient.List method.
+// IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List method.
 type IntegrationRuntimesClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -12880,7 +12880,7 @@ func (j *JiraSource) GetTabularSource() *TabularSource {
 	}
 }
 
-// LibraryClientAppendOptions contains the optional parameters for the libraryClient.Append method.
+// LibraryClientAppendOptions contains the optional parameters for the LibraryClient.Append method.
 type LibraryClientAppendOptions struct {
 	// Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current
 	// offset matches this value. Otherwise, the request fails with the
@@ -12888,35 +12888,35 @@ type LibraryClientAppendOptions struct {
 	XMSBlobConditionAppendpos *int64
 }
 
-// LibraryClientBeginCreateOptions contains the optional parameters for the libraryClient.BeginCreate method.
+// LibraryClientBeginCreateOptions contains the optional parameters for the LibraryClient.BeginCreate method.
 type LibraryClientBeginCreateOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// LibraryClientBeginDeleteOptions contains the optional parameters for the libraryClient.BeginDelete method.
+// LibraryClientBeginDeleteOptions contains the optional parameters for the LibraryClient.BeginDelete method.
 type LibraryClientBeginDeleteOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// LibraryClientBeginFlushOptions contains the optional parameters for the libraryClient.BeginFlush method.
+// LibraryClientBeginFlushOptions contains the optional parameters for the LibraryClient.BeginFlush method.
 type LibraryClientBeginFlushOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// LibraryClientGetOperationResultOptions contains the optional parameters for the libraryClient.GetOperationResult method.
+// LibraryClientGetOperationResultOptions contains the optional parameters for the LibraryClient.GetOperationResult method.
 type LibraryClientGetOperationResultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LibraryClientGetOptions contains the optional parameters for the libraryClient.Get method.
+// LibraryClientGetOptions contains the optional parameters for the LibraryClient.Get method.
 type LibraryClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LibraryClientListOptions contains the optional parameters for the libraryClient.NewListPager method.
+// LibraryClientListOptions contains the optional parameters for the LibraryClient.NewListPager method.
 type LibraryClientListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -13142,7 +13142,7 @@ type LinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type LinkedService.
 func (l *LinkedService) GetLinkedService() *LinkedService { return l }
 
-// LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginCreateOrUpdateLinkedService
+// LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginCreateOrUpdateLinkedService
 // method.
 type LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions struct {
 	// ETag of the linkedService entity. Should only be specified for update, for which it should match existing entity or can
@@ -13152,21 +13152,21 @@ type LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions struct {
 	ResumeToken string
 }
 
-// LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginDeleteLinkedService
+// LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginDeleteLinkedService
 // method.
 type LinkedServiceClientBeginDeleteLinkedServiceOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginRenameLinkedService
+// LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginRenameLinkedService
 // method.
 type LinkedServiceClientBeginRenameLinkedServiceOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// LinkedServiceClientGetLinkedServiceOptions contains the optional parameters for the linkedServiceClient.GetLinkedService
+// LinkedServiceClientGetLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.GetLinkedService
 // method.
 type LinkedServiceClientGetLinkedServiceOptions struct {
 	// ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if
@@ -13174,7 +13174,7 @@ type LinkedServiceClientGetLinkedServiceOptions struct {
 	IfNoneMatch *string
 }
 
-// LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.NewGetLinkedServicesByWorkspacePager
+// LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the LinkedServiceClient.NewGetLinkedServicesByWorkspacePager
 // method.
 type LinkedServiceClientGetLinkedServicesByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -14827,7 +14827,7 @@ type NotebookCellOutputItem struct {
 	Text any `json:"text,omitempty"`
 }
 
-// NotebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the notebookClient.BeginCreateOrUpdateNotebook
+// NotebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the NotebookClient.BeginCreateOrUpdateNotebook
 // method.
 type NotebookClientBeginCreateOrUpdateNotebookOptions struct {
 	// ETag of the Note book entity. Should only be specified for update, for which it should match existing entity or can be
@@ -14837,32 +14837,32 @@ type NotebookClientBeginCreateOrUpdateNotebookOptions struct {
 	ResumeToken string
 }
 
-// NotebookClientBeginDeleteNotebookOptions contains the optional parameters for the notebookClient.BeginDeleteNotebook method.
+// NotebookClientBeginDeleteNotebookOptions contains the optional parameters for the NotebookClient.BeginDeleteNotebook method.
 type NotebookClientBeginDeleteNotebookOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// NotebookClientBeginRenameNotebookOptions contains the optional parameters for the notebookClient.BeginRenameNotebook method.
+// NotebookClientBeginRenameNotebookOptions contains the optional parameters for the NotebookClient.BeginRenameNotebook method.
 type NotebookClientBeginRenameNotebookOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// NotebookClientGetNotebookOptions contains the optional parameters for the notebookClient.GetNotebook method.
+// NotebookClientGetNotebookOptions contains the optional parameters for the NotebookClient.GetNotebook method.
 type NotebookClientGetNotebookOptions struct {
 	// ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
 	// provided, then no content will be returned.
 	IfNoneMatch *string
 }
 
-// NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.NewGetNotebookSummaryByWorkSpacePager
+// NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the NotebookClient.NewGetNotebookSummaryByWorkSpacePager
 // method.
 type NotebookClientGetNotebookSummaryByWorkSpaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.NewGetNotebooksByWorkspacePager
+// NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the NotebookClient.NewGetNotebooksByWorkspacePager
 // method.
 type NotebookClientGetNotebooksByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -16550,7 +16550,7 @@ type Pipeline struct {
 	Variables map[string]*VariableSpecification `json:"variables,omitempty"`
 }
 
-// PipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the pipelineClient.BeginCreateOrUpdatePipeline
+// PipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the PipelineClient.BeginCreateOrUpdatePipeline
 // method.
 type PipelineClientBeginCreateOrUpdatePipelineOptions struct {
 	// ETag of the pipeline entity. Should only be specified for update, for which it should match existing entity or can be *
@@ -16560,19 +16560,19 @@ type PipelineClientBeginCreateOrUpdatePipelineOptions struct {
 	ResumeToken string
 }
 
-// PipelineClientBeginDeletePipelineOptions contains the optional parameters for the pipelineClient.BeginDeletePipeline method.
+// PipelineClientBeginDeletePipelineOptions contains the optional parameters for the PipelineClient.BeginDeletePipeline method.
 type PipelineClientBeginDeletePipelineOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// PipelineClientBeginRenamePipelineOptions contains the optional parameters for the pipelineClient.BeginRenamePipeline method.
+// PipelineClientBeginRenamePipelineOptions contains the optional parameters for the PipelineClient.BeginRenamePipeline method.
 type PipelineClientBeginRenamePipelineOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// PipelineClientCreatePipelineRunOptions contains the optional parameters for the pipelineClient.CreatePipelineRun method.
+// PipelineClientCreatePipelineRunOptions contains the optional parameters for the PipelineClient.CreatePipelineRun method.
 type PipelineClientCreatePipelineRunOptions struct {
 	// Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped
 	// under the same groupId.
@@ -16585,14 +16585,14 @@ type PipelineClientCreatePipelineRunOptions struct {
 	StartActivityName *string
 }
 
-// PipelineClientGetPipelineOptions contains the optional parameters for the pipelineClient.GetPipeline method.
+// PipelineClientGetPipelineOptions contains the optional parameters for the PipelineClient.GetPipeline method.
 type PipelineClientGetPipelineOptions struct {
 	// ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
 	// provided, then no content will be returned.
 	IfNoneMatch *string
 }
 
-// PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.NewGetPipelinesByWorkspacePager
+// PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the PipelineClient.NewGetPipelinesByWorkspacePager
 // method.
 type PipelineClientGetPipelinesByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -16688,25 +16688,25 @@ type PipelineRun struct {
 	Status *string `json:"status,omitempty" azure:"ro"`
 }
 
-// PipelineRunClientCancelPipelineRunOptions contains the optional parameters for the pipelineRunClient.CancelPipelineRun
+// PipelineRunClientCancelPipelineRunOptions contains the optional parameters for the PipelineRunClient.CancelPipelineRun
 // method.
 type PipelineRunClientCancelPipelineRunOptions struct {
 	// If true, cancel all the Child pipelines that are triggered by the current pipeline.
 	IsRecursive *bool
 }
 
-// PipelineRunClientGetPipelineRunOptions contains the optional parameters for the pipelineRunClient.GetPipelineRun method.
+// PipelineRunClientGetPipelineRunOptions contains the optional parameters for the PipelineRunClient.GetPipelineRun method.
 type PipelineRunClientGetPipelineRunOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PipelineRunClientQueryActivityRunsOptions contains the optional parameters for the pipelineRunClient.QueryActivityRuns
+// PipelineRunClientQueryActivityRunsOptions contains the optional parameters for the PipelineRunClient.QueryActivityRuns
 // method.
 type PipelineRunClientQueryActivityRunsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the pipelineRunClient.QueryPipelineRunsByWorkspace
+// PipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRunClient.QueryPipelineRunsByWorkspace
 // method.
 type PipelineRunClientQueryPipelineRunsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -18357,6 +18357,16 @@ type SQLPoolStoredProcedureActivityTypeProperties struct {
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
+// SQLPoolsClientGetOptions contains the optional parameters for the SQLPoolsClient.Get method.
+type SQLPoolsClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SQLPoolsClientListOptions contains the optional parameters for the SQLPoolsClient.List method.
+type SQLPoolsClientListOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SQLScript - SQL script.
 type SQLScript struct {
 	// REQUIRED; The content of the SQL script.
@@ -18370,6 +18380,43 @@ type SQLScript struct {
 
 	// The type of the SQL script.
 	Type *SQLScriptType `json:"type,omitempty"`
+}
+
+// SQLScriptClientBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginCreateOrUpdateSQLScript
+// method.
+type SQLScriptClientBeginCreateOrUpdateSQLScriptOptions struct {
+	// ETag of the SQL script entity. Should only be specified for update, for which it should match existing entity or can be
+	// * for unconditional update.
+	IfMatch *string
+	// Resumes the LRO from the provided token.
+	ResumeToken string
+}
+
+// SQLScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginDeleteSQLScript
+// method.
+type SQLScriptClientBeginDeleteSQLScriptOptions struct {
+	// Resumes the LRO from the provided token.
+	ResumeToken string
+}
+
+// SQLScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginRenameSQLScript
+// method.
+type SQLScriptClientBeginRenameSQLScriptOptions struct {
+	// Resumes the LRO from the provided token.
+	ResumeToken string
+}
+
+// SQLScriptClientGetSQLScriptOptions contains the optional parameters for the SQLScriptClient.GetSQLScript method.
+type SQLScriptClientGetSQLScriptOptions struct {
+	// ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if *
+	// was provided, then no content will be returned.
+	IfNoneMatch *string
+}
+
+// SQLScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the SQLScriptClient.NewGetSQLScriptsByWorkspacePager
+// method.
+type SQLScriptClientGetSQLScriptsByWorkspaceOptions struct {
+	// placeholder for future optional parameters
 }
 
 // SQLScriptContent - The content of the SQL script.
@@ -21460,7 +21507,7 @@ type SparkJobDefinition struct {
 	RequiredSparkVersion *string `json:"requiredSparkVersion,omitempty"`
 }
 
-// SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginCreateOrUpdateSparkJobDefinition
+// SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginCreateOrUpdateSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions struct {
 	// ETag of the Spark Job Definition entity. Should only be specified for update, for which it should match existing entity
@@ -21470,35 +21517,35 @@ type SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions struct
 	ResumeToken string
 }
 
-// SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginDebugSparkJobDefinition
+// SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDebugSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginDeleteSparkJobDefinition
+// SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDeleteSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginExecuteSparkJobDefinition
+// SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginExecuteSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginRenameSparkJobDefinition
+// SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginRenameSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// SparkJobDefinitionClientGetSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinition
+// SparkJobDefinitionClientGetSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.GetSparkJobDefinition
 // method.
 type SparkJobDefinitionClientGetSparkJobDefinitionOptions struct {
 	// ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag,
@@ -21506,7 +21553,7 @@ type SparkJobDefinitionClientGetSparkJobDefinitionOptions struct {
 	IfNoneMatch *string
 }
 
-// SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.NewGetSparkJobDefinitionsByWorkspacePager
+// SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the SparkJobDefinitionClient.NewGetSparkJobDefinitionsByWorkspacePager
 // method.
 type SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -21806,53 +21853,6 @@ func (s *SparkSource) GetTabularSource() *TabularSource {
 		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		AdditionalProperties:     s.AdditionalProperties,
 	}
-}
-
-// SqlPoolsClientGetOptions contains the optional parameters for the sqlPoolsClient.Get method.
-type SqlPoolsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SqlPoolsClientListOptions contains the optional parameters for the sqlPoolsClient.List method.
-type SqlPoolsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SqlScriptClientBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginCreateOrUpdateSQLScript
-// method.
-type SqlScriptClientBeginCreateOrUpdateSQLScriptOptions struct {
-	// ETag of the SQL script entity. Should only be specified for update, for which it should match existing entity or can be
-	// * for unconditional update.
-	IfMatch *string
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SqlScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginDeleteSQLScript
-// method.
-type SqlScriptClientBeginDeleteSQLScriptOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SqlScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginRenameSQLScript
-// method.
-type SqlScriptClientBeginRenameSQLScriptOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SqlScriptClientGetSQLScriptOptions contains the optional parameters for the sqlScriptClient.GetSQLScript method.
-type SqlScriptClientGetSQLScriptOptions struct {
-	// ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if *
-	// was provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// SqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.NewGetSQLScriptsByWorkspacePager
-// method.
-type SqlScriptClientGetSQLScriptsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // SquareLinkedService - Square Service linked service.
@@ -22936,7 +22936,7 @@ type Trigger struct {
 // GetTrigger implements the TriggerClassification interface for type Trigger.
 func (t *Trigger) GetTrigger() *Trigger { return t }
 
-// TriggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the triggerClient.BeginCreateOrUpdateTrigger
+// TriggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the TriggerClient.BeginCreateOrUpdateTrigger
 // method.
 type TriggerClientBeginCreateOrUpdateTriggerOptions struct {
 	// ETag of the trigger entity. Should only be specified for update, for which it should match existing entity or can be *
@@ -22946,52 +22946,52 @@ type TriggerClientBeginCreateOrUpdateTriggerOptions struct {
 	ResumeToken string
 }
 
-// TriggerClientBeginDeleteTriggerOptions contains the optional parameters for the triggerClient.BeginDeleteTrigger method.
+// TriggerClientBeginDeleteTriggerOptions contains the optional parameters for the TriggerClient.BeginDeleteTrigger method.
 type TriggerClientBeginDeleteTriggerOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// TriggerClientBeginStartTriggerOptions contains the optional parameters for the triggerClient.BeginStartTrigger method.
+// TriggerClientBeginStartTriggerOptions contains the optional parameters for the TriggerClient.BeginStartTrigger method.
 type TriggerClientBeginStartTriggerOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// TriggerClientBeginStopTriggerOptions contains the optional parameters for the triggerClient.BeginStopTrigger method.
+// TriggerClientBeginStopTriggerOptions contains the optional parameters for the TriggerClient.BeginStopTrigger method.
 type TriggerClientBeginStopTriggerOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// TriggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the triggerClient.BeginSubscribeTriggerToEvents
+// TriggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the TriggerClient.BeginSubscribeTriggerToEvents
 // method.
 type TriggerClientBeginSubscribeTriggerToEventsOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// TriggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the triggerClient.BeginUnsubscribeTriggerFromEvents
+// TriggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the TriggerClient.BeginUnsubscribeTriggerFromEvents
 // method.
 type TriggerClientBeginUnsubscribeTriggerFromEventsOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// TriggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the triggerClient.GetEventSubscriptionStatus
+// TriggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the TriggerClient.GetEventSubscriptionStatus
 // method.
 type TriggerClientGetEventSubscriptionStatusOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TriggerClientGetTriggerOptions contains the optional parameters for the triggerClient.GetTrigger method.
+// TriggerClientGetTriggerOptions contains the optional parameters for the TriggerClient.GetTrigger method.
 type TriggerClientGetTriggerOptions struct {
 	// ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
 	// provided, then no content will be returned.
 	IfNoneMatch *string
 }
 
-// TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.NewGetTriggersByWorkspacePager
+// TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the TriggerClient.NewGetTriggersByWorkspacePager
 // method.
 type TriggerClientGetTriggersByWorkspaceOptions struct {
 	// placeholder for future optional parameters
@@ -23112,19 +23112,19 @@ type TriggerRun struct {
 	TriggeredPipelines map[string]*string `json:"triggeredPipelines,omitempty" azure:"ro"`
 }
 
-// TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the triggerRunClient.CancelTriggerInstance
+// TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
 // method.
 type TriggerRunClientCancelTriggerInstanceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the triggerRunClient.QueryTriggerRunsByWorkspace
+// TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
 // method.
 type TriggerRunClientQueryTriggerRunsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the triggerRunClient.RerunTriggerInstance
+// TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
 // method.
 type TriggerRunClientRerunTriggerInstanceOptions struct {
 	// placeholder for future optional parameters
@@ -24038,12 +24038,12 @@ type Workspace struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// WorkspaceClientGetOptions contains the optional parameters for the workspaceClient.Get method.
+// WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
 type WorkspaceClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the workspaceGitRepoManagementClient.GetGitHubAccessToken
+// WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagementClient.GetGitHubAccessToken
 // method.
 type WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions struct {
 	// Can provide a guid, which is helpful for debugging and to provide better customer support

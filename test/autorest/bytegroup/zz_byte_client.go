@@ -11,24 +11,16 @@ package bytegroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // ByteClient contains the methods for the Byte group.
-// Don't use this type directly, use NewByteClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ByteClient struct {
-	pl runtime.Pipeline
-}
-
-// NewByteClient creates a new instance of ByteClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewByteClient(pl runtime.Pipeline) *ByteClient {
-	client := &ByteClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetEmpty - Get empty byte value ”
@@ -41,7 +33,7 @@ func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteClientGetEm
 	if err != nil {
 		return ByteClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ByteClientGetEmptyResponse{}, err
 	}
@@ -81,7 +73,7 @@ func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteClientGet
 	if err != nil {
 		return ByteClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ByteClientGetInvalidResponse{}, err
 	}
@@ -121,7 +113,7 @@ func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteClientGe
 	if err != nil {
 		return ByteClientGetNonASCIIResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ByteClientGetNonASCIIResponse{}, err
 	}
@@ -161,7 +153,7 @@ func (client *ByteClient) GetNull(ctx context.Context, options *ByteClientGetNul
 	if err != nil {
 		return ByteClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ByteClientGetNullResponse{}, err
 	}
@@ -202,7 +194,7 @@ func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, opti
 	if err != nil {
 		return ByteClientPutNonASCIIResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ByteClientPutNonASCIIResponse{}, err
 	}

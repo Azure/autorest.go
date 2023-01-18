@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // ArrayClient contains the methods for the Array group.
-// Don't use this type directly, use NewArrayClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ArrayClient struct {
-	pl runtime.Pipeline
-}
-
-// NewArrayClient creates a new instance of ArrayClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewArrayClient(pl runtime.Pipeline) *ArrayClient {
-	client := &ArrayClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetEmpty - Get complex types with array property which is empty
@@ -41,7 +33,7 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGet
 	if err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
@@ -81,7 +73,7 @@ func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayCli
 	if err != nil {
 		return ArrayClientGetNotProvidedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetNotProvidedResponse{}, err
 	}
@@ -121,7 +113,7 @@ func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayClientGet
 	if err != nil {
 		return ArrayClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetValidResponse{}, err
 	}
@@ -162,7 +154,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return ArrayClientPutEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutEmptyResponse{}, err
 	}
@@ -195,7 +187,7 @@ func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return ArrayClientPutValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutValidResponse{}, err
 	}

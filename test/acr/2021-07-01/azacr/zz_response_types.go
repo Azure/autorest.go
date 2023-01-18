@@ -11,27 +11,27 @@ package azacr
 
 import "io"
 
-// AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse contains the response from method authenticationClient.ExchangeAADAccessTokenForAcrRefreshToken.
+// AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse contains the response from method AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken.
 type AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse struct {
 	RefreshToken
 }
 
-// AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse contains the response from method authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken.
+// AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse contains the response from method AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken.
 type AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse struct {
 	AccessToken
 }
 
-// AuthenticationClientGetAcrAccessTokenFromLoginResponse contains the response from method authenticationClient.GetAcrAccessTokenFromLogin.
+// AuthenticationClientGetAcrAccessTokenFromLoginResponse contains the response from method AuthenticationClient.GetAcrAccessTokenFromLogin.
 type AuthenticationClientGetAcrAccessTokenFromLoginResponse struct {
 	AccessToken
 }
 
-// ContainerRegistryBlobClientCancelUploadResponse contains the response from method containerRegistryBlobClient.CancelUpload.
+// ContainerRegistryBlobClientCancelUploadResponse contains the response from method ContainerRegistryBlobClient.CancelUpload.
 type ContainerRegistryBlobClientCancelUploadResponse struct {
 	// placeholder for future response values
 }
 
-// ContainerRegistryBlobClientCheckBlobExistsResponse contains the response from method containerRegistryBlobClient.CheckBlobExists.
+// ContainerRegistryBlobClientCheckBlobExistsResponse contains the response from method ContainerRegistryBlobClient.CheckBlobExists.
 type ContainerRegistryBlobClientCheckBlobExistsResponse struct {
 	// ContentLength contains the information returned from the Content-Length header response.
 	ContentLength *int64
@@ -40,7 +40,7 @@ type ContainerRegistryBlobClientCheckBlobExistsResponse struct {
 	DockerContentDigest *string
 }
 
-// ContainerRegistryBlobClientCheckChunkExistsResponse contains the response from method containerRegistryBlobClient.CheckChunkExists.
+// ContainerRegistryBlobClientCheckChunkExistsResponse contains the response from method ContainerRegistryBlobClient.CheckChunkExists.
 type ContainerRegistryBlobClientCheckChunkExistsResponse struct {
 	// ContentLength contains the information returned from the Content-Length header response.
 	ContentLength *int64
@@ -49,7 +49,7 @@ type ContainerRegistryBlobClientCheckChunkExistsResponse struct {
 	ContentRange *string
 }
 
-// ContainerRegistryBlobClientCompleteUploadResponse contains the response from method containerRegistryBlobClient.CompleteUpload.
+// ContainerRegistryBlobClientCompleteUploadResponse contains the response from method ContainerRegistryBlobClient.CompleteUpload.
 type ContainerRegistryBlobClientCompleteUploadResponse struct {
 	// DockerContentDigest contains the information returned from the Docker-Content-Digest header response.
 	DockerContentDigest *string
@@ -61,7 +61,7 @@ type ContainerRegistryBlobClientCompleteUploadResponse struct {
 	Range *string
 }
 
-// ContainerRegistryBlobClientDeleteBlobResponse contains the response from method containerRegistryBlobClient.DeleteBlob.
+// ContainerRegistryBlobClientDeleteBlobResponse contains the response from method ContainerRegistryBlobClient.DeleteBlob.
 type ContainerRegistryBlobClientDeleteBlobResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
@@ -70,7 +70,7 @@ type ContainerRegistryBlobClientDeleteBlobResponse struct {
 	DockerContentDigest *string
 }
 
-// ContainerRegistryBlobClientGetBlobResponse contains the response from method containerRegistryBlobClient.GetBlob.
+// ContainerRegistryBlobClientGetBlobResponse contains the response from method ContainerRegistryBlobClient.GetBlob.
 type ContainerRegistryBlobClientGetBlobResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
@@ -82,7 +82,7 @@ type ContainerRegistryBlobClientGetBlobResponse struct {
 	DockerContentDigest *string
 }
 
-// ContainerRegistryBlobClientGetChunkResponse contains the response from method containerRegistryBlobClient.GetChunk.
+// ContainerRegistryBlobClientGetChunkResponse contains the response from method ContainerRegistryBlobClient.GetChunk.
 type ContainerRegistryBlobClientGetChunkResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
@@ -94,7 +94,7 @@ type ContainerRegistryBlobClientGetChunkResponse struct {
 	ContentRange *string
 }
 
-// ContainerRegistryBlobClientGetUploadStatusResponse contains the response from method containerRegistryBlobClient.GetUploadStatus.
+// ContainerRegistryBlobClientGetUploadStatusResponse contains the response from method ContainerRegistryBlobClient.GetUploadStatus.
 type ContainerRegistryBlobClientGetUploadStatusResponse struct {
 	// DockerUploadUUID contains the information returned from the Docker-Upload-UUID header response.
 	DockerUploadUUID *string
@@ -103,7 +103,7 @@ type ContainerRegistryBlobClientGetUploadStatusResponse struct {
 	Range *string
 }
 
-// ContainerRegistryBlobClientMountBlobResponse contains the response from method containerRegistryBlobClient.MountBlob.
+// ContainerRegistryBlobClientMountBlobResponse contains the response from method ContainerRegistryBlobClient.MountBlob.
 type ContainerRegistryBlobClientMountBlobResponse struct {
 	// DockerContentDigest contains the information returned from the Docker-Content-Digest header response.
 	DockerContentDigest *string
@@ -115,7 +115,7 @@ type ContainerRegistryBlobClientMountBlobResponse struct {
 	Location *string
 }
 
-// ContainerRegistryBlobClientStartUploadResponse contains the response from method containerRegistryBlobClient.StartUpload.
+// ContainerRegistryBlobClientStartUploadResponse contains the response from method ContainerRegistryBlobClient.StartUpload.
 type ContainerRegistryBlobClientStartUploadResponse struct {
 	// DockerUploadUUID contains the information returned from the Docker-Upload-UUID header response.
 	DockerUploadUUID *string
@@ -127,7 +127,7 @@ type ContainerRegistryBlobClientStartUploadResponse struct {
 	Range *string
 }
 
-// ContainerRegistryBlobClientUploadChunkResponse contains the response from method containerRegistryBlobClient.UploadChunk.
+// ContainerRegistryBlobClientUploadChunkResponse contains the response from method ContainerRegistryBlobClient.UploadChunk.
 type ContainerRegistryBlobClientUploadChunkResponse struct {
 	// DockerUploadUUID contains the information returned from the Docker-Upload-UUID header response.
 	DockerUploadUUID *string
@@ -139,12 +139,12 @@ type ContainerRegistryBlobClientUploadChunkResponse struct {
 	Range *string
 }
 
-// ContainerRegistryClientCheckDockerV2SupportResponse contains the response from method containerRegistryClient.CheckDockerV2Support.
+// ContainerRegistryClientCheckDockerV2SupportResponse contains the response from method ContainerRegistryClient.CheckDockerV2Support.
 type ContainerRegistryClientCheckDockerV2SupportResponse struct {
 	// placeholder for future response values
 }
 
-// ContainerRegistryClientCreateManifestResponse contains the response from method containerRegistryClient.CreateManifest.
+// ContainerRegistryClientCreateManifestResponse contains the response from method ContainerRegistryClient.CreateManifest.
 type ContainerRegistryClientCreateManifestResponse struct {
 	// ContentLength contains the information returned from the Content-Length header response.
 	ContentLength *int64
@@ -159,73 +159,73 @@ type ContainerRegistryClientCreateManifestResponse struct {
 	RawJSON []byte
 }
 
-// ContainerRegistryClientDeleteManifestResponse contains the response from method containerRegistryClient.DeleteManifest.
+// ContainerRegistryClientDeleteManifestResponse contains the response from method ContainerRegistryClient.DeleteManifest.
 type ContainerRegistryClientDeleteManifestResponse struct {
 	// placeholder for future response values
 }
 
-// ContainerRegistryClientDeleteRepositoryResponse contains the response from method containerRegistryClient.DeleteRepository.
+// ContainerRegistryClientDeleteRepositoryResponse contains the response from method ContainerRegistryClient.DeleteRepository.
 type ContainerRegistryClientDeleteRepositoryResponse struct {
 	DeleteRepositoryResult
 }
 
-// ContainerRegistryClientDeleteTagResponse contains the response from method containerRegistryClient.DeleteTag.
+// ContainerRegistryClientDeleteTagResponse contains the response from method ContainerRegistryClient.DeleteTag.
 type ContainerRegistryClientDeleteTagResponse struct {
 	// placeholder for future response values
 }
 
-// ContainerRegistryClientGetManifestPropertiesResponse contains the response from method containerRegistryClient.GetManifestProperties.
+// ContainerRegistryClientGetManifestPropertiesResponse contains the response from method ContainerRegistryClient.GetManifestProperties.
 type ContainerRegistryClientGetManifestPropertiesResponse struct {
 	ArtifactManifestProperties
 }
 
-// ContainerRegistryClientGetManifestResponse contains the response from method containerRegistryClient.GetManifest.
+// ContainerRegistryClientGetManifestResponse contains the response from method ContainerRegistryClient.GetManifest.
 type ContainerRegistryClientGetManifestResponse struct {
 	ManifestWrapper
 }
 
-// ContainerRegistryClientGetManifestsResponse contains the response from method containerRegistryClient.NewGetManifestsPager.
+// ContainerRegistryClientGetManifestsResponse contains the response from method ContainerRegistryClient.NewGetManifestsPager.
 type ContainerRegistryClientGetManifestsResponse struct {
 	Manifests
 	// Link contains the information returned from the Link header response.
 	Link *string
 }
 
-// ContainerRegistryClientGetPropertiesResponse contains the response from method containerRegistryClient.GetProperties.
+// ContainerRegistryClientGetPropertiesResponse contains the response from method ContainerRegistryClient.GetProperties.
 type ContainerRegistryClientGetPropertiesResponse struct {
 	ContainerRepositoryProperties
 }
 
-// ContainerRegistryClientGetRepositoriesResponse contains the response from method containerRegistryClient.NewGetRepositoriesPager.
+// ContainerRegistryClientGetRepositoriesResponse contains the response from method ContainerRegistryClient.NewGetRepositoriesPager.
 type ContainerRegistryClientGetRepositoriesResponse struct {
 	Repositories
 	// Link contains the information returned from the Link header response.
 	Link *string
 }
 
-// ContainerRegistryClientGetTagPropertiesResponse contains the response from method containerRegistryClient.GetTagProperties.
+// ContainerRegistryClientGetTagPropertiesResponse contains the response from method ContainerRegistryClient.GetTagProperties.
 type ContainerRegistryClientGetTagPropertiesResponse struct {
 	ArtifactTagProperties
 }
 
-// ContainerRegistryClientGetTagsResponse contains the response from method containerRegistryClient.NewGetTagsPager.
+// ContainerRegistryClientGetTagsResponse contains the response from method ContainerRegistryClient.NewGetTagsPager.
 type ContainerRegistryClientGetTagsResponse struct {
 	TagList
 	// Link contains the information returned from the Link header response.
 	Link *string
 }
 
-// ContainerRegistryClientUpdateManifestPropertiesResponse contains the response from method containerRegistryClient.UpdateManifestProperties.
+// ContainerRegistryClientUpdateManifestPropertiesResponse contains the response from method ContainerRegistryClient.UpdateManifestProperties.
 type ContainerRegistryClientUpdateManifestPropertiesResponse struct {
 	ArtifactManifestProperties
 }
 
-// ContainerRegistryClientUpdatePropertiesResponse contains the response from method containerRegistryClient.UpdateProperties.
+// ContainerRegistryClientUpdatePropertiesResponse contains the response from method ContainerRegistryClient.UpdateProperties.
 type ContainerRegistryClientUpdatePropertiesResponse struct {
 	ContainerRepositoryProperties
 }
 
-// ContainerRegistryClientUpdateTagAttributesResponse contains the response from method containerRegistryClient.UpdateTagAttributes.
+// ContainerRegistryClientUpdateTagAttributesResponse contains the response from method ContainerRegistryClient.UpdateTagAttributes.
 type ContainerRegistryClientUpdateTagAttributesResponse struct {
 	ArtifactTagProperties
 }

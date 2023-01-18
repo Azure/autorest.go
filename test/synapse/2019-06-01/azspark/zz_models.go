@@ -11,24 +11,24 @@ package azspark
 
 import "time"
 
-// BatchClientCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob method.
+// BatchClientCancelSparkBatchJobOptions contains the optional parameters for the BatchClient.CancelSparkBatchJob method.
 type BatchClientCancelSparkBatchJobOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BatchClientCreateSparkBatchJobOptions contains the optional parameters for the batchClient.CreateSparkBatchJob method.
+// BatchClientCreateSparkBatchJobOptions contains the optional parameters for the BatchClient.CreateSparkBatchJob method.
 type BatchClientCreateSparkBatchJobOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// BatchClientGetSparkBatchJobOptions contains the optional parameters for the batchClient.GetSparkBatchJob method.
+// BatchClientGetSparkBatchJobOptions contains the optional parameters for the BatchClient.GetSparkBatchJob method.
 type BatchClientGetSparkBatchJobOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// BatchClientGetSparkBatchJobsOptions contains the optional parameters for the batchClient.GetSparkBatchJobs method.
+// BatchClientGetSparkBatchJobsOptions contains the optional parameters for the BatchClient.GetSparkBatchJobs method.
 type BatchClientGetSparkBatchJobsOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
@@ -229,34 +229,34 @@ type Session struct {
 	WorkspaceName *string            `json:"workspaceName,omitempty"`
 }
 
-// SessionClientCancelSparkSessionOptions contains the optional parameters for the sessionClient.CancelSparkSession method.
+// SessionClientCancelSparkSessionOptions contains the optional parameters for the SessionClient.CancelSparkSession method.
 type SessionClientCancelSparkSessionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SessionClientCancelSparkStatementOptions contains the optional parameters for the sessionClient.CancelSparkStatement method.
+// SessionClientCancelSparkStatementOptions contains the optional parameters for the SessionClient.CancelSparkStatement method.
 type SessionClientCancelSparkStatementOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SessionClientCreateSparkSessionOptions contains the optional parameters for the sessionClient.CreateSparkSession method.
+// SessionClientCreateSparkSessionOptions contains the optional parameters for the SessionClient.CreateSparkSession method.
 type SessionClientCreateSparkSessionOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// SessionClientCreateSparkStatementOptions contains the optional parameters for the sessionClient.CreateSparkStatement method.
+// SessionClientCreateSparkStatementOptions contains the optional parameters for the SessionClient.CreateSparkStatement method.
 type SessionClientCreateSparkStatementOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SessionClientGetSparkSessionOptions contains the optional parameters for the sessionClient.GetSparkSession method.
+// SessionClientGetSparkSessionOptions contains the optional parameters for the SessionClient.GetSparkSession method.
 type SessionClientGetSparkSessionOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// SessionClientGetSparkSessionsOptions contains the optional parameters for the sessionClient.GetSparkSessions method.
+// SessionClientGetSparkSessionsOptions contains the optional parameters for the SessionClient.GetSparkSessions method.
 type SessionClientGetSparkSessionsOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
@@ -266,17 +266,17 @@ type SessionClientGetSparkSessionsOptions struct {
 	Size *int32
 }
 
-// SessionClientGetSparkStatementOptions contains the optional parameters for the sessionClient.GetSparkStatement method.
+// SessionClientGetSparkStatementOptions contains the optional parameters for the SessionClient.GetSparkStatement method.
 type SessionClientGetSparkStatementOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SessionClientGetSparkStatementsOptions contains the optional parameters for the sessionClient.GetSparkStatements method.
+// SessionClientGetSparkStatementsOptions contains the optional parameters for the SessionClient.GetSparkStatements method.
 type SessionClientGetSparkStatementsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SessionClientResetSparkSessionTimeoutOptions contains the optional parameters for the sessionClient.ResetSparkSessionTimeout
+// SessionClientResetSparkSessionTimeoutOptions contains the optional parameters for the SessionClient.ResetSparkSessionTimeout
 // method.
 type SessionClientResetSparkSessionTimeoutOptions struct {
 	// placeholder for future optional parameters

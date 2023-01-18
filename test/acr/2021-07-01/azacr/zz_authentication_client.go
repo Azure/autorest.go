@@ -11,6 +11,7 @@ package azacr
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -19,23 +20,12 @@ import (
 	"strings"
 )
 
-type authenticationClient struct {
+// AuthenticationClient contains the methods for the Authentication group.
+// Don't use this type directly, use a constructor function instead.
+type AuthenticationClient struct {
+	internal   *azcore.Client
 	endpoint   string
 	apiVersion *string
-	pl         runtime.Pipeline
-}
-
-// newAuthenticationClient creates a new instance of authenticationClient with the specified values.
-//   - endpoint - Registry login URL
-//   - apiVersion - Api Version. Specifying any value will set the value to 2021-07-01.
-//   - pl - the pipeline used for sending requests and handling responses.
-func newAuthenticationClient(endpoint string, apiVersion *string, pl runtime.Pipeline) *authenticationClient {
-	client := &authenticationClient{
-		endpoint:   endpoint,
-		apiVersion: apiVersion,
-		pl:         pl,
-	}
-	return client
 }
 
 // ExchangeAADAccessTokenForAcrRefreshToken - Exchange AAD tokens for an ACR refresh Token
@@ -45,13 +35,13 @@ func newAuthenticationClient(endpoint string, apiVersion *string, pl runtime.Pip
 //   - grantType - Can take a value of accesstokenrefreshtoken, or accesstoken, or refresh_token
 //   - service - Indicates the name of your Azure container registry.
 //   - options - AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions contains the optional parameters for the
-//     authenticationClient.ExchangeAADAccessTokenForAcrRefreshToken method.
-func (client *authenticationClient) ExchangeAADAccessTokenForAcrRefreshToken(ctx context.Context, grantType PostContentSchemaGrantType, service string, options *AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions) (AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse, error) {
+//     AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken method.
+func (client *AuthenticationClient) ExchangeAADAccessTokenForAcrRefreshToken(ctx context.Context, grantType PostContentSchemaGrantType, service string, options *AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions) (AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse, error) {
 	req, err := client.exchangeAADAccessTokenForAcrRefreshTokenCreateRequest(ctx, grantType, service, options)
 	if err != nil {
 		return AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse{}, err
 	}
@@ -62,7 +52,7 @@ func (client *authenticationClient) ExchangeAADAccessTokenForAcrRefreshToken(ctx
 }
 
 // exchangeAADAccessTokenForAcrRefreshTokenCreateRequest creates the ExchangeAADAccessTokenForAcrRefreshToken request.
-func (client *authenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCreateRequest(ctx context.Context, grantType PostContentSchemaGrantType, service string, options *AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions) (*policy.Request, error) {
+func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCreateRequest(ctx context.Context, grantType PostContentSchemaGrantType, service string, options *AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions) (*policy.Request, error) {
 	urlPath := "/oauth2/exchange"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -91,7 +81,7 @@ func (client *authenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCrea
 }
 
 // exchangeAADAccessTokenForAcrRefreshTokenHandleResponse handles the ExchangeAADAccessTokenForAcrRefreshToken response.
-func (client *authenticationClient) exchangeAADAccessTokenForAcrRefreshTokenHandleResponse(resp *http.Response) (AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse, error) {
+func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenHandleResponse(resp *http.Response) (AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse, error) {
 	result := AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RefreshToken); err != nil {
 		return AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse{}, err
@@ -108,13 +98,13 @@ func (client *authenticationClient) exchangeAADAccessTokenForAcrRefreshTokenHand
 //     this from the Www-Authenticate response header from the challenge.
 //   - refreshToken - Must be a valid ACR refresh token
 //   - options - AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions contains the optional parameters for the
-//     authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken method.
-func (client *authenticationClient) ExchangeAcrRefreshTokenForAcrAccessToken(ctx context.Context, service string, scope string, refreshToken string, options *AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions) (AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse, error) {
+//     AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken method.
+func (client *AuthenticationClient) ExchangeAcrRefreshTokenForAcrAccessToken(ctx context.Context, service string, scope string, refreshToken string, options *AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions) (AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse, error) {
 	req, err := client.exchangeAcrRefreshTokenForAcrAccessTokenCreateRequest(ctx, service, scope, refreshToken, options)
 	if err != nil {
 		return AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse{}, err
 	}
@@ -125,7 +115,7 @@ func (client *authenticationClient) ExchangeAcrRefreshTokenForAcrAccessToken(ctx
 }
 
 // exchangeAcrRefreshTokenForAcrAccessTokenCreateRequest creates the ExchangeAcrRefreshTokenForAcrAccessToken request.
-func (client *authenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCreateRequest(ctx context.Context, service string, scope string, refreshToken string, options *AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions) (*policy.Request, error) {
+func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCreateRequest(ctx context.Context, service string, scope string, refreshToken string, options *AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions) (*policy.Request, error) {
 	urlPath := "/oauth2/token"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -149,7 +139,7 @@ func (client *authenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCrea
 }
 
 // exchangeAcrRefreshTokenForAcrAccessTokenHandleResponse handles the ExchangeAcrRefreshTokenForAcrAccessToken response.
-func (client *authenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenHandleResponse(resp *http.Response) (AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse, error) {
+func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenHandleResponse(resp *http.Response) (AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse, error) {
 	result := AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AccessToken); err != nil {
 		return AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse{}, err
@@ -164,14 +154,14 @@ func (client *authenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenHand
 //   - service - Indicates the name of your Azure container registry.
 //   - scope - Expected to be a valid scope, and can be specified more than once for multiple scope requests. You can obtain this
 //     from the Www-Authenticate response header from the challenge.
-//   - options - AuthenticationClientGetAcrAccessTokenFromLoginOptions contains the optional parameters for the authenticationClient.GetAcrAccessTokenFromLogin
+//   - options - AuthenticationClientGetAcrAccessTokenFromLoginOptions contains the optional parameters for the AuthenticationClient.GetAcrAccessTokenFromLogin
 //     method.
-func (client *authenticationClient) GetAcrAccessTokenFromLogin(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (AuthenticationClientGetAcrAccessTokenFromLoginResponse, error) {
+func (client *AuthenticationClient) GetAcrAccessTokenFromLogin(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (AuthenticationClientGetAcrAccessTokenFromLoginResponse, error) {
 	req, err := client.getAcrAccessTokenFromLoginCreateRequest(ctx, service, scope, options)
 	if err != nil {
 		return AuthenticationClientGetAcrAccessTokenFromLoginResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AuthenticationClientGetAcrAccessTokenFromLoginResponse{}, err
 	}
@@ -182,7 +172,7 @@ func (client *authenticationClient) GetAcrAccessTokenFromLogin(ctx context.Conte
 }
 
 // getAcrAccessTokenFromLoginCreateRequest creates the GetAcrAccessTokenFromLogin request.
-func (client *authenticationClient) getAcrAccessTokenFromLoginCreateRequest(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (*policy.Request, error) {
+func (client *AuthenticationClient) getAcrAccessTokenFromLoginCreateRequest(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (*policy.Request, error) {
 	urlPath := "/oauth2/token"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -197,7 +187,7 @@ func (client *authenticationClient) getAcrAccessTokenFromLoginCreateRequest(ctx 
 }
 
 // getAcrAccessTokenFromLoginHandleResponse handles the GetAcrAccessTokenFromLogin response.
-func (client *authenticationClient) getAcrAccessTokenFromLoginHandleResponse(resp *http.Response) (AuthenticationClientGetAcrAccessTokenFromLoginResponse, error) {
+func (client *AuthenticationClient) getAcrAccessTokenFromLoginHandleResponse(resp *http.Response) (AuthenticationClientGetAcrAccessTokenFromLoginResponse, error) {
 	result := AuthenticationClientGetAcrAccessTokenFromLoginResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AccessToken); err != nil {
 		return AuthenticationClientGetAcrAccessTokenFromLoginResponse{}, err

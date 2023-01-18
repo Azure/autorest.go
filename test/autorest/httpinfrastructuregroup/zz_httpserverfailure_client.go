@@ -11,24 +11,16 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // HTTPServerFailureClient contains the methods for the HTTPServerFailure group.
-// Don't use this type directly, use NewHTTPServerFailureClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type HTTPServerFailureClient struct {
-	pl runtime.Pipeline
-}
-
-// NewHTTPServerFailureClient creates a new instance of HTTPServerFailureClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewHTTPServerFailureClient(pl runtime.Pipeline) *HTTPServerFailureClient {
-	client := &HTTPServerFailureClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
@@ -42,7 +34,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 	if err != nil {
 		return HTTPServerFailureClientDelete505Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientDelete505Response{}, err
 	}
@@ -74,7 +66,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPServerFailureClientGet501Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientGet501Response{}, err
 	}
@@ -105,7 +97,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailureClientHead501Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientHead501Response{}, err
 	}
@@ -137,7 +129,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailureClientPost505Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientPost505Response{}, err
 	}

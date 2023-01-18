@@ -12,6 +12,7 @@ package validationgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -21,21 +22,10 @@ import (
 )
 
 // AutoRestValidationTestClient contains the methods for the AutoRestValidationTest group.
-// Don't use this type directly, use NewAutoRestValidationTestClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type AutoRestValidationTestClient struct {
+	internal       *azcore.Client
 	subscriptionID string
-	pl             runtime.Pipeline
-}
-
-// NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
-//   - subscriptionID - Subscription ID.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewAutoRestValidationTestClient(subscriptionID string, pl runtime.Pipeline) *AutoRestValidationTestClient {
-	client := &AutoRestValidationTestClient{
-		subscriptionID: subscriptionID,
-		pl:             pl,
-	}
-	return client
 }
 
 // GetWithConstantInPath -
@@ -49,7 +39,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 	if err != nil {
 		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, err
 	}
@@ -81,7 +71,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 	if err != nil {
 		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, err
 	}
@@ -128,7 +118,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 	if err != nil {
 		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
@@ -183,7 +173,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx con
 	if err != nil {
 		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, err
 	}

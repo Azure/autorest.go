@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // InheritanceClient contains the methods for the Inheritance group.
-// Don't use this type directly, use NewInheritanceClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type InheritanceClient struct {
-	pl runtime.Pipeline
-}
-
-// NewInheritanceClient creates a new instance of InheritanceClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewInheritanceClient(pl runtime.Pipeline) *InheritanceClient {
-	client := &InheritanceClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetValid - Get complex types that extend others
@@ -41,7 +33,7 @@ func (client *InheritanceClient) GetValid(ctx context.Context, options *Inherita
 	if err != nil {
 		return InheritanceClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return InheritanceClientGetValidResponse{}, err
 	}
@@ -84,7 +76,7 @@ func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siame
 	if err != nil {
 		return InheritanceClientPutValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return InheritanceClientPutValidResponse{}, err
 	}

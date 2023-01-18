@@ -14,14 +14,29 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPathsClient() *PathsClient {
-	// dnsSuffix string, subscriptionID string
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewPathsClient(to.Ptr(":3000"), "test12", pl)
+func newPathsClient(t *testing.T) *PathsClient {
+	client, err := NewPathsClient("test12", to.Ptr(":3000"), nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewPathsClient(subscriptionID string, dnsSuffix *string, options *azcore.ClientOptions) (*PathsClient, error) {
+	client, err := azcore.NewClient("morecustombaseurigroup.PathsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	if dnsSuffix == nil {
+		dnsSuffix = to.Ptr("host")
+	}
+	return &PathsClient{
+		internal:       client,
+		dnsSuffix:      *dnsSuffix,
+		subscriptionID: subscriptionID,
+	}, nil
 }
 
 func TestGetEmpty(t *testing.T) {
-	client := newPathsClient()
+	client := newPathsClient(t)
 	// vault string, secret string, keyName string, options *PathsGetEmptyOptions
 	result, err := client.GetEmpty(context.Background(), "http://localhost", "", "key1", &PathsClientGetEmptyOptions{
 		KeyVersion: to.Ptr("v1"),

@@ -14,20 +14,32 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newAutoRestValidationTestClient() *AutoRestValidationTestClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewAutoRestValidationTestClient("", pl)
+func newAutoRestValidationTestClient(t *testing.T) *AutoRestValidationTestClient {
+	client, err := NewAutoRestValidationTestClient("", nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.ClientOptions) (*AutoRestValidationTestClient, error) {
+	client, err := azcore.NewClient("validationgroup.AutoRestValidationTestClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &AutoRestValidationTestClient{
+		internal:       client,
+		subscriptionID: subscriptionID,
+	}, nil
 }
 
 func TestValidationGetWithConstantInPath(t *testing.T) {
-	client := newAutoRestValidationTestClient()
+	client := newAutoRestValidationTestClient(t)
 	result, err := client.GetWithConstantInPath(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestValidationPostWithConstantInBody(t *testing.T) {
-	client := newAutoRestValidationTestClient()
+	client := newAutoRestValidationTestClient(t)
 	product := Product{
 		Child:      &ChildProduct{},
 		ConstChild: &ConstantProduct{},
@@ -50,7 +62,7 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 
 func TestValidationValidationOfBody(t *testing.T) {
 	t.Skip("need to confirm if this test will remain in the testserver and what values it's expecting")
-	client := newAutoRestValidationTestClient()
+	client := newAutoRestValidationTestClient(t)
 	result, err := client.ValidationOfBody(context.Background(), "123", 150, Product{
 		DisplayNames: []*string{
 			to.Ptr("displayname1"),

@@ -12,6 +12,7 @@ package urlgroup
 import (
 	"context"
 	"encoding/base64"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -21,18 +22,9 @@ import (
 )
 
 // QueriesClient contains the methods for the Queries group.
-// Don't use this type directly, use NewQueriesClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type QueriesClient struct {
-	pl runtime.Pipeline
-}
-
-// NewQueriesClient creates a new instance of QueriesClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewQueriesClient(pl runtime.Pipeline) *QueriesClient {
-	client := &QueriesClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
@@ -46,7 +38,7 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesClientArrayStringCSVEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientArrayStringCSVEmptyResponse{}, err
 	}
@@ -83,7 +75,7 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *Qu
 	if err != nil {
 		return QueriesClientArrayStringCSVNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientArrayStringCSVNullResponse{}, err
 	}
@@ -121,7 +113,7 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesClientArrayStringCSVValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientArrayStringCSVValidResponse{}, err
 	}
@@ -159,7 +151,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 	if err != nil {
 		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, err
 	}
@@ -197,7 +189,7 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options 
 	if err != nil {
 		return QueriesClientArrayStringPipesValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientArrayStringPipesValidResponse{}, err
 	}
@@ -235,7 +227,7 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesClientArrayStringSsvValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientArrayStringSsvValidResponse{}, err
 	}
@@ -273,7 +265,7 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesClientArrayStringTsvValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientArrayStringTsvValidResponse{}, err
 	}
@@ -309,7 +301,7 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClie
 	if err != nil {
 		return QueriesClientByteEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientByteEmptyResponse{}, err
 	}
@@ -343,7 +335,7 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesClientByteMultiByteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientByteMultiByteResponse{}, err
 	}
@@ -379,7 +371,7 @@ func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClien
 	if err != nil {
 		return QueriesClientByteNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientByteNullResponse{}, err
 	}
@@ -415,7 +407,7 @@ func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClien
 	if err != nil {
 		return QueriesClientDateNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientDateNullResponse{}, err
 	}
@@ -451,7 +443,7 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesC
 	if err != nil {
 		return QueriesClientDateTimeNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientDateTimeNullResponse{}, err
 	}
@@ -487,7 +479,7 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesClientDateTimeValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientDateTimeValidResponse{}, err
 	}
@@ -521,7 +513,7 @@ func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClie
 	if err != nil {
 		return QueriesClientDateValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientDateValidResponse{}, err
 	}
@@ -556,7 +548,7 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options 
 	if err != nil {
 		return QueriesClientDoubleDecimalNegativeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientDoubleDecimalNegativeResponse{}, err
 	}
@@ -591,7 +583,7 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options 
 	if err != nil {
 		return QueriesClientDoubleDecimalPositiveResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientDoubleDecimalPositiveResponse{}, err
 	}
@@ -625,7 +617,7 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesCli
 	if err != nil {
 		return QueriesClientDoubleNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientDoubleNullResponse{}, err
 	}
@@ -661,7 +653,7 @@ func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClien
 	if err != nil {
 		return QueriesClientEnumNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientEnumNullResponse{}, err
 	}
@@ -697,7 +689,7 @@ func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClie
 	if err != nil {
 		return QueriesClientEnumValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientEnumValidResponse{}, err
 	}
@@ -733,7 +725,7 @@ func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClie
 	if err != nil {
 		return QueriesClientFloatNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientFloatNullResponse{}, err
 	}
@@ -770,7 +762,7 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context, option
 	if err != nil {
 		return QueriesClientFloatScientificNegativeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientFloatScientificNegativeResponse{}, err
 	}
@@ -805,7 +797,7 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context, option
 	if err != nil {
 		return QueriesClientFloatScientificPositiveResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientFloatScientificPositiveResponse{}, err
 	}
@@ -839,7 +831,7 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *Queri
 	if err != nil {
 		return QueriesClientGetBooleanFalseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetBooleanFalseResponse{}, err
 	}
@@ -873,7 +865,7 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *Querie
 	if err != nil {
 		return QueriesClientGetBooleanNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetBooleanNullResponse{}, err
 	}
@@ -909,7 +901,7 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *Querie
 	if err != nil {
 		return QueriesClientGetBooleanTrueResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetBooleanTrueResponse{}, err
 	}
@@ -944,7 +936,7 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, optio
 	if err != nil {
 		return QueriesClientGetIntNegativeOneMillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetIntNegativeOneMillionResponse{}, err
 	}
@@ -978,7 +970,7 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesCli
 	if err != nil {
 		return QueriesClientGetIntNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetIntNullResponse{}, err
 	}
@@ -1015,7 +1007,7 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *Quer
 	if err != nil {
 		return QueriesClientGetIntOneMillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetIntOneMillionResponse{}, err
 	}
@@ -1049,7 +1041,7 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesCl
 	if err != nil {
 		return QueriesClientGetLongNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetLongNullResponse{}, err
 	}
@@ -1086,7 +1078,7 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options 
 	if err != nil {
 		return QueriesClientGetNegativeTenBillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetNegativeTenBillionResponse{}, err
 	}
@@ -1120,7 +1112,7 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesClientGetTenBillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientGetTenBillionResponse{}, err
 	}
@@ -1154,7 +1146,7 @@ func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesCl
 	if err != nil {
 		return QueriesClientStringEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientStringEmptyResponse{}, err
 	}
@@ -1188,7 +1180,7 @@ func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesCli
 	if err != nil {
 		return QueriesClientStringNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientStringNullResponse{}, err
 	}
@@ -1225,7 +1217,7 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 	if err != nil {
 		return QueriesClientStringURLEncodedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientStringURLEncodedResponse{}, err
 	}
@@ -1259,7 +1251,7 @@ func (client *QueriesClient) StringUnicode(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesClientStringUnicodeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return QueriesClientStringUnicodeResponse{}, err
 	}

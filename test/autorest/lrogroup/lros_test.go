@@ -20,12 +20,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newLROSClient() *LROsClient {
+func newLROSClient(t *testing.T) *LROsClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
-	return NewLROsClient(pl)
+	client, err := NewLROsClient(&options)
+	require.NoError(t, err)
+	return client
 }
 
 func httpClientWithCookieJar() policy.Transporter {
@@ -37,8 +38,19 @@ func httpClientWithCookieJar() policy.Transporter {
 	return http.DefaultClient
 }
 
+func NewLROsClient(options *azcore.ClientOptions) (*LROsClient, error) {
+	cl, err := azcore.NewClient("lrogroup.LROsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	client := &LROsClient{
+		internal: cl,
+	}
+	return client, nil
+}
+
 func TestLROResumeWrongPoller(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDelete202NoRetry204(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -50,7 +62,7 @@ func TestLROResumeWrongPoller(t *testing.T) {
 }
 
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDelete202NoRetry204(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -64,7 +76,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 }
 
 func TestLROBeginDelete202Retry200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDelete202Retry200(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -78,7 +90,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 }
 
 func TestLROBeginDelete204Succeeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDelete204Succeeded(context.Background(), nil)
 	require.NoError(t, err)
 	_, err = poller.ResumeToken()
@@ -88,7 +100,7 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteAsyncNoHeaderInRetry(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -102,7 +114,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteAsyncNoRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -116,7 +128,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteAsyncRetryFailed(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -139,7 +151,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteAsyncRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -153,7 +165,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteAsyncRetrycanceled(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -176,7 +188,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 }
 
 func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteNoHeaderInRetry(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -190,7 +202,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 }
 
 func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -204,7 +216,7 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 }
 
 func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteProvisioning202DeletingFailed200(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -218,7 +230,7 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 }
 
 func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginDeleteProvisioning202Deletingcanceled200(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -232,7 +244,7 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 }
 
 func TestLROBeginPatch201RetryWithAsyncHeader(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	resp, err := op.BeginPatch201RetryWithAsyncHeader(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	res, err := resp.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
@@ -248,7 +260,7 @@ func TestLROBeginPatch201RetryWithAsyncHeader(t *testing.T) {
 
 func TestLROBeginPatch202RetryWithAsyncAndLocationHeader(t *testing.T) {
 	t.Skip("https://github.com/Azure/autorest.testserver/pull/369")
-	op := newLROSClient()
+	op := newLROSClient(t)
 	resp, err := op.BeginPatch202RetryWithAsyncAndLocationHeader(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	res, err := resp.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
@@ -263,7 +275,7 @@ func TestLROBeginPatch202RetryWithAsyncAndLocationHeader(t *testing.T) {
 }
 
 func TestLROBeginPost200WithPayload(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPost200WithPayload(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -281,7 +293,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 }
 
 func TestLROBeginPost202List(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPost202List(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -299,7 +311,7 @@ func TestLROBeginPost202List(t *testing.T) {
 }
 
 func TestLROBeginPost202NoRetry204(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPost202NoRetry204(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -313,7 +325,7 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 }
 
 func TestLROBeginPost202Retry200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPost202Retry200(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -327,7 +339,7 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 }
 
 func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPostAsyncNoRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -348,7 +360,7 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPostAsyncRetryFailed(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -371,7 +383,7 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 }
 
 func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPostAsyncRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -392,7 +404,7 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPostAsyncRetrycanceled(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -415,7 +427,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 }
 
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPostDoubleHeadersFinalAzureHeaderGet(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -432,7 +444,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 }
 
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPostDoubleHeadersFinalAzureHeaderGetDefault(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -450,7 +462,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 }
 
 func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPostDoubleHeadersFinalLocationGet(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -468,7 +480,7 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 }
 
 func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPut200Acceptedcanceled200(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -488,7 +500,7 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 }
 
 func TestLROBeginPut200Succeeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPut200Succeeded(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	_, err = poller.ResumeToken()
@@ -505,7 +517,7 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 }
 
 func TestLROBeginPut200SucceededNoState(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPut200SucceededNoState(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	_, err = poller.ResumeToken()
@@ -520,7 +532,7 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 
 // TODO check if this test should actually be returning a 200 or a 204
 func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPut200UpdatingSucceeded204(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -541,7 +553,7 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 }
 
 func TestLROBeginPut201CreatingFailed200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPut201CreatingFailed200(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -561,7 +573,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 }
 
 func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPut201CreatingSucceeded200(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -582,7 +594,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 }
 
 func TestLROBeginPut201Succeeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	resp, err := op.BeginPut201Succeeded(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	res, err := resp.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
@@ -597,7 +609,7 @@ func TestLROBeginPut201Succeeded(t *testing.T) {
 }
 
 func TestLROBeginPut202Retry200(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPut202Retry200(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -615,7 +627,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -636,7 +648,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -657,7 +669,7 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutAsyncNoRetrycanceled(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -680,7 +692,7 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncNonResource(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutAsyncNonResource(context.Background(), SKU{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -698,7 +710,7 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutAsyncRetryFailed(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -721,7 +733,7 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutAsyncRetrySucceeded(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -742,7 +754,7 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 }
 
 func TestLROBeginPutAsyncSubResource(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutAsyncSubResource(context.Background(), SubProduct{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -762,7 +774,7 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 }
 
 func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutNoHeaderInRetry(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -783,7 +795,7 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 }
 
 func TestLROBeginPutNonResource(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutNonResource(context.Background(), SKU{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -801,7 +813,7 @@ func TestLROBeginPutNonResource(t *testing.T) {
 }
 
 func TestLROBeginPutSubResource(t *testing.T) {
-	op := newLROSClient()
+	op := newLROSClient(t)
 	poller, err := op.BeginPutSubResource(context.Background(), SubProduct{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()

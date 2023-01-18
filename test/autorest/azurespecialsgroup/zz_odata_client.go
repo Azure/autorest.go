@@ -11,6 +11,7 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // ODataClient contains the methods for the OData group.
-// Don't use this type directly, use NewODataClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ODataClient struct {
-	pl runtime.Pipeline
-}
-
-// NewODataClient creates a new instance of ODataClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewODataClient(pl runtime.Pipeline) *ODataClient {
-	client := &ODataClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
@@ -42,7 +34,7 @@ func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClie
 	if err != nil {
 		return ODataClientGetWithFilterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ODataClientGetWithFilterResponse{}, err
 	}

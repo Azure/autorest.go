@@ -14,16 +14,28 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newLrosaDsClient() *LROSADsClient {
+func newLrosaDsClient(t *testing.T) *LROSADsClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
-	return NewLROSADsClient(pl)
+	client, err := NewLROSADsClient(&options)
+	require.NoError(t, err)
+	return client
+}
+
+func NewLROSADsClient(options *azcore.ClientOptions) (*LROSADsClient, error) {
+	cl, err := azcore.NewClient("lrogroup.LROSADsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	client := &LROSADsClient{
+		internal: cl,
+	}
+	return client, nil
 }
 
 func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginDelete202NonRetry400(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -37,13 +49,13 @@ func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 }
 
 func TestLROSADSBeginDelete202RetryInvalidHeader(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginDelete202RetryInvalidHeader(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginDelete204Succeeded(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -54,7 +66,7 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginDeleteAsyncRelativeRetry400(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -68,13 +80,13 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidHeader(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginDeleteAsyncRelativeRetryInvalidHeader(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginDeleteAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -88,7 +100,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginDeleteAsyncRelativeRetryNoStatus(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -102,19 +114,19 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 }
 
 func TestLROSADSBeginDeleteNonRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginDeleteNonRetry400(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginPost202NoLocation(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginPost202NoLocation(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPost202NonRetry400(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -128,13 +140,13 @@ func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 }
 
 func TestLROSADSBeginPost202RetryInvalidHeader(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginPost202RetryInvalidHeader(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPostAsyncRelativeRetry400(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -148,13 +160,13 @@ func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryInvalidHeader(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginPostAsyncRelativeRetryInvalidHeader(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPostAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -168,7 +180,7 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPostAsyncRelativeRetryNoPayload(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -182,19 +194,19 @@ func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
 }
 
 func TestLROSADSBeginPostNonRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginPostNonRetry400(context.Background(), nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginPut200InvalidJSON(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginPut200InvalidJSON(context.Background(), Product{}, nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPutAsyncRelativeRetry400(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -208,13 +220,13 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidHeader(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginPutAsyncRelativeRetryInvalidHeader(context.Background(), Product{}, nil)
 	require.Error(t, err)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPutAsyncRelativeRetryInvalidJSONPolling(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -228,7 +240,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPutAsyncRelativeRetryNoStatus(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -242,7 +254,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPutAsyncRelativeRetryNoStatusPayload(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -256,7 +268,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 }
 
 func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPutError201NoProvisioningStatePayload(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -270,7 +282,7 @@ func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPutNonRetry201Creating400(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -284,7 +296,7 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	poller, err := op.BeginPutNonRetry201Creating400InvalidJSON(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
@@ -298,7 +310,7 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 }
 
 func TestLROSADSBeginPutNonRetry400(t *testing.T) {
-	op := newLrosaDsClient()
+	op := newLrosaDsClient(t)
 	_, err := op.BeginPutNonRetry400(context.Background(), Product{}, nil)
 	require.Error(t, err)
 }

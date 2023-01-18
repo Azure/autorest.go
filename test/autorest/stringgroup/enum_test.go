@@ -15,13 +15,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newEnumClient() *EnumClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewEnumClient(pl)
+func newEnumClient(t *testing.T) *EnumClient {
+	client, err := NewEnumClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewEnumClient(options *azcore.ClientOptions) (*EnumClient, error) {
+	client, err := azcore.NewClient("stringgroup.EnumClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &EnumClient{internal: client}, nil
 }
 
 func TestEnumGetNotExpandable(t *testing.T) {
-	client := newEnumClient()
+	client := newEnumClient(t)
 	result, err := client.GetNotExpandable(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.Ptr(ColorsRedColor)); r != "" {
@@ -30,7 +39,7 @@ func TestEnumGetNotExpandable(t *testing.T) {
 }
 
 func TestEnumGetReferenced(t *testing.T) {
-	client := newEnumClient()
+	client := newEnumClient(t)
 	result, err := client.GetReferenced(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.Ptr(ColorsRedColor)); r != "" {
@@ -39,7 +48,7 @@ func TestEnumGetReferenced(t *testing.T) {
 }
 
 func TestEnumGetReferencedConstant(t *testing.T) {
-	client := newEnumClient()
+	client := newEnumClient(t)
 	result, err := client.GetReferencedConstant(context.Background(), nil)
 	require.NoError(t, err)
 	val := "Sample String"
@@ -49,21 +58,21 @@ func TestEnumGetReferencedConstant(t *testing.T) {
 }
 
 func TestEnumPutNotExpandable(t *testing.T) {
-	client := newEnumClient()
+	client := newEnumClient(t)
 	result, err := client.PutNotExpandable(context.Background(), ColorsRedColor, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestEnumPutReferenced(t *testing.T) {
-	client := newEnumClient()
+	client := newEnumClient(t)
 	result, err := client.PutReferenced(context.Background(), ColorsRedColor, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestEnumPutReferencedConstant(t *testing.T) {
-	client := newEnumClient()
+	client := newEnumClient(t)
 	result, err := client.PutReferencedConstant(context.Background(), RefColorConstant{}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

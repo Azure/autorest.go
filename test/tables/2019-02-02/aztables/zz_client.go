@@ -13,6 +13,7 @@ import (
 	"context"
 	"encoding/xml"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,24 +24,11 @@ import (
 )
 
 // Client contains the methods for the Table group.
-// Don't use this type directly, use NewClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type Client struct {
+	internal *azcore.Client
 	endpoint string
 	version  Enum0
-	pl       runtime.Pipeline
-}
-
-// NewClient creates a new instance of Client with the specified values.
-//   - endpoint - The URL of the service account or table that is the target of the desired operation.
-//   - version - Specifies the version of the operation to use for this request.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewClient(endpoint string, version Enum0, pl runtime.Pipeline) *Client {
-	client := &Client{
-		endpoint: endpoint,
-		version:  version,
-		pl:       pl,
-	}
-	return client
 }
 
 // Create - Creates a new table under the given account.
@@ -55,7 +43,7 @@ func (client *Client) Create(ctx context.Context, dataServiceVersion Enum1, tabl
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
@@ -128,7 +116,7 @@ func (client *Client) Delete(ctx context.Context, table string, options *ClientD
 	if err != nil {
 		return ClientDeleteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteResponse{}, err
 	}
@@ -195,7 +183,7 @@ func (client *Client) DeleteEntity(ctx context.Context, dataServiceVersion Enum1
 	if err != nil {
 		return ClientDeleteEntityResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteEntityResponse{}, err
 	}
@@ -277,7 +265,7 @@ func (client *Client) GetAccessPolicy(ctx context.Context, table string, comp En
 	if err != nil {
 		return ClientGetAccessPolicyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetAccessPolicyResponse{}, err
 	}
@@ -349,7 +337,7 @@ func (client *Client) InsertEntity(ctx context.Context, dataServiceVersion Enum1
 	if err != nil {
 		return ClientInsertEntityResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientInsertEntityResponse{}, err
 	}
@@ -442,7 +430,7 @@ func (client *Client) MergeEntity(ctx context.Context, dataServiceVersion Enum1,
 	if err != nil {
 		return ClientMergeEntityResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientMergeEntityResponse{}, err
 	}
@@ -527,7 +515,7 @@ func (client *Client) Query(ctx context.Context, dataServiceVersion Enum1, optio
 	if err != nil {
 		return ClientQueryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientQueryResponse{}, err
 	}
@@ -610,7 +598,7 @@ func (client *Client) QueryEntities(ctx context.Context, dataServiceVersion Enum
 	if err != nil {
 		return ClientQueryEntitiesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientQueryEntitiesResponse{}, err
 	}
@@ -709,7 +697,7 @@ func (client *Client) QueryEntityWithPartitionAndRowKey(ctx context.Context, dat
 	if err != nil {
 		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
@@ -808,7 +796,7 @@ func (client *Client) SetAccessPolicy(ctx context.Context, table string, comp En
 	if err != nil {
 		return ClientSetAccessPolicyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetAccessPolicyResponse{}, err
 	}
@@ -884,7 +872,7 @@ func (client *Client) UpdateEntity(ctx context.Context, dataServiceVersion Enum1
 	if err != nil {
 		return ClientUpdateEntityResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateEntityResponse{}, err
 	}

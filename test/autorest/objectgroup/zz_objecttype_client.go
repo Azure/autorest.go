@@ -12,6 +12,7 @@ package objectgroup
 import (
 	"bytes"
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -19,18 +20,9 @@ import (
 )
 
 // ObjectTypeClient contains the methods for the ObjectTypeClient group.
-// Don't use this type directly, use NewObjectTypeClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ObjectTypeClient struct {
-	pl runtime.Pipeline
-}
-
-// NewObjectTypeClient creates a new instance of ObjectTypeClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewObjectTypeClient(pl runtime.Pipeline) *ObjectTypeClient {
-	client := &ObjectTypeClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
@@ -43,7 +35,7 @@ func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClie
 	if err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
@@ -86,7 +78,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject []byte, optio
 	if err != nil {
 		return ObjectTypeClientPutResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ObjectTypeClientPutResponse{}, err
 	}

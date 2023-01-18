@@ -15,14 +15,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newMultipleInheritanceServiceClient() *MultipleInheritanceServiceClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewMultipleInheritanceServiceClient(pl)
+func newMultipleInheritanceServiceClient(t *testing.T) *MultipleInheritanceServiceClient {
+	client, err := NewMultipleInheritanceServiceClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewMultipleInheritanceServiceClient(options *azcore.ClientOptions) (*MultipleInheritanceServiceClient, error) {
+	client, err := azcore.NewClient("migroup.MultipleInheritanceServiceClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &MultipleInheritanceServiceClient{internal: client}, nil
 }
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
 func TestGetCat(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.GetCat(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Cat, Cat{
@@ -37,7 +46,7 @@ func TestGetCat(t *testing.T) {
 
 // GetFeline - Get a feline where meows and hisses are true
 func TestGetFeline(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.GetFeline(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Feline, Feline{
@@ -50,7 +59,7 @@ func TestGetFeline(t *testing.T) {
 
 // GetHorse - Get a horse with name 'Fred' and isAShowHorse true
 func TestGetHorse(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.GetHorse(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Horse, Horse{
@@ -63,7 +72,7 @@ func TestGetHorse(t *testing.T) {
 
 // GetKitten - Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false
 func TestGetKitten(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.GetKitten(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Kitten, Kitten{
@@ -79,7 +88,7 @@ func TestGetKitten(t *testing.T) {
 
 // GetPet - Get a pet with name 'Peanut'
 func TestGetPet(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.GetPet(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
@@ -91,7 +100,7 @@ func TestGetPet(t *testing.T) {
 
 // PutCat - Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true
 func TestPutCat(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.PutCat(context.Background(), Cat{
 		Hisses:    to.Ptr(false),
 		Meows:     to.Ptr(true),
@@ -106,7 +115,7 @@ func TestPutCat(t *testing.T) {
 
 // PutFeline - Put a feline who hisses and doesn't meow
 func TestPutFeline(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.PutFeline(context.Background(), Feline{
 		Hisses: to.Ptr(true),
 		Meows:  to.Ptr(false),
@@ -119,7 +128,7 @@ func TestPutFeline(t *testing.T) {
 
 // PutHorse - Put a horse with name 'General' and isAShowHorse false
 func TestPutHorse(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.PutHorse(context.Background(), Horse{
 		Name:         to.Ptr("General"),
 		IsAShowHorse: to.Ptr(false),
@@ -132,7 +141,7 @@ func TestPutHorse(t *testing.T) {
 
 // PutKitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
 func TestPutKitten(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.PutKitten(context.Background(), Kitten{
 		Hisses:      to.Ptr(false),
 		Meows:       to.Ptr(true),
@@ -148,7 +157,7 @@ func TestPutKitten(t *testing.T) {
 
 // PutPet - Put a pet with name 'Butter'
 func TestPutPet(t *testing.T) {
-	client := newMultipleInheritanceServiceClient()
+	client := newMultipleInheritanceServiceClient(t)
 	result, err := client.PutPet(context.Background(), Pet{
 		Name: to.Ptr("Butter"),
 	}, nil)

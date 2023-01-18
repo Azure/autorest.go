@@ -13,34 +13,43 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newHTTPServerFailureClient() *HTTPServerFailureClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewHTTPServerFailureClient(pl)
+func newHTTPServerFailureClient(t *testing.T) *HTTPServerFailureClient {
+	client, err := NewHTTPServerFailureClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewHTTPServerFailureClient(options *azcore.ClientOptions) (*HTTPServerFailureClient, error) {
+	client, err := azcore.NewClient("httpinfrastructuregroup.HTTPServerFailureClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &HTTPServerFailureClient{internal: client}, nil
 }
 
 func TestHTTPServerFailureDelete505(t *testing.T) {
-	client := newHTTPServerFailureClient()
+	client := newHTTPServerFailureClient(t)
 	result, err := client.Delete505(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }
 
 func TestHTTPServerFailureGet501(t *testing.T) {
-	client := newHTTPServerFailureClient()
+	client := newHTTPServerFailureClient(t)
 	result, err := client.Get501(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }
 
 func TestHTTPServerFailureHead501(t *testing.T) {
-	client := newHTTPServerFailureClient()
+	client := newHTTPServerFailureClient(t)
 	result, err := client.Head501(context.Background(), nil)
 	require.Error(t, err)
 	require.False(t, result.Success)
 }
 
 func TestHTTPServerFailurePost505(t *testing.T) {
-	client := newHTTPServerFailureClient()
+	client := newHTTPServerFailureClient(t)
 	result, err := client.Post505(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)

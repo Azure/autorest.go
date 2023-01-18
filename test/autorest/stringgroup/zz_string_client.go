@@ -11,6 +11,7 @@ package stringgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -19,18 +20,9 @@ import (
 )
 
 // StringClient contains the methods for the String group.
-// Don't use this type directly, use NewStringClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type StringClient struct {
-	pl runtime.Pipeline
-}
-
-// NewStringClient creates a new instance of StringClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewStringClient(pl runtime.Pipeline) *StringClient {
-	client := &StringClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetBase64Encoded - Get value that is base64 encoded
@@ -43,7 +35,7 @@ func (client *StringClient) GetBase64Encoded(ctx context.Context, options *Strin
 	if err != nil {
 		return StringClientGetBase64EncodedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetBase64EncodedResponse{}, err
 	}
@@ -84,7 +76,7 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *St
 	if err != nil {
 		return StringClientGetBase64URLEncodedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetBase64URLEncodedResponse{}, err
 	}
@@ -124,7 +116,7 @@ func (client *StringClient) GetEmpty(ctx context.Context, options *StringClientG
 	if err != nil {
 		return StringClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetEmptyResponse{}, err
 	}
@@ -164,7 +156,7 @@ func (client *StringClient) GetMBCS(ctx context.Context, options *StringClientGe
 	if err != nil {
 		return StringClientGetMBCSResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetMBCSResponse{}, err
 	}
@@ -204,7 +196,7 @@ func (client *StringClient) GetNotProvided(ctx context.Context, options *StringC
 	if err != nil {
 		return StringClientGetNotProvidedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetNotProvidedResponse{}, err
 	}
@@ -244,7 +236,7 @@ func (client *StringClient) GetNull(ctx context.Context, options *StringClientGe
 	if err != nil {
 		return StringClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetNullResponse{}, err
 	}
@@ -285,7 +277,7 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options
 	if err != nil {
 		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
@@ -326,7 +318,7 @@ func (client *StringClient) GetWhitespace(ctx context.Context, options *StringCl
 	if err != nil {
 		return StringClientGetWhitespaceResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetWhitespaceResponse{}, err
 	}
@@ -368,7 +360,7 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 	if err != nil {
 		return StringClientPutBase64URLEncodedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutBase64URLEncodedResponse{}, err
 	}
@@ -399,7 +391,7 @@ func (client *StringClient) PutEmpty(ctx context.Context, options *StringClientP
 	if err != nil {
 		return StringClientPutEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutEmptyResponse{}, err
 	}
@@ -430,7 +422,7 @@ func (client *StringClient) PutMBCS(ctx context.Context, options *StringClientPu
 	if err != nil {
 		return StringClientPutMBCSResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutMBCSResponse{}, err
 	}
@@ -462,7 +454,7 @@ func (client *StringClient) PutNull(ctx context.Context, stringBody string, opti
 	if err != nil {
 		return StringClientPutNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutNullResponse{}, err
 	}
@@ -495,7 +487,7 @@ func (client *StringClient) PutWhitespace(ctx context.Context, options *StringCl
 	if err != nil {
 		return StringClientPutWhitespaceResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutWhitespaceResponse{}, err
 	}

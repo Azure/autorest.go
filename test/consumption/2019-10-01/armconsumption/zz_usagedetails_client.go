@@ -13,8 +13,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -25,28 +23,19 @@ import (
 // UsageDetailsClient contains the methods for the UsageDetails group.
 // Don't use this type directly, use NewUsageDetailsClient() instead.
 type UsageDetailsClient struct {
-	host string
-	pl   runtime.Pipeline
+	internal *arm.Client
 }
 
 // NewUsageDetailsClient creates a new instance of UsageDetailsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*UsageDetailsClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armconsumption.UsageDetailsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &UsageDetailsClient{
-		host: ep,
-		pl:   pl,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -88,7 +77,7 @@ func (client *UsageDetailsClient) NewListPager(scope string, options *UsageDetai
 			if err != nil {
 				return UsageDetailsClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return UsageDetailsClientListResponse{}, err
 			}
@@ -104,7 +93,7 @@ func (client *UsageDetailsClient) NewListPager(scope string, options *UsageDetai
 func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope string, options *UsageDetailsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/usageDetails"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

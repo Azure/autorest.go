@@ -16,14 +16,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPolymorphismClient() *PolymorphismClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewPolymorphismClient(pl)
+func newPolymorphismClient(t *testing.T) *PolymorphismClient {
+	client, err := NewPolymorphismClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewPolymorphismClient(options *azcore.ClientOptions) (*PolymorphismClient, error) {
+	client, err := azcore.NewClient("complexgroup.PolymorphismClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &PolymorphismClient{internal: client}, nil
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
 func TestPolymorphismGetComplicated(t *testing.T) {
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	result, err := client.GetComplicated(context.Background(), nil)
 	require.NoError(t, err)
 	salmon, ok := result.SalmonClassification.(*SmartSalmon)
@@ -154,7 +163,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type specified on the wire.
 func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	result, err := client.GetComposedWithDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DotFishMarket, DotFishMarket{
@@ -205,7 +214,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 
 // GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without discriminator specified on wire. Deserialization must NOT fail and use the explicit type of the property.
 func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	result, err := client.GetComposedWithoutDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DotFishMarket, DotFishMarket{
@@ -244,7 +253,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
 func TestPolymorphismGetDotSyntax(t *testing.T) {
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	result, err := client.GetDotSyntax(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DotFishClassification, &DotSalmon{
@@ -259,7 +268,7 @@ func TestPolymorphismGetDotSyntax(t *testing.T) {
 
 // GetValid - Get complex types that are polymorphic
 func TestPolymorphismGetValid(t *testing.T) {
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
 	salmon, ok := result.FishClassification.(*Salmon)
@@ -311,7 +320,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 	goblinBday := time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	result, err := client.PutComplicated(context.Background(), &SmartSalmon{
 		Fishtype: to.Ptr("smart_salmon"),
 		Length:   to.Ptr[float32](1),
@@ -363,7 +372,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
 func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	goblinBday := time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
@@ -436,7 +445,7 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 
 // PutValid - Put complex types that are polymorphic
 func TestPolymorphismPutValid(t *testing.T) {
-	client := newPolymorphismClient()
+	client := newPolymorphismClient(t)
 	goblinBday := time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)

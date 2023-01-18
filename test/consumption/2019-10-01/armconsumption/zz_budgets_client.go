@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,28 +24,19 @@ import (
 // BudgetsClient contains the methods for the Budgets group.
 // Don't use this type directly, use NewBudgetsClient() instead.
 type BudgetsClient struct {
-	host string
-	pl   runtime.Pipeline
+	internal *arm.Client
 }
 
 // NewBudgetsClient creates a new instance of BudgetsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*BudgetsClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armconsumption.BudgetsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &BudgetsClient{
-		host: ep,
-		pl:   pl,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -75,7 +64,7 @@ func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, b
 	if err != nil {
 		return BudgetsClientCreateOrUpdateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BudgetsClientCreateOrUpdateResponse{}, err
 	}
@@ -93,7 +82,7 @@ func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, sc
 		return nil, errors.New("parameter budgetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{budgetName}", url.PathEscape(budgetName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +122,7 @@ func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetNam
 	if err != nil {
 		return BudgetsClientDeleteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BudgetsClientDeleteResponse{}, err
 	}
@@ -151,7 +140,7 @@ func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope stri
 		return nil, errors.New("parameter budgetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{budgetName}", url.PathEscape(budgetName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +171,7 @@ func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName s
 	if err != nil {
 		return BudgetsClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BudgetsClientGetResponse{}, err
 	}
@@ -200,7 +189,7 @@ func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string,
 		return nil, errors.New("parameter budgetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{budgetName}", url.PathEscape(budgetName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +238,7 @@ func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientLi
 			if err != nil {
 				return BudgetsClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return BudgetsClientListResponse{}, err
 			}
@@ -265,7 +254,7 @@ func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientLi
 func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string, options *BudgetsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

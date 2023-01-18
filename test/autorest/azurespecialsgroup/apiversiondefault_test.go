@@ -13,14 +13,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newAPIVersionDefaultClient() *APIVersionDefaultClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewAPIVersionDefaultClient(pl)
+func newAPIVersionDefaultClient(t *testing.T) *APIVersionDefaultClient {
+	client, err := NewAPIVersionDefaultClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewAPIVersionDefaultClient(options *azcore.ClientOptions) (*APIVersionDefaultClient, error) {
+	client, err := azcore.NewClient("azurespecialsgroup.APIVersionDefaultClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &APIVersionDefaultClient{internal: client}, nil
 }
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
-	client := newAPIVersionDefaultClient()
+	client := newAPIVersionDefaultClient(t)
 	result, err := client.GetMethodGlobalNotProvidedValid(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -28,7 +37,7 @@ func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 func TestGetMethodGlobalValid(t *testing.T) {
-	client := newAPIVersionDefaultClient()
+	client := newAPIVersionDefaultClient(t)
 	result, err := client.GetMethodGlobalValid(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -36,7 +45,7 @@ func TestGetMethodGlobalValid(t *testing.T) {
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 func TestGetPathGlobalValid(t *testing.T) {
-	client := newAPIVersionDefaultClient()
+	client := newAPIVersionDefaultClient(t)
 	result, err := client.GetPathGlobalValid(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -44,7 +53,7 @@ func TestGetPathGlobalValid(t *testing.T) {
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 func TestGetSwaggerGlobalValid(t *testing.T) {
-	client := newAPIVersionDefaultClient()
+	client := newAPIVersionDefaultClient(t)
 	result, err := client.GetSwaggerGlobalValid(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

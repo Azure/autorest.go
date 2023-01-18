@@ -17,13 +17,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPrimitiveClient() *PrimitiveClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewPrimitiveClient(pl)
+func newPrimitiveClient(t *testing.T) *PrimitiveClient {
+	client, err := NewPrimitiveClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewPrimitiveClient(options *azcore.ClientOptions) (*PrimitiveClient, error) {
+	client, err := azcore.NewClient("complexgroup.PrimitiveClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &PrimitiveClient{internal: client}, nil
 }
 
 func TestPrimitiveGetInt(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetInt(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.IntWrapper, IntWrapper{Field1: to.Ptr[int32](-1), Field2: to.Ptr[int32](2)}); r != "" {
@@ -32,7 +41,7 @@ func TestPrimitiveGetInt(t *testing.T) {
 }
 
 func TestPrimitivePutInt(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	a, b := int32(-1), int32(2)
 	result, err := client.PutInt(context.Background(), IntWrapper{Field1: &a, Field2: &b}, nil)
 	require.NoError(t, err)
@@ -40,7 +49,7 @@ func TestPrimitivePutInt(t *testing.T) {
 }
 
 func TestPrimitiveGetLong(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetLong(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.LongWrapper, LongWrapper{
@@ -52,7 +61,7 @@ func TestPrimitiveGetLong(t *testing.T) {
 }
 
 func TestPrimitivePutLong(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	a, b := int64(1099511627775), int64(-999511627788)
 	result, err := client.PutLong(context.Background(), LongWrapper{Field1: &a, Field2: &b}, nil)
 	require.NoError(t, err)
@@ -60,7 +69,7 @@ func TestPrimitivePutLong(t *testing.T) {
 }
 
 func TestPrimitiveGetFloat(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetFloat(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.FloatWrapper, FloatWrapper{
@@ -72,7 +81,7 @@ func TestPrimitiveGetFloat(t *testing.T) {
 }
 
 func TestPrimitivePutFloat(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	a, b := float32(1.05), float32(-0.003)
 	result, err := client.PutFloat(context.Background(), FloatWrapper{Field1: &a, Field2: &b}, nil)
 	require.NoError(t, err)
@@ -80,7 +89,7 @@ func TestPrimitivePutFloat(t *testing.T) {
 }
 
 func TestPrimitiveGetDouble(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetDouble(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DoubleWrapper, DoubleWrapper{
@@ -92,7 +101,7 @@ func TestPrimitiveGetDouble(t *testing.T) {
 }
 
 func TestPrimitivePutDouble(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
 	result, err := client.PutDouble(context.Background(), DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b}, nil)
 	require.NoError(t, err)
@@ -100,7 +109,7 @@ func TestPrimitivePutDouble(t *testing.T) {
 }
 
 func TestPrimitiveGetBool(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetBool(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.BooleanWrapper, BooleanWrapper{
@@ -112,7 +121,7 @@ func TestPrimitiveGetBool(t *testing.T) {
 }
 
 func TestPrimitiveGetByte(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetByte(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.ByteWrapper, ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}); r != "" {
@@ -121,7 +130,7 @@ func TestPrimitiveGetByte(t *testing.T) {
 }
 
 func TestPrimitivePutBool(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	a, b := true, false
 	result, err := client.PutBool(context.Background(), BooleanWrapper{FieldTrue: &a, FieldFalse: &b}, nil)
 	require.NoError(t, err)
@@ -144,14 +153,14 @@ func TestByteWrapperJSONNull(t *testing.T) {
 }
 
 func TestPrimitivePutByte(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.PutByte(context.Background(), ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestPrimitiveGetString(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetString(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.StringWrapper, StringWrapper{
@@ -163,7 +172,7 @@ func TestPrimitiveGetString(t *testing.T) {
 }
 
 func TestPrimitivePutString(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	var c *string
 	a, b, c := "goodrequest", "", nil
 	result, err := client.PutString(context.Background(), StringWrapper{Field: &a, Empty: &b, Null: c}, nil)
@@ -172,7 +181,7 @@ func TestPrimitivePutString(t *testing.T) {
 }
 
 func TestPrimitiveGetDate(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetDate(context.Background(), nil)
 	require.NoError(t, err)
 	a, err := time.Parse("2006-01-02", "0001-01-01")
@@ -186,7 +195,7 @@ func TestPrimitiveGetDate(t *testing.T) {
 }
 
 func TestPrimitivePutDate(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	a, err := time.Parse("2006-01-02", "0001-01-01")
 	require.NoError(t, err)
 	b, err := time.Parse("2006-01-02", "2016-02-29")
@@ -197,7 +206,7 @@ func TestPrimitivePutDate(t *testing.T) {
 }
 
 func TestPrimitiveGetDuration(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetDuration(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DurationWrapper, DurationWrapper{
@@ -208,14 +217,14 @@ func TestPrimitiveGetDuration(t *testing.T) {
 }
 
 func TestPrimitivePutDuration(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.PutDuration(context.Background(), DurationWrapper{Field: to.Ptr("P123DT22H14M12.011S")}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestPrimitiveGetDateTime(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetDateTime(context.Background(), nil)
 	require.NoError(t, err)
 	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
@@ -229,7 +238,7 @@ func TestPrimitiveGetDateTime(t *testing.T) {
 }
 
 func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	result, err := client.GetDateTimeRFC1123(context.Background(), nil)
 	require.NoError(t, err)
 	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
@@ -243,7 +252,7 @@ func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
 }
 
 func TestPrimitivePutDateTime(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
 	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
 	result, err := client.PutDateTime(context.Background(), DatetimeWrapper{
@@ -255,7 +264,7 @@ func TestPrimitivePutDateTime(t *testing.T) {
 }
 
 func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
-	client := newPrimitiveClient()
+	client := newPrimitiveClient(t)
 	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
 	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
 	result, err := client.PutDateTimeRFC1123(context.Background(), Datetimerfc1123Wrapper{

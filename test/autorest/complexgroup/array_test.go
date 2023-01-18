@@ -15,13 +15,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newArrayClient() *ArrayClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewArrayClient(pl)
+func newArrayClient(t *testing.T) *ArrayClient {
+	client, err := NewArrayClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewArrayClient(options *azcore.ClientOptions) (*ArrayClient, error) {
+	client, err := azcore.NewClient("complexgroup.ArrayClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ArrayClient{internal: client}, nil
 }
 
 func TestArrayGetEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	result, err := client.GetEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{
@@ -32,7 +41,7 @@ func TestArrayGetEmpty(t *testing.T) {
 }
 
 func TestArrayGetNotProvided(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	result, err := client.GetNotProvided(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{}); r != "" {
@@ -41,7 +50,7 @@ func TestArrayGetNotProvided(t *testing.T) {
 }
 
 func TestArrayGetValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{
@@ -58,14 +67,14 @@ func TestArrayGetValid(t *testing.T) {
 }
 
 func TestArrayPutEmpty(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: []*string{}}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestArrayPutValid(t *testing.T) {
-	client := newArrayClient()
+	client := newArrayClient(t)
 	result, err := client.PutValid(context.Background(), ArrayWrapper{Array: []*string{
 		to.Ptr("1, 2, 3, 4"),
 		to.Ptr(""),

@@ -15,13 +15,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPetClient() *PetClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewPetClient(pl)
+func newPetClient(t *testing.T) *PetClient {
+	client, err := NewPetClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewPetClient(options *azcore.ClientOptions) (*PetClient, error) {
+	client, err := azcore.NewClient("extenumsgroup.PetClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &PetClient{internal: client}, nil
 }
 
 func TestAddPet(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.AddPet(context.Background(), &PetClientAddPetOptions{
 		PetParam: &Pet{
 			Name: to.Ptr("Retriever"),
@@ -36,7 +45,7 @@ func TestAddPet(t *testing.T) {
 }
 
 func TestGetByPetIDExpected(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetByPetID(context.Background(), "tommy", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
@@ -49,7 +58,7 @@ func TestGetByPetIDExpected(t *testing.T) {
 }
 
 func TestGetByPetIDUnexpected(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetByPetID(context.Background(), "casper", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
@@ -62,7 +71,7 @@ func TestGetByPetIDUnexpected(t *testing.T) {
 }
 
 func TestGetByPetIDAllowed(t *testing.T) {
-	client := newPetClient()
+	client := newPetClient(t)
 	result, err := client.GetByPetID(context.Background(), "scooby", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{

@@ -12,6 +12,7 @@ package morecustombaseurigroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,27 +21,11 @@ import (
 )
 
 // PathsClient contains the methods for the Paths group.
-// Don't use this type directly, use NewPathsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PathsClient struct {
+	internal       *azcore.Client
 	dnsSuffix      string
 	subscriptionID string
-	pl             runtime.Pipeline
-}
-
-// NewPathsClient creates a new instance of PathsClient with the specified values.
-//   - dnsSuffix - A string value that is used as a global part of the parameterized host. Default value 'host'.
-//   - subscriptionID - The subscription id with value 'test12'.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPathsClient(dnsSuffix *string, subscriptionID string, pl runtime.Pipeline) *PathsClient {
-	client := &PathsClient{
-		dnsSuffix:      "host",
-		subscriptionID: subscriptionID,
-		pl:             pl,
-	}
-	if dnsSuffix != nil {
-		client.dnsSuffix = *dnsSuffix
-	}
-	return client
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -56,7 +41,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 	if err != nil {
 		return PathsClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetEmptyResponse{}, err
 	}

@@ -11,24 +11,16 @@ package additionalpropsgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // PetsClient contains the methods for the Pets group.
-// Don't use this type directly, use NewPetsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PetsClient struct {
-	pl runtime.Pipeline
-}
-
-// NewPetsClient creates a new instance of PetsClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPetsClient(pl runtime.Pipeline) *PetsClient {
-	client := &PetsClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.
@@ -42,7 +34,7 @@ func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParame
 	if err != nil {
 		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
@@ -83,7 +75,7 @@ func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, 
 	if err != nil {
 		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
@@ -123,7 +115,7 @@ func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters P
 	if err != nil {
 		return PetsClientCreateAPObjectResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPObjectResponse{}, err
 	}
@@ -163,7 +155,7 @@ func (client *PetsClient) CreateAPString(ctx context.Context, createParameters P
 	if err != nil {
 		return PetsClientCreateAPStringResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPStringResponse{}, err
 	}
@@ -203,7 +195,7 @@ func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters Pet
 	if err != nil {
 		return PetsClientCreateAPTrueResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPTrueResponse{}, err
 	}
@@ -243,7 +235,7 @@ func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters 
 	if err != nil {
 		return PetsClientCreateCatAPTrueResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateCatAPTrueResponse{}, err
 	}

@@ -11,6 +11,7 @@ package integergroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // IntClient contains the methods for the Int group.
-// Don't use this type directly, use NewIntClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type IntClient struct {
-	pl runtime.Pipeline
-}
-
-// NewIntClient creates a new instance of IntClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewIntClient(pl runtime.Pipeline) *IntClient {
-	client := &IntClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetInvalid - Get invalid Int value
@@ -42,7 +34,7 @@ func (client *IntClient) GetInvalid(ctx context.Context, options *IntClientGetIn
 	if err != nil {
 		return IntClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetInvalidResponse{}, err
 	}
@@ -82,7 +74,7 @@ func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntCli
 	if err != nil {
 		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
@@ -124,7 +116,7 @@ func (client *IntClient) GetNull(ctx context.Context, options *IntClientGetNullO
 	if err != nil {
 		return IntClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetNullResponse{}, err
 	}
@@ -164,7 +156,7 @@ func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntClient
 	if err != nil {
 		return IntClientGetNullUnixTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetNullUnixTimeResponse{}, err
 	}
@@ -206,7 +198,7 @@ func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntClien
 	if err != nil {
 		return IntClientGetOverflowInt32Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetOverflowInt32Response{}, err
 	}
@@ -246,7 +238,7 @@ func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntClien
 	if err != nil {
 		return IntClientGetOverflowInt64Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetOverflowInt64Response{}, err
 	}
@@ -286,7 +278,7 @@ func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntClie
 	if err != nil {
 		return IntClientGetUnderflowInt32Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetUnderflowInt32Response{}, err
 	}
@@ -326,7 +318,7 @@ func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntClie
 	if err != nil {
 		return IntClientGetUnderflowInt64Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetUnderflowInt64Response{}, err
 	}
@@ -366,7 +358,7 @@ func (client *IntClient) GetUnixTime(ctx context.Context, options *IntClientGetU
 	if err != nil {
 		return IntClientGetUnixTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetUnixTimeResponse{}, err
 	}
@@ -409,7 +401,7 @@ func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *I
 	if err != nil {
 		return IntClientPutMax32Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMax32Response{}, err
 	}
@@ -441,7 +433,7 @@ func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *I
 	if err != nil {
 		return IntClientPutMax64Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMax64Response{}, err
 	}
@@ -473,7 +465,7 @@ func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *I
 	if err != nil {
 		return IntClientPutMin32Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMin32Response{}, err
 	}
@@ -505,7 +497,7 @@ func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *I
 	if err != nil {
 		return IntClientPutMin64Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMin64Response{}, err
 	}
@@ -537,7 +529,7 @@ func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time,
 	if err != nil {
 		return IntClientPutUnixTimeDateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutUnixTimeDateResponse{}, err
 	}

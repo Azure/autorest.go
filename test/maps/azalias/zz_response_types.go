@@ -9,24 +9,24 @@
 
 package azalias
 
-// ClientCreateResponse contains the response from method client.Create.
+// ClientCreateResponse contains the response from method Client.Create.
 type ClientCreateResponse struct {
 	AliasesCreateResponse
 	// AccessControlExposeHeaders contains the information returned from the Access-Control-Expose-Headers header response.
 	AccessControlExposeHeaders *string
 }
 
-// ClientGetScriptResponse contains the response from method client.GetScript.
+// ClientGetScriptResponse contains the response from method Client.GetScript.
 type ClientGetScriptResponse struct {
 	Value *string
 }
 
-// ClientListResponse contains the response from method client.NewListPager.
+// ClientListResponse contains the response from method Client.NewListPager.
 type ClientListResponse struct {
 	ListResponse
 }
 
-// ClientPolicyAssignmentResponse contains the response from method client.PolicyAssignment.
+// ClientPolicyAssignmentResponse contains the response from method Client.PolicyAssignment.
 type ClientPolicyAssignmentResponse struct {
 	PolicyAssignmentProperties
 }

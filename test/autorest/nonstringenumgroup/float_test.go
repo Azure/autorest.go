@@ -15,14 +15,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newFloatClient() *FloatClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewFloatClient(pl)
+func newFloatClient(t *testing.T) *FloatClient {
+	client, err := NewFloatClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewFloatClient(options *azcore.ClientOptions) (*FloatClient, error) {
+	client, err := azcore.NewClient("nonstringenumgroup.FloatClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &FloatClient{internal: client}, nil
 }
 
 // Get - Get a float enum
 func TestFloatGet(t *testing.T) {
-	client := newFloatClient()
+	client := newFloatClient(t)
 	result, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.Ptr(FloatEnumFourHundredTwentyNine1)); r != "" {
@@ -32,7 +41,7 @@ func TestFloatGet(t *testing.T) {
 
 // Put - Put a float enum
 func TestFloatPut(t *testing.T) {
-	client := newFloatClient()
+	client := newFloatClient(t)
 	result, err := client.Put(context.Background(), FloatEnumTwoHundred4, nil)
 	require.NoError(t, err)
 	if *result.Value != "Nice job posting a float enum" {

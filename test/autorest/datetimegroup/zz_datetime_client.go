@@ -11,6 +11,7 @@ package datetimegroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // DatetimeClient contains the methods for the Datetime group.
-// Don't use this type directly, use NewDatetimeClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type DatetimeClient struct {
-	pl runtime.Pipeline
-}
-
-// NewDatetimeClient creates a new instance of DatetimeClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewDatetimeClient(pl runtime.Pipeline) *DatetimeClient {
-	client := &DatetimeClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetInvalid - Get invalid datetime value
@@ -42,7 +34,7 @@ func (client *DatetimeClient) GetInvalid(ctx context.Context, options *DatetimeC
 	if err != nil {
 		return DatetimeClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetInvalidResponse{}, err
 	}
@@ -85,7 +77,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{}, err
 	}
@@ -128,7 +120,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse{}, err
 	}
@@ -171,7 +163,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{}, err
 	}
@@ -214,7 +206,7 @@ func (client *DatetimeClient) GetLocalNoOffsetMinDateTime(ctx context.Context, o
 	if err != nil {
 		return DatetimeClientGetLocalNoOffsetMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetLocalNoOffsetMinDateTimeResponse{}, err
 	}
@@ -257,7 +249,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{}, err
 	}
@@ -300,7 +292,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse{}, err
 	}
@@ -343,7 +335,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{}, err
 	}
@@ -385,7 +377,7 @@ func (client *DatetimeClient) GetNull(ctx context.Context, options *DatetimeClie
 	if err != nil {
 		return DatetimeClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetNullResponse{}, err
 	}
@@ -427,7 +419,7 @@ func (client *DatetimeClient) GetOverflow(ctx context.Context, options *Datetime
 	if err != nil {
 		return DatetimeClientGetOverflowResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetOverflowResponse{}, err
 	}
@@ -470,7 +462,7 @@ func (client *DatetimeClient) GetUTCLowercaseMaxDateTime(ctx context.Context, op
 	if err != nil {
 		return DatetimeClientGetUTCLowercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetUTCLowercaseMaxDateTimeResponse{}, err
 	}
@@ -513,7 +505,7 @@ func (client *DatetimeClient) GetUTCMinDateTime(ctx context.Context, options *Da
 	if err != nil {
 		return DatetimeClientGetUTCMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetUTCMinDateTimeResponse{}, err
 	}
@@ -556,7 +548,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime(ctx context.Context, op
 	if err != nil {
 		return DatetimeClientGetUTCUppercaseMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetUTCUppercaseMaxDateTimeResponse{}, err
 	}
@@ -600,7 +592,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7Digits(ctx context.Cont
 	if err != nil {
 		return DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse{}, err
 	}
@@ -642,7 +634,7 @@ func (client *DatetimeClient) GetUnderflow(ctx context.Context, options *Datetim
 	if err != nil {
 		return DatetimeClientGetUnderflowResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientGetUnderflowResponse{}, err
 	}
@@ -686,7 +678,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeClientPutLocalNegativeOffsetMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientPutLocalNegativeOffsetMaxDateTimeResponse{}, err
 	}
@@ -719,7 +711,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeClientPutLocalNegativeOffsetMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientPutLocalNegativeOffsetMinDateTimeResponse{}, err
 	}
@@ -752,7 +744,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeClientPutLocalPositiveOffsetMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientPutLocalPositiveOffsetMaxDateTimeResponse{}, err
 	}
@@ -785,7 +777,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeClientPutLocalPositiveOffsetMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientPutLocalPositiveOffsetMinDateTimeResponse{}, err
 	}
@@ -818,7 +810,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime(ctx context.Context, datetimeBod
 	if err != nil {
 		return DatetimeClientPutUTCMaxDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientPutUTCMaxDateTimeResponse{}, err
 	}
@@ -852,7 +844,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, date
 	if err != nil {
 		return DatetimeClientPutUTCMaxDateTime7DigitsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientPutUTCMaxDateTime7DigitsResponse{}, err
 	}
@@ -885,7 +877,7 @@ func (client *DatetimeClient) PutUTCMinDateTime(ctx context.Context, datetimeBod
 	if err != nil {
 		return DatetimeClientPutUTCMinDateTimeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeClientPutUTCMinDateTimeResponse{}, err
 	}

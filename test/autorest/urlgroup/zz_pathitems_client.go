@@ -12,6 +12,7 @@ package urlgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,24 +21,11 @@ import (
 )
 
 // PathItemsClient contains the methods for the PathItems group.
-// Don't use this type directly, use NewPathItemsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PathItemsClient struct {
+	internal          *azcore.Client
 	globalStringPath  string
 	globalStringQuery *string
-	pl                runtime.Pipeline
-}
-
-// NewPathItemsClient creates a new instance of PathItemsClient with the specified values.
-//   - globalStringPath - A string value 'globalItemStringPath' that appears in the path
-//   - globalStringQuery - should contain value null
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPathItemsClient(globalStringPath string, globalStringQuery *string, pl runtime.Pipeline) *PathItemsClient {
-	client := &PathItemsClient{
-		globalStringPath:  globalStringPath,
-		globalStringQuery: globalStringQuery,
-		pl:                pl,
-	}
-	return client
 }
 
 // GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
@@ -55,7 +43,7 @@ func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStr
 	if err != nil {
 		return PathItemsClientGetAllWithValuesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathItemsClientGetAllWithValuesResponse{}, err
 	}
@@ -114,7 +102,7 @@ func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, p
 	if err != nil {
 		return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, err
 	}
@@ -173,7 +161,7 @@ func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemS
 	if err != nil {
 		return PathItemsClientGetGlobalQueryNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathItemsClientGetGlobalQueryNullResponse{}, err
 	}
@@ -232,7 +220,7 @@ func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pa
 	if err != nil {
 		return PathItemsClientGetLocalPathItemQueryNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathItemsClientGetLocalPathItemQueryNullResponse{}, err
 	}

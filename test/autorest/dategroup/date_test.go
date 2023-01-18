@@ -15,20 +15,29 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newDateClient() *DateClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewDateClient(pl)
+func newDateClient(t *testing.T) *DateClient {
+	client, err := NewDateClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewDateClient(options *azcore.ClientOptions) (*DateClient, error) {
+	client, err := azcore.NewClient("dategroup.DateClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &DateClient{internal: client}, nil
 }
 
 func TestGetInvalidDate(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	resp, err := client.GetInvalidDate(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
 }
 
 func TestGetMaxDate(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	resp, err := client.GetMaxDate(context.Background(), nil)
 	require.NoError(t, err)
 	dt := time.Date(9999, 12, 31, 0, 0, 0, 0, time.UTC)
@@ -38,7 +47,7 @@ func TestGetMaxDate(t *testing.T) {
 }
 
 func TestGetMinDate(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	resp, err := client.GetMinDate(context.Background(), nil)
 	require.NoError(t, err)
 	dt := time.Date(0001, 01, 01, 0, 0, 0, 0, time.UTC)
@@ -48,7 +57,7 @@ func TestGetMinDate(t *testing.T) {
 }
 
 func TestGetNull(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	resp, err := client.GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	if resp.Value != nil {
@@ -57,21 +66,21 @@ func TestGetNull(t *testing.T) {
 }
 
 func TestGetOverflowDate(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	resp, err := client.GetOverflowDate(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
 }
 
 func TestGetUnderflowDate(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	resp, err := client.GetUnderflowDate(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, resp)
 }
 
 func TestPutMaxDate(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	dt := time.Date(9999, 12, 31, 0, 0, 0, 0, time.UTC)
 	result, err := client.PutMaxDate(context.Background(), dt, nil)
 	require.NoError(t, err)
@@ -79,7 +88,7 @@ func TestPutMaxDate(t *testing.T) {
 }
 
 func TestPutMinDate(t *testing.T) {
-	client := newDateClient()
+	client := newDateClient(t)
 	dt := time.Date(0001, 01, 01, 0, 0, 0, 0, time.UTC)
 	result, err := client.PutMinDate(context.Background(), dt, nil)
 	require.NoError(t, err)

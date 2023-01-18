@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,28 +24,19 @@ import (
 // AggregatedCostClient contains the methods for the AggregatedCost group.
 // Don't use this type directly, use NewAggregatedCostClient() instead.
 type AggregatedCostClient struct {
-	host string
-	pl   runtime.Pipeline
+	internal *arm.Client
 }
 
 // NewAggregatedCostClient creates a new instance of AggregatedCostClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AggregatedCostClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armconsumption.AggregatedCostClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &AggregatedCostClient{
-		host: ep,
-		pl:   pl,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -65,7 +54,7 @@ func (client *AggregatedCostClient) GetByManagementGroup(ctx context.Context, ma
 	if err != nil {
 		return AggregatedCostClientGetByManagementGroupResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AggregatedCostClientGetByManagementGroupResponse{}, err
 	}
@@ -82,7 +71,7 @@ func (client *AggregatedCostClient) getByManagementGroupCreateRequest(ctx contex
 		return nil, errors.New("parameter managementGroupID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{managementGroupId}", url.PathEscape(managementGroupID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +108,7 @@ func (client *AggregatedCostClient) GetForBillingPeriodByManagementGroup(ctx con
 	if err != nil {
 		return AggregatedCostClientGetForBillingPeriodByManagementGroupResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AggregatedCostClientGetForBillingPeriodByManagementGroupResponse{}, err
 	}
@@ -140,7 +129,7 @@ func (client *AggregatedCostClient) getForBillingPeriodByManagementGroupCreateRe
 		return nil, errors.New("parameter billingPeriodName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingPeriodName}", url.PathEscape(billingPeriodName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

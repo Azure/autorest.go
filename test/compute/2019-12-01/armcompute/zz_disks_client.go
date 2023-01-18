@@ -14,8 +14,6 @@ import (
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,9 +24,8 @@ import (
 // DisksClient contains the methods for the Disks group.
 // Don't use this type directly, use NewDisksClient() instead.
 type DisksClient struct {
-	host           string
+	internal       *arm.Client
 	subscriptionID string
-	pl             runtime.Pipeline
 }
 
 // NewDisksClient creates a new instance of DisksClient with the specified values.
@@ -37,21 +34,13 @@ type DisksClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DisksClient, error) {
-	if options == nil {
-		options = &arm.ClientOptions{}
-	}
-	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
-	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
-		ep = c.Endpoint
-	}
-	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	cl, err := arm.NewClient("armcompute.DisksClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &DisksClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
-		pl:             pl,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -73,9 +62,9 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DisksClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DisksClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[DisksClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -88,7 +77,7 @@ func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +102,7 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -139,9 +128,9 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DisksClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DisksClientDeleteResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[DisksClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -154,7 +143,7 @@ func (client *DisksClient) deleteOperation(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +168,7 @@ func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGrou
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +192,7 @@ func (client *DisksClient) Get(ctx context.Context, resourceGroupName string, di
 	if err != nil {
 		return DisksClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DisksClientGetResponse{}, err
 	}
@@ -228,7 +217,7 @@ func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupNa
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -264,11 +253,11 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[DisksClientGrantAccessResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DisksClientGrantAccessResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DisksClientGrantAccessResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientGrantAccessResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -281,7 +270,7 @@ func (client *DisksClient) grantAccess(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +295,7 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +326,7 @@ func (client *DisksClient) NewListPager(options *DisksClientListOptions) *runtim
 			if err != nil {
 				return DisksClientListResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return DisksClientListResponse{}, err
 			}
@@ -356,7 +345,7 @@ func (client *DisksClient) listCreateRequest(ctx context.Context, options *Disks
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -398,7 +387,7 @@ func (client *DisksClient) NewListByResourceGroupPager(resourceGroupName string,
 			if err != nil {
 				return DisksClientListByResourceGroupResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return DisksClientListByResourceGroupResponse{}, err
 			}
@@ -421,7 +410,7 @@ func (client *DisksClient) listByResourceGroupCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -456,11 +445,11 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[DisksClientRevokeAccessResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DisksClientRevokeAccessResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DisksClientRevokeAccessResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientRevokeAccessResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -473,7 +462,7 @@ func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -498,7 +487,7 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -524,9 +513,9 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DisksClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DisksClientUpdateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[DisksClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -539,7 +528,7 @@ func (client *DisksClient) update(ctx context.Context, resourceGroupName string,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -564,7 +553,7 @@ func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGrou
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}

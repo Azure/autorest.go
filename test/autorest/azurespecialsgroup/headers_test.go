@@ -15,14 +15,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newHeaderClient() *HeaderClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewHeaderClient(pl)
+func newHeaderClient(t *testing.T) *HeaderClient {
+	client, err := NewHeaderClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewHeaderClient(options *azcore.ClientOptions) (*HeaderClient, error) {
+	client, err := azcore.NewClient("azurespecialsgroup.HeaderClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderClient{internal: client}, nil
 }
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func TestCustomNamedRequestID(t *testing.T) {
-	client := newHeaderClient()
+	client := newHeaderClient(t)
 	result, err := client.CustomNamedRequestID(context.Background(), "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.FooRequestID, to.Ptr("123")); r != "" {
@@ -32,7 +41,7 @@ func TestCustomNamedRequestID(t *testing.T) {
 
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func TestCustomNamedRequestIDHead(t *testing.T) {
-	client := newHeaderClient()
+	client := newHeaderClient(t)
 	result, err := client.CustomNamedRequestIDHead(context.Background(), "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0", nil)
 	require.NoError(t, err)
 	if !result.Success {
@@ -45,7 +54,7 @@ func TestCustomNamedRequestIDHead(t *testing.T) {
 
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request, via a parameter group
 func TestCustomNamedRequestIDParamGrouping(t *testing.T) {
-	client := newHeaderClient()
+	client := newHeaderClient(t)
 	result, err := client.CustomNamedRequestIDParamGrouping(context.Background(), HeaderClientCustomNamedRequestIDParamGroupingParameters{
 		FooClientRequestID: "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
 	}, nil)

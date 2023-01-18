@@ -14,13 +14,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newByteClient() *ByteClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewByteClient(pl)
+func newByteClient(t *testing.T) *ByteClient {
+	client, err := NewByteClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewByteClient(options *azcore.ClientOptions) (*ByteClient, error) {
+	client, err := azcore.NewClient("bytegroup.ByteClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ByteClient{internal: client}, nil
 }
 
 func TestGetEmpty(t *testing.T) {
-	client := newByteClient()
+	client := newByteClient(t)
 	result, err := client.GetEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, []byte{}); r != "" {
@@ -29,7 +38,7 @@ func TestGetEmpty(t *testing.T) {
 }
 
 func TestGetInvalid(t *testing.T) {
-	client := newByteClient()
+	client := newByteClient(t)
 	result, err := client.GetInvalid(context.Background(), nil)
 	// TODO: verify error response is clear and actionable
 	require.Error(t, err)
@@ -37,7 +46,7 @@ func TestGetInvalid(t *testing.T) {
 }
 
 func TestGetNonASCII(t *testing.T) {
-	client := newByteClient()
+	client := newByteClient(t)
 	result, err := client.GetNonASCII(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6}); r != "" {
@@ -46,7 +55,7 @@ func TestGetNonASCII(t *testing.T) {
 }
 
 func TestGetNull(t *testing.T) {
-	client := newByteClient()
+	client := newByteClient(t)
 	result, err := client.GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, ([]byte)(nil)); r != "" {
@@ -55,7 +64,7 @@ func TestGetNull(t *testing.T) {
 }
 
 func TestPutNonASCII(t *testing.T) {
-	client := newByteClient()
+	client := newByteClient(t)
 	result, err := client.PutNonASCII(context.Background(), []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

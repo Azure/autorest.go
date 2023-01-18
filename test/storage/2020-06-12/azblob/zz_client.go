@@ -12,6 +12,7 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -21,26 +22,13 @@ import (
 	"time"
 )
 
-type client struct {
+// Client contains the methods for the Blob group.
+// Don't use this type directly, use a constructor function instead.
+type Client struct {
+	internal       *azcore.Client
 	endpoint       string
 	version        Enum2
 	pathRenameMode *PathRenameMode
-	pl             runtime.Pipeline
-}
-
-// newClient creates a new instance of client with the specified values.
-//   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-//   - version - Specifies the version of the operation to use for this request.
-//   - pathRenameMode - Determines the behavior of the rename operation
-//   - pl - the pipeline used for sending requests and handling responses.
-func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *client {
-	client := &client{
-		endpoint:       endpoint,
-		version:        version,
-		pathRenameMode: pathRenameMode,
-		pl:             pl,
-	}
-	return client
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination
@@ -49,14 +37,14 @@ func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, p
 //
 // Generated from API version 2020-06-12
 //   - copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
-//   - options - ClientAbortCopyFromURLOptions contains the optional parameters for the client.AbortCopyFromURL method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) AbortCopyFromURL(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, options *ClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (ClientAbortCopyFromURLResponse, error) {
+//   - options - ClientAbortCopyFromURLOptions contains the optional parameters for the Client.AbortCopyFromURL method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+func (client *Client) AbortCopyFromURL(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, options *ClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (ClientAbortCopyFromURLResponse, error) {
 	req, err := client.abortCopyFromURLCreateRequest(ctx, comp, copyActionAbortConstant, copyID, options, leaseAccessConditions)
 	if err != nil {
 		return ClientAbortCopyFromURLResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientAbortCopyFromURLResponse{}, err
 	}
@@ -67,7 +55,7 @@ func (client *client) AbortCopyFromURL(ctx context.Context, comp Enum30, copyAct
 }
 
 // abortCopyFromURLCreateRequest creates the AbortCopyFromURL request.
-func (client *client) abortCopyFromURLCreateRequest(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, options *ClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *Client) abortCopyFromURLCreateRequest(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, options *ClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -92,7 +80,7 @@ func (client *client) abortCopyFromURLCreateRequest(ctx context.Context, comp En
 }
 
 // abortCopyFromURLHandleResponse handles the AbortCopyFromURL response.
-func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (ClientAbortCopyFromURLResponse, error) {
+func (client *Client) abortCopyFromURLHandleResponse(resp *http.Response) (ClientAbortCopyFromURLResponse, error) {
 	result := ClientAbortCopyFromURLResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -117,14 +105,14 @@ func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientAcquireLeaseOptions contains the optional parameters for the client.AcquireLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) AcquireLease(ctx context.Context, comp Enum16, options *ClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientAcquireLeaseResponse, error) {
+//   - options - ClientAcquireLeaseOptions contains the optional parameters for the Client.AcquireLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) AcquireLease(ctx context.Context, comp Enum16, options *ClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientAcquireLeaseResponse, error) {
 	req, err := client.acquireLeaseCreateRequest(ctx, comp, options, modifiedAccessConditions)
 	if err != nil {
 		return ClientAcquireLeaseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientAcquireLeaseResponse{}, err
 	}
@@ -135,7 +123,7 @@ func (client *client) AcquireLease(ctx context.Context, comp Enum16, options *Cl
 }
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
-func (client *client) acquireLeaseCreateRequest(ctx context.Context, comp Enum16, options *ClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) acquireLeaseCreateRequest(ctx context.Context, comp Enum16, options *ClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -177,7 +165,7 @@ func (client *client) acquireLeaseCreateRequest(ctx context.Context, comp Enum16
 }
 
 // acquireLeaseHandleResponse handles the AcquireLease response.
-func (client *client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcquireLeaseResponse, error) {
+func (client *Client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcquireLeaseResponse, error) {
 	result := ClientAcquireLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -215,14 +203,14 @@ func (client *client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcq
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientBreakLeaseOptions contains the optional parameters for the client.BreakLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) BreakLease(ctx context.Context, comp Enum16, options *ClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientBreakLeaseResponse, error) {
+//   - options - ClientBreakLeaseOptions contains the optional parameters for the Client.BreakLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) BreakLease(ctx context.Context, comp Enum16, options *ClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientBreakLeaseResponse, error) {
 	req, err := client.breakLeaseCreateRequest(ctx, comp, options, modifiedAccessConditions)
 	if err != nil {
 		return ClientBreakLeaseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientBreakLeaseResponse{}, err
 	}
@@ -233,7 +221,7 @@ func (client *client) BreakLease(ctx context.Context, comp Enum16, options *Clie
 }
 
 // breakLeaseCreateRequest creates the BreakLease request.
-func (client *client) breakLeaseCreateRequest(ctx context.Context, comp Enum16, options *ClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) breakLeaseCreateRequest(ctx context.Context, comp Enum16, options *ClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -272,7 +260,7 @@ func (client *client) breakLeaseCreateRequest(ctx context.Context, comp Enum16, 
 }
 
 // breakLeaseHandleResponse handles the BreakLease response.
-func (client *client) breakLeaseHandleResponse(resp *http.Response) (ClientBreakLeaseResponse, error) {
+func (client *Client) breakLeaseHandleResponse(resp *http.Response) (ClientBreakLeaseResponse, error) {
 	result := ClientBreakLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -319,14 +307,14 @@ func (client *client) breakLeaseHandleResponse(resp *http.Response) (ClientBreak
 //   - proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
 //     lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
 //     string formats.
-//   - options - ClientChangeLeaseOptions contains the optional parameters for the client.ChangeLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) ChangeLease(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientChangeLeaseResponse, error) {
+//   - options - ClientChangeLeaseOptions contains the optional parameters for the Client.ChangeLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) ChangeLease(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientChangeLeaseResponse, error) {
 	req, err := client.changeLeaseCreateRequest(ctx, comp, leaseID, proposedLeaseID, options, modifiedAccessConditions)
 	if err != nil {
 		return ClientChangeLeaseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientChangeLeaseResponse{}, err
 	}
@@ -337,7 +325,7 @@ func (client *client) ChangeLease(ctx context.Context, comp Enum16, leaseID stri
 }
 
 // changeLeaseCreateRequest creates the ChangeLease request.
-func (client *client) changeLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) changeLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -375,7 +363,7 @@ func (client *client) changeLeaseCreateRequest(ctx context.Context, comp Enum16,
 }
 
 // changeLeaseHandleResponse handles the ChangeLease response.
-func (client *client) changeLeaseHandleResponse(resp *http.Response) (ClientChangeLeaseResponse, error) {
+func (client *Client) changeLeaseHandleResponse(resp *http.Response) (ClientChangeLeaseResponse, error) {
 	result := ClientChangeLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -417,17 +405,17 @@ func (client *client) changeLeaseHandleResponse(resp *http.Response) (ClientChan
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request
 //     URI. The source blob must either be public or must be authenticated via a shared access signature.
-//   - options - ClientCopyFromURLOptions contains the optional parameters for the client.CopyFromURL method.
-//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//   - options - ClientCopyFromURLOptions contains the optional parameters for the Client.CopyFromURL method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the DirectoryClient.Rename
 //     method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) CopyFromURL(ctx context.Context, xmsRequiresSync Enum29, copySource string, options *ClientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientCopyFromURLResponse, error) {
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+func (client *Client) CopyFromURL(ctx context.Context, xmsRequiresSync Enum29, copySource string, options *ClientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientCopyFromURLResponse, error) {
 	req, err := client.copyFromURLCreateRequest(ctx, xmsRequiresSync, copySource, options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return ClientCopyFromURLResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientCopyFromURLResponse{}, err
 	}
@@ -438,7 +426,7 @@ func (client *client) CopyFromURL(ctx context.Context, xmsRequiresSync Enum29, c
 }
 
 // copyFromURLCreateRequest creates the CopyFromURL request.
-func (client *client) copyFromURLCreateRequest(ctx context.Context, xmsRequiresSync Enum29, copySource string, options *ClientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *Client) copyFromURLCreateRequest(ctx context.Context, xmsRequiresSync Enum29, copySource string, options *ClientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -514,7 +502,7 @@ func (client *client) copyFromURLCreateRequest(ctx context.Context, xmsRequiresS
 }
 
 // copyFromURLHandleResponse handles the CopyFromURL response.
-func (client *client) copyFromURLHandleResponse(resp *http.Response) (ClientCopyFromURLResponse, error) {
+func (client *Client) copyFromURLHandleResponse(resp *http.Response) (ClientCopyFromURLResponse, error) {
 	result := ClientCopyFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -572,17 +560,17 @@ func (client *client) copyFromURLHandleResponse(resp *http.Response) (ClientCopy
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientCreateSnapshotOptions contains the optional parameters for the client.CreateSnapshot method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) CreateSnapshot(ctx context.Context, comp Enum28, options *ClientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientCreateSnapshotResponse, error) {
+//   - options - ClientCreateSnapshotOptions contains the optional parameters for the Client.CreateSnapshot method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+func (client *Client) CreateSnapshot(ctx context.Context, comp Enum28, options *ClientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientCreateSnapshotResponse, error) {
 	req, err := client.createSnapshotCreateRequest(ctx, comp, options, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return ClientCreateSnapshotResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientCreateSnapshotResponse{}, err
 	}
@@ -593,7 +581,7 @@ func (client *client) CreateSnapshot(ctx context.Context, comp Enum28, options *
 }
 
 // createSnapshotCreateRequest creates the CreateSnapshot request.
-func (client *client) createSnapshotCreateRequest(ctx context.Context, comp Enum28, options *ClientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *Client) createSnapshotCreateRequest(ctx context.Context, comp Enum28, options *ClientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -650,7 +638,7 @@ func (client *client) createSnapshotCreateRequest(ctx context.Context, comp Enum
 }
 
 // createSnapshotHandleResponse handles the CreateSnapshot response.
-func (client *client) createSnapshotHandleResponse(resp *http.Response) (ClientCreateSnapshotResponse, error) {
+func (client *Client) createSnapshotHandleResponse(resp *http.Response) (ClientCreateSnapshotResponse, error) {
 	result := ClientCreateSnapshotResponse{}
 	if val := resp.Header.Get("x-ms-snapshot"); val != "" {
 		result.Snapshot = &val
@@ -708,15 +696,15 @@ func (client *client) createSnapshotHandleResponse(resp *http.Response) (ClientC
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientDeleteOptions contains the optional parameters for the client.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) Delete(ctx context.Context, options *ClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientDeleteResponse, error) {
+//   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) Delete(ctx context.Context, options *ClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return ClientDeleteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteResponse{}, err
 	}
@@ -727,7 +715,7 @@ func (client *client) Delete(ctx context.Context, options *ClientDeleteOptions, 
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *client) deleteCreateRequest(ctx context.Context, options *ClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) deleteCreateRequest(ctx context.Context, options *ClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -776,7 +764,7 @@ func (client *client) deleteCreateRequest(ctx context.Context, options *ClientDe
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *client) deleteHandleResponse(resp *http.Response) (ClientDeleteResponse, error) {
+func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteResponse, error) {
 	result := ClientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -801,14 +789,14 @@ func (client *client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the client.DeleteImmutabilityPolicy
+//   - options - ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the Client.DeleteImmutabilityPolicy
 //     method.
-func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *ClientDeleteImmutabilityPolicyOptions) (ClientDeleteImmutabilityPolicyResponse, error) {
+func (client *Client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *ClientDeleteImmutabilityPolicyOptions) (ClientDeleteImmutabilityPolicyResponse, error) {
 	req, err := client.deleteImmutabilityPolicyCreateRequest(ctx, comp, options)
 	if err != nil {
 		return ClientDeleteImmutabilityPolicyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteImmutabilityPolicyResponse{}, err
 	}
@@ -819,7 +807,7 @@ func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26,
 }
 
 // deleteImmutabilityPolicyCreateRequest creates the DeleteImmutabilityPolicy request.
-func (client *client) deleteImmutabilityPolicyCreateRequest(ctx context.Context, comp Enum26, options *ClientDeleteImmutabilityPolicyOptions) (*policy.Request, error) {
+func (client *Client) deleteImmutabilityPolicyCreateRequest(ctx context.Context, comp Enum26, options *ClientDeleteImmutabilityPolicyOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -839,7 +827,7 @@ func (client *client) deleteImmutabilityPolicyCreateRequest(ctx context.Context,
 }
 
 // deleteImmutabilityPolicyHandleResponse handles the DeleteImmutabilityPolicy response.
-func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response) (ClientDeleteImmutabilityPolicyResponse, error) {
+func (client *Client) deleteImmutabilityPolicyHandleResponse(resp *http.Response) (ClientDeleteImmutabilityPolicyResponse, error) {
 	result := ClientDeleteImmutabilityPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -865,16 +853,16 @@ func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientDownloadOptions contains the optional parameters for the client.Download method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) Download(ctx context.Context, options *ClientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientDownloadResponse, error) {
+//   - options - ClientDownloadOptions contains the optional parameters for the Client.Download method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) Download(ctx context.Context, options *ClientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientDownloadResponse, error) {
 	req, err := client.downloadCreateRequest(ctx, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
 		return ClientDownloadResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDownloadResponse{}, err
 	}
@@ -885,7 +873,7 @@ func (client *client) Download(ctx context.Context, options *ClientDownloadOptio
 }
 
 // downloadCreateRequest creates the Download request.
-func (client *client) downloadCreateRequest(ctx context.Context, options *ClientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) downloadCreateRequest(ctx context.Context, options *ClientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -947,7 +935,7 @@ func (client *client) downloadCreateRequest(ctx context.Context, options *Client
 }
 
 // downloadHandleResponse handles the Download response.
-func (client *client) downloadHandleResponse(resp *http.Response) (ClientDownloadResponse, error) {
+func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloadResponse, error) {
 	result := ClientDownloadResponse{Body: resp.Body}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1160,15 +1148,15 @@ func (client *client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetAccessControlOptions contains the optional parameters for the client.GetAccessControl method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) GetAccessControl(ctx context.Context, action Enum22, options *ClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetAccessControlResponse, error) {
+//   - options - ClientGetAccessControlOptions contains the optional parameters for the Client.GetAccessControl method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) GetAccessControl(ctx context.Context, action Enum22, options *ClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetAccessControlResponse, error) {
 	req, err := client.getAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return ClientGetAccessControlResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetAccessControlResponse{}, err
 	}
@@ -1179,7 +1167,7 @@ func (client *client) GetAccessControl(ctx context.Context, action Enum22, optio
 }
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
-func (client *client) getAccessControlCreateRequest(ctx context.Context, action Enum22, options *ClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) getAccessControlCreateRequest(ctx context.Context, action Enum22, options *ClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodHead, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1217,7 +1205,7 @@ func (client *client) getAccessControlCreateRequest(ctx context.Context, action 
 }
 
 // getAccessControlHandleResponse handles the GetAccessControl response.
-func (client *client) getAccessControlHandleResponse(resp *http.Response) (ClientGetAccessControlResponse, error) {
+func (client *Client) getAccessControlHandleResponse(resp *http.Response) (ClientGetAccessControlResponse, error) {
 	result := ClientGetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -1261,13 +1249,13 @@ func (client *client) getAccessControlHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetAccountInfoOptions contains the optional parameters for the client.GetAccountInfo method.
-func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (ClientGetAccountInfoResponse, error) {
+//   - options - ClientGetAccountInfoOptions contains the optional parameters for the Client.GetAccountInfo method.
+func (client *Client) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (ClientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ClientGetAccountInfoResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetAccountInfoResponse{}, err
 	}
@@ -1278,7 +1266,7 @@ func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp En
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *client) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (*policy.Request, error) {
+func (client *Client) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1293,7 +1281,7 @@ func (client *client) getAccountInfoCreateRequest(ctx context.Context, restype E
 }
 
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
-func (client *client) getAccountInfoHandleResponse(resp *http.Response) (ClientGetAccountInfoResponse, error) {
+func (client *Client) getAccountInfoHandleResponse(resp *http.Response) (ClientGetAccountInfoResponse, error) {
 	result := ClientGetAccountInfoResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -1325,16 +1313,16 @@ func (client *client) getAccountInfoHandleResponse(resp *http.Response) (ClientG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetPropertiesOptions contains the optional parameters for the client.GetProperties method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) GetProperties(ctx context.Context, options *ClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetPropertiesResponse, error) {
+//   - options - ClientGetPropertiesOptions contains the optional parameters for the Client.GetProperties method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) GetProperties(ctx context.Context, options *ClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
 		return ClientGetPropertiesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetPropertiesResponse{}, err
 	}
@@ -1345,7 +1333,7 @@ func (client *client) GetProperties(ctx context.Context, options *ClientGetPrope
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
-func (client *client) getPropertiesCreateRequest(ctx context.Context, options *ClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) getPropertiesCreateRequest(ctx context.Context, options *ClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodHead, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1397,7 +1385,7 @@ func (client *client) getPropertiesCreateRequest(ctx context.Context, options *C
 }
 
 // getPropertiesHandleResponse handles the GetProperties response.
-func (client *client) getPropertiesHandleResponse(resp *http.Response) (ClientGetPropertiesResponse, error) {
+func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGetPropertiesResponse, error) {
 	result := ClientGetPropertiesResponse{}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1640,15 +1628,15 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetTagsOptions contains the optional parameters for the client.GetTags method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) GetTags(ctx context.Context, comp Enum42, options *ClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientGetTagsResponse, error) {
+//   - options - ClientGetTagsOptions contains the optional parameters for the Client.GetTags method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+func (client *Client) GetTags(ctx context.Context, comp Enum42, options *ClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientGetTagsResponse, error) {
 	req, err := client.getTagsCreateRequest(ctx, comp, options, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return ClientGetTagsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetTagsResponse{}, err
 	}
@@ -1659,7 +1647,7 @@ func (client *client) GetTags(ctx context.Context, comp Enum42, options *ClientG
 }
 
 // getTagsCreateRequest creates the GetTags request.
-func (client *client) getTagsCreateRequest(ctx context.Context, comp Enum42, options *ClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *Client) getTagsCreateRequest(ctx context.Context, comp Enum42, options *ClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1691,7 +1679,7 @@ func (client *client) getTagsCreateRequest(ctx context.Context, comp Enum42, opt
 }
 
 // getTagsHandleResponse handles the GetTags response.
-func (client *client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsResponse, error) {
+func (client *Client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsResponse, error) {
 	result := ClientGetTagsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -1719,16 +1707,16 @@ func (client *client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsR
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientQueryOptions contains the optional parameters for the client.Query method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) Query(ctx context.Context, comp Enum40, options *ClientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientQueryResponse, error) {
+//   - options - ClientQueryOptions contains the optional parameters for the Client.Query method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) Query(ctx context.Context, comp Enum40, options *ClientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientQueryResponse, error) {
 	req, err := client.queryCreateRequest(ctx, comp, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
 		return ClientQueryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientQueryResponse{}, err
 	}
@@ -1739,7 +1727,7 @@ func (client *client) Query(ctx context.Context, comp Enum40, options *ClientQue
 }
 
 // queryCreateRequest creates the Query request.
-func (client *client) queryCreateRequest(ctx context.Context, comp Enum40, options *ClientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) queryCreateRequest(ctx context.Context, comp Enum40, options *ClientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1793,7 +1781,7 @@ func (client *client) queryCreateRequest(ctx context.Context, comp Enum40, optio
 }
 
 // queryHandleResponse handles the Query response.
-func (client *client) queryHandleResponse(resp *http.Response) (ClientQueryResponse, error) {
+func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryResponse, error) {
 	result := ClientQueryResponse{Body: resp.Body}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1948,14 +1936,14 @@ func (client *client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 //
 // Generated from API version 2020-06-12
 //   - leaseID - Specifies the current lease ID on the resource.
-//   - options - ClientReleaseLeaseOptions contains the optional parameters for the client.ReleaseLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) ReleaseLease(ctx context.Context, comp Enum16, leaseID string, options *ClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientReleaseLeaseResponse, error) {
+//   - options - ClientReleaseLeaseOptions contains the optional parameters for the Client.ReleaseLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) ReleaseLease(ctx context.Context, comp Enum16, leaseID string, options *ClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientReleaseLeaseResponse, error) {
 	req, err := client.releaseLeaseCreateRequest(ctx, comp, leaseID, options, modifiedAccessConditions)
 	if err != nil {
 		return ClientReleaseLeaseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientReleaseLeaseResponse{}, err
 	}
@@ -1966,7 +1954,7 @@ func (client *client) ReleaseLease(ctx context.Context, comp Enum16, leaseID str
 }
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
-func (client *client) releaseLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, options *ClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) releaseLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, options *ClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2003,7 +1991,7 @@ func (client *client) releaseLeaseCreateRequest(ctx context.Context, comp Enum16
 }
 
 // releaseLeaseHandleResponse handles the ReleaseLease response.
-func (client *client) releaseLeaseHandleResponse(resp *http.Response) (ClientReleaseLeaseResponse, error) {
+func (client *Client) releaseLeaseHandleResponse(resp *http.Response) (ClientReleaseLeaseResponse, error) {
 	result := ClientReleaseLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2045,18 +2033,18 @@ func (client *client) releaseLeaseHandleResponse(resp *http.Response) (ClientRel
 //   - renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 //     If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 //     otherwise, the existing properties will be preserved.
-//   - options - ClientRenameOptions contains the optional parameters for the client.Rename method.
-//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//   - options - ClientRenameOptions contains the optional parameters for the Client.Rename method.
+//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the DirectoryClient.Create method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the DirectoryClient.Rename
 //     method.
-func (client *client) Rename(ctx context.Context, renameSource string, options *ClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (ClientRenameResponse, error) {
+func (client *Client) Rename(ctx context.Context, renameSource string, options *ClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (ClientRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return ClientRenameResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRenameResponse{}, err
 	}
@@ -2067,7 +2055,7 @@ func (client *client) Rename(ctx context.Context, renameSource string, options *
 }
 
 // renameCreateRequest creates the Rename request.
-func (client *client) renameCreateRequest(ctx context.Context, renameSource string, options *ClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) renameCreateRequest(ctx context.Context, renameSource string, options *ClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2144,7 +2132,7 @@ func (client *client) renameCreateRequest(ctx context.Context, renameSource stri
 }
 
 // renameHandleResponse handles the Rename response.
-func (client *client) renameHandleResponse(resp *http.Response) (ClientRenameResponse, error) {
+func (client *Client) renameHandleResponse(resp *http.Response) (ClientRenameResponse, error) {
 	result := ClientRenameResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2187,14 +2175,14 @@ func (client *client) renameHandleResponse(resp *http.Response) (ClientRenameRes
 //
 // Generated from API version 2020-06-12
 //   - leaseID - Specifies the current lease ID on the resource.
-//   - options - ClientRenewLeaseOptions contains the optional parameters for the client.RenewLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) RenewLease(ctx context.Context, comp Enum16, leaseID string, options *ClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientRenewLeaseResponse, error) {
+//   - options - ClientRenewLeaseOptions contains the optional parameters for the Client.RenewLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) RenewLease(ctx context.Context, comp Enum16, leaseID string, options *ClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientRenewLeaseResponse, error) {
 	req, err := client.renewLeaseCreateRequest(ctx, comp, leaseID, options, modifiedAccessConditions)
 	if err != nil {
 		return ClientRenewLeaseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRenewLeaseResponse{}, err
 	}
@@ -2205,7 +2193,7 @@ func (client *client) RenewLease(ctx context.Context, comp Enum16, leaseID strin
 }
 
 // renewLeaseCreateRequest creates the RenewLease request.
-func (client *client) renewLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, options *ClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) renewLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, options *ClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2242,7 +2230,7 @@ func (client *client) renewLeaseCreateRequest(ctx context.Context, comp Enum16, 
 }
 
 // renewLeaseHandleResponse handles the RenewLease response.
-func (client *client) renewLeaseHandleResponse(resp *http.Response) (ClientRenewLeaseResponse, error) {
+func (client *Client) renewLeaseHandleResponse(resp *http.Response) (ClientRenewLeaseResponse, error) {
 	result := ClientRenewLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2280,15 +2268,15 @@ func (client *client) renewLeaseHandleResponse(resp *http.Response) (ClientRenew
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetAccessControlOptions contains the optional parameters for the client.SetAccessControl method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetAccessControl(ctx context.Context, action Enum21, options *ClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetAccessControlResponse, error) {
+//   - options - ClientSetAccessControlOptions contains the optional parameters for the Client.SetAccessControl method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) SetAccessControl(ctx context.Context, action Enum21, options *ClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetAccessControlResponse, error) {
 	req, err := client.setAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return ClientSetAccessControlResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetAccessControlResponse{}, err
 	}
@@ -2299,7 +2287,7 @@ func (client *client) SetAccessControl(ctx context.Context, action Enum21, optio
 }
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
-func (client *client) setAccessControlCreateRequest(ctx context.Context, action Enum21, options *ClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) setAccessControlCreateRequest(ctx context.Context, action Enum21, options *ClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2346,7 +2334,7 @@ func (client *client) setAccessControlCreateRequest(ctx context.Context, action 
 }
 
 // setAccessControlHandleResponse handles the SetAccessControl response.
-func (client *client) setAccessControlHandleResponse(resp *http.Response) (ClientSetAccessControlResponse, error) {
+func (client *Client) setAccessControlHandleResponse(resp *http.Response) (ClientSetAccessControlResponse, error) {
 	result := ClientSetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -2379,13 +2367,13 @@ func (client *client) setAccessControlHandleResponse(resp *http.Response) (Clien
 //
 // Generated from API version 2020-06-12
 //   - expiryOptions - Required. Indicates mode of the expiry time
-//   - options - ClientSetExpiryOptions contains the optional parameters for the client.SetExpiry method.
-func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *ClientSetExpiryOptions) (ClientSetExpiryResponse, error) {
+//   - options - ClientSetExpiryOptions contains the optional parameters for the Client.SetExpiry method.
+func (client *Client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *ClientSetExpiryOptions) (ClientSetExpiryResponse, error) {
 	req, err := client.setExpiryCreateRequest(ctx, comp, expiryOptions, options)
 	if err != nil {
 		return ClientSetExpiryResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetExpiryResponse{}, err
 	}
@@ -2396,7 +2384,7 @@ func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions 
 }
 
 // setExpiryCreateRequest creates the SetExpiry request.
-func (client *client) setExpiryCreateRequest(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *ClientSetExpiryOptions) (*policy.Request, error) {
+func (client *Client) setExpiryCreateRequest(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *ClientSetExpiryOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2420,7 +2408,7 @@ func (client *client) setExpiryCreateRequest(ctx context.Context, comp Enum24, e
 }
 
 // setExpiryHandleResponse handles the SetExpiry response.
-func (client *client) setExpiryHandleResponse(resp *http.Response) (ClientSetExpiryResponse, error) {
+func (client *Client) setExpiryHandleResponse(resp *http.Response) (ClientSetExpiryResponse, error) {
 	result := ClientSetExpiryResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2455,16 +2443,16 @@ func (client *client) setExpiryHandleResponse(resp *http.Response) (ClientSetExp
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetHTTPHeadersOptions contains the optional parameters for the client.SetHTTPHeaders method.
-//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetHTTPHeaders(ctx context.Context, comp Enum1, options *ClientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetHTTPHeadersResponse, error) {
+//   - options - ClientSetHTTPHeadersOptions contains the optional parameters for the Client.SetHTTPHeaders method.
+//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Client.SetHTTPHeaders method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) SetHTTPHeaders(ctx context.Context, comp Enum1, options *ClientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetHTTPHeadersResponse, error) {
 	req, err := client.setHTTPHeadersCreateRequest(ctx, comp, options, blobHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return ClientSetHTTPHeadersResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetHTTPHeadersResponse{}, err
 	}
@@ -2475,7 +2463,7 @@ func (client *client) SetHTTPHeaders(ctx context.Context, comp Enum1, options *C
 }
 
 // setHTTPHeadersCreateRequest creates the SetHTTPHeaders request.
-func (client *client) setHTTPHeadersCreateRequest(ctx context.Context, comp Enum1, options *ClientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) setHTTPHeadersCreateRequest(ctx context.Context, comp Enum1, options *ClientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2531,7 +2519,7 @@ func (client *client) setHTTPHeadersCreateRequest(ctx context.Context, comp Enum
 }
 
 // setHTTPHeadersHandleResponse handles the SetHTTPHeaders response.
-func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientSetHTTPHeadersResponse, error) {
+func (client *Client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientSetHTTPHeadersResponse, error) {
 	result := ClientSetHTTPHeadersResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2573,14 +2561,14 @@ func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientS
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetImmutabilityPolicyOptions contains the optional parameters for the client.SetImmutabilityPolicy method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, options *ClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetImmutabilityPolicyResponse, error) {
+//   - options - ClientSetImmutabilityPolicyOptions contains the optional parameters for the Client.SetImmutabilityPolicy method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, options *ClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetImmutabilityPolicyResponse, error) {
 	req, err := client.setImmutabilityPolicyCreateRequest(ctx, comp, options, modifiedAccessConditions)
 	if err != nil {
 		return ClientSetImmutabilityPolicyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetImmutabilityPolicyResponse{}, err
 	}
@@ -2591,7 +2579,7 @@ func (client *client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, op
 }
 
 // setImmutabilityPolicyCreateRequest creates the SetImmutabilityPolicy request.
-func (client *client) setImmutabilityPolicyCreateRequest(ctx context.Context, comp Enum26, options *ClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) setImmutabilityPolicyCreateRequest(ctx context.Context, comp Enum26, options *ClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2620,7 +2608,7 @@ func (client *client) setImmutabilityPolicyCreateRequest(ctx context.Context, co
 }
 
 // setImmutabilityPolicyHandleResponse handles the SetImmutabilityPolicy response.
-func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (ClientSetImmutabilityPolicyResponse, error) {
+func (client *Client) setImmutabilityPolicyHandleResponse(resp *http.Response) (ClientSetImmutabilityPolicyResponse, error) {
 	result := ClientSetImmutabilityPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -2656,13 +2644,13 @@ func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 //
 // Generated from API version 2020-06-12
 //   - legalHold - Specified if a legal hold should be set on the blob.
-//   - options - ClientSetLegalHoldOptions contains the optional parameters for the client.SetLegalHold method.
-func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *ClientSetLegalHoldOptions) (ClientSetLegalHoldResponse, error) {
+//   - options - ClientSetLegalHoldOptions contains the optional parameters for the Client.SetLegalHold method.
+func (client *Client) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *ClientSetLegalHoldOptions) (ClientSetLegalHoldResponse, error) {
 	req, err := client.setLegalHoldCreateRequest(ctx, comp, legalHold, options)
 	if err != nil {
 		return ClientSetLegalHoldResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetLegalHoldResponse{}, err
 	}
@@ -2673,7 +2661,7 @@ func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold b
 }
 
 // setLegalHoldCreateRequest creates the SetLegalHold request.
-func (client *client) setLegalHoldCreateRequest(ctx context.Context, comp Enum27, legalHold bool, options *ClientSetLegalHoldOptions) (*policy.Request, error) {
+func (client *Client) setLegalHoldCreateRequest(ctx context.Context, comp Enum27, legalHold bool, options *ClientSetLegalHoldOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2694,7 +2682,7 @@ func (client *client) setLegalHoldCreateRequest(ctx context.Context, comp Enum27
 }
 
 // setLegalHoldHandleResponse handles the SetLegalHold response.
-func (client *client) setLegalHoldHandleResponse(resp *http.Response) (ClientSetLegalHoldResponse, error) {
+func (client *Client) setLegalHoldHandleResponse(resp *http.Response) (ClientSetLegalHoldResponse, error) {
 	result := ClientSetLegalHoldResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -2727,17 +2715,17 @@ func (client *client) setLegalHoldHandleResponse(resp *http.Response) (ClientSet
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetMetadataOptions contains the optional parameters for the client.SetMetadata method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetMetadata(ctx context.Context, comp Enum12, options *ClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetMetadataResponse, error) {
+//   - options - ClientSetMetadataOptions contains the optional parameters for the Client.SetMetadata method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) SetMetadata(ctx context.Context, comp Enum12, options *ClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetMetadataResponse, error) {
 	req, err := client.setMetadataCreateRequest(ctx, comp, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return ClientSetMetadataResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetMetadataResponse{}, err
 	}
@@ -2748,7 +2736,7 @@ func (client *client) SetMetadata(ctx context.Context, comp Enum12, options *Cli
 }
 
 // setMetadataCreateRequest creates the SetMetadata request.
-func (client *client) setMetadataCreateRequest(ctx context.Context, comp Enum12, options *ClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) setMetadataCreateRequest(ctx context.Context, comp Enum12, options *ClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2805,7 +2793,7 @@ func (client *client) setMetadataCreateRequest(ctx context.Context, comp Enum12,
 }
 
 // setMetadataHandleResponse handles the SetMetadata response.
-func (client *client) setMetadataHandleResponse(resp *http.Response) (ClientSetMetadataResponse, error) {
+func (client *Client) setMetadataHandleResponse(resp *http.Response) (ClientSetMetadataResponse, error) {
 	result := ClientSetMetadataResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -2856,15 +2844,15 @@ func (client *client) setMetadataHandleResponse(resp *http.Response) (ClientSetM
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetTagsOptions contains the optional parameters for the client.SetTags method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) SetTags(ctx context.Context, comp Enum42, options *ClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientSetTagsResponse, error) {
+//   - options - ClientSetTagsOptions contains the optional parameters for the Client.SetTags method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+func (client *Client) SetTags(ctx context.Context, comp Enum42, options *ClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientSetTagsResponse, error) {
 	req, err := client.setTagsCreateRequest(ctx, comp, options, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return ClientSetTagsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetTagsResponse{}, err
 	}
@@ -2875,7 +2863,7 @@ func (client *client) SetTags(ctx context.Context, comp Enum42, options *ClientS
 }
 
 // setTagsCreateRequest creates the SetTags request.
-func (client *client) setTagsCreateRequest(ctx context.Context, comp Enum42, options *ClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *Client) setTagsCreateRequest(ctx context.Context, comp Enum42, options *ClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2913,7 +2901,7 @@ func (client *client) setTagsCreateRequest(ctx context.Context, comp Enum42, opt
 }
 
 // setTagsHandleResponse handles the SetTags response.
-func (client *client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsResponse, error) {
+func (client *Client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsResponse, error) {
 	result := ClientSetTagsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -2942,15 +2930,15 @@ func (client *client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsR
 //
 // Generated from API version 2020-06-12
 //   - tier - Indicates the tier to be set on the blob.
-//   - options - ClientSetTierOptions contains the optional parameters for the client.SetTier method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetTier(ctx context.Context, comp Enum32, tier AccessTier, options *ClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetTierResponse, error) {
+//   - options - ClientSetTierOptions contains the optional parameters for the Client.SetTier method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *Client) SetTier(ctx context.Context, comp Enum32, tier AccessTier, options *ClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetTierResponse, error) {
 	req, err := client.setTierCreateRequest(ctx, comp, tier, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return ClientSetTierResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetTierResponse{}, err
 	}
@@ -2961,7 +2949,7 @@ func (client *client) SetTier(ctx context.Context, comp Enum32, tier AccessTier,
 }
 
 // setTierCreateRequest creates the SetTier request.
-func (client *client) setTierCreateRequest(ctx context.Context, comp Enum32, tier AccessTier, options *ClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *Client) setTierCreateRequest(ctx context.Context, comp Enum32, tier AccessTier, options *ClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -2997,7 +2985,7 @@ func (client *client) setTierCreateRequest(ctx context.Context, comp Enum32, tie
 }
 
 // setTierHandleResponse handles the SetTier response.
-func (client *client) setTierHandleResponse(resp *http.Response) (ClientSetTierResponse, error) {
+func (client *Client) setTierHandleResponse(resp *http.Response) (ClientSetTierResponse, error) {
 	result := ClientSetTierResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -3018,17 +3006,17 @@ func (client *client) setTierHandleResponse(resp *http.Response) (ClientSetTierR
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request
 //     URI. The source blob must either be public or must be authenticated via a shared access signature.
-//   - options - ClientStartCopyFromURLOptions contains the optional parameters for the client.StartCopyFromURL method.
-//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//   - options - ClientStartCopyFromURLOptions contains the optional parameters for the Client.StartCopyFromURL method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the DirectoryClient.Rename
 //     method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) StartCopyFromURL(ctx context.Context, copySource string, options *ClientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientStartCopyFromURLResponse, error) {
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+func (client *Client) StartCopyFromURL(ctx context.Context, copySource string, options *ClientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientStartCopyFromURLResponse, error) {
 	req, err := client.startCopyFromURLCreateRequest(ctx, copySource, options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return ClientStartCopyFromURLResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientStartCopyFromURLResponse{}, err
 	}
@@ -3039,7 +3027,7 @@ func (client *client) StartCopyFromURL(ctx context.Context, copySource string, o
 }
 
 // startCopyFromURLCreateRequest creates the StartCopyFromURL request.
-func (client *client) startCopyFromURLCreateRequest(ctx context.Context, copySource string, options *ClientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *Client) startCopyFromURLCreateRequest(ctx context.Context, copySource string, options *ClientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -3120,7 +3108,7 @@ func (client *client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 }
 
 // startCopyFromURLHandleResponse handles the StartCopyFromURL response.
-func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (ClientStartCopyFromURLResponse, error) {
+func (client *Client) startCopyFromURLHandleResponse(resp *http.Response) (ClientStartCopyFromURLResponse, error) {
 	result := ClientStartCopyFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -3164,13 +3152,13 @@ func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientUndeleteOptions contains the optional parameters for the client.Undelete method.
-func (client *client) Undelete(ctx context.Context, comp Enum14, options *ClientUndeleteOptions) (ClientUndeleteResponse, error) {
+//   - options - ClientUndeleteOptions contains the optional parameters for the Client.Undelete method.
+func (client *Client) Undelete(ctx context.Context, comp Enum14, options *ClientUndeleteOptions) (ClientUndeleteResponse, error) {
 	req, err := client.undeleteCreateRequest(ctx, comp, options)
 	if err != nil {
 		return ClientUndeleteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUndeleteResponse{}, err
 	}
@@ -3181,7 +3169,7 @@ func (client *client) Undelete(ctx context.Context, comp Enum14, options *Client
 }
 
 // undeleteCreateRequest creates the Undelete request.
-func (client *client) undeleteCreateRequest(ctx context.Context, comp Enum14, options *ClientUndeleteOptions) (*policy.Request, error) {
+func (client *Client) undeleteCreateRequest(ctx context.Context, comp Enum14, options *ClientUndeleteOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -3201,7 +3189,7 @@ func (client *client) undeleteCreateRequest(ctx context.Context, comp Enum14, op
 }
 
 // undeleteHandleResponse handles the Undelete response.
-func (client *client) undeleteHandleResponse(resp *http.Response) (ClientUndeleteResponse, error) {
+func (client *Client) undeleteHandleResponse(resp *http.Response) (ClientUndeleteResponse, error) {
 	result := ClientUndeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val

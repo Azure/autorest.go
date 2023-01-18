@@ -12,6 +12,7 @@ package complexmodelgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,18 +21,9 @@ import (
 )
 
 // ComplexModelClient contains the methods for the ComplexModelClient group.
-// Don't use this type directly, use NewComplexModelClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ComplexModelClient struct {
-	pl runtime.Pipeline
-}
-
-// NewComplexModelClient creates a new instance of ComplexModelClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewComplexModelClient(pl runtime.Pipeline) *ComplexModelClient {
-	client := &ComplexModelClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Create - Resets products.
@@ -47,7 +39,7 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID str
 	if err != nil {
 		return ComplexModelClientCreateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ComplexModelClientCreateResponse{}, err
 	}
@@ -101,7 +93,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return ComplexModelClientListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ComplexModelClientListResponse{}, err
 	}
@@ -152,7 +144,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID str
 	if err != nil {
 		return ComplexModelClientUpdateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ComplexModelClientUpdateResponse{}, err
 	}

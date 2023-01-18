@@ -11,6 +11,7 @@ package optionalgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -21,18 +22,9 @@ import (
 )
 
 // ExplicitClient contains the methods for the Explicit group.
-// Don't use this type directly, use NewExplicitClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ExplicitClient struct {
-	pl runtime.Pipeline
-}
-
-// NewExplicitClient creates a new instance of ExplicitClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewExplicitClient(pl runtime.Pipeline) *ExplicitClient {
-	client := &ExplicitClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // PostOptionalArrayHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
@@ -46,7 +38,7 @@ func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, optio
 	if err != nil {
 		return ExplicitClientPostOptionalArrayHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalArrayHeaderResponse{}, err
 	}
@@ -81,7 +73,7 @@ func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, op
 	if err != nil {
 		return ExplicitClientPostOptionalArrayParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalArrayParameterResponse{}, err
 	}
@@ -116,7 +108,7 @@ func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, opt
 	if err != nil {
 		return ExplicitClientPostOptionalArrayPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalArrayPropertyResponse{}, err
 	}
@@ -151,7 +143,7 @@ func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, op
 	if err != nil {
 		return ExplicitClientPostOptionalClassParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalClassParameterResponse{}, err
 	}
@@ -186,7 +178,7 @@ func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, opt
 	if err != nil {
 		return ExplicitClientPostOptionalClassPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalClassPropertyResponse{}, err
 	}
@@ -221,7 +213,7 @@ func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, opt
 	if err != nil {
 		return ExplicitClientPostOptionalIntegerHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalIntegerHeaderResponse{}, err
 	}
@@ -256,7 +248,7 @@ func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, 
 	if err != nil {
 		return ExplicitClientPostOptionalIntegerParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalIntegerParameterResponse{}, err
 	}
@@ -291,7 +283,7 @@ func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, o
 	if err != nil {
 		return ExplicitClientPostOptionalIntegerPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalIntegerPropertyResponse{}, err
 	}
@@ -326,7 +318,7 @@ func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, opti
 	if err != nil {
 		return ExplicitClientPostOptionalStringHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalStringHeaderResponse{}, err
 	}
@@ -361,7 +353,7 @@ func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, o
 	if err != nil {
 		return ExplicitClientPostOptionalStringParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalStringParameterResponse{}, err
 	}
@@ -397,7 +389,7 @@ func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, op
 	if err != nil {
 		return ExplicitClientPostOptionalStringPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostOptionalStringPropertyResponse{}, err
 	}
@@ -433,7 +425,7 @@ func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, heade
 	if err != nil {
 		return ExplicitClientPostRequiredArrayHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredArrayHeaderResponse{}, err
 	}
@@ -467,7 +459,7 @@ func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bo
 	if err != nil {
 		return ExplicitClientPostRequiredArrayParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredArrayParameterResponse{}, err
 	}
@@ -500,7 +492,7 @@ func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bod
 	if err != nil {
 		return ExplicitClientPostRequiredArrayPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredArrayPropertyResponse{}, err
 	}
@@ -533,7 +525,7 @@ func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bo
 	if err != nil {
 		return ExplicitClientPostRequiredClassParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredClassParameterResponse{}, err
 	}
@@ -566,7 +558,7 @@ func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bod
 	if err != nil {
 		return ExplicitClientPostRequiredClassPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredClassPropertyResponse{}, err
 	}
@@ -599,7 +591,7 @@ func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, hea
 	if err != nil {
 		return ExplicitClientPostRequiredIntegerHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredIntegerHeaderResponse{}, err
 	}
@@ -633,7 +625,7 @@ func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, 
 	if err != nil {
 		return ExplicitClientPostRequiredIntegerParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredIntegerParameterResponse{}, err
 	}
@@ -666,7 +658,7 @@ func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, b
 	if err != nil {
 		return ExplicitClientPostRequiredIntegerPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredIntegerPropertyResponse{}, err
 	}
@@ -699,7 +691,7 @@ func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, head
 	if err != nil {
 		return ExplicitClientPostRequiredStringHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredStringHeaderResponse{}, err
 	}
@@ -733,7 +725,7 @@ func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, b
 	if err != nil {
 		return ExplicitClientPostRequiredStringParameterResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredStringParameterResponse{}, err
 	}
@@ -767,7 +759,7 @@ func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bo
 	if err != nil {
 		return ExplicitClientPostRequiredStringPropertyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPostRequiredStringPropertyResponse{}, err
 	}
@@ -799,7 +791,7 @@ func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyPar
 	if err != nil {
 		return ExplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
@@ -831,7 +823,7 @@ func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyPar
 	if err != nil {
 		return ExplicitClientPutRequiredBinaryBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ExplicitClientPutRequiredBinaryBodyResponse{}, err
 	}

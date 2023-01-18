@@ -14,13 +14,25 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPathsClient() *PathsClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewPathsClient(to.Ptr(":3000"), pl)
+func newPathsClient(t *testing.T) *PathsClient {
+	client, err := NewPathsClient(to.Ptr(":3000"), nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewPathsClient(host *string, options *azcore.ClientOptions) (*PathsClient, error) {
+	client, err := azcore.NewClient("custombaseurlgroup.PathsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	if host == nil {
+		host = to.Ptr("host")
+	}
+	return &PathsClient{internal: client, host: *host}, nil
 }
 
 func TestGetEmpty(t *testing.T) {
-	client := newPathsClient()
+	client := newPathsClient(t)
 	result, err := client.GetEmpty(context.Background(), "localhost", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

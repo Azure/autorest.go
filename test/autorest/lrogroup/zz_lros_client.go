@@ -11,24 +11,16 @@ package lrogroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // LROsClient contains the methods for the LROs group.
-// Don't use this type directly, use NewLROsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type LROsClient struct {
-	pl runtime.Pipeline
-}
-
-// NewLROsClient creates a new instance of LROsClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewLROsClient(pl runtime.Pipeline) *LROsClient {
-	client := &LROsClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // BeginDelete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this
@@ -44,9 +36,9 @@ func (client *LROsClient) BeginDelete202NoRetry204(ctx context.Context, options 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDelete202NoRetry204Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDelete202NoRetry204Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDelete202NoRetry204Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDelete202NoRetry204Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -60,7 +52,7 @@ func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -94,9 +86,9 @@ func (client *LROsClient) BeginDelete202Retry200(ctx context.Context, options *L
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDelete202Retry200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDelete202Retry200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDelete202Retry200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDelete202Retry200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -110,7 +102,7 @@ func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsCl
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -143,9 +135,9 @@ func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDelete204SucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDelete204SucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDelete204SucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDelete204SucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -158,7 +150,7 @@ func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsC
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -192,9 +184,9 @@ func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, o
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteAsyncNoHeaderInRetryResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteAsyncNoHeaderInRetryResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncNoHeaderInRetryResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncNoHeaderInRetryResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -208,7 +200,7 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -242,9 +234,9 @@ func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteAsyncNoRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteAsyncNoRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncNoRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncNoRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -258,7 +250,7 @@ func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -292,9 +284,9 @@ func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, optio
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteAsyncRetryFailedResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteAsyncRetryFailedResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncRetryFailedResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncRetryFailedResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -308,7 +300,7 @@ func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -342,9 +334,9 @@ func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, op
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteAsyncRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteAsyncRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -358,7 +350,7 @@ func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -392,9 +384,9 @@ func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, opt
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteAsyncRetrycanceledResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteAsyncRetrycanceledResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncRetrycanceledResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteAsyncRetrycanceledResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -408,7 +400,7 @@ func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -442,9 +434,9 @@ func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, option
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteNoHeaderInRetryResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteNoHeaderInRetryResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteNoHeaderInRetryResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteNoHeaderInRetryResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -458,7 +450,7 @@ func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -494,9 +486,9 @@ func (client *LROsClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteProvisioning202Accepted200SucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteProvisioning202Accepted200SucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteProvisioning202Accepted200SucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteProvisioning202Accepted200SucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -512,7 +504,7 @@ func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -548,9 +540,9 @@ func (client *LROsClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteProvisioning202DeletingFailed200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteProvisioning202DeletingFailed200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteProvisioning202DeletingFailed200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteProvisioning202DeletingFailed200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -565,7 +557,7 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -601,9 +593,9 @@ func (client *LROsClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientDeleteProvisioning202Deletingcanceled200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientDeleteProvisioning202Deletingcanceled200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientDeleteProvisioning202Deletingcanceled200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientDeleteProvisioning202Deletingcanceled200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -618,7 +610,7 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -653,9 +645,9 @@ func (client *LROsClient) BeginPatch200SucceededIgnoreHeaders(ctx context.Contex
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPatch200SucceededIgnoreHeadersResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPatch200SucceededIgnoreHeadersResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPatch200SucceededIgnoreHeadersResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPatch200SucceededIgnoreHeadersResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -669,7 +661,7 @@ func (client *LROsClient) patch200SucceededIgnoreHeaders(ctx context.Context, pr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -704,11 +696,11 @@ func (client *LROsClient) BeginPatch201RetryWithAsyncHeader(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[LROsClientPatch201RetryWithAsyncHeaderResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROsClientPatch201RetryWithAsyncHeaderResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPatch201RetryWithAsyncHeaderResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPatch201RetryWithAsyncHeaderResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -721,7 +713,7 @@ func (client *LROsClient) patch201RetryWithAsyncHeader(ctx context.Context, prod
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -756,9 +748,9 @@ func (client *LROsClient) BeginPatch202RetryWithAsyncAndLocationHeader(ctx conte
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -772,7 +764,7 @@ func (client *LROsClient) patch202RetryWithAsyncAndLocationHeader(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -806,9 +798,9 @@ func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPost200WithPayloadResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPost200WithPayloadResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPost200WithPayloadResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPost200WithPayloadResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -822,7 +814,7 @@ func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsC
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -855,9 +847,9 @@ func (client *LROsClient) BeginPost202List(ctx context.Context, options *LROsCli
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPost202ListResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPost202ListResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPost202ListResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPost202ListResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -871,7 +863,7 @@ func (client *LROsClient) post202List(ctx context.Context, options *LROsClientBe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -905,9 +897,9 @@ func (client *LROsClient) BeginPost202NoRetry204(ctx context.Context, options *L
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPost202NoRetry204Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPost202NoRetry204Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPost202NoRetry204Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPost202NoRetry204Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -921,7 +913,7 @@ func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsCl
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -958,9 +950,9 @@ func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LRO
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPost202Retry200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPost202Retry200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPost202Retry200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPost202Retry200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -974,7 +966,7 @@ func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsClie
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1012,9 +1004,9 @@ func (client *LROsClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, op
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPostAsyncNoRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPostAsyncNoRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncNoRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncNoRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1029,7 +1021,7 @@ func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1067,9 +1059,9 @@ func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPostAsyncRetryFailedResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPostAsyncRetryFailedResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncRetryFailedResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncRetryFailedResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1084,7 +1076,7 @@ func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1122,9 +1114,9 @@ func (client *LROsClient) BeginPostAsyncRetrySucceeded(ctx context.Context, opti
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPostAsyncRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPostAsyncRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1139,7 +1131,7 @@ func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1177,9 +1169,9 @@ func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, optio
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPostAsyncRetrycanceledResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPostAsyncRetrycanceledResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncRetrycanceledResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPostAsyncRetrycanceledResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1194,7 +1186,7 @@ func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1231,11 +1223,11 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1249,7 +1241,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1285,9 +1277,9 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1302,7 +1294,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1336,11 +1328,11 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[LROsClientPostDoubleHeadersFinalLocationGetResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROsClientPostDoubleHeadersFinalLocationGetResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPostDoubleHeadersFinalLocationGetResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPostDoubleHeadersFinalLocationGetResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1354,7 +1346,7 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1390,9 +1382,9 @@ func (client *LROsClient) BeginPut200Acceptedcanceled200(ctx context.Context, pr
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut200Acceptedcanceled200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut200Acceptedcanceled200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut200Acceptedcanceled200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut200Acceptedcanceled200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1407,7 +1399,7 @@ func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, product
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1442,9 +1434,9 @@ func (client *LROsClient) BeginPut200Succeeded(ctx context.Context, product Prod
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut200SucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut200SucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut200SucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut200SucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1458,7 +1450,7 @@ func (client *LROsClient) put200Succeeded(ctx context.Context, product Product, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1493,9 +1485,9 @@ func (client *LROsClient) BeginPut200SucceededNoState(ctx context.Context, produ
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut200SucceededNoStateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut200SucceededNoStateResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut200SucceededNoStateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut200SucceededNoStateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1509,7 +1501,7 @@ func (client *LROsClient) put200SucceededNoState(ctx context.Context, product Pr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1545,9 +1537,9 @@ func (client *LROsClient) BeginPut200UpdatingSucceeded204(ctx context.Context, p
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut200UpdatingSucceeded204Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut200UpdatingSucceeded204Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut200UpdatingSucceeded204Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut200UpdatingSucceeded204Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1562,7 +1554,7 @@ func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, produc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1598,9 +1590,9 @@ func (client *LROsClient) BeginPut201CreatingFailed200(ctx context.Context, prod
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut201CreatingFailed200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut201CreatingFailed200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut201CreatingFailed200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut201CreatingFailed200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1615,7 +1607,7 @@ func (client *LROsClient) put201CreatingFailed200(ctx context.Context, product P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1651,9 +1643,9 @@ func (client *LROsClient) BeginPut201CreatingSucceeded200(ctx context.Context, p
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut201CreatingSucceeded200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut201CreatingSucceeded200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut201CreatingSucceeded200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut201CreatingSucceeded200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1668,7 +1660,7 @@ func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, produc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1703,9 +1695,9 @@ func (client *LROsClient) BeginPut201Succeeded(ctx context.Context, product Prod
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut201SucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut201SucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut201SucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut201SucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1719,7 +1711,7 @@ func (client *LROsClient) put201Succeeded(ctx context.Context, product Product, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1754,9 +1746,9 @@ func (client *LROsClient) BeginPut202Retry200(ctx context.Context, product Produ
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPut202Retry200Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPut202Retry200Response](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPut202Retry200Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPut202Retry200Response](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1770,7 +1762,7 @@ func (client *LROsClient) put202Retry200(ctx context.Context, product Product, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1805,9 +1797,9 @@ func (client *LROsClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, prod
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutAsyncNoHeaderInRetryResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutAsyncNoHeaderInRetryResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNoHeaderInRetryResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNoHeaderInRetryResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1821,7 +1813,7 @@ func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, product P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1857,9 +1849,9 @@ func (client *LROsClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, pro
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutAsyncNoRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutAsyncNoRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNoRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNoRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1874,7 +1866,7 @@ func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, product 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1910,9 +1902,9 @@ func (client *LROsClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, prod
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutAsyncNoRetrycanceledResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutAsyncNoRetrycanceledResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNoRetrycanceledResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNoRetrycanceledResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1927,7 +1919,7 @@ func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, product P
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1961,9 +1953,9 @@ func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, sku SKU,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutAsyncNonResourceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutAsyncNonResourceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNonResourceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncNonResourceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1976,7 +1968,7 @@ func (client *LROsClient) putAsyncNonResource(ctx context.Context, sku SKU, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2012,9 +2004,9 @@ func (client *LROsClient) BeginPutAsyncRetryFailed(ctx context.Context, product 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutAsyncRetryFailedResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutAsyncRetryFailedResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncRetryFailedResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncRetryFailedResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -2029,7 +2021,7 @@ func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, product Produ
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2065,9 +2057,9 @@ func (client *LROsClient) BeginPutAsyncRetrySucceeded(ctx context.Context, produ
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutAsyncRetrySucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutAsyncRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncRetrySucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -2082,7 +2074,7 @@ func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, product Pr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2116,9 +2108,9 @@ func (client *LROsClient) BeginPutAsyncSubResource(ctx context.Context, product 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutAsyncSubResourceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutAsyncSubResourceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncSubResourceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutAsyncSubResourceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -2131,7 +2123,7 @@ func (client *LROsClient) putAsyncSubResource(ctx context.Context, product SubPr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2166,9 +2158,9 @@ func (client *LROsClient) BeginPutNoHeaderInRetry(ctx context.Context, product P
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutNoHeaderInRetryResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutNoHeaderInRetryResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutNoHeaderInRetryResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutNoHeaderInRetryResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -2182,7 +2174,7 @@ func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, product Produc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2216,9 +2208,9 @@ func (client *LROsClient) BeginPutNonResource(ctx context.Context, sku SKU, opti
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutNonResourceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutNonResourceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutNonResourceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutNonResourceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -2231,7 +2223,7 @@ func (client *LROsClient) putNonResource(ctx context.Context, sku SKU, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2265,9 +2257,9 @@ func (client *LROsClient) BeginPutSubResource(ctx context.Context, product SubPr
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[LROsClientPutSubResourceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROsClientPutSubResourceResponse](resp, client.internal.Pipeline(), nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsClientPutSubResourceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROsClientPutSubResourceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -2280,7 +2272,7 @@ func (client *LROsClient) putSubResource(ctx context.Context, product SubProduct
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -12,6 +12,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,20 +20,11 @@ import (
 	"strings"
 )
 
-type bigDataPoolsClient struct {
+// BigDataPoolsClient contains the methods for the BigDataPools group.
+// Don't use this type directly, use a constructor function instead.
+type BigDataPoolsClient struct {
+	internal *azcore.Client
 	endpoint string
-	pl       runtime.Pipeline
-}
-
-// newBigDataPoolsClient creates a new instance of bigDataPoolsClient with the specified values.
-//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-//   - pl - the pipeline used for sending requests and handling responses.
-func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsClient {
-	client := &bigDataPoolsClient{
-		endpoint: endpoint,
-		pl:       pl,
-	}
-	return client
 }
 
 // Get - Get Big Data Pool
@@ -40,13 +32,13 @@ func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsCl
 //
 // Generated from API version 2019-06-01-preview
 //   - bigDataPoolName - The Big Data Pool name
-//   - options - BigDataPoolsClientGetOptions contains the optional parameters for the bigDataPoolsClient.Get method.
-func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (BigDataPoolsClientGetResponse, error) {
+//   - options - BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
+func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (BigDataPoolsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
 		return BigDataPoolsClientGetResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BigDataPoolsClientGetResponse{}, err
 	}
@@ -57,7 +49,7 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (*policy.Request, error) {
+func (client *BigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
 	if bigDataPoolName == "" {
 		return nil, errors.New("parameter bigDataPoolName cannot be empty")
@@ -75,7 +67,7 @@ func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataP
 }
 
 // getHandleResponse handles the Get response.
-func (client *bigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDataPoolsClientGetResponse, error) {
+func (client *BigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDataPoolsClientGetResponse, error) {
 	result := BigDataPoolsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfo); err != nil {
 		return BigDataPoolsClientGetResponse{}, err
@@ -87,13 +79,13 @@ func (client *bigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDat
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-//   - options - BigDataPoolsClientListOptions contains the optional parameters for the bigDataPoolsClient.List method.
-func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsClientListOptions) (BigDataPoolsClientListResponse, error) {
+//   - options - BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
+func (client *BigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsClientListOptions) (BigDataPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return BigDataPoolsClientListResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BigDataPoolsClientListResponse{}, err
 	}
@@ -104,7 +96,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPool
 }
 
 // listCreateRequest creates the List request.
-func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options *BigDataPoolsClientListOptions) (*policy.Request, error) {
+func (client *BigDataPoolsClient) listCreateRequest(ctx context.Context, options *BigDataPoolsClientListOptions) (*policy.Request, error) {
 	urlPath := "/bigDataPools"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -118,7 +110,7 @@ func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options
 }
 
 // listHandleResponse handles the List response.
-func (client *bigDataPoolsClient) listHandleResponse(resp *http.Response) (BigDataPoolsClientListResponse, error) {
+func (client *BigDataPoolsClient) listHandleResponse(resp *http.Response) (BigDataPoolsClientListResponse, error) {
 	result := BigDataPoolsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfoListResult); err != nil {
 		return BigDataPoolsClientListResponse{}, err

@@ -12,6 +12,7 @@ package azacr
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -21,20 +22,11 @@ import (
 	"strings"
 )
 
-type containerRegistryBlobClient struct {
+// ContainerRegistryBlobClient contains the methods for the ContainerRegistryBlob group.
+// Don't use this type directly, use a constructor function instead.
+type ContainerRegistryBlobClient struct {
+	internal *azcore.Client
 	endpoint string
-	pl       runtime.Pipeline
-}
-
-// newContainerRegistryBlobClient creates a new instance of containerRegistryBlobClient with the specified values.
-//   - endpoint - Registry login URL
-//   - pl - the pipeline used for sending requests and handling responses.
-func newContainerRegistryBlobClient(endpoint string, pl runtime.Pipeline) *containerRegistryBlobClient {
-	client := &containerRegistryBlobClient{
-		endpoint: endpoint,
-		pl:       pl,
-	}
-	return client
 }
 
 // CancelUpload - Cancel outstanding upload processes, releasing associated resources. If this is not called, the unfinished
@@ -43,14 +35,14 @@ func newContainerRegistryBlobClient(endpoint string, pl runtime.Pipeline) *conta
 //
 // Generated from API version 2021-07-01
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
-//   - options - ContainerRegistryBlobClientCancelUploadOptions contains the optional parameters for the containerRegistryBlobClient.CancelUpload
+//   - options - ContainerRegistryBlobClientCancelUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CancelUpload
 //     method.
-func (client *containerRegistryBlobClient) CancelUpload(ctx context.Context, location string, options *ContainerRegistryBlobClientCancelUploadOptions) (ContainerRegistryBlobClientCancelUploadResponse, error) {
+func (client *ContainerRegistryBlobClient) CancelUpload(ctx context.Context, location string, options *ContainerRegistryBlobClientCancelUploadOptions) (ContainerRegistryBlobClientCancelUploadResponse, error) {
 	req, err := client.cancelUploadCreateRequest(ctx, location, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCancelUploadResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCancelUploadResponse{}, err
 	}
@@ -61,7 +53,7 @@ func (client *containerRegistryBlobClient) CancelUpload(ctx context.Context, loc
 }
 
 // cancelUploadCreateRequest creates the CancelUpload request.
-func (client *containerRegistryBlobClient) cancelUploadCreateRequest(ctx context.Context, location string, options *ContainerRegistryBlobClientCancelUploadOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) cancelUploadCreateRequest(ctx context.Context, location string, options *ContainerRegistryBlobClientCancelUploadOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
@@ -78,14 +70,14 @@ func (client *containerRegistryBlobClient) cancelUploadCreateRequest(ctx context
 // Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
-//   - options - ContainerRegistryBlobClientCheckBlobExistsOptions contains the optional parameters for the containerRegistryBlobClient.CheckBlobExists
+//   - options - ContainerRegistryBlobClientCheckBlobExistsOptions contains the optional parameters for the ContainerRegistryBlobClient.CheckBlobExists
 //     method.
-func (client *containerRegistryBlobClient) CheckBlobExists(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientCheckBlobExistsOptions) (ContainerRegistryBlobClientCheckBlobExistsResponse, error) {
+func (client *ContainerRegistryBlobClient) CheckBlobExists(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientCheckBlobExistsOptions) (ContainerRegistryBlobClientCheckBlobExistsResponse, error) {
 	req, err := client.checkBlobExistsCreateRequest(ctx, name, digest, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckBlobExistsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckBlobExistsResponse{}, err
 	}
@@ -96,7 +88,7 @@ func (client *containerRegistryBlobClient) CheckBlobExists(ctx context.Context, 
 }
 
 // checkBlobExistsCreateRequest creates the CheckBlobExists request.
-func (client *containerRegistryBlobClient) checkBlobExistsCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientCheckBlobExistsOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) checkBlobExistsCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientCheckBlobExistsOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -115,7 +107,7 @@ func (client *containerRegistryBlobClient) checkBlobExistsCreateRequest(ctx cont
 }
 
 // checkBlobExistsHandleResponse handles the CheckBlobExists response.
-func (client *containerRegistryBlobClient) checkBlobExistsHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCheckBlobExistsResponse, error) {
+func (client *ContainerRegistryBlobClient) checkBlobExistsHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCheckBlobExistsResponse, error) {
 	result := ContainerRegistryBlobClientCheckBlobExistsResponse{}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
@@ -137,14 +129,14 @@ func (client *containerRegistryBlobClient) checkBlobExistsHandleResponse(resp *h
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - rangeParam - Format : bytes=-, HTTP Range header specifying blob chunk.
-//   - options - ContainerRegistryBlobClientCheckChunkExistsOptions contains the optional parameters for the containerRegistryBlobClient.CheckChunkExists
+//   - options - ContainerRegistryBlobClientCheckChunkExistsOptions contains the optional parameters for the ContainerRegistryBlobClient.CheckChunkExists
 //     method.
-func (client *containerRegistryBlobClient) CheckChunkExists(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientCheckChunkExistsOptions) (ContainerRegistryBlobClientCheckChunkExistsResponse, error) {
+func (client *ContainerRegistryBlobClient) CheckChunkExists(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientCheckChunkExistsOptions) (ContainerRegistryBlobClientCheckChunkExistsResponse, error) {
 	req, err := client.checkChunkExistsCreateRequest(ctx, name, digest, rangeParam, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckChunkExistsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckChunkExistsResponse{}, err
 	}
@@ -155,7 +147,7 @@ func (client *containerRegistryBlobClient) CheckChunkExists(ctx context.Context,
 }
 
 // checkChunkExistsCreateRequest creates the CheckChunkExists request.
-func (client *containerRegistryBlobClient) checkChunkExistsCreateRequest(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientCheckChunkExistsOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) checkChunkExistsCreateRequest(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientCheckChunkExistsOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -175,7 +167,7 @@ func (client *containerRegistryBlobClient) checkChunkExistsCreateRequest(ctx con
 }
 
 // checkChunkExistsHandleResponse handles the CheckChunkExists response.
-func (client *containerRegistryBlobClient) checkChunkExistsHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCheckChunkExistsResponse, error) {
+func (client *ContainerRegistryBlobClient) checkChunkExistsHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCheckChunkExistsResponse, error) {
 	result := ContainerRegistryBlobClientCheckChunkExistsResponse{}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
@@ -198,14 +190,14 @@ func (client *containerRegistryBlobClient) checkChunkExistsHandleResponse(resp *
 //   - digest - Digest of a BLOB
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
 //   - value - Optional raw data of blob
-//   - options - ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the containerRegistryBlobClient.CompleteUpload
+//   - options - ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CompleteUpload
 //     method.
-func (client *containerRegistryBlobClient) CompleteUpload(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
+func (client *ContainerRegistryBlobClient) CompleteUpload(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
 	req, err := client.completeUploadCreateRequest(ctx, digest, location, value, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCompleteUploadResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCompleteUploadResponse{}, err
 	}
@@ -216,7 +208,7 @@ func (client *containerRegistryBlobClient) CompleteUpload(ctx context.Context, d
 }
 
 // completeUploadCreateRequest creates the CompleteUpload request.
-func (client *containerRegistryBlobClient) completeUploadCreateRequest(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
@@ -231,7 +223,7 @@ func (client *containerRegistryBlobClient) completeUploadCreateRequest(ctx conte
 }
 
 // completeUploadHandleResponse handles the CompleteUpload response.
-func (client *containerRegistryBlobClient) completeUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
+func (client *ContainerRegistryBlobClient) completeUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
 	result := ContainerRegistryBlobClientCompleteUploadResponse{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
@@ -251,14 +243,14 @@ func (client *containerRegistryBlobClient) completeUploadHandleResponse(resp *ht
 // Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
-//   - options - ContainerRegistryBlobClientDeleteBlobOptions contains the optional parameters for the containerRegistryBlobClient.DeleteBlob
+//   - options - ContainerRegistryBlobClientDeleteBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.DeleteBlob
 //     method.
-func (client *containerRegistryBlobClient) DeleteBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientDeleteBlobOptions) (ContainerRegistryBlobClientDeleteBlobResponse, error) {
+func (client *ContainerRegistryBlobClient) DeleteBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientDeleteBlobOptions) (ContainerRegistryBlobClientDeleteBlobResponse, error) {
 	req, err := client.deleteBlobCreateRequest(ctx, name, digest, options)
 	if err != nil {
 		return ContainerRegistryBlobClientDeleteBlobResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientDeleteBlobResponse{}, err
 	}
@@ -269,7 +261,7 @@ func (client *containerRegistryBlobClient) DeleteBlob(ctx context.Context, name 
 }
 
 // deleteBlobCreateRequest creates the DeleteBlob request.
-func (client *containerRegistryBlobClient) deleteBlobCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientDeleteBlobOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) deleteBlobCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientDeleteBlobOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -289,7 +281,7 @@ func (client *containerRegistryBlobClient) deleteBlobCreateRequest(ctx context.C
 }
 
 // deleteBlobHandleResponse handles the DeleteBlob response.
-func (client *containerRegistryBlobClient) deleteBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientDeleteBlobResponse, error) {
+func (client *ContainerRegistryBlobClient) deleteBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientDeleteBlobResponse, error) {
 	result := ContainerRegistryBlobClientDeleteBlobResponse{Body: resp.Body}
 	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
 		result.DockerContentDigest = &val
@@ -303,14 +295,14 @@ func (client *containerRegistryBlobClient) deleteBlobHandleResponse(resp *http.R
 // Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
-//   - options - ContainerRegistryBlobClientGetBlobOptions contains the optional parameters for the containerRegistryBlobClient.GetBlob
+//   - options - ContainerRegistryBlobClientGetBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.GetBlob
 //     method.
-func (client *containerRegistryBlobClient) GetBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientGetBlobOptions) (ContainerRegistryBlobClientGetBlobResponse, error) {
+func (client *ContainerRegistryBlobClient) GetBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientGetBlobOptions) (ContainerRegistryBlobClientGetBlobResponse, error) {
 	req, err := client.getBlobCreateRequest(ctx, name, digest, options)
 	if err != nil {
 		return ContainerRegistryBlobClientGetBlobResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientGetBlobResponse{}, err
 	}
@@ -321,7 +313,7 @@ func (client *containerRegistryBlobClient) GetBlob(ctx context.Context, name str
 }
 
 // getBlobCreateRequest creates the GetBlob request.
-func (client *containerRegistryBlobClient) getBlobCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientGetBlobOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) getBlobCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientGetBlobOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -341,7 +333,7 @@ func (client *containerRegistryBlobClient) getBlobCreateRequest(ctx context.Cont
 }
 
 // getBlobHandleResponse handles the GetBlob response.
-func (client *containerRegistryBlobClient) getBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetBlobResponse, error) {
+func (client *ContainerRegistryBlobClient) getBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetBlobResponse, error) {
 	result := ContainerRegistryBlobClientGetBlobResponse{Body: resp.Body}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
@@ -365,14 +357,14 @@ func (client *containerRegistryBlobClient) getBlobHandleResponse(resp *http.Resp
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - rangeParam - Format : bytes=-, HTTP Range header specifying blob chunk.
-//   - options - ContainerRegistryBlobClientGetChunkOptions contains the optional parameters for the containerRegistryBlobClient.GetChunk
+//   - options - ContainerRegistryBlobClientGetChunkOptions contains the optional parameters for the ContainerRegistryBlobClient.GetChunk
 //     method.
-func (client *containerRegistryBlobClient) GetChunk(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientGetChunkOptions) (ContainerRegistryBlobClientGetChunkResponse, error) {
+func (client *ContainerRegistryBlobClient) GetChunk(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientGetChunkOptions) (ContainerRegistryBlobClientGetChunkResponse, error) {
 	req, err := client.getChunkCreateRequest(ctx, name, digest, rangeParam, options)
 	if err != nil {
 		return ContainerRegistryBlobClientGetChunkResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientGetChunkResponse{}, err
 	}
@@ -383,7 +375,7 @@ func (client *containerRegistryBlobClient) GetChunk(ctx context.Context, name st
 }
 
 // getChunkCreateRequest creates the GetChunk request.
-func (client *containerRegistryBlobClient) getChunkCreateRequest(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientGetChunkOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) getChunkCreateRequest(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientGetChunkOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -404,7 +396,7 @@ func (client *containerRegistryBlobClient) getChunkCreateRequest(ctx context.Con
 }
 
 // getChunkHandleResponse handles the GetChunk response.
-func (client *containerRegistryBlobClient) getChunkHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetChunkResponse, error) {
+func (client *ContainerRegistryBlobClient) getChunkHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetChunkResponse, error) {
 	result := ContainerRegistryBlobClientGetChunkResponse{Body: resp.Body}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
@@ -425,14 +417,14 @@ func (client *containerRegistryBlobClient) getChunkHandleResponse(resp *http.Res
 //
 // Generated from API version 2021-07-01
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
-//   - options - ContainerRegistryBlobClientGetUploadStatusOptions contains the optional parameters for the containerRegistryBlobClient.GetUploadStatus
+//   - options - ContainerRegistryBlobClientGetUploadStatusOptions contains the optional parameters for the ContainerRegistryBlobClient.GetUploadStatus
 //     method.
-func (client *containerRegistryBlobClient) GetUploadStatus(ctx context.Context, location string, options *ContainerRegistryBlobClientGetUploadStatusOptions) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
+func (client *ContainerRegistryBlobClient) GetUploadStatus(ctx context.Context, location string, options *ContainerRegistryBlobClientGetUploadStatusOptions) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
 	req, err := client.getUploadStatusCreateRequest(ctx, location, options)
 	if err != nil {
 		return ContainerRegistryBlobClientGetUploadStatusResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientGetUploadStatusResponse{}, err
 	}
@@ -443,7 +435,7 @@ func (client *containerRegistryBlobClient) GetUploadStatus(ctx context.Context, 
 }
 
 // getUploadStatusCreateRequest creates the GetUploadStatus request.
-func (client *containerRegistryBlobClient) getUploadStatusCreateRequest(ctx context.Context, location string, options *ContainerRegistryBlobClientGetUploadStatusOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) getUploadStatusCreateRequest(ctx context.Context, location string, options *ContainerRegistryBlobClientGetUploadStatusOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
@@ -455,7 +447,7 @@ func (client *containerRegistryBlobClient) getUploadStatusCreateRequest(ctx cont
 }
 
 // getUploadStatusHandleResponse handles the GetUploadStatus response.
-func (client *containerRegistryBlobClient) getUploadStatusHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
+func (client *ContainerRegistryBlobClient) getUploadStatusHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
 	result := ContainerRegistryBlobClientGetUploadStatusResponse{}
 	if val := resp.Header.Get("Range"); val != "" {
 		result.Range = &val
@@ -473,14 +465,14 @@ func (client *containerRegistryBlobClient) getUploadStatusHandleResponse(resp *h
 //   - name - Name of the image (including the namespace)
 //   - from - Name of the source repository.
 //   - mount - Digest of blob to mount from the source repository.
-//   - options - ContainerRegistryBlobClientMountBlobOptions contains the optional parameters for the containerRegistryBlobClient.MountBlob
+//   - options - ContainerRegistryBlobClientMountBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.MountBlob
 //     method.
-func (client *containerRegistryBlobClient) MountBlob(ctx context.Context, name string, from string, mount string, options *ContainerRegistryBlobClientMountBlobOptions) (ContainerRegistryBlobClientMountBlobResponse, error) {
+func (client *ContainerRegistryBlobClient) MountBlob(ctx context.Context, name string, from string, mount string, options *ContainerRegistryBlobClientMountBlobOptions) (ContainerRegistryBlobClientMountBlobResponse, error) {
 	req, err := client.mountBlobCreateRequest(ctx, name, from, mount, options)
 	if err != nil {
 		return ContainerRegistryBlobClientMountBlobResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientMountBlobResponse{}, err
 	}
@@ -491,7 +483,7 @@ func (client *containerRegistryBlobClient) MountBlob(ctx context.Context, name s
 }
 
 // mountBlobCreateRequest creates the MountBlob request.
-func (client *containerRegistryBlobClient) mountBlobCreateRequest(ctx context.Context, name string, from string, mount string, options *ContainerRegistryBlobClientMountBlobOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) mountBlobCreateRequest(ctx context.Context, name string, from string, mount string, options *ContainerRegistryBlobClientMountBlobOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/uploads/"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -510,7 +502,7 @@ func (client *containerRegistryBlobClient) mountBlobCreateRequest(ctx context.Co
 }
 
 // mountBlobHandleResponse handles the MountBlob response.
-func (client *containerRegistryBlobClient) mountBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientMountBlobResponse, error) {
+func (client *ContainerRegistryBlobClient) mountBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientMountBlobResponse, error) {
 	result := ContainerRegistryBlobClientMountBlobResponse{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
@@ -529,14 +521,14 @@ func (client *containerRegistryBlobClient) mountBlobHandleResponse(resp *http.Re
 //
 // Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
-//   - options - ContainerRegistryBlobClientStartUploadOptions contains the optional parameters for the containerRegistryBlobClient.StartUpload
+//   - options - ContainerRegistryBlobClientStartUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.StartUpload
 //     method.
-func (client *containerRegistryBlobClient) StartUpload(ctx context.Context, name string, options *ContainerRegistryBlobClientStartUploadOptions) (ContainerRegistryBlobClientStartUploadResponse, error) {
+func (client *ContainerRegistryBlobClient) StartUpload(ctx context.Context, name string, options *ContainerRegistryBlobClientStartUploadOptions) (ContainerRegistryBlobClientStartUploadResponse, error) {
 	req, err := client.startUploadCreateRequest(ctx, name, options)
 	if err != nil {
 		return ContainerRegistryBlobClientStartUploadResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientStartUploadResponse{}, err
 	}
@@ -547,7 +539,7 @@ func (client *containerRegistryBlobClient) StartUpload(ctx context.Context, name
 }
 
 // startUploadCreateRequest creates the StartUpload request.
-func (client *containerRegistryBlobClient) startUploadCreateRequest(ctx context.Context, name string, options *ContainerRegistryBlobClientStartUploadOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) startUploadCreateRequest(ctx context.Context, name string, options *ContainerRegistryBlobClientStartUploadOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/uploads/"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -562,7 +554,7 @@ func (client *containerRegistryBlobClient) startUploadCreateRequest(ctx context.
 }
 
 // startUploadHandleResponse handles the StartUpload response.
-func (client *containerRegistryBlobClient) startUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientStartUploadResponse, error) {
+func (client *ContainerRegistryBlobClient) startUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientStartUploadResponse, error) {
 	result := ContainerRegistryBlobClientStartUploadResponse{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
@@ -582,14 +574,14 @@ func (client *containerRegistryBlobClient) startUploadHandleResponse(resp *http.
 // Generated from API version 2021-07-01
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
 //   - value - Raw data of blob
-//   - options - ContainerRegistryBlobClientUploadChunkOptions contains the optional parameters for the containerRegistryBlobClient.UploadChunk
+//   - options - ContainerRegistryBlobClientUploadChunkOptions contains the optional parameters for the ContainerRegistryBlobClient.UploadChunk
 //     method.
-func (client *containerRegistryBlobClient) UploadChunk(ctx context.Context, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientUploadChunkOptions) (ContainerRegistryBlobClientUploadChunkResponse, error) {
+func (client *ContainerRegistryBlobClient) UploadChunk(ctx context.Context, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientUploadChunkOptions) (ContainerRegistryBlobClientUploadChunkResponse, error) {
 	req, err := client.uploadChunkCreateRequest(ctx, location, value, options)
 	if err != nil {
 		return ContainerRegistryBlobClientUploadChunkResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientUploadChunkResponse{}, err
 	}
@@ -600,7 +592,7 @@ func (client *containerRegistryBlobClient) UploadChunk(ctx context.Context, loca
 }
 
 // uploadChunkCreateRequest creates the UploadChunk request.
-func (client *containerRegistryBlobClient) uploadChunkCreateRequest(ctx context.Context, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientUploadChunkOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) uploadChunkCreateRequest(ctx context.Context, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientUploadChunkOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
@@ -612,7 +604,7 @@ func (client *containerRegistryBlobClient) uploadChunkCreateRequest(ctx context.
 }
 
 // uploadChunkHandleResponse handles the UploadChunk response.
-func (client *containerRegistryBlobClient) uploadChunkHandleResponse(resp *http.Response) (ContainerRegistryBlobClientUploadChunkResponse, error) {
+func (client *ContainerRegistryBlobClient) uploadChunkHandleResponse(resp *http.Response) (ContainerRegistryBlobClientUploadChunkResponse, error) {
 	result := ContainerRegistryBlobClientUploadChunkResponse{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val

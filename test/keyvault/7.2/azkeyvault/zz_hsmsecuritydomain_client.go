@@ -11,6 +11,7 @@ package azkeyvault
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,18 +19,9 @@ import (
 )
 
 // HSMSecurityDomainClient contains the methods for the HSMSecurityDomain group.
-// Don't use this type directly, use NewHSMSecurityDomainClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type HSMSecurityDomainClient struct {
-	pl runtime.Pipeline
-}
-
-// NewHSMSecurityDomainClient creates a new instance of HSMSecurityDomainClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewHSMSecurityDomainClient(pl runtime.Pipeline) *HSMSecurityDomainClient {
-	client := &HSMSecurityDomainClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // BeginDownload - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
@@ -48,11 +40,11 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[HSMSecurityDomainClientDownloadResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HSMSecurityDomainClientDownloadResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientDownloadResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientDownloadResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -66,7 +58,7 @@ func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +96,7 @@ func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaul
 	if err != nil {
 		return HSMSecurityDomainClientDownloadPendingResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HSMSecurityDomainClientDownloadPendingResponse{}, err
 	}
@@ -148,7 +140,7 @@ func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBas
 	if err != nil {
 		return HSMSecurityDomainClientTransferKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HSMSecurityDomainClientTransferKeyResponse{}, err
 	}
@@ -197,11 +189,11 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[HSMSecurityDomainClientUploadResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HSMSecurityDomainClientUploadResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientUploadResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientUploadResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -214,7 +206,7 @@ func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +241,7 @@ func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultB
 	if err != nil {
 		return HSMSecurityDomainClientUploadPendingResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HSMSecurityDomainClientUploadPendingResponse{}, err
 	}

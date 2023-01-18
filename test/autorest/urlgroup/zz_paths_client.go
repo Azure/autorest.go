@@ -13,6 +13,7 @@ import (
 	"context"
 	"encoding/base64"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,18 +23,9 @@ import (
 )
 
 // PathsClient contains the methods for the Paths group.
-// Don't use this type directly, use NewPathsClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type PathsClient struct {
-	pl runtime.Pipeline
-}
-
-// NewPathsClient creates a new instance of PathsClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewPathsClient(pl runtime.Pipeline) *PathsClient {
-	client := &PathsClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
@@ -47,7 +39,7 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 	if err != nil {
 		return PathsClientArrayCSVInPathResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientArrayCSVInPathResponse{}, err
 	}
@@ -80,7 +72,7 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, 
 	if err != nil {
 		return PathsClientBase64URLResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientBase64URLResponse{}, err
 	}
@@ -112,7 +104,7 @@ func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientBy
 	if err != nil {
 		return PathsClientByteEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientByteEmptyResponse{}, err
 	}
@@ -145,7 +137,7 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, o
 	if err != nil {
 		return PathsClientByteMultiByteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientByteMultiByteResponse{}, err
 	}
@@ -178,7 +170,7 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, option
 	if err != nil {
 		return PathsClientByteNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientByteNullResponse{}, err
 	}
@@ -211,7 +203,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 	if err != nil {
 		return PathsClientDateNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateNullResponse{}, err
 	}
@@ -244,7 +236,7 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 	if err != nil {
 		return PathsClientDateTimeNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateTimeNullResponse{}, err
 	}
@@ -276,7 +268,7 @@ func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClie
 	if err != nil {
 		return PathsClientDateTimeValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateTimeValidResponse{}, err
 	}
@@ -308,7 +300,7 @@ func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDa
 	if err != nil {
 		return PathsClientDateValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateValidResponse{}, err
 	}
@@ -341,7 +333,7 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *P
 	if err != nil {
 		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
@@ -374,7 +366,7 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *P
 	if err != nil {
 		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
@@ -407,7 +399,7 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, opti
 	if err != nil {
 		return PathsClientEnumNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientEnumNullResponse{}, err
 	}
@@ -443,7 +435,7 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, opt
 	if err != nil {
 		return PathsClientEnumValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientEnumValidResponse{}, err
 	}
@@ -479,7 +471,7 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context, options 
 	if err != nil {
 		return PathsClientFloatScientificNegativeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientFloatScientificNegativeResponse{}, err
 	}
@@ -512,7 +504,7 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context, options 
 	if err != nil {
 		return PathsClientFloatScientificPositiveResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientFloatScientificPositiveResponse{}, err
 	}
@@ -544,7 +536,7 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsCl
 	if err != nil {
 		return PathsClientGetBooleanFalseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetBooleanFalseResponse{}, err
 	}
@@ -576,7 +568,7 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsCli
 	if err != nil {
 		return PathsClientGetBooleanTrueResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetBooleanTrueResponse{}, err
 	}
@@ -609,7 +601,7 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options
 	if err != nil {
 		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
@@ -641,7 +633,7 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsC
 	if err != nil {
 		return PathsClientGetIntOneMillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetIntOneMillionResponse{}, err
 	}
@@ -674,7 +666,7 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *P
 	if err != nil {
 		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
@@ -706,7 +698,7 @@ func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClie
 	if err != nil {
 		return PathsClientGetTenBillionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetTenBillionResponse{}, err
 	}
@@ -738,7 +730,7 @@ func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClient
 	if err != nil {
 		return PathsClientStringEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringEmptyResponse{}, err
 	}
@@ -771,7 +763,7 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string, op
 	if err != nil {
 		return PathsClientStringNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringNullResponse{}, err
 	}
@@ -806,7 +798,7 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsC
 	if err != nil {
 		return PathsClientStringURLEncodedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringURLEncodedResponse{}, err
 	}
@@ -839,7 +831,7 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *Pat
 	if err != nil {
 		return PathsClientStringURLNonEncodedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringURLNonEncodedResponse{}, err
 	}
@@ -871,7 +863,7 @@ func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClie
 	if err != nil {
 		return PathsClientStringUnicodeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringUnicodeResponse{}, err
 	}
@@ -904,7 +896,7 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time
 	if err != nil {
 		return PathsClientUnixTimeURLResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientUnixTimeURLResponse{}, err
 	}

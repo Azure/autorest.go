@@ -95,7 +95,7 @@ type ArtifactTagProperties struct {
 	Tag *TagAttributesBase `json:"tag,omitempty" azure:"ro"`
 }
 
-// AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions contains the optional parameters for the authenticationClient.ExchangeAADAccessTokenForAcrRefreshToken
+// AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions contains the optional parameters for the AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken
 // method.
 type AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions struct {
 	// AAD access token, mandatory when granttype is accesstokenrefreshtoken or access_token.
@@ -106,128 +106,128 @@ type AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions struct 
 	Tenant *string
 }
 
-// AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions contains the optional parameters for the authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken
+// AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions contains the optional parameters for the AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken
 // method.
 type AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions struct {
 	// Grant type is expected to be refresh_token
 	GrantType *TokenGrantType
 }
 
-// AuthenticationClientGetAcrAccessTokenFromLoginOptions contains the optional parameters for the authenticationClient.GetAcrAccessTokenFromLogin
+// AuthenticationClientGetAcrAccessTokenFromLoginOptions contains the optional parameters for the AuthenticationClient.GetAcrAccessTokenFromLogin
 // method.
 type AuthenticationClientGetAcrAccessTokenFromLoginOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientCancelUploadOptions contains the optional parameters for the containerRegistryBlobClient.CancelUpload
+// ContainerRegistryBlobClientCancelUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CancelUpload
 // method.
 type ContainerRegistryBlobClientCancelUploadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientCheckBlobExistsOptions contains the optional parameters for the containerRegistryBlobClient.CheckBlobExists
+// ContainerRegistryBlobClientCheckBlobExistsOptions contains the optional parameters for the ContainerRegistryBlobClient.CheckBlobExists
 // method.
 type ContainerRegistryBlobClientCheckBlobExistsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientCheckChunkExistsOptions contains the optional parameters for the containerRegistryBlobClient.CheckChunkExists
+// ContainerRegistryBlobClientCheckChunkExistsOptions contains the optional parameters for the ContainerRegistryBlobClient.CheckChunkExists
 // method.
 type ContainerRegistryBlobClientCheckChunkExistsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the containerRegistryBlobClient.CompleteUpload
+// ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CompleteUpload
 // method.
 type ContainerRegistryBlobClientCompleteUploadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientDeleteBlobOptions contains the optional parameters for the containerRegistryBlobClient.DeleteBlob
+// ContainerRegistryBlobClientDeleteBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.DeleteBlob
 // method.
 type ContainerRegistryBlobClientDeleteBlobOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientGetBlobOptions contains the optional parameters for the containerRegistryBlobClient.GetBlob
+// ContainerRegistryBlobClientGetBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.GetBlob
 // method.
 type ContainerRegistryBlobClientGetBlobOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientGetChunkOptions contains the optional parameters for the containerRegistryBlobClient.GetChunk
+// ContainerRegistryBlobClientGetChunkOptions contains the optional parameters for the ContainerRegistryBlobClient.GetChunk
 // method.
 type ContainerRegistryBlobClientGetChunkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientGetUploadStatusOptions contains the optional parameters for the containerRegistryBlobClient.GetUploadStatus
+// ContainerRegistryBlobClientGetUploadStatusOptions contains the optional parameters for the ContainerRegistryBlobClient.GetUploadStatus
 // method.
 type ContainerRegistryBlobClientGetUploadStatusOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientMountBlobOptions contains the optional parameters for the containerRegistryBlobClient.MountBlob
+// ContainerRegistryBlobClientMountBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.MountBlob
 // method.
 type ContainerRegistryBlobClientMountBlobOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientStartUploadOptions contains the optional parameters for the containerRegistryBlobClient.StartUpload
+// ContainerRegistryBlobClientStartUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.StartUpload
 // method.
 type ContainerRegistryBlobClientStartUploadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryBlobClientUploadChunkOptions contains the optional parameters for the containerRegistryBlobClient.UploadChunk
+// ContainerRegistryBlobClientUploadChunkOptions contains the optional parameters for the ContainerRegistryBlobClient.UploadChunk
 // method.
 type ContainerRegistryBlobClientUploadChunkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientCheckDockerV2SupportOptions contains the optional parameters for the containerRegistryClient.CheckDockerV2Support
+// ContainerRegistryClientCheckDockerV2SupportOptions contains the optional parameters for the ContainerRegistryClient.CheckDockerV2Support
 // method.
 type ContainerRegistryClientCheckDockerV2SupportOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientCreateManifestOptions contains the optional parameters for the containerRegistryClient.CreateManifest
+// ContainerRegistryClientCreateManifestOptions contains the optional parameters for the ContainerRegistryClient.CreateManifest
 // method.
 type ContainerRegistryClientCreateManifestOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientDeleteManifestOptions contains the optional parameters for the containerRegistryClient.DeleteManifest
+// ContainerRegistryClientDeleteManifestOptions contains the optional parameters for the ContainerRegistryClient.DeleteManifest
 // method.
 type ContainerRegistryClientDeleteManifestOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientDeleteRepositoryOptions contains the optional parameters for the containerRegistryClient.DeleteRepository
+// ContainerRegistryClientDeleteRepositoryOptions contains the optional parameters for the ContainerRegistryClient.DeleteRepository
 // method.
 type ContainerRegistryClientDeleteRepositoryOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientDeleteTagOptions contains the optional parameters for the containerRegistryClient.DeleteTag method.
+// ContainerRegistryClientDeleteTagOptions contains the optional parameters for the ContainerRegistryClient.DeleteTag method.
 type ContainerRegistryClientDeleteTagOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientGetManifestOptions contains the optional parameters for the containerRegistryClient.GetManifest
+// ContainerRegistryClientGetManifestOptions contains the optional parameters for the ContainerRegistryClient.GetManifest
 // method.
 type ContainerRegistryClientGetManifestOptions struct {
 	// Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json
 	Accept *string
 }
 
-// ContainerRegistryClientGetManifestPropertiesOptions contains the optional parameters for the containerRegistryClient.GetManifestProperties
+// ContainerRegistryClientGetManifestPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetManifestProperties
 // method.
 type ContainerRegistryClientGetManifestPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientGetManifestsOptions contains the optional parameters for the containerRegistryClient.NewGetManifestsPager
+// ContainerRegistryClientGetManifestsOptions contains the optional parameters for the ContainerRegistryClient.NewGetManifestsPager
 // method.
 type ContainerRegistryClientGetManifestsOptions struct {
 	// Query parameter for the last item in previous query. Result set will include values lexically after last.
@@ -238,13 +238,13 @@ type ContainerRegistryClientGetManifestsOptions struct {
 	Orderby *string
 }
 
-// ContainerRegistryClientGetPropertiesOptions contains the optional parameters for the containerRegistryClient.GetProperties
+// ContainerRegistryClientGetPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetProperties
 // method.
 type ContainerRegistryClientGetPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientGetRepositoriesOptions contains the optional parameters for the containerRegistryClient.NewGetRepositoriesPager
+// ContainerRegistryClientGetRepositoriesOptions contains the optional parameters for the ContainerRegistryClient.NewGetRepositoriesPager
 // method.
 type ContainerRegistryClientGetRepositoriesOptions struct {
 	// Query parameter for the last item in previous query. Result set will include values lexically after last.
@@ -253,13 +253,13 @@ type ContainerRegistryClientGetRepositoriesOptions struct {
 	N *int32
 }
 
-// ContainerRegistryClientGetTagPropertiesOptions contains the optional parameters for the containerRegistryClient.GetTagProperties
+// ContainerRegistryClientGetTagPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetTagProperties
 // method.
 type ContainerRegistryClientGetTagPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientGetTagsOptions contains the optional parameters for the containerRegistryClient.NewGetTagsPager
+// ContainerRegistryClientGetTagsOptions contains the optional parameters for the ContainerRegistryClient.NewGetTagsPager
 // method.
 type ContainerRegistryClientGetTagsOptions struct {
 	// filter by digest
@@ -272,19 +272,19 @@ type ContainerRegistryClientGetTagsOptions struct {
 	Orderby *string
 }
 
-// ContainerRegistryClientUpdateManifestPropertiesOptions contains the optional parameters for the containerRegistryClient.UpdateManifestProperties
+// ContainerRegistryClientUpdateManifestPropertiesOptions contains the optional parameters for the ContainerRegistryClient.UpdateManifestProperties
 // method.
 type ContainerRegistryClientUpdateManifestPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientUpdatePropertiesOptions contains the optional parameters for the containerRegistryClient.UpdateProperties
+// ContainerRegistryClientUpdatePropertiesOptions contains the optional parameters for the ContainerRegistryClient.UpdateProperties
 // method.
 type ContainerRegistryClientUpdatePropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerRegistryClientUpdateTagAttributesOptions contains the optional parameters for the containerRegistryClient.UpdateTagAttributes
+// ContainerRegistryClientUpdateTagAttributesOptions contains the optional parameters for the ContainerRegistryClient.UpdateTagAttributes
 // method.
 type ContainerRegistryClientUpdateTagAttributesOptions struct {
 	// placeholder for future optional parameters

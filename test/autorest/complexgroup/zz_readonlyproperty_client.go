@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // ReadonlypropertyClient contains the methods for the Readonlyproperty group.
-// Don't use this type directly, use NewReadonlypropertyClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type ReadonlypropertyClient struct {
-	pl runtime.Pipeline
-}
-
-// NewReadonlypropertyClient creates a new instance of ReadonlypropertyClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewReadonlypropertyClient(pl runtime.Pipeline) *ReadonlypropertyClient {
-	client := &ReadonlypropertyClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetValid - Get complex types that have readonly properties
@@ -42,7 +34,7 @@ func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *Rea
 	if err != nil {
 		return ReadonlypropertyClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ReadonlypropertyClientGetValidResponse{}, err
 	}
@@ -83,7 +75,7 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 	if err != nil {
 		return ReadonlypropertyClientPutValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ReadonlypropertyClientPutValidResponse{}, err
 	}

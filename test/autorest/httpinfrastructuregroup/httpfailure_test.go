@@ -13,27 +13,36 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newHTTPFailureClient() *HTTPFailureClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewHTTPFailureClient(pl)
+func newHTTPFailureClient(t *testing.T) *HTTPFailureClient {
+	client, err := NewHTTPFailureClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewHTTPFailureClient(options *azcore.ClientOptions) (*HTTPFailureClient, error) {
+	client, err := azcore.NewClient("httpinfrastructuregroup.HTTPFailureClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &HTTPFailureClient{internal: client}, nil
 }
 
 func TestHTTPFailureGetEmptyError(t *testing.T) {
-	client := newHTTPFailureClient()
+	client := newHTTPFailureClient(t)
 	result, err := client.GetEmptyError(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }
 
 func TestHTTPFailureGetNoModelEmpty(t *testing.T) {
-	client := newHTTPFailureClient()
+	client := newHTTPFailureClient(t)
 	result, err := client.GetNoModelEmpty(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }
 
 func TestHTTPFailureGetNoModelError(t *testing.T) {
-	client := newHTTPFailureClient()
+	client := newHTTPFailureClient(t)
 	result, err := client.GetNoModelError(context.Background(), nil)
 	require.Error(t, err)
 	require.Zero(t, result)

@@ -11,24 +11,16 @@ package filegroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // FilesClient contains the methods for the Files group.
-// Don't use this type directly, use NewFilesClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type FilesClient struct {
-	pl runtime.Pipeline
-}
-
-// NewFilesClient creates a new instance of FilesClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewFilesClient(pl runtime.Pipeline) *FilesClient {
-	client := &FilesClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetEmptyFile - Get empty file
@@ -41,7 +33,7 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClien
 	if err != nil {
 		return FilesClientGetEmptyFileResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FilesClientGetEmptyFileResponse{}, err
 	}
@@ -73,7 +65,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetF
 	if err != nil {
 		return FilesClientGetFileResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FilesClientGetFileResponse{}, err
 	}
@@ -105,7 +97,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClien
 	if err != nil {
 		return FilesClientGetFileLargeResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FilesClientGetFileLargeResponse{}, err
 	}

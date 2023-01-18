@@ -11,24 +11,16 @@ package booleangroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // BoolClient contains the methods for the Bool group.
-// Don't use this type directly, use NewBoolClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type BoolClient struct {
-	pl runtime.Pipeline
-}
-
-// NewBoolClient creates a new instance of BoolClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewBoolClient(pl runtime.Pipeline) *BoolClient {
-	client := &BoolClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetFalse - Get false Boolean value
@@ -41,7 +33,7 @@ func (client *BoolClient) GetFalse(ctx context.Context, options *BoolClientGetFa
 	if err != nil {
 		return BoolClientGetFalseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BoolClientGetFalseResponse{}, err
 	}
@@ -81,7 +73,7 @@ func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolClientGet
 	if err != nil {
 		return BoolClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BoolClientGetInvalidResponse{}, err
 	}
@@ -121,7 +113,7 @@ func (client *BoolClient) GetNull(ctx context.Context, options *BoolClientGetNul
 	if err != nil {
 		return BoolClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BoolClientGetNullResponse{}, err
 	}
@@ -161,7 +153,7 @@ func (client *BoolClient) GetTrue(ctx context.Context, options *BoolClientGetTru
 	if err != nil {
 		return BoolClientGetTrueResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BoolClientGetTrueResponse{}, err
 	}
@@ -201,7 +193,7 @@ func (client *BoolClient) PutFalse(ctx context.Context, options *BoolClientPutFa
 	if err != nil {
 		return BoolClientPutFalseResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BoolClientPutFalseResponse{}, err
 	}
@@ -232,7 +224,7 @@ func (client *BoolClient) PutTrue(ctx context.Context, options *BoolClientPutTru
 	if err != nil {
 		return BoolClientPutTrueResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BoolClientPutTrueResponse{}, err
 	}

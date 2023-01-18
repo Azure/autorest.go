@@ -12,6 +12,7 @@ package azkeyvault
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -21,18 +22,9 @@ import (
 )
 
 // Client contains the methods for the KeyVaultClient group.
-// Don't use this type directly, use NewClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type Client struct {
-	pl runtime.Pipeline
-}
-
-// NewClient creates a new instance of Client with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewClient(pl runtime.Pipeline) *Client {
-	client := &Client{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the
@@ -48,7 +40,7 @@ func (client *Client) BackupCertificate(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientBackupCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientBackupCertificateResponse{}, err
 	}
@@ -108,7 +100,7 @@ func (client *Client) BackupKey(ctx context.Context, vaultBaseURL string, keyNam
 	if err != nil {
 		return ClientBackupKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientBackupKeyResponse{}, err
 	}
@@ -160,7 +152,7 @@ func (client *Client) BackupSecret(ctx context.Context, vaultBaseURL string, sec
 	if err != nil {
 		return ClientBackupSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientBackupSecretResponse{}, err
 	}
@@ -212,7 +204,7 @@ func (client *Client) BackupStorageAccount(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return ClientBackupStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientBackupStorageAccountResponse{}, err
 	}
@@ -265,7 +257,7 @@ func (client *Client) CreateCertificate(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientCreateCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientCreateCertificateResponse{}, err
 	}
@@ -319,7 +311,7 @@ func (client *Client) CreateKey(ctx context.Context, vaultBaseURL string, keyNam
 	if err != nil {
 		return ClientCreateKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientCreateKeyResponse{}, err
 	}
@@ -376,7 +368,7 @@ func (client *Client) Decrypt(ctx context.Context, vaultBaseURL string, keyName 
 	if err != nil {
 		return ClientDecryptResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDecryptResponse{}, err
 	}
@@ -433,7 +425,7 @@ func (client *Client) DeleteCertificate(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientDeleteCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteCertificateResponse{}, err
 	}
@@ -485,7 +477,7 @@ func (client *Client) DeleteCertificateContacts(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return ClientDeleteCertificateContactsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteCertificateContactsResponse{}, err
 	}
@@ -534,7 +526,7 @@ func (client *Client) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return ClientDeleteCertificateIssuerResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteCertificateIssuerResponse{}, err
 	}
@@ -587,7 +579,7 @@ func (client *Client) DeleteCertificateOperation(ctx context.Context, vaultBaseU
 	if err != nil {
 		return ClientDeleteCertificateOperationResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteCertificateOperationResponse{}, err
 	}
@@ -640,7 +632,7 @@ func (client *Client) DeleteKey(ctx context.Context, vaultBaseURL string, keyNam
 	if err != nil {
 		return ClientDeleteKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteKeyResponse{}, err
 	}
@@ -693,7 +685,7 @@ func (client *Client) DeleteSasDefinition(ctx context.Context, vaultBaseURL stri
 	if err != nil {
 		return ClientDeleteSasDefinitionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteSasDefinitionResponse{}, err
 	}
@@ -749,7 +741,7 @@ func (client *Client) DeleteSecret(ctx context.Context, vaultBaseURL string, sec
 	if err != nil {
 		return ClientDeleteSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteSecretResponse{}, err
 	}
@@ -800,7 +792,7 @@ func (client *Client) DeleteStorageAccount(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return ClientDeleteStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteStorageAccountResponse{}, err
 	}
@@ -859,7 +851,7 @@ func (client *Client) Encrypt(ctx context.Context, vaultBaseURL string, keyName 
 	if err != nil {
 		return ClientEncryptResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientEncryptResponse{}, err
 	}
@@ -914,11 +906,11 @@ func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[ClientFullBackupResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ClientFullBackupResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ClientFullBackupResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ClientFullBackupResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -931,7 +923,7 @@ func (client *Client) fullBackup(ctx context.Context, vaultBaseURL string, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -972,7 +964,7 @@ func (client *Client) FullBackupStatus(ctx context.Context, vaultBaseURL string,
 	if err != nil {
 		return ClientFullBackupStatusResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientFullBackupStatusResponse{}, err
 	}
@@ -1026,11 +1018,11 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[ClientFullRestoreOperationResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ClientFullRestoreOperationResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ClientFullRestoreOperationResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ClientFullRestoreOperationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1044,7 +1036,7 @@ func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1084,7 +1076,7 @@ func (client *Client) GetCertificate(ctx context.Context, vaultBaseURL string, c
 	if err != nil {
 		return ClientGetCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetCertificateResponse{}, err
 	}
@@ -1139,7 +1131,7 @@ func (client *Client) GetCertificateContacts(ctx context.Context, vaultBaseURL s
 	if err != nil {
 		return ClientGetCertificateContactsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetCertificateContactsResponse{}, err
 	}
@@ -1187,7 +1179,7 @@ func (client *Client) GetCertificateIssuer(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return ClientGetCertificateIssuerResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetCertificateIssuerResponse{}, err
 	}
@@ -1249,7 +1241,7 @@ func (client *Client) NewGetCertificateIssuersPager(vaultBaseURL string, options
 			if err != nil {
 				return ClientGetCertificateIssuersResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetCertificateIssuersResponse{}, err
 			}
@@ -1303,7 +1295,7 @@ func (client *Client) GetCertificateOperation(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return ClientGetCertificateOperationResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetCertificateOperationResponse{}, err
 	}
@@ -1355,7 +1347,7 @@ func (client *Client) GetCertificatePolicy(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return ClientGetCertificatePolicyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetCertificatePolicyResponse{}, err
 	}
@@ -1418,7 +1410,7 @@ func (client *Client) NewGetCertificateVersionsPager(vaultBaseURL string, certif
 			if err != nil {
 				return ClientGetCertificateVersionsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetCertificateVersionsResponse{}, err
 			}
@@ -1484,7 +1476,7 @@ func (client *Client) NewGetCertificatesPager(vaultBaseURL string, options *Clie
 			if err != nil {
 				return ClientGetCertificatesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetCertificatesResponse{}, err
 			}
@@ -1541,7 +1533,7 @@ func (client *Client) GetDeletedCertificate(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return ClientGetDeletedCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetDeletedCertificateResponse{}, err
 	}
@@ -1605,7 +1597,7 @@ func (client *Client) NewGetDeletedCertificatesPager(vaultBaseURL string, option
 			if err != nil {
 				return ClientGetDeletedCertificatesResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetDeletedCertificatesResponse{}, err
 			}
@@ -1662,7 +1654,7 @@ func (client *Client) GetDeletedKey(ctx context.Context, vaultBaseURL string, ke
 	if err != nil {
 		return ClientGetDeletedKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetDeletedKeyResponse{}, err
 	}
@@ -1726,7 +1718,7 @@ func (client *Client) NewGetDeletedKeysPager(vaultBaseURL string, options *Clien
 			if err != nil {
 				return ClientGetDeletedKeysResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetDeletedKeysResponse{}, err
 			}
@@ -1781,7 +1773,7 @@ func (client *Client) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return ClientGetDeletedSasDefinitionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetDeletedSasDefinitionResponse{}, err
 	}
@@ -1848,7 +1840,7 @@ func (client *Client) NewGetDeletedSasDefinitionsPager(vaultBaseURL string, stor
 			if err != nil {
 				return ClientGetDeletedSasDefinitionsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetDeletedSasDefinitionsResponse{}, err
 			}
@@ -1905,7 +1897,7 @@ func (client *Client) GetDeletedSecret(ctx context.Context, vaultBaseURL string,
 	if err != nil {
 		return ClientGetDeletedSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetDeletedSecretResponse{}, err
 	}
@@ -1966,7 +1958,7 @@ func (client *Client) NewGetDeletedSecretsPager(vaultBaseURL string, options *Cl
 			if err != nil {
 				return ClientGetDeletedSecretsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetDeletedSecretsResponse{}, err
 			}
@@ -2020,7 +2012,7 @@ func (client *Client) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return ClientGetDeletedStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetDeletedStorageAccountResponse{}, err
 	}
@@ -2082,7 +2074,7 @@ func (client *Client) NewGetDeletedStorageAccountsPager(vaultBaseURL string, opt
 			if err != nil {
 				return ClientGetDeletedStorageAccountsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetDeletedStorageAccountsResponse{}, err
 			}
@@ -2137,7 +2129,7 @@ func (client *Client) GetKey(ctx context.Context, vaultBaseURL string, keyName s
 	if err != nil {
 		return ClientGetKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetKeyResponse{}, err
 	}
@@ -2203,7 +2195,7 @@ func (client *Client) NewGetKeyVersionsPager(vaultBaseURL string, keyName string
 			if err != nil {
 				return ClientGetKeyVersionsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetKeyVersionsResponse{}, err
 			}
@@ -2271,7 +2263,7 @@ func (client *Client) NewGetKeysPager(vaultBaseURL string, options *ClientGetKey
 			if err != nil {
 				return ClientGetKeysResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetKeysResponse{}, err
 			}
@@ -2325,7 +2317,7 @@ func (client *Client) GetSasDefinition(ctx context.Context, vaultBaseURL string,
 	if err != nil {
 		return ClientGetSasDefinitionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetSasDefinitionResponse{}, err
 	}
@@ -2391,7 +2383,7 @@ func (client *Client) NewGetSasDefinitionsPager(vaultBaseURL string, storageAcco
 			if err != nil {
 				return ClientGetSasDefinitionsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetSasDefinitionsResponse{}, err
 			}
@@ -2450,7 +2442,7 @@ func (client *Client) GetSecret(ctx context.Context, vaultBaseURL string, secret
 	if err != nil {
 		return ClientGetSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetSecretResponse{}, err
 	}
@@ -2516,7 +2508,7 @@ func (client *Client) NewGetSecretVersionsPager(vaultBaseURL string, secretName 
 			if err != nil {
 				return ClientGetSecretVersionsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetSecretVersionsResponse{}, err
 			}
@@ -2583,7 +2575,7 @@ func (client *Client) NewGetSecretsPager(vaultBaseURL string, options *ClientGet
 			if err != nil {
 				return ClientGetSecretsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetSecretsResponse{}, err
 			}
@@ -2635,7 +2627,7 @@ func (client *Client) GetStorageAccount(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientGetStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetStorageAccountResponse{}, err
 	}
@@ -2696,7 +2688,7 @@ func (client *Client) NewGetStorageAccountsPager(vaultBaseURL string, options *C
 			if err != nil {
 				return ClientGetStorageAccountsResponse{}, err
 			}
-			resp, err := client.pl.Do(req)
+			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
 				return ClientGetStorageAccountsResponse{}, err
 			}
@@ -2751,7 +2743,7 @@ func (client *Client) ImportCertificate(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientImportCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientImportCertificateResponse{}, err
 	}
@@ -2805,7 +2797,7 @@ func (client *Client) ImportKey(ctx context.Context, vaultBaseURL string, keyNam
 	if err != nil {
 		return ClientImportKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientImportKeyResponse{}, err
 	}
@@ -2859,7 +2851,7 @@ func (client *Client) MergeCertificate(ctx context.Context, vaultBaseURL string,
 	if err != nil {
 		return ClientMergeCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientMergeCertificateResponse{}, err
 	}
@@ -2913,7 +2905,7 @@ func (client *Client) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return ClientPurgeDeletedCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientPurgeDeletedCertificateResponse{}, err
 	}
@@ -2957,7 +2949,7 @@ func (client *Client) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return ClientPurgeDeletedKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientPurgeDeletedKeyResponse{}, err
 	}
@@ -3001,7 +2993,7 @@ func (client *Client) PurgeDeletedSecret(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return ClientPurgeDeletedSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientPurgeDeletedSecretResponse{}, err
 	}
@@ -3046,7 +3038,7 @@ func (client *Client) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseU
 	if err != nil {
 		return ClientPurgeDeletedStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientPurgeDeletedStorageAccountResponse{}, err
 	}
@@ -3091,7 +3083,7 @@ func (client *Client) RecoverDeletedCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return ClientRecoverDeletedCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRecoverDeletedCertificateResponse{}, err
 	}
@@ -3145,7 +3137,7 @@ func (client *Client) RecoverDeletedKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientRecoverDeletedKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRecoverDeletedKeyResponse{}, err
 	}
@@ -3199,7 +3191,7 @@ func (client *Client) RecoverDeletedSasDefinition(ctx context.Context, vaultBase
 	if err != nil {
 		return ClientRecoverDeletedSasDefinitionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRecoverDeletedSasDefinitionResponse{}, err
 	}
@@ -3255,7 +3247,7 @@ func (client *Client) RecoverDeletedSecret(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return ClientRecoverDeletedSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRecoverDeletedSecretResponse{}, err
 	}
@@ -3308,7 +3300,7 @@ func (client *Client) RecoverDeletedStorageAccount(ctx context.Context, vaultBas
 	if err != nil {
 		return ClientRecoverDeletedStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRecoverDeletedStorageAccountResponse{}, err
 	}
@@ -3362,7 +3354,7 @@ func (client *Client) RegenerateStorageAccountKey(ctx context.Context, vaultBase
 	if err != nil {
 		return ClientRegenerateStorageAccountKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRegenerateStorageAccountKeyResponse{}, err
 	}
@@ -3414,7 +3406,7 @@ func (client *Client) RestoreCertificate(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return ClientRestoreCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRestoreCertificateResponse{}, err
 	}
@@ -3469,7 +3461,7 @@ func (client *Client) RestoreKey(ctx context.Context, vaultBaseURL string, param
 	if err != nil {
 		return ClientRestoreKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRestoreKeyResponse{}, err
 	}
@@ -3517,7 +3509,7 @@ func (client *Client) RestoreSecret(ctx context.Context, vaultBaseURL string, pa
 	if err != nil {
 		return ClientRestoreSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRestoreSecretResponse{}, err
 	}
@@ -3564,7 +3556,7 @@ func (client *Client) RestoreStatus(ctx context.Context, vaultBaseURL string, jo
 	if err != nil {
 		return ClientRestoreStatusResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRestoreStatusResponse{}, err
 	}
@@ -3615,7 +3607,7 @@ func (client *Client) RestoreStorageAccount(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return ClientRestoreStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientRestoreStorageAccountResponse{}, err
 	}
@@ -3666,11 +3658,11 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[ClientSelectiveKeyRestoreOperationResponse]{
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ClientSelectiveKeyRestoreOperationResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ClientSelectiveKeyRestoreOperationResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ClientSelectiveKeyRestoreOperationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -3684,7 +3676,7 @@ func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBas
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3727,7 +3719,7 @@ func (client *Client) SetCertificateContacts(ctx context.Context, vaultBaseURL s
 	if err != nil {
 		return ClientSetCertificateContactsResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetCertificateContactsResponse{}, err
 	}
@@ -3776,7 +3768,7 @@ func (client *Client) SetCertificateIssuer(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return ClientSetCertificateIssuerResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetCertificateIssuerResponse{}, err
 	}
@@ -3830,7 +3822,7 @@ func (client *Client) SetSasDefinition(ctx context.Context, vaultBaseURL string,
 	if err != nil {
 		return ClientSetSasDefinitionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetSasDefinitionResponse{}, err
 	}
@@ -3887,7 +3879,7 @@ func (client *Client) SetSecret(ctx context.Context, vaultBaseURL string, secret
 	if err != nil {
 		return ClientSetSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetSecretResponse{}, err
 	}
@@ -3939,7 +3931,7 @@ func (client *Client) SetStorageAccount(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientSetStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetStorageAccountResponse{}, err
 	}
@@ -3993,7 +3985,7 @@ func (client *Client) Sign(ctx context.Context, vaultBaseURL string, keyName str
 	if err != nil {
 		return ClientSignResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSignResponse{}, err
 	}
@@ -4053,7 +4045,7 @@ func (client *Client) UnwrapKey(ctx context.Context, vaultBaseURL string, keyNam
 	if err != nil {
 		return ClientUnwrapKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUnwrapKeyResponse{}, err
 	}
@@ -4112,7 +4104,7 @@ func (client *Client) UpdateCertificate(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return ClientUpdateCertificateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateCertificateResponse{}, err
 	}
@@ -4170,7 +4162,7 @@ func (client *Client) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return ClientUpdateCertificateIssuerResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateCertificateIssuerResponse{}, err
 	}
@@ -4224,7 +4216,7 @@ func (client *Client) UpdateCertificateOperation(ctx context.Context, vaultBaseU
 	if err != nil {
 		return ClientUpdateCertificateOperationResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateCertificateOperationResponse{}, err
 	}
@@ -4278,7 +4270,7 @@ func (client *Client) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return ClientUpdateCertificatePolicyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateCertificatePolicyResponse{}, err
 	}
@@ -4332,7 +4324,7 @@ func (client *Client) UpdateKey(ctx context.Context, vaultBaseURL string, keyNam
 	if err != nil {
 		return ClientUpdateKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateKeyResponse{}, err
 	}
@@ -4390,7 +4382,7 @@ func (client *Client) UpdateSasDefinition(ctx context.Context, vaultBaseURL stri
 	if err != nil {
 		return ClientUpdateSasDefinitionResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateSasDefinitionResponse{}, err
 	}
@@ -4449,7 +4441,7 @@ func (client *Client) UpdateSecret(ctx context.Context, vaultBaseURL string, sec
 	if err != nil {
 		return ClientUpdateSecretResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateSecretResponse{}, err
 	}
@@ -4506,7 +4498,7 @@ func (client *Client) UpdateStorageAccount(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return ClientUpdateStorageAccountResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateStorageAccountResponse{}, err
 	}
@@ -4563,7 +4555,7 @@ func (client *Client) Verify(ctx context.Context, vaultBaseURL string, keyName s
 	if err != nil {
 		return ClientVerifyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientVerifyResponse{}, err
 	}
@@ -4625,7 +4617,7 @@ func (client *Client) WrapKey(ctx context.Context, vaultBaseURL string, keyName 
 	if err != nil {
 		return ClientWrapKeyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientWrapKeyResponse{}, err
 	}

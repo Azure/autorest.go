@@ -11,6 +11,7 @@ package azblob
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,26 +19,13 @@ import (
 	"time"
 )
 
-type directoryClient struct {
+// DirectoryClient contains the methods for the Directory group.
+// Don't use this type directly, use a constructor function instead.
+type DirectoryClient struct {
+	internal       *azcore.Client
 	endpoint       string
 	version        Enum2
 	pathRenameMode *PathRenameMode
-	pl             runtime.Pipeline
-}
-
-// newDirectoryClient creates a new instance of directoryClient with the specified values.
-//   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-//   - version - Specifies the version of the operation to use for this request.
-//   - pathRenameMode - Determines the behavior of the rename operation
-//   - pl - the pipeline used for sending requests and handling responses.
-func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *directoryClient {
-	client := &directoryClient{
-		endpoint:       endpoint,
-		version:        version,
-		pathRenameMode: pathRenameMode,
-		pl:             pl,
-	}
-	return client
 }
 
 // Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a
@@ -48,16 +36,16 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - DirectoryClientCreateOptions contains the optional parameters for the directoryClient.Create method.
-//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) Create(ctx context.Context, resource Enum20, options *DirectoryClientCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientCreateResponse, error) {
+//   - options - DirectoryClientCreateOptions contains the optional parameters for the DirectoryClient.Create method.
+//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the DirectoryClient.Create method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *DirectoryClient) Create(ctx context.Context, resource Enum20, options *DirectoryClientCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, resource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return DirectoryClientCreateResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryClientCreateResponse{}, err
 	}
@@ -68,7 +56,7 @@ func (client *directoryClient) Create(ctx context.Context, resource Enum20, opti
 }
 
 // createCreateRequest creates the Create request.
-func (client *directoryClient) createCreateRequest(ctx context.Context, resource Enum20, options *DirectoryClientCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *DirectoryClient) createCreateRequest(ctx context.Context, resource Enum20, options *DirectoryClientCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -127,7 +115,7 @@ func (client *directoryClient) createCreateRequest(ctx context.Context, resource
 }
 
 // createHandleResponse handles the Create response.
-func (client *directoryClient) createHandleResponse(resp *http.Response) (DirectoryClientCreateResponse, error) {
+func (client *DirectoryClient) createHandleResponse(resp *http.Response) (DirectoryClientCreateResponse, error) {
 	result := DirectoryClientCreateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -171,15 +159,15 @@ func (client *directoryClient) createHandleResponse(resp *http.Response) (Direct
 // Generated from API version 2020-06-12
 //   - recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is
 //     non-empty, an error occurs.
-//   - options - DirectoryClientDeleteOptions contains the optional parameters for the directoryClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, options *DirectoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientDeleteResponse, error) {
+//   - options - DirectoryClientDeleteOptions contains the optional parameters for the DirectoryClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *DirectoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, options *DirectoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, recursiveDirectoryDelete, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return DirectoryClientDeleteResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryClientDeleteResponse{}, err
 	}
@@ -190,7 +178,7 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiveDirectoryDelete bool, options *DirectoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *DirectoryClient) deleteCreateRequest(ctx context.Context, recursiveDirectoryDelete bool, options *DirectoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -228,7 +216,7 @@ func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiv
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *directoryClient) deleteHandleResponse(resp *http.Response) (DirectoryClientDeleteResponse, error) {
+func (client *DirectoryClient) deleteHandleResponse(resp *http.Response) (DirectoryClientDeleteResponse, error) {
 	result := DirectoryClientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -256,16 +244,16 @@ func (client *directoryClient) deleteHandleResponse(resp *http.Response) (Direct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - DirectoryClientGetAccessControlOptions contains the optional parameters for the directoryClient.GetAccessControl
+//   - options - DirectoryClientGetAccessControlOptions contains the optional parameters for the DirectoryClient.GetAccessControl
 //     method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum22, options *DirectoryClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientGetAccessControlResponse, error) {
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *DirectoryClient) GetAccessControl(ctx context.Context, action Enum22, options *DirectoryClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientGetAccessControlResponse, error) {
 	req, err := client.getAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return DirectoryClientGetAccessControlResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryClientGetAccessControlResponse{}, err
 	}
@@ -276,7 +264,7 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum
 }
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
-func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context, action Enum22, options *DirectoryClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *DirectoryClient) getAccessControlCreateRequest(ctx context.Context, action Enum22, options *DirectoryClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodHead, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -314,7 +302,7 @@ func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context
 }
 
 // getAccessControlHandleResponse handles the GetAccessControl response.
-func (client *directoryClient) getAccessControlHandleResponse(resp *http.Response) (DirectoryClientGetAccessControlResponse, error) {
+func (client *DirectoryClient) getAccessControlHandleResponse(resp *http.Response) (DirectoryClientGetAccessControlResponse, error) {
 	result := DirectoryClientGetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -365,18 +353,18 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *http.Respons
 //   - renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 //     If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 //     otherwise, the existing properties will be preserved.
-//   - options - DirectoryClientRenameOptions contains the optional parameters for the directoryClient.Rename method.
-//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//   - options - DirectoryClientRenameOptions contains the optional parameters for the DirectoryClient.Rename method.
+//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the DirectoryClient.Create method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the DirectoryClient.Rename
 //     method.
-func (client *directoryClient) Rename(ctx context.Context, renameSource string, options *DirectoryClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (DirectoryClientRenameResponse, error) {
+func (client *DirectoryClient) Rename(ctx context.Context, renameSource string, options *DirectoryClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (DirectoryClientRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return DirectoryClientRenameResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryClientRenameResponse{}, err
 	}
@@ -387,7 +375,7 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 }
 
 // renameCreateRequest creates the Rename request.
-func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSource string, options *DirectoryClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
+func (client *DirectoryClient) renameCreateRequest(ctx context.Context, renameSource string, options *DirectoryClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -467,7 +455,7 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 }
 
 // renameHandleResponse handles the Rename response.
-func (client *directoryClient) renameHandleResponse(resp *http.Response) (DirectoryClientRenameResponse, error) {
+func (client *DirectoryClient) renameHandleResponse(resp *http.Response) (DirectoryClientRenameResponse, error) {
 	result := DirectoryClientRenameResponse{}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -512,16 +500,16 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (Direct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - DirectoryClientSetAccessControlOptions contains the optional parameters for the directoryClient.SetAccessControl
+//   - options - DirectoryClientSetAccessControlOptions contains the optional parameters for the DirectoryClient.SetAccessControl
 //     method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum21, options *DirectoryClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientSetAccessControlResponse, error) {
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+func (client *DirectoryClient) SetAccessControl(ctx context.Context, action Enum21, options *DirectoryClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientSetAccessControlResponse, error) {
 	req, err := client.setAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return DirectoryClientSetAccessControlResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryClientSetAccessControlResponse{}, err
 	}
@@ -532,7 +520,7 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum
 }
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
-func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context, action Enum21, options *DirectoryClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *DirectoryClient) setAccessControlCreateRequest(ctx context.Context, action Enum21, options *DirectoryClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -579,7 +567,7 @@ func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context
 }
 
 // setAccessControlHandleResponse handles the SetAccessControl response.
-func (client *directoryClient) setAccessControlHandleResponse(resp *http.Response) (DirectoryClientSetAccessControlResponse, error) {
+func (client *DirectoryClient) setAccessControlHandleResponse(resp *http.Response) (DirectoryClientSetAccessControlResponse, error) {
 	result := DirectoryClientSetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)

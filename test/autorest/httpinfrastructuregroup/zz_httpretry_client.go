@@ -11,24 +11,16 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // HTTPRetryClient contains the methods for the HTTPRetry group.
-// Don't use this type directly, use NewHTTPRetryClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type HTTPRetryClient struct {
-	pl runtime.Pipeline
-}
-
-// NewHTTPRetryClient creates a new instance of HTTPRetryClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewHTTPRetryClient(pl runtime.Pipeline) *HTTPRetryClient {
-	client := &HTTPRetryClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // Delete503 - Return 503 status code, then 200 after retry
@@ -41,7 +33,7 @@ func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetry
 	if err != nil {
 		return HTTPRetryClientDelete503Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientDelete503Response{}, err
 	}
@@ -72,7 +64,7 @@ func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryCli
 	if err != nil {
 		return HTTPRetryClientGet502Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientGet502Response{}, err
 	}
@@ -102,7 +94,7 @@ func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryCl
 	if err != nil {
 		return HTTPRetryClientHead408Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientHead408Response{}, err
 	}
@@ -133,7 +125,7 @@ func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetr
 	if err != nil {
 		return HTTPRetryClientOptions502Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientOptions502Response{}, err
 	}
@@ -173,7 +165,7 @@ func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryC
 	if err != nil {
 		return HTTPRetryClientPatch500Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPatch500Response{}, err
 	}
@@ -204,7 +196,7 @@ func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryC
 	if err != nil {
 		return HTTPRetryClientPatch504Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPatch504Response{}, err
 	}
@@ -235,7 +227,7 @@ func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryCl
 	if err != nil {
 		return HTTPRetryClientPost503Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPost503Response{}, err
 	}
@@ -266,7 +258,7 @@ func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryCli
 	if err != nil {
 		return HTTPRetryClientPut500Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPut500Response{}, err
 	}
@@ -297,7 +289,7 @@ func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryCli
 	if err != nil {
 		return HTTPRetryClientPut504Response{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPut504Response{}, err
 	}

@@ -16,20 +16,29 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newBinaryGroupClient() *UploadClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
-	return NewUploadClient(pl)
+func newUploadClient(t *testing.T) *UploadClient {
+	client, err := NewUploadClient(nil)
+	require.NoError(t, err)
+	return client
+}
+
+func NewUploadClient(options *azcore.ClientOptions) (*UploadClient, error) {
+	client, err := azcore.NewClient("binarygroup.UploadClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &UploadClient{internal: client}, nil
 }
 
 func TestBinary(t *testing.T) {
-	client := newBinaryGroupClient()
+	client := newUploadClient(t)
 	resp, err := client.Binary(context.Background(), streaming.NopCloser(bytes.NewReader([]byte{0xff, 0xfe, 0xfd})), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestFile(t *testing.T) {
-	client := newBinaryGroupClient()
+	client := newUploadClient(t)
 	jsonFile := strings.NewReader(`{ "more": "cowbell" }`)
 	resp, err := client.File(context.Background(), streaming.NopCloser(jsonFile), nil)
 	require.NoError(t, err)

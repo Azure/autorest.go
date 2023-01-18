@@ -11,24 +11,16 @@ package complexgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
 // BasicClient contains the methods for the Basic group.
-// Don't use this type directly, use NewBasicClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
-	pl runtime.Pipeline
-}
-
-// NewBasicClient creates a new instance of BasicClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewBasicClient(pl runtime.Pipeline) *BasicClient {
-	client := &BasicClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // GetEmpty - Get a basic complex type that is empty
@@ -41,7 +33,7 @@ func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicClientGet
 	if err != nil {
 		return BasicClientGetEmptyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BasicClientGetEmptyResponse{}, err
 	}
@@ -81,7 +73,7 @@ func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicClientG
 	if err != nil {
 		return BasicClientGetInvalidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BasicClientGetInvalidResponse{}, err
 	}
@@ -121,7 +113,7 @@ func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicCli
 	if err != nil {
 		return BasicClientGetNotProvidedResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BasicClientGetNotProvidedResponse{}, err
 	}
@@ -161,7 +153,7 @@ func (client *BasicClient) GetNull(ctx context.Context, options *BasicClientGetN
 	if err != nil {
 		return BasicClientGetNullResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BasicClientGetNullResponse{}, err
 	}
@@ -201,7 +193,7 @@ func (client *BasicClient) GetValid(ctx context.Context, options *BasicClientGet
 	if err != nil {
 		return BasicClientGetValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BasicClientGetValidResponse{}, err
 	}
@@ -242,7 +234,7 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, opti
 	if err != nil {
 		return BasicClientPutValidResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return BasicClientPutValidResponse{}, err
 	}

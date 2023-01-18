@@ -25,17 +25,27 @@ func toTimePtr(layout string, value string) *time.Time {
 	return &t
 }
 
-func newXMLClient() *XMLClient {
-	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{
+func newXMLClient(t *testing.T) *XMLClient {
+	options := azcore.ClientOptions{
 		Logging: policy.LogOptions{
 			IncludeBody: true,
 		},
-	})
-	return NewXMLClient(pl)
+	}
+	client, err := NewXMLClient(&options)
+	require.NoError(t, err)
+	return client
+}
+
+func NewXMLClient(options *azcore.ClientOptions) (*XMLClient, error) {
+	client, err := azcore.NewClient("xmlgroup.XMLClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &XMLClient{internal: client}, nil
 }
 
 func TestGetACLs(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetACLs(context.Background(), nil)
 	require.NoError(t, err)
 	expected := []*SignedIdentifier{
@@ -54,7 +64,7 @@ func TestGetACLs(t *testing.T) {
 }
 
 func TestGetBytes(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetBytes(context.Background(), nil)
 	require.NoError(t, err)
 	if string(result.Bytes) != "Hello world" {
@@ -63,7 +73,7 @@ func TestGetBytes(t *testing.T) {
 }
 
 func TestGetComplexTypeRefNoMeta(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetComplexTypeRefNoMeta(context.Background(), nil)
 	require.NoError(t, err)
 	expected := RootWithRefAndNoMeta{
@@ -78,7 +88,7 @@ func TestGetComplexTypeRefNoMeta(t *testing.T) {
 }
 
 func TestGetComplexTypeRefWithMeta(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetComplexTypeRefWithMeta(context.Background(), nil)
 	require.NoError(t, err)
 	expected := RootWithRefAndMeta{
@@ -93,7 +103,7 @@ func TestGetComplexTypeRefWithMeta(t *testing.T) {
 }
 
 func TestGetEmptyChildElement(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetEmptyChildElement(context.Background(), nil)
 	require.NoError(t, err)
 	expected := Banana{
@@ -107,7 +117,7 @@ func TestGetEmptyChildElement(t *testing.T) {
 }
 
 func TestGetEmptyList(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetEmptyList(context.Background(), nil)
 	require.NoError(t, err)
 	expected := Slideshow{}
@@ -117,7 +127,7 @@ func TestGetEmptyList(t *testing.T) {
 }
 
 func TestGetEmptyRootList(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetEmptyRootList(context.Background(), nil)
 	require.NoError(t, err)
 	if result.Bananas != nil {
@@ -126,7 +136,7 @@ func TestGetEmptyRootList(t *testing.T) {
 }
 
 func TestGetEmptyWrappedLists(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetEmptyWrappedLists(context.Background(), nil)
 	require.NoError(t, err)
 	expected := AppleBarrel{}
@@ -136,7 +146,7 @@ func TestGetEmptyWrappedLists(t *testing.T) {
 }
 
 func TestGetHeaders(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetHeaders(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.CustomHeader, to.Ptr("custom-value")); r != "" {
@@ -145,7 +155,7 @@ func TestGetHeaders(t *testing.T) {
 }
 
 func TestGetRootList(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetRootList(context.Background(), nil)
 	require.NoError(t, err)
 	expected := []*Banana{
@@ -166,7 +176,7 @@ func TestGetRootList(t *testing.T) {
 }
 
 func TestGetRootListSingleItem(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetRootListSingleItem(context.Background(), nil)
 	require.NoError(t, err)
 	expected := []*Banana{
@@ -182,7 +192,7 @@ func TestGetRootListSingleItem(t *testing.T) {
 }
 
 func TestGetServiceProperties(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetServiceProperties(context.Background(), nil)
 	require.NoError(t, err)
 	expected := StorageServiceProperties{
@@ -221,7 +231,7 @@ func TestGetServiceProperties(t *testing.T) {
 }
 
 func TestGetSimple(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetSimple(context.Background(), nil)
 	require.NoError(t, err)
 	expected := Slideshow{
@@ -246,7 +256,7 @@ func TestGetSimple(t *testing.T) {
 }
 
 func TestGetWrappedLists(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetWrappedLists(context.Background(), nil)
 	require.NoError(t, err)
 	expected := AppleBarrel{
@@ -260,7 +270,7 @@ func TestGetWrappedLists(t *testing.T) {
 
 func TestGetXMsText(t *testing.T) {
 	t.Skip("support NYI")
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.GetXMsText(context.Background(), nil)
 	require.NoError(t, err)
 	expected := ObjectWithXMsTextProperty{
@@ -273,7 +283,7 @@ func TestGetXMsText(t *testing.T) {
 }
 
 func TestJSONInput(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.JSONInput(context.Background(), JSONInput{
 		ID: to.Ptr[int32](42),
 	}, nil)
@@ -282,7 +292,7 @@ func TestJSONInput(t *testing.T) {
 }
 
 func TestJSONOutput(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.JSONOutput(context.Background(), nil)
 	require.NoError(t, err)
 	expected := JSONOutput{
@@ -294,7 +304,7 @@ func TestJSONOutput(t *testing.T) {
 }
 
 func TestListBlobs(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.ListBlobs(context.Background(), nil)
 	require.NoError(t, err)
 	blob1LM, err := time.Parse(time.RFC1123, "Wed, 09 Sep 2009 09:20:02 GMT")
@@ -417,7 +427,7 @@ func TestListBlobs(t *testing.T) {
 }
 
 func TestListContainers(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.ListContainers(context.Background(), nil)
 	require.NoError(t, err)
 	expected := ListContainersResponse{
@@ -455,7 +465,7 @@ func TestListContainers(t *testing.T) {
 }
 
 func TestPutACLs(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutACLs(context.Background(), []*SignedIdentifier{
 		{
 			ID: to.Ptr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
@@ -471,7 +481,7 @@ func TestPutACLs(t *testing.T) {
 }
 
 func TestPutBinary(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	_, err := client.PutBinary(context.Background(), ModelWithByteProperty{
 		Bytes: []byte("Hello world"),
 	}, nil)
@@ -479,7 +489,7 @@ func TestPutBinary(t *testing.T) {
 }
 
 func TestPutComplexTypeRefNoMeta(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutComplexTypeRefNoMeta(context.Background(), RootWithRefAndNoMeta{
 		RefToModel: &ComplexTypeNoMeta{
 			ID: to.Ptr("myid"),
@@ -491,7 +501,7 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 }
 
 func TestPutComplexTypeRefWithMeta(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutComplexTypeRefWithMeta(context.Background(), RootWithRefAndMeta{
 		RefToModel: &ComplexTypeWithMeta{
 			ID: to.Ptr("myid"),
@@ -503,7 +513,7 @@ func TestPutComplexTypeRefWithMeta(t *testing.T) {
 }
 
 func TestPutEmptyChildElement(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutEmptyChildElement(context.Background(), Banana{
 		Name:       to.Ptr("Unknown Banana"),
 		Expiration: toTimePtr(time.RFC3339Nano, "2012-02-24T00:53:52.789Z"),
@@ -514,7 +524,7 @@ func TestPutEmptyChildElement(t *testing.T) {
 }
 
 func TestPutEmptyList(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutEmptyList(context.Background(), Slideshow{
 		Slides: []*Slide{},
 	}, nil)
@@ -523,14 +533,14 @@ func TestPutEmptyList(t *testing.T) {
 }
 
 func TestPutEmptyRootList(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutEmptyRootList(context.Background(), []*Banana{}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestPutEmptyWrappedLists(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutEmptyWrappedLists(context.Background(), AppleBarrel{
 		BadApples:  []*string{},
 		GoodApples: []*string{},
@@ -540,7 +550,7 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 }
 
 func TestPutRootList(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutRootList(context.Background(), []*Banana{
 		{
 			Name:       to.Ptr("Cavendish"),
@@ -558,7 +568,7 @@ func TestPutRootList(t *testing.T) {
 }
 
 func TestPutRootListSingleItem(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutRootListSingleItem(context.Background(), []*Banana{
 		{
 			Name:       to.Ptr("Cavendish"),
@@ -571,7 +581,7 @@ func TestPutRootListSingleItem(t *testing.T) {
 }
 
 func TestPutServiceProperties(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutServiceProperties(context.Background(), StorageServiceProperties{
 		HourMetrics: &Metrics{
 			Version:     to.Ptr("1.0"),
@@ -607,7 +617,7 @@ func TestPutServiceProperties(t *testing.T) {
 }
 
 func TestPutSimple(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutSimple(context.Background(), Slideshow{
 		Author: to.Ptr("Yours Truly"),
 		Date:   to.Ptr("Date of publication"),
@@ -629,7 +639,7 @@ func TestPutSimple(t *testing.T) {
 }
 
 func TestPutWrappedLists(t *testing.T) {
-	client := newXMLClient()
+	client := newXMLClient(t)
 	result, err := client.PutWrappedLists(context.Background(), AppleBarrel{
 		BadApples:  to.SliceOfPtrs("Red Delicious"),
 		GoodApples: to.SliceOfPtrs("Fuji", "Gala"),

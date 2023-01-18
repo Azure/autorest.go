@@ -11,6 +11,7 @@ package mediatypesgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -20,18 +21,9 @@ import (
 )
 
 // MediaTypesClient contains the methods for the MediaTypesClient group.
-// Don't use this type directly, use NewMediaTypesClient() instead.
+// Don't use this type directly, use a constructor function instead.
 type MediaTypesClient struct {
-	pl runtime.Pipeline
-}
-
-// NewMediaTypesClient creates a new instance of MediaTypesClient with the specified values.
-//   - pl - the pipeline used for sending requests and handling responses.
-func NewMediaTypesClient(pl runtime.Pipeline) *MediaTypesClient {
-	client := &MediaTypesClient{
-		pl: pl,
-	}
-	return client
+	internal *azcore.Client
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
@@ -45,7 +37,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
@@ -92,7 +84,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, c
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
 	}
@@ -128,7 +120,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithJSON(ctx context.Co
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, err
 	}
@@ -162,7 +154,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithJSON(ctx context.Context, options
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
@@ -210,7 +202,7 @@ func (client *MediaTypesClient) BinaryBodyWithThreeContentTypes(ctx context.Cont
 	if err != nil {
 		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, err
 	}
@@ -258,7 +250,7 @@ func (client *MediaTypesClient) BinaryBodyWithTwoContentTypes(ctx context.Contex
 	if err != nil {
 		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, err
 	}
@@ -303,7 +295,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, opt
 	if err != nil {
 		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
@@ -350,7 +342,7 @@ func (client *MediaTypesClient) PutTextAndJSONBody(ctx context.Context, contentT
 	if err != nil {
 		return MediaTypesClientPutTextAndJSONBodyResponse{}, err
 	}
-	resp, err := client.pl.Do(req)
+	resp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MediaTypesClientPutTextAndJSONBodyResponse{}, err
 	}
