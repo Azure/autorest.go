@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.5.2",
+      "tag": "@autorest/gotest_v4.5.2",
+      "date": "Mon, 30 Jan 2023 08:26:19 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix autorest pipeline issue after go generator upgrade."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.5.1",
       "tag": "@autorest/gotest_v4.5.1",
       "date": "Tue, 17 Jan 2023 05:21:21 GMT",
