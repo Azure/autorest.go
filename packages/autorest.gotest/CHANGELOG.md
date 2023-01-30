@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Tue, 17 Jan 2023 05:21:21 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Jan 2023 08:26:19 GMT and should not be manually modified.
+
+## 4.5.2
+Mon, 30 Jan 2023 08:26:19 GMT
+
+### Patches
+
+- Fix autorest pipeline issue after go generator upgrade.
 
 ## 4.5.1
 Tue, 17 Jan 2023 05:21:21 GMT

@@ -7,7 +7,7 @@ https://github.com/Azure/azure-rest-api-specs
 ## How to Generate GO Test Code
 
 ```
-autorest --version=3.7.3 --use=@autorest/go@latest --use=@autorest/gotest@latest --go --track2 --output-folder=<RP package path> --file-prefix="zz_generated_" --clear-output-folder=false --go.clear-output-folder=false --testmodeler.generate-mock-test --testmodeler.generate-sdk-example --testmodeler.generate-scenario-test --testmodeler.generate-sdk-sample <RP config md file path>
+autorest --version=3.8.2 --use=@autorest/go@latest --use=@autorest/gotest@latest --go --track2 --output-folder=<RP package path> --file-prefix="zz_generated_" --clear-output-folder=false --go.clear-output-folder=false --testmodeler.generate-mock-test --testmodeler.generate-sdk-example --testmodeler.generate-scenario-test --testmodeler.generate-sdk-sample <RP config md file path>
 ```
 
 ## Configurations
@@ -59,33 +59,43 @@ testmodeler:
   scenario:
     codemodel-restcall-only: false
 
-version: 3.7.3
+version: 3.8.2
 
 use-extension:
-  '@autorest/go': '4.0.0-preview.43'
+  '@autorest/go': '4.0.0-preview.45'
   '@autorest/testmodeler': '2.3.2'
 
 pipeline:
   test-modeler:
     input:
-      - go-transform
+      - go
     output-artifact: source-file-test-modeler
-  go-tester:
-    input: test-modeler
-    output-artifact: source-file-go-tester
   testmodeler/emitter:
     input:
       - test-modeler
-      - go-tester
     scope: scope-testmodeler/emitter
+  go-transform:
+    input:
+      - test-modeler
+  go-tester:
+    input: go-transform
+    output-artifact: source-file-go-tester
+  gotest/emitter:
+    input:
+      - go-tester
+    scope: scope-gotest/emitter
   go-linter:
     input:
       - go-tester
-      - testmodeler/emitter
+      - gotest/emitter
 
 scope-testmodeler/emitter:
   input-artifact:
     - source-file-test-modeler
+  output-uri-expr: $key
+
+scope-gotest/emitter:
+  input-artifact:
     - source-file-go-tester
   output-uri-expr: $key
 ```
@@ -93,7 +103,7 @@ scope-testmodeler/emitter:
 ```yaml $(go) && !$(generate-sdk)
 pipeline:
   go/emitter:
-    scope: scope-testmodeler/emitter
+    scope: scope-gotest/emitter
 ```
 
 ```yaml $(debug)
