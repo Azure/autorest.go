@@ -2419,9 +2419,6 @@ schemas:
                       - schema: *ref_37
                         readOnly: true
                         serializedName: info
-                        extensions:
-                          x-internal-autorest-anonymous-schema:
-                            anonymous: true
                         language:
                           default:
                             name: info
@@ -3535,9 +3532,6 @@ schemas:
                         protocol: {}
                       - schema: *ref_86
                         serializedName: tags
-                        extensions:
-                          x-internal-autorest-anonymous-schema:
-                            anonymous: true
                         language: &ref_385
                           default:
                             name: tags
@@ -3870,9 +3864,6 @@ schemas:
                               - schema: *ref_100
                                 required: false
                                 serializedName: properties
-                                extensions:
-                                  x-internal-autorest-anonymous-schema:
-                                    anonymous: true
                                 language: &ref_398
                                   default:
                                     name: properties
@@ -4479,9 +4470,6 @@ schemas:
                         protocol: {}
                       - schema: *ref_118
                         serializedName: userAssignedIdentities
-                        extensions:
-                          x-internal-autorest-anonymous-schema:
-                            anonymous: true
                         language:
                           default:
                             name: userAssignedIdentities
