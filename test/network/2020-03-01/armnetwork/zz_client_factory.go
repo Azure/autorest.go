@@ -14,14 +14,16 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 )
 
-// ClientFactory is a factory help to create all clients in this modules.
+// ClientFactory is a client factory used to create any client in this module.
+// Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
 	subscriptionID string
 	credential     azcore.TokenCredential
-	options        *arm.ClientOptions
+	options        arm.ClientOptions
 }
 
-// NewClientFactory creates a new instance of ClientFactor with the specified values.
+// NewClientFactory creates a new instance of ClientFactory with the specified values.
+// The parameter values will be propagated to any client created from this factory.
 //   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 //     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
@@ -33,476 +35,476 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}
 	return &ClientFactory{
 		subscriptionID: subscriptionID, credential: credential,
-		options: options,
+		options: *options,
 	}, nil
 }
 
 func (c *ClientFactory) NewApplicationGatewaysClient() *ApplicationGatewaysClient {
-	subClient, _ := NewApplicationGatewaysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewApplicationGatewaysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewApplicationSecurityGroupsClient() *ApplicationSecurityGroupsClient {
-	subClient, _ := NewApplicationSecurityGroupsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewApplicationSecurityGroupsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAvailableDelegationsClient() *AvailableDelegationsClient {
-	subClient, _ := NewAvailableDelegationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAvailableDelegationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAvailableResourceGroupDelegationsClient() *AvailableResourceGroupDelegationsClient {
-	subClient, _ := NewAvailableResourceGroupDelegationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAvailableResourceGroupDelegationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAvailableServiceAliasesClient() *AvailableServiceAliasesClient {
-	subClient, _ := NewAvailableServiceAliasesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAvailableServiceAliasesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAzureFirewallsClient() *AzureFirewallsClient {
-	subClient, _ := NewAzureFirewallsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAzureFirewallsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAzureFirewallFqdnTagsClient() *AzureFirewallFqdnTagsClient {
-	subClient, _ := NewAzureFirewallFqdnTagsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAzureFirewallFqdnTagsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewBastionHostsClient() *BastionHostsClient {
-	subClient, _ := NewBastionHostsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewBastionHostsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewManagementClient() *ManagementClient {
-	subClient, _ := NewManagementClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewManagementClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDdosCustomPoliciesClient() *DdosCustomPoliciesClient {
-	subClient, _ := NewDdosCustomPoliciesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewDdosCustomPoliciesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDdosProtectionPlansClient() *DdosProtectionPlansClient {
-	subClient, _ := NewDdosProtectionPlansClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewDdosProtectionPlansClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAvailableEndpointServicesClient() *AvailableEndpointServicesClient {
-	subClient, _ := NewAvailableEndpointServicesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAvailableEndpointServicesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteCircuitAuthorizationsClient() *ExpressRouteCircuitAuthorizationsClient {
-	subClient, _ := NewExpressRouteCircuitAuthorizationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteCircuitAuthorizationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteCircuitPeeringsClient() *ExpressRouteCircuitPeeringsClient {
-	subClient, _ := NewExpressRouteCircuitPeeringsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteCircuitPeeringsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteCircuitConnectionsClient() *ExpressRouteCircuitConnectionsClient {
-	subClient, _ := NewExpressRouteCircuitConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteCircuitConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewPeerExpressRouteCircuitConnectionsClient() *PeerExpressRouteCircuitConnectionsClient {
-	subClient, _ := NewPeerExpressRouteCircuitConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewPeerExpressRouteCircuitConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteCircuitsClient() *ExpressRouteCircuitsClient {
-	subClient, _ := NewExpressRouteCircuitsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteCircuitsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteServiceProvidersClient() *ExpressRouteServiceProvidersClient {
-	subClient, _ := NewExpressRouteServiceProvidersClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteServiceProvidersClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteCrossConnectionsClient() *ExpressRouteCrossConnectionsClient {
-	subClient, _ := NewExpressRouteCrossConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteCrossConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteCrossConnectionPeeringsClient() *ExpressRouteCrossConnectionPeeringsClient {
-	subClient, _ := NewExpressRouteCrossConnectionPeeringsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteCrossConnectionPeeringsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRoutePortsLocationsClient() *ExpressRoutePortsLocationsClient {
-	subClient, _ := NewExpressRoutePortsLocationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRoutePortsLocationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRoutePortsClient() *ExpressRoutePortsClient {
-	subClient, _ := NewExpressRoutePortsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRoutePortsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteLinksClient() *ExpressRouteLinksClient {
-	subClient, _ := NewExpressRouteLinksClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteLinksClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewFirewallPoliciesClient() *FirewallPoliciesClient {
-	subClient, _ := NewFirewallPoliciesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewFirewallPoliciesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewFirewallPolicyRuleGroupsClient() *FirewallPolicyRuleGroupsClient {
-	subClient, _ := NewFirewallPolicyRuleGroupsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewFirewallPolicyRuleGroupsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewIPAllocationsClient() *IPAllocationsClient {
-	subClient, _ := NewIPAllocationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewIPAllocationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewIPGroupsClient() *IPGroupsClient {
-	subClient, _ := NewIPGroupsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewIPGroupsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLoadBalancersClient() *LoadBalancersClient {
-	subClient, _ := NewLoadBalancersClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLoadBalancersClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLoadBalancerBackendAddressPoolsClient() *LoadBalancerBackendAddressPoolsClient {
-	subClient, _ := NewLoadBalancerBackendAddressPoolsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLoadBalancerBackendAddressPoolsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLoadBalancerFrontendIPConfigurationsClient() *LoadBalancerFrontendIPConfigurationsClient {
-	subClient, _ := NewLoadBalancerFrontendIPConfigurationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLoadBalancerFrontendIPConfigurationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewInboundNatRulesClient() *InboundNatRulesClient {
-	subClient, _ := NewInboundNatRulesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewInboundNatRulesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLoadBalancerLoadBalancingRulesClient() *LoadBalancerLoadBalancingRulesClient {
-	subClient, _ := NewLoadBalancerLoadBalancingRulesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLoadBalancerLoadBalancingRulesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLoadBalancerOutboundRulesClient() *LoadBalancerOutboundRulesClient {
-	subClient, _ := NewLoadBalancerOutboundRulesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLoadBalancerOutboundRulesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLoadBalancerNetworkInterfacesClient() *LoadBalancerNetworkInterfacesClient {
-	subClient, _ := NewLoadBalancerNetworkInterfacesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLoadBalancerNetworkInterfacesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLoadBalancerProbesClient() *LoadBalancerProbesClient {
-	subClient, _ := NewLoadBalancerProbesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLoadBalancerProbesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewNatGatewaysClient() *NatGatewaysClient {
-	subClient, _ := NewNatGatewaysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewNatGatewaysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewInterfacesClient() *InterfacesClient {
-	subClient, _ := NewInterfacesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewInterfacesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewInterfaceIPConfigurationsClient() *InterfaceIPConfigurationsClient {
-	subClient, _ := NewInterfaceIPConfigurationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewInterfaceIPConfigurationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewInterfaceLoadBalancersClient() *InterfaceLoadBalancersClient {
-	subClient, _ := NewInterfaceLoadBalancersClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewInterfaceLoadBalancersClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewInterfaceTapConfigurationsClient() *InterfaceTapConfigurationsClient {
-	subClient, _ := NewInterfaceTapConfigurationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewInterfaceTapConfigurationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewProfilesClient() *ProfilesClient {
-	subClient, _ := NewProfilesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewProfilesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSecurityGroupsClient() *SecurityGroupsClient {
-	subClient, _ := NewSecurityGroupsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewSecurityGroupsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSecurityRulesClient() *SecurityRulesClient {
-	subClient, _ := NewSecurityRulesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewSecurityRulesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDefaultSecurityRulesClient() *DefaultSecurityRulesClient {
-	subClient, _ := NewDefaultSecurityRulesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewDefaultSecurityRulesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualAppliancesClient() *VirtualAppliancesClient {
-	subClient, _ := NewVirtualAppliancesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualAppliancesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewWatchersClient() *WatchersClient {
-	subClient, _ := NewWatchersClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewWatchersClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewPacketCapturesClient() *PacketCapturesClient {
-	subClient, _ := NewPacketCapturesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewPacketCapturesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewConnectionMonitorsClient() *ConnectionMonitorsClient {
-	subClient, _ := NewConnectionMonitorsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewConnectionMonitorsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewFlowLogsClient() *FlowLogsClient {
-	subClient, _ := NewFlowLogsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewFlowLogsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
-	subClient, _ := NewOperationsClient(c.credential, c.options)
+	subClient, _ := NewOperationsClient(c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewPrivateEndpointsClient() *PrivateEndpointsClient {
-	subClient, _ := NewPrivateEndpointsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewPrivateEndpointsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAvailablePrivateEndpointTypesClient() *AvailablePrivateEndpointTypesClient {
-	subClient, _ := NewAvailablePrivateEndpointTypesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAvailablePrivateEndpointTypesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewPrivateDNSZoneGroupsClient() *PrivateDNSZoneGroupsClient {
-	subClient, _ := NewPrivateDNSZoneGroupsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewPrivateDNSZoneGroupsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewPrivateLinkServicesClient() *PrivateLinkServicesClient {
-	subClient, _ := NewPrivateLinkServicesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewPrivateLinkServicesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewPublicIPAddressesClient() *PublicIPAddressesClient {
-	subClient, _ := NewPublicIPAddressesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewPublicIPAddressesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewPublicIPPrefixesClient() *PublicIPPrefixesClient {
-	subClient, _ := NewPublicIPPrefixesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewPublicIPPrefixesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewRouteFiltersClient() *RouteFiltersClient {
-	subClient, _ := NewRouteFiltersClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewRouteFiltersClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewRouteFilterRulesClient() *RouteFilterRulesClient {
-	subClient, _ := NewRouteFilterRulesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewRouteFilterRulesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewRouteTablesClient() *RouteTablesClient {
-	subClient, _ := NewRouteTablesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewRouteTablesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewRoutesClient() *RoutesClient {
-	subClient, _ := NewRoutesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewRoutesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSecurityPartnerProvidersClient() *SecurityPartnerProvidersClient {
-	subClient, _ := NewSecurityPartnerProvidersClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewSecurityPartnerProvidersClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewBgpServiceCommunitiesClient() *BgpServiceCommunitiesClient {
-	subClient, _ := NewBgpServiceCommunitiesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewBgpServiceCommunitiesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewServiceEndpointPoliciesClient() *ServiceEndpointPoliciesClient {
-	subClient, _ := NewServiceEndpointPoliciesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewServiceEndpointPoliciesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewServiceEndpointPolicyDefinitionsClient() *ServiceEndpointPolicyDefinitionsClient {
-	subClient, _ := NewServiceEndpointPolicyDefinitionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewServiceEndpointPolicyDefinitionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewServiceTagsClient() *ServiceTagsClient {
-	subClient, _ := NewServiceTagsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewServiceTagsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewUsagesClient() *UsagesClient {
-	subClient, _ := NewUsagesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewUsagesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualNetworksClient() *VirtualNetworksClient {
-	subClient, _ := NewVirtualNetworksClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualNetworksClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSubnetsClient() *SubnetsClient {
-	subClient, _ := NewSubnetsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewSubnetsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewResourceNavigationLinksClient() *ResourceNavigationLinksClient {
-	subClient, _ := NewResourceNavigationLinksClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewResourceNavigationLinksClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewServiceAssociationLinksClient() *ServiceAssociationLinksClient {
-	subClient, _ := NewServiceAssociationLinksClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewServiceAssociationLinksClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualNetworkPeeringsClient() *VirtualNetworkPeeringsClient {
-	subClient, _ := NewVirtualNetworkPeeringsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualNetworkPeeringsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualNetworkGatewaysClient() *VirtualNetworkGatewaysClient {
-	subClient, _ := NewVirtualNetworkGatewaysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualNetworkGatewaysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualNetworkGatewayConnectionsClient() *VirtualNetworkGatewayConnectionsClient {
-	subClient, _ := NewVirtualNetworkGatewayConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualNetworkGatewayConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLocalNetworkGatewaysClient() *LocalNetworkGatewaysClient {
-	subClient, _ := NewLocalNetworkGatewaysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLocalNetworkGatewaysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualNetworkTapsClient() *VirtualNetworkTapsClient {
-	subClient, _ := NewVirtualNetworkTapsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualNetworkTapsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualRoutersClient() *VirtualRoutersClient {
-	subClient, _ := NewVirtualRoutersClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualRoutersClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualRouterPeeringsClient() *VirtualRouterPeeringsClient {
-	subClient, _ := NewVirtualRouterPeeringsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualRouterPeeringsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualWansClient() *VirtualWansClient {
-	subClient, _ := NewVirtualWansClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualWansClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNSitesClient() *VPNSitesClient {
-	subClient, _ := NewVPNSitesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNSitesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNSiteLinksClient() *VPNSiteLinksClient {
-	subClient, _ := NewVPNSiteLinksClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNSiteLinksClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNSitesConfigurationClient() *VPNSitesConfigurationClient {
-	subClient, _ := NewVPNSitesConfigurationClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNSitesConfigurationClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNServerConfigurationsClient() *VPNServerConfigurationsClient {
-	subClient, _ := NewVPNServerConfigurationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNServerConfigurationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualHubsClient() *VirtualHubsClient {
-	subClient, _ := NewVirtualHubsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualHubsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewHubVirtualNetworkConnectionsClient() *HubVirtualNetworkConnectionsClient {
-	subClient, _ := NewHubVirtualNetworkConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewHubVirtualNetworkConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNGatewaysClient() *VPNGatewaysClient {
-	subClient, _ := NewVPNGatewaysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNGatewaysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNConnectionsClient() *VPNConnectionsClient {
-	subClient, _ := NewVPNConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNSiteLinkConnectionsClient() *VPNSiteLinkConnectionsClient {
-	subClient, _ := NewVPNSiteLinkConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNSiteLinkConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNLinkConnectionsClient() *VPNLinkConnectionsClient {
-	subClient, _ := NewVPNLinkConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNLinkConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewP2SVPNGatewaysClient() *P2SVPNGatewaysClient {
-	subClient, _ := NewP2SVPNGatewaysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewP2SVPNGatewaysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVPNServerConfigurationsAssociatedWithVirtualWanClient() *VPNServerConfigurationsAssociatedWithVirtualWanClient {
-	subClient, _ := NewVPNServerConfigurationsAssociatedWithVirtualWanClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVPNServerConfigurationsAssociatedWithVirtualWanClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualHubRouteTableV2SClient() *VirtualHubRouteTableV2SClient {
-	subClient, _ := NewVirtualHubRouteTableV2SClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualHubRouteTableV2SClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteGatewaysClient() *ExpressRouteGatewaysClient {
-	subClient, _ := NewExpressRouteGatewaysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteGatewaysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewExpressRouteConnectionsClient() *ExpressRouteConnectionsClient {
-	subClient, _ := NewExpressRouteConnectionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewExpressRouteConnectionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewWebApplicationFirewallPoliciesClient() *WebApplicationFirewallPoliciesClient {
-	subClient, _ := NewWebApplicationFirewallPoliciesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewWebApplicationFirewallPoliciesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }

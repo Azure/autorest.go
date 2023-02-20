@@ -36,18 +36,20 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
 
     // add factory type
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    result += '// ClientFactory is a factory help to create all clients in this modules.\n';
+    result += '// ClientFactory is a client factory used to create any client in this module.\n';
+    result += '// Don\'t use this type directly, use NewClientFactory instead.\n';
     result += 'type ClientFactory struct {\n';
     for (const clientParam of values(allClientParams)) {
       result += `\t${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}\n`;
     }
     result += '\tcredential azcore.TokenCredential\n';
-    result += '\toptions *arm.ClientOptions\n';
+    result += '\toptions arm.ClientOptions\n';
     result += '}\n\n';
 
     // add factory CTOR
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
-    result += '// NewClientFactory creates a new instance of ClientFactor with the specified values.\n';
+    result += '// NewClientFactory creates a new instance of ClientFactory with the specified values.\n';
+    result += '// The parameter values will be propagated to any client created from this factory.\n';
     for (const clientParam of values(allClientParams)) {
       result += `${formatCommentAsBulletItem(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`)}\n`;
     }
@@ -64,7 +66,7 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
       result += `\t\t${clientParam.language.go!.name}: \t${clientParam.language.go!.name},`;
     }
     result += '\t\tcredential: credential,\n';
-    result += '\t\toptions: options,\n';
+    result += '\t\toptions: *options,\n';
     result += '\t}, nil\n';
     result += '}\n\n';
 
@@ -74,9 +76,9 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       if (clientParams) {
         clientParams.sort(sortParametersByRequired);
-        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(${clientParams.map(p => {return `c.${p.language.go!.name}`;}).join(', ')}, c.credential, c.options)\n`;
+        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(${clientParams.map(p => {return `c.${p.language.go!.name}`;}).join(', ')}, c.credential, &c.options)\n`;
       } else {
-        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(c.credential, c.options)\n`;
+        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(c.credential, &c.options)\n`;
       }
       
       result += '\treturn subClient\n';

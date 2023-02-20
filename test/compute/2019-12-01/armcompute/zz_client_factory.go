@@ -14,14 +14,16 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 )
 
-// ClientFactory is a factory help to create all clients in this modules.
+// ClientFactory is a client factory used to create any client in this module.
+// Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
 	subscriptionID string
 	credential     azcore.TokenCredential
-	options        *arm.ClientOptions
+	options        arm.ClientOptions
 }
 
-// NewClientFactory creates a new instance of ClientFactor with the specified values.
+// NewClientFactory creates a new instance of ClientFactory with the specified values.
+// The parameter values will be propagated to any client created from this factory.
 //   - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 //     part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
@@ -33,156 +35,156 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}
 	return &ClientFactory{
 		subscriptionID: subscriptionID, credential: credential,
-		options: options,
+		options: *options,
 	}, nil
 }
 
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
-	subClient, _ := NewOperationsClient(c.credential, c.options)
+	subClient, _ := NewOperationsClient(c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAvailabilitySetsClient() *AvailabilitySetsClient {
-	subClient, _ := NewAvailabilitySetsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewAvailabilitySetsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewProximityPlacementGroupsClient() *ProximityPlacementGroupsClient {
-	subClient, _ := NewProximityPlacementGroupsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewProximityPlacementGroupsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDedicatedHostGroupsClient() *DedicatedHostGroupsClient {
-	subClient, _ := NewDedicatedHostGroupsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewDedicatedHostGroupsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDedicatedHostsClient() *DedicatedHostsClient {
-	subClient, _ := NewDedicatedHostsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewDedicatedHostsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSSHPublicKeysClient() *SSHPublicKeysClient {
-	subClient, _ := NewSSHPublicKeysClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewSSHPublicKeysClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineExtensionImagesClient() *VirtualMachineExtensionImagesClient {
-	subClient, _ := NewVirtualMachineExtensionImagesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineExtensionImagesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineExtensionsClient() *VirtualMachineExtensionsClient {
-	subClient, _ := NewVirtualMachineExtensionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineExtensionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineImagesClient() *VirtualMachineImagesClient {
-	subClient, _ := NewVirtualMachineImagesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineImagesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewUsageClient() *UsageClient {
-	subClient, _ := NewUsageClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewUsageClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachinesClient() *VirtualMachinesClient {
-	subClient, _ := NewVirtualMachinesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachinesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineSizesClient() *VirtualMachineSizesClient {
-	subClient, _ := NewVirtualMachineSizesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineSizesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewImagesClient() *ImagesClient {
-	subClient, _ := NewImagesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewImagesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineScaleSetsClient() *VirtualMachineScaleSetsClient {
-	subClient, _ := NewVirtualMachineScaleSetsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineScaleSetsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineScaleSetExtensionsClient() *VirtualMachineScaleSetExtensionsClient {
-	subClient, _ := NewVirtualMachineScaleSetExtensionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineScaleSetExtensionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineScaleSetRollingUpgradesClient() *VirtualMachineScaleSetRollingUpgradesClient {
-	subClient, _ := NewVirtualMachineScaleSetRollingUpgradesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineScaleSetRollingUpgradesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineScaleSetVMExtensionsClient() *VirtualMachineScaleSetVMExtensionsClient {
-	subClient, _ := NewVirtualMachineScaleSetVMExtensionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineScaleSetVMExtensionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineScaleSetVMsClient() *VirtualMachineScaleSetVMsClient {
-	subClient, _ := NewVirtualMachineScaleSetVMsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineScaleSetVMsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewLogAnalyticsClient() *LogAnalyticsClient {
-	subClient, _ := NewLogAnalyticsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewLogAnalyticsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewVirtualMachineRunCommandsClient() *VirtualMachineRunCommandsClient {
-	subClient, _ := NewVirtualMachineRunCommandsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewVirtualMachineRunCommandsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewResourceSKUsClient() *ResourceSKUsClient {
-	subClient, _ := NewResourceSKUsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewResourceSKUsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDisksClient() *DisksClient {
-	subClient, _ := NewDisksClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewDisksClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSnapshotsClient() *SnapshotsClient {
-	subClient, _ := NewSnapshotsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewSnapshotsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDiskEncryptionSetsClient() *DiskEncryptionSetsClient {
-	subClient, _ := NewDiskEncryptionSetsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewDiskEncryptionSetsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewGalleriesClient() *GalleriesClient {
-	subClient, _ := NewGalleriesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewGalleriesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewGalleryImagesClient() *GalleryImagesClient {
-	subClient, _ := NewGalleryImagesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewGalleryImagesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewGalleryImageVersionsClient() *GalleryImageVersionsClient {
-	subClient, _ := NewGalleryImageVersionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewGalleryImageVersionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewGalleryApplicationsClient() *GalleryApplicationsClient {
-	subClient, _ := NewGalleryApplicationsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewGalleryApplicationsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewGalleryApplicationVersionsClient() *GalleryApplicationVersionsClient {
-	subClient, _ := NewGalleryApplicationVersionsClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewGalleryApplicationVersionsClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewContainerServicesClient() *ContainerServicesClient {
-	subClient, _ := NewContainerServicesClient(c.subscriptionID, c.credential, c.options)
+	subClient, _ := NewContainerServicesClient(c.subscriptionID, c.credential, &c.options)
 	return subClient
 }
