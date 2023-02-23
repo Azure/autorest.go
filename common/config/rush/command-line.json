@@ -66,6 +66,12 @@
       "name": "buildvet",
       "summary": "run node .scripts/buildvet.js to build and vet all modules",
       "shellCommand": "node .scripts/buildvet.js"
+    },
+    {
+      "commandKind": "global",
+      "name": "gogetu",
+      "summary": "run node .scripts/gogetu.js to update and tidy all go.mod files",
+      "shellCommand": "node .scripts/gogetu.js"
     }
   ],
   "parameters": [
