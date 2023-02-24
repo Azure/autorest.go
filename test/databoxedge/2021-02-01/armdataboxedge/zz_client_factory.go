@@ -19,7 +19,7 @@ import (
 type ClientFactory struct {
 	subscriptionID string
 	credential     azcore.TokenCredential
-	options        arm.ClientOptions
+	options        *arm.ClientOptions
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
@@ -34,106 +34,106 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}
 	return &ClientFactory{
 		subscriptionID: subscriptionID, credential: credential,
-		options: *options,
+		options: options.Clone(),
 	}, nil
 }
 
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
-	subClient, _ := NewOperationsClient(c.credential, &c.options)
+	subClient, _ := NewOperationsClient(c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAvailableSKUsClient() *AvailableSKUsClient {
-	subClient, _ := NewAvailableSKUsClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewAvailableSKUsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDevicesClient() *DevicesClient {
-	subClient, _ := NewDevicesClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewDevicesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAlertsClient() *AlertsClient {
-	subClient, _ := NewAlertsClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewAlertsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewBandwidthSchedulesClient() *BandwidthSchedulesClient {
-	subClient, _ := NewBandwidthSchedulesClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewBandwidthSchedulesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewDiagnosticSettingsClient() *DiagnosticSettingsClient {
-	subClient, _ := NewDiagnosticSettingsClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewDiagnosticSettingsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewJobsClient() *JobsClient {
-	subClient, _ := NewJobsClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewJobsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewNodesClient() *NodesClient {
-	subClient, _ := NewNodesClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewNodesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewOperationsStatusClient() *OperationsStatusClient {
-	subClient, _ := NewOperationsStatusClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewOperationsStatusClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewOrdersClient() *OrdersClient {
-	subClient, _ := NewOrdersClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewOrdersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewRolesClient() *RolesClient {
-	subClient, _ := NewRolesClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewRolesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewAddonsClient() *AddonsClient {
-	subClient, _ := NewAddonsClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewAddonsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewMonitoringConfigClient() *MonitoringConfigClient {
-	subClient, _ := NewMonitoringConfigClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewMonitoringConfigClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSharesClient() *SharesClient {
-	subClient, _ := NewSharesClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewSharesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewStorageAccountCredentialsClient() *StorageAccountCredentialsClient {
-	subClient, _ := NewStorageAccountCredentialsClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewStorageAccountCredentialsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewStorageAccountsClient() *StorageAccountsClient {
-	subClient, _ := NewStorageAccountsClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewStorageAccountsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewContainersClient() *ContainersClient {
-	subClient, _ := NewContainersClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewContainersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewTriggersClient() *TriggersClient {
-	subClient, _ := NewTriggersClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewTriggersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewSupportPackagesClient() *SupportPackagesClient {
-	subClient, _ := NewSupportPackagesClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewSupportPackagesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewUsersClient() *UsersClient {
-	subClient, _ := NewUsersClient(c.subscriptionID, c.credential, &c.options)
+	subClient, _ := NewUsersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }

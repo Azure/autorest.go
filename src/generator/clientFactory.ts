@@ -43,7 +43,7 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
       result += `\t${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}\n`;
     }
     result += '\tcredential azcore.TokenCredential\n';
-    result += '\toptions arm.ClientOptions\n';
+    result += '\toptions *arm.ClientOptions\n';
     result += '}\n\n';
 
     // add factory CTOR
@@ -66,7 +66,7 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
       result += `\t\t${clientParam.language.go!.name}: \t${clientParam.language.go!.name},`;
     }
     result += '\t\tcredential: credential,\n';
-    result += '\t\toptions: *options,\n';
+    result += '\t\toptions: options.Clone(),\n';
     result += '\t}, nil\n';
     result += '}\n\n';
 
@@ -76,9 +76,9 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       if (clientParams) {
         clientParams.sort(sortParametersByRequired);
-        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(${clientParams.map(p => {return `c.${p.language.go!.name}`;}).join(', ')}, c.credential, &c.options)\n`;
+        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(${clientParams.map(p => {return `c.${p.language.go!.name}`;}).join(', ')}, c.credential, c.options)\n`;
       } else {
-        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(c.credential, &c.options)\n`;
+        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(c.credential, c.options)\n`;
       }
       
       result += '\treturn subClient\n';
