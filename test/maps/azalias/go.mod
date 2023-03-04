@@ -3,7 +3,7 @@ module azalias
 go 1.18
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.3.1
+	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.4.0
 	github.com/stretchr/testify v1.7.0
 )
 

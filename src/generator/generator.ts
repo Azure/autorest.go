@@ -7,6 +7,7 @@ import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
+import { generateClientFactory } from './clientFactory';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
 import { generateResponses } from './responses';
@@ -54,6 +55,15 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
+    const clientFactory = await generateClientFactory(session);
+    if (clientFactory.length > 0) {
+      host.writeFile({
+        filename: `${filePrefix}client_factory.go`,
+        content: clientFactory,
+        artifactType: 'source-file-go'
+      });
+    }
+    
     const constants = await generateConstants(session);
     host.writeFile({
       filename: `${filePrefix}constants.go`,

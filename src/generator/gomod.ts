@@ -12,7 +12,7 @@ import { lt, toSemver } from '@azure-tools/codegen';
 export async function generateGoModFile(session: Session<CodeModel>, existingGoMod: string): Promise<string> {
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
-  const version = await session.getValue('azcore-version', '1.3.0');
+  const version = await session.getValue('azcore-version', '1.4.0');
   if (!version.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
     throw new Error(`azcore version ${version} must in the format major.minor.patch[-beta.N]`);
   }

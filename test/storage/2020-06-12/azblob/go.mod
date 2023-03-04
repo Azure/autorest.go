@@ -2,7 +2,7 @@ module azstorage
 
 go 1.18
 
-require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.3.1
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.4.0
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.1.2 // indirect
