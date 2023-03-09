@@ -22,8 +22,9 @@ async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
 
 // Creates the content in constants.go
 export async function generateConstants(session: Session<CodeModel>): Promise<string> {
+  const enums = getEnums(session.model.schemas);
   // lack of operation groups indicates model-only mode.
-  if (length(session.model.operationGroups) === 0) {
+  if (length(session.model.operationGroups) === 0 || (enums.length === 0 && !session.model.language.go!.host && !session.model.language.go!.azureARM)) {
     return '';
   }
   let text = await contentPreamble(session);
@@ -38,7 +39,7 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
     text += `\tmoduleVersion = "v${version}"\n`;
     text += ')\n\n';
   }
-  for (const enm of values(getEnums(session.model.schemas))) {
+  for (const enm of values(enums)) {
     if (enm.desc) {
       text += `${comment(`${enm.name} - ${enm.desc}`, '// ', undefined, commentLength)}\n`;
     }
