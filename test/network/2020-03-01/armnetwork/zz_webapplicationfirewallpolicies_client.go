@@ -34,7 +34,7 @@ type WebApplicationFirewallPoliciesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewWebApplicationFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*WebApplicationFirewallPoliciesClient, error) {
-	cl, err := arm.NewClient("armnetwork.WebApplicationFirewallPoliciesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".WebApplicationFirewallPoliciesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

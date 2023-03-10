@@ -34,7 +34,7 @@ type SecurityPartnerProvidersClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SecurityPartnerProvidersClient, error) {
-	cl, err := arm.NewClient("armnetwork.SecurityPartnerProvidersClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".SecurityPartnerProvidersClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

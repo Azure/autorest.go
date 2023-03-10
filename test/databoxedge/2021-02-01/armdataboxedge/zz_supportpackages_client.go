@@ -33,7 +33,7 @@ type SupportPackagesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SupportPackagesClient, error) {
-	cl, err := arm.NewClient("armdataboxedge.SupportPackagesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".SupportPackagesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

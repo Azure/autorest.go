@@ -34,7 +34,7 @@ type VirtualNetworkTapsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualNetworkTapsClient, error) {
-	cl, err := arm.NewClient("armnetwork.VirtualNetworkTapsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".VirtualNetworkTapsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

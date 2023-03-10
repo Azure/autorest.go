@@ -33,7 +33,7 @@ type BandwidthSchedulesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBandwidthSchedulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*BandwidthSchedulesClient, error) {
-	cl, err := arm.NewClient("armdataboxedge.BandwidthSchedulesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".BandwidthSchedulesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

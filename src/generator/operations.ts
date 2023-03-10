@@ -141,7 +141,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
 
       clientText += `func ${group.language.go!.clientCtorName}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
-      clientText += `\tcl, err := ${clientPkg}.NewClient("${session.model.language.go!.packageName}.${clientName}", moduleVersion, credential, options)\n`;
+      clientText += `\tcl, err := ${clientPkg}.NewClient(moduleName+".${clientName}", moduleVersion, credential, options)\n`;
       clientText += "\tif err != nil {\n"
       clientText += '\t\treturn nil, err\n';
       clientText += '\t}\n';

@@ -33,7 +33,7 @@ type ForecastsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ForecastsClient, error) {
-	cl, err := arm.NewClient("armconsumption.ForecastsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".ForecastsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

@@ -34,7 +34,7 @@ type ExpressRouteLinksClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewExpressRouteLinksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ExpressRouteLinksClient, error) {
-	cl, err := arm.NewClient("armnetwork.ExpressRouteLinksClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".ExpressRouteLinksClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

@@ -34,7 +34,7 @@ type ServiceEndpointPoliciesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewServiceEndpointPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ServiceEndpointPoliciesClient, error) {
-	cl, err := arm.NewClient("armnetwork.ServiceEndpointPoliciesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".ServiceEndpointPoliciesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

@@ -34,7 +34,7 @@ type DiskEncryptionSetsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDiskEncryptionSetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DiskEncryptionSetsClient, error) {
-	cl, err := arm.NewClient("armcompute.DiskEncryptionSetsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".DiskEncryptionSetsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

@@ -34,7 +34,7 @@ type PrivateLinkServicesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPrivateLinkServicesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PrivateLinkServicesClient, error) {
-	cl, err := arm.NewClient("armnetwork.PrivateLinkServicesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".PrivateLinkServicesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

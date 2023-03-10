@@ -34,7 +34,7 @@ type IPGroupsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewIPGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*IPGroupsClient, error) {
-	cl, err := arm.NewClient("armnetwork.IPGroupsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".IPGroupsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

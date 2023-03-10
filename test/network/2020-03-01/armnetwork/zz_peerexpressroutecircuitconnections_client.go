@@ -34,7 +34,7 @@ type PeerExpressRouteCircuitConnectionsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PeerExpressRouteCircuitConnectionsClient, error) {
-	cl, err := arm.NewClient("armnetwork.PeerExpressRouteCircuitConnectionsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".PeerExpressRouteCircuitConnectionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

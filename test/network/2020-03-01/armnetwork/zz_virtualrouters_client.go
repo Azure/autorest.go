@@ -34,7 +34,7 @@ type VirtualRoutersClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVirtualRoutersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualRoutersClient, error) {
-	cl, err := arm.NewClient("armnetwork.VirtualRoutersClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".VirtualRoutersClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

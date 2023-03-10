@@ -34,7 +34,7 @@ type ApplicationGatewaysClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewApplicationGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ApplicationGatewaysClient, error) {
-	cl, err := arm.NewClient("armnetwork.ApplicationGatewaysClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".ApplicationGatewaysClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

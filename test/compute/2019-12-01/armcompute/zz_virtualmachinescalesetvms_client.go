@@ -35,7 +35,7 @@ type VirtualMachineScaleSetVMsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVirtualMachineScaleSetVMsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualMachineScaleSetVMsClient, error) {
-	cl, err := arm.NewClient("armcompute.VirtualMachineScaleSetVMsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".VirtualMachineScaleSetVMsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

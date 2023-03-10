@@ -33,7 +33,7 @@ type AddonsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AddonsClient, error) {
-	cl, err := arm.NewClient("armdataboxedge.AddonsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".AddonsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
