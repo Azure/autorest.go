@@ -34,7 +34,7 @@ type DdosCustomPoliciesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDdosCustomPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DdosCustomPoliciesClient, error) {
-	cl, err := arm.NewClient("armnetwork.DdosCustomPoliciesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".DdosCustomPoliciesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

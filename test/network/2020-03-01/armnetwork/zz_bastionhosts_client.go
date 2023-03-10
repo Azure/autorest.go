@@ -34,7 +34,7 @@ type BastionHostsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*BastionHostsClient, error) {
-	cl, err := arm.NewClient("armnetwork.BastionHostsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".BastionHostsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

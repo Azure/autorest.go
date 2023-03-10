@@ -34,7 +34,7 @@ type PrivateDNSZoneGroupsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PrivateDNSZoneGroupsClient, error) {
-	cl, err := arm.NewClient("armnetwork.PrivateDNSZoneGroupsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".PrivateDNSZoneGroupsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

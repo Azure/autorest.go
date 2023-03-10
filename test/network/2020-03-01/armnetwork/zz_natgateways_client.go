@@ -34,7 +34,7 @@ type NatGatewaysClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*NatGatewaysClient, error) {
-	cl, err := arm.NewClient("armnetwork.NatGatewaysClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".NatGatewaysClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

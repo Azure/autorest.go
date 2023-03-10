@@ -57,7 +57,7 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
     result += `${formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
 
     result += `func NewClientFactory(${allClientParams.map(p => {return `${p.language.go!.name} ${formatParameterTypeName(p)}`;}).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
-    result += '\t_, err := arm.NewClient("armcompute.ClientFactory", moduleVersion, credential, options)\n';
+    result += '\t_, err := arm.NewClient(moduleName+".ClientFactory", moduleVersion, credential, options)\n';
     result += '\tif err != nil {\n';
     result += '\t\treturn nil, err\n';
     result += '\t}\n';

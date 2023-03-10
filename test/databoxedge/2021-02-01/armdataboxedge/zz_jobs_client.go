@@ -33,7 +33,7 @@ type JobsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewJobsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*JobsClient, error) {
-	cl, err := arm.NewClient("armdataboxedge.JobsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".JobsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

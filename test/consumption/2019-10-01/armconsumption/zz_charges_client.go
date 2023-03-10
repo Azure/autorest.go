@@ -29,7 +29,7 @@ type ChargesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ChargesClient, error) {
-	cl, err := arm.NewClient("armconsumption.ChargesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".ChargesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

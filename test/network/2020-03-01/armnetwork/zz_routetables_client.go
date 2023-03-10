@@ -34,7 +34,7 @@ type RouteTablesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*RouteTablesClient, error) {
-	cl, err := arm.NewClient("armnetwork.RouteTablesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".RouteTablesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

@@ -34,7 +34,7 @@ type VPNServerConfigurationsAssociatedWithVirtualWanClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VPNServerConfigurationsAssociatedWithVirtualWanClient, error) {
-	cl, err := arm.NewClient("armnetwork.VPNServerConfigurationsAssociatedWithVirtualWanClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".VPNServerConfigurationsAssociatedWithVirtualWanClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

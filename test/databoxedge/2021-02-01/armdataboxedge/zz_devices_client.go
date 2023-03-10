@@ -33,7 +33,7 @@ type DevicesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DevicesClient, error) {
-	cl, err := arm.NewClient("armdataboxedge.DevicesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".DevicesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

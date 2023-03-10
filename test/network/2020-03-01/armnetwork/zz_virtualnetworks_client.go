@@ -34,7 +34,7 @@ type VirtualNetworksClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualNetworksClient, error) {
-	cl, err := arm.NewClient("armnetwork.VirtualNetworksClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".VirtualNetworksClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

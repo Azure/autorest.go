@@ -34,7 +34,7 @@ type SnapshotsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSnapshotsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SnapshotsClient, error) {
-	cl, err := arm.NewClient("armcompute.SnapshotsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".SnapshotsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

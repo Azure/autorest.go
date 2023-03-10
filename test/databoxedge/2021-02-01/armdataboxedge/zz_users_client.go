@@ -33,7 +33,7 @@ type UsersClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewUsersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*UsersClient, error) {
-	cl, err := arm.NewClient("armdataboxedge.UsersClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".UsersClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

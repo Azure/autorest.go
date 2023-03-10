@@ -30,7 +30,7 @@ type UsageDetailsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*UsageDetailsClient, error) {
-	cl, err := arm.NewClient("armconsumption.UsageDetailsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".UsageDetailsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

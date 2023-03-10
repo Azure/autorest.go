@@ -34,7 +34,7 @@ type AzureFirewallsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureFirewallsClient, error) {
-	cl, err := arm.NewClient("armnetwork.AzureFirewallsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".AzureFirewallsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

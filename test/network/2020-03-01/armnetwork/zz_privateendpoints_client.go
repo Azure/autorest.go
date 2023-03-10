@@ -34,7 +34,7 @@ type PrivateEndpointsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PrivateEndpointsClient, error) {
-	cl, err := arm.NewClient("armnetwork.PrivateEndpointsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".PrivateEndpointsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

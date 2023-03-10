@@ -33,7 +33,7 @@ type RolesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*RolesClient, error) {
-	cl, err := arm.NewClient("armdataboxedge.RolesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".RolesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

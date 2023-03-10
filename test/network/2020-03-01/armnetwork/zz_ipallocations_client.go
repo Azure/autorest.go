@@ -34,7 +34,7 @@ type IPAllocationsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*IPAllocationsClient, error) {
-	cl, err := arm.NewClient("armnetwork.IPAllocationsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".IPAllocationsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

@@ -34,7 +34,7 @@ type RouteFilterRulesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewRouteFilterRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*RouteFilterRulesClient, error) {
-	cl, err := arm.NewClient("armnetwork.RouteFilterRulesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".RouteFilterRulesClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

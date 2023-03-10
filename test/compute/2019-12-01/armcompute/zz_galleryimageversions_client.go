@@ -34,7 +34,7 @@ type GalleryImageVersionsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewGalleryImageVersionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*GalleryImageVersionsClient, error) {
-	cl, err := arm.NewClient("armcompute.GalleryImageVersionsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".GalleryImageVersionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
