@@ -27,11 +27,11 @@ func ExampleLogAnalyticsClient_BeginExportRequestRateByInterval() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewLogAnalyticsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginExportRequestRateByInterval(ctx, "westus", armcompute.RequestRateByIntervalInput{
+	poller, err := clientFactory.NewLogAnalyticsClient().BeginExportRequestRateByInterval(ctx, "westus", armcompute.RequestRateByIntervalInput{
 		BlobContainerSasURI: to.Ptr("https://somesasuri"),
 		FromTime:            to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
 		GroupByResourceName: to.Ptr(true),
@@ -62,11 +62,11 @@ func ExampleLogAnalyticsClient_BeginExportThrottledRequests() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewLogAnalyticsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginExportThrottledRequests(ctx, "westus", armcompute.ThrottledRequestsInput{
+	poller, err := clientFactory.NewLogAnalyticsClient().BeginExportThrottledRequests(ctx, "westus", armcompute.ThrottledRequestsInput{
 		BlobContainerSasURI:        to.Ptr("https://somesasuri"),
 		FromTime:                   to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
 		GroupByClientApplicationID: to.Ptr(false),

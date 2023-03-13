@@ -24,11 +24,11 @@ func ExampleSharedGalleryImageVersionsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewSharedGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myLocation", "galleryUniqueName", "myGalleryImageName", &armcompute.SharedGalleryImageVersionsClientListOptions{SharedTo: nil})
+	pager := clientFactory.NewSharedGalleryImageVersionsClient().NewListPager("myLocation", "galleryUniqueName", "myGalleryImageName", &armcompute.SharedGalleryImageVersionsClientListOptions{SharedTo: nil})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -63,11 +63,11 @@ func ExampleSharedGalleryImageVersionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewSharedGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myLocation", "galleryUniqueName", "myGalleryImageName", "myGalleryImageVersionName", nil)
+	res, err := clientFactory.NewSharedGalleryImageVersionsClient().Get(ctx, "myLocation", "galleryUniqueName", "myGalleryImageName", "myGalleryImageVersionName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

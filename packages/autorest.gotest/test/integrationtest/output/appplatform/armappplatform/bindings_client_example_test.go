@@ -25,11 +25,11 @@ func ExampleBindingsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
+	res, err := clientFactory.NewBindingsClient().Get(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -62,11 +62,11 @@ func ExampleBindingsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
+	poller, err := clientFactory.NewBindingsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]any{
 				"apiType":      "SQL",
@@ -112,11 +112,11 @@ func ExampleBindingsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
+	poller, err := clientFactory.NewBindingsClient().BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -133,11 +133,11 @@ func ExampleBindingsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
+	poller, err := clientFactory.NewBindingsClient().BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]any{
 				"apiType":      "SQL",
@@ -182,11 +182,11 @@ func ExampleBindingsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", nil)
+	pager := clientFactory.NewBindingsClient().NewListPager("myResourceGroup", "myservice", "myapp", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

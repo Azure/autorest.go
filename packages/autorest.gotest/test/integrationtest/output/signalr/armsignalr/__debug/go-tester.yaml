@@ -9918,6 +9918,9 @@ security:
         - https://management.azure.com/.default
 testModel:
   mockTest:
+    clientFactoryParametersOutput:
+      - paramName: subscriptionID
+        paramOutput: '"<subscription-id>"'
     exampleGroups:
       - operationId: Operations_List
         examples:
@@ -22230,7 +22233,6 @@ language:
     name: SignalRManagementClient
     description: ''
     azureARM: true
-    exportClients: false
     groupParameters: true
     hasTimeRFC3339: true
     headAsBoolean: true

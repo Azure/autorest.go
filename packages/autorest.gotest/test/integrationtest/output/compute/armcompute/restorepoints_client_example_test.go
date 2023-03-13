@@ -25,11 +25,11 @@ func ExampleRestorePointsClient_BeginCreate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewRestorePointsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreate(ctx, "myResourceGroup", "rpcName", "rpName", armcompute.RestorePoint{
+	poller, err := clientFactory.NewRestorePointsClient().BeginCreate(ctx, "myResourceGroup", "rpcName", "rpName", armcompute.RestorePoint{
 		ExcludeDisks: []*armcompute.APIEntityReference{
 			{
 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
@@ -51,11 +51,11 @@ func ExampleRestorePointsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewRestorePointsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "rpcName", "rpName", nil)
+	res, err := clientFactory.NewRestorePointsClient().Get(ctx, "myResourceGroup", "rpcName", "rpName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

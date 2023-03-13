@@ -25,11 +25,11 @@ func ExampleVirtualMachineRunCommandsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineRunCommandsClient("subid", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("SoutheastAsia", nil)
+	pager := clientFactory.NewVirtualMachineRunCommandsClient().NewListPager("SoutheastAsia", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -123,11 +123,11 @@ func ExampleVirtualMachineRunCommandsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineRunCommandsClient("24fb23e3-6ba3-41f0-9b6e-e41131d5d61e", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "SoutheastAsia", "RunPowerShellScript", nil)
+	res, err := clientFactory.NewVirtualMachineRunCommandsClient().Get(ctx, "SoutheastAsia", "RunPowerShellScript", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -167,11 +167,11 @@ func ExampleVirtualMachineRunCommandsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", "myRunCommand", armcompute.VirtualMachineRunCommand{
+	poller, err := clientFactory.NewVirtualMachineRunCommandsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", "myRunCommand", armcompute.VirtualMachineRunCommand{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.VirtualMachineRunCommandProperties{
 			AsyncExecution: to.Ptr(false),
@@ -239,11 +239,11 @@ func ExampleVirtualMachineRunCommandsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myVM", "myRunCommand", armcompute.VirtualMachineRunCommandUpdate{
+	poller, err := clientFactory.NewVirtualMachineRunCommandsClient().BeginUpdate(ctx, "myResourceGroup", "myVM", "myRunCommand", armcompute.VirtualMachineRunCommandUpdate{
 		Properties: &armcompute.VirtualMachineRunCommandProperties{
 			Source: &armcompute.VirtualMachineRunCommandScriptSource{
 				Script: to.Ptr("Write-Host Script Source Updated!"),
@@ -297,11 +297,11 @@ func ExampleVirtualMachineRunCommandsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myVM", "myRunCommand", nil)
+	poller, err := clientFactory.NewVirtualMachineRunCommandsClient().BeginDelete(ctx, "myResourceGroup", "myVM", "myRunCommand", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -318,11 +318,11 @@ func ExampleVirtualMachineRunCommandsClient_GetByVirtualMachine() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetByVirtualMachine(ctx, "myResourceGroup", "myVM", "myRunCommand", &armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineOptions{Expand: nil})
+	res, err := clientFactory.NewVirtualMachineRunCommandsClient().GetByVirtualMachine(ctx, "myResourceGroup", "myVM", "myRunCommand", &armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -366,11 +366,11 @@ func ExampleVirtualMachineRunCommandsClient_NewListByVirtualMachinePager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByVirtualMachinePager("myResourceGroup", "myVM", &armcompute.VirtualMachineRunCommandsClientListByVirtualMachineOptions{Expand: nil})
+	pager := clientFactory.NewVirtualMachineRunCommandsClient().NewListByVirtualMachinePager("myResourceGroup", "myVM", &armcompute.VirtualMachineRunCommandsClientListByVirtualMachineOptions{Expand: nil})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

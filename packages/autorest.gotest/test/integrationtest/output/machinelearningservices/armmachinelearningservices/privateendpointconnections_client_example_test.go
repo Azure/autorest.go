@@ -25,11 +25,11 @@ func ExamplePrivateEndpointConnectionsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("rg-1234", "testworkspace", nil)
+	pager := clientFactory.NewPrivateEndpointConnectionsClient().NewListPager("rg-1234", "testworkspace", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -85,11 +85,11 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
+	res, err := clientFactory.NewPrivateEndpointConnectionsClient().Get(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -121,11 +121,11 @@ func ExamplePrivateEndpointConnectionsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", armmachinelearningservices.PrivateEndpointConnection{
+	res, err := clientFactory.NewPrivateEndpointConnectionsClient().CreateOrUpdate(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", armmachinelearningservices.PrivateEndpointConnection{
 		Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
 			PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
 				Description: to.Ptr("Auto-Approved"),
@@ -164,11 +164,11 @@ func ExamplePrivateEndpointConnectionsClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
+	_, err = clientFactory.NewPrivateEndpointConnectionsClient().Delete(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

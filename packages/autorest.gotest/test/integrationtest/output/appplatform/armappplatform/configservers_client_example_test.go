@@ -25,11 +25,11 @@ func ExampleConfigServersClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
+	res, err := clientFactory.NewConfigServersClient().Get(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -61,11 +61,11 @@ func ExampleConfigServersClient_BeginUpdatePut() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
+	poller, err := clientFactory.NewConfigServersClient().BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
 		Properties: &armappplatform.ConfigServerProperties{
 			ConfigServer: &armappplatform.ConfigServerSettings{
 				GitProperty: &armappplatform.ConfigServerGitProperty{
@@ -112,11 +112,11 @@ func ExampleConfigServersClient_BeginUpdatePatch() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
+	poller, err := clientFactory.NewConfigServersClient().BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
 		Properties: &armappplatform.ConfigServerProperties{
 			ConfigServer: &armappplatform.ConfigServerSettings{
 				GitProperty: &armappplatform.ConfigServerGitProperty{
@@ -163,11 +163,11 @@ func ExampleConfigServersClient_BeginValidate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginValidate(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerSettings{
+	poller, err := clientFactory.NewConfigServersClient().BeginValidate(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerSettings{
 		GitProperty: &armappplatform.ConfigServerGitProperty{
 			Label: to.Ptr("master"),
 			SearchPaths: []*string{

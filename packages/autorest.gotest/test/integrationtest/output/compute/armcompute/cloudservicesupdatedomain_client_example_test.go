@@ -24,11 +24,11 @@ func ExampleCloudServicesUpdateDomainClient_BeginWalkUpdateDomain() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewCloudServicesUpdateDomainClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginWalkUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, armcompute.UpdateDomain{}, nil)
+	poller, err := clientFactory.NewCloudServicesUpdateDomainClient().BeginWalkUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, armcompute.UpdateDomain{}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -45,11 +45,11 @@ func ExampleCloudServicesUpdateDomainClient_GetUpdateDomain() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewCloudServicesUpdateDomainClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, nil)
+	res, err := clientFactory.NewCloudServicesUpdateDomainClient().GetUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -69,11 +69,11 @@ func ExampleCloudServicesUpdateDomainClient_NewListUpdateDomainsPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewCloudServicesUpdateDomainClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListUpdateDomainsPager("ConstosoRG", "{cs-name}", nil)
+	pager := clientFactory.NewCloudServicesUpdateDomainClient().NewListUpdateDomainsPager("ConstosoRG", "{cs-name}", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

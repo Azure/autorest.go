@@ -25,11 +25,11 @@ func ExampleBatchEndpointsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.BatchEndpointsClientListOptions{Count: to.Ptr[int32](1),
+	pager := clientFactory.NewBatchEndpointsClient().NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.BatchEndpointsClientListOptions{Count: to.Ptr[int32](1),
 		Skip: nil,
 	})
 	for pager.More() {
@@ -102,11 +102,11 @@ func ExampleBatchEndpointsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "resourceGroup-1234", "testworkspace", "testBatchEndpoint", nil)
+	poller, err := clientFactory.NewBatchEndpointsClient().BeginDelete(ctx, "resourceGroup-1234", "testworkspace", "testBatchEndpoint", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -123,11 +123,11 @@ func ExampleBatchEndpointsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
+	res, err := clientFactory.NewBatchEndpointsClient().Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -190,11 +190,11 @@ func ExampleBatchEndpointsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialBatchEndpointPartialTrackedResource{
+	poller, err := clientFactory.NewBatchEndpointsClient().BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialBatchEndpointPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
 			UserAssignedIdentities: map[string]any{
@@ -284,11 +284,11 @@ func ExampleBatchEndpointsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.BatchEndpointData{
+	poller, err := clientFactory.NewBatchEndpointsClient().BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.BatchEndpointData{
 		Location: to.Ptr("string"),
 		Tags:     map[string]*string{},
 		Identity: &armmachinelearningservices.ManagedServiceIdentity{
@@ -382,11 +382,11 @@ func ExampleBatchEndpointsClient_ListKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
+	res, err := clientFactory.NewBatchEndpointsClient().ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -24,11 +24,11 @@ func ExampleVirtualMachineScaleSetRollingUpgradesClient_BeginStartExtensionUpgra
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetRollingUpgradesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStartExtensionUpgrade(ctx, "myResourceGroup", "{vmss-name}", nil)
+	poller, err := clientFactory.NewVirtualMachineScaleSetRollingUpgradesClient().BeginStartExtensionUpgrade(ctx, "myResourceGroup", "{vmss-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

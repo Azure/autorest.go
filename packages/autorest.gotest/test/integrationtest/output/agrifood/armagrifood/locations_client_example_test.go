@@ -25,11 +25,11 @@ func ExampleLocationsClient_CheckNameAvailability_locationsCheckNameAvailability
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewLocationsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
+	res, err := clientFactory.NewLocationsClient().CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
 		Name: to.Ptr("existingaccountname"),
 		Type: to.Ptr("Microsoft.AgFoodPlatform/farmBeats"),
 	}, nil)
@@ -53,11 +53,11 @@ func ExampleLocationsClient_CheckNameAvailability_locationsCheckNameAvailability
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewLocationsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
+	res, err := clientFactory.NewLocationsClient().CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
 		Name: to.Ptr("newaccountname"),
 		Type: to.Ptr("Microsoft.AgFoodPlatform/farmBeats"),
 	}, nil)

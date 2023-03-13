@@ -18494,7 +18494,6 @@ language:
     name: SignalRManagementClient
     description: ''
     azureARM: true
-    exportClients: false
     groupParameters: true
     hasTimeRFC3339: true
     headAsBoolean: true

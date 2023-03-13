@@ -24,11 +24,11 @@ func ExampleFarmBeatsExtensionsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsExtensionsClient(cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager(&armagrifood.FarmBeatsExtensionsClientListOptions{FarmBeatsExtensionIDs: []string{},
+	pager := clientFactory.NewFarmBeatsExtensionsClient().NewListPager(&armagrifood.FarmBeatsExtensionsClientListOptions{FarmBeatsExtensionIDs: []string{},
 		FarmBeatsExtensionNames: []string{},
 		ExtensionCategories:     []string{},
 		PublisherIDs:            []string{},
@@ -273,11 +273,11 @@ func ExampleFarmBeatsExtensionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsExtensionsClient(cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "DTN.ContentServices", nil)
+	res, err := clientFactory.NewFarmBeatsExtensionsClient().Get(ctx, "DTN.ContentServices", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

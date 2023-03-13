@@ -25,11 +25,11 @@ func ExampleOnlineEndpointsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.OnlineEndpointsClientListOptions{Name: to.Ptr("string"),
+	pager := clientFactory.NewOnlineEndpointsClient().NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.OnlineEndpointsClientListOptions{Name: to.Ptr("string"),
 		Count:       to.Ptr[int32](1),
 		ComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
 		Skip:        nil,
@@ -109,11 +109,11 @@ func ExampleOnlineEndpointsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
+	poller, err := clientFactory.NewOnlineEndpointsClient().BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -130,11 +130,11 @@ func ExampleOnlineEndpointsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
+	res, err := clientFactory.NewOnlineEndpointsClient().Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -199,11 +199,11 @@ func ExampleOnlineEndpointsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
+	poller, err := clientFactory.NewOnlineEndpointsClient().BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
 			UserAssignedIdentities: map[string]any{
@@ -294,11 +294,11 @@ func ExampleOnlineEndpointsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.OnlineEndpointData{
+	poller, err := clientFactory.NewOnlineEndpointsClient().BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.OnlineEndpointData{
 		Location: to.Ptr("string"),
 		Tags:     map[string]*string{},
 		Identity: &armmachinelearningservices.ManagedServiceIdentity{
@@ -395,11 +395,11 @@ func ExampleOnlineEndpointsClient_ListKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
+	res, err := clientFactory.NewOnlineEndpointsClient().ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -419,11 +419,11 @@ func ExampleOnlineEndpointsClient_BeginRegenerateKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRegenerateKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.RegenerateEndpointKeysRequest{
+	poller, err := clientFactory.NewOnlineEndpointsClient().BeginRegenerateKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.RegenerateEndpointKeysRequest{
 		KeyType:  to.Ptr(armmachinelearningservices.KeyTypePrimary),
 		KeyValue: to.Ptr("string"),
 	}, nil)
@@ -443,11 +443,11 @@ func ExampleOnlineEndpointsClient_GetToken() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetToken(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
+	res, err := clientFactory.NewOnlineEndpointsClient().GetToken(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

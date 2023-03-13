@@ -25,11 +25,11 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryImageVersionProperties{
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
@@ -164,11 +164,11 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryImageVersionProperties{
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
@@ -303,11 +303,11 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryImageVersionProperties{
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
@@ -440,11 +440,11 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryImageVersionProperties{
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
@@ -579,11 +579,11 @@ func ExampleGalleryImageVersionsClient_BeginCreateOrUpdate_createOrUpdateASimple
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryImageVersionProperties{
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
@@ -698,11 +698,11 @@ func ExampleGalleryImageVersionsClient_BeginUpdate_updateASimpleGalleryImageVers
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersionUpdate{
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersionUpdate{
 		Properties: &armcompute.GalleryImageVersionProperties{
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
 				TargetRegions: []*armcompute.TargetRegion{
@@ -790,11 +790,11 @@ func ExampleGalleryImageVersionsClient_BeginUpdate_updateASimpleGalleryImageVers
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersionUpdate{
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersionUpdate{
 		Properties: &armcompute.GalleryImageVersionProperties{
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
 				TargetRegions: []*armcompute.TargetRegion{
@@ -878,11 +878,11 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithReplicatio
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
+	res, err := clientFactory.NewGalleryImageVersionsClient().Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -966,11 +966,11 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithSnapshotsA
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewGalleryImageVersionsClient().Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -1035,11 +1035,11 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersionWithVhdAsASour
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewGalleryImageVersionsClient().Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -1106,11 +1106,11 @@ func ExampleGalleryImageVersionsClient_Get_getAGalleryImageVersion() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewGalleryImageVersionsClient().Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -1178,11 +1178,11 @@ func ExampleGalleryImageVersionsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", nil)
+	poller, err := clientFactory.NewGalleryImageVersionsClient().BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -1199,11 +1199,11 @@ func ExampleGalleryImageVersionsClient_NewListByGalleryImagePager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByGalleryImagePager("myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
+	pager := clientFactory.NewGalleryImageVersionsClient().NewListByGalleryImagePager("myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

@@ -25,11 +25,11 @@ func ExampleResourceSKUsClient_NewListPager_listsAllAvailableResourceSkUs() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewResourceSKUsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager(&armcompute.ResourceSKUsClientListOptions{Filter: nil})
+	pager := clientFactory.NewResourceSKUsClient().NewListPager(&armcompute.ResourceSKUsClientListOptions{Filter: nil})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -218,11 +218,11 @@ func ExampleResourceSKUsClient_NewListPager_listsAllAvailableResourceSkUsForTheS
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewResourceSKUsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager(&armcompute.ResourceSKUsClientListOptions{Filter: to.Ptr("location eq 'westus'")})
+	pager := clientFactory.NewResourceSKUsClient().NewListPager(&armcompute.ResourceSKUsClientListOptions{Filter: to.Ptr("location eq 'westus'")})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

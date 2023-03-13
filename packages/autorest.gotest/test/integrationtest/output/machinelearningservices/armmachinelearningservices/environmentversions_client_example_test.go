@@ -25,11 +25,11 @@ func ExampleEnvironmentVersionsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.EnvironmentVersionsClientListOptions{OrderBy: to.Ptr("string"),
+	pager := clientFactory.NewEnvironmentVersionsClient().NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.EnvironmentVersionsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:          to.Ptr[int32](1),
 		Skip:         nil,
 		ListViewType: nil,
@@ -101,11 +101,11 @@ func ExampleEnvironmentVersionsClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
+	_, err = clientFactory.NewEnvironmentVersionsClient().Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -118,11 +118,11 @@ func ExampleEnvironmentVersionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
+	res, err := clientFactory.NewEnvironmentVersionsClient().Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -182,11 +182,11 @@ func ExampleEnvironmentVersionsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.EnvironmentVersionData{
+	res, err := clientFactory.NewEnvironmentVersionsClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.EnvironmentVersionData{
 		Properties: &armmachinelearningservices.EnvironmentVersionDetails{
 			Description: to.Ptr("string"),
 			Properties: map[string]*string{

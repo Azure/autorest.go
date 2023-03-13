@@ -25,11 +25,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlob
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -85,11 +85,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlob
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -141,11 +141,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAMana
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -205,11 +205,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAMana
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -265,11 +265,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnap
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -329,11 +329,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnap
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -389,11 +389,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAnExi
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			SourceVirtualMachine: &armcompute.SubResource{
@@ -445,11 +445,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -509,11 +509,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -581,11 +581,11 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatInclu
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+	poller, err := clientFactory.NewImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.ImageProperties{
 			StorageProfile: &armcompute.ImageStorageProfile{
@@ -653,11 +653,11 @@ func ExampleImagesClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myImage", armcompute.ImageUpdate{
+	poller, err := clientFactory.NewImagesClient().BeginUpdate(ctx, "myResourceGroup", "myImage", armcompute.ImageUpdate{
 		Tags: map[string]*string{
 			"department": to.Ptr("HR"),
 		},
@@ -727,11 +727,11 @@ func ExampleImagesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myImage", &armcompute.ImagesClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewImagesClient().Get(ctx, "myResourceGroup", "myImage", &armcompute.ImagesClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -784,11 +784,11 @@ func ExampleImagesClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
+	pager := clientFactory.NewImagesClient().NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -847,11 +847,11 @@ func ExampleImagesClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager(nil)
+	pager := clientFactory.NewImagesClient().NewListPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

@@ -25,11 +25,11 @@ func ExampleCustomDomainsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
+	res, err := clientFactory.NewCustomDomainsClient().Get(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -55,11 +55,11 @@ func ExampleCustomDomainsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
+	poller, err := clientFactory.NewCustomDomainsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName:   to.Ptr("mycert"),
 			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
@@ -94,11 +94,11 @@ func ExampleCustomDomainsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
+	poller, err := clientFactory.NewCustomDomainsClient().BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -115,11 +115,11 @@ func ExampleCustomDomainsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
+	poller, err := clientFactory.NewCustomDomainsClient().BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName:   to.Ptr("mycert"),
 			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
@@ -154,11 +154,11 @@ func ExampleCustomDomainsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", nil)
+	pager := clientFactory.NewCustomDomainsClient().NewListPager("myResourceGroup", "myservice", "myapp", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

@@ -25,11 +25,11 @@ func ExampleMonitoringSettingsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewMonitoringSettingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
+	res, err := clientFactory.NewMonitoringSettingsClient().Get(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -59,11 +59,11 @@ func ExampleMonitoringSettingsClient_BeginUpdatePut() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewMonitoringSettingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
+	poller, err := clientFactory.NewMonitoringSettingsClient().BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
 		Properties: &armappplatform.MonitoringSettingProperties{
 			AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
 			AppInsightsSamplingRate:       to.Ptr[float64](10),
@@ -103,11 +103,11 @@ func ExampleMonitoringSettingsClient_BeginUpdatePatch() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewMonitoringSettingsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
+	poller, err := clientFactory.NewMonitoringSettingsClient().BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
 		Properties: &armappplatform.MonitoringSettingProperties{
 			AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
 			AppInsightsSamplingRate:       to.Ptr[float64](10),

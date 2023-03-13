@@ -25,11 +25,11 @@ func ExampleBatchDeploymentsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.BatchDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
+	pager := clientFactory.NewBatchDeploymentsClient().NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.BatchDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:  to.Ptr[int32](1),
 		Skip: nil,
 	})
@@ -130,11 +130,11 @@ func ExampleBatchDeploymentsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
+	poller, err := clientFactory.NewBatchDeploymentsClient().BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -151,11 +151,11 @@ func ExampleBatchDeploymentsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
+	res, err := clientFactory.NewBatchDeploymentsClient().Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -245,11 +245,11 @@ func ExampleBatchDeploymentsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
+	poller, err := clientFactory.NewBatchDeploymentsClient().BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
 			UserAssignedIdentities: map[string]any{
@@ -389,11 +389,11 @@ func ExampleBatchDeploymentsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.BatchDeploymentData{
+	poller, err := clientFactory.NewBatchDeploymentsClient().BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.BatchDeploymentData{
 		Location: to.Ptr("string"),
 		Tags:     map[string]*string{},
 		Identity: &armmachinelearningservices.ManagedServiceIdentity{
