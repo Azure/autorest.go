@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.6.0",
+      "tag": "@autorest/gotest_v4.6.0",
+      "date": "Mon, 13 Mar 2023 09:28:18 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Change example generation to use `ClientFactory`."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.5.2",
       "tag": "@autorest/gotest_v4.5.2",
       "date": "Mon, 30 Jan 2023 08:26:19 GMT",
