@@ -3,14 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { BaseCodeGenerator } from './baseGenerator';
-import { Config } from '../common/constant';
-import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
-import { MockTestDataRender } from './mockTestGenerator';
-import { ParameterOutput } from '../common/model';
-import { camelCase, trimEnd } from 'lodash';
 import { ObjectSchema, Parameter, SchemaType } from '@autorest/codemodel';
 import { sortParametersByRequired } from '@autorest/go/dist/generator/helpers';
+import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
+import { camelCase, trimEnd } from 'lodash';
+import { Config } from '../common/constant';
+import { ParameterOutput } from '../common/model';
+import { BaseCodeGenerator } from './baseGenerator';
+import { MockTestDataRender } from './mockTestGenerator';
 
 export class ExampleDataRender extends MockTestDataRender {
   public renderData(): void {
