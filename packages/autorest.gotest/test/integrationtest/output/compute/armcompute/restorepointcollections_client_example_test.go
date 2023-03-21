@@ -25,11 +25,11 @@ func ExampleRestorePointCollectionsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myRpc", armcompute.RestorePointCollection{
+	res, err := clientFactory.NewRestorePointCollectionsClient().CreateOrUpdate(ctx, "myResourceGroup", "myRpc", armcompute.RestorePointCollection{
 		Location: to.Ptr("norwayeast"),
 		Tags: map[string]*string{
 			"myTag1": to.Ptr("tagValue1"),
@@ -72,11 +72,11 @@ func ExampleRestorePointCollectionsClient_Get_getARestorePointCollectionButNotTh
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myRpc", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewRestorePointCollectionsClient().Get(ctx, "myResourceGroup", "myRpc", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -109,11 +109,11 @@ func ExampleRestorePointCollectionsClient_Get_getARestorePointCollectionIncludin
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "rpcName", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewRestorePointCollectionsClient().Get(ctx, "myResourceGroup", "rpcName", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -213,11 +213,11 @@ func ExampleRestorePointCollectionsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup", nil)
+	pager := clientFactory.NewRestorePointCollectionsClient().NewListPager("myResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -275,11 +275,11 @@ func ExampleRestorePointCollectionsClient_NewListAllPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListAllPager(nil)
+	pager := clientFactory.NewRestorePointCollectionsClient().NewListAllPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

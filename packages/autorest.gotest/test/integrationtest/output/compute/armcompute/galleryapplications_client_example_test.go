@@ -25,11 +25,11 @@ func ExampleGalleryApplicationsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplication{
+	poller, err := clientFactory.NewGalleryApplicationsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplication{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryApplicationProperties{
 			Description:         to.Ptr("This is the gallery application description."),
@@ -71,11 +71,11 @@ func ExampleGalleryApplicationsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplicationUpdate{
+	poller, err := clientFactory.NewGalleryApplicationsClient().BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplicationUpdate{
 		Properties: &armcompute.GalleryApplicationProperties{
 			Description:         to.Ptr("This is the gallery application description."),
 			Eula:                to.Ptr("This is the gallery application EULA."),
@@ -116,11 +116,11 @@ func ExampleGalleryApplicationsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
+	res, err := clientFactory.NewGalleryApplicationsClient().Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -147,11 +147,11 @@ func ExampleGalleryApplicationsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
+	poller, err := clientFactory.NewGalleryApplicationsClient().BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -168,11 +168,11 @@ func ExampleGalleryApplicationsClient_NewListByGalleryPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
+	pager := clientFactory.NewGalleryApplicationsClient().NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

@@ -25,11 +25,11 @@ func ExampleAvailabilitySetsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewAvailabilitySetsClient("1", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myAvailabilitySet", armcompute.AvailabilitySet{
+	res, err := clientFactory.NewAvailabilitySetsClient().CreateOrUpdate(ctx, "myResourceGroup", "myAvailabilitySet", armcompute.AvailabilitySet{
 		Location: to.Ptr("westus"),
 		AdditionalProperties: map[string]*string{
 			"anyProperty": to.Ptr("fakeValue"),
@@ -67,11 +67,11 @@ func ExampleAvailabilitySetsClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewAvailabilitySetsClient("{subscriptionId}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListBySubscriptionPager(&armcompute.AvailabilitySetsClientListBySubscriptionOptions{Expand: to.Ptr("Faked for test: +ge+2020, %3E2012")})
+	pager := clientFactory.NewAvailabilitySetsClient().NewListBySubscriptionPager(&armcompute.AvailabilitySetsClientListBySubscriptionOptions{Expand: to.Ptr("Faked for test: +ge+2020, %3E2012")})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Mon, 30 Jan 2023 08:26:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Mar 2023 09:28:18 GMT and should not be manually modified.
+
+## 4.6.0
+Mon, 13 Mar 2023 09:28:18 GMT
+
+### Minor changes
+
+- Change example generation to use `ClientFactory`.
 
 ## 4.5.2
 Mon, 30 Jan 2023 08:26:19 GMT

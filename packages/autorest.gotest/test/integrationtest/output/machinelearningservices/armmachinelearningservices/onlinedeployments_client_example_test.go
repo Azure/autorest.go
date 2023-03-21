@@ -25,11 +25,11 @@ func ExampleOnlineDeploymentsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.OnlineDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
+	pager := clientFactory.NewOnlineDeploymentsClient().NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.OnlineDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:  to.Ptr[int32](1),
 		Skip: nil,
 	})
@@ -138,11 +138,11 @@ func ExampleOnlineDeploymentsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", nil)
+	poller, err := clientFactory.NewOnlineDeploymentsClient().BeginDelete(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -159,11 +159,11 @@ func ExampleOnlineDeploymentsClient_Get_getKubernetesOnlineDeployment() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
+	res, err := clientFactory.NewOnlineDeploymentsClient().Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -261,11 +261,11 @@ func ExampleOnlineDeploymentsClient_Get_getManagedOnlineDeployment() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
+	res, err := clientFactory.NewOnlineDeploymentsClient().Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -358,11 +358,11 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateKubernetesOnlineDeployment
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
+	poller, err := clientFactory.NewOnlineDeploymentsClient().BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
 			UserAssignedIdentities: map[string]any{
@@ -484,11 +484,11 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_updateManagedOnlineDeployment() 
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
+	poller, err := clientFactory.NewOnlineDeploymentsClient().BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
 		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
 			UserAssignedIdentities: map[string]any{
@@ -605,11 +605,11 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateKubernetes
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
+	poller, err := clientFactory.NewOnlineDeploymentsClient().BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
 		Location: to.Ptr("string"),
 		Tags:     map[string]*string{},
 		Identity: &armmachinelearningservices.ManagedServiceIdentity{
@@ -774,11 +774,11 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateManagedOnl
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
+	poller, err := clientFactory.NewOnlineDeploymentsClient().BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
 		Location: to.Ptr("string"),
 		Tags:     map[string]*string{},
 		Identity: &armmachinelearningservices.ManagedServiceIdentity{
@@ -933,11 +933,11 @@ func ExampleOnlineDeploymentsClient_GetLogs() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetLogs(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", armmachinelearningservices.DeploymentLogsRequest{
+	res, err := clientFactory.NewOnlineDeploymentsClient().GetLogs(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", armmachinelearningservices.DeploymentLogsRequest{
 		ContainerType: to.Ptr(armmachinelearningservices.ContainerTypeStorageInitializer),
 		Tail:          to.Ptr[int32](0),
 	}, nil)
@@ -959,11 +959,11 @@ func ExampleOnlineDeploymentsClient_NewListSKUsPager_listKubernetesOnlineDeploym
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListSKUsPager("test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", &armmachinelearningservices.OnlineDeploymentsClientListSKUsOptions{Count: to.Ptr[int32](1),
+	pager := clientFactory.NewOnlineDeploymentsClient().NewListSKUsPager("test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", &armmachinelearningservices.OnlineDeploymentsClientListSKUsOptions{Count: to.Ptr[int32](1),
 		Skip: nil,
 	})
 	for pager.More() {
@@ -1002,11 +1002,11 @@ func ExampleOnlineDeploymentsClient_NewListSKUsPager_listManagedOnlineDeployment
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListSKUsPager("test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", &armmachinelearningservices.OnlineDeploymentsClientListSKUsOptions{Count: to.Ptr[int32](1),
+	pager := clientFactory.NewOnlineDeploymentsClient().NewListSKUsPager("test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", &armmachinelearningservices.OnlineDeploymentsClientListSKUsOptions{Count: to.Ptr[int32](1),
 		Skip: nil,
 	})
 	for pager.More() {

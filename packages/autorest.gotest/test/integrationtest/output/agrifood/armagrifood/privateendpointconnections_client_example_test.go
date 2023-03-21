@@ -25,11 +25,11 @@ func ExamplePrivateEndpointConnectionsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewPrivateEndpointConnectionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "examples-rg", "examples-farmbeatsResourceName", "privateEndpointConnectionName", armagrifood.PrivateEndpointConnection{
+	res, err := clientFactory.NewPrivateEndpointConnectionsClient().CreateOrUpdate(ctx, "examples-rg", "examples-farmbeatsResourceName", "privateEndpointConnectionName", armagrifood.PrivateEndpointConnection{
 		Properties: &armagrifood.PrivateEndpointConnectionProperties{
 			PrivateLinkServiceConnectionState: &armagrifood.PrivateLinkServiceConnectionState{
 				Description: to.Ptr("Approved by johndoe@contoso.com"),
@@ -68,11 +68,11 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewPrivateEndpointConnectionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "examples-rg", "examples-farmbeatsResourceName", "privateEndpointConnectionName", nil)
+	res, err := clientFactory.NewPrivateEndpointConnectionsClient().Get(ctx, "examples-rg", "examples-farmbeatsResourceName", "privateEndpointConnectionName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -104,11 +104,11 @@ func ExamplePrivateEndpointConnectionsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewPrivateEndpointConnectionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "examples-rg", "examples-farmbeatsResourceName", "privateEndpointConnectionName", nil)
+	poller, err := clientFactory.NewPrivateEndpointConnectionsClient().BeginDelete(ctx, "examples-rg", "examples-farmbeatsResourceName", "privateEndpointConnectionName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -125,11 +125,11 @@ func ExamplePrivateEndpointConnectionsClient_NewListByResourcePager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewPrivateEndpointConnectionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourcePager("examples-rg", "examples-farmbeatsResourceName", nil)
+	pager := clientFactory.NewPrivateEndpointConnectionsClient().NewListByResourcePager("examples-rg", "examples-farmbeatsResourceName", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

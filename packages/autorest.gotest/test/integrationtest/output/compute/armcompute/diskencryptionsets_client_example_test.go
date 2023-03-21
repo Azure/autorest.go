@@ -25,11 +25,11 @@ func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate_createADiskEncryptionSe
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
+	poller, err := clientFactory.NewDiskEncryptionSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
 		Location: to.Ptr("West US"),
 		Identity: &armcompute.EncryptionSetIdentity{
 			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
@@ -75,11 +75,11 @@ func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate_createADiskEncryptionSe
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
+	poller, err := clientFactory.NewDiskEncryptionSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
 		Location: to.Ptr("West US"),
 		Identity: &armcompute.EncryptionSetIdentity{
 			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
@@ -131,11 +131,11 @@ func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSetWithRot
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+	poller, err := clientFactory.NewDiskEncryptionSetsClient().BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
 		Identity: &armcompute.EncryptionSetIdentity{
 			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
@@ -184,11 +184,11 @@ func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSetWithRot
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+	poller, err := clientFactory.NewDiskEncryptionSetsClient().BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
 		Identity: &armcompute.EncryptionSetIdentity{
 			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
@@ -241,11 +241,11 @@ func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSet() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+	poller, err := clientFactory.NewDiskEncryptionSetsClient().BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
 		Properties: &armcompute.DiskEncryptionSetUpdateProperties{
 			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
 				KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/keyName/keyVersion"),
@@ -302,11 +302,11 @@ func ExampleDiskEncryptionSetsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
+	res, err := clientFactory.NewDiskEncryptionSetsClient().Get(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -347,11 +347,11 @@ func ExampleDiskEncryptionSetsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
+	poller, err := clientFactory.NewDiskEncryptionSetsClient().BeginDelete(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -368,11 +368,11 @@ func ExampleDiskEncryptionSetsClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
+	pager := clientFactory.NewDiskEncryptionSetsClient().NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -446,11 +446,11 @@ func ExampleDiskEncryptionSetsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager(nil)
+	pager := clientFactory.NewDiskEncryptionSetsClient().NewListPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -524,11 +524,11 @@ func ExampleDiskEncryptionSetsClient_NewListAssociatedResourcesPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListAssociatedResourcesPager("myResourceGroup", "myDiskEncryptionSet", nil)
+	pager := clientFactory.NewDiskEncryptionSetsClient().NewListAssociatedResourcesPager("myResourceGroup", "myDiskEncryptionSet", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

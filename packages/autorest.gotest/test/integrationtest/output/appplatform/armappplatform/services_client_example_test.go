@@ -25,11 +25,11 @@ func ExampleServicesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
+	res, err := clientFactory.NewServicesClient().Get(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -94,11 +94,11 @@ func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
+	poller, err := clientFactory.NewServicesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
 		Location: to.Ptr("eastus"),
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
@@ -177,11 +177,11 @@ func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdateVNetInjecti
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
+	poller, err := clientFactory.NewServicesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
 		Location: to.Ptr("eastus"),
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
@@ -272,11 +272,11 @@ func ExampleServicesClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", nil)
+	poller, err := clientFactory.NewServicesClient().BeginDelete(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -293,11 +293,11 @@ func ExampleServicesClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
+	poller, err := clientFactory.NewServicesClient().BeginUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
 		Location: to.Ptr("eastus"),
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
@@ -376,11 +376,11 @@ func ExampleServicesClient_ListTestKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListTestKeys(ctx, "myResourceGroup", "myservice", nil)
+	res, err := clientFactory.NewServicesClient().ListTestKeys(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -403,11 +403,11 @@ func ExampleServicesClient_RegenerateTestKey() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.RegenerateTestKey(ctx, "myResourceGroup", "myservice", armappplatform.RegenerateTestKeyRequestPayload{
+	res, err := clientFactory.NewServicesClient().RegenerateTestKey(ctx, "myResourceGroup", "myservice", armappplatform.RegenerateTestKeyRequestPayload{
 		KeyType: to.Ptr(armappplatform.TestKeyTypePrimary),
 	}, nil)
 	if err != nil {
@@ -432,11 +432,11 @@ func ExampleServicesClient_DisableTestEndpoint() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.DisableTestEndpoint(ctx, "myResourceGroup", "myservice", nil)
+	_, err = clientFactory.NewServicesClient().DisableTestEndpoint(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -449,11 +449,11 @@ func ExampleServicesClient_EnableTestEndpoint() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.EnableTestEndpoint(ctx, "myResourceGroup", "myservice", nil)
+	res, err := clientFactory.NewServicesClient().EnableTestEndpoint(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -476,11 +476,11 @@ func ExampleServicesClient_CheckNameAvailability() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CheckNameAvailability(ctx, "eastus", armappplatform.NameAvailabilityParameters{
+	res, err := clientFactory.NewServicesClient().CheckNameAvailability(ctx, "eastus", armappplatform.NameAvailabilityParameters{
 		Name: to.Ptr("myservice"),
 		Type: to.Ptr("Microsoft.AppPlatform/Spring"),
 	}, nil)
@@ -504,11 +504,11 @@ func ExampleServicesClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewServicesClient().NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -581,11 +581,11 @@ func ExampleServicesClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup", nil)
+	pager := clientFactory.NewServicesClient().NewListPager("myResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

@@ -20340,6 +20340,9 @@ security:
         - https://management.azure.com/.default
 testModel:
   mockTest:
+    clientFactoryParametersOutput:
+      - paramName: subscriptionID
+        paramOutput: '"<subscription-id>"'
     exampleGroups:
       - operationId: Services_Get
         examples:
@@ -45227,7 +45230,6 @@ language:
     name: AppPlatformManagementClient
     description: ''
     azureARM: true
-    exportClients: false
     groupParameters: true
     hasTimeRFC3339: true
     headAsBoolean: true

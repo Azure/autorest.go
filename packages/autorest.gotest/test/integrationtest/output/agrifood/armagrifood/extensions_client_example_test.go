@@ -24,11 +24,11 @@ func ExampleExtensionsClient_Create() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewExtensionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Create(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
+	_, err = clientFactory.NewExtensionsClient().Create(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -41,11 +41,11 @@ func ExampleExtensionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewExtensionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
+	res, err := clientFactory.NewExtensionsClient().Get(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -81,11 +81,11 @@ func ExampleExtensionsClient_Update() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewExtensionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Update(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
+	res, err := clientFactory.NewExtensionsClient().Update(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -121,11 +121,11 @@ func ExampleExtensionsClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewExtensionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
+	_, err = clientFactory.NewExtensionsClient().Delete(ctx, "examples-rg", "examples-farmbeatsResourceName", "provider.extension", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -138,11 +138,11 @@ func ExampleExtensionsClient_NewListByFarmBeatsPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewExtensionsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByFarmBeatsPager("examples-rg", "examples-farmbeatsResourceName", &armagrifood.ExtensionsClientListByFarmBeatsOptions{ExtensionIDs: []string{},
+	pager := clientFactory.NewExtensionsClient().NewListByFarmBeatsPager("examples-rg", "examples-farmbeatsResourceName", &armagrifood.ExtensionsClientListByFarmBeatsOptions{ExtensionIDs: []string{},
 		ExtensionCategories: []string{},
 		MaxPageSize:         nil,
 		SkipToken:           nil,

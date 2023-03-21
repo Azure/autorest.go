@@ -25,11 +25,11 @@ func ExampleComputeClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("testrg123", "workspaces123", &armmachinelearningservices.ComputeClientListOptions{Skip: nil})
+	pager := clientFactory.NewComputeClient().NewListPager("testrg123", "workspaces123", &armmachinelearningservices.ComputeClientListOptions{Skip: nil})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -81,11 +81,11 @@ func ExampleComputeClient_Get_getAAksCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
+	res, err := clientFactory.NewComputeClient().Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -115,11 +115,11 @@ func ExampleComputeClient_Get_getAAmlCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
+	res, err := clientFactory.NewComputeClient().Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -176,11 +176,11 @@ func ExampleComputeClient_Get_getAKubernetesCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
+	res, err := clientFactory.NewComputeClient().Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -232,11 +232,11 @@ func ExampleComputeClient_Get_getAnComputeInstance() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
+	res, err := clientFactory.NewComputeClient().Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -299,11 +299,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_attachAKubernetesCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.Kubernetes{
 			Description: to.Ptr("some compute"),
 			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeKubernetes),
@@ -383,11 +383,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAAmlCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.AmlCompute{
 			Properties: &armmachinelearningservices.AmlComputeProperties{
 				EnableNodePublicIP:          to.Ptr(true),
@@ -438,11 +438,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_createADataFactoryCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.DataFactory{
 			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeDataFactory),
 		},
@@ -477,11 +477,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnAksCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.AKS{
 			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
 		},
@@ -516,11 +516,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.ComputeInstance{
 			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
 			Properties: &armmachinelearningservices.ComputeInstanceProperties{
@@ -572,11 +572,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceComputeWith
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.ComputeInstance{
 			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
 			Properties: &armmachinelearningservices.ComputeInstanceProperties{
@@ -614,11 +614,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_updateAAmlCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.AmlCompute{
 			Properties: &armmachinelearningservices.AmlComputeProperties{
 				ScaleSettings: &armmachinelearningservices.ScaleSettings{
@@ -692,11 +692,11 @@ func ExampleComputeClient_BeginCreateOrUpdate_updateAnAksCompute() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+	poller, err := clientFactory.NewComputeClient().BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
 		Properties: &armmachinelearningservices.AKS{
 			Properties: &armmachinelearningservices.AKSSchemaProperties{
 				AgentCount: to.Ptr[int32](4),
@@ -741,11 +741,11 @@ func ExampleComputeClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ClusterUpdateParameters{
+	poller, err := clientFactory.NewComputeClient().BeginUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ClusterUpdateParameters{
 		Properties: &armmachinelearningservices.ClusterUpdateProperties{
 			Properties: &armmachinelearningservices.ScaleSettingsInformation{
 				ScaleSettings: &armmachinelearningservices.ScaleSettings{
@@ -786,11 +786,11 @@ func ExampleComputeClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.UnderlyingResourceActionDelete, nil)
+	poller, err := clientFactory.NewComputeClient().BeginDelete(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.UnderlyingResourceActionDelete, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -807,11 +807,11 @@ func ExampleComputeClient_NewListNodesPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListNodesPager("testrg123", "workspaces123", "compute123", nil)
+	pager := clientFactory.NewComputeClient().NewListNodesPager("testrg123", "workspaces123", "compute123", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -850,11 +850,11 @@ func ExampleComputeClient_ListKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx, "testrg123", "workspaces123", "compute123", nil)
+	res, err := clientFactory.NewComputeClient().ListKeys(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -878,11 +878,11 @@ func ExampleComputeClient_BeginStart() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStart(ctx, "testrg123", "workspaces123", "compute123", nil)
+	poller, err := clientFactory.NewComputeClient().BeginStart(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -899,11 +899,11 @@ func ExampleComputeClient_BeginStop() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStop(ctx, "testrg123", "workspaces123", "compute123", nil)
+	poller, err := clientFactory.NewComputeClient().BeginStop(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -920,11 +920,11 @@ func ExampleComputeClient_BeginRestart() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRestart(ctx, "testrg123", "workspaces123", "compute123", nil)
+	poller, err := clientFactory.NewComputeClient().BeginRestart(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

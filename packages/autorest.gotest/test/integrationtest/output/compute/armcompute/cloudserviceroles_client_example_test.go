@@ -24,11 +24,11 @@ func ExampleCloudServiceRolesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewCloudServiceRolesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "{role-name}", "ConstosoRG", "{cs-name}", nil)
+	res, err := clientFactory.NewCloudServiceRolesClient().Get(ctx, "{role-name}", "ConstosoRG", "{cs-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -58,11 +58,11 @@ func ExampleCloudServiceRolesClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewCloudServiceRolesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("ConstosoRG", "{cs-name}", nil)
+	pager := clientFactory.NewCloudServiceRolesClient().NewListPager("ConstosoRG", "{cs-name}", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

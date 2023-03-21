@@ -26,15 +26,15 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
         log.Fatalf("failed to obtain a credential: %v", err)
     }
     ctx := context.Background()
-    client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}cred, nil)
-    if err != nil {
+    clientFactory, err := {{packageName}}.NewClientFactory({{jsFunc.getParamsValue(clientFactoryParametersOutput) + ", " if clientFactoryParametersOutput.length>0 else ""}}cred, nil)
+	if err != nil {
         log.Fatalf("failed to create client: %v", err)
     }
     {%- if example.returnInfo.length == 2 %}
     {%- if example.isLRO %}
-    poller, err := client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+    poller, err := clientFactory.{{example.operationGroup.language.go.clientCtorName}}().{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
     {%- else %}
-    {% if example.checkResponse %}res{% else %}_{% endif %}, err {% if example.checkResponse %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+    {% if example.checkResponse %}res{% else %}_{% endif %}, err {% if example.checkResponse %}:{% endif %}= clientFactory.{{example.operationGroup.language.go.clientCtorName}}().{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
     {%- endif %}
     if err != nil {
         log.Fatalf("failed to finish the request: %v", err)
@@ -46,7 +46,7 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
     }
     {%- endif %}
     {%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}
-    pager := client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+    pager := clientFactory.{{example.operationGroup.language.go.clientCtorName}}().{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
     for pager.More() {
         page, err := pager.NextPage(ctx)
         if err != nil {
@@ -60,7 +60,7 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
         // page{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %} = {{jsFunc.getCommentResponseOutput(example.responseOutput)}}
     }
     {%- else %}
-    client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+    clientFactory.{{example.operationGroup.language.go.clientCtorName}}().{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
     {%- endif %}
     {%- if example.isLRO and example.isPageable and example.checkResponse %}
     for res.More() {

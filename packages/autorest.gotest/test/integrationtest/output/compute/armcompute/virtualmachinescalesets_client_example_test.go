@@ -25,11 +25,11 @@ func ExampleVirtualMachineScaleSetsClient_NewListByLocationPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByLocationPager("eastus", nil)
+	pager := clientFactory.NewVirtualMachineScaleSetsClient().NewListByLocationPager("eastus", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -205,11 +205,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createACustomImage
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("<subscription-id>", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "<resource-group-name>", "<vm-scale-set-name>", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "<resource-group-name>", "<vm-scale-set-name>", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -341,11 +341,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAPlatformIma
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -495,11 +495,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -638,11 +638,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -781,11 +781,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetFro
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -910,11 +910,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -1085,11 +1085,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -1271,11 +1271,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Plan: &armcompute.Plan{
 			Name:      to.Ptr("windows2016"),
@@ -1437,11 +1437,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -1601,11 +1601,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Plan: &armcompute.Plan{
 			Name:      to.Ptr("windows2016"),
@@ -1761,11 +1761,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -1919,11 +1919,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -2091,11 +2091,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			AutomaticRepairsPolicy: &armcompute.AutomaticRepairsPolicy{
@@ -2249,11 +2249,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -2411,11 +2411,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -2593,11 +2593,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Plan: &armcompute.Plan{
 			Name:      to.Ptr("windows2016"),
@@ -2761,11 +2761,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Plan: &armcompute.Plan{
 			Name:      to.Ptr("windows2016"),
@@ -2923,11 +2923,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -3114,11 +3114,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -3274,11 +3274,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -3424,11 +3424,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -3574,11 +3574,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -3739,11 +3739,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -3901,11 +3901,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -4058,11 +4058,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginCreateOrUpdate_createAScaleSetWit
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
 		Location: to.Ptr("centralus"),
 		Properties: &armcompute.VirtualMachineScaleSetProperties{
 			Overprovision: to.Ptr(true),
@@ -4247,11 +4247,11 @@ func ExampleVirtualMachineScaleSetsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", &armcompute.VirtualMachineScaleSetsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
+	poller, err := clientFactory.NewVirtualMachineScaleSetsClient().BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", &armcompute.VirtualMachineScaleSetsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -4268,11 +4268,11 @@ func ExampleVirtualMachineScaleSetsClient_Get_getAVirtualMachineScaleSetPlacedOn
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myVirtualMachineScaleSet", &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewVirtualMachineScaleSetsClient().Get(ctx, "myResourceGroup", "myVirtualMachineScaleSet", &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -4367,11 +4367,11 @@ func ExampleVirtualMachineScaleSetsClient_Get_getAVirtualMachineScaleSetWithUser
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myVirtualMachineScaleSet", &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewVirtualMachineScaleSetsClient().Get(ctx, "myResourceGroup", "myVirtualMachineScaleSet", &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

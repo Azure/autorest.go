@@ -25,11 +25,11 @@ func ExampleEnvironmentContainersClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("testrg123", "testworkspace", &armmachinelearningservices.EnvironmentContainersClientListOptions{Skip: nil,
+	pager := clientFactory.NewEnvironmentContainersClient().NewListPager("testrg123", "testworkspace", &armmachinelearningservices.EnvironmentContainersClientListOptions{Skip: nil,
 		ListViewType: nil,
 	})
 	for pager.More() {
@@ -75,11 +75,11 @@ func ExampleEnvironmentContainersClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx, "testrg123", "testworkspace", "testContainer", nil)
+	_, err = clientFactory.NewEnvironmentContainersClient().Delete(ctx, "testrg123", "testworkspace", "testContainer", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -92,11 +92,11 @@ func ExampleEnvironmentContainersClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "testrg123", "testworkspace", "testEnvironment", nil)
+	res, err := clientFactory.NewEnvironmentContainersClient().Get(ctx, "testrg123", "testworkspace", "testEnvironment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -132,11 +132,11 @@ func ExampleEnvironmentContainersClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "testrg123", "testworkspace", "testEnvironment", armmachinelearningservices.EnvironmentContainerData{
+	res, err := clientFactory.NewEnvironmentContainersClient().CreateOrUpdate(ctx, "testrg123", "testworkspace", "testEnvironment", armmachinelearningservices.EnvironmentContainerData{
 		Properties: &armmachinelearningservices.EnvironmentContainerDetails{
 			Description: to.Ptr("string"),
 			Properties: map[string]*string{

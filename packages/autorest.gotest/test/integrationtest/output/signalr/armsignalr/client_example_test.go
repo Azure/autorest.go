@@ -25,11 +25,11 @@ func ExampleClient_CheckNameAvailability() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CheckNameAvailability(ctx, "eastus", armsignalr.NameAvailabilityParameters{
+	res, err := clientFactory.NewClient().CheckNameAvailability(ctx, "eastus", armsignalr.NameAvailabilityParameters{
 		Name: to.Ptr("mySignalRService"),
 		Type: to.Ptr("Microsoft.SignalRService/SignalR"),
 	}, nil)
@@ -53,11 +53,11 @@ func ExampleClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewClient().NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -197,11 +197,11 @@ func ExampleClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
+	pager := clientFactory.NewClient().NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -341,11 +341,11 @@ func ExampleClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "mySignalRService", nil)
+	res, err := clientFactory.NewClient().Get(ctx, "myResourceGroup", "mySignalRService", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -477,11 +477,11 @@ func ExampleClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "mySignalRService", armsignalr.ResourceInfo{
+	poller, err := clientFactory.NewClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "mySignalRService", armsignalr.ResourceInfo{
 		Location: to.Ptr("eastus"),
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
@@ -693,11 +693,11 @@ func ExampleClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "mySignalRService", nil)
+	poller, err := clientFactory.NewClient().BeginDelete(ctx, "myResourceGroup", "mySignalRService", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -714,11 +714,11 @@ func ExampleClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "mySignalRService", armsignalr.ResourceInfo{
+	poller, err := clientFactory.NewClient().BeginUpdate(ctx, "myResourceGroup", "mySignalRService", armsignalr.ResourceInfo{
 		Location: to.Ptr("eastus"),
 		Tags: map[string]*string{
 			"$(subscriptionId)": to.Ptr("$(subscriptionId)"),
@@ -931,11 +931,11 @@ func ExampleClient_ListKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx, "myResourceGroup", "mySignalRService", nil)
+	res, err := clientFactory.NewClient().ListKeys(ctx, "myResourceGroup", "mySignalRService", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -953,11 +953,11 @@ func ExampleClient_BeginRegenerateKey() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRegenerateKey(ctx, "myResourceGroup", "mySignalRService", armsignalr.RegenerateKeyParameters{
+	poller, err := clientFactory.NewClient().BeginRegenerateKey(ctx, "myResourceGroup", "mySignalRService", armsignalr.RegenerateKeyParameters{
 		KeyType: to.Ptr(armsignalr.KeyTypePrimary),
 	}, nil)
 	if err != nil {
@@ -976,11 +976,11 @@ func ExampleClient_BeginRestart() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armsignalr.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRestart(ctx, "myResourceGroup", "mySignalRService", nil)
+	poller, err := clientFactory.NewClient().BeginRestart(ctx, "myResourceGroup", "mySignalRService", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

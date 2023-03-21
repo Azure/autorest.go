@@ -25,11 +25,11 @@ func ExampleSSHPublicKeysClient_Create() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewSSHPublicKeysClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Create(ctx, "myResourceGroup", "mySshPublicKeyName", armcompute.SSHPublicKeyResource{
+	res, err := clientFactory.NewSSHPublicKeysClient().Create(ctx, "myResourceGroup", "mySshPublicKeyName", armcompute.SSHPublicKeyResource{
 		Location: to.Ptr("westus"),
 		Properties: &armcompute.SSHPublicKeyResourceProperties{
 			PublicKey: to.Ptr("{ssh-rsa public key}"),
@@ -58,11 +58,11 @@ func ExampleSSHPublicKeysClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewSSHPublicKeysClient("{subscriptionId}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
+	res, err := clientFactory.NewSSHPublicKeysClient().Get(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -89,11 +89,11 @@ func ExampleSSHPublicKeysClient_GenerateKeyPair() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewSSHPublicKeysClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GenerateKeyPair(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
+	res, err := clientFactory.NewSSHPublicKeysClient().GenerateKeyPair(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

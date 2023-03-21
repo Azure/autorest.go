@@ -24,11 +24,11 @@ func ExamplePrivateLinkResourcesClient_NewListByResourcePager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewPrivateLinkResourcesClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourcePager("examples-rg", "examples-farmbeatsResourceName", nil)
+	pager := clientFactory.NewPrivateLinkResourcesClient().NewListByResourcePager("examples-rg", "examples-farmbeatsResourceName", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -64,11 +64,11 @@ func ExamplePrivateLinkResourcesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewPrivateLinkResourcesClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "examples-rg", "examples-farmbeatsResourceName", "farmbeats", nil)
+	res, err := clientFactory.NewPrivateLinkResourcesClient().Get(ctx, "examples-rg", "examples-farmbeatsResourceName", "farmbeats", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

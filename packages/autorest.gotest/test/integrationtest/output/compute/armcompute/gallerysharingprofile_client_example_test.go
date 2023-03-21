@@ -25,11 +25,11 @@ func ExampleGallerySharingProfileClient_BeginUpdate_addSharingIdToTheSharingProf
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGallerySharingProfileClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.SharingUpdate{
+	poller, err := clientFactory.NewGallerySharingProfileClient().BeginUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.SharingUpdate{
 		Groups: []*armcompute.SharingProfileGroup{
 			{
 				Type: to.Ptr(armcompute.SharingProfileGroupTypesSubscriptions),
@@ -78,11 +78,11 @@ func ExampleGallerySharingProfileClient_BeginUpdate_resetSharingProfileOfAGaller
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGallerySharingProfileClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.SharingUpdate{
+	poller, err := clientFactory.NewGallerySharingProfileClient().BeginUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.SharingUpdate{
 		OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesReset),
 	}, nil)
 	if err != nil {

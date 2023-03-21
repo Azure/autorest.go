@@ -25,11 +25,11 @@ func ExampleDatastoresClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.DatastoresClientListOptions{Skip: nil,
+	pager := clientFactory.NewDatastoresClient().NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.DatastoresClientListOptions{Skip: nil,
 		Count:     to.Ptr[int32](1),
 		IsDefault: to.Ptr(false),
 		Names: []string{
@@ -89,11 +89,11 @@ func ExampleDatastoresClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	_, err = clientFactory.NewDatastoresClient().Delete(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -106,11 +106,11 @@ func ExampleDatastoresClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	res, err := clientFactory.NewDatastoresClient().Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -154,11 +154,11 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureDataLake
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+	res, err := clientFactory.NewDatastoresClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
 		Properties: &armmachinelearningservices.AzureDataLakeGen1Datastore{
 			Description: to.Ptr("string"),
 			Tags: map[string]*string{
@@ -222,11 +222,11 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureDataLake
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+	res, err := clientFactory.NewDatastoresClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
 		Properties: &armmachinelearningservices.AzureDataLakeGen2Datastore{
 			Description: to.Ptr("string"),
 			Tags: map[string]*string{
@@ -296,11 +296,11 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureFileStor
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+	res, err := clientFactory.NewDatastoresClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
 		Properties: &armmachinelearningservices.AzureFileDatastore{
 			Description: to.Ptr("string"),
 			Tags: map[string]*string{
@@ -362,11 +362,11 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureBlobWAcc
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+	res, err := clientFactory.NewDatastoresClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
 		Properties: &armmachinelearningservices.AzureBlobDatastore{
 			Description: to.Ptr("string"),
 			Tags: map[string]*string{
@@ -429,11 +429,11 @@ func ExampleDatastoresClient_ListSecrets() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListSecrets(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	res, err := clientFactory.NewDatastoresClient().ListSecrets(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -8913,6 +8913,9 @@ security:
         - https://management.azure.com/.default
 testModel:
   mockTest:
+    clientFactoryParametersOutput:
+      - paramName: subscriptionID
+        paramOutput: '"<subscription-id>"'
     exampleGroups:
       - operationId: Extensions_Create
         examples:
@@ -13874,7 +13877,6 @@ language:
     name: AzureAgFoodPlatformRPService
     description: ''
     azureARM: true
-    exportClients: false
     groupParameters: true
     hasTimeRFC3339: true
     headAsBoolean: true

@@ -25,11 +25,11 @@ func ExampleFarmBeatsModelsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "examples-rg", "examples-farmBeatsResourceName", nil)
+	res, err := clientFactory.NewFarmBeatsModelsClient().Get(ctx, "examples-rg", "examples-farmBeatsResourceName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -67,11 +67,11 @@ func ExampleFarmBeatsModelsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "examples-rg", "examples-farmbeatsResourceName", armagrifood.FarmBeats{
+	res, err := clientFactory.NewFarmBeatsModelsClient().CreateOrUpdate(ctx, "examples-rg", "examples-farmbeatsResourceName", armagrifood.FarmBeats{
 		Location: to.Ptr("eastus2"),
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
@@ -115,11 +115,11 @@ func ExampleFarmBeatsModelsClient_BeginUpdate_farmBeatsModelsUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "examples-rg", "examples-farmBeatsResourceName", armagrifood.FarmBeatsUpdateRequestModel{
+	poller, err := clientFactory.NewFarmBeatsModelsClient().BeginUpdate(ctx, "examples-rg", "examples-farmBeatsResourceName", armagrifood.FarmBeatsUpdateRequestModel{
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
 			"key2": to.Ptr("value2"),
@@ -166,11 +166,11 @@ func ExampleFarmBeatsModelsClient_BeginUpdate_farmBeatsModelsUpdateWithSensor() 
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "examples-rg", "examples-farmBeatsResourceName", armagrifood.FarmBeatsUpdateRequestModel{
+	poller, err := clientFactory.NewFarmBeatsModelsClient().BeginUpdate(ctx, "examples-rg", "examples-farmBeatsResourceName", armagrifood.FarmBeatsUpdateRequestModel{
 		Identity: &armagrifood.Identity{
 			Type: to.Ptr("SystemAssigned"),
 		},
@@ -233,11 +233,11 @@ func ExampleFarmBeatsModelsClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx, "examples-rg", "examples-farmBeatsResourceName", nil)
+	_, err = clientFactory.NewFarmBeatsModelsClient().Delete(ctx, "examples-rg", "examples-farmBeatsResourceName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -250,11 +250,11 @@ func ExampleFarmBeatsModelsClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListBySubscriptionPager(&armagrifood.FarmBeatsModelsClientListBySubscriptionOptions{MaxPageSize: nil,
+	pager := clientFactory.NewFarmBeatsModelsClient().NewListBySubscriptionPager(&armagrifood.FarmBeatsModelsClientListBySubscriptionOptions{MaxPageSize: nil,
 		SkipToken: nil,
 	})
 	for pager.More() {
@@ -302,11 +302,11 @@ func ExampleFarmBeatsModelsClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("examples-rg", &armagrifood.FarmBeatsModelsClientListByResourceGroupOptions{MaxPageSize: nil,
+	pager := clientFactory.NewFarmBeatsModelsClient().NewListByResourceGroupPager("examples-rg", &armagrifood.FarmBeatsModelsClientListByResourceGroupOptions{MaxPageSize: nil,
 		SkipToken: nil,
 	})
 	for pager.More() {
@@ -354,11 +354,11 @@ func ExampleFarmBeatsModelsClient_GetOperationResult() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armagrifood.NewFarmBeatsModelsClient("11111111-2222-3333-4444-555555555555", cred, nil)
+	clientFactory, err := armagrifood.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetOperationResult(ctx, "examples-rg", "examples-farmBeatsResourceName", "resource-provisioning-id-farmBeatsResourceName", nil)
+	res, err := clientFactory.NewFarmBeatsModelsClient().GetOperationResult(ctx, "examples-rg", "examples-farmBeatsResourceName", "resource-provisioning-id-farmBeatsResourceName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -25,11 +25,11 @@ func ExampleDedicatedHostGroupsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDedicatedHostGroupsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myDedicatedHostGroup", armcompute.DedicatedHostGroup{
+	res, err := clientFactory.NewDedicatedHostGroupsClient().CreateOrUpdate(ctx, "myResourceGroup", "myDedicatedHostGroup", armcompute.DedicatedHostGroup{
 		Location: to.Ptr("westus"),
 		Tags: map[string]*string{
 			"department": to.Ptr("finance"),
@@ -71,11 +71,11 @@ func ExampleDedicatedHostGroupsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDedicatedHostGroupsClient("{subscriptionId}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myDedicatedHostGroup", &armcompute.DedicatedHostGroupsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewDedicatedHostGroupsClient().Get(ctx, "myResourceGroup", "myDedicatedHostGroup", &armcompute.DedicatedHostGroupsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -25,11 +25,11 @@ func ExampleGalleryImagesClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImage{
+	poller, err := clientFactory.NewGalleryImagesClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImage{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryImageProperties{
 			HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
@@ -76,11 +76,11 @@ func ExampleGalleryImagesClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImageUpdate{
+	poller, err := clientFactory.NewGalleryImagesClient().BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImageUpdate{
 		Properties: &armcompute.GalleryImageProperties{
 			HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
 			Identifier: &armcompute.GalleryImageIdentifier{
@@ -126,11 +126,11 @@ func ExampleGalleryImagesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
+	res, err := clientFactory.NewGalleryImagesClient().Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -161,11 +161,11 @@ func ExampleGalleryImagesClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
+	poller, err := clientFactory.NewGalleryImagesClient().BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -182,11 +182,11 @@ func ExampleGalleryImagesClient_NewListByGalleryPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
+	pager := clientFactory.NewGalleryImagesClient().NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

@@ -25,11 +25,11 @@ func ExampleDeploymentsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
+	res, err := clientFactory.NewDeploymentsClient().Get(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -83,11 +83,11 @@ func ExampleDeploymentsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
+	poller, err := clientFactory.NewDeploymentsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
 				CPU: to.Ptr[int32](1),
@@ -168,11 +168,11 @@ func ExampleDeploymentsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
+	poller, err := clientFactory.NewDeploymentsClient().BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -189,11 +189,11 @@ func ExampleDeploymentsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
+	poller, err := clientFactory.NewDeploymentsClient().BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			Source: &armappplatform.UserSourceInfo{
 				Type:             to.Ptr(armappplatform.UserSourceTypeSource),
@@ -260,11 +260,11 @@ func ExampleDeploymentsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", &armappplatform.DeploymentsClientListOptions{Version: []string{}})
+	pager := clientFactory.NewDeploymentsClient().NewListPager("myResourceGroup", "myservice", "myapp", &armappplatform.DeploymentsClientListOptions{Version: []string{}})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -326,11 +326,11 @@ func ExampleDeploymentsClient_NewListForClusterPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListForClusterPager("myResourceGroup", "myservice", &armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
+	pager := clientFactory.NewDeploymentsClient().NewListForClusterPager("myResourceGroup", "myservice", &armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -392,11 +392,11 @@ func ExampleDeploymentsClient_BeginStart() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
+	poller, err := clientFactory.NewDeploymentsClient().BeginStart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -413,11 +413,11 @@ func ExampleDeploymentsClient_BeginStop() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStop(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
+	poller, err := clientFactory.NewDeploymentsClient().BeginStop(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -434,11 +434,11 @@ func ExampleDeploymentsClient_BeginRestart() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRestart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
+	poller, err := clientFactory.NewDeploymentsClient().BeginRestart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -455,11 +455,11 @@ func ExampleDeploymentsClient_GetLogFileURL() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armappplatform.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetLogFileURL(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
+	res, err := clientFactory.NewDeploymentsClient().GetLogFileURL(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

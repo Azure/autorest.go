@@ -25,11 +25,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDi
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -72,11 +72,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDi
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -121,11 +121,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByCopyingASnapshot
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -164,11 +164,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByImportingAnUnman
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -209,11 +209,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskByImportingAnUnman
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -252,11 +252,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAPlatformImage
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscriptionId}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -307,11 +307,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAnExistingMana
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk2", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk2", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -350,11 +350,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSecurityProfil
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("North Central US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -405,11 +405,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSsdZrsAccountT
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -455,11 +455,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedUploadDisk() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -498,11 +498,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnEmptyManagedDiskInExtendedLo
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		ExtendedLocation: &armcompute.ExtendedLocation{
 			Name: to.Ptr("{edge-zone-id}"),
@@ -549,11 +549,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnEmptyManagedDisk() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -592,11 +592,11 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnUltraManagedDiskWithLogicalS
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+	poller, err := clientFactory.NewDisksClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskProperties{
 			CreationData: &armcompute.CreationData{
@@ -644,11 +644,11 @@ func ExampleDisksClient_BeginUpdate_createOrUpdateABurstingEnabledManagedDisk() 
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+	poller, err := clientFactory.NewDisksClient().BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
 		Properties: &armcompute.DiskUpdateProperties{
 			BurstingEnabled: to.Ptr(true),
 			DiskSizeGB:      to.Ptr[int32](1024),
@@ -685,11 +685,11 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToAddPurchasePlan() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+	poller, err := clientFactory.NewDisksClient().BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
 		Properties: &armcompute.DiskUpdateProperties{
 			PurchasePlan: &armcompute.DiskPurchasePlan{
 				Name:          to.Ptr("myPurchasePlanName"),
@@ -744,11 +744,11 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToAddSupportsHibernation()
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+	poller, err := clientFactory.NewDisksClient().BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
 		Properties: &armcompute.DiskUpdateProperties{
 			SupportsHibernation: to.Ptr(true),
 		},
@@ -791,11 +791,11 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToChangeTier() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+	poller, err := clientFactory.NewDisksClient().BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
 		Properties: &armcompute.DiskUpdateProperties{
 			Tier: to.Ptr("P30"),
 		},
@@ -830,11 +830,11 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToDisableBursting() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+	poller, err := clientFactory.NewDisksClient().BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
 		Properties: &armcompute.DiskUpdateProperties{
 			BurstingEnabled: to.Ptr(false),
 		},
@@ -868,11 +868,11 @@ func ExampleDisksClient_BeginUpdate_updateManagedDiskToRemoveDiskAccessResourceA
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+	poller, err := clientFactory.NewDisksClient().BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
 		Properties: &armcompute.DiskUpdateProperties{
 			NetworkAccessPolicy: to.Ptr(armcompute.NetworkAccessPolicyAllowAll),
 		},
@@ -908,11 +908,11 @@ func ExampleDisksClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myManagedDisk", nil)
+	res, err := clientFactory.NewDisksClient().Get(ctx, "myResourceGroup", "myManagedDisk", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -985,11 +985,11 @@ func ExampleDisksClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
+	pager := clientFactory.NewDisksClient().NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -1115,11 +1115,11 @@ func ExampleDisksClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewDisksClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager(nil)
+	pager := clientFactory.NewDisksClient().NewListPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

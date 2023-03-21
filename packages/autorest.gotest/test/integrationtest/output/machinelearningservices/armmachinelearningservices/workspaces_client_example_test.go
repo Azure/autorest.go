@@ -25,11 +25,11 @@ func ExampleWorkspacesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "workspace-1234", "testworkspace", nil)
+	res, err := clientFactory.NewWorkspacesClient().Get(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -115,11 +115,11 @@ func ExampleWorkspacesClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.Workspace{
+	poller, err := clientFactory.NewWorkspacesClient().BeginCreateOrUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.Workspace{
 		Identity: &armmachinelearningservices.ManagedServiceIdentity{
 			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
@@ -227,11 +227,11 @@ func ExampleWorkspacesClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "workspace-1234", "testworkspace", nil)
+	poller, err := clientFactory.NewWorkspacesClient().BeginDelete(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -248,11 +248,11 @@ func ExampleWorkspacesClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.WorkspaceUpdateParameters{
+	poller, err := clientFactory.NewWorkspacesClient().BeginUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.WorkspaceUpdateParameters{
 		Properties: &armmachinelearningservices.WorkspacePropertiesUpdateParameters{
 			Description:         to.Ptr("new description"),
 			FriendlyName:        to.Ptr("New friendly name"),
@@ -299,11 +299,11 @@ func ExampleWorkspacesClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("workspace-1234", &armmachinelearningservices.WorkspacesClientListByResourceGroupOptions{Skip: nil})
+	pager := clientFactory.NewWorkspacesClient().NewListByResourceGroupPager("workspace-1234", &armmachinelearningservices.WorkspacesClientListByResourceGroupOptions{Skip: nil})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -357,11 +357,11 @@ func ExampleWorkspacesClient_BeginDiagnose() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDiagnose(ctx, "workspace-1234", "testworkspace", &armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
+	poller, err := clientFactory.NewWorkspacesClient().BeginDiagnose(ctx, "workspace-1234", "testworkspace", &armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
 		Value: &armmachinelearningservices.DiagnoseRequestProperties{
 			ApplicationInsights: map[string]any{},
 			ContainerRegistry:   map[string]any{},
@@ -420,11 +420,11 @@ func ExampleWorkspacesClient_ListKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx, "testrg123", "workspaces123", nil)
+	res, err := clientFactory.NewWorkspacesClient().ListKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -457,11 +457,11 @@ func ExampleWorkspacesClient_BeginResyncKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginResyncKeys(ctx, "testrg123", "workspaces123", nil)
+	poller, err := clientFactory.NewWorkspacesClient().BeginResyncKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -478,11 +478,11 @@ func ExampleWorkspacesClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListBySubscriptionPager(&armmachinelearningservices.WorkspacesClientListBySubscriptionOptions{Skip: nil})
+	pager := clientFactory.NewWorkspacesClient().NewListBySubscriptionPager(&armmachinelearningservices.WorkspacesClientListBySubscriptionOptions{Skip: nil})
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -536,11 +536,11 @@ func ExampleWorkspacesClient_ListNotebookAccessToken() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListNotebookAccessToken(ctx, "workspace-1234", "testworkspace", nil)
+	res, err := clientFactory.NewWorkspacesClient().ListNotebookAccessToken(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -564,11 +564,11 @@ func ExampleWorkspacesClient_BeginPrepareNotebook() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginPrepareNotebook(ctx, "testrg123", "workspaces123", nil)
+	poller, err := clientFactory.NewWorkspacesClient().BeginPrepareNotebook(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -596,11 +596,11 @@ func ExampleWorkspacesClient_ListStorageAccountKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListStorageAccountKeys(ctx, "testrg123", "workspaces123", nil)
+	res, err := clientFactory.NewWorkspacesClient().ListStorageAccountKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -618,11 +618,11 @@ func ExampleWorkspacesClient_ListNotebookKeys() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListNotebookKeys(ctx, "testrg123", "workspaces123", nil)
+	res, err := clientFactory.NewWorkspacesClient().ListNotebookKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -640,11 +640,11 @@ func ExampleWorkspacesClient_ListOutboundNetworkDependenciesEndpoints() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListOutboundNetworkDependenciesEndpoints(ctx, "workspace-1234", "testworkspace", nil)
+	res, err := clientFactory.NewWorkspacesClient().ListOutboundNetworkDependenciesEndpoints(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

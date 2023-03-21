@@ -24,11 +24,11 @@ func ExampleVirtualMachineSizesClient_List() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewVirtualMachineSizesClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.List(ctx, "eastus", nil)
+	res, err := clientFactory.NewVirtualMachineSizesClient().List(ctx, "eastus", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

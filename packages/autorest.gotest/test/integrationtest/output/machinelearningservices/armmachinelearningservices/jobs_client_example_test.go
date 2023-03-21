@@ -27,11 +27,11 @@ func ExampleJobsClient_NewListPager_listAutoMlJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+	pager := clientFactory.NewJobsClient().NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      nil,
 		Tag:          nil,
 		ListViewType: nil,
@@ -155,11 +155,11 @@ func ExampleJobsClient_NewListPager_listCommandJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+	pager := clientFactory.NewJobsClient().NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      to.Ptr("string"),
 		Tag:          to.Ptr("string"),
 		ListViewType: nil,
@@ -273,11 +273,11 @@ func ExampleJobsClient_NewListPager_listPipelineJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+	pager := clientFactory.NewJobsClient().NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      to.Ptr("string"),
 		Tag:          to.Ptr("string"),
 		ListViewType: nil,
@@ -363,11 +363,11 @@ func ExampleJobsClient_NewListPager_listSweepJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+	pager := clientFactory.NewJobsClient().NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      to.Ptr("string"),
 		Tag:          to.Ptr("string"),
 		ListViewType: nil,
@@ -479,11 +479,11 @@ func ExampleJobsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	poller, err := clientFactory.NewJobsClient().BeginDelete(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -500,11 +500,11 @@ func ExampleJobsClient_Get_getAutoMlJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	res, err := clientFactory.NewJobsClient().Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -614,11 +614,11 @@ func ExampleJobsClient_Get_getCommandJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	res, err := clientFactory.NewJobsClient().Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -718,11 +718,11 @@ func ExampleJobsClient_Get_getPipelineJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	res, err := clientFactory.NewJobsClient().Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -794,11 +794,11 @@ func ExampleJobsClient_Get_getSweepJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	res, err := clientFactory.NewJobsClient().Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -896,11 +896,11 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateAutoMlJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+	res, err := clientFactory.NewJobsClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
 		Properties: &armmachinelearningservices.AutoMLJob{
 			Description: to.Ptr("string"),
 			Properties: map[string]*string{
@@ -1089,11 +1089,11 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateCommandJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+	res, err := clientFactory.NewJobsClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
 		Properties: &armmachinelearningservices.CommandJob{
 			Description: to.Ptr("string"),
 			Properties: map[string]*string{
@@ -1259,11 +1259,11 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdatePipelineJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+	res, err := clientFactory.NewJobsClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
 		Properties: &armmachinelearningservices.PipelineJob{
 			Description: to.Ptr("string"),
 			Properties: map[string]*string{
@@ -1375,11 +1375,11 @@ func ExampleJobsClient_CreateOrUpdate_createOrUpdateSweepJob() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+	res, err := clientFactory.NewJobsClient().CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
 		Properties: &armmachinelearningservices.SweepJob{
 			Description: to.Ptr("string"),
 			Properties: map[string]*string{
@@ -1543,11 +1543,11 @@ func ExampleJobsClient_Cancel() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armmachinelearningservices.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Cancel(ctx, "test-rg", "my-aml-workspace", "string", nil)
+	_, err = clientFactory.NewJobsClient().Cancel(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

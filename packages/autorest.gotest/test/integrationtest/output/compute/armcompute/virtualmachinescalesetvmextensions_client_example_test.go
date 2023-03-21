@@ -25,11 +25,11 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtension{
+	poller, err := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient().BeginCreateOrUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtension{
 		Properties: &armcompute.VirtualMachineExtensionProperties{
 			Type:                    to.Ptr("extType"),
 			AutoUpgradeMinorVersion: to.Ptr(true),
@@ -97,11 +97,11 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtensionUpdate{
+	poller, err := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient().BeginUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtensionUpdate{
 		Properties: &armcompute.VirtualMachineExtensionUpdateProperties{
 			Type:                    to.Ptr("extType"),
 			AutoUpgradeMinorVersion: to.Ptr(true),
@@ -146,11 +146,11 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", nil)
+	poller, err := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient().BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -167,11 +167,11 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", &armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions{Expand: nil})
+	res, err := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient().Get(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", &armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -202,11 +202,11 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_List() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", cred, nil)
+	clientFactory, err := armcompute.NewClientFactory("<subscription-id>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.List(ctx, "myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions{Expand: nil})
+	res, err := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient().List(ctx, "myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
