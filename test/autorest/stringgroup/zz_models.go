@@ -42,10 +42,10 @@ type EnumClientPutReferencedOptions struct {
 type RefColorConstant struct {
 	// CONSTANT; Referenced Color Constant Description.
 	// Field has constant value "green-color", any specified value is ignored.
-	ColorConstant *string `json:"ColorConstant,omitempty"`
+	ColorConstant *string
 
 	// Sample string.
-	Field1 *string `json:"field1,omitempty"`
+	Field1 *string
 }
 
 // StringClientGetBase64EncodedOptions contains the optional parameters for the StringClient.GetBase64Encoded method.

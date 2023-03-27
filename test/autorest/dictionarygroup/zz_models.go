@@ -359,6 +359,6 @@ type DictionaryClientPutStringValidOptions struct {
 }
 
 type Widget struct {
-	Integer *int32  `json:"integer,omitempty"`
-	String  *string `json:"string,omitempty"`
+	Integer *int32
+	String  *string
 }

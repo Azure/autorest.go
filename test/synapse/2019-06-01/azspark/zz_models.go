@@ -40,193 +40,193 @@ type BatchClientGetSparkBatchJobsOptions struct {
 
 type BatchJob struct {
 	// REQUIRED; The session Id.
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// The application id of this session
-	AppID *string `json:"appId,omitempty"`
+	AppID *string
 
 	// The detailed application info.
-	AppInfo map[string]*string `json:"appInfo,omitempty"`
+	AppInfo map[string]*string
 
 	// The artifact identifier.
-	ArtifactID *string `json:"artifactId,omitempty"`
+	ArtifactID *string
 
 	// The error information.
-	Errors []*ServiceError `json:"errorInfo,omitempty"`
+	Errors []*ServiceError
 
 	// The job type.
-	JobType  *SparkJobType  `json:"jobType,omitempty"`
-	LivyInfo *BatchJobState `json:"livyInfo,omitempty"`
+	JobType  *SparkJobType
+	LivyInfo *BatchJobState
 
 	// The log lines.
-	LogLines []*string `json:"log,omitempty"`
+	LogLines []*string
 
 	// The batch name.
-	Name *string `json:"name,omitempty"`
+	Name *string
 
 	// The plugin information.
-	Plugin *ServicePlugin `json:"pluginInfo,omitempty"`
+	Plugin *ServicePlugin
 
 	// The Spark batch job result.
-	Result *SparkBatchJobResultType `json:"result,omitempty"`
+	Result *SparkBatchJobResultType
 
 	// The scheduler information.
-	Scheduler *Scheduler `json:"schedulerInfo,omitempty"`
+	Scheduler *Scheduler
 
 	// The Spark pool name.
-	SparkPoolName *string `json:"sparkPoolName,omitempty"`
+	SparkPoolName *string
 
 	// The batch state
-	State *string `json:"state,omitempty"`
+	State *string
 
 	// The submitter identifier.
-	SubmitterID *string `json:"submitterId,omitempty"`
+	SubmitterID *string
 
 	// The submitter name.
-	SubmitterName *string `json:"submitterName,omitempty"`
+	SubmitterName *string
 
 	// The tags.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// The workspace name.
-	WorkspaceName *string `json:"workspaceName,omitempty"`
+	WorkspaceName *string
 }
 
 // BatchJobCollection - Response for batch list operation.
 type BatchJobCollection struct {
 	// REQUIRED; The start index of fetched sessions.
-	From *int32 `json:"from,omitempty"`
+	From *int32
 
 	// REQUIRED; Number of sessions fetched.
-	Total *int32 `json:"total,omitempty"`
+	Total *int32
 
 	// Batch list
-	Sessions []*BatchJob `json:"sessions,omitempty"`
+	Sessions []*BatchJob
 }
 
 type BatchJobOptions struct {
 	// REQUIRED
-	File *string `json:"file,omitempty"`
+	File *string
 
 	// REQUIRED
-	Name       *string   `json:"name,omitempty"`
-	Archives   []*string `json:"archives,omitempty"`
-	Arguments  []*string `json:"args,omitempty"`
-	ArtifactID *string   `json:"artifactId,omitempty"`
-	ClassName  *string   `json:"className,omitempty"`
+	Name       *string
+	Archives   []*string
+	Arguments  []*string
+	ArtifactID *string
+	ClassName  *string
 
 	// Dictionary of
-	Configuration  map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	Files          []*string          `json:"files,omitempty"`
-	Jars           []*string          `json:"jars,omitempty"`
-	PythonFiles    []*string          `json:"pyFiles,omitempty"`
+	Configuration  map[string]*string
+	DriverCores    *int32
+	DriverMemory   *string
+	ExecutorCores  *int32
+	ExecutorCount  *int32
+	ExecutorMemory *string
+	Files          []*string
+	Jars           []*string
+	PythonFiles    []*string
 
 	// Dictionary of
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 type BatchJobState struct {
 	// the Spark job state.
-	CurrentState *string `json:"currentState,omitempty"`
+	CurrentState *string
 
 	// time that at which "dead" livy state was first seen.
-	DeadAt             *time.Time `json:"deadAt,omitempty"`
-	JobCreationRequest *Request   `json:"jobCreationRequest,omitempty"`
+	DeadAt             *time.Time
+	JobCreationRequest *Request
 
 	// the time that at which "not_started" livy state was first seen.
-	NotStartedAt *time.Time `json:"notStartedAt,omitempty"`
+	NotStartedAt *time.Time
 
 	// the time that at which "recovering" livy state was first seen.
-	RecoveringAt *time.Time `json:"recoveringAt,omitempty"`
+	RecoveringAt *time.Time
 
 	// the time that at which "running" livy state was first seen.
-	RunningAt *time.Time `json:"runningAt,omitempty"`
+	RunningAt *time.Time
 
 	// the time that at which "starting" livy state was first seen.
-	StartingAt *time.Time `json:"startingAt,omitempty"`
+	StartingAt *time.Time
 
 	// the time that at which "success" livy state was first seen.
-	SuccessAt *time.Time `json:"successAt,omitempty"`
+	SuccessAt *time.Time
 
 	// the time that at which "killed" livy state was first seen.
-	TerminatedAt *time.Time `json:"killedAt,omitempty"`
+	TerminatedAt *time.Time
 }
 
 type Request struct {
-	Archives  []*string `json:"archives,omitempty"`
-	Arguments []*string `json:"args,omitempty"`
-	ClassName *string   `json:"className,omitempty"`
+	Archives  []*string
+	Arguments []*string
+	ClassName *string
 
 	// Dictionary of
-	Configuration  map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
-	Files          []*string          `json:"files,omitempty"`
-	Jars           []*string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
-	PythonFiles    []*string          `json:"pyFiles,omitempty"`
+	Configuration  map[string]*string
+	DriverCores    *int32
+	DriverMemory   *string
+	ExecutorCores  *int32
+	ExecutorCount  *int32
+	ExecutorMemory *string
+	File           *string
+	Files          []*string
+	Jars           []*string
+	Name           *string
+	PythonFiles    []*string
 }
 
 type Scheduler struct {
-	CancellationRequestedAt *time.Time             `json:"cancellationRequestedAt,omitempty"`
-	CurrentState            *SchedulerCurrentState `json:"currentState,omitempty"`
-	EndedAt                 *time.Time             `json:"endedAt,omitempty"`
-	ScheduledAt             *time.Time             `json:"scheduledAt,omitempty"`
-	SubmittedAt             *time.Time             `json:"submittedAt,omitempty"`
+	CancellationRequestedAt *time.Time
+	CurrentState            *SchedulerCurrentState
+	EndedAt                 *time.Time
+	ScheduledAt             *time.Time
+	SubmittedAt             *time.Time
 }
 
 type ServiceError struct {
-	ErrorCode *string           `json:"errorCode,omitempty"`
-	Message   *string           `json:"message,omitempty"`
-	Source    *SparkErrorSource `json:"source,omitempty"`
+	ErrorCode *string
+	Message   *string
+	Source    *SparkErrorSource
 }
 
 type ServicePlugin struct {
-	CleanupStartedAt             *time.Time          `json:"cleanupStartedAt,omitempty"`
-	CurrentState                 *PluginCurrentState `json:"currentState,omitempty"`
-	MonitoringStartedAt          *time.Time          `json:"monitoringStartedAt,omitempty"`
-	PreparationStartedAt         *time.Time          `json:"preparationStartedAt,omitempty"`
-	ResourceAcquisitionStartedAt *time.Time          `json:"resourceAcquisitionStartedAt,omitempty"`
-	SubmissionStartedAt          *time.Time          `json:"submissionStartedAt,omitempty"`
+	CleanupStartedAt             *time.Time
+	CurrentState                 *PluginCurrentState
+	MonitoringStartedAt          *time.Time
+	PreparationStartedAt         *time.Time
+	ResourceAcquisitionStartedAt *time.Time
+	SubmissionStartedAt          *time.Time
 }
 
 type Session struct {
 	// REQUIRED
-	ID    *int32  `json:"id,omitempty"`
-	AppID *string `json:"appId,omitempty"`
+	ID    *int32
+	AppID *string
 
 	// Dictionary of
-	AppInfo    map[string]*string `json:"appInfo,omitempty"`
-	ArtifactID *string            `json:"artifactId,omitempty"`
+	AppInfo    map[string]*string
+	ArtifactID *string
 
 	// The error information.
-	Errors []*ServiceError `json:"errorInfo,omitempty"`
+	Errors []*ServiceError
 
 	// The job type.
-	JobType       *SparkJobType           `json:"jobType,omitempty"`
-	LivyInfo      *SessionState           `json:"livyInfo,omitempty"`
-	LogLines      []*string               `json:"log,omitempty"`
-	Name          *string                 `json:"name,omitempty"`
-	Plugin        *ServicePlugin          `json:"pluginInfo,omitempty"`
-	Result        *SparkSessionResultType `json:"result,omitempty"`
-	Scheduler     *Scheduler              `json:"schedulerInfo,omitempty"`
-	SparkPoolName *string                 `json:"sparkPoolName,omitempty"`
-	State         *string                 `json:"state,omitempty"`
-	SubmitterID   *string                 `json:"submitterId,omitempty"`
-	SubmitterName *string                 `json:"submitterName,omitempty"`
+	JobType       *SparkJobType
+	LivyInfo      *SessionState
+	LogLines      []*string
+	Name          *string
+	Plugin        *ServicePlugin
+	Result        *SparkSessionResultType
+	Scheduler     *Scheduler
+	SparkPoolName *string
+	State         *string
+	SubmitterID   *string
+	SubmitterName *string
 
 	// Dictionary of
-	Tags          map[string]*string `json:"tags,omitempty"`
-	WorkspaceName *string            `json:"workspaceName,omitempty"`
+	Tags          map[string]*string
+	WorkspaceName *string
 }
 
 // SessionClientCancelSparkSessionOptions contains the optional parameters for the SessionClient.CancelSparkSession method.
@@ -284,83 +284,83 @@ type SessionClientResetSparkSessionTimeoutOptions struct {
 
 type SessionCollection struct {
 	// REQUIRED
-	From *int32 `json:"from,omitempty"`
+	From *int32
 
 	// REQUIRED
-	Total    *int32     `json:"total,omitempty"`
-	Sessions []*Session `json:"sessions,omitempty"`
+	Total    *int32
+	Sessions []*Session
 }
 
 type SessionOptions struct {
 	// REQUIRED
-	Name       *string   `json:"name,omitempty"`
-	Archives   []*string `json:"archives,omitempty"`
-	Arguments  []*string `json:"args,omitempty"`
-	ArtifactID *string   `json:"artifactId,omitempty"`
-	ClassName  *string   `json:"className,omitempty"`
+	Name       *string
+	Archives   []*string
+	Arguments  []*string
+	ArtifactID *string
+	ClassName  *string
 
 	// Dictionary of
-	Configuration  map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
-	Files          []*string          `json:"files,omitempty"`
-	Jars           []*string          `json:"jars,omitempty"`
-	PythonFiles    []*string          `json:"pyFiles,omitempty"`
+	Configuration  map[string]*string
+	DriverCores    *int32
+	DriverMemory   *string
+	ExecutorCores  *int32
+	ExecutorCount  *int32
+	ExecutorMemory *string
+	File           *string
+	Files          []*string
+	Jars           []*string
+	PythonFiles    []*string
 
 	// Dictionary of
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 type SessionState struct {
-	BusyAt             *time.Time `json:"busyAt,omitempty"`
-	CurrentState       *string    `json:"currentState,omitempty"`
-	DeadAt             *time.Time `json:"deadAt,omitempty"`
-	ErrorAt            *time.Time `json:"errorAt,omitempty"`
-	IdleAt             *time.Time `json:"idleAt,omitempty"`
-	JobCreationRequest *Request   `json:"jobCreationRequest,omitempty"`
-	NotStartedAt       *time.Time `json:"notStartedAt,omitempty"`
-	RecoveringAt       *time.Time `json:"recoveringAt,omitempty"`
-	ShuttingDownAt     *time.Time `json:"shuttingDownAt,omitempty"`
-	StartingAt         *time.Time `json:"startingAt,omitempty"`
-	TerminatedAt       *time.Time `json:"killedAt,omitempty"`
+	BusyAt             *time.Time
+	CurrentState       *string
+	DeadAt             *time.Time
+	ErrorAt            *time.Time
+	IdleAt             *time.Time
+	JobCreationRequest *Request
+	NotStartedAt       *time.Time
+	RecoveringAt       *time.Time
+	ShuttingDownAt     *time.Time
+	StartingAt         *time.Time
+	TerminatedAt       *time.Time
 }
 
 type Statement struct {
 	// REQUIRED
-	ID     *int32           `json:"id,omitempty"`
-	Code   *string          `json:"code,omitempty"`
-	Output *StatementOutput `json:"output,omitempty"`
-	State  *string          `json:"state,omitempty"`
+	ID     *int32
+	Code   *string
+	Output *StatementOutput
+	State  *string
 }
 
 type StatementCancellationResult struct {
 	// The msg property from the Livy API. The value is always "canceled".
-	Message *string `json:"msg,omitempty"`
+	Message *string
 }
 
 type StatementCollection struct {
 	// REQUIRED
-	Total      *int32       `json:"total_statements,omitempty"`
-	Statements []*Statement `json:"statements,omitempty"`
+	Total      *int32
+	Statements []*Statement
 }
 
 type StatementOptions struct {
-	Code *string                     `json:"code,omitempty"`
-	Kind *SparkStatementLanguageType `json:"kind,omitempty"`
+	Code *string
+	Kind *SparkStatementLanguageType
 }
 
 type StatementOutput struct {
 	// REQUIRED
-	ExecutionCount *int32 `json:"execution_count,omitempty"`
+	ExecutionCount *int32
 
 	// Anything
-	Data       any       `json:"data,omitempty"`
-	ErrorName  *string   `json:"ename,omitempty"`
-	ErrorValue *string   `json:"evalue,omitempty"`
-	Status     *string   `json:"status,omitempty"`
-	Traceback  []*string `json:"traceback,omitempty"`
+	Data       any
+	ErrorName  *string
+	ErrorValue *string
+	Status     *string
+	Traceback  []*string
 }

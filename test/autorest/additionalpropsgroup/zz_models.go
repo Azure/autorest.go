@@ -11,81 +11,81 @@ package additionalpropsgroup
 
 type CatAPTrue struct {
 	// REQUIRED
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]any
-	Friendly             *bool   `json:"friendly,omitempty"`
-	Name                 *string `json:"name,omitempty"`
+	Friendly             *bool
+	Name                 *string
 
 	// READ-ONLY
-	Status *bool `json:"status,omitempty" azure:"ro"`
+	Status *bool
 }
 
 type PetAPInProperties struct {
 	// REQUIRED
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// Dictionary of
-	AdditionalProperties map[string]*float32 `json:"additionalProperties,omitempty"`
-	Name                 *string             `json:"name,omitempty"`
+	AdditionalProperties map[string]*float32
+	Name                 *string
 
 	// READ-ONLY
-	Status *bool `json:"status,omitempty" azure:"ro"`
+	Status *bool
 }
 
 type PetAPInPropertiesWithAPString struct {
 	// REQUIRED
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// REQUIRED
-	ODataLocation *string `json:"@odata.location,omitempty"`
+	ODataLocation *string
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]*string
 
 	// Dictionary of
-	AdditionalProperties1 map[string]*float32 `json:"additionalProperties,omitempty"`
-	Name                  *string             `json:"name,omitempty"`
+	AdditionalProperties1 map[string]*float32
+	Name                  *string
 
 	// READ-ONLY
-	Status *bool `json:"status,omitempty" azure:"ro"`
+	Status *bool
 }
 
 type PetAPObject struct {
 	// REQUIRED
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]any
-	Name                 *string `json:"name,omitempty"`
+	Name                 *string
 
 	// READ-ONLY
-	Status *bool `json:"status,omitempty" azure:"ro"`
+	Status *bool
 }
 
 type PetAPString struct {
 	// REQUIRED
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]*string
-	Name                 *string `json:"name,omitempty"`
+	Name                 *string
 
 	// READ-ONLY
-	Status *bool `json:"status,omitempty" azure:"ro"`
+	Status *bool
 }
 
 type PetAPTrue struct {
 	// REQUIRED
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]any
-	Name                 *string `json:"name,omitempty"`
+	Name                 *string
 
 	// READ-ONLY
-	Status *bool `json:"status,omitempty" azure:"ro"`
+	Status *bool
 }
 
 // PetsClientCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties method.

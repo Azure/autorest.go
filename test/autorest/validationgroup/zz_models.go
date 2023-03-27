@@ -37,48 +37,48 @@ type AutoRestValidationTestClientValidationOfMethodParametersOptions struct {
 type ChildProduct struct {
 	// CONSTANT; Constant string
 	// Field has constant value "constant", any specified value is ignored.
-	ConstProperty *string `json:"constProperty,omitempty"`
+	ConstProperty *string
 
 	// Count
-	Count *int32 `json:"count,omitempty"`
+	Count *int32
 }
 
 // ConstantProduct - The product documentation.
 type ConstantProduct struct {
 	// CONSTANT; Constant string
 	// Field has constant value "constant", any specified value is ignored.
-	ConstProperty *string `json:"constProperty,omitempty"`
+	ConstProperty *string
 
 	// CONSTANT; Constant string2
 	// Field has constant value "constant2", any specified value is ignored.
-	ConstProperty2 *string `json:"constProperty2,omitempty"`
+	ConstProperty2 *string
 }
 
 // Product - The product documentation.
 type Product struct {
 	// REQUIRED; The product documentation.
-	Child *ChildProduct `json:"child,omitempty"`
+	Child *ChildProduct
 
 	// REQUIRED; The product documentation.
-	ConstChild *ConstantProduct `json:"constChild,omitempty"`
+	ConstChild *ConstantProduct
 
 	// CONSTANT; Constant int
 	// Field has constant value 0, any specified value is ignored.
-	ConstInt *int32 `json:"constInt,omitempty"`
+	ConstInt *int32
 
 	// CONSTANT; Constant string
 	// Field has constant value "constant", any specified value is ignored.
-	ConstString *string `json:"constString,omitempty"`
+	ConstString *string
 
 	// Non required int betwen 0 and 100 exclusive.
-	Capacity *int32 `json:"capacity,omitempty"`
+	Capacity *int32
 
 	// Constant string as Enum
-	ConstStringAsEnum *string `json:"constStringAsEnum,omitempty"`
+	ConstStringAsEnum *string
 
 	// Non required array of unique items from 0 to 6 elements.
-	DisplayNames []*string `json:"display_names,omitempty"`
+	DisplayNames []*string
 
 	// Image URL representing the product.
-	Image *string `json:"image,omitempty"`
+	Image *string
 }

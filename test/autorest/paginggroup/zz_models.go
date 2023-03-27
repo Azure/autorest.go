@@ -18,8 +18,8 @@ type CustomParameterGroup struct {
 }
 
 type ODataProductResult struct {
-	ODataNextLink *string    `json:"odata.nextLink,omitempty"`
-	Values        []*Product `json:"values,omitempty"`
+	ODataNextLink *string
+	Values        []*Product
 }
 
 // PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
@@ -149,25 +149,25 @@ type PagingClientGetWithQueryParamsOptions struct {
 }
 
 type Product struct {
-	Properties *ProductProperties `json:"properties,omitempty"`
+	Properties *ProductProperties
 }
 
 type ProductProperties struct {
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	ID   *int32
+	Name *string
 }
 
 type ProductResult struct {
-	NextLink *string    `json:"nextLink,omitempty"`
-	Values   []*Product `json:"values,omitempty"`
+	NextLink *string
+	Values   []*Product
 }
 
 type ProductResultValue struct {
-	NextLink *string    `json:"nextLink,omitempty"`
-	Value    []*Product `json:"value,omitempty"`
+	NextLink *string
+	Value    []*Product
 }
 
 type ProductResultValueWithXMSClientName struct {
-	Indexes  []*Product `json:"values,omitempty"`
-	NextLink *string    `json:"nextLink,omitempty"`
+	Indexes  []*Product
+	NextLink *string
 }

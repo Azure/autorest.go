@@ -11,30 +11,30 @@ package migroup
 
 type Cat struct {
 	// REQUIRED
-	Name      *string `json:"name,omitempty"`
-	Hisses    *bool   `json:"hisses,omitempty"`
-	LikesMilk *bool   `json:"likesMilk,omitempty"`
-	Meows     *bool   `json:"meows,omitempty"`
+	Name      *string
+	Hisses    *bool
+	LikesMilk *bool
+	Meows     *bool
 }
 
 type Feline struct {
-	Hisses *bool `json:"hisses,omitempty"`
-	Meows  *bool `json:"meows,omitempty"`
+	Hisses *bool
+	Meows  *bool
 }
 
 type Horse struct {
 	// REQUIRED
-	Name         *string `json:"name,omitempty"`
-	IsAShowHorse *bool   `json:"isAShowHorse,omitempty"`
+	Name         *string
+	IsAShowHorse *bool
 }
 
 type Kitten struct {
 	// REQUIRED
-	Name        *string `json:"name,omitempty"`
-	EatsMiceYet *bool   `json:"eatsMiceYet,omitempty"`
-	Hisses      *bool   `json:"hisses,omitempty"`
-	LikesMilk   *bool   `json:"likesMilk,omitempty"`
-	Meows       *bool   `json:"meows,omitempty"`
+	Name        *string
+	EatsMiceYet *bool
+	Hisses      *bool
+	LikesMilk   *bool
+	Meows       *bool
 }
 
 // MultipleInheritanceServiceClientGetCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetCat
@@ -99,5 +99,5 @@ type MultipleInheritanceServiceClientPutPetOptions struct {
 
 type Pet struct {
 	// REQUIRED
-	Name *string `json:"name,omitempty"`
+	Name *string
 }

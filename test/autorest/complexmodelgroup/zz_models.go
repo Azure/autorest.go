@@ -11,22 +11,22 @@ package complexmodelgroup
 
 type CatalogArray struct {
 	// Array of products
-	ProductArray []*Product `json:"productArray,omitempty"`
+	ProductArray []*Product
 }
 
 type CatalogArrayOfDictionary struct {
 	// Array of dictionary of products
-	ProductArrayOfDictionary []map[string]*Product `json:"productArrayOfDictionary,omitempty"`
+	ProductArrayOfDictionary []map[string]*Product
 }
 
 type CatalogDictionary struct {
 	// Dictionary of products
-	ProductDictionary map[string]*Product `json:"productDictionary,omitempty"`
+	ProductDictionary map[string]*Product
 }
 
 type CatalogDictionaryOfArray struct {
 	// Dictionary of Array of product
-	ProductDictionaryOfArray map[string][]*Product `json:"productDictionaryOfArray,omitempty"`
+	ProductDictionaryOfArray map[string][]*Product
 }
 
 // ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.
@@ -47,18 +47,18 @@ type ComplexModelClientUpdateOptions struct {
 // Product - The product documentation.
 type Product struct {
 	// Capacity of product. For example, 4 people.
-	Capacity *string `json:"capacity,omitempty"`
+	Capacity *string
 
 	// Description of product.
-	Description *string `json:"description,omitempty"`
+	Description *string
 
 	// Display name of product.
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string
 
 	// Image URL representing the product.
-	Image *string `json:"image,omitempty"`
+	Image *string
 
 	// Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco
 	// will have a different product_id than uberX in Los Angeles.
-	ProductID *string `json:"product_id,omitempty"`
+	ProductID *string
 }

@@ -1072,16 +1072,16 @@ type CpkScopeInfo struct {
 
 type DataLakeStorageError struct {
 	// The service error response object.
-	DataLakeStorageErrorDetails *DataLakeStorageErrorError `json:"error,omitempty"`
+	DataLakeStorageErrorDetails *DataLakeStorageErrorError
 }
 
 // DataLakeStorageErrorError - The service error response object.
 type DataLakeStorageErrorError struct {
 	// The service error code.
-	Code *string `json:"Code,omitempty"`
+	Code *string
 
 	// The service error message.
-	Message *string `json:"Message,omitempty"`
+	Message *string
 }
 
 // DelimitedTextConfiguration - delimited text configuration
@@ -1834,7 +1834,7 @@ type StaticWebsite struct {
 }
 
 type StorageError struct {
-	Message *string `json:"Message,omitempty"`
+	Message *string
 }
 
 // StorageServiceProperties - Storage Service Properties.

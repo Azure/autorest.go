@@ -11,13 +11,13 @@ package extenumsgroup
 
 type Pet struct {
 	// REQUIRED
-	IntEnum *IntEnum `json:"IntEnum,omitempty"`
+	IntEnum *IntEnum
 
 	// Type of Pet
-	DaysOfWeek *DaysOfWeekExtensibleEnum `json:"DaysOfWeek,omitempty"`
+	DaysOfWeek *DaysOfWeekExtensibleEnum
 
 	// name
-	Name *string `json:"name,omitempty"`
+	Name *string
 }
 
 // PetClientAddPetOptions contains the optional parameters for the PetClient.AddPet method.

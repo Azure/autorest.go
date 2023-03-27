@@ -10,21 +10,21 @@
 package optionalgroup
 
 type ArrayOptionalWrapper struct {
-	Value []*string `json:"value,omitempty"`
+	Value []*string
 }
 
 type ArrayWrapper struct {
 	// REQUIRED
-	Value []*string `json:"value,omitempty"`
+	Value []*string
 }
 
 type ClassOptionalWrapper struct {
-	Value *Product `json:"value,omitempty"`
+	Value *Product
 }
 
 type ClassWrapper struct {
 	// REQUIRED
-	Value *Product `json:"value,omitempty"`
+	Value *Product
 }
 
 // ExplicitClientPostOptionalArrayHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayHeader
@@ -215,25 +215,25 @@ type ImplicitClientPutOptionalQueryOptions struct {
 }
 
 type IntOptionalWrapper struct {
-	Value *int32 `json:"value,omitempty"`
+	Value *int32
 }
 
 type IntWrapper struct {
 	// REQUIRED
-	Value *int32 `json:"value,omitempty"`
+	Value *int32
 }
 
 type Product struct {
 	// REQUIRED
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	ID   *int32
+	Name *string
 }
 
 type StringOptionalWrapper struct {
-	Value *string `json:"value,omitempty"`
+	Value *string
 }
 
 type StringWrapper struct {
 	// REQUIRED
-	Value *string `json:"value,omitempty"`
+	Value *string
 }
