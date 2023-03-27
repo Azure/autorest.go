@@ -14,323 +14,323 @@ import "time"
 // Action - The action that will be executed.
 type Action struct {
 	// The type of the action.
-	ActionType *ActionType `json:"action_type,omitempty"`
+	ActionType *ActionType
 }
 
 // AdministratorDetails - Details of the organization administrator of the certificate issuer.
 type AdministratorDetails struct {
 	// Email address.
-	EmailAddress *string `json:"email,omitempty"`
+	EmailAddress *string
 
 	// First name.
-	FirstName *string `json:"first_name,omitempty"`
+	FirstName *string
 
 	// Last name.
-	LastName *string `json:"last_name,omitempty"`
+	LastName *string
 
 	// Phone number.
-	Phone *string `json:"phone,omitempty"`
+	Phone *string
 }
 
 // Attributes - The object attributes managed by the KeyVault service.
 type Attributes struct {
 	// Determines whether the object is enabled.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool
 
 	// Expiry date in UTC.
-	Expires *time.Time `json:"exp,omitempty"`
+	Expires *time.Time
 
 	// Not before date in UTC.
-	NotBefore *time.Time `json:"nbf,omitempty"`
+	NotBefore *time.Time
 
 	// READ-ONLY; Creation time in UTC.
-	Created *time.Time `json:"created,omitempty" azure:"ro"`
+	Created *time.Time
 
 	// READ-ONLY; Last updated time in UTC.
-	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+	Updated *time.Time
 }
 
 // BackupCertificateResult - The backup certificate result, containing the backup blob.
 type BackupCertificateResult struct {
 	// READ-ONLY; The backup blob containing the backed up certificate.
-	Value []byte `json:"value,omitempty" azure:"ro"`
+	Value []byte
 }
 
 // BackupKeyResult - The backup key result, containing the backup blob.
 type BackupKeyResult struct {
 	// READ-ONLY; The backup blob containing the backed up key.
-	Value []byte `json:"value,omitempty" azure:"ro"`
+	Value []byte
 }
 
 // BackupSecretResult - The backup secret result, containing the backup blob.
 type BackupSecretResult struct {
 	// READ-ONLY; The backup blob containing the backed up secret.
-	Value []byte `json:"value,omitempty" azure:"ro"`
+	Value []byte
 }
 
 // BackupStorageResult - The backup storage result, containing the backup blob.
 type BackupStorageResult struct {
 	// READ-ONLY; The backup blob containing the backed up storage account.
-	Value []byte `json:"value,omitempty" azure:"ro"`
+	Value []byte
 }
 
 // CertificateAttributes - The certificate management attributes.
 type CertificateAttributes struct {
 	// Determines whether the object is enabled.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool
 
 	// Expiry date in UTC.
-	Expires *time.Time `json:"exp,omitempty"`
+	Expires *time.Time
 
 	// Not before date in UTC.
-	NotBefore *time.Time `json:"nbf,omitempty"`
+	NotBefore *time.Time
 
 	// READ-ONLY; Creation time in UTC.
-	Created *time.Time `json:"created,omitempty" azure:"ro"`
+	Created *time.Time
 
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
-	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
+	RecoverableDays *int32
 
 	// READ-ONLY; Reflects the deletion recovery level currently in effect for certificates in the current vault. If it contains
 	// 'Purgeable', the certificate can be permanently deleted by a privileged user; otherwise,
 	// only the system can purge the certificate, at the end of the retention interval.
-	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
+	RecoveryLevel *DeletionRecoveryLevel
 
 	// READ-ONLY; Last updated time in UTC.
-	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+	Updated *time.Time
 }
 
 // CertificateBundle - A certificate bundle consists of a certificate (X509) plus its attributes.
 type CertificateBundle struct {
 	// The certificate attributes.
-	Attributes *CertificateAttributes `json:"attributes,omitempty"`
+	Attributes *CertificateAttributes
 
 	// CER contents of x509 certificate.
-	Cer []byte `json:"cer,omitempty"`
+	Cer []byte
 
 	// The content type of the secret.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// Application specific metadata in the form of key-value pairs
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; The certificate id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The key id.
-	Kid *string `json:"kid,omitempty" azure:"ro"`
+	Kid *string
 
 	// READ-ONLY; The management policy.
-	Policy *CertificatePolicy `json:"policy,omitempty" azure:"ro"`
+	Policy *CertificatePolicy
 
 	// READ-ONLY; The secret id.
-	Sid *string `json:"sid,omitempty" azure:"ro"`
+	Sid *string
 
 	// READ-ONLY; Thumbprint of the certificate.
-	X509Thumbprint []byte `json:"x5t,omitempty" azure:"ro"`
+	X509Thumbprint []byte
 }
 
 // CertificateCreateParameters - The certificate create parameters.
 type CertificateCreateParameters struct {
 	// The attributes of the certificate (optional).
-	CertificateAttributes *CertificateAttributes `json:"attributes,omitempty"`
+	CertificateAttributes *CertificateAttributes
 
 	// The management policy for the certificate.
-	CertificatePolicy *CertificatePolicy `json:"policy,omitempty"`
+	CertificatePolicy *CertificatePolicy
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // CertificateImportParameters - The certificate import parameters.
 type CertificateImportParameters struct {
 	// REQUIRED; Base64 encoded representation of the certificate object to import. This certificate needs to contain the private
 	// key.
-	Base64EncodedCertificate *string `json:"value,omitempty"`
+	Base64EncodedCertificate *string
 
 	// The attributes of the certificate (optional).
-	CertificateAttributes *CertificateAttributes `json:"attributes,omitempty"`
+	CertificateAttributes *CertificateAttributes
 
 	// The management policy for the certificate.
-	CertificatePolicy *CertificatePolicy `json:"policy,omitempty"`
+	CertificatePolicy *CertificatePolicy
 
 	// If the private key in base64EncodedCertificate is encrypted, the password used for encryption.
-	Password *string `json:"pwd,omitempty"`
+	Password *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 type CertificateInfoObject struct {
 	// REQUIRED; Certificates needed from customer
-	Certificates []*SecurityDomainCertificateItem `json:"certificates,omitempty"`
+	Certificates []*SecurityDomainCertificateItem
 
 	// Customer to specify the number of certificates (minimum 2 and maximum 10) to restore Security Domain
-	Required *int32 `json:"required,omitempty"`
+	Required *int32
 }
 
 // CertificateIssuerItem - The certificate issuer item containing certificate issuer metadata.
 type CertificateIssuerItem struct {
 	// Certificate Identifier.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// The issuer provider.
-	Provider *string `json:"provider,omitempty"`
+	Provider *string
 }
 
 // CertificateIssuerListResult - The certificate issuer list result.
 type CertificateIssuerListResult struct {
 	// READ-ONLY; The URL to get the next set of certificate issuers.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of certificate issuers in the key vault along with a link to the next page
 	// of certificate issuers.
-	Value []*CertificateIssuerItem `json:"value,omitempty" azure:"ro"`
+	Value []*CertificateIssuerItem
 }
 
 // CertificateIssuerSetParameters - The certificate issuer set parameters.
 type CertificateIssuerSetParameters struct {
 	// REQUIRED; The issuer provider.
-	Provider *string `json:"provider,omitempty"`
+	Provider *string
 
 	// Attributes of the issuer object.
-	Attributes *IssuerAttributes `json:"attributes,omitempty"`
+	Attributes *IssuerAttributes
 
 	// The credentials to be used for the issuer.
-	Credentials *IssuerCredentials `json:"credentials,omitempty"`
+	Credentials *IssuerCredentials
 
 	// Details of the organization as provided to the issuer.
-	OrganizationDetails *OrganizationDetails `json:"org_details,omitempty"`
+	OrganizationDetails *OrganizationDetails
 }
 
 // CertificateIssuerUpdateParameters - The certificate issuer update parameters.
 type CertificateIssuerUpdateParameters struct {
 	// Attributes of the issuer object.
-	Attributes *IssuerAttributes `json:"attributes,omitempty"`
+	Attributes *IssuerAttributes
 
 	// The credentials to be used for the issuer.
-	Credentials *IssuerCredentials `json:"credentials,omitempty"`
+	Credentials *IssuerCredentials
 
 	// Details of the organization as provided to the issuer.
-	OrganizationDetails *OrganizationDetails `json:"org_details,omitempty"`
+	OrganizationDetails *OrganizationDetails
 
 	// The issuer provider.
-	Provider *string `json:"provider,omitempty"`
+	Provider *string
 }
 
 // CertificateItem - The certificate item containing certificate metadata.
 type CertificateItem struct {
 	// The certificate management attributes.
-	Attributes *CertificateAttributes `json:"attributes,omitempty"`
+	Attributes *CertificateAttributes
 
 	// Certificate identifier.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// Thumbprint of the certificate.
-	X509Thumbprint []byte `json:"x5t,omitempty"`
+	X509Thumbprint []byte
 }
 
 // CertificateListResult - The certificate list result.
 type CertificateListResult struct {
 	// READ-ONLY; The URL to get the next set of certificates.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of certificates in the key vault along with a link to the next page of
 	// certificates.
-	Value []*CertificateItem `json:"value,omitempty" azure:"ro"`
+	Value []*CertificateItem
 }
 
 // CertificateMergeParameters - The certificate merge parameters
 type CertificateMergeParameters struct {
 	// REQUIRED; The certificate or the certificate chain to merge.
-	X509Certificates [][]byte `json:"x5c,omitempty"`
+	X509Certificates [][]byte
 
 	// The attributes of the certificate (optional).
-	CertificateAttributes *CertificateAttributes `json:"attributes,omitempty"`
+	CertificateAttributes *CertificateAttributes
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // CertificateOperation - A certificate operation is returned in case of asynchronous requests.
 type CertificateOperation struct {
 	// Indicates if cancellation was requested on the certificate operation.
-	CancellationRequested *bool `json:"cancellation_requested,omitempty"`
+	CancellationRequested *bool
 
 	// The certificate signing request (CSR) that is being used in the certificate operation.
-	Csr []byte `json:"csr,omitempty"`
+	Csr []byte
 
 	// Error encountered, if any, during the certificate operation.
-	Error *ErrorInfo `json:"error,omitempty"`
+	Error *ErrorInfo
 
 	// Parameters for the issuer of the X509 component of a certificate.
-	IssuerParameters *IssuerParameters `json:"issuer,omitempty"`
+	IssuerParameters *IssuerParameters
 
 	// Identifier for the certificate operation.
-	RequestID *string `json:"request_id,omitempty"`
+	RequestID *string
 
 	// Status of the certificate operation.
-	Status *string `json:"status,omitempty"`
+	Status *string
 
 	// The status details of the certificate operation.
-	StatusDetails *string `json:"status_details,omitempty"`
+	StatusDetails *string
 
 	// Location which contains the result of the certificate operation.
-	Target *string `json:"target,omitempty"`
+	Target *string
 
 	// READ-ONLY; The certificate id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 }
 
 // CertificateOperationUpdateParameter - The certificate operation update parameters.
 type CertificateOperationUpdateParameter struct {
 	// REQUIRED; Indicates if cancellation was requested on the certificate operation.
-	CancellationRequested *bool `json:"cancellation_requested,omitempty"`
+	CancellationRequested *bool
 }
 
 // CertificatePolicy - Management policy for a certificate.
 type CertificatePolicy struct {
 	// The certificate attributes.
-	Attributes *CertificateAttributes `json:"attributes,omitempty"`
+	Attributes *CertificateAttributes
 
 	// Parameters for the issuer of the X509 component of a certificate.
-	IssuerParameters *IssuerParameters `json:"issuer,omitempty"`
+	IssuerParameters *IssuerParameters
 
 	// Properties of the key backing a certificate.
-	KeyProperties *KeyProperties `json:"key_props,omitempty"`
+	KeyProperties *KeyProperties
 
 	// Actions that will be performed by Key Vault over the lifetime of a certificate.
-	LifetimeActions []*LifetimeAction `json:"lifetime_actions,omitempty"`
+	LifetimeActions []*LifetimeAction
 
 	// Properties of the secret backing a certificate.
-	SecretProperties *SecretProperties `json:"secret_props,omitempty"`
+	SecretProperties *SecretProperties
 
 	// Properties of the X509 component of a certificate.
-	X509CertificateProperties *X509CertificateProperties `json:"x509_props,omitempty"`
+	X509CertificateProperties *X509CertificateProperties
 
 	// READ-ONLY; The certificate id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 }
 
 // CertificateRestoreParameters - The certificate restore parameters.
 type CertificateRestoreParameters struct {
 	// REQUIRED; The backup blob associated with a certificate bundle.
-	CertificateBundleBackup []byte `json:"value,omitempty"`
+	CertificateBundleBackup []byte
 }
 
 // CertificateUpdateParameters - The certificate update parameters.
 type CertificateUpdateParameters struct {
 	// The attributes of the certificate (optional).
-	CertificateAttributes *CertificateAttributes `json:"attributes,omitempty"`
+	CertificateAttributes *CertificateAttributes
 
 	// The management policy for the certificate.
-	CertificatePolicy *CertificatePolicy `json:"policy,omitempty"`
+	CertificatePolicy *CertificatePolicy
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // ClientBackupCertificateOptions contains the optional parameters for the Client.BackupCertificate method.
@@ -780,409 +780,409 @@ type ClientWrapKeyOptions struct {
 // Contact - The contact information for the vault certificates.
 type Contact struct {
 	// Email address.
-	EmailAddress *string `json:"email,omitempty"`
+	EmailAddress *string
 
 	// Name.
-	Name *string `json:"name,omitempty"`
+	Name *string
 
 	// Phone number.
-	Phone *string `json:"phone,omitempty"`
+	Phone *string
 }
 
 // Contacts - The contacts for the vault certificates.
 type Contacts struct {
 	// The contact list for the vault certificates.
-	ContactList []*Contact `json:"contacts,omitempty"`
+	ContactList []*Contact
 
 	// READ-ONLY; Identifier for the contacts collection.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 }
 
 // DeletedCertificateBundle - A Deleted Certificate consisting of its previous id, attributes and its tags, as well as information
 // on when it will be purged.
 type DeletedCertificateBundle struct {
 	// The certificate attributes.
-	Attributes *CertificateAttributes `json:"attributes,omitempty"`
+	Attributes *CertificateAttributes
 
 	// CER contents of x509 certificate.
-	Cer []byte `json:"cer,omitempty"`
+	Cer []byte
 
 	// The content type of the secret.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// The url of the recovery object, used to identify and recover the deleted certificate.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// Application specific metadata in the form of key-value pairs
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; The time when the certificate was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; The certificate id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The key id.
-	Kid *string `json:"kid,omitempty" azure:"ro"`
+	Kid *string
 
 	// READ-ONLY; The management policy.
-	Policy *CertificatePolicy `json:"policy,omitempty" azure:"ro"`
+	Policy *CertificatePolicy
 
 	// READ-ONLY; The time when the certificate is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 
 	// READ-ONLY; The secret id.
-	Sid *string `json:"sid,omitempty" azure:"ro"`
+	Sid *string
 
 	// READ-ONLY; Thumbprint of the certificate.
-	X509Thumbprint []byte `json:"x5t,omitempty" azure:"ro"`
+	X509Thumbprint []byte
 }
 
 // DeletedCertificateItem - The deleted certificate item containing metadata about the deleted certificate.
 type DeletedCertificateItem struct {
 	// The certificate management attributes.
-	Attributes *CertificateAttributes `json:"attributes,omitempty"`
+	Attributes *CertificateAttributes
 
 	// Certificate identifier.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// The url of the recovery object, used to identify and recover the deleted certificate.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// Thumbprint of the certificate.
-	X509Thumbprint []byte `json:"x5t,omitempty"`
+	X509Thumbprint []byte
 
 	// READ-ONLY; The time when the certificate was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; The time when the certificate is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 }
 
 // DeletedCertificateListResult - A list of certificates that have been deleted in this vault.
 type DeletedCertificateListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted certificates.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of deleted certificates in the vault along with a link to the next page
 	// of deleted certificates
-	Value []*DeletedCertificateItem `json:"value,omitempty" azure:"ro"`
+	Value []*DeletedCertificateItem
 }
 
 // DeletedKeyBundle - A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
 type DeletedKeyBundle struct {
 	// The key management attributes.
-	Attributes *KeyAttributes `json:"attributes,omitempty"`
+	Attributes *KeyAttributes
 
 	// The Json web key.
-	Key *JSONWebKey `json:"key,omitempty"`
+	Key *JSONWebKey
 
 	// The url of the recovery object, used to identify and recover the deleted key.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; The time when the key was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will
 	// be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 
 	// READ-ONLY; The time when the key is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 }
 
 // DeletedKeyItem - The deleted key item containing the deleted key metadata and information about deletion.
 type DeletedKeyItem struct {
 	// The key management attributes.
-	Attributes *KeyAttributes `json:"attributes,omitempty"`
+	Attributes *KeyAttributes
 
 	// Key identifier.
-	Kid *string `json:"kid,omitempty"`
+	Kid *string
 
 	// The url of the recovery object, used to identify and recover the deleted key.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; The time when the key was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will
 	// be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 
 	// READ-ONLY; The time when the key is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 }
 
 // DeletedKeyListResult - A list of keys that have been deleted in this vault.
 type DeletedKeyListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted keys.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of deleted keys in the vault along with a link to the next page of deleted
 	// keys
-	Value []*DeletedKeyItem `json:"value,omitempty" azure:"ro"`
+	Value []*DeletedKeyItem
 }
 
 // DeletedSasDefinitionBundle - A deleted SAS definition bundle consisting of its previous id, attributes and its tags, as
 // well as information on when it will be purged.
 type DeletedSasDefinitionBundle struct {
 	// The url of the recovery object, used to identify and recover the deleted SAS definition.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// READ-ONLY; The SAS definition attributes.
-	Attributes *SasDefinitionAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *SasDefinitionAttributes
 
 	// READ-ONLY; The time when the SAS definition was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; The SAS definition id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The type of SAS token the SAS definition will create.
-	SasType *SasTokenType `json:"sasType,omitempty" azure:"ro"`
+	SasType *SasTokenType
 
 	// READ-ONLY; The time when the SAS definition is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 
 	// READ-ONLY; Storage account SAS definition secret id.
-	SecretID *string `json:"sid,omitempty" azure:"ro"`
+	SecretID *string
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 
 	// READ-ONLY; The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition
 	// will have the same properties as the template.
-	TemplateURI *string `json:"templateUri,omitempty" azure:"ro"`
+	TemplateURI *string
 
 	// READ-ONLY; The validity period of SAS tokens created according to the SAS definition.
-	ValidityPeriod *string `json:"validityPeriod,omitempty" azure:"ro"`
+	ValidityPeriod *string
 }
 
 // DeletedSasDefinitionItem - The deleted SAS definition item containing metadata about the deleted SAS definition.
 type DeletedSasDefinitionItem struct {
 	// The url of the recovery object, used to identify and recover the deleted SAS definition.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// READ-ONLY; The SAS definition management attributes.
-	Attributes *SasDefinitionAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *SasDefinitionAttributes
 
 	// READ-ONLY; The time when the SAS definition was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; The storage SAS identifier.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The time when the SAS definition is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 
 	// READ-ONLY; The storage account SAS definition secret id.
-	SecretID *string `json:"sid,omitempty" azure:"ro"`
+	SecretID *string
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 }
 
 // DeletedSasDefinitionListResult - The deleted SAS definition list result
 type DeletedSasDefinitionListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted SAS definitions.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of the deleted SAS definitions in the vault along with a link to the next
 	// page of deleted sas definitions
-	Value []*DeletedSasDefinitionItem `json:"value,omitempty" azure:"ro"`
+	Value []*DeletedSasDefinitionItem
 }
 
 // DeletedSecretBundle - A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on
 // when it will be purged.
 type DeletedSecretBundle struct {
 	// The secret management attributes.
-	Attributes *SecretAttributes `json:"attributes,omitempty"`
+	Attributes *SecretAttributes
 
 	// The content type of the secret.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// The secret id.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// The url of the recovery object, used to identify and recover the deleted secret.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// The secret value.
-	Value *string `json:"value,omitempty"`
+	Value *string
 
 	// READ-ONLY; The time when the secret was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV
 	// certificate.
-	Kid *string `json:"kid,omitempty" azure:"ro"`
+	Kid *string
 
 	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a secret backing a certificate, then managed
 	// will be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 
 	// READ-ONLY; The time when the secret is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 }
 
 // DeletedSecretItem - The deleted secret item containing metadata about the deleted secret.
 type DeletedSecretItem struct {
 	// The secret management attributes.
-	Attributes *SecretAttributes `json:"attributes,omitempty"`
+	Attributes *SecretAttributes
 
 	// Type of the secret value such as a password.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// Secret identifier.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// The url of the recovery object, used to identify and recover the deleted secret.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; The time when the secret was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a key backing a certificate, then managed
 	// will be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 
 	// READ-ONLY; The time when the secret is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 }
 
 // DeletedSecretListResult - The deleted secret list result
 type DeletedSecretListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted secrets.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of the deleted secrets in the vault along with a link to the next page
 	// of deleted secrets
-	Value []*DeletedSecretItem `json:"value,omitempty" azure:"ro"`
+	Value []*DeletedSecretItem
 }
 
 // DeletedStorageAccountItem - The deleted storage account item containing metadata about the deleted storage account.
 type DeletedStorageAccountItem struct {
 	// The url of the recovery object, used to identify and recover the deleted storage account.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// READ-ONLY; The storage account management attributes.
-	Attributes *StorageAccountAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *StorageAccountAttributes
 
 	// READ-ONLY; The time when the storage account was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; Storage identifier.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; Storage account resource Id.
-	ResourceID *string `json:"resourceId,omitempty" azure:"ro"`
+	ResourceID *string
 
 	// READ-ONLY; The time when the storage account is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 }
 
 // DeletedStorageBundle - A deleted storage account bundle consisting of its previous id, attributes and its tags, as well
 // as information on when it will be purged.
 type DeletedStorageBundle struct {
 	// The url of the recovery object, used to identify and recover the deleted storage account.
-	RecoveryID *string `json:"recoveryId,omitempty"`
+	RecoveryID *string
 
 	// READ-ONLY; The current active storage account key name.
-	ActiveKeyName *string `json:"activeKeyName,omitempty" azure:"ro"`
+	ActiveKeyName *string
 
 	// READ-ONLY; The storage account attributes.
-	Attributes *StorageAccountAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *StorageAccountAttributes
 
 	// READ-ONLY; whether keyvault should manage the storage account for the user.
-	AutoRegenerateKey *bool `json:"autoRegenerateKey,omitempty" azure:"ro"`
+	AutoRegenerateKey *bool
 
 	// READ-ONLY; The time when the storage account was deleted, in UTC
-	DeletedDate *time.Time `json:"deletedDate,omitempty" azure:"ro"`
+	DeletedDate *time.Time
 
 	// READ-ONLY; The storage account id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The key regeneration time duration specified in ISO-8601 format.
-	RegenerationPeriod *string `json:"regenerationPeriod,omitempty" azure:"ro"`
+	RegenerationPeriod *string
 
 	// READ-ONLY; The storage account resource id.
-	ResourceID *string `json:"resourceId,omitempty" azure:"ro"`
+	ResourceID *string
 
 	// READ-ONLY; The time when the storage account is scheduled to be purged, in UTC
-	ScheduledPurgeDate *time.Time `json:"scheduledPurgeDate,omitempty" azure:"ro"`
+	ScheduledPurgeDate *time.Time
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 }
 
 // DeletedStorageListResult - The deleted storage account list result
 type DeletedStorageListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted storage accounts.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of the deleted storage accounts in the vault along with a link to the next
 	// page of deleted storage accounts
-	Value []*DeletedStorageAccountItem `json:"value,omitempty" azure:"ro"`
+	Value []*DeletedStorageAccountItem
 }
 
 // Error - The key vault error exception.
 type Error struct {
 	// READ-ONLY; The key vault server error.
-	Error *ErrorInfo `json:"error,omitempty" azure:"ro"`
+	Error *ErrorInfo
 }
 
 // ErrorInfo - The key vault server error.
 type ErrorInfo struct {
 	// READ-ONLY; The error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
+	Code *string
 
 	// READ-ONLY; The key vault server error.
-	InnerError *ErrorInfo `json:"innererror,omitempty" azure:"ro"`
+	InnerError *ErrorInfo
 
 	// READ-ONLY; The error message.
-	Message *string `json:"message,omitempty" azure:"ro"`
+	Message *string
 }
 
 // FullBackupOperation - Full backup operation
 type FullBackupOperation struct {
 	// The Azure blob storage container Uri which contains the full backup
-	AzureStorageBlobContainerURI *string `json:"azureStorageBlobContainerUri,omitempty"`
+	AzureStorageBlobContainerURI *string
 
 	// The end time of the backup operation in UTC
-	EndTime *time.Time `json:"endTime,omitempty"`
+	EndTime *time.Time
 
 	// Error encountered, if any, during the full backup operation.
-	Error *ErrorInfo `json:"error,omitempty"`
+	Error *ErrorInfo
 
 	// Identifier for the full backup operation.
-	JobID *string `json:"jobId,omitempty"`
+	JobID *string
 
 	// The start time of the backup operation in UTC
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *time.Time
 
 	// Status of the backup operation.
-	Status *string `json:"status,omitempty"`
+	Status *string
 
 	// The status details of backup operation.
-	StatusDetails *string `json:"statusDetails,omitempty"`
+	StatusDetails *string
 }
 
 // HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
@@ -1220,430 +1220,430 @@ type HSMSecurityDomainClientUploadPendingOptions struct {
 // IssuerAttributes - The attributes of an issuer managed by the Key Vault service.
 type IssuerAttributes struct {
 	// Determines whether the issuer is enabled.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool
 
 	// READ-ONLY; Creation time in UTC.
-	Created *time.Time `json:"created,omitempty" azure:"ro"`
+	Created *time.Time
 
 	// READ-ONLY; Last updated time in UTC.
-	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+	Updated *time.Time
 }
 
 // IssuerBundle - The issuer for Key Vault certificate.
 type IssuerBundle struct {
 	// Attributes of the issuer object.
-	Attributes *IssuerAttributes `json:"attributes,omitempty"`
+	Attributes *IssuerAttributes
 
 	// The credentials to be used for the issuer.
-	Credentials *IssuerCredentials `json:"credentials,omitempty"`
+	Credentials *IssuerCredentials
 
 	// Details of the organization as provided to the issuer.
-	OrganizationDetails *OrganizationDetails `json:"org_details,omitempty"`
+	OrganizationDetails *OrganizationDetails
 
 	// The issuer provider.
-	Provider *string `json:"provider,omitempty"`
+	Provider *string
 
 	// READ-ONLY; Identifier for the issuer object.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 }
 
 // IssuerCredentials - The credentials to be used for the certificate issuer.
 type IssuerCredentials struct {
 	// The user name/account name/account id.
-	AccountID *string `json:"account_id,omitempty"`
+	AccountID *string
 
 	// The password/secret/account key.
-	Password *string `json:"pwd,omitempty"`
+	Password *string
 }
 
 // IssuerParameters - Parameters for the issuer of the X509 component of a certificate.
 type IssuerParameters struct {
 	// Indicates if the certificates generated under this policy should be published to certificate transparency logs.
-	CertificateTransparency *bool `json:"cert_transparency,omitempty"`
+	CertificateTransparency *bool
 
 	// Certificate type as supported by the provider (optional); for example 'OV-SSL', 'EV-SSL'
-	CertificateType *string `json:"cty,omitempty"`
+	CertificateType *string
 
 	// Name of the referenced issuer object or reserved names; for example, 'Self' or 'Unknown'.
-	Name *string `json:"name,omitempty"`
+	Name *string
 }
 
 // JSONWebKey - As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
 type JSONWebKey struct {
 	// Elliptic curve name. For valid values, see JsonWebKeyCurveName.
-	Crv *JSONWebKeyCurveName `json:"crv,omitempty"`
+	Crv *JSONWebKeyCurveName
 
 	// RSA private exponent, or the D component of an EC private key.
-	D []byte `json:"d,omitempty"`
+	D []byte
 
 	// RSA private key parameter.
-	DP []byte `json:"dp,omitempty"`
+	DP []byte
 
 	// RSA private key parameter.
-	DQ []byte `json:"dq,omitempty"`
+	DQ []byte
 
 	// RSA public exponent.
-	E []byte `json:"e,omitempty"`
+	E []byte
 
 	// Symmetric key.
-	K      []byte    `json:"k,omitempty"`
-	KeyOps []*string `json:"key_ops,omitempty"`
+	K      []byte
+	KeyOps []*string
 
 	// Key identifier.
-	Kid *string `json:"kid,omitempty"`
+	Kid *string
 
 	// JsonWebKey Key Type (kty), as defined in https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.
-	Kty *JSONWebKeyType `json:"kty,omitempty"`
+	Kty *JSONWebKeyType
 
 	// RSA modulus.
-	N []byte `json:"n,omitempty"`
+	N []byte
 
 	// RSA secret prime.
-	P []byte `json:"p,omitempty"`
+	P []byte
 
 	// RSA secret prime, with p < q.
-	Q []byte `json:"q,omitempty"`
+	Q []byte
 
 	// RSA private key parameter.
-	QI []byte `json:"qi,omitempty"`
+	QI []byte
 
 	// Protected Key, used with 'Bring Your Own Key'.
-	T []byte `json:"key_hsm,omitempty"`
+	T []byte
 
 	// X component of an EC public key.
-	X []byte `json:"x,omitempty"`
+	X []byte
 
 	// Y component of an EC public key.
-	Y []byte `json:"y,omitempty"`
+	Y []byte
 }
 
 // KeyAttributes - The attributes of a key managed by the key vault service.
 type KeyAttributes struct {
 	// Determines whether the object is enabled.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool
 
 	// Expiry date in UTC.
-	Expires *time.Time `json:"exp,omitempty"`
+	Expires *time.Time
 
 	// Not before date in UTC.
-	NotBefore *time.Time `json:"nbf,omitempty"`
+	NotBefore *time.Time
 
 	// READ-ONLY; Creation time in UTC.
-	Created *time.Time `json:"created,omitempty" azure:"ro"`
+	Created *time.Time
 
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
-	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
+	RecoverableDays *int32
 
 	// READ-ONLY; Reflects the deletion recovery level currently in effect for keys in the current vault. If it contains 'Purgeable'
 	// the key can be permanently deleted by a privileged user; otherwise, only the system
 	// can purge the key, at the end of the retention interval.
-	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
+	RecoveryLevel *DeletionRecoveryLevel
 
 	// READ-ONLY; Last updated time in UTC.
-	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+	Updated *time.Time
 }
 
 // KeyBundle - A KeyBundle consisting of a WebKey plus its attributes.
 type KeyBundle struct {
 	// The key management attributes.
-	Attributes *KeyAttributes `json:"attributes,omitempty"`
+	Attributes *KeyAttributes
 
 	// The Json web key.
-	Key *JSONWebKey `json:"key,omitempty"`
+	Key *JSONWebKey
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will
 	// be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 }
 
 // KeyCreateParameters - The key create parameters.
 type KeyCreateParameters struct {
 	// REQUIRED; The type of key to create. For valid values, see JsonWebKeyType.
-	Kty *JSONWebKeyType `json:"kty,omitempty"`
+	Kty *JSONWebKeyType
 
 	// Elliptic curve name. For valid values, see JsonWebKeyCurveName.
-	Curve *JSONWebKeyCurveName `json:"crv,omitempty"`
+	Curve *JSONWebKeyCurveName
 
 	// The attributes of a key managed by the key vault service.
-	KeyAttributes *KeyAttributes         `json:"attributes,omitempty"`
-	KeyOps        []*JSONWebKeyOperation `json:"key_ops,omitempty"`
+	KeyAttributes *KeyAttributes
+	KeyOps        []*JSONWebKeyOperation
 
 	// The key size in bits. For example: 2048, 3072, or 4096 for RSA.
-	KeySize *int32 `json:"key_size,omitempty"`
+	KeySize *int32
 
 	// The public exponent for a RSA key.
-	PublicExponent *int32 `json:"public_exponent,omitempty"`
+	PublicExponent *int32
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // KeyImportParameters - The key import parameters.
 type KeyImportParameters struct {
 	// REQUIRED; The Json web key
-	Key *JSONWebKey `json:"key,omitempty"`
+	Key *JSONWebKey
 
 	// Whether to import as a hardware key (HSM) or software key.
-	Hsm *bool `json:"Hsm,omitempty"`
+	Hsm *bool
 
 	// The key management attributes.
-	KeyAttributes *KeyAttributes `json:"attributes,omitempty"`
+	KeyAttributes *KeyAttributes
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // KeyItem - The key item containing key metadata.
 type KeyItem struct {
 	// The key management attributes.
-	Attributes *KeyAttributes `json:"attributes,omitempty"`
+	Attributes *KeyAttributes
 
 	// Key identifier.
-	Kid *string `json:"kid,omitempty"`
+	Kid *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will
 	// be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 }
 
 // KeyListResult - The key list result.
 type KeyListResult struct {
 	// READ-ONLY; The URL to get the next set of keys.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of keys in the key vault along with a link to the next page of keys.
-	Value []*KeyItem `json:"value,omitempty" azure:"ro"`
+	Value []*KeyItem
 }
 
 // KeyOperationResult - The key operation result.
 type KeyOperationResult struct {
 	// READ-ONLY
-	AdditionalAuthenticatedData []byte `json:"aad,omitempty" azure:"ro"`
+	AdditionalAuthenticatedData []byte
 
 	// READ-ONLY
-	AuthenticationTag []byte `json:"tag,omitempty" azure:"ro"`
+	AuthenticationTag []byte
 
 	// READ-ONLY
-	Iv []byte `json:"iv,omitempty" azure:"ro"`
+	Iv []byte
 
 	// READ-ONLY; Key identifier
-	Kid *string `json:"kid,omitempty" azure:"ro"`
+	Kid *string
 
 	// READ-ONLY
-	Result []byte `json:"value,omitempty" azure:"ro"`
+	Result []byte
 }
 
 // KeyOperationsParameters - The key operations parameters.
 type KeyOperationsParameters struct {
 	// REQUIRED; algorithm identifier
-	Algorithm *JSONWebKeyEncryptionAlgorithm `json:"alg,omitempty"`
+	Algorithm *JSONWebKeyEncryptionAlgorithm
 
 	// REQUIRED
-	Value []byte `json:"value,omitempty"`
+	Value []byte
 
 	// Additional data to authenticate but not encrypt/decrypt when using authenticated crypto algorithms.
-	AAD []byte `json:"aad,omitempty"`
+	AAD []byte
 
 	// Initialization vector for symmetric algorithms.
-	Iv []byte `json:"iv,omitempty"`
+	Iv []byte
 
 	// The tag to authenticate when performing decryption with an authenticated algorithm.
-	Tag []byte `json:"tag,omitempty"`
+	Tag []byte
 }
 
 // KeyProperties - Properties of the key pair backing a certificate.
 type KeyProperties struct {
 	// Elliptic curve name. For valid values, see JsonWebKeyCurveName.
-	Curve *JSONWebKeyCurveName `json:"crv,omitempty"`
+	Curve *JSONWebKeyCurveName
 
 	// Not supported in this version. Indicates if the private key can be exported.
-	Exportable *bool `json:"exportable,omitempty"`
+	Exportable *bool
 
 	// The key size in bits. For example: 2048, 3072, or 4096 for RSA.
-	KeySize *int32 `json:"key_size,omitempty"`
+	KeySize *int32
 
 	// The type of key pair to be used for the certificate.
-	KeyType *JSONWebKeyType `json:"kty,omitempty"`
+	KeyType *JSONWebKeyType
 
 	// Indicates if the same key pair will be used on certificate renewal.
-	ReuseKey *bool `json:"reuse_key,omitempty"`
+	ReuseKey *bool
 }
 
 // KeyRestoreParameters - The key restore parameters.
 type KeyRestoreParameters struct {
 	// REQUIRED; The backup blob associated with a key bundle.
-	KeyBundleBackup []byte `json:"value,omitempty"`
+	KeyBundleBackup []byte
 }
 
 // KeySignParameters - The key operations parameters.
 type KeySignParameters struct {
 	// REQUIRED; The signing/verification algorithm identifier. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.
-	Algorithm *JSONWebKeySignatureAlgorithm `json:"alg,omitempty"`
+	Algorithm *JSONWebKeySignatureAlgorithm
 
 	// REQUIRED
-	Value []byte `json:"value,omitempty"`
+	Value []byte
 }
 
 // KeyUpdateParameters - The key update parameters.
 type KeyUpdateParameters struct {
 	// The attributes of a key managed by the key vault service.
-	KeyAttributes *KeyAttributes `json:"attributes,omitempty"`
+	KeyAttributes *KeyAttributes
 
 	// Json web key operations. For more information on possible key operations, see JsonWebKeyOperation.
-	KeyOps []*JSONWebKeyOperation `json:"key_ops,omitempty"`
+	KeyOps []*JSONWebKeyOperation
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // KeyVerifyParameters - The key verify parameters.
 type KeyVerifyParameters struct {
 	// REQUIRED; The signing/verification algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.
-	Algorithm *JSONWebKeySignatureAlgorithm `json:"alg,omitempty"`
+	Algorithm *JSONWebKeySignatureAlgorithm
 
 	// REQUIRED; The digest used for signing.
-	Digest []byte `json:"digest,omitempty"`
+	Digest []byte
 
 	// REQUIRED; The signature to be verified.
-	Signature []byte `json:"value,omitempty"`
+	Signature []byte
 }
 
 // KeyVerifyResult - The key verify result.
 type KeyVerifyResult struct {
 	// READ-ONLY; True if the signature is verified, otherwise false.
-	Value *bool `json:"value,omitempty" azure:"ro"`
+	Value *bool
 }
 
 // LifetimeAction - Action and its trigger that will be performed by Key Vault over the lifetime of a certificate.
 type LifetimeAction struct {
 	// The action that will be executed.
-	Action *Action `json:"action,omitempty"`
+	Action *Action
 
 	// The condition that will execute the action.
-	Trigger *Trigger `json:"trigger,omitempty"`
+	Trigger *Trigger
 }
 
 // OrganizationDetails - Details of the organization of the certificate issuer.
 type OrganizationDetails struct {
 	// Details of the organization administrator.
-	AdminDetails []*AdministratorDetails `json:"admin_details,omitempty"`
+	AdminDetails []*AdministratorDetails
 
 	// Id of the organization.
-	ID *string `json:"id,omitempty"`
+	ID *string
 }
 
 // PendingCertificateSigningRequestResult - The pending certificate signing request result.
 type PendingCertificateSigningRequestResult struct {
 	// READ-ONLY; The pending certificate signing request as Base64 encoded string.
-	Value *string `json:"value,omitempty" azure:"ro"`
+	Value *string
 }
 
 // Permission - Role definition permissions.
 type Permission struct {
 	// Action permissions that are granted.
-	Actions []*string `json:"actions,omitempty"`
+	Actions []*string
 
 	// Data action permissions that are granted.
-	DataActions []*DataAction `json:"dataActions,omitempty"`
+	DataActions []*DataAction
 
 	// Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal.
-	NotActions []*string `json:"notActions,omitempty"`
+	NotActions []*string
 
 	// Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal.
-	NotDataActions []*DataAction `json:"notDataActions,omitempty"`
+	NotDataActions []*DataAction
 }
 
 // RestoreOperation - Restore operation
 type RestoreOperation struct {
 	// The end time of the restore operation
-	EndTime *time.Time `json:"endTime,omitempty"`
+	EndTime *time.Time
 
 	// Error encountered, if any, during the restore operation.
-	Error *ErrorInfo `json:"error,omitempty"`
+	Error *ErrorInfo
 
 	// Identifier for the restore operation.
-	JobID *string `json:"jobId,omitempty"`
+	JobID *string
 
 	// The start time of the restore operation
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *time.Time
 
 	// Status of the restore operation.
-	Status *string `json:"status,omitempty"`
+	Status *string
 
 	// The status details of restore operation.
-	StatusDetails *string `json:"statusDetails,omitempty"`
+	StatusDetails *string
 }
 
 type RestoreOperationParameters struct {
 	// REQUIRED; The Folder name of the blob where the previous successful full backup was stored
-	FolderToRestore *string `json:"folderToRestore,omitempty"`
+	FolderToRestore *string
 
 	// REQUIRED; SAS token parameter object containing Azure storage resourceUri and token
-	SasTokenParameters *SASTokenParameter `json:"sasTokenParameters,omitempty"`
+	SasTokenParameters *SASTokenParameter
 }
 
 // RoleAssignment - Role Assignments
 type RoleAssignment struct {
 	// Role assignment properties.
-	Properties *RoleAssignmentPropertiesWithScope `json:"properties,omitempty"`
+	Properties *RoleAssignmentPropertiesWithScope
 
 	// READ-ONLY; The role assignment ID.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The role assignment name.
-	Name *string `json:"name,omitempty" azure:"ro"`
+	Name *string
 
 	// READ-ONLY; The role assignment type.
-	Type *string `json:"type,omitempty" azure:"ro"`
+	Type *string
 }
 
 // RoleAssignmentCreateParameters - Role assignment create parameters.
 type RoleAssignmentCreateParameters struct {
 	// REQUIRED; Role assignment properties.
-	Properties *RoleAssignmentProperties `json:"properties,omitempty"`
+	Properties *RoleAssignmentProperties
 }
 
 // RoleAssignmentFilter - Role Assignments filter
 type RoleAssignmentFilter struct {
 	// Returns role assignment of the specific principal.
-	PrincipalID *string `json:"principalId,omitempty"`
+	PrincipalID *string
 }
 
 // RoleAssignmentListResult - Role assignment list operation result.
 type RoleAssignmentListResult struct {
 	// The URL to use for getting the next set of results.
-	NextLink *string `json:"nextLink,omitempty"`
+	NextLink *string
 
 	// Role assignment list.
-	Value []*RoleAssignment `json:"value,omitempty"`
+	Value []*RoleAssignment
 }
 
 // RoleAssignmentProperties - Role assignment properties.
 type RoleAssignmentProperties struct {
 	// REQUIRED; The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user,
 	// service principal, or security group.
-	PrincipalID *string `json:"principalId,omitempty"`
+	PrincipalID *string
 
 	// REQUIRED; The role definition ID used in the role assignment.
-	RoleDefinitionID *string `json:"roleDefinitionId,omitempty"`
+	RoleDefinitionID *string
 }
 
 // RoleAssignmentPropertiesWithScope - Role assignment properties with scope.
 type RoleAssignmentPropertiesWithScope struct {
 	// The principal ID.
-	PrincipalID *string `json:"principalId,omitempty"`
+	PrincipalID *string
 
 	// The role definition ID.
-	RoleDefinitionID *string `json:"roleDefinitionId,omitempty"`
+	RoleDefinitionID *string
 
 	// The role scope.
-	Scope *RoleScope `json:"scope,omitempty"`
+	Scope *RoleScope
 }
 
 // RoleAssignmentsClientCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
@@ -1673,55 +1673,55 @@ type RoleAssignmentsClientListForScopeOptions struct {
 // RoleDefinition - Role definition.
 type RoleDefinition struct {
 	// Role definition properties.
-	Properties *RoleDefinitionProperties `json:"properties,omitempty"`
+	Properties *RoleDefinitionProperties
 
 	// READ-ONLY; The role definition ID.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The role definition name.
-	Name *string `json:"name,omitempty" azure:"ro"`
+	Name *string
 
 	// READ-ONLY; The role definition type.
-	Type *RoleDefinitionType `json:"type,omitempty" azure:"ro"`
+	Type *RoleDefinitionType
 }
 
 // RoleDefinitionCreateParameters - Role definition create parameters.
 type RoleDefinitionCreateParameters struct {
 	// REQUIRED; Role definition properties.
-	Properties *RoleDefinitionProperties `json:"properties,omitempty"`
+	Properties *RoleDefinitionProperties
 }
 
 // RoleDefinitionFilter - Role Definitions filter
 type RoleDefinitionFilter struct {
 	// Returns role definition with the specific name.
-	RoleName *string `json:"roleName,omitempty"`
+	RoleName *string
 }
 
 // RoleDefinitionListResult - Role definition list operation result.
 type RoleDefinitionListResult struct {
 	// The URL to use for getting the next set of results.
-	NextLink *string `json:"nextLink,omitempty"`
+	NextLink *string
 
 	// Role definition list.
-	Value []*RoleDefinition `json:"value,omitempty"`
+	Value []*RoleDefinition
 }
 
 // RoleDefinitionProperties - Role definition properties.
 type RoleDefinitionProperties struct {
 	// Role definition assignable scopes.
-	AssignableScopes []*RoleScope `json:"assignableScopes,omitempty"`
+	AssignableScopes []*RoleScope
 
 	// The role definition description.
-	Description *string `json:"description,omitempty"`
+	Description *string
 
 	// Role definition permissions.
-	Permissions []*Permission `json:"permissions,omitempty"`
+	Permissions []*Permission
 
 	// The role name.
-	RoleName *string `json:"roleName,omitempty"`
+	RoleName *string
 
 	// The role type.
-	RoleType *RoleType `json:"type,omitempty"`
+	RoleType *RoleType
 }
 
 // RoleDefinitionsClientCreateOrUpdateOptions contains the optional parameters for the RoleDefinitionsClient.CreateOrUpdate
@@ -1748,481 +1748,481 @@ type RoleDefinitionsClientListOptions struct {
 
 type SASTokenParameter struct {
 	// REQUIRED; Azure Blob storage container Uri
-	StorageResourceURI *string `json:"storageResourceUri,omitempty"`
+	StorageResourceURI *string
 
 	// REQUIRED; The SAS token pointing to an Azure Blob storage container
-	Token *string `json:"token,omitempty"`
+	Token *string
 }
 
 // SasDefinitionAttributes - The SAS definition management attributes.
 type SasDefinitionAttributes struct {
 	// the enabled state of the object.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool
 
 	// READ-ONLY; Creation time in UTC.
-	Created *time.Time `json:"created,omitempty" azure:"ro"`
+	Created *time.Time
 
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
-	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
+	RecoverableDays *int32
 
 	// READ-ONLY; Reflects the deletion recovery level currently in effect for SAS definitions in the current vault. If it contains
 	// 'Purgeable' the SAS definition can be permanently deleted by a privileged user;
 	// otherwise, only the system can purge the SAS definition, at the end of the retention interval.
-	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
+	RecoveryLevel *DeletionRecoveryLevel
 
 	// READ-ONLY; Last updated time in UTC.
-	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+	Updated *time.Time
 }
 
 // SasDefinitionBundle - A SAS definition bundle consists of key vault SAS definition details plus its attributes.
 type SasDefinitionBundle struct {
 	// READ-ONLY; The SAS definition attributes.
-	Attributes *SasDefinitionAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *SasDefinitionAttributes
 
 	// READ-ONLY; The SAS definition id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The type of SAS token the SAS definition will create.
-	SasType *SasTokenType `json:"sasType,omitempty" azure:"ro"`
+	SasType *SasTokenType
 
 	// READ-ONLY; Storage account SAS definition secret id.
-	SecretID *string `json:"sid,omitempty" azure:"ro"`
+	SecretID *string
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 
 	// READ-ONLY; The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition
 	// will have the same properties as the template.
-	TemplateURI *string `json:"templateUri,omitempty" azure:"ro"`
+	TemplateURI *string
 
 	// READ-ONLY; The validity period of SAS tokens created according to the SAS definition.
-	ValidityPeriod *string `json:"validityPeriod,omitempty" azure:"ro"`
+	ValidityPeriod *string
 }
 
 // SasDefinitionCreateParameters - The SAS definition create parameters.
 type SasDefinitionCreateParameters struct {
 	// REQUIRED; The type of SAS token the SAS definition will create.
-	SasType *SasTokenType `json:"sasType,omitempty"`
+	SasType *SasTokenType
 
 	// REQUIRED; The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition
 	// will have the same properties as the template.
-	TemplateURI *string `json:"templateUri,omitempty"`
+	TemplateURI *string
 
 	// REQUIRED; The validity period of SAS tokens created according to the SAS definition.
-	ValidityPeriod *string `json:"validityPeriod,omitempty"`
+	ValidityPeriod *string
 
 	// The attributes of the SAS definition.
-	SasDefinitionAttributes *SasDefinitionAttributes `json:"attributes,omitempty"`
+	SasDefinitionAttributes *SasDefinitionAttributes
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // SasDefinitionItem - The SAS definition item containing storage SAS definition metadata.
 type SasDefinitionItem struct {
 	// READ-ONLY; The SAS definition management attributes.
-	Attributes *SasDefinitionAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *SasDefinitionAttributes
 
 	// READ-ONLY; The storage SAS identifier.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The storage account SAS definition secret id.
-	SecretID *string `json:"sid,omitempty" azure:"ro"`
+	SecretID *string
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 }
 
 // SasDefinitionListResult - The storage account SAS definition list result.
 type SasDefinitionListResult struct {
 	// READ-ONLY; The URL to get the next set of SAS definitions.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of SAS definitions along with a link to the next page of SAS definitions.
-	Value []*SasDefinitionItem `json:"value,omitempty" azure:"ro"`
+	Value []*SasDefinitionItem
 }
 
 // SasDefinitionUpdateParameters - The SAS definition update parameters.
 type SasDefinitionUpdateParameters struct {
 	// The attributes of the SAS definition.
-	SasDefinitionAttributes *SasDefinitionAttributes `json:"attributes,omitempty"`
+	SasDefinitionAttributes *SasDefinitionAttributes
 
 	// The type of SAS token the SAS definition will create.
-	SasType *SasTokenType `json:"sasType,omitempty"`
+	SasType *SasTokenType
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition will have
 	// the same properties as the template.
-	TemplateURI *string `json:"templateUri,omitempty"`
+	TemplateURI *string
 
 	// The validity period of SAS tokens created according to the SAS definition.
-	ValidityPeriod *string `json:"validityPeriod,omitempty"`
+	ValidityPeriod *string
 }
 
 // SecretAttributes - The secret management attributes.
 type SecretAttributes struct {
 	// Determines whether the object is enabled.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool
 
 	// Expiry date in UTC.
-	Expires *time.Time `json:"exp,omitempty"`
+	Expires *time.Time
 
 	// Not before date in UTC.
-	NotBefore *time.Time `json:"nbf,omitempty"`
+	NotBefore *time.Time
 
 	// READ-ONLY; Creation time in UTC.
-	Created *time.Time `json:"created,omitempty" azure:"ro"`
+	Created *time.Time
 
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
-	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
+	RecoverableDays *int32
 
 	// READ-ONLY; Reflects the deletion recovery level currently in effect for secrets in the current vault. If it contains 'Purgeable',
 	// the secret can be permanently deleted by a privileged user; otherwise, only the
 	// system can purge the secret, at the end of the retention interval.
-	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
+	RecoveryLevel *DeletionRecoveryLevel
 
 	// READ-ONLY; Last updated time in UTC.
-	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+	Updated *time.Time
 }
 
 // SecretBundle - A secret consisting of a value, id and its attributes.
 type SecretBundle struct {
 	// The secret management attributes.
-	Attributes *SecretAttributes `json:"attributes,omitempty"`
+	Attributes *SecretAttributes
 
 	// The content type of the secret.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// The secret id.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// The secret value.
-	Value *string `json:"value,omitempty"`
+	Value *string
 
 	// READ-ONLY; If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV
 	// certificate.
-	Kid *string `json:"kid,omitempty" azure:"ro"`
+	Kid *string
 
 	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a secret backing a certificate, then managed
 	// will be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 }
 
 // SecretItem - The secret item containing secret metadata.
 type SecretItem struct {
 	// The secret management attributes.
-	Attributes *SecretAttributes `json:"attributes,omitempty"`
+	Attributes *SecretAttributes
 
 	// Type of the secret value such as a password.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// Secret identifier.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a key backing a certificate, then managed
 	// will be true.
-	Managed *bool `json:"managed,omitempty" azure:"ro"`
+	Managed *bool
 }
 
 // SecretListResult - The secret list result.
 type SecretListResult struct {
 	// READ-ONLY; The URL to get the next set of secrets.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of secrets in the key vault along with a link to the next page of secrets.
-	Value []*SecretItem `json:"value,omitempty" azure:"ro"`
+	Value []*SecretItem
 }
 
 // SecretProperties - Properties of the key backing a certificate.
 type SecretProperties struct {
 	// The media type (MIME type).
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 }
 
 // SecretRestoreParameters - The secret restore parameters.
 type SecretRestoreParameters struct {
 	// REQUIRED; The backup blob associated with a secret bundle.
-	SecretBundleBackup []byte `json:"value,omitempty"`
+	SecretBundleBackup []byte
 }
 
 // SecretSetParameters - The secret set parameters.
 type SecretSetParameters struct {
 	// REQUIRED; The value of the secret.
-	Value *string `json:"value,omitempty"`
+	Value *string
 
 	// Type of the secret value such as a password.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// The secret management attributes.
-	SecretAttributes *SecretAttributes `json:"attributes,omitempty"`
+	SecretAttributes *SecretAttributes
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // SecretUpdateParameters - The secret update parameters.
 type SecretUpdateParameters struct {
 	// Type of the secret value such as a password.
-	ContentType *string `json:"contentType,omitempty"`
+	ContentType *string
 
 	// The secret management attributes.
-	SecretAttributes *SecretAttributes `json:"attributes,omitempty"`
+	SecretAttributes *SecretAttributes
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 type SecurityDomainCertificateItem struct {
 	// REQUIRED; Customer generated certificate containing public key in JWK format
-	Value *SecurityDomainJSONWebKey `json:"value,omitempty"`
+	Value *SecurityDomainJSONWebKey
 }
 
 type SecurityDomainJSONWebKey struct {
 	// REQUIRED; Algorithm intended for use with the key.
-	Alg *string `json:"alg,omitempty"`
+	Alg *string
 
 	// REQUIRED; RSA public exponent.
-	E *string `json:"e,omitempty"`
+	E *string
 
 	// REQUIRED
-	KeyOps []*string `json:"key_ops,omitempty"`
+	KeyOps []*string
 
 	// REQUIRED; Key identifier.
-	Kid *string `json:"kid,omitempty"`
+	Kid *string
 
 	// REQUIRED; JsonWebKey Key Type (kty), as defined in https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.
 	// For Security Domain this value must be RSA.
-	Kty *string `json:"kty,omitempty"`
+	Kty *string
 
 	// REQUIRED; RSA modulus.
-	N *string `json:"n,omitempty"`
+	N *string
 
 	// REQUIRED; X509 certificate chain parameter
-	X5C []*string `json:"x5c,omitempty"`
+	X5C []*string
 
 	// REQUIRED; X509 certificate SHA256 thumbprint.
-	X5TS256 *string `json:"x5t#S256,omitempty"`
+	X5TS256 *string
 
 	// Public Key Use Parameter. This is optional and if present must be enc.
-	Use *string `json:"use,omitempty"`
+	Use *string
 
 	// X509 certificate SHA1 thumbprint. This is optional.
-	X5T *string `json:"x5t,omitempty"`
+	X5T *string
 }
 
 // SecurityDomainObject - The Security Domain.
 type SecurityDomainObject struct {
 	// REQUIRED; The Security Domain.
-	Value *string `json:"value,omitempty"`
+	Value *string
 }
 
 type SecurityDomainOperationStatus struct {
 	// operation status
-	Status        *OperationStatus `json:"status,omitempty"`
-	StatusDetails *string          `json:"status_details,omitempty"`
+	Status        *OperationStatus
+	StatusDetails *string
 }
 
 // SelectiveKeyRestoreOperation - Selective Key Restore operation
 type SelectiveKeyRestoreOperation struct {
 	// The end time of the restore operation
-	EndTime *time.Time `json:"endTime,omitempty"`
+	EndTime *time.Time
 
 	// Error encountered, if any, during the selective key restore operation.
-	Error *ErrorInfo `json:"error,omitempty"`
+	Error *ErrorInfo
 
 	// Identifier for the selective key restore operation.
-	JobID *string `json:"jobId,omitempty"`
+	JobID *string
 
 	// The start time of the restore operation
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *time.Time
 
 	// Status of the restore operation.
-	Status *string `json:"status,omitempty"`
+	Status *string
 
 	// The status details of restore operation.
-	StatusDetails *string `json:"statusDetails,omitempty"`
+	StatusDetails *string
 }
 
 type SelectiveKeyRestoreOperationParameters struct {
 	// REQUIRED; The Folder name of the blob where the previous successful full backup was stored
-	Folder *string `json:"folder,omitempty"`
+	Folder *string
 
 	// REQUIRED; SAS token parameter object containing Azure storage resourceUri and token
-	SasTokenParameters *SASTokenParameter `json:"sasTokenParameters,omitempty"`
+	SasTokenParameters *SASTokenParameter
 }
 
 // StorageAccountAttributes - The storage account management attributes.
 type StorageAccountAttributes struct {
 	// the enabled state of the object.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool
 
 	// READ-ONLY; Creation time in UTC.
-	Created *time.Time `json:"created,omitempty" azure:"ro"`
+	Created *time.Time
 
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
-	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
+	RecoverableDays *int32
 
 	// READ-ONLY; Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains
 	// 'Purgeable' the storage account can be permanently deleted by a privileged user;
 	// otherwise, only the system can purge the storage account, at the end of the retention interval.
-	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
+	RecoveryLevel *DeletionRecoveryLevel
 
 	// READ-ONLY; Last updated time in UTC.
-	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+	Updated *time.Time
 }
 
 // StorageAccountCreateParameters - The storage account create parameters.
 type StorageAccountCreateParameters struct {
 	// REQUIRED; Current active storage account key name.
-	ActiveKeyName *string `json:"activeKeyName,omitempty"`
+	ActiveKeyName *string
 
 	// REQUIRED; whether keyvault should manage the storage account for the user.
-	AutoRegenerateKey *bool `json:"autoRegenerateKey,omitempty"`
+	AutoRegenerateKey *bool
 
 	// REQUIRED; Storage account resource id.
-	ResourceID *string `json:"resourceId,omitempty"`
+	ResourceID *string
 
 	// The key regeneration time duration specified in ISO-8601 format.
-	RegenerationPeriod *string `json:"regenerationPeriod,omitempty"`
+	RegenerationPeriod *string
 
 	// The attributes of the storage account.
-	StorageAccountAttributes *StorageAccountAttributes `json:"attributes,omitempty"`
+	StorageAccountAttributes *StorageAccountAttributes
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // StorageAccountItem - The storage account item containing storage account metadata.
 type StorageAccountItem struct {
 	// READ-ONLY; The storage account management attributes.
-	Attributes *StorageAccountAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *StorageAccountAttributes
 
 	// READ-ONLY; Storage identifier.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; Storage account resource Id.
-	ResourceID *string `json:"resourceId,omitempty" azure:"ro"`
+	ResourceID *string
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 }
 
 // StorageAccountRegenerteKeyParameters - The storage account key regenerate parameters.
 type StorageAccountRegenerteKeyParameters struct {
 	// REQUIRED; The storage account key name.
-	KeyName *string `json:"keyName,omitempty"`
+	KeyName *string
 }
 
 // StorageAccountUpdateParameters - The storage account update parameters.
 type StorageAccountUpdateParameters struct {
 	// The current active storage account key name.
-	ActiveKeyName *string `json:"activeKeyName,omitempty"`
+	ActiveKeyName *string
 
 	// whether keyvault should manage the storage account for the user.
-	AutoRegenerateKey *bool `json:"autoRegenerateKey,omitempty"`
+	AutoRegenerateKey *bool
 
 	// The key regeneration time duration specified in ISO-8601 format.
-	RegenerationPeriod *string `json:"regenerationPeriod,omitempty"`
+	RegenerationPeriod *string
 
 	// The attributes of the storage account.
-	StorageAccountAttributes *StorageAccountAttributes `json:"attributes,omitempty"`
+	StorageAccountAttributes *StorageAccountAttributes
 
 	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 }
 
 // StorageBundle - A Storage account bundle consists of key vault storage account details plus its attributes.
 type StorageBundle struct {
 	// READ-ONLY; The current active storage account key name.
-	ActiveKeyName *string `json:"activeKeyName,omitempty" azure:"ro"`
+	ActiveKeyName *string
 
 	// READ-ONLY; The storage account attributes.
-	Attributes *StorageAccountAttributes `json:"attributes,omitempty" azure:"ro"`
+	Attributes *StorageAccountAttributes
 
 	// READ-ONLY; whether keyvault should manage the storage account for the user.
-	AutoRegenerateKey *bool `json:"autoRegenerateKey,omitempty" azure:"ro"`
+	AutoRegenerateKey *bool
 
 	// READ-ONLY; The storage account id.
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; The key regeneration time duration specified in ISO-8601 format.
-	RegenerationPeriod *string `json:"regenerationPeriod,omitempty" azure:"ro"`
+	RegenerationPeriod *string
 
 	// READ-ONLY; The storage account resource id.
-	ResourceID *string `json:"resourceId,omitempty" azure:"ro"`
+	ResourceID *string
 
 	// READ-ONLY; Application specific metadata in the form of key-value pairs
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+	Tags map[string]*string
 }
 
 // StorageListResult - The storage accounts list result.
 type StorageListResult struct {
 	// READ-ONLY; The URL to get the next set of storage accounts.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 
 	// READ-ONLY; A response message containing a list of storage accounts in the key vault along with a link to the next page
 	// of storage accounts.
-	Value []*StorageAccountItem `json:"value,omitempty" azure:"ro"`
+	Value []*StorageAccountItem
 }
 
 // StorageRestoreParameters - The secret restore parameters.
 type StorageRestoreParameters struct {
 	// REQUIRED; The backup blob associated with a storage account.
-	StorageBundleBackup []byte `json:"value,omitempty"`
+	StorageBundleBackup []byte
 }
 
 // SubjectAlternativeNames - The subject alternate names of a X509 object.
 type SubjectAlternativeNames struct {
 	// Domain names.
-	DNSNames []*string `json:"dns_names,omitempty"`
+	DNSNames []*string
 
 	// Email addresses.
-	Emails []*string `json:"emails,omitempty"`
+	Emails []*string
 
 	// User principal names.
-	Upns []*string `json:"upns,omitempty"`
+	Upns []*string
 }
 
 type TransferKey struct {
 	// REQUIRED; Specifies the transfer key in JWK format
-	TransferKey *SecurityDomainJSONWebKey `json:"transfer_key,omitempty"`
+	TransferKey *SecurityDomainJSONWebKey
 
 	// Specifies the format of the transfer key
-	KeyFormat *string `json:"key_format,omitempty"`
+	KeyFormat *string
 }
 
 // Trigger - A condition to be satisfied for an action to be executed.
 type Trigger struct {
 	// Days before expiry to attempt renewal. Value should be between 1 and validityinmonths multiplied by 27. If validityinmonths
 	// is 36, then value should be between 1 and 972 (36 * 27).
-	DaysBeforeExpiry *int32 `json:"days_before_expiry,omitempty"`
+	DaysBeforeExpiry *int32
 
 	// Percentage of lifetime at which to trigger. Value should be between 1 and 99.
-	LifetimePercentage *int32 `json:"lifetime_percentage,omitempty"`
+	LifetimePercentage *int32
 }
 
 // X509CertificateProperties - Properties of the X509 component of a certificate.
 type X509CertificateProperties struct {
 	// The enhanced key usage.
-	Ekus []*string `json:"ekus,omitempty"`
+	Ekus []*string
 
 	// List of key usages.
-	KeyUsage []*KeyUsageType `json:"key_usage,omitempty"`
+	KeyUsage []*KeyUsageType
 
 	// The subject name. Should be a valid X509 distinguished Name.
-	Subject *string `json:"subject,omitempty"`
+	Subject *string
 
 	// The subject alternative names.
-	SubjectAlternativeNames *SubjectAlternativeNames `json:"sans,omitempty"`
+	SubjectAlternativeNames *SubjectAlternativeNames
 
 	// The duration that the certificate is valid in months.
-	ValidityInMonths *int32 `json:"validity_months,omitempty"`
+	ValidityInMonths *int32
 }

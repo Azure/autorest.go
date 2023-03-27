@@ -165,11 +165,11 @@ type CorsRule struct {
 }
 
 type JSONInput struct {
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 }
 
 type JSONOutput struct {
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 }
 
 // ListBlobsResponse - An enumeration of blobs

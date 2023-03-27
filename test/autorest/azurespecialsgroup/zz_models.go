@@ -93,8 +93,8 @@ type ODataClientGetWithFilterOptions struct {
 }
 
 type ODataFilter struct {
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	ID   *int32
+	Name *string
 }
 
 // SkipURLEncodingClientGetMethodPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodPathValid

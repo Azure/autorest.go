@@ -10,16 +10,16 @@
 package httpinfrastructuregroup
 
 type B struct {
-	StatusCode     *string `json:"statusCode,omitempty"`
-	TextStatusCode *string `json:"textStatusCode,omitempty"`
+	StatusCode     *string
+	TextStatusCode *string
 }
 
 type C struct {
-	HTTPCode *string `json:"httpCode,omitempty"`
+	HTTPCode *string
 }
 
 type D struct {
-	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
+	HTTPStatusCode *string
 }
 
 // HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400 method.
@@ -612,5 +612,5 @@ type MultipleResponsesClientGetDefaultNone400NoneOptions struct {
 }
 
 type MyException struct {
-	StatusCode *string `json:"statusCode,omitempty"`
+	StatusCode *string
 }

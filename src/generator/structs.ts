@@ -99,12 +99,10 @@ export class StructDef {
       if (prop.readOnly) {
         readOnly = ` azure:"ro"`;
       }
-      let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
-      // if this is a response type then omit the tag IFF the marshalling format is
-      // JSON, or it's a header.  XML marshalling needs a tag.
-      // also omit the tag for additionalProperties
-      if ((this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml')) || prop.language.go!.isAdditionalProperties) {
-        tag = '';
+      let tag = '';
+      // only emit tags for XML; JSON uses custom marshallers/unmarshallers
+      if (this.Language.marshallingFormat === 'xml' && !prop.language.go!.isAdditionalProperties) {
+        tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
       }
       let pointer = '*';
       if (prop.language.go!.byValue === true) {

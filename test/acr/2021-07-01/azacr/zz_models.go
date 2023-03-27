@@ -13,7 +13,7 @@ import "time"
 
 type AccessToken struct {
 	// The access token for performing authenticated requests
-	AccessToken *string `json:"access_token,omitempty"`
+	AccessToken *string
 }
 
 // Annotations - Additional information provided through arbitrary metadata.
@@ -22,77 +22,77 @@ type Annotations struct {
 	AdditionalProperties map[string]any
 
 	// Contact details of the people or organization responsible for the image.
-	Authors *string `json:"org.opencontainers.image.authors,omitempty"`
+	Authors *string
 
 	// Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6)
-	Created *time.Time `json:"org.opencontainers.image.created,omitempty"`
+	Created *time.Time
 
 	// Human-readable description of the software packaged in the image
-	Description *string `json:"org.opencontainers.image.description,omitempty"`
+	Description *string
 
 	// URL to get documentation on the image.
-	Documentation *string `json:"org.opencontainers.image.documentation,omitempty"`
+	Documentation *string
 
 	// License(s) under which contained software is distributed as an SPDX License Expression.
-	Licenses *string `json:"org.opencontainers.image.licenses,omitempty"`
+	Licenses *string
 
 	// Name of the reference for a target.
-	Name *string `json:"org.opencontainers.image.ref.name,omitempty"`
+	Name *string
 
 	// Source control revision identifier for the packaged software.
-	Revision *string `json:"org.opencontainers.image.revision,omitempty"`
+	Revision *string
 
 	// URL to get source code for building the image.
-	Source *string `json:"org.opencontainers.image.source,omitempty"`
+	Source *string
 
 	// Human-readable title of the image
-	Title *string `json:"org.opencontainers.image.title,omitempty"`
+	Title *string
 
 	// URL to find more information on the image.
-	URL *string `json:"org.opencontainers.image.url,omitempty"`
+	URL *string
 
 	// Name of the distributing entity, organization or individual.
-	Vendor *string `json:"org.opencontainers.image.vendor,omitempty"`
+	Vendor *string
 
 	// Version of the packaged software. The version MAY match a label or tag in the source code repository, may also be Semantic
 	// versioning-compatible
-	Version *string `json:"org.opencontainers.image.version,omitempty"`
+	Version *string
 }
 
 // ArtifactManifestPlatform - The artifact's platform, consisting of operating system and architecture.
 type ArtifactManifestPlatform struct {
 	// READ-ONLY; Manifest digest
-	Digest *string `json:"digest,omitempty" azure:"ro"`
+	Digest *string
 
 	// READ-ONLY; CPU architecture
-	Architecture *ArtifactArchitecture `json:"architecture,omitempty" azure:"ro"`
+	Architecture *ArtifactArchitecture
 
 	// READ-ONLY; Operating system
-	OperatingSystem *ArtifactOperatingSystem `json:"os,omitempty" azure:"ro"`
+	OperatingSystem *ArtifactOperatingSystem
 }
 
 // ArtifactManifestProperties - Manifest attributes details
 type ArtifactManifestProperties struct {
 	// READ-ONLY; Manifest attributes
-	Manifest *ManifestAttributesBase `json:"manifest,omitempty" azure:"ro"`
+	Manifest *ManifestAttributesBase
 
 	// READ-ONLY; Registry login server name. This is likely to be similar to {registry-name}.azurecr.io.
-	RegistryLoginServer *string `json:"registry,omitempty" azure:"ro"`
+	RegistryLoginServer *string
 
 	// READ-ONLY; Repository name
-	RepositoryName *string `json:"imageName,omitempty" azure:"ro"`
+	RepositoryName *string
 }
 
 // ArtifactTagProperties - Tag attributes
 type ArtifactTagProperties struct {
 	// READ-ONLY; Registry login server name. This is likely to be similar to {registry-name}.azurecr.io.
-	RegistryLoginServer *string `json:"registry,omitempty" azure:"ro"`
+	RegistryLoginServer *string
 
 	// READ-ONLY; Image name
-	RepositoryName *string `json:"imageName,omitempty" azure:"ro"`
+	RepositoryName *string
 
 	// READ-ONLY; List of tag attribute details
-	Tag *TagAttributesBase `json:"tag,omitempty" azure:"ro"`
+	Tag *TagAttributesBase
 }
 
 // AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions contains the optional parameters for the AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken
@@ -293,323 +293,323 @@ type ContainerRegistryClientUpdateTagAttributesOptions struct {
 // ContainerRepositoryProperties - Properties of this repository.
 type ContainerRepositoryProperties struct {
 	// REQUIRED; Writeable properties of the resource
-	ChangeableAttributes *RepositoryWriteableProperties `json:"changeableAttributes,omitempty"`
+	ChangeableAttributes *RepositoryWriteableProperties
 
 	// READ-ONLY; Image created time
-	CreatedOn *time.Time `json:"createdTime,omitempty" azure:"ro"`
+	CreatedOn *time.Time
 
 	// READ-ONLY; Image last update time
-	LastUpdatedOn *time.Time `json:"lastUpdateTime,omitempty" azure:"ro"`
+	LastUpdatedOn *time.Time
 
 	// READ-ONLY; Number of the manifests
-	ManifestCount *int32 `json:"manifestCount,omitempty" azure:"ro"`
+	ManifestCount *int32
 
 	// READ-ONLY; Image name
-	Name *string `json:"imageName,omitempty" azure:"ro"`
+	Name *string
 
 	// READ-ONLY; Registry login server name. This is likely to be similar to {registry-name}.azurecr.io.
-	RegistryLoginServer *string `json:"registry,omitempty" azure:"ro"`
+	RegistryLoginServer *string
 
 	// READ-ONLY; Number of the tags
-	TagCount *int32 `json:"tagCount,omitempty" azure:"ro"`
+	TagCount *int32
 }
 
 // DeleteRepositoryResult - Deleted repository
 type DeleteRepositoryResult struct {
 	// READ-ONLY; SHA of the deleted image
-	DeletedManifests []*string `json:"manifestsDeleted,omitempty" azure:"ro"`
+	DeletedManifests []*string
 
 	// READ-ONLY; Tag of the deleted image
-	DeletedTags []*string `json:"tagsDeleted,omitempty" azure:"ro"`
+	DeletedTags []*string
 }
 
 // Descriptor - Docker V2 image layer descriptor including config and layers
 type Descriptor struct {
 	// Additional information provided through arbitrary metadata.
-	Annotations *Annotations `json:"annotations,omitempty"`
+	Annotations *Annotations
 
 	// Layer digest
-	Digest *string `json:"digest,omitempty"`
+	Digest *string
 
 	// Layer media type
-	MediaType *string `json:"mediaType,omitempty"`
+	MediaType *string
 
 	// Layer size
-	Size *int64 `json:"size,omitempty"`
+	Size *int64
 
 	// Specifies a list of URIs from which this object may be downloaded.
-	Urls []*string `json:"urls,omitempty"`
+	Urls []*string
 }
 
 // ErrorInfo - Error information
 type ErrorInfo struct {
 	// Error code
-	Code *string `json:"code,omitempty"`
+	Code *string
 
 	// Error details
-	Detail []byte `json:"detail,omitempty"`
+	Detail []byte
 
 	// Error message
-	Message *string `json:"message,omitempty"`
+	Message *string
 }
 
 // Errors - Acr error response describing why the operation failed
 type Errors struct {
 	// Array of detailed error
-	Errors []*ErrorInfo `json:"errors,omitempty"`
+	Errors []*ErrorInfo
 }
 
 // FsLayer - Image layer information
 type FsLayer struct {
 	// SHA of an image layer
-	BlobSum *string `json:"blobSum,omitempty"`
+	BlobSum *string
 }
 
 // History - A list of unstructured historical data for v1 compatibility
 type History struct {
 	// The raw v1 compatibility information
-	V1Compatibility *string `json:"v1Compatibility,omitempty"`
+	V1Compatibility *string
 }
 
 // ImageSignature - Signature of a signed manifest
 type ImageSignature struct {
 	// A JSON web signature
-	Header *JWK `json:"header,omitempty"`
+	Header *JWK
 
 	// The signed protected header
-	Protected *string `json:"protected,omitempty"`
+	Protected *string
 
 	// A signature for the image manifest, signed by a libtrust private key
-	Signature *string `json:"signature,omitempty"`
+	Signature *string
 }
 
 // JWK - A JSON web signature
 type JWK struct {
 	// The algorithm used to sign or encrypt the JWT
-	Alg *string `json:"alg,omitempty"`
+	Alg *string
 
 	// JSON web key parameter
-	Jwk *JWKHeader `json:"jwk,omitempty"`
+	Jwk *JWKHeader
 }
 
 // JWKHeader - JSON web key parameter
 type JWKHeader struct {
 	// crv value
-	Crv *string `json:"crv,omitempty"`
+	Crv *string
 
 	// kid value
-	Kid *string `json:"kid,omitempty"`
+	Kid *string
 
 	// kty value
-	Kty *string `json:"kty,omitempty"`
+	Kty *string
 
 	// x value
-	X *string `json:"x,omitempty"`
+	X *string
 
 	// y value
-	Y *string `json:"y,omitempty"`
+	Y *string
 }
 
 // Manifest - Returns the requested manifest file
 type Manifest struct {
 	// Schema version
-	SchemaVersion *int32 `json:"schemaVersion,omitempty"`
+	SchemaVersion *int32
 }
 
 // ManifestAttributesBase - Manifest details
 type ManifestAttributesBase struct {
 	// READ-ONLY; Created time
-	CreatedOn *time.Time `json:"createdTime,omitempty" azure:"ro"`
+	CreatedOn *time.Time
 
 	// READ-ONLY; Manifest
-	Digest *string `json:"digest,omitempty" azure:"ro"`
+	Digest *string
 
 	// READ-ONLY; Last update time
-	LastUpdatedOn *time.Time `json:"lastUpdateTime,omitempty" azure:"ro"`
+	LastUpdatedOn *time.Time
 
 	// Writeable properties of the resource
-	ChangeableAttributes *ManifestWriteableProperties `json:"changeableAttributes,omitempty"`
+	ChangeableAttributes *ManifestWriteableProperties
 
 	// Config blob media type
-	ConfigMediaType *string `json:"configMediaType,omitempty"`
+	ConfigMediaType *string
 
 	// READ-ONLY; CPU architecture
-	Architecture *ArtifactArchitecture `json:"architecture,omitempty" azure:"ro"`
+	Architecture *ArtifactArchitecture
 
 	// READ-ONLY; Operating system
-	OperatingSystem *ArtifactOperatingSystem `json:"os,omitempty" azure:"ro"`
+	OperatingSystem *ArtifactOperatingSystem
 
 	// READ-ONLY; List of artifacts that are referenced by this manifest list, with information about the platform each supports.
 	// This list will be empty if this is a leaf manifest and not a manifest list.
-	RelatedArtifacts []*ArtifactManifestPlatform `json:"references,omitempty" azure:"ro"`
+	RelatedArtifacts []*ArtifactManifestPlatform
 
 	// READ-ONLY; Image size
-	Size *int64 `json:"imageSize,omitempty" azure:"ro"`
+	Size *int64
 
 	// READ-ONLY; List of tags
-	Tags []*string `json:"tags,omitempty" azure:"ro"`
+	Tags []*string
 }
 
 // ManifestAttributesManifest - List of manifest attributes
 type ManifestAttributesManifest struct {
 	// List of manifest attributes details
-	References []*ArtifactManifestPlatform `json:"references,omitempty"`
+	References []*ArtifactManifestPlatform
 }
 
 // ManifestList - Returns the requested Docker multi-arch-manifest file
 type ManifestList struct {
 	// List of V2 image layer information
-	Manifests []*ManifestListAttributes `json:"manifests,omitempty"`
+	Manifests []*ManifestListAttributes
 
 	// Media type for this Manifest
-	MediaType *string `json:"mediaType,omitempty"`
+	MediaType *string
 
 	// Schema version
-	SchemaVersion *int32 `json:"schemaVersion,omitempty"`
+	SchemaVersion *int32
 }
 
 type ManifestListAttributes struct {
 	// The digest of the content, as defined by the Registry V2 HTTP API Specification
-	Digest *string `json:"digest,omitempty"`
+	Digest *string
 
 	// The MIME type of the referenced object. This will generally be application/vnd.docker.image.manifest.v2+json, but it could
 	// also be application/vnd.docker.image.manifest.v1+json
-	MediaType *string `json:"mediaType,omitempty"`
+	MediaType *string
 
 	// The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system
 	// and architecture values are listed in the Go language documentation for $GOOS
 	// and $GOARCH
-	Platform *Platform `json:"platform,omitempty"`
+	Platform *Platform
 
 	// The size in bytes of the object
-	Size *int64 `json:"size,omitempty"`
+	Size *int64
 }
 
 // ManifestWrapper - Returns the requested manifest file
 type ManifestWrapper struct {
 	// (OCI, OCIIndex) Additional metadata
-	Annotations *Annotations `json:"annotations,omitempty"`
+	Annotations *Annotations
 
 	// (V1) CPU architecture
-	Architecture *string `json:"architecture,omitempty"`
+	Architecture *string
 
 	// (V2, OCI) Image config descriptor
-	Config *Descriptor `json:"config,omitempty"`
+	Config *Descriptor
 
 	// (V1) List of layer information
-	FsLayers []*FsLayer `json:"fsLayers,omitempty"`
+	FsLayers []*FsLayer
 
 	// (V1) Image history
-	History []*History `json:"history,omitempty"`
+	History []*History
 
 	// (V2, OCI) List of V2 image layer information
-	Layers []*Descriptor `json:"layers,omitempty"`
+	Layers []*Descriptor
 
 	// (ManifestList, OCIIndex) List of V2 image layer information
-	Manifests []*ManifestListAttributes `json:"manifests,omitempty"`
+	Manifests []*ManifestListAttributes
 
 	// Media type for this Manifest
-	MediaType *string `json:"mediaType,omitempty"`
+	MediaType *string
 
 	// (V1) Image name
-	Name *string `json:"name,omitempty"`
+	Name *string
 
 	// Schema version
-	SchemaVersion *int32 `json:"schemaVersion,omitempty"`
+	SchemaVersion *int32
 
 	// (V1) Image signature
-	Signatures []*ImageSignature `json:"signatures,omitempty"`
+	Signatures []*ImageSignature
 
 	// (V1) Image tag
-	Tag *string `json:"tag,omitempty"`
+	Tag *string
 }
 
 // ManifestWriteableProperties - Changeable attributes
 type ManifestWriteableProperties struct {
 	// Delete enabled
-	CanDelete *bool `json:"deleteEnabled,omitempty"`
+	CanDelete *bool
 
 	// List enabled
-	CanList *bool `json:"listEnabled,omitempty"`
+	CanList *bool
 
 	// Read enabled
-	CanRead *bool `json:"readEnabled,omitempty"`
+	CanRead *bool
 
 	// Write enabled
-	CanWrite *bool `json:"writeEnabled,omitempty"`
+	CanWrite *bool
 }
 
 // Manifests - Manifest attributes
 type Manifests struct {
-	Link *string `json:"link,omitempty"`
+	Link *string
 
 	// List of manifests
-	Manifests []*ManifestAttributesBase `json:"manifests,omitempty"`
+	Manifests []*ManifestAttributesBase
 
 	// Registry login server name. This is likely to be similar to {registry-name}.azurecr.io.
-	RegistryLoginServer *string `json:"registry,omitempty"`
+	RegistryLoginServer *string
 
 	// Image name
-	Repository *string `json:"imageName,omitempty"`
+	Repository *string
 }
 
 // OCIIndex - Returns the requested OCI index file
 type OCIIndex struct {
 	// Additional information provided through arbitrary metadata.
-	Annotations *Annotations `json:"annotations,omitempty"`
+	Annotations *Annotations
 
 	// List of OCI image layer information
-	Manifests []*ManifestListAttributes `json:"manifests,omitempty"`
+	Manifests []*ManifestListAttributes
 
 	// Schema version
-	SchemaVersion *int32 `json:"schemaVersion,omitempty"`
+	SchemaVersion *int32
 }
 
 // OCIManifest - Returns the requested OCI Manifest file
 type OCIManifest struct {
 	// Additional information provided through arbitrary metadata.
-	Annotations *Annotations `json:"annotations,omitempty"`
+	Annotations *Annotations
 
 	// V2 image config descriptor
-	Config *Descriptor `json:"config,omitempty"`
+	Config *Descriptor
 
 	// List of V2 image layer information
-	Layers []*Descriptor `json:"layers,omitempty"`
+	Layers []*Descriptor
 
 	// Schema version
-	SchemaVersion *int32 `json:"schemaVersion,omitempty"`
+	SchemaVersion *int32
 }
 
 type Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema struct {
 	// REQUIRED; Can take a value of accesstokenrefreshtoken, or accesstoken, or refresh_token
-	GrantType *PostContentSchemaGrantType `json:"grant_type,omitempty"`
+	GrantType *PostContentSchemaGrantType
 
 	// REQUIRED; Indicates the name of your Azure container registry.
-	Service *string `json:"service,omitempty"`
+	Service *string
 
 	// AAD access token, mandatory when granttype is accesstokenrefreshtoken or access_token.
-	AADAccessToken *string `json:"access_token,omitempty"`
+	AADAccessToken *string
 
 	// AAD refresh token, mandatory when granttype is accesstokenrefreshtoken or refresh_token
-	RefreshToken *string `json:"refresh_token,omitempty"`
+	RefreshToken *string
 
 	// AAD tenant associated to the AAD credentials.
-	Tenant *string `json:"tenant,omitempty"`
+	Tenant *string
 }
 
 type PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema struct {
 	// REQUIRED; Must be a valid ACR refresh token
-	AcrRefreshToken *string `json:"refresh_token,omitempty"`
+	AcrRefreshToken *string
 
 	// REQUIRED; Grant type is expected to be refresh_token
-	GrantType *TokenGrantType `json:"grant_type,omitempty"`
+	GrantType *TokenGrantType
 
 	// REQUIRED; Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained
 	// this from the Www-Authenticate response header from the challenge.
-	Scope *string `json:"scope,omitempty"`
+	Scope *string
 
 	// REQUIRED; Indicates the name of your Azure container registry.
-	Service *string `json:"service,omitempty"`
+	Service *string
 }
 
 // Platform - The platform object describes the platform which the image in the manifest runs on. A full list of valid operating
@@ -617,153 +617,153 @@ type PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSc
 // and $GOARCH
 type Platform struct {
 	// Specifies the CPU architecture, for example amd64 or ppc64le.
-	Architecture *string `json:"architecture,omitempty"`
+	Architecture *string
 
 	// The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes
-	Features []*string `json:"features,omitempty"`
+	Features []*string
 
 	// The os field specifies the operating system, for example linux or windows.
-	OS *string `json:"os,omitempty"`
+	OS *string
 
 	// The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows
 	// win32k
-	OSFeatures []*string `json:"os.features,omitempty"`
+	OSFeatures []*string
 
 	// The optional os.version field specifies the operating system version, for example 10.0.10586.
-	OSVersion *string `json:"os.version,omitempty"`
+	OSVersion *string
 
 	// The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the
 	// ARM CPU.
-	Variant *string `json:"variant,omitempty"`
+	Variant *string
 }
 
 type RefreshToken struct {
 	// The refresh token to be used for generating access tokens
-	RefreshToken *string `json:"refresh_token,omitempty"`
+	RefreshToken *string
 }
 
 // Repositories - List of repositories
 type Repositories struct {
-	Link *string `json:"link,omitempty"`
+	Link *string
 
 	// Repository names
-	Repositories []*string `json:"repositories,omitempty"`
+	Repositories []*string
 }
 
 // RepositoryTags - Result of the request to list tags of the image
 type RepositoryTags struct {
 	// Name of the image
-	Name *string `json:"name,omitempty"`
+	Name *string
 
 	// List of tags
-	Tags []*string `json:"tags,omitempty"`
+	Tags []*string
 }
 
 // RepositoryWriteableProperties - Changeable attributes for Repository
 type RepositoryWriteableProperties struct {
 	// Delete enabled
-	CanDelete *bool `json:"deleteEnabled,omitempty"`
+	CanDelete *bool
 
 	// List enabled
-	CanList *bool `json:"listEnabled,omitempty"`
+	CanList *bool
 
 	// Read enabled
-	CanRead *bool `json:"readEnabled,omitempty"`
+	CanRead *bool
 
 	// Write enabled
-	CanWrite *bool `json:"writeEnabled,omitempty"`
+	CanWrite *bool
 }
 
 // TagAttributesBase - Tag attribute details
 type TagAttributesBase struct {
 	// REQUIRED; Writeable properties of the resource
-	ChangeableAttributes *TagWriteableProperties `json:"changeableAttributes,omitempty"`
+	ChangeableAttributes *TagWriteableProperties
 
 	// Is signed
-	Signed *bool `json:"signed,omitempty"`
+	Signed *bool
 
 	// READ-ONLY; Tag created time
-	CreatedOn *time.Time `json:"createdTime,omitempty" azure:"ro"`
+	CreatedOn *time.Time
 
 	// READ-ONLY; Tag digest
-	Digest *string `json:"digest,omitempty" azure:"ro"`
+	Digest *string
 
 	// READ-ONLY; Tag last update time
-	LastUpdatedOn *time.Time `json:"lastUpdateTime,omitempty" azure:"ro"`
+	LastUpdatedOn *time.Time
 
 	// READ-ONLY; Tag name
-	Name *string `json:"name,omitempty" azure:"ro"`
+	Name *string
 }
 
 // TagAttributesTag - Tag
 type TagAttributesTag struct {
 	// SignatureRecord value
-	SignatureRecord *string `json:"signatureRecord,omitempty"`
+	SignatureRecord *string
 }
 
 // TagList - List of tag details
 type TagList struct {
 	// REQUIRED; Registry login server name. This is likely to be similar to {registry-name}.azurecr.io.
-	RegistryLoginServer *string `json:"registry,omitempty"`
+	RegistryLoginServer *string
 
 	// REQUIRED; Image name
-	Repository *string `json:"imageName,omitempty"`
+	Repository *string
 
 	// REQUIRED; List of tag attribute details
-	TagAttributeBases []*TagAttributesBase `json:"tags,omitempty"`
-	Link              *string              `json:"link,omitempty"`
+	TagAttributeBases []*TagAttributesBase
+	Link              *string
 }
 
 // TagWriteableProperties - Changeable attributes
 type TagWriteableProperties struct {
 	// Delete enabled
-	CanDelete *bool `json:"deleteEnabled,omitempty"`
+	CanDelete *bool
 
 	// List enabled
-	CanList *bool `json:"listEnabled,omitempty"`
+	CanList *bool
 
 	// Read enabled
-	CanRead *bool `json:"readEnabled,omitempty"`
+	CanRead *bool
 
 	// Write enabled
-	CanWrite *bool `json:"writeEnabled,omitempty"`
+	CanWrite *bool
 }
 
 // V1Manifest - Returns the requested V1 manifest file
 type V1Manifest struct {
 	// CPU architecture
-	Architecture *string `json:"architecture,omitempty"`
+	Architecture *string
 
 	// List of layer information
-	FsLayers []*FsLayer `json:"fsLayers,omitempty"`
+	FsLayers []*FsLayer
 
 	// Image history
-	History []*History `json:"history,omitempty"`
+	History []*History
 
 	// Image name
-	Name *string `json:"name,omitempty"`
+	Name *string
 
 	// Schema version
-	SchemaVersion *int32 `json:"schemaVersion,omitempty"`
+	SchemaVersion *int32
 
 	// Image signature
-	Signatures []*ImageSignature `json:"signatures,omitempty"`
+	Signatures []*ImageSignature
 
 	// Image tag
-	Tag *string `json:"tag,omitempty"`
+	Tag *string
 }
 
 // V2Manifest - Returns the requested Docker V2 Manifest file
 type V2Manifest struct {
 	// V2 image config descriptor
-	Config *Descriptor `json:"config,omitempty"`
+	Config *Descriptor
 
 	// List of V2 image layer information
-	Layers []*Descriptor `json:"layers,omitempty"`
+	Layers []*Descriptor
 
 	// Media type for this Manifest
-	MediaType *string `json:"mediaType,omitempty"`
+	MediaType *string
 
 	// Schema version
-	SchemaVersion *int32 `json:"schemaVersion,omitempty"`
+	SchemaVersion *int32
 }

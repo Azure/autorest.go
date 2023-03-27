@@ -10,15 +10,15 @@
 package errorsgroup
 
 type Pet struct {
-	AniType *string `json:"aniType,omitempty"`
+	AniType *string
 
 	// READ-ONLY; Gets the Pet by id.
-	Name *string `json:"name,omitempty" azure:"ro"`
+	Name *string
 }
 
 type PetAction struct {
 	// action feedback
-	ActionResponse *string `json:"actionResponse,omitempty"`
+	ActionResponse *string
 }
 
 // PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.

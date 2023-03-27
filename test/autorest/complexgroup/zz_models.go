@@ -37,17 +37,17 @@ type ArrayClientPutValidOptions struct {
 }
 
 type ArrayWrapper struct {
-	Array []*string `json:"array,omitempty"`
+	Array []*string
 }
 
 type Basic struct {
-	Color *CMYKColors `json:"color,omitempty"`
+	Color *CMYKColors
 
 	// Basic Id
-	ID *int32 `json:"id,omitempty"`
+	ID *int32
 
 	// Name property with a very long description that does not fit on a single line and a line break.
-	Name *string `json:"name,omitempty"`
+	Name *string
 }
 
 // BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
@@ -81,26 +81,26 @@ type BasicClientPutValidOptions struct {
 }
 
 type BooleanWrapper struct {
-	FieldFalse *bool `json:"field_false,omitempty"`
-	FieldTrue  *bool `json:"field_true,omitempty"`
+	FieldFalse *bool
+	FieldTrue  *bool
 }
 
 type ByteWrapper struct {
-	Field []byte `json:"field,omitempty"`
+	Field []byte
 }
 
 type Cookiecuttershark struct {
 	// REQUIRED
-	Birthday *time.Time `json:"birthday,omitempty"`
+	Birthday *time.Time
 
 	// REQUIRED
-	Fishtype *string `json:"fishtype,omitempty"`
+	Fishtype *string
 
 	// REQUIRED
-	Length   *float32             `json:"length,omitempty"`
-	Age      *int32               `json:"age,omitempty"`
-	Siblings []FishClassification `json:"siblings,omitempty"`
-	Species  *string              `json:"species,omitempty"`
+	Length   *float32
+	Age      *int32
+	Siblings []FishClassification
+	Species  *string
 }
 
 // GetFish implements the FishClassification interface for type Cookiecuttershark.
@@ -126,18 +126,18 @@ func (c *Cookiecuttershark) GetShark() *Shark {
 }
 
 type DateWrapper struct {
-	Field *time.Time `json:"field,omitempty"`
-	Leap  *time.Time `json:"leap,omitempty"`
+	Field *time.Time
+	Leap  *time.Time
 }
 
 type DatetimeWrapper struct {
-	Field *time.Time `json:"field,omitempty"`
-	Now   *time.Time `json:"now,omitempty"`
+	Field *time.Time
+	Now   *time.Time
 }
 
 type Datetimerfc1123Wrapper struct {
-	Field *time.Time `json:"field,omitempty"`
-	Now   *time.Time `json:"now,omitempty"`
+	Field *time.Time
+	Now   *time.Time
 }
 
 // DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
@@ -172,13 +172,13 @@ type DictionaryClientPutValidOptions struct {
 
 type DictionaryWrapper struct {
 	// Dictionary of
-	DefaultProgram map[string]*string `json:"defaultProgram,omitempty"`
+	DefaultProgram map[string]*string
 }
 
 type Dog struct {
-	Food *string `json:"food,omitempty"`
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Food *string
+	ID   *int32
+	Name *string
 }
 
 // DotFishClassification provides polymorphic access to related types.
@@ -192,26 +192,26 @@ type DotFishClassification interface {
 
 type DotFish struct {
 	// REQUIRED
-	FishType *string `json:"fish.type,omitempty"`
-	Species  *string `json:"species,omitempty"`
+	FishType *string
+	Species  *string
 }
 
 // GetDotFish implements the DotFishClassification interface for type DotFish.
 func (d *DotFish) GetDotFish() *DotFish { return d }
 
 type DotFishMarket struct {
-	Fishes       []DotFishClassification `json:"fishes,omitempty"`
-	Salmons      []*DotSalmon            `json:"salmons,omitempty"`
-	SampleFish   DotFishClassification   `json:"sampleFish,omitempty"`
-	SampleSalmon *DotSalmon              `json:"sampleSalmon,omitempty"`
+	Fishes       []DotFishClassification
+	Salmons      []*DotSalmon
+	SampleFish   DotFishClassification
+	SampleSalmon *DotSalmon
 }
 
 type DotSalmon struct {
 	// REQUIRED
-	FishType *string `json:"fish.type,omitempty"`
-	Iswild   *bool   `json:"iswild,omitempty"`
-	Location *string `json:"location,omitempty"`
-	Species  *string `json:"species,omitempty"`
+	FishType *string
+	Iswild   *bool
+	Location *string
+	Species  *string
 }
 
 // GetDotFish implements the DotFishClassification interface for type DotSalmon.
@@ -223,12 +223,12 @@ func (d *DotSalmon) GetDotFish() *DotFish {
 }
 
 type DoubleWrapper struct {
-	Field1                                                                          *float64 `json:"field1,omitempty"`
-	Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64 `json:"field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose,omitempty"`
+	Field1                                                                          *float64
+	Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64
 }
 
 type DurationWrapper struct {
-	Field *string `json:"field,omitempty"`
+	Field *string
 }
 
 // FishClassification provides polymorphic access to related types.
@@ -242,12 +242,12 @@ type FishClassification interface {
 
 type Fish struct {
 	// REQUIRED
-	Fishtype *string `json:"fishtype,omitempty"`
+	Fishtype *string
 
 	// REQUIRED
-	Length   *float32             `json:"length,omitempty"`
-	Siblings []FishClassification `json:"siblings,omitempty"`
-	Species  *string              `json:"species,omitempty"`
+	Length   *float32
+	Siblings []FishClassification
+	Species  *string
 }
 
 // GetFish implements the FishClassification interface for type Fish.
@@ -259,26 +259,26 @@ type FlattencomplexClientGetValidOptions struct {
 }
 
 type FloatWrapper struct {
-	Field1 *float32 `json:"field1,omitempty"`
-	Field2 *float32 `json:"field2,omitempty"`
+	Field1 *float32
+	Field2 *float32
 }
 
 type Goblinshark struct {
 	// REQUIRED
-	Birthday *time.Time `json:"birthday,omitempty"`
+	Birthday *time.Time
 
 	// REQUIRED
-	Fishtype *string `json:"fishtype,omitempty"`
+	Fishtype *string
 
 	// REQUIRED
-	Length *float32 `json:"length,omitempty"`
-	Age    *int32   `json:"age,omitempty"`
+	Length *float32
+	Age    *int32
 
 	// Colors possible
-	Color    *GoblinSharkColor    `json:"color,omitempty"`
-	Jawsize  *int32               `json:"jawsize,omitempty"`
-	Siblings []FishClassification `json:"siblings,omitempty"`
-	Species  *string              `json:"species,omitempty"`
+	Color    *GoblinSharkColor
+	Jawsize  *int32
+	Siblings []FishClassification
+	Species  *string
 }
 
 // GetFish implements the FishClassification interface for type Goblinshark.
@@ -314,17 +314,17 @@ type InheritanceClientPutValidOptions struct {
 }
 
 type IntWrapper struct {
-	Field1 *int32 `json:"field1,omitempty"`
-	Field2 *int32 `json:"field2,omitempty"`
+	Field1 *int32
+	Field2 *int32
 }
 
 type LongWrapper struct {
-	Field1 *int64 `json:"field1,omitempty"`
-	Field2 *int64 `json:"field2,omitempty"`
+	Field1 *int64
+	Field2 *int64
 }
 
 type MyBaseHelperType struct {
-	PropBH1 *string `json:"propBH1,omitempty"`
+	PropBH1 *string
 }
 
 // MyBaseTypeClassification provides polymorphic access to related types.
@@ -338,9 +338,9 @@ type MyBaseTypeClassification interface {
 
 type MyBaseType struct {
 	// REQUIRED
-	Kind   *MyKind           `json:"kind,omitempty"`
-	Helper *MyBaseHelperType `json:"helper,omitempty"`
-	PropB1 *string           `json:"propB1,omitempty"`
+	Kind   *MyKind
+	Helper *MyBaseHelperType
+	PropB1 *string
 }
 
 // GetMyBaseType implements the MyBaseTypeClassification interface for type MyBaseType.
@@ -348,10 +348,10 @@ func (m *MyBaseType) GetMyBaseType() *MyBaseType { return m }
 
 type MyDerivedType struct {
 	// REQUIRED
-	Kind   *MyKind           `json:"kind,omitempty"`
-	Helper *MyBaseHelperType `json:"helper,omitempty"`
-	PropB1 *string           `json:"propB1,omitempty"`
-	PropD1 *string           `json:"propD1,omitempty"`
+	Kind   *MyKind
+	Helper *MyBaseHelperType
+	PropB1 *string
+	PropD1 *string
 }
 
 // GetMyBaseType implements the MyBaseTypeClassification interface for type MyDerivedType.
@@ -535,10 +535,10 @@ type PrimitiveClientPutStringOptions struct {
 }
 
 type ReadonlyObj struct {
-	Size *int32 `json:"size,omitempty"`
+	Size *int32
 
 	// READ-ONLY
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 }
 
 // ReadonlypropertyClientGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid method.
@@ -563,14 +563,14 @@ type SalmonClassification interface {
 
 type Salmon struct {
 	// REQUIRED
-	Fishtype *string `json:"fishtype,omitempty"`
+	Fishtype *string
 
 	// REQUIRED
-	Length   *float32             `json:"length,omitempty"`
-	Iswild   *bool                `json:"iswild,omitempty"`
-	Location *string              `json:"location,omitempty"`
-	Siblings []FishClassification `json:"siblings,omitempty"`
-	Species  *string              `json:"species,omitempty"`
+	Length   *float32
+	Iswild   *bool
+	Location *string
+	Siblings []FishClassification
+	Species  *string
 }
 
 // GetFish implements the FishClassification interface for type Salmon.
@@ -588,17 +588,17 @@ func (s *Salmon) GetSalmon() *Salmon { return s }
 
 type Sawshark struct {
 	// REQUIRED
-	Birthday *time.Time `json:"birthday,omitempty"`
+	Birthday *time.Time
 
 	// REQUIRED
-	Fishtype *string `json:"fishtype,omitempty"`
+	Fishtype *string
 
 	// REQUIRED
-	Length   *float32             `json:"length,omitempty"`
-	Age      *int32               `json:"age,omitempty"`
-	Picture  []byte               `json:"picture,omitempty"`
-	Siblings []FishClassification `json:"siblings,omitempty"`
-	Species  *string              `json:"species,omitempty"`
+	Length   *float32
+	Age      *int32
+	Picture  []byte
+	Siblings []FishClassification
+	Species  *string
 }
 
 // GetFish implements the FishClassification interface for type Sawshark.
@@ -635,16 +635,16 @@ type SharkClassification interface {
 
 type Shark struct {
 	// REQUIRED
-	Birthday *time.Time `json:"birthday,omitempty"`
+	Birthday *time.Time
 
 	// REQUIRED
-	Fishtype *string `json:"fishtype,omitempty"`
+	Fishtype *string
 
 	// REQUIRED
-	Length   *float32             `json:"length,omitempty"`
-	Age      *int32               `json:"age,omitempty"`
-	Siblings []FishClassification `json:"siblings,omitempty"`
-	Species  *string              `json:"species,omitempty"`
+	Length   *float32
+	Age      *int32
+	Siblings []FishClassification
+	Species  *string
 }
 
 // GetFish implements the FishClassification interface for type Shark.
@@ -661,27 +661,27 @@ func (s *Shark) GetFish() *Fish {
 func (s *Shark) GetShark() *Shark { return s }
 
 type Siamese struct {
-	Breed *string `json:"breed,omitempty"`
-	Color *string `json:"color,omitempty"`
-	Hates []*Dog  `json:"hates,omitempty"`
-	ID    *int32  `json:"id,omitempty"`
-	Name  *string `json:"name,omitempty"`
+	Breed *string
+	Color *string
+	Hates []*Dog
+	ID    *int32
+	Name  *string
 }
 
 type SmartSalmon struct {
 	// REQUIRED
-	Fishtype *string `json:"fishtype,omitempty"`
+	Fishtype *string
 
 	// REQUIRED
-	Length *float32 `json:"length,omitempty"`
+	Length *float32
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]any
-	CollegeDegree        *string              `json:"college_degree,omitempty"`
-	Iswild               *bool                `json:"iswild,omitempty"`
-	Location             *string              `json:"location,omitempty"`
-	Siblings             []FishClassification `json:"siblings,omitempty"`
-	Species              *string              `json:"species,omitempty"`
+	CollegeDegree        *string
+	Iswild               *bool
+	Location             *string
+	Siblings             []FishClassification
+	Species              *string
 }
 
 // GetFish implements the FishClassification interface for type SmartSalmon.
@@ -707,7 +707,7 @@ func (s *SmartSalmon) GetSalmon() *Salmon {
 }
 
 type StringWrapper struct {
-	Empty *string `json:"empty,omitempty"`
-	Field *string `json:"field,omitempty"`
-	Null  *string `json:"null,omitempty"`
+	Empty *string
+	Field *string
+	Null  *string
 }

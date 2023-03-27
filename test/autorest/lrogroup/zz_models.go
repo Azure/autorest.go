@@ -600,44 +600,44 @@ type LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions struct {
 
 type Product struct {
 	// Resource Location
-	Location   *string            `json:"location,omitempty"`
-	Properties *ProductProperties `json:"properties,omitempty"`
+	Location   *string
+	Properties *ProductProperties
 
 	// Dictionary of
-	Tags map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string
 
 	// READ-ONLY; Resource Id
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 
 	// READ-ONLY; Resource Name
-	Name *string `json:"name,omitempty" azure:"ro"`
+	Name *string
 
 	// READ-ONLY; Resource Type
-	Type *string `json:"type,omitempty" azure:"ro"`
+	Type *string
 }
 
 type ProductProperties struct {
-	ProvisioningState *string `json:"provisioningState,omitempty"`
+	ProvisioningState *string
 
 	// READ-ONLY
-	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
+	ProvisioningStateValues *ProductPropertiesProvisioningStateValues
 }
 
 type SKU struct {
-	ID   *string `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	ID   *string
+	Name *string
 }
 
 type SubProduct struct {
-	Properties *SubProductProperties `json:"properties,omitempty"`
+	Properties *SubProductProperties
 
 	// READ-ONLY; Sub Resource Id
-	ID *string `json:"id,omitempty" azure:"ro"`
+	ID *string
 }
 
 type SubProductProperties struct {
-	ProvisioningState *string `json:"provisioningState,omitempty"`
+	ProvisioningState *string
 
 	// READ-ONLY
-	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
+	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues
 }

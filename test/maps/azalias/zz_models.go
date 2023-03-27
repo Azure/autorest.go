@@ -14,16 +14,16 @@ import "time"
 // AliasesCreateResponse - The response model for the Alias Create API for the case when the alias was successfully created.
 type AliasesCreateResponse struct {
 	// READ-ONLY; The id for the alias.
-	AliasID *string `json:"aliasId,omitempty" azure:"ro"`
+	AliasID *string
 
 	// READ-ONLY; The created timestamp for the alias.
-	CreatedTimestamp *string `json:"createdTimestamp,omitempty" azure:"ro"`
+	CreatedTimestamp *string
 
 	// READ-ONLY; The id for the creator data item that this alias references (could be null if the alias has not been assigned).
-	CreatorDataItemID *string `json:"creatorDataItemId,omitempty" azure:"ro"`
+	CreatorDataItemID *string
 
 	// READ-ONLY; The timestamp of the last time the alias was assigned.
-	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
+	LastUpdatedTimestamp *string
 }
 
 // ClientCreateOptions contains the optional parameters for the Client.Create method.
@@ -53,10 +53,10 @@ type ClientPolicyAssignmentOptions struct {
 // ErrorResponse - An error happened.
 type ErrorResponse struct {
 	// READ-ONLY; The error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
+	Code *string
 
 	// READ-ONLY; The error message.
-	Message *string `json:"message,omitempty" azure:"ro"`
+	Message *string
 }
 
 // GeoJSONFeature - A valid GeoJSON Feature object type. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3.2]
@@ -65,20 +65,20 @@ type GeoJSONFeature struct {
 	// REQUIRED; Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString,
 	// MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and
 	// FeatureCollection.
-	Type *GeoJSONObjectType `json:"type,omitempty"`
+	Type *GeoJSONObjectType
 
 	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have
 	// an empty value.
-	FeatureType *string `json:"featureType,omitempty"`
+	FeatureType *string
 
 	// Identifier for the feature.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties []byte `json:"properties,omitempty"`
+	Properties []byte
 
 	// test enum with a default
-	Setting *DataSetting `json:"setting,omitempty"`
+	Setting *DataSetting
 }
 
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
@@ -92,16 +92,16 @@ func (g *GeoJSONFeature) GetGeoJSONObject() *GeoJSONObject {
 type GeoJSONFeatureData struct {
 	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have
 	// an empty value.
-	FeatureType *string `json:"featureType,omitempty"`
+	FeatureType *string
 
 	// Identifier for the feature.
-	ID *string `json:"id,omitempty"`
+	ID *string
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties []byte `json:"properties,omitempty"`
+	Properties []byte
 
 	// test enum with a default
-	Setting *DataSetting `json:"setting,omitempty"`
+	Setting *DataSetting
 }
 
 // GeoJSONObjectClassification provides polymorphic access to related types.
@@ -118,10 +118,10 @@ type GeoJSONObject struct {
 	// REQUIRED; Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString,
 	// MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and
 	// FeatureCollection.
-	Type *GeoJSONObjectType `json:"type,omitempty"`
+	Type *GeoJSONObjectType
 
 	// Identifier for the feature.
-	ID *string `json:"id,omitempty"`
+	ID *string
 }
 
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
@@ -130,68 +130,68 @@ func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
 // ListItem - Detailed information for the alias.
 type ListItem struct {
 	// READ-ONLY; The id for the alias.
-	AliasID *string `json:"aliasId,omitempty" azure:"ro"`
+	AliasID *string
 
 	// READ-ONLY; The created timestamp for the alias.
-	CreatedTimestamp *string `json:"createdTimestamp,omitempty" azure:"ro"`
+	CreatedTimestamp *string
 
 	// READ-ONLY; The id for the creator data item that this alias references (could be null if the alias has not been assigned).
-	CreatorDataItemID *string `json:"creatorDataItemId,omitempty" azure:"ro"`
+	CreatorDataItemID *string
 
 	// READ-ONLY; The timestamp of the last time the alias was assigned.
-	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
+	LastUpdatedTimestamp *string
 }
 
 // ListResponse - The response model for the List API. Returns a list of all the previously created aliases.
 type ListResponse struct {
 	// READ-ONLY; A list of all the previously created aliases.
-	Aliases []*ListItem `json:"aliases,omitempty" azure:"ro"`
+	Aliases []*ListItem
 
 	// READ-ONLY; If present, the location of the next page of data.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+	NextLink *string
 }
 
 type ParameterMetadataValue struct {
 	// a JSON object
-	Value []byte `json:"value,omitempty"`
+	Value []byte
 }
 
 // ParameterValuesValue - The value of a parameter.
 type ParameterValuesValue struct {
 	// The value of the parameter.
-	Value []byte `json:"value,omitempty"`
+	Value []byte
 }
 
 type PolicyAssignmentProperties struct {
 	// The display name of the policy assignment.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName *string
 
 	// Key-value pairs of extra info.
-	Metadata map[string]*ParameterMetadataValue `json:"metadata,omitempty"`
+	Metadata map[string]*ParameterMetadataValue
 
 	// The parameter values for the assigned policy rule. The keys are the parameter names.
-	Parameters map[string]*ParameterValuesValue `json:"parameters,omitempty"`
+	Parameters map[string]*ParameterValuesValue
 }
 
 // ScheduleCreateOrUpdateProperties - The parameters supplied to the create or update schedule operation.
 type ScheduleCreateOrUpdateProperties struct {
 	// A list of all the previously created aliases.
-	Aliases []*string `json:"aliases,omitempty"`
+	Aliases []*string
 
 	// Gets or sets the description of the schedule.
-	Description *string `json:"description,omitempty"`
+	Description *string
 
 	// Gets or sets the interval of the schedule.
-	Interval []byte `json:"interval,omitempty"`
+	Interval []byte
 
 	// Gets or sets the start time of the schedule.
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *time.Time
 }
 
 type TypeWithRawJSON struct {
 	// any JSON object
-	AnyObject []byte `json:"anyObject,omitempty"`
+	AnyObject []byte
 
 	// any valid JSON
-	Anything []byte `json:"anything,omitempty"`
+	Anything []byte
 }

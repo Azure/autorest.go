@@ -10,6 +10,6 @@
 package noopsgroup
 
 type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
+	Message *string
+	Status  *int32
 }

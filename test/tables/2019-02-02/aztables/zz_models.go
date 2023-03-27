@@ -204,10 +204,10 @@ type CorsRule struct {
 // EntityQueryResponse - The properties for the table entity query response.
 type EntityQueryResponse struct {
 	// The metadata response of the table.
-	ODataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string
 
 	// List of table entities.
-	Value []map[string]any `json:"value,omitempty"`
+	Value []map[string]any
 }
 
 type GeoReplication struct {
@@ -255,49 +255,49 @@ type Metrics struct {
 // Properties - The properties for creating a table.
 type Properties struct {
 	// The name of the table to create.
-	TableName *string `json:"TableName,omitempty"`
+	TableName *string
 }
 
 // QueryResponse - The properties for the table query response.
 type QueryResponse struct {
 	// The metadata response of the table.
-	ODataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string
 
 	// List of tables.
-	Value []*ResponseProperties `json:"value,omitempty"`
+	Value []*ResponseProperties
 }
 
 // Response - The response for a single table.
 type Response struct {
 	// The edit link of the table.
-	ODataEditLink *string `json:"odata.editLink,omitempty"`
+	ODataEditLink *string
 
 	// The id of the table.
-	ODataID *string `json:"odata.id,omitempty"`
+	ODataID *string
 
 	// The metadata response of the table.
-	ODataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string
 
 	// The odata type of the table.
-	ODataType *string `json:"odata.type,omitempty"`
+	ODataType *string
 
 	// The name of the table.
-	TableName *string `json:"TableName,omitempty"`
+	TableName *string
 }
 
 // ResponseProperties - The properties for the table response.
 type ResponseProperties struct {
 	// The edit link of the table.
-	ODataEditLink *string `json:"odata.editLink,omitempty"`
+	ODataEditLink *string
 
 	// The id of the table.
-	ODataID *string `json:"odata.id,omitempty"`
+	ODataID *string
 
 	// The odata type of the table.
-	ODataType *string `json:"odata.type,omitempty"`
+	ODataType *string
 
 	// The name of the table.
-	TableName *string `json:"TableName,omitempty"`
+	TableName *string
 }
 
 // RetentionPolicy - The retention policy.
@@ -340,7 +340,7 @@ type ServiceClientSetPropertiesOptions struct {
 // ServiceError - Table Service error.
 type ServiceError struct {
 	// The error message.
-	Message *string `json:"Message,omitempty"`
+	Message *string
 }
 
 // ServiceProperties - Table Service Properties.
