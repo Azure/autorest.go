@@ -419,6 +419,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         }
       }
       const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
+      const params = values(aggregateParameters(op));
       // create an optional params struct even if the operation contains no optional params.
       // this provides version resiliency in case optional params are added in the future.
       // don't do this for paging next link operation as this isn't part of the public API
@@ -429,12 +430,19 @@ async function processOperationRequests(session: Session<CodeModel>) {
         const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName} method.`;
         const gp = createGroupProperty(optionalParamsGroupName, desc);
         gp.language.go!.name = 'options';
+        // if there's an existing parameter with the name options then pick something else
+        for (const param of params) {
+          if (param.language.go!.name === gp.language.go!.name) {
+            gp.language.go!.name = 'opts';
+            break;
+          }
+        }
         gp.required = false;
         paramGroups.set(optionalParamsGroupName, gp);
         // associate the param group with the operation
         op.language.go!.optionalParamGroup = gp;
       }
-      for (const param of values(aggregateParameters(op))) {
+      for (const param of params) {
         if (param.language.go!.description) {
           param.language.go!.description = parseComments(param.language.go!.description);
         }
