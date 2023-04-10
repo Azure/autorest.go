@@ -166,5 +166,5 @@ func TestInterfaceJSONNull(t *testing.T) {
 	b, err := json.Marshal(props1)
 	require.NoError(t, err)
 	require.Contains(t, string(b), `"anyObject":null`)
-	require.NotContains(t, string(b), `"anything":null`)
+	require.NotContains(t, string(b), "anything")
 }
