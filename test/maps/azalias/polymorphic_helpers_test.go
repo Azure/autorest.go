@@ -160,12 +160,11 @@ func TestInterfaceNil(t *testing.T) {
 }
 
 func TestInterfaceJSONNull(t *testing.T) {
-	props1 := ScheduleCreateOrUpdateProperties{
-		Description: to.Ptr("funky"),
-		StartTime:   to.Ptr(time.Now().UTC()),
-		Interval:    azcore.NullValue[*any](),
+	props1 := TypeWithRawJSON{
+		AnyObject: azcore.NullValue[*any](),
 	}
 	b, err := json.Marshal(props1)
 	require.NoError(t, err)
-	require.Contains(t, string(b), `"interval":null`)
+	require.Contains(t, string(b), `"anyObject":null`)
+	require.NotContains(t, string(b), `"anything":null`)
 }
