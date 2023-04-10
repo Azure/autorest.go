@@ -911,7 +911,7 @@ func (s *StatementOptions) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type StatementOutput.
 func (s StatementOutput) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "data", &s.Data)
+	populateAny(objectMap, "data", s.Data)
 	populate(objectMap, "ename", s.ErrorName)
 	populate(objectMap, "evalue", s.ErrorValue)
 	populate(objectMap, "execution_count", s.ExecutionCount)
@@ -961,6 +961,16 @@ func populate(m map[string]any, k string, v any) {
 	} else if azcore.IsNullValue(v) {
 		m[k] = nil
 	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
+}
+
+func populateAny(m map[string]any, k string, v any) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else {
 		m[k] = v
 	}
 }

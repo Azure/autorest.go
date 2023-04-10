@@ -15,16 +15,13 @@ func TestPolicyAssignmentProperties(t *testing.T) {
 		t.Fatal(err)
 	}
 	var s string
-	if err := json.Unmarshal(paprops.Parameters["effect"].Value, &s); err != nil {
-		t.Fatal(err)
-	}
+	s, ok := paprops.Parameters["effect"].Value.(string)
+	require.True(t, ok)
 	if s != "Audit" {
 		t.Fatalf("got %s, want Audit", s)
 	}
-	sl := []string{}
-	if err := json.Unmarshal(paprops.Parameters["listOfResourceTypesNotAllowed"].Value, &sl); err != nil {
-		t.Fatal(err)
-	}
+	sl, ok := paprops.Parameters["listOfResourceTypesNotAllowed"].Value.([]any)
+	require.True(t, ok)
 	if len(sl) != 1 {
 		t.Fatal("unexpected slice len")
 	}
@@ -35,10 +32,8 @@ func TestPolicyAssignmentProperties(t *testing.T) {
 	if !ok {
 		t.Fatal("missing one")
 	}
-	mm := map[string]any{}
-	if err := json.Unmarshal(m.Value, &mm); err != nil {
-		t.Fatal(err)
-	}
+	mm, ok := m.Value.(map[string]any)
+	require.True(t, ok)
 	if v := mm["key"]; v != "value" {
 		t.Fatalf("got %s want value", v)
 	}

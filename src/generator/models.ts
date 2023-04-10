@@ -37,6 +37,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
   let needsJSONPopulate = false;
   let needsJSONUnpopulate = false;
   let needsJSONPopulateByteArray = false;
+  let needsJSONPopulateAny = false;
   let serdeTextBody = '';
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
@@ -65,6 +66,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
     if (struct.HasJSONByteArray) {
       needsJSONPopulateByteArray = true;
     }
+    if (struct.HasAny) {
+      needsJSONPopulateAny = true;
+    }
   }
   if (needsJSONPopulate) {
     serdeTextBody += 'func populate(m map[string]any, k string, v any) {\n';
@@ -73,6 +77,17 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
     serdeTextBody += '\t} else if azcore.IsNullValue(v) {\n';
     serdeTextBody += '\t\tm[k] = nil\n';
     serdeTextBody += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
+    serdeTextBody += '\t\tm[k] = v\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '}\n\n';
+  }
+  if (needsJSONPopulateAny) {
+    serdeTextBody += 'func populateAny(m map[string]any, k string, v any) {\n';
+    serdeTextBody += '\tif v == nil {\n';
+    serdeTextBody += '\t\treturn\n';
+    serdeTextBody += '\t} else if azcore.IsNullValue(v) {\n';
+    serdeTextBody += '\t\tm[k] = nil\n';
+    serdeTextBody += '\t} else {\n';
     serdeTextBody += '\t\tm[k] = v\n';
     serdeTextBody += '\t}\n';
     serdeTextBody += '}\n\n';
@@ -262,14 +277,12 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
         marshaller += `\tif ${receiver}.${prop.language.go!.name} == nil {\n\t\t${receiver}.${prop.language.go!.name} = to.Ptr(${getClientDefaultValue(prop)})\n\t}\n`;
       }
       let populate = 'populate';
-      let addr = '';
       if (prop.schema.language.go!.internalTimeType) {
         populate += capitalize(prop.schema.language.go!.internalTimeType);
       } else if (prop.schema.type === SchemaType.Any) {
-        // for fields that are any we pass their address so populate() IsNil() doesn't panic
-        addr = '&';
+        populate += 'Any';
       }
-      marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${addr}${receiver}.${prop.language.go!.name})\n`;
+      marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name})\n`;
     }
   }
   if (addlProps) {

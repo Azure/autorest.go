@@ -26,6 +26,7 @@ export class StructDef {
   readonly Methods: StructMethod[];
   readonly ComposedOf: string[];
   HasJSONByteArray: boolean;
+  HasAny: boolean;
 
   constructor(language: Language, props?: Property[], params?: Parameter[]) {
     this.Language = language;
@@ -41,6 +42,7 @@ export class StructDef {
     this.Methods = new Array<StructMethod>();
     this.ComposedOf = new Array<string>();
     this.HasJSONByteArray = false;
+    this.HasAny = false;
   }
 
   text(): string {
@@ -167,6 +169,8 @@ export function generateStruct(imports: ImportManager, lang: Language, props?: P
     imports.addImportForSchemaType(prop.schema);
     if (prop.language.go!.embeddedType) {
       st.ComposedOf.push(prop.schema.language.go!.name);
+    } else if (prop.schema.type === SchemaType.Any && !prop.schema.language.go!.rawJSONAsBytes) {
+      st.HasAny = true;
     }
   }
   return st;
