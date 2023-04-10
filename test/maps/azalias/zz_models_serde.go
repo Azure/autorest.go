@@ -95,7 +95,7 @@ func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
-	populate(objectMap, "properties", json.RawMessage(g.Properties))
+	populateAny(objectMap, "properties", g.Properties)
 	if g.Setting == nil {
 		g.Setting = to.Ptr(DataSettingTwo)
 	}
@@ -120,7 +120,7 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ID", &g.ID)
 			delete(rawMsg, key)
 		case "properties":
-			g.Properties = val
+			err = unpopulate(val, "Properties", &g.Properties)
 			delete(rawMsg, key)
 		case "setting":
 			err = unpopulate(val, "Setting", &g.Setting)
@@ -144,7 +144,7 @@ func (g GeoJSONFeatureData) MarshalJSON() ([]byte, error) {
 	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
-	populate(objectMap, "properties", json.RawMessage(g.Properties))
+	populateAny(objectMap, "properties", g.Properties)
 	if g.Setting == nil {
 		g.Setting = to.Ptr(DataSettingTwo)
 	}
@@ -168,7 +168,7 @@ func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ID", &g.ID)
 			delete(rawMsg, key)
 		case "properties":
-			g.Properties = val
+			err = unpopulate(val, "Properties", &g.Properties)
 			delete(rawMsg, key)
 		case "setting":
 			err = unpopulate(val, "Setting", &g.Setting)
@@ -285,7 +285,7 @@ func (l *ListResponse) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type ParameterMetadataValue.
 func (p ParameterMetadataValue) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "value", json.RawMessage(p.Value))
+	populateAny(objectMap, "value", p.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -299,7 +299,7 @@ func (p *ParameterMetadataValue) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			p.Value = val
+			err = unpopulate(val, "Value", &p.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -312,7 +312,7 @@ func (p *ParameterMetadataValue) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type ParameterValuesValue.
 func (p ParameterValuesValue) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "value", json.RawMessage(p.Value))
+	populateAny(objectMap, "value", p.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -326,7 +326,7 @@ func (p *ParameterValuesValue) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			p.Value = val
+			err = unpopulate(val, "Value", &p.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -376,7 +376,7 @@ func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "aliases", s.Aliases)
 	populate(objectMap, "description", s.Description)
-	populate(objectMap, "interval", json.RawMessage(s.Interval))
+	populateAny(objectMap, "interval", s.Interval)
 	populateTimeRFC3339(objectMap, "startTime", s.StartTime)
 	return json.Marshal(objectMap)
 }
@@ -397,7 +397,7 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Description", &s.Description)
 			delete(rawMsg, key)
 		case "interval":
-			s.Interval = val
+			err = unpopulate(val, "Interval", &s.Interval)
 			delete(rawMsg, key)
 		case "startTime":
 			err = unpopulateTimeRFC3339(val, "StartTime", &s.StartTime)
@@ -413,8 +413,8 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type TypeWithRawJSON.
 func (t TypeWithRawJSON) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "anyObject", json.RawMessage(t.AnyObject))
-	populate(objectMap, "anything", json.RawMessage(t.Anything))
+	populateAny(objectMap, "anyObject", t.AnyObject)
+	populateAny(objectMap, "anything", t.Anything)
 	return json.Marshal(objectMap)
 }
 
@@ -428,10 +428,10 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "anyObject":
-			t.AnyObject = val
+			err = unpopulate(val, "AnyObject", &t.AnyObject)
 			delete(rawMsg, key)
 		case "anything":
-			t.Anything = val
+			err = unpopulate(val, "Anything", &t.Anything)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -447,6 +447,16 @@ func populate(m map[string]any, k string, v any) {
 	} else if azcore.IsNullValue(v) {
 		m[k] = nil
 	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
+}
+
+func populateAny(m map[string]any, k string, v any) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else {
 		m[k] = v
 	}
 }

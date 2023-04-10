@@ -6,7 +6,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
@@ -96,7 +98,7 @@ func TestInterfaceRoundTrip(t *testing.T) {
 	props1 := ScheduleCreateOrUpdateProperties{
 		Aliases:     []*string{to.Ptr("foo")},
 		Description: to.Ptr("funky"),
-		Interval:    []byte("false"),
+		Interval:    false,
 		StartTime:   to.Ptr(time.Now().UTC()),
 	}
 	b, err := json.Marshal(props1)
@@ -114,8 +116,10 @@ func TestInterfaceRoundTrip(t *testing.T) {
 	if *props1.Description != *props2.Description {
 		t.Fatalf("expected %v, got %v", *props1.Description, *props2.Description)
 	}
-	i1 := string(props1.Interval)
-	i2 := string(props2.Interval)
+	i1, ok := props1.Interval.(bool)
+	require.True(t, ok)
+	i2, ok := props2.Interval.(bool)
+	require.True(t, ok)
 	if i1 != i2 {
 		t.Fatalf("expected %v, got %v", props1.Interval, props2.Interval)
 	}
@@ -153,4 +157,15 @@ func TestInterfaceNil(t *testing.T) {
 	if props2.Aliases != nil {
 		t.Fatal("expected nil Aliases")
 	}
+}
+
+func TestInterfaceJSONNull(t *testing.T) {
+	props1 := ScheduleCreateOrUpdateProperties{
+		Description: to.Ptr("funky"),
+		StartTime:   to.Ptr(time.Now().UTC()),
+		Interval:    azcore.NullValue[*any](),
+	}
+	b, err := json.Marshal(props1)
+	require.NoError(t, err)
+	require.Contains(t, string(b), `"interval":null`)
 }

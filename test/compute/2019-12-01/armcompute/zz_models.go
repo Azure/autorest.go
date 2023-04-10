@@ -3685,10 +3685,10 @@ type VirtualMachineCaptureResult struct {
 	ContentVersion *string
 
 	// READ-ONLY; parameters of the captured virtual machine
-	Parameters []byte
+	Parameters any
 
 	// READ-ONLY; a list of resource items of the captured virtual machine
-	Resources []byte
+	Resources []any
 
 	// READ-ONLY; the schema of the captured virtual machine
 	Schema *string
@@ -3821,13 +3821,13 @@ type VirtualMachineExtensionProperties struct {
 	InstanceView *VirtualMachineExtensionInstanceView
 
 	// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
-	ProtectedSettings []byte
+	ProtectedSettings any
 
 	// The name of the extension handler publisher.
 	Publisher *string
 
 	// Json formatted public settings for the extension.
-	Settings []byte
+	Settings any
 
 	// Specifies the type of the extension; an example is "CustomScriptExtension".
 	Type *string
@@ -3859,13 +3859,13 @@ type VirtualMachineExtensionUpdateProperties struct {
 	ForceUpdateTag *string
 
 	// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
-	ProtectedSettings []byte
+	ProtectedSettings any
 
 	// The name of the extension handler publisher.
 	Publisher *string
 
 	// Json formatted public settings for the extension.
-	Settings []byte
+	Settings any
 
 	// Specifies the type of the extension; an example is "CustomScriptExtension".
 	Type *string
@@ -4302,7 +4302,7 @@ type VirtualMachineScaleSetExtensionProperties struct {
 	ForceUpdateTag *string
 
 	// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
-	ProtectedSettings []byte
+	ProtectedSettings any
 
 	// Collection of extension names after which this extension needs to be provisioned.
 	ProvisionAfterExtensions []*string
@@ -4311,7 +4311,7 @@ type VirtualMachineScaleSetExtensionProperties struct {
 	Publisher *string
 
 	// Json formatted public settings for the extension.
-	Settings []byte
+	Settings any
 
 	// Specifies the type of the extension; an example is "CustomScriptExtension".
 	Type *string

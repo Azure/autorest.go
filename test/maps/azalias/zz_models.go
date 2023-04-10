@@ -75,7 +75,7 @@ type GeoJSONFeature struct {
 	ID *string
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties []byte
+	Properties any
 
 	// test enum with a default
 	Setting *DataSetting
@@ -98,7 +98,7 @@ type GeoJSONFeatureData struct {
 	ID *string
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties []byte
+	Properties any
 
 	// test enum with a default
 	Setting *DataSetting
@@ -153,13 +153,13 @@ type ListResponse struct {
 
 type ParameterMetadataValue struct {
 	// a JSON object
-	Value []byte
+	Value any
 }
 
 // ParameterValuesValue - The value of a parameter.
 type ParameterValuesValue struct {
 	// The value of the parameter.
-	Value []byte
+	Value any
 }
 
 type PolicyAssignmentProperties struct {
@@ -182,7 +182,7 @@ type ScheduleCreateOrUpdateProperties struct {
 	Description *string
 
 	// Gets or sets the interval of the schedule.
-	Interval []byte
+	Interval any
 
 	// Gets or sets the start time of the schedule.
 	StartTime *time.Time
@@ -190,8 +190,8 @@ type ScheduleCreateOrUpdateProperties struct {
 
 type TypeWithRawJSON struct {
 	// any JSON object
-	AnyObject []byte
+	AnyObject any
 
 	// any valid JSON
-	Anything []byte
+	Anything any
 }
