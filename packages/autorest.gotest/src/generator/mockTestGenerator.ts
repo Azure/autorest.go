@@ -23,7 +23,7 @@ import { GoExampleModel, GoMockTestDefinitionModel, ParameterOutput } from '../c
 import { GoHelper } from '../util/goHelper';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { generateReturnsInfo, getAPIParametersSig, getClientParametersSig, getSchemaResponse } from '../util/codegenBridge';
-import { isLROOperation, isMultiRespOperation, isPageableOperation } from '@autorest/go/dist/common/helpers';
+import { isLROOperation, isMultiRespOperation, isPageableOperation } from '@autorest/go/src/common/helpers';
 import _ = require('lodash');
 export class MockTestDataRender extends BaseDataRender {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

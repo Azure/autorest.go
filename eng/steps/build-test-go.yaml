@@ -1,5 +1,5 @@
 parameters:
-  GoTestPath: "$(system.defaultWorkingDirectory)/test"
+  GoTestPath: "$(System.DefaultWorkingDirectory)/packages/autorest.go/test"
   PublishAutorestCoverage: false
 
 steps:
@@ -13,6 +13,7 @@ steps:
       git add -A ./test/.
       git diff --staged -w 1>&2
     displayName: "Regenerate Autorest Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
     failOnStderr: true
 
   - script: |
@@ -84,6 +85,7 @@ steps:
       npm stop
       popd
     displayName: "Run Acceptance Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - pwsh: npm test
     displayName: "Run Unit Tests"
@@ -102,3 +104,4 @@ steps:
           cd src/node_modules/@microsoft.azure/autorest.testserver;
           npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
         displayName: "Publish AutoRest Test Server Coverage Report"
+        workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": false,
     "module": "commonjs",
@@ -13,19 +14,18 @@
     "declaration": true,
     "stripInternal": true,
     "noEmitHelpers": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "target": "es2018",
-    "types": [
-      "node",
-      "jest"
-    ],
-    "lib": [
-      "es2018", 
-      "dom",
-    ],
+    "esModuleInterop": true,
+    "target": "es6",
+    "types": ["node", "jest"],
+    "lib": ["ESNext.AsyncIterable", "dom"],
     "experimentalDecorators": true,
     "newLine": "LF",
+    "outDir": "dist",
+    "rootDir": ".",
+    "downlevelIteration": true,
+    "strictNullChecks": true,
+    "useUnknownInCatchVariables": false
   },
-  "include": ["src/**/*.ts", "definitions/**/*.d.ts", "test/**/*.ts"]
+  "include": ["src"],
+  "exclude": ["dist", "resources", "node_modules", "**/*.d.ts", "generated"]
 }

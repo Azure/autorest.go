@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Operation, OperationGroup, Parameter, SchemaResponse } from '@autorest/codemodel';
-import { isLROOperation, isPageableOperation, isSchemaResponse } from '@autorest/go/dist/common/helpers';
-import { formatParameterTypeName, getMethodParameters, getResponseEnvelopeName } from '@autorest/go/dist/generator/helpers';
+import { isLROOperation, isPageableOperation, isSchemaResponse } from '@autorest/go/src/common/helpers';
+import { formatParameterTypeName, getMethodParameters, getResponseEnvelopeName } from '@autorest/go/src/generator/helpers';
 import { values } from '@azure-tools/linq';
 
 // homo structureed with getAPIParametersSig() in autorest.go

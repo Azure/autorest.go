@@ -4,8 +4,7 @@ trigger:
       - main
   paths:
     exclude:
-      - src
-      - test
+      - packages/autorest.go
 
 pr:
   branches:
@@ -13,8 +12,7 @@ pr:
       - main
   paths:
     exclude:
-      - src
-      - test
+      - packages/autorest.go
 
 jobs:
   - job: "AutoRest_Go_CI"

@@ -10,12 +10,12 @@ steps:
       NodeVersion: "16.x"
       GoVersion: "1.19.1"
 
-  - template: ../steps/build-test.yaml
+  - template: ../steps/build-test-go.yaml
 
   - pwsh: |
-      $currentVersion = node -p -e "require('./src/package.json').version";
+      $currentVersion = node -p -e "require('./packages/autorest.go/package.json').version";
       $currentVersion="$currentVersion-$(Build.BuildNumber)";
-      cd src
+      cd packages/autorest.go
       npm version --no-git-tag-version $currentVersion
       npm pack;
       npx publish-release --token $(package-write-token) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Preview version of Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);

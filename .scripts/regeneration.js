@@ -7,7 +7,7 @@ const fs = require('fs');
 // limit to 8 concurrent builds
 const sem = require('./semaphore')(8);
 
-const swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagger/';
+const swaggerDir = 'packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 
 const goMappings = {
     'additionalpropsgroup': ['additionalProperties.json', '--remove-unreferenced-types'],
@@ -123,7 +123,7 @@ generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/da
 const acr = 'https://github.com/Azure/azure-rest-api-specs/blob/195cd610db0accd0422c3e00a72df739ab4de677/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
 generate("azacr", acr, 'test/acr/2021-07-01/azacr', '--module="azacr" --openapi-type="data-plane" --rawjson-as-bytes');
 
-generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
+generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
 
 function should_generate(name) {
     if (filter !== undefined) {
@@ -135,7 +135,7 @@ function should_generate(name) {
 
 function fullPath(outputDir) {
     const root = execSync('git rev-parse --show-toplevel').toString().trim();
-    return root + '/' + outputDir;
+    return root + '/packages/autorest.go/' + outputDir;
 }
 
 // helper to log the package being generated before invocation
@@ -150,7 +150,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
         console.log('generating ' + inputFile);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
+        exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
     });
 }
 
@@ -165,7 +165,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
         console.log('generating ' + readme);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
+        exec('autorest --use=./packages/autorest.go ' + readme + ' --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
 }
 
