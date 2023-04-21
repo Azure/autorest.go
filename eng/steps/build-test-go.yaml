@@ -78,14 +78,13 @@ steps:
         go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
         popd
       }
-      pushd ./test/autorest
+      pushd ./packages/autorest.go/test/autorest
       go run ./covreport/main.go
       popd
       pushd ./packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver
       npm stop
       popd
     displayName: "Run Acceptance Tests"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - pwsh: npm test
     displayName: "Run Unit Tests"
@@ -101,7 +100,7 @@ steps:
       - pwsh: |
           $currentVersion = node -p -e "require('./src/package.json').version";
           $currentVersion="$currentVersion-$(Build.BuildNumber)";
-          cd packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver;
+          cd ./node_modules/@microsoft.azure/autorest.testserver;
           npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
         displayName: "Publish AutoRest Test Server Coverage Report"
         workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
