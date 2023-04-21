@@ -96,7 +96,7 @@
   "projects": [
     {
       "packageName": "@autorest/go",
-      "projectFolder": "src",
+      "projectFolder": "packages/autorest.go",
       "reviewCategory": "production",
       "shouldPublish": true
     },

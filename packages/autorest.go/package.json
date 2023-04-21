@@ -11,8 +11,8 @@
     "node": ">=10.12.0"
   },
   "scripts": {
-    "start": "node --max_old_space_size=4096 ./dist/main.js",
-    "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/main.js",
+    "start": "node --max_old_space_size=4096 ./dist/src/main.js",
+    "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/main.js",
     "eslint-fix": "eslint  . --fix --ext .ts",
     "eslint": "eslint  . --ext .ts",
     "build": "tsc -p .",

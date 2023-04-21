@@ -6,7 +6,7 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js', 'json', 'node'],
     moduleNameMapper: {},
     collectCoverage: true,
-    collectCoverageFrom: ['./src/**/*.ts', '!**/node_modules/**'],
+    collectCoverageFrom: ['./packages/autorest.go/src/**/*.ts', '!**/node_modules/**'],
     coverageReporters: ['json', 'lcov', 'cobertura', 'text', 'html', 'clover'],
     coveragePathIgnorePatterns: ['/node_modules/', '.*/tests/.*'],
     globals: {

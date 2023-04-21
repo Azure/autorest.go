@@ -5,7 +5,7 @@
 
 import { AutorestExtensionHost } from '@autorest/extension-base';
 import { Config } from '../common/constant';
-import { ImportManager } from '@autorest/go/dist/generator/imports';
+import { ImportManager } from '@autorest/go/dist/src/generator/imports';
 import { TestCodeModel } from '@autorest/testmodeler/dist/src/core/model';
 import { TestConfig } from '@autorest/testmodeler/dist/src/common/testConfig';
 export class GenerateContext {

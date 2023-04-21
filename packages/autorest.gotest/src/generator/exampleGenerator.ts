@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ObjectSchema, Parameter, SchemaType } from '@autorest/codemodel';
-import { sortParametersByRequired } from '@autorest/go/dist/generator/helpers';
+import { sortParametersByRequired } from '@autorest/go/dist/src/generator/helpers';
 import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
 import { camelCase, trimEnd } from 'lodash';
 import { Config } from '../common/constant';

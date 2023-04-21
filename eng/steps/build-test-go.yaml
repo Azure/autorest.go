@@ -1,5 +1,5 @@
 parameters:
-  GoTestPath: "$(system.defaultWorkingDirectory)/test"
+  GoTestPath: "$(System.DefaultWorkingDirectory)/packages/autorest.go/test"
   PublishAutorestCoverage: false
 
 steps:
@@ -13,6 +13,7 @@ steps:
       git add -A ./test/.
       git diff --staged -w 1>&2
     displayName: "Regenerate Autorest Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
     failOnStderr: true
 
   - script: |
@@ -67,7 +68,7 @@ steps:
     displayName: "Vet"
 
   - pwsh: |
-      pushd ./src/node_modules/@microsoft.azure/autorest.testserver
+      pushd ./packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver
       npm run start:prod&
       popd
       $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
@@ -77,17 +78,17 @@ steps:
         go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
         popd
       }
-      pushd ./test/autorest
+      pushd ./packages/autorest.go/test/autorest
       go run ./covreport/main.go
       popd
-      pushd ./src/node_modules/@microsoft.azure/autorest.testserver
+      pushd ./packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver
       npm stop
       popd
     displayName: "Run Acceptance Tests"
 
   - pwsh: npm test
     displayName: "Run Unit Tests"
-    workingDirectory: $(System.DefaultWorkingDirectory)/src
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - task: PublishTestResults@2
     inputs:
@@ -99,6 +100,7 @@ steps:
       - pwsh: |
           $currentVersion = node -p -e "require('./src/package.json').version";
           $currentVersion="$currentVersion-$(Build.BuildNumber)";
-          cd src/node_modules/@microsoft.azure/autorest.testserver;
+          cd ./node_modules/@microsoft.azure/autorest.testserver;
           npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
         displayName: "Publish AutoRest Test Server Coverage Report"
+        workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
