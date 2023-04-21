@@ -93,35 +93,35 @@ for (namespace in goMappings) {
     generate(namespace, inputFile, 'test/autorest/' + namespace, extraParams.join(' '));
 }
 
-const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee9bd6fe35eb7850ff0d1496c59259eb74f0d446/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json';
-generate("azstorage", blobStorage, 'test/storage/2020-06-12/azblob', '--security=AzureKey --module="azstorage" --openapi-type="data-plane" --honor-body-placement');
+const blobStorage = './swagger/specification/storage/data-plane/Microsoft.BlobStorage/preview/2021-12-02/blob.json';
+generate("azblob", blobStorage, 'test/storage/azblob', '--security=AzureKey --module="azblob" --openapi-type="data-plane" --honor-body-placement');
 
-const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/network/resource-manager/readme.md';
-generateFromReadme("armnetwork", network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types');
+const network = './swagger/specification/network/resource-manager/readme.md';
+generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types');
 
-const compute = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/compute/resource-manager/readme.md';
-generateFromReadme("armcompute", compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types');
+const compute = './swagger/specification/compute/resource-manager/readme.md';
+generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types');
 
-const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/synapse/data-plane/readme.md';
-generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-2019-06-01-preview', 'test/synapse/2019-06-01/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
+const synapseArtifacts = './swagger/specification/synapse/data-plane/readme.md';
+generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-composite-v6', 'test/synapse/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
 
-const synapseSpark = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/synapse/data-plane/readme.md';
-generateFromReadme("azspark", synapseSpark, 'package-spark-2019-11-01-preview', 'test/synapse/2019-06-01/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
+const synapseSpark = './swagger/specification/synapse/data-plane/readme.md';
+generateFromReadme("azspark", synapseSpark, 'package-spark-2020-12-01', 'test/synapse/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
 
-const tables = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/cosmos-db/data-plane/readme.md';
-generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table --rawjson-as-bytes');
+const tables = './swagger/specification/cosmos-db/data-plane/readme.md';
+generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table --rawjson-as-bytes');
 
-const keyvault = fullPath('test/keyvault/7.2/azkeyvault/autorest.md');
-generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault');
+const keyvault = './swagger/specification/keyvault/data-plane/readme.md';
+generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/azkeyvault', '--module=azkeyvault');
 
-const consumption = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3865f04d22e82db481be0727b406021d29cd2b70/specification/consumption/resource-manager/readme.md';
-generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/2019-10-01/armconsumption', '--module=armconsumption --azure-arm=true --remove-unreferenced-types');
+const consumption = './swagger/specification/consumption/resource-manager/readme.md';
+generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --azure-arm=true --remove-unreferenced-types');
 
-const databoxedge = fullPath('test/databoxedge/2021-02-01/armdataboxedge/autorest.md');
-generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--remove-unreferenced-types');
+const databoxedge = './swagger/specification/databoxedge/resource-manager/readme.md';
+generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --azure-arm=true --remove-unreferenced-types');
 
-const acr = 'https://github.com/Azure/azure-rest-api-specs/blob/195cd610db0accd0422c3e00a72df739ab4de677/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
-generate("azacr", acr, 'test/acr/2021-07-01/azacr', '--module="azacr" --openapi-type="data-plane" --rawjson-as-bytes');
+const acr = './swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
+generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --openapi-type="data-plane" --rawjson-as-bytes');
 
 generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
 
@@ -165,7 +165,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
         console.log('generating ' + readme);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=./packages/autorest.go ' + readme + ' --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
+        exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
 }
 
