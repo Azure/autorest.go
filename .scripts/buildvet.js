@@ -3,7 +3,7 @@
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 
-recursiveFindGoMod('test');
+recursiveFindGoMod('./packages/autorest.go/test');
 
 function recursiveFindGoMod(cur) {
     const dir = fs.opendirSync(cur);
