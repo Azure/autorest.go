@@ -35,6 +35,6 @@ jobs:
           NodeVersion: "16.x"
           GoVersion: "$(go.version)"
 
-      - template: ../steps/build-test.yaml
+      - template: ../steps/build-test-go.yaml
         parameters:
           PublishAutorestCoverage: true
