@@ -8,7 +8,7 @@ steps:
   - template: ../steps/set-env.yaml
     parameters:
       NodeVersion: "16.x"
-      GoVersion: "1.19.1"
+      GoVersion: "1.20.3"
 
   - template: ../steps/build-test-gotest.yaml
 
