@@ -1,8 +1,8 @@
 # Default
 * @chlowell     @jhendrixMSFT @RickWinter @ArcturusZhang @lirenhe @tadelesh
+
 # autorest.go
-/src      @chlowell @jhendrixMSFT @RickWinter
-/test     @chlowell @jhendrixMSFT @RickWinter
+/packages/autorest.go         @chlowell @jhendrixMSFT @RickWinter
 
 # autorest.gotest
 /packages/autorest.gotest     @ArcturusZhang @lirenhe @tadelesh
