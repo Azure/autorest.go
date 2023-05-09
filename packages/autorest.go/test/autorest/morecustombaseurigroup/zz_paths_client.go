@@ -36,19 +36,22 @@ type PathsClient struct {
 //   - secret - Secret value.
 //   - keyName - The key name with value 'key1'.
 //   - options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
-func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsClientGetEmptyOptions) (PathsClientGetEmptyResponse, error) {
+func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsClientGetEmptyOptions) (resp PathsClientGetEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {
-		return PathsClientGetEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PathsClientGetEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return PathsClientGetEmptyResponse{}, nil
+	return
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.

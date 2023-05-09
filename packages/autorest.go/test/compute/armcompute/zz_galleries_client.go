@@ -55,15 +55,21 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 //   - gallery - Parameters supplied to the create or update Shared Image Gallery operation.
 //   - options - GalleriesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleriesClient.BeginCreateOrUpdate
 //     method.
-func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*runtime.Poller[GalleriesClientCreateOrUpdateResponse], error) {
+func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[GalleriesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "GalleriesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, gallery, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleriesClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[GalleriesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleriesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[GalleriesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -71,19 +77,20 @@ func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-10-01
-func (client *GalleriesClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *GalleriesClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -122,15 +129,21 @@ func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, 
 //   - resourceGroupName - The name of the resource group.
 //   - galleryName - The name of the Shared Image Gallery to be deleted.
 //   - options - GalleriesClientBeginDeleteOptions contains the optional parameters for the GalleriesClient.BeginDelete method.
-func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*runtime.Poller[GalleriesClientDeleteResponse], error) {
+func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (resp *runtime.Poller[GalleriesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "GalleriesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleriesClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[GalleriesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleriesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[GalleriesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -138,19 +151,20 @@ func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-10-01
-func (client *GalleriesClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *GalleriesClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -186,19 +200,22 @@ func (client *GalleriesClient) deleteCreateRequest(ctx context.Context, resource
 //   - resourceGroupName - The name of the resource group.
 //   - galleryName - The name of the Shared Image Gallery.
 //   - options - GalleriesClientGetOptions contains the optional parameters for the GalleriesClient.Get method.
-func (client *GalleriesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientGetOptions) (GalleriesClientGetResponse, error) {
+func (client *GalleriesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientGetOptions) (resp GalleriesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "GalleriesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
-		return GalleriesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return GalleriesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return GalleriesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -271,6 +288,7 @@ func (client *GalleriesClient) NewListPager(options *GalleriesClientListOptions)
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -332,6 +350,7 @@ func (client *GalleriesClient) NewListByResourceGroupPager(resourceGroupName str
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -375,15 +394,21 @@ func (client *GalleriesClient) listByResourceGroupHandleResponse(resp *http.Resp
 //     allowed in the middle. The maximum length is 80 characters.
 //   - gallery - Parameters supplied to the update Shared Image Gallery operation.
 //   - options - GalleriesClientBeginUpdateOptions contains the optional parameters for the GalleriesClient.BeginUpdate method.
-func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*runtime.Poller[GalleriesClientUpdateResponse], error) {
+func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (resp *runtime.Poller[GalleriesClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "GalleriesClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, galleryName, gallery, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleriesClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[GalleriesClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleriesClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[GalleriesClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -391,19 +416,20 @@ func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-10-01
-func (client *GalleriesClient) update(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*http.Response, error) {
+func (client *GalleriesClient) update(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

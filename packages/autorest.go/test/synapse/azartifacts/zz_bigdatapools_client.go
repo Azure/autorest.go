@@ -33,19 +33,22 @@ type BigDataPoolsClient struct {
 // Generated from API version 2020-12-01
 //   - bigDataPoolName - The Big Data Pool name
 //   - options - BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
-func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (BigDataPoolsClientGetResponse, error) {
+func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (resp BigDataPoolsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BigDataPoolsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
-		return BigDataPoolsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BigDataPoolsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BigDataPoolsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -80,19 +83,22 @@ func (client *BigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDat
 //
 // Generated from API version 2020-12-01
 //   - options - BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
-func (client *BigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsClientListOptions) (BigDataPoolsClientListResponse, error) {
+func (client *BigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsClientListOptions) (resp BigDataPoolsClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BigDataPoolsClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return BigDataPoolsClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BigDataPoolsClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BigDataPoolsClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.

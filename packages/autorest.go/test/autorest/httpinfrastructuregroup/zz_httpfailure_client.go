@@ -29,19 +29,22 @@ type HTTPFailureClient struct {
 // Generated from API version 1.0.0
 //   - options - HTTPFailureClientGetEmptyErrorOptions contains the optional parameters for the HTTPFailureClient.GetEmptyError
 //     method.
-func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureClientGetEmptyErrorOptions) (HTTPFailureClientGetEmptyErrorResponse, error) {
+func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureClientGetEmptyErrorOptions) (resp HTTPFailureClientGetEmptyErrorResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPFailureClient.GetEmptyError", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyErrorCreateRequest(ctx, options)
 	if err != nil {
-		return HTTPFailureClientGetEmptyErrorResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPFailureClientGetEmptyErrorResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPFailureClientGetEmptyErrorResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getEmptyErrorHandleResponse(resp)
+	return client.getEmptyErrorHandleResponse(httpResp)
 }
 
 // getEmptyErrorCreateRequest creates the GetEmptyError request.
@@ -70,19 +73,22 @@ func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *http.Response
 // Generated from API version 1.0.0
 //   - options - HTTPFailureClientGetNoModelEmptyOptions contains the optional parameters for the HTTPFailureClient.GetNoModelEmpty
 //     method.
-func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureClientGetNoModelEmptyOptions) (HTTPFailureClientGetNoModelEmptyResponse, error) {
+func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureClientGetNoModelEmptyOptions) (resp HTTPFailureClientGetNoModelEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPFailureClient.GetNoModelEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNoModelEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return HTTPFailureClientGetNoModelEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPFailureClientGetNoModelEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPFailureClientGetNoModelEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getNoModelEmptyHandleResponse(resp)
+	return client.getNoModelEmptyHandleResponse(httpResp)
 }
 
 // getNoModelEmptyCreateRequest creates the GetNoModelEmpty request.
@@ -111,19 +117,22 @@ func (client *HTTPFailureClient) getNoModelEmptyHandleResponse(resp *http.Respon
 // Generated from API version 1.0.0
 //   - options - HTTPFailureClientGetNoModelErrorOptions contains the optional parameters for the HTTPFailureClient.GetNoModelError
 //     method.
-func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureClientGetNoModelErrorOptions) (HTTPFailureClientGetNoModelErrorResponse, error) {
+func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureClientGetNoModelErrorOptions) (resp HTTPFailureClientGetNoModelErrorResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPFailureClient.GetNoModelError", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNoModelErrorCreateRequest(ctx, options)
 	if err != nil {
-		return HTTPFailureClientGetNoModelErrorResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPFailureClientGetNoModelErrorResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPFailureClientGetNoModelErrorResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getNoModelErrorHandleResponse(resp)
+	return client.getNoModelErrorHandleResponse(httpResp)
 }
 
 // getNoModelErrorCreateRequest creates the GetNoModelError request.

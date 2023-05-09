@@ -54,17 +54,22 @@ func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCre
 //   - parameters - Parameters supplied to the create or update Firewall Policy operation.
 //   - options - FirewallPoliciesClientBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPoliciesClient.BeginCreateOrUpdate
 //     method.
-func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesClientBeginCreateOrUpdateOptions) (*runtime.Poller[FirewallPoliciesClientCreateOrUpdateResponse], error) {
+func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[FirewallPoliciesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "FirewallPoliciesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[FirewallPoliciesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[FirewallPoliciesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[FirewallPoliciesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *FirewallPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *FirewallPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *FirewallPoliciesClient) createOrUpdateCreateRequest(ctx context.Co
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPoliciesClientBeginDeleteOptions contains the optional parameters for the FirewallPoliciesClient.BeginDelete
 //     method.
-func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientBeginDeleteOptions) (*runtime.Poller[FirewallPoliciesClientDeleteResponse], error) {
+func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientBeginDeleteOptions) (resp *runtime.Poller[FirewallPoliciesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "FirewallPoliciesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[FirewallPoliciesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[FirewallPoliciesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[FirewallPoliciesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *FirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *FirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *FirewallPoliciesClient) deleteCreateRequest(ctx context.Context, r
 //   - resourceGroupName - The name of the resource group.
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPoliciesClientGetOptions contains the optional parameters for the FirewallPoliciesClient.Get method.
-func (client *FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientGetOptions) (FirewallPoliciesClientGetResponse, error) {
+func (client *FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientGetOptions) (resp FirewallPoliciesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPoliciesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
-		return FirewallPoliciesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FirewallPoliciesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FirewallPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -274,6 +289,7 @@ func (client *FirewallPoliciesClient) NewListPager(resourceGroupName string, opt
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -338,6 +354,7 @@ func (client *FirewallPoliciesClient) NewListAllPager(options *FirewallPoliciesC
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -377,19 +394,22 @@ func (client *FirewallPoliciesClient) listAllHandleResponse(resp *http.Response)
 //   - parameters - Parameters supplied to update Azure Firewall Policy tags.
 //   - options - FirewallPoliciesClientUpdateTagsOptions contains the optional parameters for the FirewallPoliciesClient.UpdateTags
 //     method.
-func (client *FirewallPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters TagsObject, options *FirewallPoliciesClientUpdateTagsOptions) (FirewallPoliciesClientUpdateTagsResponse, error) {
+func (client *FirewallPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters TagsObject, options *FirewallPoliciesClientUpdateTagsOptions) (resp FirewallPoliciesClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPoliciesClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
-		return FirewallPoliciesClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FirewallPoliciesClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FirewallPoliciesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

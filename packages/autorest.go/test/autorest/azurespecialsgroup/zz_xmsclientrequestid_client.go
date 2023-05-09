@@ -28,19 +28,22 @@ type XMSClientRequestIDClient struct {
 //
 // Generated from API version 2015-07-01-preview
 //   - options - XMSClientRequestIDClientGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
-func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (XMSClientRequestIDClientGetResponse, error) {
+func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (resp XMSClientRequestIDClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "XMSClientRequestIDClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return XMSClientRequestIDClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return XMSClientRequestIDClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMSClientRequestIDClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return XMSClientRequestIDClientGetResponse{}, nil
+	return
 }
 
 // getCreateRequest creates the Get request.
@@ -60,19 +63,22 @@ func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, op
 //   - xmsClientRequestID - This should appear as a method parameter, use value '9C4D50EE-2D56-4CD3-8152-34347DC9F2B0'
 //   - options - XMSClientRequestIDClientParamGetOptions contains the optional parameters for the XMSClientRequestIDClient.ParamGet
 //     method.
-func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDClientParamGetOptions) (XMSClientRequestIDClientParamGetResponse, error) {
+func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDClientParamGetOptions) (resp XMSClientRequestIDClientParamGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "XMSClientRequestIDClient.ParamGet", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.paramGetCreateRequest(ctx, xmsClientRequestID, options)
 	if err != nil {
-		return XMSClientRequestIDClientParamGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return XMSClientRequestIDClientParamGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMSClientRequestIDClientParamGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return XMSClientRequestIDClientParamGetResponse{}, nil
+	return
 }
 
 // paramGetCreateRequest creates the ParamGet request.

@@ -31,19 +31,22 @@ type FormdataClient struct {
 //   - fileContent - File to upload.
 //   - fileName - File name to upload. Name has to be spelled exactly as written here.
 //   - options - FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
-func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataClientUploadFileOptions) (FormdataClientUploadFileResponse, error) {
+func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataClientUploadFileOptions) (resp FormdataClientUploadFileResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FormdataClient.UploadFile", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.uploadFileCreateRequest(ctx, fileContent, fileName, options)
 	if err != nil {
-		return FormdataClientUploadFileResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FormdataClientUploadFileResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataClientUploadFileResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return FormdataClientUploadFileResponse{Body: resp.Body}, nil
+	return FormdataClientUploadFileResponse{Body: httpResp.Body}, nil
 }
 
 // uploadFileCreateRequest creates the UploadFile request.
@@ -71,19 +74,22 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 //   - fileContent - File to upload.
 //   - options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
 //     method.
-func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (FormdataClientUploadFileViaBodyResponse, error) {
+func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (resp FormdataClientUploadFileViaBodyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FormdataClient.UploadFileViaBody", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
-		return FormdataClientUploadFileViaBodyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FormdataClientUploadFileViaBodyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataClientUploadFileViaBodyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return FormdataClientUploadFileViaBodyResponse{Body: resp.Body}, nil
+	return FormdataClientUploadFileViaBodyResponse{Body: httpResp.Body}, nil
 }
 
 // uploadFileViaBodyCreateRequest creates the UploadFileViaBody request.
@@ -107,19 +113,22 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 // Generated from API version 1.0.0
 //   - fileContent - Files to upload.
 //   - options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
-func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (FormdataClientUploadFilesResponse, error) {
+func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (resp FormdataClientUploadFilesResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FormdataClient.UploadFiles", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.uploadFilesCreateRequest(ctx, fileContent, options)
 	if err != nil {
-		return FormdataClientUploadFilesResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FormdataClientUploadFilesResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataClientUploadFilesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return FormdataClientUploadFilesResponse{Body: resp.Body}, nil
+	return FormdataClientUploadFilesResponse{Body: httpResp.Body}, nil
 }
 
 // uploadFilesCreateRequest creates the UploadFiles request.

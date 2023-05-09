@@ -28,19 +28,22 @@ type FloatClient struct {
 //
 // Generated from API version 2.0-preview
 //   - options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
-func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (FloatClientGetResponse, error) {
+func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (resp FloatClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FloatClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return FloatClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FloatClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FloatClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -69,19 +72,22 @@ func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGe
 // Generated from API version 2.0-preview
 //   - input - Input float enum.
 //   - options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
-func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
+func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (resp FloatClientPutResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FloatClient.Put", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {
-		return FloatClientPutResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FloatClientPutResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FloatClientPutResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.putHandleResponse(resp)
+	return client.putHandleResponse(httpResp)
 }
 
 // putCreateRequest creates the Put request.

@@ -54,17 +54,22 @@ func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 //   - parameters - Parameters supplied to the create or update nat gateway operation.
 //   - options - NatGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the NatGatewaysClient.BeginCreateOrUpdate
 //     method.
-func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[NatGatewaysClientCreateOrUpdateResponse], error) {
+func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[NatGatewaysClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "NatGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NatGatewaysClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[NatGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NatGatewaysClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *NatGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *NatGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -123,17 +129,22 @@ func (client *NatGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 //   - resourceGroupName - The name of the resource group.
 //   - natGatewayName - The name of the nat gateway.
 //   - options - NatGatewaysClientBeginDeleteOptions contains the optional parameters for the NatGatewaysClient.BeginDelete method.
-func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (*runtime.Poller[NatGatewaysClientDeleteResponse], error) {
+func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (resp *runtime.Poller[NatGatewaysClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "NatGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, natGatewayName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NatGatewaysClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[NatGatewaysClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NatGatewaysClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -141,19 +152,20 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *NatGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (*http.Response, error) {
+func (client *NatGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -189,19 +201,22 @@ func (client *NatGatewaysClient) deleteCreateRequest(ctx context.Context, resour
 //   - resourceGroupName - The name of the resource group.
 //   - natGatewayName - The name of the nat gateway.
 //   - options - NatGatewaysClientGetOptions contains the optional parameters for the NatGatewaysClient.Get method.
-func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientGetOptions) (NatGatewaysClientGetResponse, error) {
+func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientGetOptions) (resp NatGatewaysClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "NatGatewaysClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
-		return NatGatewaysClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return NatGatewaysClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NatGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -272,6 +287,7 @@ func (client *NatGatewaysClient) NewListPager(resourceGroupName string, options 
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -335,6 +351,7 @@ func (client *NatGatewaysClient) NewListAllPager(options *NatGatewaysClientListA
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -373,19 +390,22 @@ func (client *NatGatewaysClient) listAllHandleResponse(resp *http.Response) (Nat
 //   - natGatewayName - The name of the nat gateway.
 //   - parameters - Parameters supplied to update nat gateway tags.
 //   - options - NatGatewaysClientUpdateTagsOptions contains the optional parameters for the NatGatewaysClient.UpdateTags method.
-func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject, options *NatGatewaysClientUpdateTagsOptions) (NatGatewaysClientUpdateTagsResponse, error) {
+func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject, options *NatGatewaysClientUpdateTagsOptions) (resp NatGatewaysClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "NatGatewaysClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
-		return NatGatewaysClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return NatGatewaysClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NatGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

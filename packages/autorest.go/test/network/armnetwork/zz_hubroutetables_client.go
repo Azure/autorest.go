@@ -55,17 +55,22 @@ func NewHubRouteTablesClient(subscriptionID string, credential azcore.TokenCrede
 //   - routeTableParameters - Parameters supplied to create or update RouteTable.
 //   - options - HubRouteTablesClientBeginCreateOrUpdateOptions contains the optional parameters for the HubRouteTablesClient.BeginCreateOrUpdate
 //     method.
-func (client *HubRouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, routeTableParameters HubRouteTable, options *HubRouteTablesClientBeginCreateOrUpdateOptions) (*runtime.Poller[HubRouteTablesClientCreateOrUpdateResponse], error) {
+func (client *HubRouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, routeTableParameters HubRouteTable, options *HubRouteTablesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[HubRouteTablesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "HubRouteTablesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeTableName, routeTableParameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HubRouteTablesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HubRouteTablesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[HubRouteTablesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *HubRouteTablesClient) BeginCreateOrUpdate(ctx context.Context, res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *HubRouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, routeTableParameters HubRouteTable, options *HubRouteTablesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *HubRouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, routeTableParameters HubRouteTable, options *HubRouteTablesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, routeTableName, routeTableParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,17 +136,22 @@ func (client *HubRouteTablesClient) createOrUpdateCreateRequest(ctx context.Cont
 //   - routeTableName - The name of the RouteTable.
 //   - options - HubRouteTablesClientBeginDeleteOptions contains the optional parameters for the HubRouteTablesClient.BeginDelete
 //     method.
-func (client *HubRouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *HubRouteTablesClientBeginDeleteOptions) (*runtime.Poller[HubRouteTablesClientDeleteResponse], error) {
+func (client *HubRouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *HubRouteTablesClientBeginDeleteOptions) (resp *runtime.Poller[HubRouteTablesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "HubRouteTablesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HubRouteTablesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HubRouteTablesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[HubRouteTablesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -148,19 +159,20 @@ func (client *HubRouteTablesClient) BeginDelete(ctx context.Context, resourceGro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *HubRouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *HubRouteTablesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *HubRouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *HubRouteTablesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -201,19 +213,22 @@ func (client *HubRouteTablesClient) deleteCreateRequest(ctx context.Context, res
 //   - virtualHubName - The name of the VirtualHub.
 //   - routeTableName - The name of the RouteTable.
 //   - options - HubRouteTablesClientGetOptions contains the optional parameters for the HubRouteTablesClient.Get method.
-func (client *HubRouteTablesClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *HubRouteTablesClientGetOptions) (HubRouteTablesClientGetResponse, error) {
+func (client *HubRouteTablesClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *HubRouteTablesClientGetOptions) (resp HubRouteTablesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HubRouteTablesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
-		return HubRouteTablesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HubRouteTablesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HubRouteTablesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -286,6 +301,7 @@ func (client *HubRouteTablesClient) NewListPager(resourceGroupName string, virtu
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

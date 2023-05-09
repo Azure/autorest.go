@@ -35,19 +35,22 @@ type LinkConnectionClient struct {
 //   - linkConnection - Link connection resource definition
 //   - options - LinkConnectionClientCreateOrUpdateOptions contains the optional parameters for the LinkConnectionClient.CreateOrUpdate
 //     method.
-func (client *LinkConnectionClient) CreateOrUpdate(ctx context.Context, linkConnectionName string, linkConnection LinkConnectionResource, options *LinkConnectionClientCreateOrUpdateOptions) (LinkConnectionClientCreateOrUpdateResponse, error) {
+func (client *LinkConnectionClient) CreateOrUpdate(ctx context.Context, linkConnectionName string, linkConnection LinkConnectionResource, options *LinkConnectionClientCreateOrUpdateOptions) (resp LinkConnectionClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, linkConnectionName, linkConnection, options)
 	if err != nil {
-		return LinkConnectionClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -86,19 +89,22 @@ func (client *LinkConnectionClient) createOrUpdateHandleResponse(resp *http.Resp
 // Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientDeleteOptions contains the optional parameters for the LinkConnectionClient.Delete method.
-func (client *LinkConnectionClient) Delete(ctx context.Context, linkConnectionName string, options *LinkConnectionClientDeleteOptions) (LinkConnectionClientDeleteResponse, error) {
+func (client *LinkConnectionClient) Delete(ctx context.Context, linkConnectionName string, options *LinkConnectionClientDeleteOptions) (resp LinkConnectionClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return LinkConnectionClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return LinkConnectionClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -127,19 +133,22 @@ func (client *LinkConnectionClient) deleteCreateRequest(ctx context.Context, lin
 //   - editTablesRequest - Edit tables request
 //   - options - LinkConnectionClientEditTablesOptions contains the optional parameters for the LinkConnectionClient.EditTables
 //     method.
-func (client *LinkConnectionClient) EditTables(ctx context.Context, linkConnectionName string, editTablesRequest EditTablesRequest, options *LinkConnectionClientEditTablesOptions) (LinkConnectionClientEditTablesResponse, error) {
+func (client *LinkConnectionClient) EditTables(ctx context.Context, linkConnectionName string, editTablesRequest EditTablesRequest, options *LinkConnectionClientEditTablesOptions) (resp LinkConnectionClientEditTablesResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.EditTables", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.editTablesCreateRequest(ctx, linkConnectionName, editTablesRequest, options)
 	if err != nil {
-		return LinkConnectionClientEditTablesResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientEditTablesResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientEditTablesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return LinkConnectionClientEditTablesResponse{}, nil
+	return
 }
 
 // editTablesCreateRequest creates the EditTables request.
@@ -169,19 +178,22 @@ func (client *LinkConnectionClient) editTablesCreateRequest(ctx context.Context,
 // Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientGetOptions contains the optional parameters for the LinkConnectionClient.Get method.
-func (client *LinkConnectionClient) Get(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetOptions) (LinkConnectionClientGetResponse, error) {
+func (client *LinkConnectionClient) Get(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetOptions) (resp LinkConnectionClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -218,19 +230,22 @@ func (client *LinkConnectionClient) getHandleResponse(resp *http.Response) (Link
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientGetDetailedStatusOptions contains the optional parameters for the LinkConnectionClient.GetDetailedStatus
 //     method.
-func (client *LinkConnectionClient) GetDetailedStatus(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetDetailedStatusOptions) (LinkConnectionClientGetDetailedStatusResponse, error) {
+func (client *LinkConnectionClient) GetDetailedStatus(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetDetailedStatusOptions) (resp LinkConnectionClientGetDetailedStatusResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.GetDetailedStatus", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDetailedStatusCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientGetDetailedStatusResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientGetDetailedStatusResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientGetDetailedStatusResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getDetailedStatusHandleResponse(resp)
+	return client.getDetailedStatusHandleResponse(httpResp)
 }
 
 // getDetailedStatusCreateRequest creates the GetDetailedStatus request.
@@ -290,6 +305,7 @@ func (client *LinkConnectionClient) NewListByWorkspacePager(options *LinkConnect
 			}
 			return client.listByWorkspaceHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -323,19 +339,22 @@ func (client *LinkConnectionClient) listByWorkspaceHandleResponse(resp *http.Res
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientListLinkTablesOptions contains the optional parameters for the LinkConnectionClient.ListLinkTables
 //     method.
-func (client *LinkConnectionClient) ListLinkTables(ctx context.Context, linkConnectionName string, options *LinkConnectionClientListLinkTablesOptions) (LinkConnectionClientListLinkTablesResponse, error) {
+func (client *LinkConnectionClient) ListLinkTables(ctx context.Context, linkConnectionName string, options *LinkConnectionClientListLinkTablesOptions) (resp LinkConnectionClientListLinkTablesResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.ListLinkTables", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listLinkTablesCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientListLinkTablesResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientListLinkTablesResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientListLinkTablesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listLinkTablesHandleResponse(resp)
+	return client.listLinkTablesHandleResponse(httpResp)
 }
 
 // listLinkTablesCreateRequest creates the ListLinkTables request.
@@ -371,19 +390,22 @@ func (client *LinkConnectionClient) listLinkTablesHandleResponse(resp *http.Resp
 // Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientPauseOptions contains the optional parameters for the LinkConnectionClient.Pause method.
-func (client *LinkConnectionClient) Pause(ctx context.Context, linkConnectionName string, options *LinkConnectionClientPauseOptions) (LinkConnectionClientPauseResponse, error) {
+func (client *LinkConnectionClient) Pause(ctx context.Context, linkConnectionName string, options *LinkConnectionClientPauseOptions) (resp LinkConnectionClientPauseResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.Pause", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.pauseCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientPauseResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientPauseResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientPauseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return LinkConnectionClientPauseResponse{}, nil
+	return
 }
 
 // pauseCreateRequest creates the Pause request.
@@ -412,19 +434,22 @@ func (client *LinkConnectionClient) pauseCreateRequest(ctx context.Context, link
 //   - queryTableStatusRequest - Query table status request
 //   - options - LinkConnectionClientQueryTableStatusOptions contains the optional parameters for the LinkConnectionClient.QueryTableStatus
 //     method.
-func (client *LinkConnectionClient) QueryTableStatus(ctx context.Context, linkConnectionName string, queryTableStatusRequest QueryTableStatusRequest, options *LinkConnectionClientQueryTableStatusOptions) (LinkConnectionClientQueryTableStatusResponse, error) {
+func (client *LinkConnectionClient) QueryTableStatus(ctx context.Context, linkConnectionName string, queryTableStatusRequest QueryTableStatusRequest, options *LinkConnectionClientQueryTableStatusOptions) (resp LinkConnectionClientQueryTableStatusResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.QueryTableStatus", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.queryTableStatusCreateRequest(ctx, linkConnectionName, queryTableStatusRequest, options)
 	if err != nil {
-		return LinkConnectionClientQueryTableStatusResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientQueryTableStatusResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientQueryTableStatusResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.queryTableStatusHandleResponse(resp)
+	return client.queryTableStatusHandleResponse(httpResp)
 }
 
 // queryTableStatusCreateRequest creates the QueryTableStatus request.
@@ -463,19 +488,22 @@ func (client *LinkConnectionClient) queryTableStatusHandleResponse(resp *http.Re
 // Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientResumeOptions contains the optional parameters for the LinkConnectionClient.Resume method.
-func (client *LinkConnectionClient) Resume(ctx context.Context, linkConnectionName string, options *LinkConnectionClientResumeOptions) (LinkConnectionClientResumeResponse, error) {
+func (client *LinkConnectionClient) Resume(ctx context.Context, linkConnectionName string, options *LinkConnectionClientResumeOptions) (resp LinkConnectionClientResumeResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.Resume", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.resumeCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientResumeResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientResumeResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientResumeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return LinkConnectionClientResumeResponse{}, nil
+	return
 }
 
 // resumeCreateRequest creates the Resume request.
@@ -502,19 +530,22 @@ func (client *LinkConnectionClient) resumeCreateRequest(ctx context.Context, lin
 // Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientStartOptions contains the optional parameters for the LinkConnectionClient.Start method.
-func (client *LinkConnectionClient) Start(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStartOptions) (LinkConnectionClientStartResponse, error) {
+func (client *LinkConnectionClient) Start(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStartOptions) (resp LinkConnectionClientStartResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.Start", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.startCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientStartResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientStartResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientStartResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return LinkConnectionClientStartResponse{}, nil
+	return
 }
 
 // startCreateRequest creates the Start request.
@@ -541,19 +572,22 @@ func (client *LinkConnectionClient) startCreateRequest(ctx context.Context, link
 // Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientStopOptions contains the optional parameters for the LinkConnectionClient.Stop method.
-func (client *LinkConnectionClient) Stop(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStopOptions) (LinkConnectionClientStopResponse, error) {
+func (client *LinkConnectionClient) Stop(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStopOptions) (resp LinkConnectionClientStopResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.Stop", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stopCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
-		return LinkConnectionClientStopResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientStopResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientStopResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return LinkConnectionClientStopResponse{}, nil
+	return
 }
 
 // stopCreateRequest creates the Stop request.
@@ -582,19 +616,22 @@ func (client *LinkConnectionClient) stopCreateRequest(ctx context.Context, linkC
 //   - updateLandingZoneCredentialRequest - update landing zone credential request
 //   - options - LinkConnectionClientUpdateLandingZoneCredentialOptions contains the optional parameters for the LinkConnectionClient.UpdateLandingZoneCredential
 //     method.
-func (client *LinkConnectionClient) UpdateLandingZoneCredential(ctx context.Context, linkConnectionName string, updateLandingZoneCredentialRequest UpdateLandingZoneCredential, options *LinkConnectionClientUpdateLandingZoneCredentialOptions) (LinkConnectionClientUpdateLandingZoneCredentialResponse, error) {
+func (client *LinkConnectionClient) UpdateLandingZoneCredential(ctx context.Context, linkConnectionName string, updateLandingZoneCredentialRequest UpdateLandingZoneCredential, options *LinkConnectionClientUpdateLandingZoneCredentialOptions) (resp LinkConnectionClientUpdateLandingZoneCredentialResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LinkConnectionClient.UpdateLandingZoneCredential", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateLandingZoneCredentialCreateRequest(ctx, linkConnectionName, updateLandingZoneCredentialRequest, options)
 	if err != nil {
-		return LinkConnectionClientUpdateLandingZoneCredentialResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LinkConnectionClientUpdateLandingZoneCredentialResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LinkConnectionClientUpdateLandingZoneCredentialResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return LinkConnectionClientUpdateLandingZoneCredentialResponse{}, nil
+	return
 }
 
 // updateLandingZoneCredentialCreateRequest creates the UpdateLandingZoneCredential request.

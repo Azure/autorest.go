@@ -34,19 +34,22 @@ type ComplexModelClient struct {
 //   - resourceGroupName - Resource Group ID.
 //   - bodyParameter - body Parameter
 //   - options - ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.
-func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (ComplexModelClientCreateResponse, error) {
+func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (resp ComplexModelClientCreateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ComplexModelClient.Create", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
-		return ComplexModelClientCreateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ComplexModelClientCreateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ComplexModelClientCreateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createHandleResponse(resp)
+	return client.createHandleResponse(httpResp)
 }
 
 // createCreateRequest creates the Create request.
@@ -91,19 +94,22 @@ func (client *ComplexModelClient) createHandleResponse(resp *http.Response) (Com
 // Generated from API version 2014-04-01-preview
 //   - resourceGroupName - Resource Group ID.
 //   - options - ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
-func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (ComplexModelClientListResponse, error) {
+func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (resp ComplexModelClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ComplexModelClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
-		return ComplexModelClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ComplexModelClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ComplexModelClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.
@@ -142,19 +148,22 @@ func (client *ComplexModelClient) listHandleResponse(resp *http.Response) (Compl
 //   - resourceGroupName - Resource Group ID.
 //   - bodyParameter - body Parameter
 //   - options - ComplexModelClientUpdateOptions contains the optional parameters for the ComplexModelClient.Update method.
-func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (ComplexModelClientUpdateResponse, error) {
+func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (resp ComplexModelClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ComplexModelClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
-		return ComplexModelClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ComplexModelClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ComplexModelClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

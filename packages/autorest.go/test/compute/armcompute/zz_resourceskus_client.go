@@ -74,6 +74,7 @@ func (client *ResourceSKUsClient) NewListPager(options *ResourceSKUsClientListOp
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -55,19 +55,22 @@ func NewDedicatedHostGroupsClient(subscriptionID string, credential azcore.Token
 //   - parameters - Parameters supplied to the Create Dedicated Host Group.
 //   - options - DedicatedHostGroupsClientCreateOrUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.CreateOrUpdate
 //     method.
-func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsClientCreateOrUpdateOptions) (DedicatedHostGroupsClientCreateOrUpdateResponse, error) {
+func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsClientCreateOrUpdateOptions) (resp DedicatedHostGroupsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DedicatedHostGroupsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
-		return DedicatedHostGroupsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DedicatedHostGroupsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return DedicatedHostGroupsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -116,19 +119,22 @@ func (client *DedicatedHostGroupsClient) createOrUpdateHandleResponse(resp *http
 //   - hostGroupName - The name of the dedicated host group.
 //   - options - DedicatedHostGroupsClientDeleteOptions contains the optional parameters for the DedicatedHostGroupsClient.Delete
 //     method.
-func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientDeleteOptions) (DedicatedHostGroupsClientDeleteResponse, error) {
+func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientDeleteOptions) (resp DedicatedHostGroupsClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DedicatedHostGroupsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
-		return DedicatedHostGroupsClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DedicatedHostGroupsClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return DedicatedHostGroupsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return DedicatedHostGroupsClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -164,19 +170,22 @@ func (client *DedicatedHostGroupsClient) deleteCreateRequest(ctx context.Context
 //   - resourceGroupName - The name of the resource group.
 //   - hostGroupName - The name of the dedicated host group.
 //   - options - DedicatedHostGroupsClientGetOptions contains the optional parameters for the DedicatedHostGroupsClient.Get method.
-func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientGetOptions) (DedicatedHostGroupsClientGetResponse, error) {
+func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientGetOptions) (resp DedicatedHostGroupsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DedicatedHostGroupsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
-		return DedicatedHostGroupsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DedicatedHostGroupsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DedicatedHostGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -249,6 +258,7 @@ func (client *DedicatedHostGroupsClient) NewListByResourceGroupPager(resourceGro
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -314,6 +324,7 @@ func (client *DedicatedHostGroupsClient) NewListBySubscriptionPager(options *Ded
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -353,19 +364,22 @@ func (client *DedicatedHostGroupsClient) listBySubscriptionHandleResponse(resp *
 //   - parameters - Parameters supplied to the Update Dedicated Host Group operation.
 //   - options - DedicatedHostGroupsClientUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.Update
 //     method.
-func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsClientUpdateOptions) (DedicatedHostGroupsClientUpdateResponse, error) {
+func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsClientUpdateOptions) (resp DedicatedHostGroupsClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DedicatedHostGroupsClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
-		return DedicatedHostGroupsClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DedicatedHostGroupsClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DedicatedHostGroupsClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

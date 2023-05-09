@@ -54,17 +54,22 @@ func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.Token
 //   - parameters - Parameters supplied to the create or update operation.
 //   - options - DdosProtectionPlansClientBeginCreateOrUpdateOptions contains the optional parameters for the DdosProtectionPlansClient.BeginCreateOrUpdate
 //     method.
-func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*runtime.Poller[DdosProtectionPlansClientCreateOrUpdateResponse], error) {
+func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[DdosProtectionPlansClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DdosProtectionPlansClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DdosProtectionPlansClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DdosProtectionPlansClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DdosProtectionPlansClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context
 //   - ddosProtectionPlanName - The name of the DDoS protection plan.
 //   - options - DdosProtectionPlansClientBeginDeleteOptions contains the optional parameters for the DdosProtectionPlansClient.BeginDelete
 //     method.
-func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*runtime.Poller[DdosProtectionPlansClientDeleteResponse], error) {
+func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (resp *runtime.Poller[DdosProtectionPlansClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DdosProtectionPlansClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DdosProtectionPlansClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DdosProtectionPlansClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DdosProtectionPlansClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*http.Response, error) {
+func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context
 //   - resourceGroupName - The name of the resource group.
 //   - ddosProtectionPlanName - The name of the DDoS protection plan.
 //   - options - DdosProtectionPlansClientGetOptions contains the optional parameters for the DdosProtectionPlansClient.Get method.
-func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientGetOptions) (DdosProtectionPlansClientGetResponse, error) {
+func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientGetOptions) (resp DdosProtectionPlansClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DdosProtectionPlansClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
-		return DdosProtectionPlansClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DdosProtectionPlansClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DdosProtectionPlansClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -270,6 +285,7 @@ func (client *DdosProtectionPlansClient) NewListPager(options *DdosProtectionPla
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -331,6 +347,7 @@ func (client *DdosProtectionPlansClient) NewListByResourceGroupPager(resourceGro
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -374,19 +391,22 @@ func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp 
 //   - parameters - Parameters supplied to the update DDoS protection plan resource tags.
 //   - options - DdosProtectionPlansClientUpdateTagsOptions contains the optional parameters for the DdosProtectionPlansClient.UpdateTags
 //     method.
-func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansClientUpdateTagsOptions) (DdosProtectionPlansClientUpdateTagsResponse, error) {
+func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansClientUpdateTagsOptions) (resp DdosProtectionPlansClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DdosProtectionPlansClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
-		return DdosProtectionPlansClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DdosProtectionPlansClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DdosProtectionPlansClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

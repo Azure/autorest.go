@@ -58,6 +58,7 @@ func (client *PagingClient) NewDuplicateParamsPager(options *PagingClientDuplica
 			}
 			return client.duplicateParamsHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -117,6 +118,7 @@ func (client *PagingClient) NewFirstResponseEmptyPager(options *PagingClientFirs
 			}
 			return client.firstResponseEmptyHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -170,6 +172,7 @@ func (client *PagingClient) NewGetMultiplePagesPager(options *PagingClientGetMul
 			}
 			return client.getMultiplePagesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -232,6 +235,7 @@ func (client *PagingClient) NewGetMultiplePagesFailurePager(options *PagingClien
 			}
 			return client.getMultiplePagesFailureHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -285,6 +289,7 @@ func (client *PagingClient) NewGetMultiplePagesFailureURIPager(options *PagingCl
 			}
 			return client.getMultiplePagesFailureURIHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -340,6 +345,7 @@ func (client *PagingClient) NewGetMultiplePagesFragmentNextLinkPager(apiVersion 
 			}
 			return client.getMultiplePagesFragmentNextLinkHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -403,6 +409,7 @@ func (client *PagingClient) NewGetMultiplePagesFragmentWithGroupingNextLinkPager
 			}
 			return client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -438,7 +445,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleRe
 // Generated from API version 1.0.0
 //   - options - PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 //     method.
-func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*runtime.Poller[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]], error) {
+func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (resp *runtime.Poller[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]], err error) {
 	pager := runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesLROResponse]{
 		More: func(page PagingClientGetMultiplePagesLROResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -457,18 +464,23 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 			}
 			return client.getMultiplePagesLROHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "PagingClient.BeginGetMultiplePagesLRO", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.getMultiplePagesLRO(ctx, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
+			Tracer:   client.internal.Tracer(),
 		})
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
+			Tracer:   client.internal.Tracer(),
 		})
 	}
 }
@@ -476,19 +488,20 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
 //
 // Generated from API version 1.0.0
-func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*http.Response, error) {
+func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (resp *http.Response, err error) {
 	req, err := client.getMultiplePagesLROCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // getMultiplePagesLROCreateRequest creates the GetMultiplePagesLRO request.
@@ -551,6 +564,7 @@ func (client *PagingClient) NewGetMultiplePagesRetryFirstPager(options *PagingCl
 			}
 			return client.getMultiplePagesRetryFirstHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -605,6 +619,7 @@ func (client *PagingClient) NewGetMultiplePagesRetrySecondPager(options *PagingC
 			}
 			return client.getMultiplePagesRetrySecondHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -658,6 +673,7 @@ func (client *PagingClient) NewGetMultiplePagesWithOffsetPager(options PagingCli
 			}
 			return client.getMultiplePagesWithOffsetHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -721,6 +737,7 @@ func (client *PagingClient) NewGetNoItemNamePagesPager(options *PagingClientGetN
 			}
 			return client.getNoItemNamePagesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -768,6 +785,7 @@ func (client *PagingClient) NewGetNullNextLinkNamePagesPager(options *PagingClie
 			}
 			return client.getNullNextLinkNamePagesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -821,6 +839,7 @@ func (client *PagingClient) NewGetODataMultiplePagesPager(options *PagingClientG
 			}
 			return client.getODataMultiplePagesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -884,6 +903,7 @@ func (client *PagingClient) NewGetPagingModelWithItemNameWithXMSClientNamePager(
 			}
 			return client.getPagingModelWithItemNameWithXMSClientNameHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -937,6 +957,7 @@ func (client *PagingClient) NewGetSinglePagesPager(options *PagingClientGetSingl
 			}
 			return client.getSinglePagesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -990,6 +1011,7 @@ func (client *PagingClient) NewGetSinglePagesFailurePager(options *PagingClientG
 			}
 			return client.getSinglePagesFailureHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -1045,6 +1067,7 @@ func (client *PagingClient) NewGetWithQueryParamsPager(requiredQueryParameter in
 			}
 			return client.getWithQueryParamsHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

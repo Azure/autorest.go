@@ -71,6 +71,7 @@ func (client *LotsClient) NewListPager(scope string, options *LotsClientListOpti
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

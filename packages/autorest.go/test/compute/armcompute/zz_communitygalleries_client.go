@@ -52,19 +52,22 @@ func NewCommunityGalleriesClient(subscriptionID string, credential azcore.TokenC
 //   - location - Resource location.
 //   - publicGalleryName - The public name of the community gallery.
 //   - options - CommunityGalleriesClientGetOptions contains the optional parameters for the CommunityGalleriesClient.Get method.
-func (client *CommunityGalleriesClient) Get(ctx context.Context, location string, publicGalleryName string, options *CommunityGalleriesClientGetOptions) (CommunityGalleriesClientGetResponse, error) {
+func (client *CommunityGalleriesClient) Get(ctx context.Context, location string, publicGalleryName string, options *CommunityGalleriesClientGetOptions) (resp CommunityGalleriesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CommunityGalleriesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, publicGalleryName, options)
 	if err != nil {
-		return CommunityGalleriesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CommunityGalleriesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CommunityGalleriesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.

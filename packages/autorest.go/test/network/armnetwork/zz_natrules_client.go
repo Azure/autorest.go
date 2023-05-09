@@ -55,17 +55,22 @@ func NewNatRulesClient(subscriptionID string, credential azcore.TokenCredential,
 //   - natRuleParameters - Parameters supplied to create or Update a Nat Rule.
 //   - options - NatRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the NatRulesClient.BeginCreateOrUpdate
 //     method.
-func (client *NatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, natRuleParameters VPNGatewayNatRule, options *NatRulesClientBeginCreateOrUpdateOptions) (*runtime.Poller[NatRulesClientCreateOrUpdateResponse], error) {
+func (client *NatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, natRuleParameters VPNGatewayNatRule, options *NatRulesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[NatRulesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "NatRulesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, natRuleName, natRuleParameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NatRulesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[NatRulesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NatRulesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *NatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *NatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, natRuleParameters VPNGatewayNatRule, options *NatRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *NatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, natRuleParameters VPNGatewayNatRule, options *NatRulesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, natRuleName, natRuleParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -129,17 +135,22 @@ func (client *NatRulesClient) createOrUpdateCreateRequest(ctx context.Context, r
 //   - gatewayName - The name of the gateway.
 //   - natRuleName - The name of the nat rule.
 //   - options - NatRulesClientBeginDeleteOptions contains the optional parameters for the NatRulesClient.BeginDelete method.
-func (client *NatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, options *NatRulesClientBeginDeleteOptions) (*runtime.Poller[NatRulesClientDeleteResponse], error) {
+func (client *NatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, options *NatRulesClientBeginDeleteOptions) (resp *runtime.Poller[NatRulesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "NatRulesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, natRuleName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NatRulesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[NatRulesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NatRulesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -147,19 +158,20 @@ func (client *NatRulesClient) BeginDelete(ctx context.Context, resourceGroupName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *NatRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, options *NatRulesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *NatRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, options *NatRulesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, natRuleName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -200,19 +212,22 @@ func (client *NatRulesClient) deleteCreateRequest(ctx context.Context, resourceG
 //   - gatewayName - The name of the gateway.
 //   - natRuleName - The name of the nat rule.
 //   - options - NatRulesClientGetOptions contains the optional parameters for the NatRulesClient.Get method.
-func (client *NatRulesClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, options *NatRulesClientGetOptions) (NatRulesClientGetResponse, error) {
+func (client *NatRulesClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, options *NatRulesClientGetOptions) (resp NatRulesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "NatRulesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, natRuleName, options)
 	if err != nil {
-		return NatRulesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return NatRulesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NatRulesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -286,6 +301,7 @@ func (client *NatRulesClient) NewListByVPNGatewayPager(resourceGroupName string,
 			}
 			return client.listByVPNGatewayHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

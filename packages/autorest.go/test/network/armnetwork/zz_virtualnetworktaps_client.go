@@ -54,17 +54,22 @@ func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenC
 //   - parameters - Parameters supplied to the create or update virtual network tap operation.
 //   - options - VirtualNetworkTapsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkTapsClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworkTapsClientCreateOrUpdateResponse], error) {
+func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualNetworkTapsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkTapsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, tapName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkTapsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkTapsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkTapsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkTapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualNetworkTapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, tapName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *VirtualNetworkTapsClient) createOrUpdateCreateRequest(ctx context.
 //   - tapName - The name of the virtual network tap.
 //   - options - VirtualNetworkTapsClientBeginDeleteOptions contains the optional parameters for the VirtualNetworkTapsClient.BeginDelete
 //     method.
-func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworkTapsClientDeleteResponse], error) {
+func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientBeginDeleteOptions) (resp *runtime.Poller[VirtualNetworkTapsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkTapsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, tapName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkTapsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkTapsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkTapsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkTapsClient) deleteOperation(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualNetworkTapsClient) deleteOperation(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, tapName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *VirtualNetworkTapsClient) deleteCreateRequest(ctx context.Context,
 //   - resourceGroupName - The name of the resource group.
 //   - tapName - The name of virtual network tap.
 //   - options - VirtualNetworkTapsClientGetOptions contains the optional parameters for the VirtualNetworkTapsClient.Get method.
-func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientGetOptions) (VirtualNetworkTapsClientGetResponse, error) {
+func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientGetOptions) (resp VirtualNetworkTapsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkTapsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, tapName, options)
 	if err != nil {
-		return VirtualNetworkTapsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkTapsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkTapsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -270,6 +285,7 @@ func (client *VirtualNetworkTapsClient) NewListAllPager(options *VirtualNetworkT
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -331,6 +347,7 @@ func (client *VirtualNetworkTapsClient) NewListByResourceGroupPager(resourceGrou
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -374,19 +391,22 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupHandleResponse(resp *
 //   - tapParameters - Parameters supplied to update VirtualNetworkTap tags.
 //   - options - VirtualNetworkTapsClientUpdateTagsOptions contains the optional parameters for the VirtualNetworkTapsClient.UpdateTags
 //     method.
-func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject, options *VirtualNetworkTapsClientUpdateTagsOptions) (VirtualNetworkTapsClientUpdateTagsResponse, error) {
+func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject, options *VirtualNetworkTapsClientUpdateTagsOptions) (resp VirtualNetworkTapsClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkTapsClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, tapName, tapParameters, options)
 	if err != nil {
-		return VirtualNetworkTapsClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkTapsClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkTapsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

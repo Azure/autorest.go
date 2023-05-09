@@ -76,6 +76,7 @@ func (client *AvailableServiceAliasesClient) NewListPager(location string, optio
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -142,6 +143,7 @@ func (client *AvailableServiceAliasesClient) NewListByResourceGroupPager(resourc
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

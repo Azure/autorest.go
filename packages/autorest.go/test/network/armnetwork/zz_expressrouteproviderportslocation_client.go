@@ -51,19 +51,22 @@ func NewExpressRouteProviderPortsLocationClient(subscriptionID string, credentia
 // Generated from API version 2022-09-01
 //   - options - ExpressRouteProviderPortsLocationClientListOptions contains the optional parameters for the ExpressRouteProviderPortsLocationClient.List
 //     method.
-func (client *ExpressRouteProviderPortsLocationClient) List(ctx context.Context, options *ExpressRouteProviderPortsLocationClientListOptions) (ExpressRouteProviderPortsLocationClientListResponse, error) {
+func (client *ExpressRouteProviderPortsLocationClient) List(ctx context.Context, options *ExpressRouteProviderPortsLocationClientListOptions) (resp ExpressRouteProviderPortsLocationClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteProviderPortsLocationClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return ExpressRouteProviderPortsLocationClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteProviderPortsLocationClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteProviderPortsLocationClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.

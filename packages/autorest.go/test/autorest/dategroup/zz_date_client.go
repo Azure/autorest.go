@@ -29,19 +29,22 @@ type DateClient struct {
 //
 // Generated from API version 1.0.0
 //   - options - DateClientGetInvalidDateOptions contains the optional parameters for the DateClient.GetInvalidDate method.
-func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateClientGetInvalidDateOptions) (DateClientGetInvalidDateResponse, error) {
+func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateClientGetInvalidDateOptions) (resp DateClientGetInvalidDateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetInvalidDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInvalidDateCreateRequest(ctx, options)
 	if err != nil {
-		return DateClientGetInvalidDateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientGetInvalidDateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientGetInvalidDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getInvalidDateHandleResponse(resp)
+	return client.getInvalidDateHandleResponse(httpResp)
 }
 
 // getInvalidDateCreateRequest creates the GetInvalidDate request.
@@ -71,19 +74,22 @@ func (client *DateClient) getInvalidDateHandleResponse(resp *http.Response) (Dat
 //
 // Generated from API version 1.0.0
 //   - options - DateClientGetMaxDateOptions contains the optional parameters for the DateClient.GetMaxDate method.
-func (client *DateClient) GetMaxDate(ctx context.Context, options *DateClientGetMaxDateOptions) (DateClientGetMaxDateResponse, error) {
+func (client *DateClient) GetMaxDate(ctx context.Context, options *DateClientGetMaxDateOptions) (resp DateClientGetMaxDateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetMaxDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMaxDateCreateRequest(ctx, options)
 	if err != nil {
-		return DateClientGetMaxDateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientGetMaxDateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientGetMaxDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getMaxDateHandleResponse(resp)
+	return client.getMaxDateHandleResponse(httpResp)
 }
 
 // getMaxDateCreateRequest creates the GetMaxDate request.
@@ -113,19 +119,22 @@ func (client *DateClient) getMaxDateHandleResponse(resp *http.Response) (DateCli
 //
 // Generated from API version 1.0.0
 //   - options - DateClientGetMinDateOptions contains the optional parameters for the DateClient.GetMinDate method.
-func (client *DateClient) GetMinDate(ctx context.Context, options *DateClientGetMinDateOptions) (DateClientGetMinDateResponse, error) {
+func (client *DateClient) GetMinDate(ctx context.Context, options *DateClientGetMinDateOptions) (resp DateClientGetMinDateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetMinDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMinDateCreateRequest(ctx, options)
 	if err != nil {
-		return DateClientGetMinDateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientGetMinDateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientGetMinDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getMinDateHandleResponse(resp)
+	return client.getMinDateHandleResponse(httpResp)
 }
 
 // getMinDateCreateRequest creates the GetMinDate request.
@@ -155,19 +164,22 @@ func (client *DateClient) getMinDateHandleResponse(resp *http.Response) (DateCli
 //
 // Generated from API version 1.0.0
 //   - options - DateClientGetNullOptions contains the optional parameters for the DateClient.GetNull method.
-func (client *DateClient) GetNull(ctx context.Context, options *DateClientGetNullOptions) (DateClientGetNullResponse, error) {
+func (client *DateClient) GetNull(ctx context.Context, options *DateClientGetNullOptions) (resp DateClientGetNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return DateClientGetNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientGetNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientGetNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getNullHandleResponse(resp)
+	return client.getNullHandleResponse(httpResp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -197,19 +209,22 @@ func (client *DateClient) getNullHandleResponse(resp *http.Response) (DateClient
 //
 // Generated from API version 1.0.0
 //   - options - DateClientGetOverflowDateOptions contains the optional parameters for the DateClient.GetOverflowDate method.
-func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateClientGetOverflowDateOptions) (DateClientGetOverflowDateResponse, error) {
+func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateClientGetOverflowDateOptions) (resp DateClientGetOverflowDateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetOverflowDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getOverflowDateCreateRequest(ctx, options)
 	if err != nil {
-		return DateClientGetOverflowDateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientGetOverflowDateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientGetOverflowDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getOverflowDateHandleResponse(resp)
+	return client.getOverflowDateHandleResponse(httpResp)
 }
 
 // getOverflowDateCreateRequest creates the GetOverflowDate request.
@@ -239,19 +254,22 @@ func (client *DateClient) getOverflowDateHandleResponse(resp *http.Response) (Da
 //
 // Generated from API version 1.0.0
 //   - options - DateClientGetUnderflowDateOptions contains the optional parameters for the DateClient.GetUnderflowDate method.
-func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateClientGetUnderflowDateOptions) (DateClientGetUnderflowDateResponse, error) {
+func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateClientGetUnderflowDateOptions) (resp DateClientGetUnderflowDateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetUnderflowDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowDateCreateRequest(ctx, options)
 	if err != nil {
-		return DateClientGetUnderflowDateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientGetUnderflowDateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientGetUnderflowDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getUnderflowDateHandleResponse(resp)
+	return client.getUnderflowDateHandleResponse(httpResp)
 }
 
 // getUnderflowDateCreateRequest creates the GetUnderflowDate request.
@@ -282,19 +300,22 @@ func (client *DateClient) getUnderflowDateHandleResponse(resp *http.Response) (D
 // Generated from API version 1.0.0
 //   - dateBody - date body
 //   - options - DateClientPutMaxDateOptions contains the optional parameters for the DateClient.PutMaxDate method.
-func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, options *DateClientPutMaxDateOptions) (DateClientPutMaxDateResponse, error) {
+func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, options *DateClientPutMaxDateOptions) (resp DateClientPutMaxDateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.PutMaxDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMaxDateCreateRequest(ctx, dateBody, options)
 	if err != nil {
-		return DateClientPutMaxDateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientPutMaxDateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientPutMaxDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return DateClientPutMaxDateResponse{}, nil
+	return
 }
 
 // putMaxDateCreateRequest creates the PutMaxDate request.
@@ -317,19 +338,22 @@ func (client *DateClient) putMaxDateCreateRequest(ctx context.Context, dateBody 
 // Generated from API version 1.0.0
 //   - dateBody - date body
 //   - options - DateClientPutMinDateOptions contains the optional parameters for the DateClient.PutMinDate method.
-func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, options *DateClientPutMinDateOptions) (DateClientPutMinDateResponse, error) {
+func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, options *DateClientPutMinDateOptions) (resp DateClientPutMinDateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.PutMinDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMinDateCreateRequest(ctx, dateBody, options)
 	if err != nil {
-		return DateClientPutMinDateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DateClientPutMinDateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DateClientPutMinDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return DateClientPutMinDateResponse{}, nil
+	return
 }
 
 // putMinDateCreateRequest creates the PutMinDate request.

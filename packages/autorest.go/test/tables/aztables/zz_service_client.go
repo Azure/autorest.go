@@ -32,19 +32,22 @@ type ServiceClient struct {
 //
 // Generated from API version 2019-02-02
 //   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
-func (client *ServiceClient) GetProperties(ctx context.Context, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
+func (client *ServiceClient) GetProperties(ctx context.Context, options *ServiceClientGetPropertiesOptions) (resp ServiceClientGetPropertiesResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, options)
 	if err != nil {
-		return ServiceClientGetPropertiesResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ServiceClientGetPropertiesResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getPropertiesHandleResponse(resp)
+	return client.getPropertiesHandleResponse(httpResp)
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -92,19 +95,22 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 //
 // Generated from API version 2019-02-02
 //   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
-func (client *ServiceClient) GetStatistics(ctx context.Context, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
+func (client *ServiceClient) GetStatistics(ctx context.Context, options *ServiceClientGetStatisticsOptions) (resp ServiceClientGetStatisticsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetStatistics", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getStatisticsCreateRequest(ctx, options)
 	if err != nil {
-		return ServiceClientGetStatisticsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ServiceClientGetStatisticsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetStatisticsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getStatisticsHandleResponse(resp)
+	return client.getStatisticsHandleResponse(httpResp)
 }
 
 // getStatisticsCreateRequest creates the GetStatistics request.
@@ -160,19 +166,22 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 // Generated from API version 2019-02-02
 //   - tableServiceProperties - The Table Service properties.
 //   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
-func (client *ServiceClient) SetProperties(ctx context.Context, tableServiceProperties ServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
+func (client *ServiceClient) SetProperties(ctx context.Context, tableServiceProperties ServiceProperties, options *ServiceClientSetPropertiesOptions) (resp ServiceClientSetPropertiesResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.SetProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setPropertiesCreateRequest(ctx, tableServiceProperties, options)
 	if err != nil {
-		return ServiceClientSetPropertiesResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ServiceClientSetPropertiesResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ServiceClientSetPropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setPropertiesHandleResponse(resp)
+	return client.setPropertiesHandleResponse(httpResp)
 }
 
 // setPropertiesCreateRequest creates the SetProperties request.

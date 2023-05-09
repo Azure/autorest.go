@@ -54,19 +54,22 @@ func NewLoadBalancerLoadBalancingRulesClient(subscriptionID string, credential a
 //   - loadBalancingRuleName - The name of the load balancing rule.
 //   - options - LoadBalancerLoadBalancingRulesClientGetOptions contains the optional parameters for the LoadBalancerLoadBalancingRulesClient.Get
 //     method.
-func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesClientGetOptions) (LoadBalancerLoadBalancingRulesClientGetResponse, error) {
+func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesClientGetOptions) (resp LoadBalancerLoadBalancingRulesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancerLoadBalancingRulesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, loadBalancingRuleName, options)
 	if err != nil {
-		return LoadBalancerLoadBalancingRulesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LoadBalancerLoadBalancingRulesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LoadBalancerLoadBalancingRulesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -140,6 +143,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) NewListPager(resourceGroupNa
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

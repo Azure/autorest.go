@@ -54,19 +54,22 @@ func NewManagersClient(subscriptionID string, credential azcore.TokenCredential,
 //   - networkManagerName - The name of the network manager.
 //   - parameters - Parameters supplied to specify which network manager is.
 //   - options - ManagersClientCreateOrUpdateOptions contains the optional parameters for the ManagersClient.CreateOrUpdate method.
-func (client *ManagersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, parameters Manager, options *ManagersClientCreateOrUpdateOptions) (ManagersClientCreateOrUpdateResponse, error) {
+func (client *ManagersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, parameters Manager, options *ManagersClientCreateOrUpdateOptions) (resp ManagersClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ManagersClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, parameters, options)
 	if err != nil {
-		return ManagersClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ManagersClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return ManagersClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -114,17 +117,22 @@ func (client *ManagersClient) createOrUpdateHandleResponse(resp *http.Response) 
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - options - ManagersClientBeginDeleteOptions contains the optional parameters for the ManagersClient.BeginDelete method.
-func (client *ManagersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientBeginDeleteOptions) (*runtime.Poller[ManagersClientDeleteResponse], error) {
+func (client *ManagersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientBeginDeleteOptions) (resp *runtime.Poller[ManagersClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ManagersClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ManagersClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ManagersClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ManagersClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -132,19 +140,20 @@ func (client *ManagersClient) BeginDelete(ctx context.Context, resourceGroupName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ManagersClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientBeginDeleteOptions) (*http.Response, error) {
+func (client *ManagersClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -183,19 +192,22 @@ func (client *ManagersClient) deleteCreateRequest(ctx context.Context, resourceG
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - options - ManagersClientGetOptions contains the optional parameters for the ManagersClient.Get method.
-func (client *ManagersClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientGetOptions) (ManagersClientGetResponse, error) {
+func (client *ManagersClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientGetOptions) (resp ManagersClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ManagersClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, options)
 	if err != nil {
-		return ManagersClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ManagersClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ManagersClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -263,6 +275,7 @@ func (client *ManagersClient) NewListPager(resourceGroupName string, options *Ma
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -333,6 +346,7 @@ func (client *ManagersClient) NewListBySubscriptionPager(options *ManagersClient
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -377,19 +391,22 @@ func (client *ManagersClient) listBySubscriptionHandleResponse(resp *http.Respon
 //   - networkManagerName - The name of the network manager.
 //   - parameters - Parameters supplied to specify which network manager is.
 //   - options - ManagersClientPatchOptions contains the optional parameters for the ManagersClient.Patch method.
-func (client *ManagersClient) Patch(ctx context.Context, resourceGroupName string, networkManagerName string, parameters PatchObject, options *ManagersClientPatchOptions) (ManagersClientPatchResponse, error) {
+func (client *ManagersClient) Patch(ctx context.Context, resourceGroupName string, networkManagerName string, parameters PatchObject, options *ManagersClientPatchOptions) (resp ManagersClientPatchResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ManagersClient.Patch", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchCreateRequest(ctx, resourceGroupName, networkManagerName, parameters, options)
 	if err != nil {
-		return ManagersClientPatchResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ManagersClientPatchResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ManagersClientPatchResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.patchHandleResponse(resp)
+	return client.patchHandleResponse(httpResp)
 }
 
 // patchCreateRequest creates the Patch request.

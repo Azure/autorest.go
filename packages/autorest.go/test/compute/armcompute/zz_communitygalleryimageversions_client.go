@@ -57,19 +57,22 @@ func NewCommunityGalleryImageVersionsClient(subscriptionID string, credential az
 //     Format: ..
 //   - options - CommunityGalleryImageVersionsClientGetOptions contains the optional parameters for the CommunityGalleryImageVersionsClient.Get
 //     method.
-func (client *CommunityGalleryImageVersionsClient) Get(ctx context.Context, location string, publicGalleryName string, galleryImageName string, galleryImageVersionName string, options *CommunityGalleryImageVersionsClientGetOptions) (CommunityGalleryImageVersionsClientGetResponse, error) {
+func (client *CommunityGalleryImageVersionsClient) Get(ctx context.Context, location string, publicGalleryName string, galleryImageName string, galleryImageVersionName string, options *CommunityGalleryImageVersionsClientGetOptions) (resp CommunityGalleryImageVersionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CommunityGalleryImageVersionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, publicGalleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
-		return CommunityGalleryImageVersionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CommunityGalleryImageVersionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CommunityGalleryImageVersionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.

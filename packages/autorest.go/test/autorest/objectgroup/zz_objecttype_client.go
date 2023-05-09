@@ -30,19 +30,22 @@ type ObjectTypeClient struct {
 //
 // Generated from API version 1.0.0
 //   - options - ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
-func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectTypeClientGetResponse, error) {
+func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (resp ObjectTypeClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ObjectTypeClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return ObjectTypeClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ObjectTypeClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ObjectTypeClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -73,19 +76,22 @@ func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTy
 // Generated from API version 1.0.0
 //   - putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
 //   - options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
-func (client *ObjectTypeClient) Put(ctx context.Context, putObject []byte, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
+func (client *ObjectTypeClient) Put(ctx context.Context, putObject []byte, options *ObjectTypeClientPutOptions) (resp ObjectTypeClientPutResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ObjectTypeClient.Put", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {
-		return ObjectTypeClientPutResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ObjectTypeClientPutResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ObjectTypeClientPutResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return ObjectTypeClientPutResponse{}, nil
+	return
 }
 
 // putCreateRequest creates the Put request.

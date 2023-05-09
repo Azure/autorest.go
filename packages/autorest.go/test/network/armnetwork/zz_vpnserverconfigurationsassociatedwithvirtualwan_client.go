@@ -53,17 +53,22 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 //   - virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
 //   - options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
 //     VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList method.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*runtime.Poller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse], error) {
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (resp *runtime.Poller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -71,19 +76,20 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*http.Response, error) {
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (resp *http.Response, err error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // listCreateRequest creates the List request.

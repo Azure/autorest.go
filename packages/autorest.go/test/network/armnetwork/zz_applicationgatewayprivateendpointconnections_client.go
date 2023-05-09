@@ -54,17 +54,22 @@ func NewApplicationGatewayPrivateEndpointConnectionsClient(subscriptionID string
 //   - connectionName - The name of the application gateway private endpoint connection.
 //   - options - ApplicationGatewayPrivateEndpointConnectionsClientBeginDeleteOptions contains the optional parameters for the
 //     ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete method.
-func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginDeleteOptions) (*runtime.Poller[ApplicationGatewayPrivateEndpointConnectionsClientDeleteResponse], error) {
+func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginDeleteOptions) (resp *runtime.Poller[ApplicationGatewayPrivateEndpointConnectionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, connectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewayPrivateEndpointConnectionsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ApplicationGatewayPrivateEndpointConnectionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewayPrivateEndpointConnectionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginDelete(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewayPrivateEndpointConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *ApplicationGatewayPrivateEndpointConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, applicationGatewayName, connectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -126,19 +132,22 @@ func (client *ApplicationGatewayPrivateEndpointConnectionsClient) deleteCreateRe
 //   - connectionName - The name of the application gateway private endpoint connection.
 //   - options - ApplicationGatewayPrivateEndpointConnectionsClientGetOptions contains the optional parameters for the ApplicationGatewayPrivateEndpointConnectionsClient.Get
 //     method.
-func (client *ApplicationGatewayPrivateEndpointConnectionsClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, options *ApplicationGatewayPrivateEndpointConnectionsClientGetOptions) (ApplicationGatewayPrivateEndpointConnectionsClientGetResponse, error) {
+func (client *ApplicationGatewayPrivateEndpointConnectionsClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, options *ApplicationGatewayPrivateEndpointConnectionsClientGetOptions) (resp ApplicationGatewayPrivateEndpointConnectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewayPrivateEndpointConnectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, applicationGatewayName, connectionName, options)
 	if err != nil {
-		return ApplicationGatewayPrivateEndpointConnectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewayPrivateEndpointConnectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ApplicationGatewayPrivateEndpointConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -212,6 +221,7 @@ func (client *ApplicationGatewayPrivateEndpointConnectionsClient) NewListPager(r
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -260,17 +270,22 @@ func (client *ApplicationGatewayPrivateEndpointConnectionsClient) listHandleResp
 //   - parameters - Parameters supplied to update application gateway private endpoint connection operation.
 //   - options - ApplicationGatewayPrivateEndpointConnectionsClientBeginUpdateOptions contains the optional parameters for the
 //     ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate method.
-func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, parameters ApplicationGatewayPrivateEndpointConnection, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginUpdateOptions) (*runtime.Poller[ApplicationGatewayPrivateEndpointConnectionsClientUpdateResponse], error) {
+func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, parameters ApplicationGatewayPrivateEndpointConnection, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginUpdateOptions) (resp *runtime.Poller[ApplicationGatewayPrivateEndpointConnectionsClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, applicationGatewayName, connectionName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewayPrivateEndpointConnectionsClientUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ApplicationGatewayPrivateEndpointConnectionsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewayPrivateEndpointConnectionsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -278,19 +293,20 @@ func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginUpdate(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewayPrivateEndpointConnectionsClient) update(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, parameters ApplicationGatewayPrivateEndpointConnection, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *ApplicationGatewayPrivateEndpointConnectionsClient) update(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, parameters ApplicationGatewayPrivateEndpointConnection, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, applicationGatewayName, connectionName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

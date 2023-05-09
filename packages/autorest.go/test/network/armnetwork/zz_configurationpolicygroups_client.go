@@ -55,17 +55,22 @@ func NewConfigurationPolicyGroupsClient(subscriptionID string, credential azcore
 //   - vpnServerConfigurationPolicyGroupParameters - Parameters supplied to create or update a VpnServerConfiguration PolicyGroup.
 //   - options - ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the ConfigurationPolicyGroupsClient.BeginCreateOrUpdate
 //     method.
-func (client *ConfigurationPolicyGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, vpnServerConfigurationPolicyGroupParameters VPNServerConfigurationPolicyGroup, options *ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ConfigurationPolicyGroupsClientCreateOrUpdateResponse], error) {
+func (client *ConfigurationPolicyGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, vpnServerConfigurationPolicyGroupParameters VPNServerConfigurationPolicyGroup, options *ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[ConfigurationPolicyGroupsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConfigurationPolicyGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, vpnServerConfigurationPolicyGroupParameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConfigurationPolicyGroupsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConfigurationPolicyGroupsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConfigurationPolicyGroupsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *ConfigurationPolicyGroupsClient) BeginCreateOrUpdate(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConfigurationPolicyGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, vpnServerConfigurationPolicyGroupParameters VPNServerConfigurationPolicyGroup, options *ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *ConfigurationPolicyGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, vpnServerConfigurationPolicyGroupParameters VPNServerConfigurationPolicyGroup, options *ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, vpnServerConfigurationPolicyGroupParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,17 +136,22 @@ func (client *ConfigurationPolicyGroupsClient) createOrUpdateCreateRequest(ctx c
 //   - configurationPolicyGroupName - The name of the ConfigurationPolicyGroup.
 //   - options - ConfigurationPolicyGroupsClientBeginDeleteOptions contains the optional parameters for the ConfigurationPolicyGroupsClient.BeginDelete
 //     method.
-func (client *ConfigurationPolicyGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientBeginDeleteOptions) (*runtime.Poller[ConfigurationPolicyGroupsClientDeleteResponse], error) {
+func (client *ConfigurationPolicyGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientBeginDeleteOptions) (resp *runtime.Poller[ConfigurationPolicyGroupsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConfigurationPolicyGroupsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConfigurationPolicyGroupsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConfigurationPolicyGroupsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConfigurationPolicyGroupsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -148,19 +159,20 @@ func (client *ConfigurationPolicyGroupsClient) BeginDelete(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConfigurationPolicyGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *ConfigurationPolicyGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -202,19 +214,22 @@ func (client *ConfigurationPolicyGroupsClient) deleteCreateRequest(ctx context.C
 //   - configurationPolicyGroupName - The name of the ConfigurationPolicyGroup being retrieved.
 //   - options - ConfigurationPolicyGroupsClientGetOptions contains the optional parameters for the ConfigurationPolicyGroupsClient.Get
 //     method.
-func (client *ConfigurationPolicyGroupsClient) Get(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientGetOptions) (ConfigurationPolicyGroupsClientGetResponse, error) {
+func (client *ConfigurationPolicyGroupsClient) Get(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientGetOptions) (resp ConfigurationPolicyGroupsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ConfigurationPolicyGroupsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, options)
 	if err != nil {
-		return ConfigurationPolicyGroupsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ConfigurationPolicyGroupsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConfigurationPolicyGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -288,6 +303,7 @@ func (client *ConfigurationPolicyGroupsClient) NewListByVPNServerConfigurationPa
 			}
 			return client.listByVPNServerConfigurationHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

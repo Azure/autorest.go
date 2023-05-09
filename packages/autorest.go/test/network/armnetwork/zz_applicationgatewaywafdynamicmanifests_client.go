@@ -76,6 +76,7 @@ func (client *ApplicationGatewayWafDynamicManifestsClient) NewGetPager(location 
 			}
 			return client.getHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -49,19 +49,22 @@ func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.Cli
 //   - managementGroupID - Azure Management Group ID.
 //   - options - AggregatedCostClientGetByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetByManagementGroup
 //     method.
-func (client *AggregatedCostClient) GetByManagementGroup(ctx context.Context, managementGroupID string, options *AggregatedCostClientGetByManagementGroupOptions) (AggregatedCostClientGetByManagementGroupResponse, error) {
+func (client *AggregatedCostClient) GetByManagementGroup(ctx context.Context, managementGroupID string, options *AggregatedCostClientGetByManagementGroupOptions) (resp AggregatedCostClientGetByManagementGroupResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AggregatedCostClient.GetByManagementGroup", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getByManagementGroupCreateRequest(ctx, managementGroupID, options)
 	if err != nil {
-		return AggregatedCostClientGetByManagementGroupResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AggregatedCostClientGetByManagementGroupResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AggregatedCostClientGetByManagementGroupResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getByManagementGroupHandleResponse(resp)
+	return client.getByManagementGroupHandleResponse(httpResp)
 }
 
 // getByManagementGroupCreateRequest creates the GetByManagementGroup request.
@@ -103,19 +106,22 @@ func (client *AggregatedCostClient) getByManagementGroupHandleResponse(resp *htt
 //   - billingPeriodName - Billing Period Name.
 //   - options - AggregatedCostClientGetForBillingPeriodByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetForBillingPeriodByManagementGroup
 //     method.
-func (client *AggregatedCostClient) GetForBillingPeriodByManagementGroup(ctx context.Context, managementGroupID string, billingPeriodName string, options *AggregatedCostClientGetForBillingPeriodByManagementGroupOptions) (AggregatedCostClientGetForBillingPeriodByManagementGroupResponse, error) {
+func (client *AggregatedCostClient) GetForBillingPeriodByManagementGroup(ctx context.Context, managementGroupID string, billingPeriodName string, options *AggregatedCostClientGetForBillingPeriodByManagementGroupOptions) (resp AggregatedCostClientGetForBillingPeriodByManagementGroupResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AggregatedCostClient.GetForBillingPeriodByManagementGroup", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getForBillingPeriodByManagementGroupCreateRequest(ctx, managementGroupID, billingPeriodName, options)
 	if err != nil {
-		return AggregatedCostClientGetForBillingPeriodByManagementGroupResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AggregatedCostClientGetForBillingPeriodByManagementGroupResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AggregatedCostClientGetForBillingPeriodByManagementGroupResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getForBillingPeriodByManagementGroupHandleResponse(resp)
+	return client.getForBillingPeriodByManagementGroupHandleResponse(httpResp)
 }
 
 // getForBillingPeriodByManagementGroupCreateRequest creates the GetForBillingPeriodByManagementGroup request.

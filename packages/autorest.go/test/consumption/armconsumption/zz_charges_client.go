@@ -57,19 +57,22 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 //     for invoiceSection scope, and
 //     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 //   - options - ChargesClientListOptions contains the optional parameters for the ChargesClient.List method.
-func (client *ChargesClient) List(ctx context.Context, scope string, options *ChargesClientListOptions) (ChargesClientListResponse, error) {
+func (client *ChargesClient) List(ctx context.Context, scope string, options *ChargesClientListOptions) (resp ChargesClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ChargesClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, scope, options)
 	if err != nil {
-		return ChargesClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ChargesClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ChargesClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.

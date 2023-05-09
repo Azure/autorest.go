@@ -57,19 +57,22 @@ func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential
 //     VM), PremiumSSDManagedDisksP30 (for Managed Disks)
 //   - options - ReservationRecommendationDetailsClientGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
 //     method.
-func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsClientGetOptions) (ReservationRecommendationDetailsClientGetResponse, error) {
+func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsClientGetOptions) (resp ReservationRecommendationDetailsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ReservationRecommendationDetailsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, billingScope, scope, region, term, lookBackPeriod, product, options)
 	if err != nil {
-		return ReservationRecommendationDetailsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ReservationRecommendationDetailsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return ReservationRecommendationDetailsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.

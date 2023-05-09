@@ -51,19 +51,22 @@ func NewManagementGroupNetworkManagerConnectionsClient(credential azcore.TokenCr
 //   - parameters - Network manager connection to be created/updated.
 //   - options - ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateOptions contains the optional parameters for the
 //     ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate method.
-func (client *ManagementGroupNetworkManagerConnectionsClient) CreateOrUpdate(ctx context.Context, managementGroupID string, networkManagerConnectionName string, parameters ManagerConnection, options *ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateOptions) (ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateResponse, error) {
+func (client *ManagementGroupNetworkManagerConnectionsClient) CreateOrUpdate(ctx context.Context, managementGroupID string, networkManagerConnectionName string, parameters ManagerConnection, options *ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateOptions) (resp ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, managementGroupID, networkManagerConnectionName, parameters, options)
 	if err != nil {
-		return ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -108,19 +111,22 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) createOrUpdateHand
 //   - networkManagerConnectionName - Name for the network manager connection.
 //   - options - ManagementGroupNetworkManagerConnectionsClientDeleteOptions contains the optional parameters for the ManagementGroupNetworkManagerConnectionsClient.Delete
 //     method.
-func (client *ManagementGroupNetworkManagerConnectionsClient) Delete(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientDeleteOptions) (ManagementGroupNetworkManagerConnectionsClientDeleteResponse, error) {
+func (client *ManagementGroupNetworkManagerConnectionsClient) Delete(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientDeleteOptions) (resp ManagementGroupNetworkManagerConnectionsClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ManagementGroupNetworkManagerConnectionsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, managementGroupID, networkManagerConnectionName, options)
 	if err != nil {
-		return ManagementGroupNetworkManagerConnectionsClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ManagementGroupNetworkManagerConnectionsClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return ManagementGroupNetworkManagerConnectionsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return ManagementGroupNetworkManagerConnectionsClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -153,19 +159,22 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) deleteCreateReques
 //   - networkManagerConnectionName - Name for the network manager connection.
 //   - options - ManagementGroupNetworkManagerConnectionsClientGetOptions contains the optional parameters for the ManagementGroupNetworkManagerConnectionsClient.Get
 //     method.
-func (client *ManagementGroupNetworkManagerConnectionsClient) Get(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientGetOptions) (ManagementGroupNetworkManagerConnectionsClientGetResponse, error) {
+func (client *ManagementGroupNetworkManagerConnectionsClient) Get(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientGetOptions) (resp ManagementGroupNetworkManagerConnectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ManagementGroupNetworkManagerConnectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, managementGroupID, networkManagerConnectionName, options)
 	if err != nil {
-		return ManagementGroupNetworkManagerConnectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ManagementGroupNetworkManagerConnectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ManagementGroupNetworkManagerConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -230,6 +239,7 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) NewListPager(manag
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

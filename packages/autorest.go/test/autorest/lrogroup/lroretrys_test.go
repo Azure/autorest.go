@@ -12,9 +12,30 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/tracing/azotel"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
+	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/sdk/resource"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 )
+
+func jaegerTracerProvider() *tracesdk.TracerProvider {
+	// Create the Jaeger exporter
+	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://localhost:14268/api/traces")))
+	if err != nil {
+		panic(err)
+	}
+	tp := tracesdk.NewTracerProvider(
+		tracesdk.WithBatcher(exp),
+		tracesdk.WithResource(resource.NewWithAttributes(
+			semconv.SchemaURL,
+			semconv.ServiceNameKey.String("lrogroup"),
+		)),
+	)
+	return tp
+}
 
 func newLRORetrysClient(t *testing.T) *LRORetrysClient {
 	options := azcore.ClientOptions{}
@@ -37,7 +58,18 @@ func NewLRORetrysClient(options *azcore.ClientOptions) (*LRORetrysClient, error)
 }
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
-	op := newLRORetrysClient(t)
+	jaegerTP := jaegerTracerProvider()
+	defer jaegerTP.Shutdown(context.Background())
+
+	azTP := azotel.NewTracingProvider(jaegerTP, nil)
+
+	options := azcore.ClientOptions{}
+	options.Retry.RetryDelay = time.Second
+	options.Transport = httpClientWithCookieJar()
+	options.TracingProvider = azTP
+	op, err := NewLRORetrysClient(&options)
+	require.NoError(t, err)
+
 	poller, err := op.BeginDelete202Retry200(context.Background(), nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()

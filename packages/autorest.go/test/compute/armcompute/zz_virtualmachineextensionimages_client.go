@@ -53,19 +53,22 @@ func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential az
 //   - location - The name of a supported Azure region.
 //   - options - VirtualMachineExtensionImagesClientGetOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.Get
 //     method.
-func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesClientGetOptions) (VirtualMachineExtensionImagesClientGetResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesClientGetOptions) (resp VirtualMachineExtensionImagesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineExtensionImagesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, publisherName, typeParam, version, options)
 	if err != nil {
-		return VirtualMachineExtensionImagesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineExtensionImagesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -118,19 +121,22 @@ func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *http.
 //   - location - The name of a supported Azure region.
 //   - options - VirtualMachineExtensionImagesClientListTypesOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListTypes
 //     method.
-func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesClientListTypesOptions) (VirtualMachineExtensionImagesClientListTypesResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesClientListTypesOptions) (resp VirtualMachineExtensionImagesClientListTypesResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineExtensionImagesClient.ListTypes", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listTypesCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
-		return VirtualMachineExtensionImagesClientListTypesResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineExtensionImagesClientListTypesResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesClientListTypesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listTypesHandleResponse(resp)
+	return client.listTypesHandleResponse(httpResp)
 }
 
 // listTypesCreateRequest creates the ListTypes request.
@@ -175,19 +181,22 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp 
 //   - location - The name of a supported Azure region.
 //   - options - VirtualMachineExtensionImagesClientListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListVersions
 //     method.
-func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesClientListVersionsOptions) (VirtualMachineExtensionImagesClientListVersionsResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesClientListVersionsOptions) (resp VirtualMachineExtensionImagesClientListVersionsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineExtensionImagesClient.ListVersions", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listVersionsCreateRequest(ctx, location, publisherName, typeParam, options)
 	if err != nil {
-		return VirtualMachineExtensionImagesClientListVersionsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineExtensionImagesClientListVersionsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesClientListVersionsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listVersionsHandleResponse(resp)
+	return client.listVersionsHandleResponse(httpResp)
 }
 
 // listVersionsCreateRequest creates the ListVersions request.

@@ -54,17 +54,22 @@ func NewVirtualRoutersClient(subscriptionID string, credential azcore.TokenCrede
 //   - parameters - Parameters supplied to the create or update Virtual Router.
 //   - options - VirtualRoutersClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRoutersClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualRoutersClientCreateOrUpdateResponse], error) {
+func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualRoutersClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualRoutersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualRoutersClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualRoutersClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualRoutersClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Cont
 //   - virtualRouterName - The name of the Virtual Router.
 //   - options - VirtualRoutersClientBeginDeleteOptions contains the optional parameters for the VirtualRoutersClient.BeginDelete
 //     method.
-func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*runtime.Poller[VirtualRoutersClientDeleteResponse], error) {
+func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (resp *runtime.Poller[VirtualRoutersClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualRoutersClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualRoutersClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualRoutersClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualRoutersClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *VirtualRoutersClient) deleteCreateRequest(ctx context.Context, res
 //   - resourceGroupName - The name of the resource group.
 //   - virtualRouterName - The name of the Virtual Router.
 //   - options - VirtualRoutersClientGetOptions contains the optional parameters for the VirtualRoutersClient.Get method.
-func (client *VirtualRoutersClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientGetOptions) (VirtualRoutersClientGetResponse, error) {
+func (client *VirtualRoutersClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientGetOptions) (resp VirtualRoutersClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualRoutersClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
-		return VirtualRoutersClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualRoutersClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualRoutersClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -272,6 +287,7 @@ func (client *VirtualRoutersClient) NewListPager(options *VirtualRoutersClientLi
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -333,6 +349,7 @@ func (client *VirtualRoutersClient) NewListByResourceGroupPager(resourceGroupNam
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

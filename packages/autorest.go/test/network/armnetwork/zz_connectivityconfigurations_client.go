@@ -56,19 +56,22 @@ func NewConnectivityConfigurationsClient(subscriptionID string, credential azcor
 //   - connectivityConfiguration - Parameters supplied to create/update a network manager connectivity configuration
 //   - options - ConnectivityConfigurationsClientCreateOrUpdateOptions contains the optional parameters for the ConnectivityConfigurationsClient.CreateOrUpdate
 //     method.
-func (client *ConnectivityConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, connectivityConfiguration ConnectivityConfiguration, options *ConnectivityConfigurationsClientCreateOrUpdateOptions) (ConnectivityConfigurationsClientCreateOrUpdateResponse, error) {
+func (client *ConnectivityConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, connectivityConfiguration ConnectivityConfiguration, options *ConnectivityConfigurationsClientCreateOrUpdateOptions) (resp ConnectivityConfigurationsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ConnectivityConfigurationsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, connectivityConfiguration, options)
 	if err != nil {
-		return ConnectivityConfigurationsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ConnectivityConfigurationsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return ConnectivityConfigurationsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -123,17 +126,22 @@ func (client *ConnectivityConfigurationsClient) createOrUpdateHandleResponse(res
 //   - configurationName - The name of the network manager connectivity configuration.
 //   - options - ConnectivityConfigurationsClientBeginDeleteOptions contains the optional parameters for the ConnectivityConfigurationsClient.BeginDelete
 //     method.
-func (client *ConnectivityConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *ConnectivityConfigurationsClientBeginDeleteOptions) (*runtime.Poller[ConnectivityConfigurationsClientDeleteResponse], error) {
+func (client *ConnectivityConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *ConnectivityConfigurationsClientBeginDeleteOptions) (resp *runtime.Poller[ConnectivityConfigurationsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConnectivityConfigurationsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, configurationName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConnectivityConfigurationsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConnectivityConfigurationsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConnectivityConfigurationsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +150,20 @@ func (client *ConnectivityConfigurationsClient) BeginDelete(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConnectivityConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *ConnectivityConfigurationsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *ConnectivityConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *ConnectivityConfigurationsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -200,19 +209,22 @@ func (client *ConnectivityConfigurationsClient) deleteCreateRequest(ctx context.
 //   - configurationName - The name of the network manager connectivity configuration.
 //   - options - ConnectivityConfigurationsClientGetOptions contains the optional parameters for the ConnectivityConfigurationsClient.Get
 //     method.
-func (client *ConnectivityConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *ConnectivityConfigurationsClientGetOptions) (ConnectivityConfigurationsClientGetResponse, error) {
+func (client *ConnectivityConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *ConnectivityConfigurationsClientGetOptions) (resp ConnectivityConfigurationsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ConnectivityConfigurationsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, options)
 	if err != nil {
-		return ConnectivityConfigurationsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ConnectivityConfigurationsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectivityConfigurationsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -286,6 +298,7 @@ func (client *ConnectivityConfigurationsClient) NewListPager(resourceGroupName s
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

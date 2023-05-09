@@ -31,19 +31,22 @@ type DataFlowDebugSessionClient struct {
 //   - request - Data flow debug session definition with debug content.
 //   - options - DataFlowDebugSessionClientAddDataFlowOptions contains the optional parameters for the DataFlowDebugSessionClient.AddDataFlow
 //     method.
-func (client *DataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionClientAddDataFlowOptions) (DataFlowDebugSessionClientAddDataFlowResponse, error) {
+func (client *DataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionClientAddDataFlowOptions) (resp DataFlowDebugSessionClientAddDataFlowResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DataFlowDebugSessionClient.AddDataFlow", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.addDataFlowCreateRequest(ctx, request, options)
 	if err != nil {
-		return DataFlowDebugSessionClientAddDataFlowResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DataFlowDebugSessionClientAddDataFlowResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DataFlowDebugSessionClientAddDataFlowResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.addDataFlowHandleResponse(resp)
+	return client.addDataFlowHandleResponse(httpResp)
 }
 
 // addDataFlowCreateRequest creates the AddDataFlow request.
@@ -79,15 +82,21 @@ func (client *DataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.R
 //   - request - Data flow debug session definition
 //   - options - DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 //     method.
-func (client *DataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*runtime.Poller[DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse], error) {
+func (client *DataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (resp *runtime.Poller[DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createDataFlowDebugSession(ctx, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -95,19 +104,20 @@ func (client *DataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *DataFlowDebugSessionClient) createDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*http.Response, error) {
+func (client *DataFlowDebugSessionClient) createDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (resp *http.Response, err error) {
 	req, err := client.createDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createDataFlowDebugSessionCreateRequest creates the CreateDataFlowDebugSession request.
@@ -134,19 +144,22 @@ func (client *DataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 //   - request - Data flow debug session definition for deletion
 //   - options - DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.DeleteDataFlowDebugSession
 //     method.
-func (client *DataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions) (DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse, error) {
+func (client *DataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions) (resp DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DataFlowDebugSessionClient.DeleteDataFlowDebugSession", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
-		return DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, nil
+	return
 }
 
 // deleteDataFlowDebugSessionCreateRequest creates the DeleteDataFlowDebugSession request.
@@ -173,15 +186,21 @@ func (client *DataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 //   - request - Data flow debug command definition.
 //   - options - DataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginExecuteCommand
 //     method.
-func (client *DataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (*runtime.Poller[DataFlowDebugSessionClientExecuteCommandResponse], error) {
+func (client *DataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (resp *runtime.Poller[DataFlowDebugSessionClientExecuteCommandResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DataFlowDebugSessionClient.BeginExecuteCommand", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.executeCommand(ctx, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DataFlowDebugSessionClientExecuteCommandResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DataFlowDebugSessionClientExecuteCommandResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DataFlowDebugSessionClientExecuteCommandResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DataFlowDebugSessionClientExecuteCommandResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -189,19 +208,20 @@ func (client *DataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *DataFlowDebugSessionClient) executeCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (*http.Response, error) {
+func (client *DataFlowDebugSessionClient) executeCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (resp *http.Response, err error) {
 	req, err := client.executeCommandCreateRequest(ctx, request, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // executeCommandCreateRequest creates the ExecuteCommand request.
@@ -251,6 +271,7 @@ func (client *DataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspa
 			}
 			return client.queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

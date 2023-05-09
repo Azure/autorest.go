@@ -47,19 +47,22 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 //     for Billing Profile scope, and
 //     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 //   - options - CreditsClientGetOptions contains the optional parameters for the CreditsClient.Get method.
-func (client *CreditsClient) Get(ctx context.Context, scope string, options *CreditsClientGetOptions) (CreditsClientGetResponse, error) {
+func (client *CreditsClient) Get(ctx context.Context, scope string, options *CreditsClientGetOptions) (resp CreditsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CreditsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {
-		return CreditsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CreditsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return CreditsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.

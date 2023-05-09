@@ -54,17 +54,22 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 //   - parameters - Parameters supplied to the create or update private endpoint operation.
 //   - options - PrivateEndpointsClientBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointsClient.BeginCreateOrUpdate
 //     method.
-func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*runtime.Poller[PrivateEndpointsClientCreateOrUpdateResponse], error) {
+func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[PrivateEndpointsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[PrivateEndpointsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[PrivateEndpointsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[PrivateEndpointsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Co
 //   - privateEndpointName - The name of the private endpoint.
 //   - options - PrivateEndpointsClientBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
 //     method.
-func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*runtime.Poller[PrivateEndpointsClientDeleteResponse], error) {
+func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (resp *runtime.Poller[PrivateEndpointsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[PrivateEndpointsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[PrivateEndpointsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[PrivateEndpointsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, r
 //   - resourceGroupName - The name of the resource group.
 //   - privateEndpointName - The name of the private endpoint.
 //   - options - PrivateEndpointsClientGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
-func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientGetOptions) (PrivateEndpointsClientGetResponse, error) {
+func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientGetOptions) (resp PrivateEndpointsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PrivateEndpointsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
-		return PrivateEndpointsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PrivateEndpointsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrivateEndpointsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -274,6 +289,7 @@ func (client *PrivateEndpointsClient) NewListPager(resourceGroupName string, opt
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -338,6 +354,7 @@ func (client *PrivateEndpointsClient) NewListBySubscriptionPager(options *Privat
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -53,19 +53,22 @@ func NewDiagnosticSettingsClient(subscriptionID string, credential azcore.TokenC
 //   - resourceGroupName - The resource group name.
 //   - options - DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for
 //     the DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings method.
-func (client *DiagnosticSettingsClient) GetDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
+func (client *DiagnosticSettingsClient) GetDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions) (resp DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getDiagnosticProactiveLogCollectionSettingsHandleResponse(resp)
+	return client.getDiagnosticProactiveLogCollectionSettingsHandleResponse(httpResp)
 }
 
 // getDiagnosticProactiveLogCollectionSettingsCreateRequest creates the GetDiagnosticProactiveLogCollectionSettings request.
@@ -109,19 +112,22 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 //   - resourceGroupName - The resource group name.
 //   - options - DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
 //     method.
-func (client *DiagnosticSettingsClient) GetDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse, error) {
+func (client *DiagnosticSettingsClient) GetDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions) (resp DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getDiagnosticRemoteSupportSettingsHandleResponse(resp)
+	return client.getDiagnosticRemoteSupportSettingsHandleResponse(httpResp)
 }
 
 // getDiagnosticRemoteSupportSettingsCreateRequest creates the GetDiagnosticRemoteSupportSettings request.
@@ -166,15 +172,21 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandle
 //   - proactiveLogCollectionSettings - The proactive log collection settings.
 //   - options - DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters
 //     for the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
-func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*runtime.Poller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse], error) {
+func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (resp *runtime.Poller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.updateDiagnosticProactiveLogCollectionSettings(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -183,19 +195,20 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollect
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*http.Response, error) {
+func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (resp *http.Response, err error) {
 	req, err := client.updateDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateDiagnosticProactiveLogCollectionSettingsCreateRequest creates the UpdateDiagnosticProactiveLogCollectionSettings request.
@@ -234,15 +247,21 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 //   - diagnosticRemoteSupportSettings - The diagnostic remote support settings.
 //   - options - DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for
 //     the DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings method.
-func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*runtime.Poller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse], error) {
+func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (resp *runtime.Poller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.updateDiagnosticRemoteSupportSettings(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -251,19 +270,20 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettin
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*http.Response, error) {
+func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (resp *http.Response, err error) {
 	req, err := client.updateDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateDiagnosticRemoteSupportSettingsCreateRequest creates the UpdateDiagnosticRemoteSupportSettings request.

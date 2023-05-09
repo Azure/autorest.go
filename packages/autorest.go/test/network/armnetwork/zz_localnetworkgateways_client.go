@@ -54,17 +54,22 @@ func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.Toke
 //   - parameters - Parameters supplied to the create or update local network gateway operation.
 //   - options - LocalNetworkGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginCreateOrUpdate
 //     method.
-func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[LocalNetworkGatewaysClientCreateOrUpdateResponse], error) {
+func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[LocalNetworkGatewaysClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "LocalNetworkGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LocalNetworkGatewaysClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[LocalNetworkGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LocalNetworkGatewaysClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *LocalNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *LocalNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateCreateRequest(ctx contex
 //   - localNetworkGatewayName - The name of the local network gateway.
 //   - options - LocalNetworkGatewaysClientBeginDeleteOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginDelete
 //     method.
-func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (*runtime.Poller[LocalNetworkGatewaysClientDeleteResponse], error) {
+func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (resp *runtime.Poller[LocalNetworkGatewaysClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "LocalNetworkGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LocalNetworkGatewaysClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[LocalNetworkGatewaysClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LocalNetworkGatewaysClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *LocalNetworkGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (*http.Response, error) {
+func (client *LocalNetworkGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -191,19 +203,22 @@ func (client *LocalNetworkGatewaysClient) deleteCreateRequest(ctx context.Contex
 //   - localNetworkGatewayName - The name of the local network gateway.
 //   - options - LocalNetworkGatewaysClientGetOptions contains the optional parameters for the LocalNetworkGatewaysClient.Get
 //     method.
-func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientGetOptions) (LocalNetworkGatewaysClientGetResponse, error) {
+func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientGetOptions) (resp LocalNetworkGatewaysClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LocalNetworkGatewaysClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
-		return LocalNetworkGatewaysClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LocalNetworkGatewaysClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LocalNetworkGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -272,6 +287,7 @@ func (client *LocalNetworkGatewaysClient) NewListPager(resourceGroupName string,
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -315,19 +331,22 @@ func (client *LocalNetworkGatewaysClient) listHandleResponse(resp *http.Response
 //   - parameters - Parameters supplied to update local network gateway tags.
 //   - options - LocalNetworkGatewaysClientUpdateTagsOptions contains the optional parameters for the LocalNetworkGatewaysClient.UpdateTags
 //     method.
-func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysClientUpdateTagsOptions) (LocalNetworkGatewaysClientUpdateTagsResponse, error) {
+func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysClientUpdateTagsOptions) (resp LocalNetworkGatewaysClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LocalNetworkGatewaysClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
-		return LocalNetworkGatewaysClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LocalNetworkGatewaysClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LocalNetworkGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

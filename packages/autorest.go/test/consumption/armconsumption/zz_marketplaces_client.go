@@ -79,6 +79,7 @@ func (client *MarketplacesClient) NewListPager(scope string, options *Marketplac
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

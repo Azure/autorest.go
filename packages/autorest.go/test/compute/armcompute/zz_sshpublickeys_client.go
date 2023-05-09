@@ -53,19 +53,22 @@ func NewSSHPublicKeysClient(subscriptionID string, credential azcore.TokenCreden
 //   - sshPublicKeyName - The name of the SSH public key.
 //   - parameters - Parameters supplied to create the SSH public key.
 //   - options - SSHPublicKeysClientCreateOptions contains the optional parameters for the SSHPublicKeysClient.Create method.
-func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysClientCreateOptions) (SSHPublicKeysClientCreateResponse, error) {
+func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysClientCreateOptions) (resp SSHPublicKeysClientCreateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Create", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
-		return SSHPublicKeysClientCreateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return SSHPublicKeysClientCreateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return SSHPublicKeysClientCreateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createHandleResponse(resp)
+	return client.createHandleResponse(httpResp)
 }
 
 // createCreateRequest creates the Create request.
@@ -113,19 +116,22 @@ func (client *SSHPublicKeysClient) createHandleResponse(resp *http.Response) (SS
 //   - resourceGroupName - The name of the resource group.
 //   - sshPublicKeyName - The name of the SSH public key.
 //   - options - SSHPublicKeysClientDeleteOptions contains the optional parameters for the SSHPublicKeysClient.Delete method.
-func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientDeleteOptions) (SSHPublicKeysClientDeleteResponse, error) {
+func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientDeleteOptions) (resp SSHPublicKeysClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
-		return SSHPublicKeysClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return SSHPublicKeysClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return SSHPublicKeysClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return SSHPublicKeysClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -164,19 +170,22 @@ func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, reso
 //   - sshPublicKeyName - The name of the SSH public key.
 //   - options - SSHPublicKeysClientGenerateKeyPairOptions contains the optional parameters for the SSHPublicKeysClient.GenerateKeyPair
 //     method.
-func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGenerateKeyPairOptions) (SSHPublicKeysClientGenerateKeyPairResponse, error) {
+func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGenerateKeyPairOptions) (resp SSHPublicKeysClientGenerateKeyPairResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.GenerateKeyPair", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.generateKeyPairCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
-		return SSHPublicKeysClientGenerateKeyPairResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return SSHPublicKeysClientGenerateKeyPairResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SSHPublicKeysClientGenerateKeyPairResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.generateKeyPairHandleResponse(resp)
+	return client.generateKeyPairHandleResponse(httpResp)
 }
 
 // generateKeyPairCreateRequest creates the GenerateKeyPair request.
@@ -221,19 +230,22 @@ func (client *SSHPublicKeysClient) generateKeyPairHandleResponse(resp *http.Resp
 //   - resourceGroupName - The name of the resource group.
 //   - sshPublicKeyName - The name of the SSH public key.
 //   - options - SSHPublicKeysClientGetOptions contains the optional parameters for the SSHPublicKeysClient.Get method.
-func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGetOptions) (SSHPublicKeysClientGetResponse, error) {
+func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGetOptions) (resp SSHPublicKeysClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
-		return SSHPublicKeysClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return SSHPublicKeysClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SSHPublicKeysClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -303,6 +315,7 @@ func (client *SSHPublicKeysClient) NewListByResourceGroupPager(resourceGroupName
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -368,6 +381,7 @@ func (client *SSHPublicKeysClient) NewListBySubscriptionPager(options *SSHPublic
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -406,19 +420,22 @@ func (client *SSHPublicKeysClient) listBySubscriptionHandleResponse(resp *http.R
 //   - sshPublicKeyName - The name of the SSH public key.
 //   - parameters - Parameters supplied to update the SSH public key.
 //   - options - SSHPublicKeysClientUpdateOptions contains the optional parameters for the SSHPublicKeysClient.Update method.
-func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysClientUpdateOptions) (SSHPublicKeysClientUpdateResponse, error) {
+func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysClientUpdateOptions) (resp SSHPublicKeysClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
-		return SSHPublicKeysClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return SSHPublicKeysClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SSHPublicKeysClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

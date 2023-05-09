@@ -54,17 +54,22 @@ func NewCustomIPPrefixesClient(subscriptionID string, credential azcore.TokenCre
 //   - parameters - Parameters supplied to the create or update custom IP prefix operation.
 //   - options - CustomIPPrefixesClientBeginCreateOrUpdateOptions contains the optional parameters for the CustomIPPrefixesClient.BeginCreateOrUpdate
 //     method.
-func (client *CustomIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, customIPPrefixName string, parameters CustomIPPrefix, options *CustomIPPrefixesClientBeginCreateOrUpdateOptions) (*runtime.Poller[CustomIPPrefixesClientCreateOrUpdateResponse], error) {
+func (client *CustomIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, customIPPrefixName string, parameters CustomIPPrefix, options *CustomIPPrefixesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[CustomIPPrefixesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CustomIPPrefixesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, customIPPrefixName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CustomIPPrefixesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CustomIPPrefixesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CustomIPPrefixesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *CustomIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *CustomIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, customIPPrefixName string, parameters CustomIPPrefix, options *CustomIPPrefixesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *CustomIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, customIPPrefixName string, parameters CustomIPPrefix, options *CustomIPPrefixesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, customIPPrefixName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *CustomIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Co
 //   - customIPPrefixName - The name of the CustomIpPrefix.
 //   - options - CustomIPPrefixesClientBeginDeleteOptions contains the optional parameters for the CustomIPPrefixesClient.BeginDelete
 //     method.
-func (client *CustomIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, customIPPrefixName string, options *CustomIPPrefixesClientBeginDeleteOptions) (*runtime.Poller[CustomIPPrefixesClientDeleteResponse], error) {
+func (client *CustomIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, customIPPrefixName string, options *CustomIPPrefixesClientBeginDeleteOptions) (resp *runtime.Poller[CustomIPPrefixesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CustomIPPrefixesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, customIPPrefixName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CustomIPPrefixesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CustomIPPrefixesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CustomIPPrefixesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *CustomIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *CustomIPPrefixesClient) deleteOperation(ctx context.Context, resourceGroupName string, customIPPrefixName string, options *CustomIPPrefixesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *CustomIPPrefixesClient) deleteOperation(ctx context.Context, resourceGroupName string, customIPPrefixName string, options *CustomIPPrefixesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, customIPPrefixName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *CustomIPPrefixesClient) deleteCreateRequest(ctx context.Context, r
 //   - resourceGroupName - The name of the resource group.
 //   - customIPPrefixName - The name of the custom IP prefix.
 //   - options - CustomIPPrefixesClientGetOptions contains the optional parameters for the CustomIPPrefixesClient.Get method.
-func (client *CustomIPPrefixesClient) Get(ctx context.Context, resourceGroupName string, customIPPrefixName string, options *CustomIPPrefixesClientGetOptions) (CustomIPPrefixesClientGetResponse, error) {
+func (client *CustomIPPrefixesClient) Get(ctx context.Context, resourceGroupName string, customIPPrefixName string, options *CustomIPPrefixesClientGetOptions) (resp CustomIPPrefixesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CustomIPPrefixesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, customIPPrefixName, options)
 	if err != nil {
-		return CustomIPPrefixesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CustomIPPrefixesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CustomIPPrefixesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -274,6 +289,7 @@ func (client *CustomIPPrefixesClient) NewListPager(resourceGroupName string, opt
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -338,6 +354,7 @@ func (client *CustomIPPrefixesClient) NewListAllPager(options *CustomIPPrefixesC
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -377,19 +394,22 @@ func (client *CustomIPPrefixesClient) listAllHandleResponse(resp *http.Response)
 //   - parameters - Parameters supplied to update custom IP prefix tags.
 //   - options - CustomIPPrefixesClientUpdateTagsOptions contains the optional parameters for the CustomIPPrefixesClient.UpdateTags
 //     method.
-func (client *CustomIPPrefixesClient) UpdateTags(ctx context.Context, resourceGroupName string, customIPPrefixName string, parameters TagsObject, options *CustomIPPrefixesClientUpdateTagsOptions) (CustomIPPrefixesClientUpdateTagsResponse, error) {
+func (client *CustomIPPrefixesClient) UpdateTags(ctx context.Context, resourceGroupName string, customIPPrefixName string, parameters TagsObject, options *CustomIPPrefixesClientUpdateTagsOptions) (resp CustomIPPrefixesClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CustomIPPrefixesClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, customIPPrefixName, parameters, options)
 	if err != nil {
-		return CustomIPPrefixesClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CustomIPPrefixesClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CustomIPPrefixesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

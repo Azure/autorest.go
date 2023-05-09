@@ -55,17 +55,22 @@ func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential
 //   - serviceEndpointPolicyDefinitions - Parameters supplied to the create or update service endpoint policy operation.
 //   - options - ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate
 //     method.
-func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse], error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,17 +136,22 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateReques
 //   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
 //   - options - ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginDelete
 //     method.
-func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*runtime.Poller[ServiceEndpointPolicyDefinitionsClientDeleteResponse], error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (resp *runtime.Poller[ServiceEndpointPolicyDefinitionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ServiceEndpointPolicyDefinitionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ServiceEndpointPolicyDefinitionsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ServiceEndpointPolicyDefinitionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ServiceEndpointPolicyDefinitionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -148,19 +159,20 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ServiceEndpointPolicyDefinitionsClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -202,19 +214,22 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteCreateRequest(ctx co
 //   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
 //   - options - ServiceEndpointPolicyDefinitionsClientGetOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.Get
 //     method.
-func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientGetOptions) (ServiceEndpointPolicyDefinitionsClientGetResponse, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientGetOptions) (resp ServiceEndpointPolicyDefinitionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceEndpointPolicyDefinitionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -288,6 +303,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) NewListByResourceGroupPage
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

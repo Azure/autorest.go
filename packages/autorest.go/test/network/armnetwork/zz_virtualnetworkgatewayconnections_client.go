@@ -54,17 +54,22 @@ func NewVirtualNetworkGatewayConnectionsClient(subscriptionID string, credential
 //   - parameters - Parameters supplied to the create or update virtual network gateway connection operation.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateCreateReques
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginDeleteOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginDelete
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientDeleteResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginDeleteOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -191,19 +203,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) deleteCreateRequest(ctx co
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - options - VirtualNetworkGatewayConnectionsClientGetOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.Get
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientGetOptions) (VirtualNetworkGatewayConnectionsClientGetResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientGetOptions) (resp VirtualNetworkGatewayConnectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
-		return VirtualNetworkGatewayConnectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkGatewayConnectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkGatewayConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -249,17 +264,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) getHandleResponse(resp *ht
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway Connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginGetIkeSas(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientGetIkeSasResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginGetIkeSas(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientGetIkeSasResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.getIkeSas(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientGetIkeSasResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientGetIkeSasResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientGetIkeSasResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -267,19 +287,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginGetIkeSas(ctx context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) getIkeSas(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) getIkeSas(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions) (resp *http.Response, err error) {
 	req, err := client.getIkeSasCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // getIkeSasCreateRequest creates the GetIkeSas request.
@@ -317,19 +338,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) getIkeSasCreateRequest(ctx
 //   - virtualNetworkGatewayConnectionName - The virtual network gateway connection shared key name.
 //   - options - VirtualNetworkGatewayConnectionsClientGetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.GetSharedKey
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientGetSharedKeyOptions) (VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientGetSharedKeyOptions) (resp VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.GetSharedKey", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
-		return VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getSharedKeyHandleResponse(resp)
+	return client.getSharedKeyHandleResponse(httpResp)
 }
 
 // getSharedKeyCreateRequest creates the GetSharedKey request.
@@ -399,6 +423,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) NewListPager(resourceGroup
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -441,17 +466,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) listHandleResponse(resp *h
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway Connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginResetConnection
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginResetConnection(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientResetConnectionResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginResetConnection(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientResetConnectionResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginResetConnection", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.resetConnection(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientResetConnectionResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientResetConnectionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientResetConnectionResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -459,19 +489,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetConnection(ctx c
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) resetConnection(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) resetConnection(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions) (resp *http.Response, err error) {
 	req, err := client.resetConnectionCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // resetConnectionCreateRequest creates the ResetConnection request.
@@ -512,17 +543,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetConnectionCreateReque
 //     resource provider.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginResetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginResetSharedKeyOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginResetSharedKeyOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.resetSharedKey(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -532,19 +568,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginResetSharedKeyOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginResetSharedKeyOptions) (resp *http.Response, err error) {
 	req, err := client.resetSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // resetSharedKeyCreateRequest creates the ResetSharedKey request.
@@ -588,17 +625,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKeyCreateReques
 //     resource provider.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.setSharedKey(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -608,19 +650,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) setSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) setSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions) (resp *http.Response, err error) {
 	req, err := client.setSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // setSharedKeyCreateRequest creates the SetSharedKey request.
@@ -660,17 +703,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) setSharedKeyCreateRequest(
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions contains the optional parameters for the
 //     VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.startPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -678,19 +726,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) startPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) startPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions) (resp *http.Response, err error) {
 	req, err := client.startPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // startPacketCaptureCreateRequest creates the StartPacketCapture request.
@@ -734,17 +783,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureCreateRe
 //   - parameters - Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginStopPacketCaptureOptions contains the optional parameters for the
 //     VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsClientBeginStopPacketCaptureOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsClientBeginStopPacketCaptureOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.stopPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -752,19 +806,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsClientBeginStopPacketCaptureOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsClientBeginStopPacketCaptureOptions) (resp *http.Response, err error) {
 	req, err := client.stopPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // stopPacketCaptureCreateRequest creates the StopPacketCapture request.
@@ -805,17 +860,22 @@ func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCaptureCreateReq
 //   - parameters - Parameters supplied to update virtual network gateway connection tags.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginUpdateTagsOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginUpdateTags
 //     method.
-func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters TagsObject, options *VirtualNetworkGatewayConnectionsClientBeginUpdateTagsOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse], error) {
+func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters TagsObject, options *VirtualNetworkGatewayConnectionsClientBeginUpdateTagsOptions) (resp *runtime.Poller[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginUpdateTags", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -823,19 +883,20 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworkGatewayConnectionsClient) updateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters TagsObject, options *VirtualNetworkGatewayConnectionsClientBeginUpdateTagsOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewayConnectionsClient) updateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters TagsObject, options *VirtualNetworkGatewayConnectionsClientBeginUpdateTagsOptions) (resp *http.Response, err error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

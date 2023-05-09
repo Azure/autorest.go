@@ -55,17 +55,22 @@ func NewRouteMapsClient(subscriptionID string, credential azcore.TokenCredential
 //   - routeMapParameters - Parameters supplied to create or update a RouteMap.
 //   - options - RouteMapsClientBeginCreateOrUpdateOptions contains the optional parameters for the RouteMapsClient.BeginCreateOrUpdate
 //     method.
-func (client *RouteMapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (*runtime.Poller[RouteMapsClientCreateOrUpdateResponse], error) {
+func (client *RouteMapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[RouteMapsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "RouteMapsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeMapName, routeMapParameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[RouteMapsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[RouteMapsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[RouteMapsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *RouteMapsClient) BeginCreateOrUpdate(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *RouteMapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *RouteMapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, routeMapName, routeMapParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -129,17 +135,22 @@ func (client *RouteMapsClient) createOrUpdateCreateRequest(ctx context.Context, 
 //   - virtualHubName - The name of the VirtualHub containing the RouteMap.
 //   - routeMapName - The name of the RouteMap.
 //   - options - RouteMapsClientBeginDeleteOptions contains the optional parameters for the RouteMapsClient.BeginDelete method.
-func (client *RouteMapsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (*runtime.Poller[RouteMapsClientDeleteResponse], error) {
+func (client *RouteMapsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (resp *runtime.Poller[RouteMapsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "RouteMapsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeMapName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[RouteMapsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[RouteMapsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[RouteMapsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -147,19 +158,20 @@ func (client *RouteMapsClient) BeginDelete(ctx context.Context, resourceGroupNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *RouteMapsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *RouteMapsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, routeMapName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -200,19 +212,22 @@ func (client *RouteMapsClient) deleteCreateRequest(ctx context.Context, resource
 //   - virtualHubName - The name of the VirtualHub containing the RouteMap.
 //   - routeMapName - The name of the RouteMap.
 //   - options - RouteMapsClientGetOptions contains the optional parameters for the RouteMapsClient.Get method.
-func (client *RouteMapsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientGetOptions) (RouteMapsClientGetResponse, error) {
+func (client *RouteMapsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientGetOptions) (resp RouteMapsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "RouteMapsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, routeMapName, options)
 	if err != nil {
-		return RouteMapsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RouteMapsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RouteMapsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -285,6 +300,7 @@ func (client *RouteMapsClient) NewListPager(resourceGroupName string, virtualHub
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

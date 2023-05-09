@@ -55,17 +55,22 @@ func NewFlowLogsClient(subscriptionID string, credential azcore.TokenCredential,
 //   - parameters - Parameters that define the create or update flow log resource.
 //   - options - FlowLogsClientBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogsClient.BeginCreateOrUpdate
 //     method.
-func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (*runtime.Poller[FlowLogsClientCreateOrUpdateResponse], error) {
+func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[FlowLogsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "FlowLogsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[FlowLogsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[FlowLogsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[FlowLogsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -129,17 +135,22 @@ func (client *FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, r
 //   - networkWatcherName - The name of the network watcher.
 //   - flowLogName - The name of the flow log resource.
 //   - options - FlowLogsClientBeginDeleteOptions contains the optional parameters for the FlowLogsClient.BeginDelete method.
-func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (*runtime.Poller[FlowLogsClientDeleteResponse], error) {
+func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (resp *runtime.Poller[FlowLogsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "FlowLogsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[FlowLogsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[FlowLogsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[FlowLogsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -147,19 +158,20 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *FlowLogsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *FlowLogsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -200,19 +212,22 @@ func (client *FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceG
 //   - networkWatcherName - The name of the network watcher.
 //   - flowLogName - The name of the flow log resource.
 //   - options - FlowLogsClientGetOptions contains the optional parameters for the FlowLogsClient.Get method.
-func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientGetOptions) (FlowLogsClientGetResponse, error) {
+func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientGetOptions) (resp FlowLogsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FlowLogsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
-		return FlowLogsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FlowLogsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FlowLogsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -285,6 +300,7 @@ func (client *FlowLogsClient) NewListPager(resourceGroupName string, networkWatc
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -332,19 +348,22 @@ func (client *FlowLogsClient) listHandleResponse(resp *http.Response) (FlowLogsC
 //   - flowLogName - The name of the flow log.
 //   - parameters - Parameters supplied to update flow log tags.
 //   - options - FlowLogsClientUpdateTagsOptions contains the optional parameters for the FlowLogsClient.UpdateTags method.
-func (client *FlowLogsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters TagsObject, options *FlowLogsClientUpdateTagsOptions) (FlowLogsClientUpdateTagsResponse, error) {
+func (client *FlowLogsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters TagsObject, options *FlowLogsClientUpdateTagsOptions) (resp FlowLogsClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "FlowLogsClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
-		return FlowLogsClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FlowLogsClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FlowLogsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

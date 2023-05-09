@@ -57,19 +57,22 @@ func NewAdminRuleCollectionsClient(subscriptionID string, credential azcore.Toke
 //   - ruleCollection - The Rule Collection to create or update
 //   - options - AdminRuleCollectionsClientCreateOrUpdateOptions contains the optional parameters for the AdminRuleCollectionsClient.CreateOrUpdate
 //     method.
-func (client *AdminRuleCollectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, ruleCollection AdminRuleCollection, options *AdminRuleCollectionsClientCreateOrUpdateOptions) (AdminRuleCollectionsClientCreateOrUpdateResponse, error) {
+func (client *AdminRuleCollectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, ruleCollection AdminRuleCollection, options *AdminRuleCollectionsClientCreateOrUpdateOptions) (resp AdminRuleCollectionsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AdminRuleCollectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleCollection, options)
 	if err != nil {
-		return AdminRuleCollectionsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AdminRuleCollectionsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return AdminRuleCollectionsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -128,17 +131,22 @@ func (client *AdminRuleCollectionsClient) createOrUpdateHandleResponse(resp *htt
 //   - ruleCollectionName - The name of the network manager security Configuration rule collection.
 //   - options - AdminRuleCollectionsClientBeginDeleteOptions contains the optional parameters for the AdminRuleCollectionsClient.BeginDelete
 //     method.
-func (client *AdminRuleCollectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientBeginDeleteOptions) (*runtime.Poller[AdminRuleCollectionsClientDeleteResponse], error) {
+func (client *AdminRuleCollectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientBeginDeleteOptions) (resp *runtime.Poller[AdminRuleCollectionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "AdminRuleCollectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AdminRuleCollectionsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[AdminRuleCollectionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AdminRuleCollectionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -146,19 +154,20 @@ func (client *AdminRuleCollectionsClient) BeginDelete(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *AdminRuleCollectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *AdminRuleCollectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -208,19 +217,22 @@ func (client *AdminRuleCollectionsClient) deleteCreateRequest(ctx context.Contex
 //   - ruleCollectionName - The name of the network manager security Configuration rule collection.
 //   - options - AdminRuleCollectionsClientGetOptions contains the optional parameters for the AdminRuleCollectionsClient.Get
 //     method.
-func (client *AdminRuleCollectionsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientGetOptions) (AdminRuleCollectionsClientGetResponse, error) {
+func (client *AdminRuleCollectionsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientGetOptions) (resp AdminRuleCollectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AdminRuleCollectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, options)
 	if err != nil {
-		return AdminRuleCollectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AdminRuleCollectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AdminRuleCollectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -299,6 +311,7 @@ func (client *AdminRuleCollectionsClient) NewListPager(resourceGroupName string,
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -52,19 +52,22 @@ func NewVirtualApplianceSKUsClient(subscriptionID string, credential azcore.Toke
 //   - skuName - Name of the Sku.
 //   - options - VirtualApplianceSKUsClientGetOptions contains the optional parameters for the VirtualApplianceSKUsClient.Get
 //     method.
-func (client *VirtualApplianceSKUsClient) Get(ctx context.Context, skuName string, options *VirtualApplianceSKUsClientGetOptions) (VirtualApplianceSKUsClientGetResponse, error) {
+func (client *VirtualApplianceSKUsClient) Get(ctx context.Context, skuName string, options *VirtualApplianceSKUsClientGetOptions) (resp VirtualApplianceSKUsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualApplianceSKUsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, skuName, options)
 	if err != nil {
-		return VirtualApplianceSKUsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualApplianceSKUsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualApplianceSKUsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -128,6 +131,7 @@ func (client *VirtualApplianceSKUsClient) NewListPager(options *VirtualAppliance
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

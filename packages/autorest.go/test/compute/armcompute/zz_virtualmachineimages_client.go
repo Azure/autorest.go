@@ -57,19 +57,22 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 //   - version - A valid image SKU version.
 //   - options - VirtualMachineImagesClientGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get
 //     method.
-func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesClientGetOptions) (VirtualMachineImagesClientGetResponse, error) {
+func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesClientGetOptions) (resp VirtualMachineImagesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
-		return VirtualMachineImagesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -129,19 +132,22 @@ func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response)
 //   - skus - A valid image SKU.
 //   - options - VirtualMachineImagesClientListOptions contains the optional parameters for the VirtualMachineImagesClient.List
 //     method.
-func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesClientListOptions) (VirtualMachineImagesClientListResponse, error) {
+func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesClientListOptions) (resp VirtualMachineImagesClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
-		return VirtualMachineImagesClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.
@@ -204,19 +210,22 @@ func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response
 //   - publisherName - A valid image publisher.
 //   - options - VirtualMachineImagesClientListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers
 //     method.
-func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesClientListOffersOptions) (VirtualMachineImagesClientListOffersResponse, error) {
+func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesClientListOffersOptions) (resp VirtualMachineImagesClientListOffersResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.ListOffers", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
-		return VirtualMachineImagesClientListOffersResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesClientListOffersResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListOffersResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listOffersHandleResponse(resp)
+	return client.listOffersHandleResponse(httpResp)
 }
 
 // listOffersCreateRequest creates the ListOffers request.
@@ -261,19 +270,22 @@ func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Re
 //   - location - The name of a supported Azure region.
 //   - options - VirtualMachineImagesClientListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
 //     method.
-func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesClientListPublishersOptions) (VirtualMachineImagesClientListPublishersResponse, error) {
+func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesClientListPublishersOptions) (resp VirtualMachineImagesClientListPublishersResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.ListPublishers", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
 	if err != nil {
-		return VirtualMachineImagesClientListPublishersResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesClientListPublishersResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListPublishersResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listPublishersHandleResponse(resp)
+	return client.listPublishersHandleResponse(httpResp)
 }
 
 // listPublishersCreateRequest creates the ListPublishers request.
@@ -316,19 +328,22 @@ func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *htt
 //   - offer - A valid image publisher offer.
 //   - options - VirtualMachineImagesClientListSKUsOptions contains the optional parameters for the VirtualMachineImagesClient.ListSKUs
 //     method.
-func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesClientListSKUsOptions) (VirtualMachineImagesClientListSKUsResponse, error) {
+func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesClientListSKUsOptions) (resp VirtualMachineImagesClientListSKUsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.ListSKUs", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {
-		return VirtualMachineImagesClientListSKUsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesClientListSKUsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListSKUsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listSKUsHandleResponse(resp)
+	return client.listSKUsHandleResponse(httpResp)
 }
 
 // listSKUsCreateRequest creates the ListSKUs request.

@@ -29,19 +29,22 @@ type PolymorphismClient struct {
 // Generated from API version 2016-02-29
 //   - options - PolymorphismClientGetComplicatedOptions contains the optional parameters for the PolymorphismClient.GetComplicated
 //     method.
-func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *PolymorphismClientGetComplicatedOptions) (PolymorphismClientGetComplicatedResponse, error) {
+func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *PolymorphismClientGetComplicatedOptions) (resp PolymorphismClientGetComplicatedResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetComplicated", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplicatedCreateRequest(ctx, options)
 	if err != nil {
-		return PolymorphismClientGetComplicatedResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientGetComplicatedResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientGetComplicatedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getComplicatedHandleResponse(resp)
+	return client.getComplicatedHandleResponse(httpResp)
 }
 
 // getComplicatedCreateRequest creates the GetComplicated request.
@@ -72,19 +75,22 @@ func (client *PolymorphismClient) getComplicatedHandleResponse(resp *http.Respon
 // Generated from API version 2016-02-29
 //   - options - PolymorphismClientGetComposedWithDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithDiscriminator
 //     method.
-func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithDiscriminatorOptions) (PolymorphismClientGetComposedWithDiscriminatorResponse, error) {
+func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithDiscriminatorOptions) (resp PolymorphismClientGetComposedWithDiscriminatorResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetComposedWithDiscriminator", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComposedWithDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
-		return PolymorphismClientGetComposedWithDiscriminatorResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientGetComposedWithDiscriminatorResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientGetComposedWithDiscriminatorResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getComposedWithDiscriminatorHandleResponse(resp)
+	return client.getComposedWithDiscriminatorHandleResponse(httpResp)
 }
 
 // getComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
@@ -115,19 +121,22 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(res
 // Generated from API version 2016-02-29
 //   - options - PolymorphismClientGetComposedWithoutDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithoutDiscriminator
 //     method.
-func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithoutDiscriminatorOptions) (PolymorphismClientGetComposedWithoutDiscriminatorResponse, error) {
+func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithoutDiscriminatorOptions) (resp PolymorphismClientGetComposedWithoutDiscriminatorResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetComposedWithoutDiscriminator", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComposedWithoutDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
-		return PolymorphismClientGetComposedWithoutDiscriminatorResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientGetComposedWithoutDiscriminatorResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientGetComposedWithoutDiscriminatorResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getComposedWithoutDiscriminatorHandleResponse(resp)
+	return client.getComposedWithoutDiscriminatorHandleResponse(httpResp)
 }
 
 // getComposedWithoutDiscriminatorCreateRequest creates the GetComposedWithoutDiscriminator request.
@@ -156,19 +165,22 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(
 // Generated from API version 2016-02-29
 //   - options - PolymorphismClientGetDotSyntaxOptions contains the optional parameters for the PolymorphismClient.GetDotSyntax
 //     method.
-func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *PolymorphismClientGetDotSyntaxOptions) (PolymorphismClientGetDotSyntaxResponse, error) {
+func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *PolymorphismClientGetDotSyntaxOptions) (resp PolymorphismClientGetDotSyntaxResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetDotSyntax", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDotSyntaxCreateRequest(ctx, options)
 	if err != nil {
-		return PolymorphismClientGetDotSyntaxResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientGetDotSyntaxResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientGetDotSyntaxResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getDotSyntaxHandleResponse(resp)
+	return client.getDotSyntaxHandleResponse(httpResp)
 }
 
 // getDotSyntaxCreateRequest creates the GetDotSyntax request.
@@ -196,19 +208,22 @@ func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *http.Response
 //
 // Generated from API version 2016-02-29
 //   - options - PolymorphismClientGetValidOptions contains the optional parameters for the PolymorphismClient.GetValid method.
-func (client *PolymorphismClient) GetValid(ctx context.Context, options *PolymorphismClientGetValidOptions) (PolymorphismClientGetValidResponse, error) {
+func (client *PolymorphismClient) GetValid(ctx context.Context, options *PolymorphismClientGetValidOptions) (resp PolymorphismClientGetValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return PolymorphismClientGetValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientGetValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientGetValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getValidHandleResponse(resp)
+	return client.getValidHandleResponse(httpResp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -237,19 +252,22 @@ func (client *PolymorphismClient) getValidHandleResponse(resp *http.Response) (P
 // Generated from API version 2016-02-29
 //   - options - PolymorphismClientPutComplicatedOptions contains the optional parameters for the PolymorphismClient.PutComplicated
 //     method.
-func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutComplicatedOptions) (PolymorphismClientPutComplicatedResponse, error) {
+func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutComplicatedOptions) (resp PolymorphismClientPutComplicatedResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutComplicated", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putComplicatedCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PolymorphismClientPutComplicatedResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientPutComplicatedResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientPutComplicatedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return PolymorphismClientPutComplicatedResponse{}, nil
+	return
 }
 
 // putComplicatedCreateRequest creates the PutComplicated request.
@@ -272,19 +290,22 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 // Generated from API version 2016-02-29
 //   - options - PolymorphismClientPutMissingDiscriminatorOptions contains the optional parameters for the PolymorphismClient.PutMissingDiscriminator
 //     method.
-func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutMissingDiscriminatorOptions) (PolymorphismClientPutMissingDiscriminatorResponse, error) {
+func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutMissingDiscriminatorOptions) (resp PolymorphismClientPutMissingDiscriminatorResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutMissingDiscriminator", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMissingDiscriminatorCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PolymorphismClientPutMissingDiscriminatorResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientPutMissingDiscriminatorResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientPutMissingDiscriminatorResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.putMissingDiscriminatorHandleResponse(resp)
+	return client.putMissingDiscriminatorHandleResponse(httpResp)
 }
 
 // putMissingDiscriminatorCreateRequest creates the PutMissingDiscriminator request.
@@ -321,19 +342,22 @@ func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *ht
 //     254]).toString('base64'), 'species':'dangerous', }, { 'fishtype': 'goblin', 'age': 1, 'birthday': '2015-08-08T00:00:00Z',
 //     'length': 30.0, 'species': 'scary', 'jawsize': 5 } ] };
 //   - options - PolymorphismClientPutValidOptions contains the optional parameters for the PolymorphismClient.PutValid method.
-func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidOptions) (PolymorphismClientPutValidResponse, error) {
+func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidOptions) (resp PolymorphismClientPutValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PolymorphismClientPutValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientPutValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientPutValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return PolymorphismClientPutValidResponse{}, nil
+	return
 }
 
 // putValidCreateRequest creates the PutValid request.
@@ -362,19 +386,22 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 //     }, { "fishtype": "sawshark", "species": "dangerous", "picture": base64(FF FF FF FF FE), "length": 10, "age": 105 } ] }
 //   - options - PolymorphismClientPutValidMissingRequiredOptions contains the optional parameters for the PolymorphismClient.PutValidMissingRequired
 //     method.
-func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidMissingRequiredOptions) (PolymorphismClientPutValidMissingRequiredResponse, error) {
+func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidMissingRequiredOptions) (resp PolymorphismClientPutValidMissingRequiredResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutValidMissingRequired", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putValidMissingRequiredCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PolymorphismClientPutValidMissingRequiredResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphismClientPutValidMissingRequiredResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphismClientPutValidMissingRequiredResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return PolymorphismClientPutValidMissingRequiredResponse{}, nil
+	return
 }
 
 // putValidMissingRequiredCreateRequest creates the PutValidMissingRequired request.

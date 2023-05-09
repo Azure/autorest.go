@@ -54,15 +54,21 @@ func NewGallerySharingProfileClient(subscriptionID string, credential azcore.Tok
 //   - sharingUpdate - Parameters supplied to the update gallery sharing profile.
 //   - options - GallerySharingProfileClientBeginUpdateOptions contains the optional parameters for the GallerySharingProfileClient.BeginUpdate
 //     method.
-func (client *GallerySharingProfileClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate SharingUpdate, options *GallerySharingProfileClientBeginUpdateOptions) (*runtime.Poller[GallerySharingProfileClientUpdateResponse], error) {
+func (client *GallerySharingProfileClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate SharingUpdate, options *GallerySharingProfileClientBeginUpdateOptions) (resp *runtime.Poller[GallerySharingProfileClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "GallerySharingProfileClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, galleryName, sharingUpdate, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GallerySharingProfileClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[GallerySharingProfileClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[GallerySharingProfileClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[GallerySharingProfileClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -70,19 +76,20 @@ func (client *GallerySharingProfileClient) BeginUpdate(ctx context.Context, reso
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-10-01
-func (client *GallerySharingProfileClient) update(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate SharingUpdate, options *GallerySharingProfileClientBeginUpdateOptions) (*http.Response, error) {
+func (client *GallerySharingProfileClient) update(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate SharingUpdate, options *GallerySharingProfileClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, sharingUpdate, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

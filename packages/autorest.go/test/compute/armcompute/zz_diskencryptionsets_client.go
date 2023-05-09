@@ -56,15 +56,21 @@ func NewDiskEncryptionSetsClient(subscriptionID string, credential azcore.TokenC
 //   - diskEncryptionSet - disk encryption set object supplied in the body of the Put disk encryption set operation.
 //   - options - DiskEncryptionSetsClientBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginCreateOrUpdate
 //     method.
-func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (*runtime.Poller[DiskEncryptionSetsClientCreateOrUpdateResponse], error) {
+func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[DiskEncryptionSetsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DiskEncryptionSetsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiskEncryptionSetsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DiskEncryptionSetsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DiskEncryptionSetsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +78,20 @@ func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-12-01
-func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -126,15 +133,21 @@ func (client *DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.
 //     name length is 80 characters.
 //   - options - DiskEncryptionSetsClientBeginDeleteOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginDelete
 //     method.
-func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (*runtime.Poller[DiskEncryptionSetsClientDeleteResponse], error) {
+func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (resp *runtime.Poller[DiskEncryptionSetsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DiskEncryptionSetsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, diskEncryptionSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiskEncryptionSetsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DiskEncryptionSetsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DiskEncryptionSetsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +155,20 @@ func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-12-01
-func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -192,19 +206,22 @@ func (client *DiskEncryptionSetsClient) deleteCreateRequest(ctx context.Context,
 //     disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum
 //     name length is 80 characters.
 //   - options - DiskEncryptionSetsClientGetOptions contains the optional parameters for the DiskEncryptionSetsClient.Get method.
-func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientGetOptions) (DiskEncryptionSetsClientGetResponse, error) {
+func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientGetOptions) (resp DiskEncryptionSetsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DiskEncryptionSetsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
-		return DiskEncryptionSetsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DiskEncryptionSetsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DiskEncryptionSetsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -272,6 +289,7 @@ func (client *DiskEncryptionSetsClient) NewListPager(options *DiskEncryptionSets
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -336,6 +354,7 @@ func (client *DiskEncryptionSetsClient) NewListAssociatedResourcesPager(resource
 			}
 			return client.listAssociatedResourcesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -405,6 +424,7 @@ func (client *DiskEncryptionSetsClient) NewListByResourceGroupPager(resourceGrou
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -450,15 +470,21 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupHandleResponse(resp *
 //   - diskEncryptionSet - disk encryption set object supplied in the body of the Patch disk encryption set operation.
 //   - options - DiskEncryptionSetsClientBeginUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginUpdate
 //     method.
-func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (*runtime.Poller[DiskEncryptionSetsClientUpdateResponse], error) {
+func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (resp *runtime.Poller[DiskEncryptionSetsClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DiskEncryptionSetsClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DiskEncryptionSetsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DiskEncryptionSetsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskEncryptionSetsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DiskEncryptionSetsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -466,19 +492,20 @@ func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-12-01
-func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

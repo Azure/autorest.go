@@ -58,15 +58,21 @@ func NewGalleryImageVersionsClient(subscriptionID string, credential azcore.Toke
 //   - galleryImageVersion - Parameters supplied to the create or update gallery image version operation.
 //   - options - GalleryImageVersionsClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginCreateOrUpdate
 //     method.
-func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[GalleryImageVersionsClientCreateOrUpdateResponse], error) {
+func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[GalleryImageVersionsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "GalleryImageVersionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleryImageVersionsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[GalleryImageVersionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleryImageVersionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[GalleryImageVersionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -74,19 +80,20 @@ func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-10-01
-func (client *GalleryImageVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *GalleryImageVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -136,15 +143,21 @@ func (client *GalleryImageVersionsClient) createOrUpdateCreateRequest(ctx contex
 //   - galleryImageVersionName - The name of the gallery image version to be deleted.
 //   - options - GalleryImageVersionsClientBeginDeleteOptions contains the optional parameters for the GalleryImageVersionsClient.BeginDelete
 //     method.
-func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (*runtime.Poller[GalleryImageVersionsClientDeleteResponse], error) {
+func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (resp *runtime.Poller[GalleryImageVersionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "GalleryImageVersionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleryImageVersionsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[GalleryImageVersionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleryImageVersionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[GalleryImageVersionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -152,19 +165,20 @@ func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-10-01
-func (client *GalleryImageVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *GalleryImageVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -211,19 +225,22 @@ func (client *GalleryImageVersionsClient) deleteCreateRequest(ctx context.Contex
 //   - galleryImageVersionName - The name of the gallery image version to be retrieved.
 //   - options - GalleryImageVersionsClientGetOptions contains the optional parameters for the GalleryImageVersionsClient.Get
 //     method.
-func (client *GalleryImageVersionsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientGetOptions) (GalleryImageVersionsClientGetResponse, error) {
+func (client *GalleryImageVersionsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientGetOptions) (resp GalleryImageVersionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "GalleryImageVersionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
-		return GalleryImageVersionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return GalleryImageVersionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return GalleryImageVersionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -305,6 +322,7 @@ func (client *GalleryImageVersionsClient) NewListByGalleryImagePager(resourceGro
 			}
 			return client.listByGalleryImageHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -360,15 +378,21 @@ func (client *GalleryImageVersionsClient) listByGalleryImageHandleResponse(resp 
 //   - galleryImageVersion - Parameters supplied to the update gallery image version operation.
 //   - options - GalleryImageVersionsClientBeginUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginUpdate
 //     method.
-func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (*runtime.Poller[GalleryImageVersionsClientUpdateResponse], error) {
+func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (resp *runtime.Poller[GalleryImageVersionsClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "GalleryImageVersionsClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[GalleryImageVersionsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[GalleryImageVersionsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[GalleryImageVersionsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[GalleryImageVersionsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -376,19 +400,20 @@ func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-10-01
-func (client *GalleryImageVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *GalleryImageVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

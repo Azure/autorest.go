@@ -33,19 +33,22 @@ type IntegrationRuntimesClient struct {
 // Generated from API version 2020-12-01
 //   - integrationRuntimeName - The Integration Runtime name
 //   - options - IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
-func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesClientGetOptions) (IntegrationRuntimesClientGetResponse, error) {
+func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesClientGetOptions) (resp IntegrationRuntimesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "IntegrationRuntimesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
-		return IntegrationRuntimesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return IntegrationRuntimesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntegrationRuntimesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -81,19 +84,22 @@ func (client *IntegrationRuntimesClient) getHandleResponse(resp *http.Response) 
 // Generated from API version 2020-12-01
 //   - options - IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List
 //     method.
-func (client *IntegrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesClientListOptions) (IntegrationRuntimesClientListResponse, error) {
+func (client *IntegrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesClientListOptions) (resp IntegrationRuntimesClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "IntegrationRuntimesClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return IntegrationRuntimesClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return IntegrationRuntimesClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntegrationRuntimesClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.

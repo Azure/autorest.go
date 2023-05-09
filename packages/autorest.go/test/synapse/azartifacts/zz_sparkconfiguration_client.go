@@ -35,15 +35,21 @@ type SparkConfigurationClient struct {
 //   - sparkConfiguration - SparkConfiguration resource definition.
 //   - options - SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions contains the optional parameters for the
 //     SparkConfigurationClient.BeginCreateOrUpdateSparkConfiguration method.
-func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse], error) {
+func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (resp *runtime.Poller[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "SparkConfigurationClient.BeginCreateOrUpdateSparkConfiguration", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdateSparkConfiguration(ctx, sparkConfigurationName, sparkConfiguration, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -51,19 +57,20 @@ func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-06-01-preview
-func (client *SparkConfigurationClient) createOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (*http.Response, error) {
+func (client *SparkConfigurationClient) createOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateSparkConfigurationCreateRequest(ctx, sparkConfigurationName, sparkConfiguration, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateSparkConfigurationCreateRequest creates the CreateOrUpdateSparkConfiguration request.
@@ -97,15 +104,21 @@ func (client *SparkConfigurationClient) createOrUpdateSparkConfigurationCreateRe
 //   - sparkConfigurationName - The spark Configuration name.
 //   - options - SparkConfigurationClientBeginDeleteSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginDeleteSparkConfiguration
 //     method.
-func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientDeleteSparkConfigurationResponse], error) {
+func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (resp *runtime.Poller[SparkConfigurationClientDeleteSparkConfigurationResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "SparkConfigurationClient.BeginDeleteSparkConfiguration", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteSparkConfiguration(ctx, sparkConfigurationName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SparkConfigurationClientDeleteSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkConfigurationClientDeleteSparkConfigurationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[SparkConfigurationClientDeleteSparkConfigurationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkConfigurationClientDeleteSparkConfigurationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -113,19 +126,20 @@ func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-06-01-preview
-func (client *SparkConfigurationClient) deleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*http.Response, error) {
+func (client *SparkConfigurationClient) deleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (resp *http.Response, err error) {
 	req, err := client.deleteSparkConfigurationCreateRequest(ctx, sparkConfigurationName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteSparkConfigurationCreateRequest creates the DeleteSparkConfiguration request.
@@ -153,19 +167,22 @@ func (client *SparkConfigurationClient) deleteSparkConfigurationCreateRequest(ct
 //   - sparkConfigurationName - The spark Configuration name.
 //   - options - SparkConfigurationClientGetSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.GetSparkConfiguration
 //     method.
-func (client *SparkConfigurationClient) GetSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientGetSparkConfigurationOptions) (SparkConfigurationClientGetSparkConfigurationResponse, error) {
+func (client *SparkConfigurationClient) GetSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientGetSparkConfigurationOptions) (resp SparkConfigurationClientGetSparkConfigurationResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "SparkConfigurationClient.GetSparkConfiguration", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getSparkConfigurationCreateRequest(ctx, sparkConfigurationName, options)
 	if err != nil {
-		return SparkConfigurationClientGetSparkConfigurationResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return SparkConfigurationClientGetSparkConfigurationResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return SparkConfigurationClientGetSparkConfigurationResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotModified) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getSparkConfigurationHandleResponse(resp)
+	return client.getSparkConfigurationHandleResponse(httpResp)
 }
 
 // getSparkConfigurationCreateRequest creates the GetSparkConfiguration request.
@@ -228,6 +245,7 @@ func (client *SparkConfigurationClient) NewGetSparkConfigurationsByWorkspacePage
 			}
 			return client.getSparkConfigurationsByWorkspaceHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -262,15 +280,21 @@ func (client *SparkConfigurationClient) getSparkConfigurationsByWorkspaceHandleR
 //   - request - proposed new name.
 //   - options - SparkConfigurationClientBeginRenameSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginRenameSparkConfiguration
 //     method.
-func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientRenameSparkConfigurationResponse], error) {
+func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (resp *runtime.Poller[SparkConfigurationClientRenameSparkConfigurationResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "SparkConfigurationClient.BeginRenameSparkConfiguration", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.renameSparkConfiguration(ctx, sparkConfigurationName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SparkConfigurationClientRenameSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkConfigurationClientRenameSparkConfigurationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[SparkConfigurationClientRenameSparkConfigurationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkConfigurationClientRenameSparkConfigurationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -278,19 +302,20 @@ func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-06-01-preview
-func (client *SparkConfigurationClient) renameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*http.Response, error) {
+func (client *SparkConfigurationClient) renameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (resp *http.Response, err error) {
 	req, err := client.renameSparkConfigurationCreateRequest(ctx, sparkConfigurationName, request, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // renameSparkConfigurationCreateRequest creates the RenameSparkConfiguration request.

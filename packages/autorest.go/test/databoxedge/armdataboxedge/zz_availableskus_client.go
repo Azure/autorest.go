@@ -73,6 +73,7 @@ func (client *AvailableSKUsClient) NewListPager(options *AvailableSKUsClientList
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

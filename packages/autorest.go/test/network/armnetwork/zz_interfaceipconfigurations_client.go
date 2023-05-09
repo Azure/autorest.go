@@ -54,19 +54,22 @@ func NewInterfaceIPConfigurationsClient(subscriptionID string, credential azcore
 //   - ipConfigurationName - The name of the ip configuration name.
 //   - options - InterfaceIPConfigurationsClientGetOptions contains the optional parameters for the InterfaceIPConfigurationsClient.Get
 //     method.
-func (client *InterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *InterfaceIPConfigurationsClientGetOptions) (InterfaceIPConfigurationsClientGetResponse, error) {
+func (client *InterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *InterfaceIPConfigurationsClientGetOptions) (resp InterfaceIPConfigurationsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "InterfaceIPConfigurationsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
-		return InterfaceIPConfigurationsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return InterfaceIPConfigurationsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InterfaceIPConfigurationsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -140,6 +143,7 @@ func (client *InterfaceIPConfigurationsClient) NewListPager(resourceGroupName st
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

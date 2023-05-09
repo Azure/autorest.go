@@ -30,19 +30,22 @@ type UploadClient struct {
 // Generated from API version 1.0.0
 //   - fileParam - Non-empty binary file
 //   - options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
-func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (UploadClientBinaryResponse, error) {
+func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (resp UploadClientBinaryResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "UploadClient.Binary", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.binaryCreateRequest(ctx, fileParam, options)
 	if err != nil {
-		return UploadClientBinaryResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return UploadClientBinaryResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadClientBinaryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return UploadClientBinaryResponse{}, nil
+	return
 }
 
 // binaryCreateRequest creates the Binary request.
@@ -64,19 +67,22 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 // Generated from API version 1.0.0
 //   - fileParam - JSON file with payload { "more": "cowbell" }
 //   - options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
-func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (UploadClientFileResponse, error) {
+func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (resp UploadClientFileResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "UploadClient.File", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fileCreateRequest(ctx, fileParam, options)
 	if err != nil {
-		return UploadClientFileResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return UploadClientFileResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadClientFileResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return UploadClientFileResponse{}, nil
+	return
 }
 
 // fileCreateRequest creates the File request.

@@ -54,19 +54,22 @@ func NewServiceAssociationLinksClient(subscriptionID string, credential azcore.T
 //   - subnetName - The name of the subnet.
 //   - options - ServiceAssociationLinksClientListOptions contains the optional parameters for the ServiceAssociationLinksClient.List
 //     method.
-func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ServiceAssociationLinksClientListOptions) (ServiceAssociationLinksClientListResponse, error) {
+func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ServiceAssociationLinksClientListOptions) (resp ServiceAssociationLinksClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceAssociationLinksClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
-		return ServiceAssociationLinksClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ServiceAssociationLinksClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceAssociationLinksClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.

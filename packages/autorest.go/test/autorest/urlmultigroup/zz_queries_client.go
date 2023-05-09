@@ -29,19 +29,22 @@ type QueriesClient struct {
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
 //     method.
-func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesClientArrayStringMultiEmptyOptions) (QueriesClientArrayStringMultiEmptyResponse, error) {
+func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesClientArrayStringMultiEmptyOptions) (resp QueriesClientArrayStringMultiEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringMultiEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringMultiEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringMultiEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringMultiEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringMultiEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringMultiEmptyResponse{}, nil
+	return
 }
 
 // arrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
@@ -68,19 +71,22 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull
 //     method.
-func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesClientArrayStringMultiNullOptions) (QueriesClientArrayStringMultiNullResponse, error) {
+func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesClientArrayStringMultiNullOptions) (resp QueriesClientArrayStringMultiNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringMultiNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringMultiNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringMultiNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringMultiNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringMultiNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringMultiNullResponse{}, nil
+	return
 }
 
 // arrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
@@ -108,19 +114,22 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid
 //     method.
-func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesClientArrayStringMultiValidOptions) (QueriesClientArrayStringMultiValidResponse, error) {
+func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesClientArrayStringMultiValidOptions) (resp QueriesClientArrayStringMultiValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringMultiValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringMultiValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringMultiValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringMultiValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringMultiValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringMultiValidResponse{}, nil
+	return
 }
 
 // arrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.

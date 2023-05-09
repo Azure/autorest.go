@@ -55,17 +55,22 @@ func NewVirtualHubBgpConnectionClient(subscriptionID string, credential azcore.T
 //   - parameters - Parameters of Bgp connection.
 //   - options - VirtualHubBgpConnectionClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubBgpConnectionClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualHubBgpConnectionClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, parameters BgpConnection, options *VirtualHubBgpConnectionClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualHubBgpConnectionClientCreateOrUpdateResponse], error) {
+func (client *VirtualHubBgpConnectionClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, parameters BgpConnection, options *VirtualHubBgpConnectionClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualHubBgpConnectionClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubBgpConnectionClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, connectionName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualHubBgpConnectionClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualHubBgpConnectionClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualHubBgpConnectionClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *VirtualHubBgpConnectionClient) BeginCreateOrUpdate(ctx context.Con
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualHubBgpConnectionClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, parameters BgpConnection, options *VirtualHubBgpConnectionClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualHubBgpConnectionClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, parameters BgpConnection, options *VirtualHubBgpConnectionClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,17 +136,22 @@ func (client *VirtualHubBgpConnectionClient) createOrUpdateCreateRequest(ctx con
 //   - connectionName - The name of the connection.
 //   - options - VirtualHubBgpConnectionClientBeginDeleteOptions contains the optional parameters for the VirtualHubBgpConnectionClient.BeginDelete
 //     method.
-func (client *VirtualHubBgpConnectionClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *VirtualHubBgpConnectionClientBeginDeleteOptions) (*runtime.Poller[VirtualHubBgpConnectionClientDeleteResponse], error) {
+func (client *VirtualHubBgpConnectionClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *VirtualHubBgpConnectionClientBeginDeleteOptions) (resp *runtime.Poller[VirtualHubBgpConnectionClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubBgpConnectionClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, connectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualHubBgpConnectionClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualHubBgpConnectionClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualHubBgpConnectionClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -148,19 +159,20 @@ func (client *VirtualHubBgpConnectionClient) BeginDelete(ctx context.Context, re
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualHubBgpConnectionClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *VirtualHubBgpConnectionClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualHubBgpConnectionClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *VirtualHubBgpConnectionClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -202,19 +214,22 @@ func (client *VirtualHubBgpConnectionClient) deleteCreateRequest(ctx context.Con
 //   - connectionName - The name of the connection.
 //   - options - VirtualHubBgpConnectionClientGetOptions contains the optional parameters for the VirtualHubBgpConnectionClient.Get
 //     method.
-func (client *VirtualHubBgpConnectionClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *VirtualHubBgpConnectionClientGetOptions) (VirtualHubBgpConnectionClientGetResponse, error) {
+func (client *VirtualHubBgpConnectionClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *VirtualHubBgpConnectionClientGetOptions) (resp VirtualHubBgpConnectionClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubBgpConnectionClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, options)
 	if err != nil {
-		return VirtualHubBgpConnectionClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualHubBgpConnectionClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualHubBgpConnectionClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.

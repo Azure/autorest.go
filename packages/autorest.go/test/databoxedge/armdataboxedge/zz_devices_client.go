@@ -52,19 +52,22 @@ func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, 
 //   - resourceGroupName - The resource group name.
 //   - dataBoxEdgeDevice - The resource object.
 //   - options - DevicesClientCreateOrUpdateOptions contains the optional parameters for the DevicesClient.CreateOrUpdate method.
-func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice Device, options *DevicesClientCreateOrUpdateOptions) (DevicesClientCreateOrUpdateResponse, error) {
+func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice Device, options *DevicesClientCreateOrUpdateOptions) (resp DevicesClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, resourceGroupName, dataBoxEdgeDevice, options)
 	if err != nil {
-		return DevicesClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -111,15 +114,21 @@ func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (
 //   - securitySettings - The security settings.
 //   - options - DevicesClientBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
 //     method.
-func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*runtime.Poller[DevicesClientCreateOrUpdateSecuritySettingsResponse], error) {
+func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (resp *runtime.Poller[DevicesClientCreateOrUpdateSecuritySettingsResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.BeginCreateOrUpdateSecuritySettings", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdateSecuritySettings(ctx, deviceName, resourceGroupName, securitySettings, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DevicesClientCreateOrUpdateSecuritySettingsResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DevicesClientCreateOrUpdateSecuritySettingsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DevicesClientCreateOrUpdateSecuritySettingsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DevicesClientCreateOrUpdateSecuritySettingsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -127,19 +136,20 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*http.Response, error) {
+func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateSecuritySettingsCreateRequest(ctx, deviceName, resourceGroupName, securitySettings, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateSecuritySettingsCreateRequest creates the CreateOrUpdateSecuritySettings request.
@@ -175,15 +185,21 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
-func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*runtime.Poller[DevicesClientDeleteResponse], error) {
+func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (resp *runtime.Poller[DevicesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DevicesClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DevicesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DevicesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DevicesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -191,19 +207,20 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -237,15 +254,21 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates
 //     method.
-func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*runtime.Poller[DevicesClientDownloadUpdatesResponse], error) {
+func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (resp *runtime.Poller[DevicesClientDownloadUpdatesResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.BeginDownloadUpdates", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.downloadUpdates(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DevicesClientDownloadUpdatesResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DevicesClientDownloadUpdatesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DevicesClientDownloadUpdatesResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DevicesClientDownloadUpdatesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -253,19 +276,20 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*http.Response, error) {
+func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (resp *http.Response, err error) {
 	req, err := client.downloadUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // downloadUpdatesCreateRequest creates the DownloadUpdates request.
@@ -299,19 +323,22 @@ func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, d
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientGenerateCertificateOptions contains the optional parameters for the DevicesClient.GenerateCertificate
 //     method.
-func (client *DevicesClient) GenerateCertificate(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGenerateCertificateOptions) (DevicesClientGenerateCertificateResponse, error) {
+func (client *DevicesClient) GenerateCertificate(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGenerateCertificateOptions) (resp DevicesClientGenerateCertificateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.GenerateCertificate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.generateCertificateCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientGenerateCertificateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientGenerateCertificateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGenerateCertificateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.generateCertificateHandleResponse(resp)
+	return client.generateCertificateHandleResponse(httpResp)
 }
 
 // generateCertificateCreateRequest creates the GenerateCertificate request.
@@ -353,19 +380,22 @@ func (client *DevicesClient) generateCertificateHandleResponse(resp *http.Respon
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientGetOptions contains the optional parameters for the DevicesClient.Get method.
-func (client *DevicesClient) Get(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetOptions) (DevicesClientGetResponse, error) {
+func (client *DevicesClient) Get(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetOptions) (resp DevicesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -408,19 +438,22 @@ func (client *DevicesClient) getHandleResponse(resp *http.Response) (DevicesClie
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientGetExtendedInformationOptions contains the optional parameters for the DevicesClient.GetExtendedInformation
 //     method.
-func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetExtendedInformationOptions) (DevicesClientGetExtendedInformationResponse, error) {
+func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetExtendedInformationOptions) (resp DevicesClientGetExtendedInformationResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.GetExtendedInformation", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientGetExtendedInformationResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientGetExtendedInformationResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetExtendedInformationResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getExtendedInformationHandleResponse(resp)
+	return client.getExtendedInformationHandleResponse(httpResp)
 }
 
 // getExtendedInformationCreateRequest creates the GetExtendedInformation request.
@@ -463,19 +496,22 @@ func (client *DevicesClient) getExtendedInformationHandleResponse(resp *http.Res
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientGetNetworkSettingsOptions contains the optional parameters for the DevicesClient.GetNetworkSettings
 //     method.
-func (client *DevicesClient) GetNetworkSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetNetworkSettingsOptions) (DevicesClientGetNetworkSettingsResponse, error) {
+func (client *DevicesClient) GetNetworkSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetNetworkSettingsOptions) (resp DevicesClientGetNetworkSettingsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.GetNetworkSettings", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNetworkSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientGetNetworkSettingsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientGetNetworkSettingsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetNetworkSettingsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getNetworkSettingsHandleResponse(resp)
+	return client.getNetworkSettingsHandleResponse(httpResp)
 }
 
 // getNetworkSettingsCreateRequest creates the GetNetworkSettings request.
@@ -519,19 +555,22 @@ func (client *DevicesClient) getNetworkSettingsHandleResponse(resp *http.Respons
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientGetUpdateSummaryOptions contains the optional parameters for the DevicesClient.GetUpdateSummary
 //     method.
-func (client *DevicesClient) GetUpdateSummary(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetUpdateSummaryOptions) (DevicesClientGetUpdateSummaryResponse, error) {
+func (client *DevicesClient) GetUpdateSummary(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetUpdateSummaryOptions) (resp DevicesClientGetUpdateSummaryResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.GetUpdateSummary", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUpdateSummaryCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientGetUpdateSummaryResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientGetUpdateSummaryResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetUpdateSummaryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getUpdateSummaryHandleResponse(resp)
+	return client.getUpdateSummaryHandleResponse(httpResp)
 }
 
 // getUpdateSummaryCreateRequest creates the GetUpdateSummary request.
@@ -574,15 +613,21 @@ func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response)
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates
 //     method.
-func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*runtime.Poller[DevicesClientInstallUpdatesResponse], error) {
+func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (resp *runtime.Poller[DevicesClientInstallUpdatesResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.BeginInstallUpdates", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.installUpdates(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DevicesClientInstallUpdatesResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DevicesClientInstallUpdatesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DevicesClientInstallUpdatesResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DevicesClientInstallUpdatesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -590,19 +635,20 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *DevicesClient) installUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*http.Response, error) {
+func (client *DevicesClient) installUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (resp *http.Response, err error) {
 	req, err := client.installUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // installUpdatesCreateRequest creates the InstallUpdates request.
@@ -659,6 +705,7 @@ func (client *DevicesClient) NewListByResourceGroupPager(resourceGroupName strin
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -726,6 +773,7 @@ func (client *DevicesClient) NewListBySubscriptionPager(options *DevicesClientLi
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -767,15 +815,21 @@ func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Respons
 //   - resourceGroupName - The resource group name.
 //   - options - DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates
 //     method.
-func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*runtime.Poller[DevicesClientScanForUpdatesResponse], error) {
+func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (resp *runtime.Poller[DevicesClientScanForUpdatesResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.BeginScanForUpdates", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.scanForUpdates(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[DevicesClientScanForUpdatesResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DevicesClientScanForUpdatesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DevicesClientScanForUpdatesResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DevicesClientScanForUpdatesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -783,19 +837,20 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*http.Response, error) {
+func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (resp *http.Response, err error) {
 	req, err := client.scanForUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // scanForUpdatesCreateRequest creates the ScanForUpdates request.
@@ -829,19 +884,22 @@ func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, de
 //   - resourceGroupName - The resource group name.
 //   - parameters - The resource parameters.
 //   - options - DevicesClientUpdateOptions contains the optional parameters for the DevicesClient.Update method.
-func (client *DevicesClient) Update(ctx context.Context, deviceName string, resourceGroupName string, parameters DevicePatch, options *DevicesClientUpdateOptions) (DevicesClientUpdateResponse, error) {
+func (client *DevicesClient) Update(ctx context.Context, deviceName string, resourceGroupName string, parameters DevicePatch, options *DevicesClientUpdateOptions) (resp DevicesClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
-		return DevicesClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.
@@ -888,19 +946,22 @@ func (client *DevicesClient) updateHandleResponse(resp *http.Response) (DevicesC
 //   - parameters - The patch object.
 //   - options - DevicesClientUpdateExtendedInformationOptions contains the optional parameters for the DevicesClient.UpdateExtendedInformation
 //     method.
-func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, parameters DeviceExtendedInfoPatch, options *DevicesClientUpdateExtendedInformationOptions) (DevicesClientUpdateExtendedInformationResponse, error) {
+func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, parameters DeviceExtendedInfoPatch, options *DevicesClientUpdateExtendedInformationOptions) (resp DevicesClientUpdateExtendedInformationResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.UpdateExtendedInformation", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
-		return DevicesClientUpdateExtendedInformationResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientUpdateExtendedInformationResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientUpdateExtendedInformationResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateExtendedInformationHandleResponse(resp)
+	return client.updateExtendedInformationHandleResponse(httpResp)
 }
 
 // updateExtendedInformationCreateRequest creates the UpdateExtendedInformation request.
@@ -947,19 +1008,22 @@ func (client *DevicesClient) updateExtendedInformationHandleResponse(resp *http.
 //   - parameters - The upload certificate request.
 //   - options - DevicesClientUploadCertificateOptions contains the optional parameters for the DevicesClient.UploadCertificate
 //     method.
-func (client *DevicesClient) UploadCertificate(ctx context.Context, deviceName string, resourceGroupName string, parameters UploadCertificateRequest, options *DevicesClientUploadCertificateOptions) (DevicesClientUploadCertificateResponse, error) {
+func (client *DevicesClient) UploadCertificate(ctx context.Context, deviceName string, resourceGroupName string, parameters UploadCertificateRequest, options *DevicesClientUploadCertificateOptions) (resp DevicesClientUploadCertificateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DevicesClient.UploadCertificate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.uploadCertificateCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
-		return DevicesClientUploadCertificateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DevicesClientUploadCertificateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientUploadCertificateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.uploadCertificateHandleResponse(resp)
+	return client.uploadCertificateHandleResponse(httpResp)
 }
 
 // uploadCertificateCreateRequest creates the UploadCertificate request.

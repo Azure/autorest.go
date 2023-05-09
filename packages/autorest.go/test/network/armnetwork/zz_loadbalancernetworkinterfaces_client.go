@@ -77,6 +77,7 @@ func (client *LoadBalancerNetworkInterfacesClient) NewListPager(resourceGroupNam
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

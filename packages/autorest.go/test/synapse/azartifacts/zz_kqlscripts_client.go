@@ -53,6 +53,7 @@ func (client *KqlScriptsClient) NewGetAllPager(options *KqlScriptsClientGetAllOp
 			}
 			return client.getAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

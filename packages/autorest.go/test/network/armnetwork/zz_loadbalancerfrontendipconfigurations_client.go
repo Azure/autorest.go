@@ -54,19 +54,22 @@ func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, creden
 //   - frontendIPConfigurationName - The name of the frontend IP configuration.
 //   - options - LoadBalancerFrontendIPConfigurationsClientGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.Get
 //     method.
-func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsClientGetOptions) (LoadBalancerFrontendIPConfigurationsClientGetResponse, error) {
+func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsClientGetOptions) (resp LoadBalancerFrontendIPConfigurationsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancerFrontendIPConfigurationsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
 	if err != nil {
-		return LoadBalancerFrontendIPConfigurationsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return LoadBalancerFrontendIPConfigurationsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LoadBalancerFrontendIPConfigurationsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -140,6 +143,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) NewListPager(resourceG
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

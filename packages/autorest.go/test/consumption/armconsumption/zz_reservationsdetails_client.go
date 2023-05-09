@@ -75,6 +75,7 @@ func (client *ReservationsDetailsClient) NewListPager(scope string, options *Res
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -150,6 +151,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderPager(reservat
 			}
 			return client.listByReservationOrderHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -215,6 +217,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderAndReservation
 			}
 			return client.listByReservationOrderAndReservationHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

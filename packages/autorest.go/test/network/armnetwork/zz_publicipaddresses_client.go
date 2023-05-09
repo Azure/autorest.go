@@ -54,17 +54,22 @@ func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCr
 //   - parameters - Parameters supplied to the create or update public IP address operation.
 //   - options - PublicIPAddressesClientBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPAddressesClient.BeginCreateOrUpdate
 //     method.
-func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (*runtime.Poller[PublicIPAddressesClientCreateOrUpdateResponse], error) {
+func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[PublicIPAddressesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[PublicIPAddressesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[PublicIPAddressesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[PublicIPAddressesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *PublicIPAddressesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *PublicIPAddressesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *PublicIPAddressesClient) createOrUpdateCreateRequest(ctx context.C
 //   - publicIPAddressName - The name of the public IP address.
 //   - options - PublicIPAddressesClientBeginDdosProtectionStatusOptions contains the optional parameters for the PublicIPAddressesClient.BeginDdosProtectionStatus
 //     method.
-func (client *PublicIPAddressesClient) BeginDdosProtectionStatus(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDdosProtectionStatusOptions) (*runtime.Poller[PublicIPAddressesClientDdosProtectionStatusResponse], error) {
+func (client *PublicIPAddressesClient) BeginDdosProtectionStatus(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDdosProtectionStatusOptions) (resp *runtime.Poller[PublicIPAddressesClientDdosProtectionStatusResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginDdosProtectionStatus", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.ddosProtectionStatus(ctx, resourceGroupName, publicIPAddressName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[PublicIPAddressesClientDdosProtectionStatusResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[PublicIPAddressesClientDdosProtectionStatusResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[PublicIPAddressesClientDdosProtectionStatusResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *PublicIPAddressesClient) BeginDdosProtectionStatus(ctx context.Con
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *PublicIPAddressesClient) ddosProtectionStatus(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDdosProtectionStatusOptions) (*http.Response, error) {
+func (client *PublicIPAddressesClient) ddosProtectionStatus(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDdosProtectionStatusOptions) (resp *http.Response, err error) {
 	req, err := client.ddosProtectionStatusCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // ddosProtectionStatusCreateRequest creates the DdosProtectionStatus request.
@@ -191,17 +203,22 @@ func (client *PublicIPAddressesClient) ddosProtectionStatusCreateRequest(ctx con
 //   - publicIPAddressName - The name of the public IP address.
 //   - options - PublicIPAddressesClientBeginDeleteOptions contains the optional parameters for the PublicIPAddressesClient.BeginDelete
 //     method.
-func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (*runtime.Poller[PublicIPAddressesClientDeleteResponse], error) {
+func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (resp *runtime.Poller[PublicIPAddressesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[PublicIPAddressesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[PublicIPAddressesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[PublicIPAddressesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -209,19 +226,20 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *PublicIPAddressesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *PublicIPAddressesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -257,19 +275,22 @@ func (client *PublicIPAddressesClient) deleteCreateRequest(ctx context.Context, 
 //   - resourceGroupName - The name of the resource group.
 //   - publicIPAddressName - The name of the public IP address.
 //   - options - PublicIPAddressesClientGetOptions contains the optional parameters for the PublicIPAddressesClient.Get method.
-func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientGetOptions) (PublicIPAddressesClientGetResponse, error) {
+func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientGetOptions) (resp PublicIPAddressesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
-		return PublicIPAddressesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PublicIPAddressesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PublicIPAddressesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -322,19 +343,22 @@ func (client *PublicIPAddressesClient) getHandleResponse(resp *http.Response) (P
 //   - publicIPAddressName - The name of the public IP Address.
 //   - options - PublicIPAddressesClientGetCloudServicePublicIPAddressOptions contains the optional parameters for the PublicIPAddressesClient.GetCloudServicePublicIPAddress
 //     method.
-func (client *PublicIPAddressesClient) GetCloudServicePublicIPAddress(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesClientGetCloudServicePublicIPAddressOptions) (PublicIPAddressesClientGetCloudServicePublicIPAddressResponse, error) {
+func (client *PublicIPAddressesClient) GetCloudServicePublicIPAddress(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesClientGetCloudServicePublicIPAddressOptions) (resp PublicIPAddressesClientGetCloudServicePublicIPAddressResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.GetCloudServicePublicIPAddress", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCloudServicePublicIPAddressCreateRequest(ctx, resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, ipConfigurationName, publicIPAddressName, options)
 	if err != nil {
-		return PublicIPAddressesClientGetCloudServicePublicIPAddressResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PublicIPAddressesClientGetCloudServicePublicIPAddressResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PublicIPAddressesClientGetCloudServicePublicIPAddressResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getCloudServicePublicIPAddressHandleResponse(resp)
+	return client.getCloudServicePublicIPAddressHandleResponse(httpResp)
 }
 
 // getCloudServicePublicIPAddressCreateRequest creates the GetCloudServicePublicIPAddress request.
@@ -403,19 +427,22 @@ func (client *PublicIPAddressesClient) getCloudServicePublicIPAddressHandleRespo
 //   - publicIPAddressName - The name of the public IP Address.
 //   - options - PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressOptions contains the optional parameters for the
 //     PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress method.
-func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressOptions) (PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse, error) {
+func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressOptions) (resp PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getVirtualMachineScaleSetPublicIPAddressCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIPAddressName, options)
 	if err != nil {
-		return PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getVirtualMachineScaleSetPublicIPAddressHandleResponse(resp)
+	return client.getVirtualMachineScaleSetPublicIPAddressHandleResponse(httpResp)
 }
 
 // getVirtualMachineScaleSetPublicIPAddressCreateRequest creates the GetVirtualMachineScaleSetPublicIPAddress request.
@@ -503,6 +530,7 @@ func (client *PublicIPAddressesClient) NewListPager(resourceGroupName string, op
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -567,6 +595,7 @@ func (client *PublicIPAddressesClient) NewListAllPager(options *PublicIPAddresse
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -629,6 +658,7 @@ func (client *PublicIPAddressesClient) NewListCloudServicePublicIPAddressesPager
 			}
 			return client.listCloudServicePublicIPAddressesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -703,6 +733,7 @@ func (client *PublicIPAddressesClient) NewListCloudServiceRoleInstancePublicIPAd
 			}
 			return client.listCloudServiceRoleInstancePublicIPAddressesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -786,6 +817,7 @@ func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetPublicIPAddr
 			}
 			return client.listVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -860,6 +892,7 @@ func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetVMPublicIPAd
 			}
 			return client.listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -919,19 +952,22 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 //   - parameters - Parameters supplied to update public IP address tags.
 //   - options - PublicIPAddressesClientUpdateTagsOptions contains the optional parameters for the PublicIPAddressesClient.UpdateTags
 //     method.
-func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesClientUpdateTagsOptions) (PublicIPAddressesClientUpdateTagsResponse, error) {
+func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesClientUpdateTagsOptions) (resp PublicIPAddressesClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {
-		return PublicIPAddressesClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PublicIPAddressesClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PublicIPAddressesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

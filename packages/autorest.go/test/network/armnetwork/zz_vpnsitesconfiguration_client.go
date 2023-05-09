@@ -54,17 +54,22 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 //   - request - Parameters supplied to download vpn-sites configuration.
 //   - options - VPNSitesConfigurationClientBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
 //     method.
-func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*runtime.Poller[VPNSitesConfigurationClientDownloadResponse], error) {
+func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (resp *runtime.Poller[VPNSitesConfigurationClientDownloadResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VPNSitesConfigurationClient.BeginDownload", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNSitesConfigurationClientDownloadResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNSitesConfigurationClientDownloadResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNSitesConfigurationClientDownloadResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*http.Response, error) {
+func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (resp *http.Response, err error) {
 	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // downloadCreateRequest creates the Download request.

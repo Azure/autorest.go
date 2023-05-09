@@ -70,6 +70,7 @@ func (client *VirtualMachineSizesClient) NewListPager(location string, options *
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -54,19 +54,22 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 //   - parameters - Parameters supplied to the Create Availability Set operation.
 //   - options - AvailabilitySetsClientCreateOrUpdateOptions contains the optional parameters for the AvailabilitySetsClient.CreateOrUpdate
 //     method.
-func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsClientCreateOrUpdateOptions) (AvailabilitySetsClientCreateOrUpdateResponse, error) {
+func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsClientCreateOrUpdateOptions) (resp AvailabilitySetsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AvailabilitySetsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
-		return AvailabilitySetsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AvailabilitySetsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -114,19 +117,22 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Re
 //   - resourceGroupName - The name of the resource group.
 //   - availabilitySetName - The name of the availability set.
 //   - options - AvailabilitySetsClientDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
-func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientDeleteOptions) (AvailabilitySetsClientDeleteResponse, error) {
+func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientDeleteOptions) (resp AvailabilitySetsClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AvailabilitySetsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
-		return AvailabilitySetsClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AvailabilitySetsClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return AvailabilitySetsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return AvailabilitySetsClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -162,19 +168,22 @@ func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, r
 //   - resourceGroupName - The name of the resource group.
 //   - availabilitySetName - The name of the availability set.
 //   - options - AvailabilitySetsClientGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
-func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientGetOptions) (AvailabilitySetsClientGetResponse, error) {
+func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientGetOptions) (resp AvailabilitySetsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AvailabilitySetsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
-		return AvailabilitySetsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AvailabilitySetsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -243,6 +252,7 @@ func (client *AvailabilitySetsClient) NewListPager(resourceGroupName string, opt
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -304,6 +314,7 @@ func (client *AvailabilitySetsClient) NewListAvailableSizesPager(resourceGroupNa
 			}
 			return client.listAvailableSizesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -372,6 +383,7 @@ func (client *AvailabilitySetsClient) NewListBySubscriptionPager(options *Availa
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -413,19 +425,22 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *htt
 //   - availabilitySetName - The name of the availability set.
 //   - parameters - Parameters supplied to the Update Availability Set operation.
 //   - options - AvailabilitySetsClientUpdateOptions contains the optional parameters for the AvailabilitySetsClient.Update method.
-func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsClientUpdateOptions) (AvailabilitySetsClientUpdateResponse, error) {
+func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsClientUpdateOptions) (resp AvailabilitySetsClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AvailabilitySetsClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
-		return AvailabilitySetsClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AvailabilitySetsClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

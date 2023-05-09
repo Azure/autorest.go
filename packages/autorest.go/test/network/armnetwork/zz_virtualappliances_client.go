@@ -54,17 +54,22 @@ func NewVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCr
 //   - parameters - Parameters supplied to the create or update Network Virtual Appliance.
 //   - options - VirtualAppliancesClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualAppliancesClientCreateOrUpdateResponse], error) {
+func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualAppliancesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualAppliancesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualAppliancesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualAppliancesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualAppliancesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualAppliancesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualAppliancesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *VirtualAppliancesClient) createOrUpdateCreateRequest(ctx context.C
 //   - networkVirtualApplianceName - The name of Network Virtual Appliance.
 //   - options - VirtualAppliancesClientBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
 //     method.
-func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*runtime.Poller[VirtualAppliancesClientDeleteResponse], error) {
+func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (resp *runtime.Poller[VirtualAppliancesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualAppliancesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualAppliancesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualAppliancesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualAppliancesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualAppliancesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualAppliancesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *VirtualAppliancesClient) deleteCreateRequest(ctx context.Context, 
 //   - resourceGroupName - The name of the resource group.
 //   - networkVirtualApplianceName - The name of Network Virtual Appliance.
 //   - options - VirtualAppliancesClientGetOptions contains the optional parameters for the VirtualAppliancesClient.Get method.
-func (client *VirtualAppliancesClient) Get(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientGetOptions) (VirtualAppliancesClientGetResponse, error) {
+func (client *VirtualAppliancesClient) Get(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientGetOptions) (resp VirtualAppliancesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualAppliancesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
-		return VirtualAppliancesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualAppliancesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualAppliancesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -273,6 +288,7 @@ func (client *VirtualAppliancesClient) NewListPager(options *VirtualAppliancesCl
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -334,6 +350,7 @@ func (client *VirtualAppliancesClient) NewListByResourceGroupPager(resourceGroup
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -377,19 +394,22 @@ func (client *VirtualAppliancesClient) listByResourceGroupHandleResponse(resp *h
 //   - parameters - Parameters supplied to Update Network Virtual Appliance Tags.
 //   - options - VirtualAppliancesClientUpdateTagsOptions contains the optional parameters for the VirtualAppliancesClient.UpdateTags
 //     method.
-func (client *VirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *VirtualAppliancesClientUpdateTagsOptions) (VirtualAppliancesClientUpdateTagsResponse, error) {
+func (client *VirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *VirtualAppliancesClientUpdateTagsOptions) (resp VirtualAppliancesClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualAppliancesClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
-		return VirtualAppliancesClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualAppliancesClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualAppliancesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

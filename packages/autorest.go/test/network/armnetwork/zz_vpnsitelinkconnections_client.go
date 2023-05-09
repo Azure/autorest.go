@@ -55,19 +55,22 @@ func NewVPNSiteLinkConnectionsClient(subscriptionID string, credential azcore.To
 //   - linkConnectionName - The name of the vpn connection.
 //   - options - VPNSiteLinkConnectionsClientGetOptions contains the optional parameters for the VPNSiteLinkConnectionsClient.Get
 //     method.
-func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNSiteLinkConnectionsClientGetOptions) (VPNSiteLinkConnectionsClientGetResponse, error) {
+func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNSiteLinkConnectionsClientGetOptions) (resp VPNSiteLinkConnectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VPNSiteLinkConnectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {
-		return VPNSiteLinkConnectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VPNSiteLinkConnectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNSiteLinkConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.

@@ -54,17 +54,22 @@ func NewDscpConfigurationClient(subscriptionID string, credential azcore.TokenCr
 //   - parameters - Parameters supplied to the create or update dscp configuration operation.
 //   - options - DscpConfigurationClientBeginCreateOrUpdateOptions contains the optional parameters for the DscpConfigurationClient.BeginCreateOrUpdate
 //     method.
-func (client *DscpConfigurationClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, dscpConfigurationName string, parameters DscpConfiguration, options *DscpConfigurationClientBeginCreateOrUpdateOptions) (*runtime.Poller[DscpConfigurationClientCreateOrUpdateResponse], error) {
+func (client *DscpConfigurationClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, dscpConfigurationName string, parameters DscpConfiguration, options *DscpConfigurationClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[DscpConfigurationClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DscpConfigurationClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, dscpConfigurationName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DscpConfigurationClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DscpConfigurationClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DscpConfigurationClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +77,20 @@ func (client *DscpConfigurationClient) BeginCreateOrUpdate(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *DscpConfigurationClient) createOrUpdate(ctx context.Context, resourceGroupName string, dscpConfigurationName string, parameters DscpConfiguration, options *DscpConfigurationClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *DscpConfigurationClient) createOrUpdate(ctx context.Context, resourceGroupName string, dscpConfigurationName string, parameters DscpConfiguration, options *DscpConfigurationClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, dscpConfigurationName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,17 +130,22 @@ func (client *DscpConfigurationClient) createOrUpdateCreateRequest(ctx context.C
 //   - dscpConfigurationName - The name of the resource.
 //   - options - DscpConfigurationClientBeginDeleteOptions contains the optional parameters for the DscpConfigurationClient.BeginDelete
 //     method.
-func (client *DscpConfigurationClient) BeginDelete(ctx context.Context, resourceGroupName string, dscpConfigurationName string, options *DscpConfigurationClientBeginDeleteOptions) (*runtime.Poller[DscpConfigurationClientDeleteResponse], error) {
+func (client *DscpConfigurationClient) BeginDelete(ctx context.Context, resourceGroupName string, dscpConfigurationName string, options *DscpConfigurationClientBeginDeleteOptions) (resp *runtime.Poller[DscpConfigurationClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "DscpConfigurationClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, dscpConfigurationName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DscpConfigurationClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[DscpConfigurationClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DscpConfigurationClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -142,19 +153,20 @@ func (client *DscpConfigurationClient) BeginDelete(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *DscpConfigurationClient) deleteOperation(ctx context.Context, resourceGroupName string, dscpConfigurationName string, options *DscpConfigurationClientBeginDeleteOptions) (*http.Response, error) {
+func (client *DscpConfigurationClient) deleteOperation(ctx context.Context, resourceGroupName string, dscpConfigurationName string, options *DscpConfigurationClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, dscpConfigurationName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +202,22 @@ func (client *DscpConfigurationClient) deleteCreateRequest(ctx context.Context, 
 //   - resourceGroupName - The name of the resource group.
 //   - dscpConfigurationName - The name of the resource.
 //   - options - DscpConfigurationClientGetOptions contains the optional parameters for the DscpConfigurationClient.Get method.
-func (client *DscpConfigurationClient) Get(ctx context.Context, resourceGroupName string, dscpConfigurationName string, options *DscpConfigurationClientGetOptions) (DscpConfigurationClientGetResponse, error) {
+func (client *DscpConfigurationClient) Get(ctx context.Context, resourceGroupName string, dscpConfigurationName string, options *DscpConfigurationClientGetOptions) (resp DscpConfigurationClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "DscpConfigurationClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, dscpConfigurationName, options)
 	if err != nil {
-		return DscpConfigurationClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return DscpConfigurationClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DscpConfigurationClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -271,6 +286,7 @@ func (client *DscpConfigurationClient) NewListPager(resourceGroupName string, op
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -335,6 +351,7 @@ func (client *DscpConfigurationClient) NewListAllPager(options *DscpConfiguratio
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

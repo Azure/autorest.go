@@ -46,19 +46,22 @@ type Client struct {
 //
 // Generated from API version 2.0
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
-func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
+func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (resp ClientCreateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Create", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
-		return ClientCreateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientCreateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return ClientCreateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createHandleResponse(resp)
+	return client.createHandleResponse(httpResp)
 }
 
 // createCreateRequest creates the Create request.
@@ -108,19 +111,22 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 //
 // Generated from API version 2.0
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (resp ClientGetScriptResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetScript", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
-		return ClientGetScriptResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientGetScriptResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetScriptResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getScriptHandleResponse(resp)
+	return client.getScriptHandleResponse(httpResp)
 }
 
 // getScriptCreateRequest creates the GetScript request.
@@ -195,6 +201,7 @@ func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[Cl
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -231,19 +238,22 @@ func (client *Client) listHandleResponse(resp *http.Response) (ClientListRespons
 //
 // Generated from API version 2.0
 //   - options - ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
-func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
+func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (resp ClientPolicyAssignmentResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.PolicyAssignment", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
 	if err != nil {
-		return ClientPolicyAssignmentResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientPolicyAssignmentResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientPolicyAssignmentResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.policyAssignmentHandleResponse(resp)
+	return client.policyAssignmentHandleResponse(httpResp)
 }
 
 // policyAssignmentCreateRequest creates the PolicyAssignment request.

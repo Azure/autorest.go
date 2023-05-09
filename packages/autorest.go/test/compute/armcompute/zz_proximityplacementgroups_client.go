@@ -54,19 +54,22 @@ func NewProximityPlacementGroupsClient(subscriptionID string, credential azcore.
 //   - parameters - Parameters supplied to the Create Proximity Placement Group operation.
 //   - options - ProximityPlacementGroupsClientCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroupsClient.CreateOrUpdate
 //     method.
-func (client *ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, options *ProximityPlacementGroupsClientCreateOrUpdateOptions) (ProximityPlacementGroupsClientCreateOrUpdateResponse, error) {
+func (client *ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, options *ProximityPlacementGroupsClientCreateOrUpdateOptions) (resp ProximityPlacementGroupsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ProximityPlacementGroupsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
-		return ProximityPlacementGroupsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ProximityPlacementGroupsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return ProximityPlacementGroupsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -115,19 +118,22 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateHandleResponse(resp 
 //   - proximityPlacementGroupName - The name of the proximity placement group.
 //   - options - ProximityPlacementGroupsClientDeleteOptions contains the optional parameters for the ProximityPlacementGroupsClient.Delete
 //     method.
-func (client *ProximityPlacementGroupsClient) Delete(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsClientDeleteOptions) (ProximityPlacementGroupsClientDeleteResponse, error) {
+func (client *ProximityPlacementGroupsClient) Delete(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsClientDeleteOptions) (resp ProximityPlacementGroupsClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ProximityPlacementGroupsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, options)
 	if err != nil {
-		return ProximityPlacementGroupsClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ProximityPlacementGroupsClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ProximityPlacementGroupsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return ProximityPlacementGroupsClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -164,19 +170,22 @@ func (client *ProximityPlacementGroupsClient) deleteCreateRequest(ctx context.Co
 //   - proximityPlacementGroupName - The name of the proximity placement group.
 //   - options - ProximityPlacementGroupsClientGetOptions contains the optional parameters for the ProximityPlacementGroupsClient.Get
 //     method.
-func (client *ProximityPlacementGroupsClient) Get(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsClientGetOptions) (ProximityPlacementGroupsClientGetResponse, error) {
+func (client *ProximityPlacementGroupsClient) Get(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsClientGetOptions) (resp ProximityPlacementGroupsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ProximityPlacementGroupsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, options)
 	if err != nil {
-		return ProximityPlacementGroupsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ProximityPlacementGroupsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ProximityPlacementGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -248,6 +257,7 @@ func (client *ProximityPlacementGroupsClient) NewListByResourceGroupPager(resour
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -312,6 +322,7 @@ func (client *ProximityPlacementGroupsClient) NewListBySubscriptionPager(options
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -351,19 +362,22 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleResponse(r
 //   - parameters - Parameters supplied to the Update Proximity Placement Group operation.
 //   - options - ProximityPlacementGroupsClientUpdateOptions contains the optional parameters for the ProximityPlacementGroupsClient.Update
 //     method.
-func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsClientUpdateOptions) (ProximityPlacementGroupsClientUpdateResponse, error) {
+func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsClientUpdateOptions) (resp ProximityPlacementGroupsClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ProximityPlacementGroupsClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
-		return ProximityPlacementGroupsClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ProximityPlacementGroupsClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ProximityPlacementGroupsClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

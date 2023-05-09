@@ -59,19 +59,22 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 //   - budgetName - Budget Name.
 //   - parameters - Parameters supplied to the Create Budget operation.
 //   - options - BudgetsClientCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
-func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsClientCreateOrUpdateOptions) (BudgetsClientCreateOrUpdateResponse, error) {
+func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsClientCreateOrUpdateOptions) (resp BudgetsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BudgetsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, scope, budgetName, parameters, options)
 	if err != nil {
-		return BudgetsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BudgetsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return BudgetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -120,19 +123,22 @@ func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (
 //     for invoiceSection scope.
 //   - budgetName - Budget Name.
 //   - options - BudgetsClientDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
-func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetName string, options *BudgetsClientDeleteOptions) (BudgetsClientDeleteResponse, error) {
+func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetName string, options *BudgetsClientDeleteOptions) (resp BudgetsClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BudgetsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
-		return BudgetsClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BudgetsClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BudgetsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return BudgetsClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -169,19 +175,22 @@ func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope stri
 //     for invoiceSection scope.
 //   - budgetName - Budget Name.
 //   - options - BudgetsClientGetOptions contains the optional parameters for the BudgetsClient.Get method.
-func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName string, options *BudgetsClientGetOptions) (BudgetsClientGetResponse, error) {
+func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName string, options *BudgetsClientGetOptions) (resp BudgetsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BudgetsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
-		return BudgetsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BudgetsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BudgetsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -250,6 +259,7 @@ func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientLi
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

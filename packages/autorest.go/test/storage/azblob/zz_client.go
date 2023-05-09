@@ -44,19 +44,22 @@ type Client struct {
 //   - copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
 //   - options - ClientAbortCopyFromURLOptions contains the optional parameters for the Client.AbortCopyFromURL method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-func (client *Client) AbortCopyFromURL(ctx context.Context, containerName string, blob string, comp Enum27, copyActionAbortConstant Enum28, copyID string, options *ClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (ClientAbortCopyFromURLResponse, error) {
+func (client *Client) AbortCopyFromURL(ctx context.Context, containerName string, blob string, comp Enum27, copyActionAbortConstant Enum28, copyID string, options *ClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (resp ClientAbortCopyFromURLResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.AbortCopyFromURL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.abortCopyFromURLCreateRequest(ctx, containerName, blob, comp, copyActionAbortConstant, copyID, options, leaseAccessConditions)
 	if err != nil {
-		return ClientAbortCopyFromURLResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientAbortCopyFromURLResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientAbortCopyFromURLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.abortCopyFromURLHandleResponse(resp)
+	return client.abortCopyFromURLHandleResponse(httpResp)
 }
 
 // abortCopyFromURLCreateRequest creates the AbortCopyFromURL request.
@@ -124,19 +127,22 @@ func (client *Client) abortCopyFromURLHandleResponse(resp *http.Response) (Clien
 //   - comp - comp
 //   - options - ClientAcquireLeaseOptions contains the optional parameters for the Client.AcquireLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) AcquireLease(ctx context.Context, containerName string, blob string, comp Enum16, options *ClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientAcquireLeaseResponse, error) {
+func (client *Client) AcquireLease(ctx context.Context, containerName string, blob string, comp Enum16, options *ClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientAcquireLeaseResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.AcquireLease", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.acquireLeaseCreateRequest(ctx, containerName, blob, comp, options, modifiedAccessConditions)
 	if err != nil {
-		return ClientAcquireLeaseResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientAcquireLeaseResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return ClientAcquireLeaseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.acquireLeaseHandleResponse(resp)
+	return client.acquireLeaseHandleResponse(httpResp)
 }
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
@@ -234,19 +240,22 @@ func (client *Client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcq
 //   - comp - comp
 //   - options - ClientBreakLeaseOptions contains the optional parameters for the Client.BreakLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) BreakLease(ctx context.Context, containerName string, blob string, comp Enum16, options *ClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientBreakLeaseResponse, error) {
+func (client *Client) BreakLease(ctx context.Context, containerName string, blob string, comp Enum16, options *ClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientBreakLeaseResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.BreakLease", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.breakLeaseCreateRequest(ctx, containerName, blob, comp, options, modifiedAccessConditions)
 	if err != nil {
-		return ClientBreakLeaseResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientBreakLeaseResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ClientBreakLeaseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.breakLeaseHandleResponse(resp)
+	return client.breakLeaseHandleResponse(httpResp)
 }
 
 // breakLeaseCreateRequest creates the BreakLease request.
@@ -350,19 +359,22 @@ func (client *Client) breakLeaseHandleResponse(resp *http.Response) (ClientBreak
 //     string formats.
 //   - options - ClientChangeLeaseOptions contains the optional parameters for the Client.ChangeLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) ChangeLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientChangeLeaseResponse, error) {
+func (client *Client) ChangeLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientChangeLeaseResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.ChangeLease", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.changeLeaseCreateRequest(ctx, containerName, blob, comp, leaseID, proposedLeaseID, options, modifiedAccessConditions)
 	if err != nil {
-		return ClientChangeLeaseResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientChangeLeaseResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientChangeLeaseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.changeLeaseHandleResponse(resp)
+	return client.changeLeaseHandleResponse(httpResp)
 }
 
 // changeLeaseCreateRequest creates the ChangeLease request.
@@ -464,19 +476,22 @@ func (client *Client) changeLeaseHandleResponse(resp *http.Response) (ClientChan
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
-func (client *Client) CopyFromURL(ctx context.Context, containerName string, blob string, xmsRequiresSync Enum26, copySource string, options *ClientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions, cpkScopeInfo *CpkScopeInfo) (ClientCopyFromURLResponse, error) {
+func (client *Client) CopyFromURL(ctx context.Context, containerName string, blob string, xmsRequiresSync Enum26, copySource string, options *ClientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions, cpkScopeInfo *CpkScopeInfo) (resp ClientCopyFromURLResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.CopyFromURL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.copyFromURLCreateRequest(ctx, containerName, blob, xmsRequiresSync, copySource, options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions, cpkScopeInfo)
 	if err != nil {
-		return ClientCopyFromURLResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientCopyFromURLResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ClientCopyFromURLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.copyFromURLHandleResponse(resp)
+	return client.copyFromURLHandleResponse(httpResp)
 }
 
 // copyFromURLCreateRequest creates the CopyFromURL request.
@@ -643,19 +658,22 @@ func (client *Client) copyFromURLHandleResponse(resp *http.Response) (ClientCopy
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-func (client *Client) CreateSnapshot(ctx context.Context, containerName string, blob string, comp Enum25, options *ClientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientCreateSnapshotResponse, error) {
+func (client *Client) CreateSnapshot(ctx context.Context, containerName string, blob string, comp Enum25, options *ClientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (resp ClientCreateSnapshotResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.CreateSnapshot", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createSnapshotCreateRequest(ctx, containerName, blob, comp, options, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return ClientCreateSnapshotResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientCreateSnapshotResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return ClientCreateSnapshotResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createSnapshotHandleResponse(resp)
+	return client.createSnapshotHandleResponse(httpResp)
 }
 
 // createSnapshotCreateRequest creates the CreateSnapshot request.
@@ -788,19 +806,22 @@ func (client *Client) createSnapshotHandleResponse(resp *http.Response) (ClientC
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) Delete(ctx context.Context, containerName string, blob string, options *ClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientDeleteResponse, error) {
+func (client *Client) Delete(ctx context.Context, containerName string, blob string, options *ClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, containerName, blob, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return ClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.deleteHandleResponse(resp)
+	return client.deleteHandleResponse(httpResp)
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -892,19 +913,22 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 //   - comp - comp
 //   - options - ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the Client.DeleteImmutabilityPolicy
 //     method.
-func (client *Client) DeleteImmutabilityPolicy(ctx context.Context, containerName string, blob string, comp Enum23, options *ClientDeleteImmutabilityPolicyOptions) (ClientDeleteImmutabilityPolicyResponse, error) {
+func (client *Client) DeleteImmutabilityPolicy(ctx context.Context, containerName string, blob string, comp Enum23, options *ClientDeleteImmutabilityPolicyOptions) (resp ClientDeleteImmutabilityPolicyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.DeleteImmutabilityPolicy", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteImmutabilityPolicyCreateRequest(ctx, containerName, blob, comp, options)
 	if err != nil {
-		return ClientDeleteImmutabilityPolicyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientDeleteImmutabilityPolicyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.deleteImmutabilityPolicyHandleResponse(resp)
+	return client.deleteImmutabilityPolicyHandleResponse(httpResp)
 }
 
 // deleteImmutabilityPolicyCreateRequest creates the DeleteImmutabilityPolicy request.
@@ -969,19 +993,22 @@ func (client *Client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) Download(ctx context.Context, containerName string, blob string, options *ClientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientDownloadResponse, error) {
+func (client *Client) Download(ctx context.Context, containerName string, blob string, options *ClientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientDownloadResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Download", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.downloadCreateRequest(ctx, containerName, blob, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
-		return ClientDownloadResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientDownloadResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusPartialContent) {
-		return ClientDownloadResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusPartialContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.downloadHandleResponse(resp)
+	return client.downloadHandleResponse(httpResp)
 }
 
 // downloadCreateRequest creates the Download request.
@@ -1281,19 +1308,22 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 //   - restype - restype
 //   - comp - comp
 //   - options - ClientGetAccountInfoOptions contains the optional parameters for the Client.GetAccountInfo method.
-func (client *Client) GetAccountInfo(ctx context.Context, containerName string, blob string, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (ClientGetAccountInfoResponse, error) {
+func (client *Client) GetAccountInfo(ctx context.Context, containerName string, blob string, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (resp ClientGetAccountInfoResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetAccountInfo", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getAccountInfoCreateRequest(ctx, containerName, blob, restype, comp, options)
 	if err != nil {
-		return ClientGetAccountInfoResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientGetAccountInfoResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getAccountInfoHandleResponse(resp)
+	return client.getAccountInfoHandleResponse(httpResp)
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
@@ -1359,19 +1389,22 @@ func (client *Client) getAccountInfoHandleResponse(resp *http.Response) (ClientG
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) GetProperties(ctx context.Context, containerName string, blob string, options *ClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetPropertiesResponse, error) {
+func (client *Client) GetProperties(ctx context.Context, containerName string, blob string, options *ClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientGetPropertiesResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, containerName, blob, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
-		return ClientGetPropertiesResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientGetPropertiesResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getPropertiesHandleResponse(resp)
+	return client.getPropertiesHandleResponse(httpResp)
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -1685,19 +1718,22 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 //   - options - ClientGetTagsOptions contains the optional parameters for the Client.GetTags method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-func (client *Client) GetTags(ctx context.Context, containerName string, blob string, comp Enum39, options *ClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientGetTagsResponse, error) {
+func (client *Client) GetTags(ctx context.Context, containerName string, blob string, comp Enum39, options *ClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (resp ClientGetTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getTagsCreateRequest(ctx, containerName, blob, comp, options, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return ClientGetTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientGetTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getTagsHandleResponse(resp)
+	return client.getTagsHandleResponse(httpResp)
 }
 
 // getTagsCreateRequest creates the GetTags request.
@@ -1777,19 +1813,22 @@ func (client *Client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsR
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) Query(ctx context.Context, containerName string, blob string, comp Enum37, options *ClientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientQueryResponse, error) {
+func (client *Client) Query(ctx context.Context, containerName string, blob string, comp Enum37, options *ClientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientQueryResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Query", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.queryCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
-		return ClientQueryResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientQueryResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusPartialContent) {
-		return ClientQueryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusPartialContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.queryHandleResponse(resp)
+	return client.queryHandleResponse(httpResp)
 }
 
 // queryCreateRequest creates the Query request.
@@ -2019,19 +2058,22 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 //   - leaseID - Specifies the current lease ID on the resource.
 //   - options - ClientReleaseLeaseOptions contains the optional parameters for the Client.ReleaseLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) ReleaseLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, options *ClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientReleaseLeaseResponse, error) {
+func (client *Client) ReleaseLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, options *ClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientReleaseLeaseResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.ReleaseLease", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.releaseLeaseCreateRequest(ctx, containerName, blob, comp, leaseID, options, modifiedAccessConditions)
 	if err != nil {
-		return ClientReleaseLeaseResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientReleaseLeaseResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientReleaseLeaseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.releaseLeaseHandleResponse(resp)
+	return client.releaseLeaseHandleResponse(httpResp)
 }
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
@@ -2122,19 +2164,22 @@ func (client *Client) releaseLeaseHandleResponse(resp *http.Response) (ClientRel
 //   - leaseID - Specifies the current lease ID on the resource.
 //   - options - ClientRenewLeaseOptions contains the optional parameters for the Client.RenewLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) RenewLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, options *ClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientRenewLeaseResponse, error) {
+func (client *Client) RenewLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, options *ClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientRenewLeaseResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.RenewLease", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renewLeaseCreateRequest(ctx, containerName, blob, comp, leaseID, options, modifiedAccessConditions)
 	if err != nil {
-		return ClientRenewLeaseResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientRenewLeaseResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRenewLeaseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.renewLeaseHandleResponse(resp)
+	return client.renewLeaseHandleResponse(httpResp)
 }
 
 // renewLeaseCreateRequest creates the RenewLease request.
@@ -2227,19 +2272,22 @@ func (client *Client) renewLeaseHandleResponse(resp *http.Response) (ClientRenew
 //   - comp - comp
 //   - expiryOptions - Required. Indicates mode of the expiry time
 //   - options - ClientSetExpiryOptions contains the optional parameters for the Client.SetExpiry method.
-func (client *Client) SetExpiry(ctx context.Context, containerName string, blob string, comp Enum21, expiryOptions BlobExpiryOptions, options *ClientSetExpiryOptions) (ClientSetExpiryResponse, error) {
+func (client *Client) SetExpiry(ctx context.Context, containerName string, blob string, comp Enum21, expiryOptions BlobExpiryOptions, options *ClientSetExpiryOptions) (resp ClientSetExpiryResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetExpiry", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setExpiryCreateRequest(ctx, containerName, blob, comp, expiryOptions, options)
 	if err != nil {
-		return ClientSetExpiryResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientSetExpiryResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetExpiryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setExpiryHandleResponse(resp)
+	return client.setExpiryHandleResponse(httpResp)
 }
 
 // setExpiryCreateRequest creates the SetExpiry request.
@@ -2318,19 +2366,22 @@ func (client *Client) setExpiryHandleResponse(resp *http.Response) (ClientSetExp
 //   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Client.SetHTTPHeaders method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) SetHTTPHeaders(ctx context.Context, containerName string, blob string, comp Enum1, options *ClientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetHTTPHeadersResponse, error) {
+func (client *Client) SetHTTPHeaders(ctx context.Context, containerName string, blob string, comp Enum1, options *ClientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientSetHTTPHeadersResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetHTTPHeaders", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setHTTPHeadersCreateRequest(ctx, containerName, blob, comp, options, blobHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return ClientSetHTTPHeadersResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientSetHTTPHeadersResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetHTTPHeadersResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setHTTPHeadersHandleResponse(resp)
+	return client.setHTTPHeadersHandleResponse(httpResp)
 }
 
 // setHTTPHeadersCreateRequest creates the SetHTTPHeaders request.
@@ -2446,19 +2497,22 @@ func (client *Client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientS
 //   - comp - comp
 //   - options - ClientSetImmutabilityPolicyOptions contains the optional parameters for the Client.SetImmutabilityPolicy method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) SetImmutabilityPolicy(ctx context.Context, containerName string, blob string, comp Enum23, options *ClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetImmutabilityPolicyResponse, error) {
+func (client *Client) SetImmutabilityPolicy(ctx context.Context, containerName string, blob string, comp Enum23, options *ClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientSetImmutabilityPolicyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetImmutabilityPolicy", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setImmutabilityPolicyCreateRequest(ctx, containerName, blob, comp, options, modifiedAccessConditions)
 	if err != nil {
-		return ClientSetImmutabilityPolicyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientSetImmutabilityPolicyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setImmutabilityPolicyHandleResponse(resp)
+	return client.setImmutabilityPolicyHandleResponse(httpResp)
 }
 
 // setImmutabilityPolicyCreateRequest creates the SetImmutabilityPolicy request.
@@ -2540,19 +2594,22 @@ func (client *Client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 //   - comp - comp
 //   - legalHold - Specified if a legal hold should be set on the blob.
 //   - options - ClientSetLegalHoldOptions contains the optional parameters for the Client.SetLegalHold method.
-func (client *Client) SetLegalHold(ctx context.Context, containerName string, blob string, comp Enum24, legalHold bool, options *ClientSetLegalHoldOptions) (ClientSetLegalHoldResponse, error) {
+func (client *Client) SetLegalHold(ctx context.Context, containerName string, blob string, comp Enum24, legalHold bool, options *ClientSetLegalHoldOptions) (resp ClientSetLegalHoldResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetLegalHold", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setLegalHoldCreateRequest(ctx, containerName, blob, comp, legalHold, options)
 	if err != nil {
-		return ClientSetLegalHoldResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientSetLegalHoldResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetLegalHoldResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setLegalHoldHandleResponse(resp)
+	return client.setLegalHoldHandleResponse(httpResp)
 }
 
 // setLegalHoldCreateRequest creates the SetLegalHold request.
@@ -2627,19 +2684,22 @@ func (client *Client) setLegalHoldHandleResponse(resp *http.Response) (ClientSet
 //   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) SetMetadata(ctx context.Context, containerName string, blob string, comp Enum12, options *ClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetMetadataResponse, error) {
+func (client *Client) SetMetadata(ctx context.Context, containerName string, blob string, comp Enum12, options *ClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientSetMetadataResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetMetadata", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setMetadataCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return ClientSetMetadataResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientSetMetadataResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetMetadataResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setMetadataHandleResponse(resp)
+	return client.setMetadataHandleResponse(httpResp)
 }
 
 // setMetadataCreateRequest creates the SetMetadata request.
@@ -2766,19 +2826,22 @@ func (client *Client) setMetadataHandleResponse(resp *http.Response) (ClientSetM
 //   - options - ClientSetTagsOptions contains the optional parameters for the Client.SetTags method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-func (client *Client) SetTags(ctx context.Context, containerName string, blob string, comp Enum39, options *ClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientSetTagsResponse, error) {
+func (client *Client) SetTags(ctx context.Context, containerName string, blob string, comp Enum39, options *ClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (resp ClientSetTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setTagsCreateRequest(ctx, containerName, blob, comp, options, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return ClientSetTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientSetTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientSetTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setTagsHandleResponse(resp)
+	return client.setTagsHandleResponse(httpResp)
 }
 
 // setTagsCreateRequest creates the SetTags request.
@@ -2867,19 +2930,22 @@ func (client *Client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsR
 //   - options - ClientSetTierOptions contains the optional parameters for the Client.SetTier method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *Client) SetTier(ctx context.Context, containerName string, blob string, comp Enum29, tier AccessTier, options *ClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetTierResponse, error) {
+func (client *Client) SetTier(ctx context.Context, containerName string, blob string, comp Enum29, tier AccessTier, options *ClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (resp ClientSetTierResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetTier", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setTierCreateRequest(ctx, containerName, blob, comp, tier, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return ClientSetTierResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientSetTierResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return ClientSetTierResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.setTierHandleResponse(resp)
+	return client.setTierHandleResponse(httpResp)
 }
 
 // setTierCreateRequest creates the SetTier request.
@@ -2956,19 +3022,22 @@ func (client *Client) setTierHandleResponse(resp *http.Response) (ClientSetTierR
 //     method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-func (client *Client) StartCopyFromURL(ctx context.Context, containerName string, blob string, copySource string, options *ClientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientStartCopyFromURLResponse, error) {
+func (client *Client) StartCopyFromURL(ctx context.Context, containerName string, blob string, copySource string, options *ClientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (resp ClientStartCopyFromURLResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.StartCopyFromURL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.startCopyFromURLCreateRequest(ctx, containerName, blob, copySource, options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return ClientStartCopyFromURLResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientStartCopyFromURLResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ClientStartCopyFromURLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.startCopyFromURLHandleResponse(resp)
+	return client.startCopyFromURLHandleResponse(httpResp)
 }
 
 // startCopyFromURLCreateRequest creates the StartCopyFromURL request.
@@ -3110,19 +3179,22 @@ func (client *Client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - ClientUndeleteOptions contains the optional parameters for the Client.Undelete method.
-func (client *Client) Undelete(ctx context.Context, containerName string, blob string, comp Enum14, options *ClientUndeleteOptions) (ClientUndeleteResponse, error) {
+func (client *Client) Undelete(ctx context.Context, containerName string, blob string, comp Enum14, options *ClientUndeleteOptions) (resp ClientUndeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Undelete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.undeleteCreateRequest(ctx, containerName, blob, comp, options)
 	if err != nil {
-		return ClientUndeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientUndeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUndeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.undeleteHandleResponse(resp)
+	return client.undeleteHandleResponse(httpResp)
 }
 
 // undeleteCreateRequest creates the Undelete request.

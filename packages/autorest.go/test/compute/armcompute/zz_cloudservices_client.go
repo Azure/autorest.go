@@ -55,15 +55,21 @@ func NewCloudServicesClient(subscriptionID string, credential azcore.TokenCreden
 //   - parameters - The cloud service object.
 //   - options - CloudServicesClientBeginCreateOrUpdateOptions contains the optional parameters for the CloudServicesClient.BeginCreateOrUpdate
 //     method.
-func (client *CloudServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudService, options *CloudServicesClientBeginCreateOrUpdateOptions) (*runtime.Poller[CloudServicesClientCreateOrUpdateResponse], error) {
+func (client *CloudServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudService, options *CloudServicesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[CloudServicesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, cloudServiceName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -71,19 +77,20 @@ func (client *CloudServicesClient) BeginCreateOrUpdate(ctx context.Context, reso
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudService, options *CloudServicesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *CloudServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudService, options *CloudServicesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, cloudServiceName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -123,15 +130,21 @@ func (client *CloudServicesClient) createOrUpdateCreateRequest(ctx context.Conte
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientBeginDeleteOptions contains the optional parameters for the CloudServicesClient.BeginDelete
 //     method.
-func (client *CloudServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteOptions) (*runtime.Poller[CloudServicesClientDeleteResponse], error) {
+func (client *CloudServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteOptions) (resp *runtime.Poller[CloudServicesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -139,19 +152,20 @@ func (client *CloudServicesClient) BeginDelete(ctx context.Context, resourceGrou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *CloudServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -188,15 +202,21 @@ func (client *CloudServicesClient) deleteCreateRequest(ctx context.Context, reso
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientBeginDeleteInstancesOptions contains the optional parameters for the CloudServicesClient.BeginDeleteInstances
 //     method.
-func (client *CloudServicesClient) BeginDeleteInstances(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteInstancesOptions) (*runtime.Poller[CloudServicesClientDeleteInstancesResponse], error) {
+func (client *CloudServicesClient) BeginDeleteInstances(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteInstancesOptions) (resp *runtime.Poller[CloudServicesClientDeleteInstancesResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginDeleteInstances", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteInstances(ctx, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientDeleteInstancesResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientDeleteInstancesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientDeleteInstancesResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientDeleteInstancesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -204,19 +224,20 @@ func (client *CloudServicesClient) BeginDeleteInstances(ctx context.Context, res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) deleteInstances(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteInstancesOptions) (*http.Response, error) {
+func (client *CloudServicesClient) deleteInstances(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginDeleteInstancesOptions) (resp *http.Response, err error) {
 	req, err := client.deleteInstancesCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteInstancesCreateRequest creates the DeleteInstances request.
@@ -258,19 +279,22 @@ func (client *CloudServicesClient) deleteInstancesCreateRequest(ctx context.Cont
 //   - resourceGroupName - Name of the resource group.
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientGetOptions contains the optional parameters for the CloudServicesClient.Get method.
-func (client *CloudServicesClient) Get(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientGetOptions) (CloudServicesClientGetResponse, error) {
+func (client *CloudServicesClient) Get(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientGetOptions) (resp CloudServicesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return CloudServicesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CloudServicesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServicesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -316,19 +340,22 @@ func (client *CloudServicesClient) getHandleResponse(resp *http.Response) (Cloud
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientGetInstanceViewOptions contains the optional parameters for the CloudServicesClient.GetInstanceView
 //     method.
-func (client *CloudServicesClient) GetInstanceView(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientGetInstanceViewOptions) (CloudServicesClientGetInstanceViewResponse, error) {
+func (client *CloudServicesClient) GetInstanceView(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientGetInstanceViewOptions) (resp CloudServicesClientGetInstanceViewResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.GetInstanceView", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInstanceViewCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return CloudServicesClientGetInstanceViewResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CloudServicesClientGetInstanceViewResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServicesClientGetInstanceViewResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getInstanceViewHandleResponse(resp)
+	return client.getInstanceViewHandleResponse(httpResp)
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.
@@ -397,6 +424,7 @@ func (client *CloudServicesClient) NewListPager(resourceGroupName string, option
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -463,6 +491,7 @@ func (client *CloudServicesClient) NewListAllPager(options *CloudServicesClientL
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -502,15 +531,21 @@ func (client *CloudServicesClient) listAllHandleResponse(resp *http.Response) (C
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientBeginPowerOffOptions contains the optional parameters for the CloudServicesClient.BeginPowerOff
 //     method.
-func (client *CloudServicesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginPowerOffOptions) (*runtime.Poller[CloudServicesClientPowerOffResponse], error) {
+func (client *CloudServicesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginPowerOffOptions) (resp *runtime.Poller[CloudServicesClientPowerOffResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginPowerOff", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.powerOff(ctx, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientPowerOffResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientPowerOffResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientPowerOffResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientPowerOffResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -518,19 +553,20 @@ func (client *CloudServicesClient) BeginPowerOff(ctx context.Context, resourceGr
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) powerOff(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginPowerOffOptions) (*http.Response, error) {
+func (client *CloudServicesClient) powerOff(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginPowerOffOptions) (resp *http.Response, err error) {
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // powerOffCreateRequest creates the PowerOff request.
@@ -569,15 +605,21 @@ func (client *CloudServicesClient) powerOffCreateRequest(ctx context.Context, re
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientBeginRebuildOptions contains the optional parameters for the CloudServicesClient.BeginRebuild
 //     method.
-func (client *CloudServicesClient) BeginRebuild(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRebuildOptions) (*runtime.Poller[CloudServicesClientRebuildResponse], error) {
+func (client *CloudServicesClient) BeginRebuild(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRebuildOptions) (resp *runtime.Poller[CloudServicesClientRebuildResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginRebuild", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.rebuild(ctx, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientRebuildResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientRebuildResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientRebuildResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientRebuildResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -587,19 +629,20 @@ func (client *CloudServicesClient) BeginRebuild(ctx context.Context, resourceGro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) rebuild(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRebuildOptions) (*http.Response, error) {
+func (client *CloudServicesClient) rebuild(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRebuildOptions) (resp *http.Response, err error) {
 	req, err := client.rebuildCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // rebuildCreateRequest creates the Rebuild request.
@@ -642,15 +685,21 @@ func (client *CloudServicesClient) rebuildCreateRequest(ctx context.Context, res
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientBeginReimageOptions contains the optional parameters for the CloudServicesClient.BeginReimage
 //     method.
-func (client *CloudServicesClient) BeginReimage(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginReimageOptions) (*runtime.Poller[CloudServicesClientReimageResponse], error) {
+func (client *CloudServicesClient) BeginReimage(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginReimageOptions) (resp *runtime.Poller[CloudServicesClientReimageResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginReimage", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.reimage(ctx, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientReimageResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientReimageResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientReimageResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientReimageResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -658,19 +707,20 @@ func (client *CloudServicesClient) BeginReimage(ctx context.Context, resourceGro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) reimage(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginReimageOptions) (*http.Response, error) {
+func (client *CloudServicesClient) reimage(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginReimageOptions) (resp *http.Response, err error) {
 	req, err := client.reimageCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // reimageCreateRequest creates the Reimage request.
@@ -713,15 +763,21 @@ func (client *CloudServicesClient) reimageCreateRequest(ctx context.Context, res
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientBeginRestartOptions contains the optional parameters for the CloudServicesClient.BeginRestart
 //     method.
-func (client *CloudServicesClient) BeginRestart(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRestartOptions) (*runtime.Poller[CloudServicesClientRestartResponse], error) {
+func (client *CloudServicesClient) BeginRestart(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRestartOptions) (resp *runtime.Poller[CloudServicesClientRestartResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginRestart", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.restart(ctx, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientRestartResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientRestartResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientRestartResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientRestartResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -729,19 +785,20 @@ func (client *CloudServicesClient) BeginRestart(ctx context.Context, resourceGro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) restart(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRestartOptions) (*http.Response, error) {
+func (client *CloudServicesClient) restart(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginRestartOptions) (resp *http.Response, err error) {
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // restartCreateRequest creates the Restart request.
@@ -784,15 +841,21 @@ func (client *CloudServicesClient) restartCreateRequest(ctx context.Context, res
 //   - cloudServiceName - Name of the cloud service.
 //   - options - CloudServicesClientBeginStartOptions contains the optional parameters for the CloudServicesClient.BeginStart
 //     method.
-func (client *CloudServicesClient) BeginStart(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginStartOptions) (*runtime.Poller[CloudServicesClientStartResponse], error) {
+func (client *CloudServicesClient) BeginStart(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginStartOptions) (resp *runtime.Poller[CloudServicesClientStartResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginStart", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.start(ctx, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientStartResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientStartResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientStartResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientStartResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -800,19 +863,20 @@ func (client *CloudServicesClient) BeginStart(ctx context.Context, resourceGroup
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) start(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginStartOptions) (*http.Response, error) {
+func (client *CloudServicesClient) start(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesClientBeginStartOptions) (resp *http.Response, err error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // startCreateRequest creates the Start request.
@@ -850,15 +914,21 @@ func (client *CloudServicesClient) startCreateRequest(ctx context.Context, resou
 //   - parameters - The cloud service object.
 //   - options - CloudServicesClientBeginUpdateOptions contains the optional parameters for the CloudServicesClient.BeginUpdate
 //     method.
-func (client *CloudServicesClient) BeginUpdate(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudServiceUpdate, options *CloudServicesClientBeginUpdateOptions) (*runtime.Poller[CloudServicesClientUpdateResponse], error) {
+func (client *CloudServicesClient) BeginUpdate(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudServiceUpdate, options *CloudServicesClientBeginUpdateOptions) (resp *runtime.Poller[CloudServicesClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, cloudServiceName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -866,19 +936,20 @@ func (client *CloudServicesClient) BeginUpdate(ctx context.Context, resourceGrou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesClient) update(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudServiceUpdate, options *CloudServicesClientBeginUpdateOptions) (*http.Response, error) {
+func (client *CloudServicesClient) update(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters CloudServiceUpdate, options *CloudServicesClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, cloudServiceName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

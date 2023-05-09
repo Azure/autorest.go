@@ -32,19 +32,22 @@ type MetastoreClient struct {
 //
 // Generated from API version 2021-07-01-preview
 //   - options - MetastoreClientDeleteOptions contains the optional parameters for the MetastoreClient.Delete method.
-func (client *MetastoreClient) Delete(ctx context.Context, id string, options *MetastoreClientDeleteOptions) (MetastoreClientDeleteResponse, error) {
+func (client *MetastoreClient) Delete(ctx context.Context, id string, options *MetastoreClientDeleteOptions) (resp MetastoreClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "MetastoreClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, id, options)
 	if err != nil {
-		return MetastoreClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return MetastoreClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return MetastoreClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return MetastoreClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -71,19 +74,22 @@ func (client *MetastoreClient) deleteCreateRequest(ctx context.Context, id strin
 // Generated from API version 2021-07-01-preview
 //   - options - MetastoreClientGetDatabaseOperationsOptions contains the optional parameters for the MetastoreClient.GetDatabaseOperations
 //     method.
-func (client *MetastoreClient) GetDatabaseOperations(ctx context.Context, id string, options *MetastoreClientGetDatabaseOperationsOptions) (MetastoreClientGetDatabaseOperationsResponse, error) {
+func (client *MetastoreClient) GetDatabaseOperations(ctx context.Context, id string, options *MetastoreClientGetDatabaseOperationsOptions) (resp MetastoreClientGetDatabaseOperationsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "MetastoreClient.GetDatabaseOperations", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDatabaseOperationsCreateRequest(ctx, id, options)
 	if err != nil {
-		return MetastoreClientGetDatabaseOperationsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return MetastoreClientGetDatabaseOperationsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MetastoreClientGetDatabaseOperationsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getDatabaseOperationsHandleResponse(resp)
+	return client.getDatabaseOperationsHandleResponse(httpResp)
 }
 
 // getDatabaseOperationsCreateRequest creates the GetDatabaseOperations request.
@@ -121,19 +127,22 @@ func (client *MetastoreClient) getDatabaseOperationsHandleResponse(resp *http.Re
 //     characters
 //   - registerBody - The body for the register request
 //   - options - MetastoreClientRegisterOptions contains the optional parameters for the MetastoreClient.Register method.
-func (client *MetastoreClient) Register(ctx context.Context, id string, registerBody MetastoreRegisterObject, options *MetastoreClientRegisterOptions) (MetastoreClientRegisterResponse, error) {
+func (client *MetastoreClient) Register(ctx context.Context, id string, registerBody MetastoreRegisterObject, options *MetastoreClientRegisterOptions) (resp MetastoreClientRegisterResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "MetastoreClient.Register", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.registerCreateRequest(ctx, id, registerBody, options)
 	if err != nil {
-		return MetastoreClientRegisterResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return MetastoreClientRegisterResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return MetastoreClientRegisterResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.registerHandleResponse(resp)
+	return client.registerHandleResponse(httpResp)
 }
 
 // registerCreateRequest creates the Register request.
@@ -173,19 +182,22 @@ func (client *MetastoreClient) registerHandleResponse(resp *http.Response) (Meta
 //   - id - The name of the database to be updated
 //   - updateBody - The body for the update request
 //   - options - MetastoreClientUpdateOptions contains the optional parameters for the MetastoreClient.Update method.
-func (client *MetastoreClient) Update(ctx context.Context, id string, updateBody MetastoreUpdateObject, options *MetastoreClientUpdateOptions) (MetastoreClientUpdateResponse, error) {
+func (client *MetastoreClient) Update(ctx context.Context, id string, updateBody MetastoreUpdateObject, options *MetastoreClientUpdateOptions) (resp MetastoreClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "MetastoreClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, id, updateBody, options)
 	if err != nil {
-		return MetastoreClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return MetastoreClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return MetastoreClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

@@ -77,6 +77,7 @@ func (client *AvailableResourceGroupDelegationsClient) NewListPager(location str
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

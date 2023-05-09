@@ -54,15 +54,21 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 //   - monitoringMetricConfiguration - The metric configuration.
 //   - options - MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
 //     method.
-func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*runtime.Poller[MonitoringConfigClientCreateOrUpdateResponse], error) {
+func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[MonitoringConfigClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "MonitoringConfigClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[MonitoringConfigClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[MonitoringConfigClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[MonitoringConfigClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[MonitoringConfigClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -70,19 +76,20 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,15 +131,21 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 //   - resourceGroupName - The resource group name.
 //   - options - MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
 //     method.
-func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*runtime.Poller[MonitoringConfigClientDeleteResponse], error) {
+func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (resp *runtime.Poller[MonitoringConfigClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "MonitoringConfigClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, deviceName, roleName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[MonitoringConfigClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[MonitoringConfigClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[MonitoringConfigClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[MonitoringConfigClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -140,19 +153,20 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*http.Response, error) {
+func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +204,22 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 //   - roleName - The role name.
 //   - resourceGroupName - The resource group name.
 //   - options - MonitoringConfigClientGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
-func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientGetOptions) (MonitoringConfigClientGetResponse, error) {
+func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientGetOptions) (resp MonitoringConfigClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "MonitoringConfigClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
-		return MonitoringConfigClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return MonitoringConfigClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MonitoringConfigClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -274,6 +291,7 @@ func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName s
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

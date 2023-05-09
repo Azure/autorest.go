@@ -31,19 +31,22 @@ type PetClient struct {
 //
 // Generated from API version 2016-07-07
 //   - options - PetClientAddPetOptions contains the optional parameters for the PetClient.AddPet method.
-func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOptions) (PetClientAddPetResponse, error) {
+func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOptions) (resp PetClientAddPetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PetClient.AddPet", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.addPetCreateRequest(ctx, options)
 	if err != nil {
-		return PetClientAddPetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PetClientAddPetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetClientAddPetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.addPetHandleResponse(resp)
+	return client.addPetHandleResponse(httpResp)
 }
 
 // addPetCreateRequest creates the AddPet request.
@@ -78,19 +81,22 @@ func (client *PetClient) addPetHandleResponse(resp *http.Response) (PetClientAdd
 // Generated from API version 2016-07-07
 //   - petID - Pet id
 //   - options - PetClientGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
-func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetClientGetByPetIDOptions) (PetClientGetByPetIDResponse, error) {
+func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetClientGetByPetIDOptions) (resp PetClientGetByPetIDResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PetClient.GetByPetID", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getByPetIDCreateRequest(ctx, petID, options)
 	if err != nil {
-		return PetClientGetByPetIDResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PetClientGetByPetIDResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetClientGetByPetIDResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getByPetIDHandleResponse(resp)
+	return client.getByPetIDHandleResponse(httpResp)
 }
 
 // getByPetIDCreateRequest creates the GetByPetID request.

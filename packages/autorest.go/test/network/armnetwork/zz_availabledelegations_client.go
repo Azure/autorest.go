@@ -76,6 +76,7 @@ func (client *AvailableDelegationsClient) NewListPager(location string, options 
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -54,15 +54,21 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 //   - trigger - The trigger.
 //   - options - TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate
 //     method.
-func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*runtime.Poller[TriggersClientCreateOrUpdateResponse], error) {
+func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[TriggersClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "TriggersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggersClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TriggersClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[TriggersClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TriggersClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -70,19 +76,20 @@ func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, trigger, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -123,15 +130,21 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 //   - name - The trigger name.
 //   - resourceGroupName - The resource group name.
 //   - options - TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
-func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*runtime.Poller[TriggersClientDeleteResponse], error) {
+func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (resp *runtime.Poller[TriggersClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "TriggersClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggersClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TriggersClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[TriggersClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TriggersClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -139,19 +152,20 @@ func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*http.Response, error) {
+func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -189,19 +203,22 @@ func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceNam
 //   - name - The trigger name.
 //   - resourceGroupName - The resource group name.
 //   - options - TriggersClientGetOptions contains the optional parameters for the TriggersClient.Get method.
-func (client *TriggersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientGetOptions) (TriggersClientGetResponse, error) {
+func (client *TriggersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientGetOptions) (resp TriggersClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "TriggersClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return TriggersClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return TriggersClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggersClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -272,6 +289,7 @@ func (client *TriggersClient) NewListByDataBoxEdgeDevicePager(deviceName string,
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -75,6 +75,7 @@ func (client *UsagesClient) NewListPager(location string, options *UsagesClientL
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

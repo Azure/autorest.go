@@ -36,19 +36,22 @@ type AuthenticationClient struct {
 //   - service - Indicates the name of your Azure container registry.
 //   - options - AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions contains the optional parameters for the
 //     AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken method.
-func (client *AuthenticationClient) ExchangeAADAccessTokenForAcrRefreshToken(ctx context.Context, grantType PostContentSchemaGrantType, service string, options *AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions) (AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse, error) {
+func (client *AuthenticationClient) ExchangeAADAccessTokenForAcrRefreshToken(ctx context.Context, grantType PostContentSchemaGrantType, service string, options *AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions) (resp AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.exchangeAADAccessTokenForAcrRefreshTokenCreateRequest(ctx, grantType, service, options)
 	if err != nil {
-		return AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.exchangeAADAccessTokenForAcrRefreshTokenHandleResponse(resp)
+	return client.exchangeAADAccessTokenForAcrRefreshTokenHandleResponse(httpResp)
 }
 
 // exchangeAADAccessTokenForAcrRefreshTokenCreateRequest creates the ExchangeAADAccessTokenForAcrRefreshToken request.
@@ -102,19 +105,22 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenHand
 //   - refreshToken - Must be a valid ACR refresh token
 //   - options - AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions contains the optional parameters for the
 //     AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken method.
-func (client *AuthenticationClient) ExchangeAcrRefreshTokenForAcrAccessToken(ctx context.Context, service string, scope string, refreshToken string, options *AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions) (AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse, error) {
+func (client *AuthenticationClient) ExchangeAcrRefreshTokenForAcrAccessToken(ctx context.Context, service string, scope string, refreshToken string, options *AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions) (resp AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.exchangeAcrRefreshTokenForAcrAccessTokenCreateRequest(ctx, service, scope, refreshToken, options)
 	if err != nil {
-		return AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.exchangeAcrRefreshTokenForAcrAccessTokenHandleResponse(resp)
+	return client.exchangeAcrRefreshTokenForAcrAccessTokenHandleResponse(httpResp)
 }
 
 // exchangeAcrRefreshTokenForAcrAccessTokenCreateRequest creates the ExchangeAcrRefreshTokenForAcrAccessToken request.
@@ -162,19 +168,22 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenHand
 //     from the Www-Authenticate response header from the challenge.
 //   - options - AuthenticationClientGetAcrAccessTokenFromLoginOptions contains the optional parameters for the AuthenticationClient.GetAcrAccessTokenFromLogin
 //     method.
-func (client *AuthenticationClient) GetAcrAccessTokenFromLogin(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (AuthenticationClientGetAcrAccessTokenFromLoginResponse, error) {
+func (client *AuthenticationClient) GetAcrAccessTokenFromLogin(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (resp AuthenticationClientGetAcrAccessTokenFromLoginResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AuthenticationClient.GetAcrAccessTokenFromLogin", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getAcrAccessTokenFromLoginCreateRequest(ctx, service, scope, options)
 	if err != nil {
-		return AuthenticationClientGetAcrAccessTokenFromLoginResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AuthenticationClientGetAcrAccessTokenFromLoginResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AuthenticationClientGetAcrAccessTokenFromLoginResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getAcrAccessTokenFromLoginHandleResponse(resp)
+	return client.getAcrAccessTokenFromLoginHandleResponse(httpResp)
 }
 
 // getAcrAccessTokenFromLoginCreateRequest creates the GetAcrAccessTokenFromLogin request.

@@ -29,19 +29,22 @@ type PolymorphicrecursiveClient struct {
 // Generated from API version 2016-02-29
 //   - options - PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
 //     method.
-func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveClientGetValidOptions) (PolymorphicrecursiveClientGetValidResponse, error) {
+func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveClientGetValidOptions) (resp PolymorphicrecursiveClientGetValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphicrecursiveClient.GetValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return PolymorphicrecursiveClientGetValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphicrecursiveClientGetValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphicrecursiveClientGetValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getValidHandleResponse(resp)
+	return client.getValidHandleResponse(httpResp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -77,19 +80,22 @@ func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Resp
 //     "age": 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age": 105 } ] }
 //   - options - PolymorphicrecursiveClientPutValidOptions contains the optional parameters for the PolymorphicrecursiveClient.PutValid
 //     method.
-func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursiveClientPutValidOptions) (PolymorphicrecursiveClientPutValidResponse, error) {
+func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursiveClientPutValidOptions) (resp PolymorphicrecursiveClientPutValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphicrecursiveClient.PutValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PolymorphicrecursiveClientPutValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PolymorphicrecursiveClientPutValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphicrecursiveClientPutValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return PolymorphicrecursiveClientPutValidResponse{}, nil
+	return
 }
 
 // putValidCreateRequest creates the PutValid request.

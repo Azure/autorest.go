@@ -57,19 +57,22 @@ func NewCloudServicesUpdateDomainClient(subscriptionID string, credential azcore
 //     index: the first update domain has an ID of 0, the second has an ID of 1, and so on.
 //   - options - CloudServicesUpdateDomainClientGetUpdateDomainOptions contains the optional parameters for the CloudServicesUpdateDomainClient.GetUpdateDomain
 //     method.
-func (client *CloudServicesUpdateDomainClient) GetUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, options *CloudServicesUpdateDomainClientGetUpdateDomainOptions) (CloudServicesUpdateDomainClientGetUpdateDomainResponse, error) {
+func (client *CloudServicesUpdateDomainClient) GetUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, options *CloudServicesUpdateDomainClientGetUpdateDomainOptions) (resp CloudServicesUpdateDomainClientGetUpdateDomainResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.GetUpdateDomain", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUpdateDomainCreateRequest(ctx, resourceGroupName, cloudServiceName, updateDomain, options)
 	if err != nil {
-		return CloudServicesUpdateDomainClientGetUpdateDomainResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CloudServicesUpdateDomainClientGetUpdateDomainResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServicesUpdateDomainClientGetUpdateDomainResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getUpdateDomainHandleResponse(resp)
+	return client.getUpdateDomainHandleResponse(httpResp)
 }
 
 // getUpdateDomainCreateRequest creates the GetUpdateDomain request.
@@ -140,6 +143,7 @@ func (client *CloudServicesUpdateDomainClient) NewListUpdateDomainsPager(resourc
 			}
 			return client.listUpdateDomainsHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -189,15 +193,21 @@ func (client *CloudServicesUpdateDomainClient) listUpdateDomainsHandleResponse(r
 //   - parameters - The update domain object.
 //   - options - CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions contains the optional parameters for the CloudServicesUpdateDomainClient.BeginWalkUpdateDomain
 //     method.
-func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*runtime.Poller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse], error) {
+func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (resp *runtime.Poller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.walkUpdateDomain(ctx, resourceGroupName, cloudServiceName, updateDomain, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesUpdateDomainClientWalkUpdateDomainResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesUpdateDomainClientWalkUpdateDomainResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesUpdateDomainClientWalkUpdateDomainResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -205,19 +215,20 @@ func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServicesUpdateDomainClient) walkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*http.Response, error) {
+func (client *CloudServicesUpdateDomainClient) walkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (resp *http.Response, err error) {
 	req, err := client.walkUpdateDomainCreateRequest(ctx, resourceGroupName, cloudServiceName, updateDomain, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // walkUpdateDomainCreateRequest creates the WalkUpdateDomain request.

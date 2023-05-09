@@ -56,15 +56,21 @@ func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credenti
 //   - extensionParameters - Parameters supplied to the Create Virtual Machine Extension operation.
 //   - options - VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse], error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -72,19 +78,20 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -134,15 +141,21 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateCreateRequ
 //   - vmExtensionName - The name of the virtual machine extension.
 //   - options - VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginDelete
 //     method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (*runtime.Poller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse], error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (resp *runtime.Poller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachineScaleSetVMExtensionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualMachineScaleSetVMExtensionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -150,19 +163,20 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *VirtualMachineScaleSetVMExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -209,19 +223,22 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteCreateRequest(ctx 
 //   - vmExtensionName - The name of the virtual machine extension.
 //   - options - VirtualMachineScaleSetVMExtensionsClientGetOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.Get
 //     method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientGetOptions) (VirtualMachineScaleSetVMExtensionsClientGetResponse, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientGetOptions) (resp VirtualMachineScaleSetVMExtensionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -279,19 +296,22 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) getHandleResponse(resp *
 //   - instanceID - The instance ID of the virtual machine.
 //   - options - VirtualMachineScaleSetVMExtensionsClientListOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.List
 //     method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMExtensionsClientListOptions) (VirtualMachineScaleSetVMExtensionsClientListResponse, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMExtensionsClientListOptions) (resp VirtualMachineScaleSetVMExtensionsClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.
@@ -347,15 +367,21 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleResponse(resp 
 //   - extensionParameters - Parameters supplied to the Update Virtual Machine Extension operation.
 //   - options - VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginUpdate
 //     method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (*runtime.Poller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse], error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (resp *runtime.Poller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachineScaleSetVMExtensionsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualMachineScaleSetVMExtensionsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -363,19 +389,20 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

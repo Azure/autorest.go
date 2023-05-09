@@ -55,19 +55,22 @@ func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCred
 //   - ipAddress - The private IP address to be verified.
 //   - options - VirtualNetworksClientCheckIPAddressAvailabilityOptions contains the optional parameters for the VirtualNetworksClient.CheckIPAddressAvailability
 //     method.
-func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksClientCheckIPAddressAvailabilityOptions) (VirtualNetworksClientCheckIPAddressAvailabilityResponse, error) {
+func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksClientCheckIPAddressAvailabilityOptions) (resp VirtualNetworksClientCheckIPAddressAvailabilityResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.CheckIPAddressAvailability", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.checkIPAddressAvailabilityCreateRequest(ctx, resourceGroupName, virtualNetworkName, ipAddress, options)
 	if err != nil {
-		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.checkIPAddressAvailabilityHandleResponse(resp)
+	return client.checkIPAddressAvailabilityHandleResponse(httpResp)
 }
 
 // checkIPAddressAvailabilityCreateRequest creates the CheckIPAddressAvailability request.
@@ -115,17 +118,22 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(re
 //   - parameters - Parameters supplied to the create or update virtual network operation.
 //   - options - VirtualNetworksClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworksClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworksClientCreateOrUpdateResponse], error) {
+func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualNetworksClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworksClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworksClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworksClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -133,19 +141,20 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -185,17 +194,22 @@ func (client *VirtualNetworksClient) createOrUpdateCreateRequest(ctx context.Con
 //   - virtualNetworkName - The name of the virtual network.
 //   - options - VirtualNetworksClientBeginDeleteOptions contains the optional parameters for the VirtualNetworksClient.BeginDelete
 //     method.
-func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworksClientDeleteResponse], error) {
+func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (resp *runtime.Poller[VirtualNetworksClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualNetworksClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualNetworksClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualNetworksClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -203,19 +217,20 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworksClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualNetworksClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -251,19 +266,22 @@ func (client *VirtualNetworksClient) deleteCreateRequest(ctx context.Context, re
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkName - The name of the virtual network.
 //   - options - VirtualNetworksClientGetOptions contains the optional parameters for the VirtualNetworksClient.Get method.
-func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientGetOptions) (VirtualNetworksClientGetResponse, error) {
+func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientGetOptions) (resp VirtualNetworksClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
-		return VirtualNetworksClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworksClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworksClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -335,6 +353,7 @@ func (client *VirtualNetworksClient) NewListPager(resourceGroupName string, opti
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -399,6 +418,7 @@ func (client *VirtualNetworksClient) NewListAllPager(options *VirtualNetworksCli
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -436,7 +456,7 @@ func (client *VirtualNetworksClient) listAllHandleResponse(resp *http.Response) 
 //   - virtualNetworkName - The name of the virtual network.
 //   - options - VirtualNetworksClientBeginListDdosProtectionStatusOptions contains the optional parameters for the VirtualNetworksClient.BeginListDdosProtectionStatus
 //     method.
-func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginListDdosProtectionStatusOptions) (*runtime.Poller[*runtime.Pager[VirtualNetworksClientListDdosProtectionStatusResponse]], error) {
+func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginListDdosProtectionStatusOptions) (resp *runtime.Poller[*runtime.Pager[VirtualNetworksClientListDdosProtectionStatusResponse]], err error) {
 	pager := runtime.NewPager(runtime.PagingHandler[VirtualNetworksClientListDdosProtectionStatusResponse]{
 		More: func(page VirtualNetworksClientListDdosProtectionStatusResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -455,8 +475,11 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 			}
 			return client.listDdosProtectionStatusHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.BeginListDdosProtectionStatus", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.listDdosProtectionStatus(ctx, resourceGroupName, virtualNetworkName, options)
 		if err != nil {
 			return nil, err
@@ -464,10 +487,12 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[VirtualNetworksClientListDdosProtectionStatusResponse]]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 			Response:      &pager,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[VirtualNetworksClientListDdosProtectionStatusResponse]]{
 			Response: &pager,
+			Tracer:   client.internal.Tracer(),
 		})
 	}
 }
@@ -475,19 +500,20 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 // ListDdosProtectionStatus - Gets the Ddos Protection Status of all IP Addresses under the Virtual Network
 //
 // Generated from API version 2022-09-01
-func (client *VirtualNetworksClient) listDdosProtectionStatus(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginListDdosProtectionStatusOptions) (*http.Response, error) {
+func (client *VirtualNetworksClient) listDdosProtectionStatus(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginListDdosProtectionStatusOptions) (resp *http.Response, err error) {
 	req, err := client.listDdosProtectionStatusCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // listDdosProtectionStatusCreateRequest creates the ListDdosProtectionStatus request.
@@ -563,6 +589,7 @@ func (client *VirtualNetworksClient) NewListUsagePager(resourceGroupName string,
 			}
 			return client.listUsageHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -610,19 +637,22 @@ func (client *VirtualNetworksClient) listUsageHandleResponse(resp *http.Response
 //   - parameters - Parameters supplied to update virtual network tags.
 //   - options - VirtualNetworksClientUpdateTagsOptions contains the optional parameters for the VirtualNetworksClient.UpdateTags
 //     method.
-func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters TagsObject, options *VirtualNetworksClientUpdateTagsOptions) (VirtualNetworksClientUpdateTagsResponse, error) {
+func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters TagsObject, options *VirtualNetworksClientUpdateTagsOptions) (resp VirtualNetworksClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
-		return VirtualNetworksClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworksClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworksClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

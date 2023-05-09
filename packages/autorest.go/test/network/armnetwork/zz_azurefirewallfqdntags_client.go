@@ -75,6 +75,7 @@ func (client *AzureFirewallFqdnTagsClient) NewListAllPager(options *AzureFirewal
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

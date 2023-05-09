@@ -76,6 +76,7 @@ func (client *ReservationsSummariesClient) NewListPager(scope string, grain Data
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -151,6 +152,7 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderPager(reserv
 			}
 			return client.listByReservationOrderHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -218,6 +220,7 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderAndReservati
 			}
 			return client.listByReservationOrderAndReservationHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

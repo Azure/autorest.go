@@ -28,19 +28,22 @@ type ByteClient struct {
 //
 // Generated from API version 1.0.0
 //   - options - ByteClientGetEmptyOptions contains the optional parameters for the ByteClient.GetEmpty method.
-func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteClientGetEmptyOptions) (ByteClientGetEmptyResponse, error) {
+func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteClientGetEmptyOptions) (resp ByteClientGetEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ByteClient.GetEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ByteClientGetEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ByteClientGetEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getEmptyHandleResponse(resp)
+	return client.getEmptyHandleResponse(httpResp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -68,19 +71,22 @@ func (client *ByteClient) getEmptyHandleResponse(resp *http.Response) (ByteClien
 //
 // Generated from API version 1.0.0
 //   - options - ByteClientGetInvalidOptions contains the optional parameters for the ByteClient.GetInvalid method.
-func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteClientGetInvalidOptions) (ByteClientGetInvalidResponse, error) {
+func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteClientGetInvalidOptions) (resp ByteClientGetInvalidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ByteClient.GetInvalid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return ByteClientGetInvalidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ByteClientGetInvalidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getInvalidHandleResponse(resp)
+	return client.getInvalidHandleResponse(httpResp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -108,19 +114,22 @@ func (client *ByteClient) getInvalidHandleResponse(resp *http.Response) (ByteCli
 //
 // Generated from API version 1.0.0
 //   - options - ByteClientGetNonASCIIOptions contains the optional parameters for the ByteClient.GetNonASCII method.
-func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteClientGetNonASCIIOptions) (ByteClientGetNonASCIIResponse, error) {
+func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteClientGetNonASCIIOptions) (resp ByteClientGetNonASCIIResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ByteClient.GetNonASCII", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNonASCIICreateRequest(ctx, options)
 	if err != nil {
-		return ByteClientGetNonASCIIResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ByteClientGetNonASCIIResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteClientGetNonASCIIResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getNonASCIIHandleResponse(resp)
+	return client.getNonASCIIHandleResponse(httpResp)
 }
 
 // getNonASCIICreateRequest creates the GetNonASCII request.
@@ -148,19 +157,22 @@ func (client *ByteClient) getNonASCIIHandleResponse(resp *http.Response) (ByteCl
 //
 // Generated from API version 1.0.0
 //   - options - ByteClientGetNullOptions contains the optional parameters for the ByteClient.GetNull method.
-func (client *ByteClient) GetNull(ctx context.Context, options *ByteClientGetNullOptions) (ByteClientGetNullResponse, error) {
+func (client *ByteClient) GetNull(ctx context.Context, options *ByteClientGetNullOptions) (resp ByteClientGetNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ByteClient.GetNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return ByteClientGetNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ByteClientGetNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteClientGetNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getNullHandleResponse(resp)
+	return client.getNullHandleResponse(httpResp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -189,19 +201,22 @@ func (client *ByteClient) getNullHandleResponse(resp *http.Response) (ByteClient
 // Generated from API version 1.0.0
 //   - byteBody - Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 //   - options - ByteClientPutNonASCIIOptions contains the optional parameters for the ByteClient.PutNonASCII method.
-func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, options *ByteClientPutNonASCIIOptions) (ByteClientPutNonASCIIResponse, error) {
+func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, options *ByteClientPutNonASCIIOptions) (resp ByteClientPutNonASCIIResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ByteClient.PutNonASCII", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putNonASCIICreateRequest(ctx, byteBody, options)
 	if err != nil {
-		return ByteClientPutNonASCIIResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ByteClientPutNonASCIIResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteClientPutNonASCIIResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return ByteClientPutNonASCIIResponse{}, nil
+	return
 }
 
 // putNonASCIICreateRequest creates the PutNonASCII request.

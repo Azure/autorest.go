@@ -75,6 +75,7 @@ func (client *ReservationRecommendationsClient) NewListPager(scope string, optio
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

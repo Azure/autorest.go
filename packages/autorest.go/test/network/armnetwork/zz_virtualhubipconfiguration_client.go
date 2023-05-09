@@ -55,17 +55,22 @@ func NewVirtualHubIPConfigurationClient(subscriptionID string, credential azcore
 //   - parameters - Hub Ip Configuration parameters.
 //   - options - VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubIPConfigurationClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualHubIPConfigurationClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, parameters HubIPConfiguration, options *VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualHubIPConfigurationClientCreateOrUpdateResponse], error) {
+func (client *VirtualHubIPConfigurationClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, parameters HubIPConfiguration, options *VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualHubIPConfigurationClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubIPConfigurationClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, ipConfigName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualHubIPConfigurationClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualHubIPConfigurationClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualHubIPConfigurationClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *VirtualHubIPConfigurationClient) BeginCreateOrUpdate(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualHubIPConfigurationClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, parameters HubIPConfiguration, options *VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualHubIPConfigurationClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, parameters HubIPConfiguration, options *VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, ipConfigName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,17 +136,22 @@ func (client *VirtualHubIPConfigurationClient) createOrUpdateCreateRequest(ctx c
 //   - ipConfigName - The name of the ipconfig.
 //   - options - VirtualHubIPConfigurationClientBeginDeleteOptions contains the optional parameters for the VirtualHubIPConfigurationClient.BeginDelete
 //     method.
-func (client *VirtualHubIPConfigurationClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientBeginDeleteOptions) (*runtime.Poller[VirtualHubIPConfigurationClientDeleteResponse], error) {
+func (client *VirtualHubIPConfigurationClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientBeginDeleteOptions) (resp *runtime.Poller[VirtualHubIPConfigurationClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubIPConfigurationClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, ipConfigName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualHubIPConfigurationClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualHubIPConfigurationClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualHubIPConfigurationClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -148,19 +159,20 @@ func (client *VirtualHubIPConfigurationClient) BeginDelete(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VirtualHubIPConfigurationClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualHubIPConfigurationClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, ipConfigName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -202,19 +214,22 @@ func (client *VirtualHubIPConfigurationClient) deleteCreateRequest(ctx context.C
 //   - ipConfigName - The name of the ipconfig.
 //   - options - VirtualHubIPConfigurationClientGetOptions contains the optional parameters for the VirtualHubIPConfigurationClient.Get
 //     method.
-func (client *VirtualHubIPConfigurationClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientGetOptions) (VirtualHubIPConfigurationClientGetResponse, error) {
+func (client *VirtualHubIPConfigurationClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientGetOptions) (resp VirtualHubIPConfigurationClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubIPConfigurationClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, ipConfigName, options)
 	if err != nil {
-		return VirtualHubIPConfigurationClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualHubIPConfigurationClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualHubIPConfigurationClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -288,6 +303,7 @@ func (client *VirtualHubIPConfigurationClient) NewListPager(resourceGroupName st
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

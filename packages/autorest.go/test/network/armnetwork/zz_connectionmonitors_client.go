@@ -55,17 +55,22 @@ func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenC
 //   - parameters - Parameters that define the operation to create a connection monitor.
 //   - options - ConnectionMonitorsClientBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitorsClient.BeginCreateOrUpdate
 //     method.
-func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ConnectionMonitorsClientCreateOrUpdateResponse], error) {
+func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[ConnectionMonitorsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConnectionMonitorsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConnectionMonitorsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConnectionMonitorsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -133,17 +139,22 @@ func (client *ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.
 //   - connectionMonitorName - The name of the connection monitor.
 //   - options - ConnectionMonitorsClientBeginDeleteOptions contains the optional parameters for the ConnectionMonitorsClient.BeginDelete
 //     method.
-func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*runtime.Poller[ConnectionMonitorsClientDeleteResponse], error) {
+func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (resp *runtime.Poller[ConnectionMonitorsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConnectionMonitorsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConnectionMonitorsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConnectionMonitorsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -151,19 +162,20 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -204,19 +216,22 @@ func (client *ConnectionMonitorsClient) deleteCreateRequest(ctx context.Context,
 //   - networkWatcherName - The name of the Network Watcher resource.
 //   - connectionMonitorName - The name of the connection monitor.
 //   - options - ConnectionMonitorsClientGetOptions contains the optional parameters for the ConnectionMonitorsClient.Get method.
-func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientGetOptions) (ConnectionMonitorsClientGetResponse, error) {
+func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientGetOptions) (resp ConnectionMonitorsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ConnectionMonitorsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -284,6 +299,7 @@ func (client *ConnectionMonitorsClient) NewListPager(resourceGroupName string, n
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -331,17 +347,22 @@ func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) 
 //   - connectionMonitorName - The name given to the connection monitor.
 //   - options - ConnectionMonitorsClientBeginQueryOptions contains the optional parameters for the ConnectionMonitorsClient.BeginQuery
 //     method.
-func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*runtime.Poller[ConnectionMonitorsClientQueryResponse], error) {
+func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (resp *runtime.Poller[ConnectionMonitorsClientQueryResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginQuery", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.query(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConnectionMonitorsClientQueryResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConnectionMonitorsClientQueryResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConnectionMonitorsClientQueryResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -349,19 +370,20 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (resp *http.Response, err error) {
 	req, err := client.queryCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // queryCreateRequest creates the Query request.
@@ -403,17 +425,22 @@ func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, 
 //   - connectionMonitorName - The name of the connection monitor.
 //   - options - ConnectionMonitorsClientBeginStartOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStart
 //     method.
-func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*runtime.Poller[ConnectionMonitorsClientStartResponse], error) {
+func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (resp *runtime.Poller[ConnectionMonitorsClientStartResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginStart", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.start(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConnectionMonitorsClientStartResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConnectionMonitorsClientStartResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConnectionMonitorsClientStartResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -421,19 +448,20 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (resp *http.Response, err error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // startCreateRequest creates the Start request.
@@ -475,17 +503,22 @@ func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, 
 //   - connectionMonitorName - The name of the connection monitor.
 //   - options - ConnectionMonitorsClientBeginStopOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStop
 //     method.
-func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*runtime.Poller[ConnectionMonitorsClientStopResponse], error) {
+func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (resp *runtime.Poller[ConnectionMonitorsClientStopResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginStop", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ConnectionMonitorsClientStopResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ConnectionMonitorsClientStopResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ConnectionMonitorsClientStopResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -493,19 +526,20 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (resp *http.Response, err error) {
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // stopCreateRequest creates the Stop request.
@@ -548,19 +582,22 @@ func (client *ConnectionMonitorsClient) stopCreateRequest(ctx context.Context, r
 //   - parameters - Parameters supplied to update connection monitor tags.
 //   - options - ConnectionMonitorsClientUpdateTagsOptions contains the optional parameters for the ConnectionMonitorsClient.UpdateTags
 //     method.
-func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsClientUpdateTagsOptions) (ConnectionMonitorsClientUpdateTagsResponse, error) {
+func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsClientUpdateTagsOptions) (resp ConnectionMonitorsClientUpdateTagsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.UpdateTags", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
-		return ConnectionMonitorsClientUpdateTagsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ConnectionMonitorsClientUpdateTagsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateTagsHandleResponse(resp)
+	return client.updateTagsHandleResponse(httpResp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

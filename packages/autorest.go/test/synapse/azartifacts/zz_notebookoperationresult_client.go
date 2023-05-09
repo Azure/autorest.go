@@ -34,19 +34,22 @@ type NotebookOperationResultClient struct {
 //   - operationID - Operation ID.
 //   - options - NotebookOperationResultClientGetOptions contains the optional parameters for the NotebookOperationResultClient.Get
 //     method.
-func (client *NotebookOperationResultClient) Get(ctx context.Context, operationID string, options *NotebookOperationResultClientGetOptions) (NotebookOperationResultClientGetResponse, error) {
+func (client *NotebookOperationResultClient) Get(ctx context.Context, operationID string, options *NotebookOperationResultClientGetOptions) (resp NotebookOperationResultClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "NotebookOperationResultClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, operationID, options)
 	if err != nil {
-		return NotebookOperationResultClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return NotebookOperationResultClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return NotebookOperationResultClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return NotebookOperationResultClientGetResponse{}, nil
+	return
 }
 
 // getCreateRequest creates the Get request.

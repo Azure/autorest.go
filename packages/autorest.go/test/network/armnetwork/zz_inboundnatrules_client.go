@@ -55,17 +55,22 @@ func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCred
 //   - inboundNatRuleParameters - Parameters supplied to the create or update inbound NAT rule operation.
 //   - options - InboundNatRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRulesClient.BeginCreateOrUpdate
 //     method.
-func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (*runtime.Poller[InboundNatRulesClientCreateOrUpdateResponse], error) {
+func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[InboundNatRulesClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "InboundNatRulesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InboundNatRulesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[InboundNatRulesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[InboundNatRulesClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *InboundNatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *InboundNatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,17 +136,22 @@ func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Con
 //   - inboundNatRuleName - The name of the inbound NAT rule.
 //   - options - InboundNatRulesClientBeginDeleteOptions contains the optional parameters for the InboundNatRulesClient.BeginDelete
 //     method.
-func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (*runtime.Poller[InboundNatRulesClientDeleteResponse], error) {
+func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (resp *runtime.Poller[InboundNatRulesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "InboundNatRulesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InboundNatRulesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[InboundNatRulesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[InboundNatRulesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -148,19 +159,20 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *InboundNatRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *InboundNatRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -201,19 +213,22 @@ func (client *InboundNatRulesClient) deleteCreateRequest(ctx context.Context, re
 //   - loadBalancerName - The name of the load balancer.
 //   - inboundNatRuleName - The name of the inbound NAT rule.
 //   - options - InboundNatRulesClientGetOptions contains the optional parameters for the InboundNatRulesClient.Get method.
-func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientGetOptions) (InboundNatRulesClientGetResponse, error) {
+func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientGetOptions) (resp InboundNatRulesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "InboundNatRulesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
-		return InboundNatRulesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return InboundNatRulesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InboundNatRulesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -290,6 +305,7 @@ func (client *InboundNatRulesClient) NewListPager(resourceGroupName string, load
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -35,19 +35,22 @@ type RoleAssignmentsClient struct {
 //   - roleAssignmentName - The name of the role assignment to create. It can be any valid GUID.
 //   - parameters - Parameters for the role assignment.
 //   - options - RoleAssignmentsClientCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
-func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsClientCreateOptions) (RoleAssignmentsClientCreateResponse, error) {
+func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsClientCreateOptions) (resp RoleAssignmentsClientCreateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "RoleAssignmentsClient.Create", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, parameters, options)
 	if err != nil {
-		return RoleAssignmentsClientCreateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RoleAssignmentsClientCreateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return RoleAssignmentsClientCreateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createHandleResponse(resp)
+	return client.createHandleResponse(httpResp)
 }
 
 // createCreateRequest creates the Create request.
@@ -91,19 +94,22 @@ func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (
 //   - scope - The scope of the role assignment to delete.
 //   - roleAssignmentName - The name of the role assignment to delete.
 //   - options - RoleAssignmentsClientDeleteOptions contains the optional parameters for the RoleAssignmentsClient.Delete method.
-func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientDeleteOptions) (RoleAssignmentsClientDeleteResponse, error) {
+func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientDeleteOptions) (resp RoleAssignmentsClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "RoleAssignmentsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
-		return RoleAssignmentsClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RoleAssignmentsClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleAssignmentsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.deleteHandleResponse(resp)
+	return client.deleteHandleResponse(httpResp)
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -144,19 +150,22 @@ func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (
 //   - scope - The scope of the role assignment.
 //   - roleAssignmentName - The name of the role assignment to get.
 //   - options - RoleAssignmentsClientGetOptions contains the optional parameters for the RoleAssignmentsClient.Get method.
-func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientGetOptions) (RoleAssignmentsClientGetResponse, error) {
+func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientGetOptions) (resp RoleAssignmentsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "RoleAssignmentsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
-		return RoleAssignmentsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RoleAssignmentsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleAssignmentsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -221,6 +230,7 @@ func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, s
 			}
 			return client.listForScopeHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

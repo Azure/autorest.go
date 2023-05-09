@@ -55,15 +55,21 @@ func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, o
 //   - addon - The addon properties.
 //   - options - AddonsClientBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate
 //     method.
-func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*runtime.Poller[AddonsClientCreateOrUpdateResponse], error) {
+func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[AddonsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "AddonsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[AddonsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AddonsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[AddonsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AddonsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -71,19 +77,20 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -129,15 +136,21 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 //   - addonName - The addon name.
 //   - resourceGroupName - The resource group name.
 //   - options - AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
-func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*runtime.Poller[AddonsClientDeleteResponse], error) {
+func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (resp *runtime.Poller[AddonsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "AddonsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[AddonsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AddonsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[AddonsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AddonsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -145,19 +158,20 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -200,19 +214,22 @@ func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName 
 //   - addonName - The addon name.
 //   - resourceGroupName - The resource group name.
 //   - options - AddonsClientGetOptions contains the optional parameters for the AddonsClient.Get method.
-func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientGetOptions) (AddonsClientGetResponse, error) {
+func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientGetOptions) (resp AddonsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "AddonsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
-		return AddonsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AddonsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AddonsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -287,6 +304,7 @@ func (client *AddonsClient) NewListByRolePager(deviceName string, roleName strin
 			}
 			return client.listByRoleHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

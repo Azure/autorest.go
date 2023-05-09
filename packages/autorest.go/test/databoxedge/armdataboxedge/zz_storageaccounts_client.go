@@ -54,15 +54,21 @@ func NewStorageAccountsClient(subscriptionID string, credential azcore.TokenCred
 //   - storageAccount - The StorageAccount properties.
 //   - options - StorageAccountsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountsClient.BeginCreateOrUpdate
 //     method.
-func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (*runtime.Poller[StorageAccountsClientCreateOrUpdateResponse], error) {
+func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[StorageAccountsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "StorageAccountsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, resourceGroupName, storageAccount, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[StorageAccountsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[StorageAccountsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[StorageAccountsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[StorageAccountsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -70,19 +76,20 @@ func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, de
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *StorageAccountsClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *StorageAccountsClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, storageAccount, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -124,15 +131,21 @@ func (client *StorageAccountsClient) createOrUpdateCreateRequest(ctx context.Con
 //   - resourceGroupName - The resource group name.
 //   - options - StorageAccountsClientBeginDeleteOptions contains the optional parameters for the StorageAccountsClient.BeginDelete
 //     method.
-func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (*runtime.Poller[StorageAccountsClientDeleteResponse], error) {
+func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (resp *runtime.Poller[StorageAccountsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "StorageAccountsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[StorageAccountsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[StorageAccountsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[StorageAccountsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[StorageAccountsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -140,19 +153,20 @@ func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *StorageAccountsClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *StorageAccountsClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -190,19 +204,22 @@ func (client *StorageAccountsClient) deleteCreateRequest(ctx context.Context, de
 //   - storageAccountName - The storage account name.
 //   - resourceGroupName - The resource group name.
 //   - options - StorageAccountsClientGetOptions contains the optional parameters for the StorageAccountsClient.Get method.
-func (client *StorageAccountsClient) Get(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientGetOptions) (StorageAccountsClientGetResponse, error) {
+func (client *StorageAccountsClient) Get(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientGetOptions) (resp StorageAccountsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "StorageAccountsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
-		return StorageAccountsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return StorageAccountsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StorageAccountsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -273,6 +290,7 @@ func (client *StorageAccountsClient) NewListByDataBoxEdgeDevicePager(deviceName 
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

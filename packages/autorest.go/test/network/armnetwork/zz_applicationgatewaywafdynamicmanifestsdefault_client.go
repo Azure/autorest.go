@@ -52,19 +52,22 @@ func NewApplicationGatewayWafDynamicManifestsDefaultClient(subscriptionID string
 //   - location - The region where the nrp are located at.
 //   - options - ApplicationGatewayWafDynamicManifestsDefaultClientGetOptions contains the optional parameters for the ApplicationGatewayWafDynamicManifestsDefaultClient.Get
 //     method.
-func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) Get(ctx context.Context, location string, options *ApplicationGatewayWafDynamicManifestsDefaultClientGetOptions) (ApplicationGatewayWafDynamicManifestsDefaultClientGetResponse, error) {
+func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) Get(ctx context.Context, location string, options *ApplicationGatewayWafDynamicManifestsDefaultClientGetOptions) (resp ApplicationGatewayWafDynamicManifestsDefaultClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewayWafDynamicManifestsDefaultClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, options)
 	if err != nil {
-		return ApplicationGatewayWafDynamicManifestsDefaultClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewayWafDynamicManifestsDefaultClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ApplicationGatewayWafDynamicManifestsDefaultClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.

@@ -58,19 +58,22 @@ func NewVirtualMachineImagesEdgeZoneClient(subscriptionID string, credential azc
 //   - version - A valid image SKU version.
 //   - options - VirtualMachineImagesEdgeZoneClientGetOptions contains the optional parameters for the VirtualMachineImagesEdgeZoneClient.Get
 //     method.
-func (client *VirtualMachineImagesEdgeZoneClient) Get(ctx context.Context, location string, edgeZone string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesEdgeZoneClientGetOptions) (VirtualMachineImagesEdgeZoneClientGetResponse, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) Get(ctx context.Context, location string, edgeZone string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesEdgeZoneClientGetOptions) (resp VirtualMachineImagesEdgeZoneClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesEdgeZoneClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, edgeZone, publisherName, offer, skus, version, options)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesEdgeZoneClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -135,19 +138,22 @@ func (client *VirtualMachineImagesEdgeZoneClient) getHandleResponse(resp *http.R
 //   - skus - A valid image SKU.
 //   - options - VirtualMachineImagesEdgeZoneClientListOptions contains the optional parameters for the VirtualMachineImagesEdgeZoneClient.List
 //     method.
-func (client *VirtualMachineImagesEdgeZoneClient) List(ctx context.Context, location string, edgeZone string, publisherName string, offer string, skus string, options *VirtualMachineImagesEdgeZoneClientListOptions) (VirtualMachineImagesEdgeZoneClientListResponse, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) List(ctx context.Context, location string, edgeZone string, publisherName string, offer string, skus string, options *VirtualMachineImagesEdgeZoneClientListOptions) (resp VirtualMachineImagesEdgeZoneClientListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesEdgeZoneClient.List", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, location, edgeZone, publisherName, offer, skus, options)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesEdgeZoneClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listHandleResponse(resp)
+	return client.listHandleResponse(httpResp)
 }
 
 // listCreateRequest creates the List request.
@@ -215,19 +221,22 @@ func (client *VirtualMachineImagesEdgeZoneClient) listHandleResponse(resp *http.
 //   - publisherName - A valid image publisher.
 //   - options - VirtualMachineImagesEdgeZoneClientListOffersOptions contains the optional parameters for the VirtualMachineImagesEdgeZoneClient.ListOffers
 //     method.
-func (client *VirtualMachineImagesEdgeZoneClient) ListOffers(ctx context.Context, location string, edgeZone string, publisherName string, options *VirtualMachineImagesEdgeZoneClientListOffersOptions) (VirtualMachineImagesEdgeZoneClientListOffersResponse, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) ListOffers(ctx context.Context, location string, edgeZone string, publisherName string, options *VirtualMachineImagesEdgeZoneClientListOffersOptions) (resp VirtualMachineImagesEdgeZoneClientListOffersResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesEdgeZoneClient.ListOffers", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listOffersCreateRequest(ctx, location, edgeZone, publisherName, options)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListOffersResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListOffersResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesEdgeZoneClientListOffersResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listOffersHandleResponse(resp)
+	return client.listOffersHandleResponse(httpResp)
 }
 
 // listOffersCreateRequest creates the ListOffers request.
@@ -277,19 +286,22 @@ func (client *VirtualMachineImagesEdgeZoneClient) listOffersHandleResponse(resp 
 //   - edgeZone - The name of the edge zone.
 //   - options - VirtualMachineImagesEdgeZoneClientListPublishersOptions contains the optional parameters for the VirtualMachineImagesEdgeZoneClient.ListPublishers
 //     method.
-func (client *VirtualMachineImagesEdgeZoneClient) ListPublishers(ctx context.Context, location string, edgeZone string, options *VirtualMachineImagesEdgeZoneClientListPublishersOptions) (VirtualMachineImagesEdgeZoneClientListPublishersResponse, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) ListPublishers(ctx context.Context, location string, edgeZone string, options *VirtualMachineImagesEdgeZoneClientListPublishersOptions) (resp VirtualMachineImagesEdgeZoneClientListPublishersResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesEdgeZoneClient.ListPublishers", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listPublishersCreateRequest(ctx, location, edgeZone, options)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListPublishersResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListPublishersResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesEdgeZoneClientListPublishersResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listPublishersHandleResponse(resp)
+	return client.listPublishersHandleResponse(httpResp)
 }
 
 // listPublishersCreateRequest creates the ListPublishers request.
@@ -337,19 +349,22 @@ func (client *VirtualMachineImagesEdgeZoneClient) listPublishersHandleResponse(r
 //   - offer - A valid image publisher offer.
 //   - options - VirtualMachineImagesEdgeZoneClientListSKUsOptions contains the optional parameters for the VirtualMachineImagesEdgeZoneClient.ListSKUs
 //     method.
-func (client *VirtualMachineImagesEdgeZoneClient) ListSKUs(ctx context.Context, location string, edgeZone string, publisherName string, offer string, options *VirtualMachineImagesEdgeZoneClientListSKUsOptions) (VirtualMachineImagesEdgeZoneClientListSKUsResponse, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) ListSKUs(ctx context.Context, location string, edgeZone string, publisherName string, offer string, options *VirtualMachineImagesEdgeZoneClientListSKUsOptions) (resp VirtualMachineImagesEdgeZoneClientListSKUsResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesEdgeZoneClient.ListSKUs", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listSKUsCreateRequest(ctx, location, edgeZone, publisherName, offer, options)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListSKUsResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineImagesEdgeZoneClientListSKUsResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesEdgeZoneClientListSKUsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.listSKUsHandleResponse(resp)
+	return client.listSKUsHandleResponse(httpResp)
 }
 
 // listSKUsCreateRequest creates the ListSKUs request.

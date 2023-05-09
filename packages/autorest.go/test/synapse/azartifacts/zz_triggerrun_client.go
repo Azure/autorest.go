@@ -35,19 +35,22 @@ type TriggerRunClient struct {
 //   - runID - The pipeline run identifier.
 //   - options - TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
 //     method.
-func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (TriggerRunClientCancelTriggerInstanceResponse, error) {
+func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (resp TriggerRunClientCancelTriggerInstanceResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "TriggerRunClient.CancelTriggerInstance", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
-		return TriggerRunClientCancelTriggerInstanceResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return TriggerRunClientCancelTriggerInstanceResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggerRunClientCancelTriggerInstanceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return TriggerRunClientCancelTriggerInstanceResponse{}, nil
+	return
 }
 
 // cancelTriggerInstanceCreateRequest creates the CancelTriggerInstance request.
@@ -79,19 +82,22 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 //   - filterParameters - Parameters to filter the pipeline run.
 //   - options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
 //     method.
-func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
+func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (resp TriggerRunClientQueryTriggerRunsByWorkspaceResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "TriggerRunClient.QueryTriggerRunsByWorkspace", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
-		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.queryTriggerRunsByWorkspaceHandleResponse(resp)
+	return client.queryTriggerRunsByWorkspaceHandleResponse(httpResp)
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
@@ -128,19 +134,22 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 //   - runID - The pipeline run identifier.
 //   - options - TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
 //     method.
-func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (TriggerRunClientRerunTriggerInstanceResponse, error) {
+func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (resp TriggerRunClientRerunTriggerInstanceResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "TriggerRunClient.RerunTriggerInstance", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
-		return TriggerRunClientRerunTriggerInstanceResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return TriggerRunClientRerunTriggerInstanceResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggerRunClientRerunTriggerInstanceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return TriggerRunClientRerunTriggerInstanceResponse{}, nil
+	return
 }
 
 // rerunTriggerInstanceCreateRequest creates the RerunTriggerInstance request.

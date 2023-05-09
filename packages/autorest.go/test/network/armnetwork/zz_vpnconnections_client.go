@@ -56,17 +56,22 @@ func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCrede
 //   - vpnConnectionParameters - Parameters supplied to create or Update a VPN Connection.
 //   - options - VPNConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnectionsClient.BeginCreateOrUpdate
 //     method.
-func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VPNConnectionsClientCreateOrUpdateResponse], error) {
+func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VPNConnectionsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNConnectionsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNConnectionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNConnectionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -74,19 +79,20 @@ func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VPNConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VPNConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -131,17 +137,22 @@ func (client *VPNConnectionsClient) createOrUpdateCreateRequest(ctx context.Cont
 //   - connectionName - The name of the connection.
 //   - options - VPNConnectionsClientBeginDeleteOptions contains the optional parameters for the VPNConnectionsClient.BeginDelete
 //     method.
-func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (*runtime.Poller[VPNConnectionsClientDeleteResponse], error) {
+func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (resp *runtime.Poller[VPNConnectionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNConnectionsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNConnectionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNConnectionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -149,19 +160,20 @@ func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VPNConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VPNConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -202,19 +214,22 @@ func (client *VPNConnectionsClient) deleteCreateRequest(ctx context.Context, res
 //   - gatewayName - The name of the gateway.
 //   - connectionName - The name of the vpn connection.
 //   - options - VPNConnectionsClientGetOptions contains the optional parameters for the VPNConnectionsClient.Get method.
-func (client *VPNConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientGetOptions) (VPNConnectionsClientGetResponse, error) {
+func (client *VPNConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientGetOptions) (resp VPNConnectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
-		return VPNConnectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VPNConnectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -288,6 +303,7 @@ func (client *VPNConnectionsClient) NewListByVPNGatewayPager(resourceGroupName s
 			}
 			return client.listByVPNGatewayHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -335,17 +351,22 @@ func (client *VPNConnectionsClient) listByVPNGatewayHandleResponse(resp *http.Re
 //   - vpnConnectionName - The name of the vpn connection.
 //   - options - VPNConnectionsClientBeginStartPacketCaptureOptions contains the optional parameters for the VPNConnectionsClient.BeginStartPacketCapture
 //     method.
-func (client *VPNConnectionsClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStartPacketCaptureOptions) (*runtime.Poller[VPNConnectionsClientStartPacketCaptureResponse], error) {
+func (client *VPNConnectionsClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStartPacketCaptureOptions) (resp *runtime.Poller[VPNConnectionsClientStartPacketCaptureResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.startPacketCapture(ctx, resourceGroupName, gatewayName, vpnConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNConnectionsClientStartPacketCaptureResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNConnectionsClientStartPacketCaptureResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNConnectionsClientStartPacketCaptureResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -353,19 +374,20 @@ func (client *VPNConnectionsClient) BeginStartPacketCapture(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VPNConnectionsClient) startPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStartPacketCaptureOptions) (*http.Response, error) {
+func (client *VPNConnectionsClient) startPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStartPacketCaptureOptions) (resp *http.Response, err error) {
 	req, err := client.startPacketCaptureCreateRequest(ctx, resourceGroupName, gatewayName, vpnConnectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // startPacketCaptureCreateRequest creates the StartPacketCapture request.
@@ -413,17 +435,22 @@ func (client *VPNConnectionsClient) startPacketCaptureCreateRequest(ctx context.
 //   - vpnConnectionName - The name of the vpn connection.
 //   - options - VPNConnectionsClientBeginStopPacketCaptureOptions contains the optional parameters for the VPNConnectionsClient.BeginStopPacketCapture
 //     method.
-func (client *VPNConnectionsClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStopPacketCaptureOptions) (*runtime.Poller[VPNConnectionsClientStopPacketCaptureResponse], error) {
+func (client *VPNConnectionsClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStopPacketCaptureOptions) (resp *runtime.Poller[VPNConnectionsClientStopPacketCaptureResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.stopPacketCapture(ctx, resourceGroupName, gatewayName, vpnConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNConnectionsClientStopPacketCaptureResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNConnectionsClientStopPacketCaptureResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNConnectionsClientStopPacketCaptureResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -431,19 +458,20 @@ func (client *VPNConnectionsClient) BeginStopPacketCapture(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VPNConnectionsClient) stopPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStopPacketCaptureOptions) (*http.Response, error) {
+func (client *VPNConnectionsClient) stopPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStopPacketCaptureOptions) (resp *http.Response, err error) {
 	req, err := client.stopPacketCaptureCreateRequest(ctx, resourceGroupName, gatewayName, vpnConnectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // stopPacketCaptureCreateRequest creates the StopPacketCapture request.

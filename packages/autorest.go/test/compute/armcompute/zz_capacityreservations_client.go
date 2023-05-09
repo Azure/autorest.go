@@ -57,15 +57,21 @@ func NewCapacityReservationsClient(subscriptionID string, credential azcore.Toke
 //   - parameters - Parameters supplied to the Create capacity reservation.
 //   - options - CapacityReservationsClientBeginCreateOrUpdateOptions contains the optional parameters for the CapacityReservationsClient.BeginCreateOrUpdate
 //     method.
-func (client *CapacityReservationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservation, options *CapacityReservationsClientBeginCreateOrUpdateOptions) (*runtime.Poller[CapacityReservationsClientCreateOrUpdateResponse], error) {
+func (client *CapacityReservationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservation, options *CapacityReservationsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[CapacityReservationsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CapacityReservationsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CapacityReservationsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CapacityReservationsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CapacityReservationsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -75,19 +81,20 @@ func (client *CapacityReservationsClient) BeginCreateOrUpdate(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *CapacityReservationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservation, options *CapacityReservationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *CapacityReservationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservation, options *CapacityReservationsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -134,15 +141,21 @@ func (client *CapacityReservationsClient) createOrUpdateCreateRequest(ctx contex
 //   - capacityReservationName - The name of the capacity reservation.
 //   - options - CapacityReservationsClientBeginDeleteOptions contains the optional parameters for the CapacityReservationsClient.BeginDelete
 //     method.
-func (client *CapacityReservationsClient) BeginDelete(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, options *CapacityReservationsClientBeginDeleteOptions) (*runtime.Poller[CapacityReservationsClientDeleteResponse], error) {
+func (client *CapacityReservationsClient) BeginDelete(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, options *CapacityReservationsClientBeginDeleteOptions) (resp *runtime.Poller[CapacityReservationsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CapacityReservationsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CapacityReservationsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CapacityReservationsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CapacityReservationsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -152,19 +165,20 @@ func (client *CapacityReservationsClient) BeginDelete(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *CapacityReservationsClient) deleteOperation(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, options *CapacityReservationsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *CapacityReservationsClient) deleteOperation(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, options *CapacityReservationsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -206,19 +220,22 @@ func (client *CapacityReservationsClient) deleteCreateRequest(ctx context.Contex
 //   - capacityReservationName - The name of the capacity reservation.
 //   - options - CapacityReservationsClientGetOptions contains the optional parameters for the CapacityReservationsClient.Get
 //     method.
-func (client *CapacityReservationsClient) Get(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, options *CapacityReservationsClientGetOptions) (CapacityReservationsClientGetResponse, error) {
+func (client *CapacityReservationsClient) Get(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, options *CapacityReservationsClientGetOptions) (resp CapacityReservationsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, options)
 	if err != nil {
-		return CapacityReservationsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CapacityReservationsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CapacityReservationsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -296,6 +313,7 @@ func (client *CapacityReservationsClient) NewListByCapacityReservationGroupPager
 			}
 			return client.listByCapacityReservationGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -344,15 +362,21 @@ func (client *CapacityReservationsClient) listByCapacityReservationGroupHandleRe
 //   - parameters - Parameters supplied to the Update capacity reservation operation.
 //   - options - CapacityReservationsClientBeginUpdateOptions contains the optional parameters for the CapacityReservationsClient.BeginUpdate
 //     method.
-func (client *CapacityReservationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservationUpdate, options *CapacityReservationsClientBeginUpdateOptions) (*runtime.Poller[CapacityReservationsClientUpdateResponse], error) {
+func (client *CapacityReservationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservationUpdate, options *CapacityReservationsClientBeginUpdateOptions) (resp *runtime.Poller[CapacityReservationsClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationsClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CapacityReservationsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CapacityReservationsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CapacityReservationsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CapacityReservationsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -360,19 +384,20 @@ func (client *CapacityReservationsClient) BeginUpdate(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *CapacityReservationsClient) update(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservationUpdate, options *CapacityReservationsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *CapacityReservationsClient) update(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservationUpdate, options *CapacityReservationsClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, parameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.

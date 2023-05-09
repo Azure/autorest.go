@@ -55,17 +55,22 @@ func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azc
 //   - hubVirtualNetworkConnectionParameters - Parameters supplied to create or update a hub virtual network connection.
 //   - options - HubVirtualNetworkConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the HubVirtualNetworkConnectionsClient.BeginCreateOrUpdate
 //     method.
-func (client *HubVirtualNetworkConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, hubVirtualNetworkConnectionParameters HubVirtualNetworkConnection, options *HubVirtualNetworkConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[HubVirtualNetworkConnectionsClientCreateOrUpdateResponse], error) {
+func (client *HubVirtualNetworkConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, hubVirtualNetworkConnectionParameters HubVirtualNetworkConnection, options *HubVirtualNetworkConnectionsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[HubVirtualNetworkConnectionsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "HubVirtualNetworkConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, connectionName, hubVirtualNetworkConnectionParameters, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HubVirtualNetworkConnectionsClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HubVirtualNetworkConnectionsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[HubVirtualNetworkConnectionsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -73,19 +78,20 @@ func (client *HubVirtualNetworkConnectionsClient) BeginCreateOrUpdate(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *HubVirtualNetworkConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, hubVirtualNetworkConnectionParameters HubVirtualNetworkConnection, options *HubVirtualNetworkConnectionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *HubVirtualNetworkConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, hubVirtualNetworkConnectionParameters HubVirtualNetworkConnection, options *HubVirtualNetworkConnectionsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, hubVirtualNetworkConnectionParameters, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,17 +136,22 @@ func (client *HubVirtualNetworkConnectionsClient) createOrUpdateCreateRequest(ct
 //   - connectionName - The name of the HubVirtualNetworkConnection.
 //   - options - HubVirtualNetworkConnectionsClientBeginDeleteOptions contains the optional parameters for the HubVirtualNetworkConnectionsClient.BeginDelete
 //     method.
-func (client *HubVirtualNetworkConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsClientBeginDeleteOptions) (*runtime.Poller[HubVirtualNetworkConnectionsClientDeleteResponse], error) {
+func (client *HubVirtualNetworkConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsClientBeginDeleteOptions) (resp *runtime.Poller[HubVirtualNetworkConnectionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "HubVirtualNetworkConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, connectionName, options)
 		if err != nil {
 			return nil, err
 		}
 		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HubVirtualNetworkConnectionsClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HubVirtualNetworkConnectionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[HubVirtualNetworkConnectionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -148,19 +159,20 @@ func (client *HubVirtualNetworkConnectionsClient) BeginDelete(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *HubVirtualNetworkConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *HubVirtualNetworkConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -202,19 +214,22 @@ func (client *HubVirtualNetworkConnectionsClient) deleteCreateRequest(ctx contex
 //   - connectionName - The name of the vpn connection.
 //   - options - HubVirtualNetworkConnectionsClientGetOptions contains the optional parameters for the HubVirtualNetworkConnectionsClient.Get
 //     method.
-func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsClientGetOptions) (HubVirtualNetworkConnectionsClientGetResponse, error) {
+func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsClientGetOptions) (resp HubVirtualNetworkConnectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HubVirtualNetworkConnectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, options)
 	if err != nil {
-		return HubVirtualNetworkConnectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HubVirtualNetworkConnectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HubVirtualNetworkConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -288,6 +303,7 @@ func (client *HubVirtualNetworkConnectionsClient) NewListPager(resourceGroupName
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

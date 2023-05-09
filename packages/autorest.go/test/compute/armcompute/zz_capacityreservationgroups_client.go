@@ -56,19 +56,22 @@ func NewCapacityReservationGroupsClient(subscriptionID string, credential azcore
 //   - parameters - Parameters supplied to the Create capacity reservation Group.
 //   - options - CapacityReservationGroupsClientCreateOrUpdateOptions contains the optional parameters for the CapacityReservationGroupsClient.CreateOrUpdate
 //     method.
-func (client *CapacityReservationGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, parameters CapacityReservationGroup, options *CapacityReservationGroupsClientCreateOrUpdateOptions) (CapacityReservationGroupsClientCreateOrUpdateResponse, error) {
+func (client *CapacityReservationGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, parameters CapacityReservationGroup, options *CapacityReservationGroupsClientCreateOrUpdateOptions) (resp CapacityReservationGroupsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationGroupsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, parameters, options)
 	if err != nil {
-		return CapacityReservationGroupsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CapacityReservationGroupsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return CapacityReservationGroupsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -119,19 +122,22 @@ func (client *CapacityReservationGroupsClient) createOrUpdateHandleResponse(resp
 //   - capacityReservationGroupName - The name of the capacity reservation group.
 //   - options - CapacityReservationGroupsClientDeleteOptions contains the optional parameters for the CapacityReservationGroupsClient.Delete
 //     method.
-func (client *CapacityReservationGroupsClient) Delete(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, options *CapacityReservationGroupsClientDeleteOptions) (CapacityReservationGroupsClientDeleteResponse, error) {
+func (client *CapacityReservationGroupsClient) Delete(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, options *CapacityReservationGroupsClientDeleteOptions) (resp CapacityReservationGroupsClientDeleteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationGroupsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, options)
 	if err != nil {
-		return CapacityReservationGroupsClientDeleteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CapacityReservationGroupsClientDeleteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return CapacityReservationGroupsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return CapacityReservationGroupsClientDeleteResponse{}, nil
+	return
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -168,19 +174,22 @@ func (client *CapacityReservationGroupsClient) deleteCreateRequest(ctx context.C
 //   - capacityReservationGroupName - The name of the capacity reservation group.
 //   - options - CapacityReservationGroupsClientGetOptions contains the optional parameters for the CapacityReservationGroupsClient.Get
 //     method.
-func (client *CapacityReservationGroupsClient) Get(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, options *CapacityReservationGroupsClientGetOptions) (CapacityReservationGroupsClientGetResponse, error) {
+func (client *CapacityReservationGroupsClient) Get(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, options *CapacityReservationGroupsClientGetOptions) (resp CapacityReservationGroupsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationGroupsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, options)
 	if err != nil {
-		return CapacityReservationGroupsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CapacityReservationGroupsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CapacityReservationGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -253,6 +262,7 @@ func (client *CapacityReservationGroupsClient) NewListByResourceGroupPager(resou
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -321,6 +331,7 @@ func (client *CapacityReservationGroupsClient) NewListBySubscriptionPager(option
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -364,19 +375,22 @@ func (client *CapacityReservationGroupsClient) listBySubscriptionHandleResponse(
 //   - parameters - Parameters supplied to the Update capacity reservation Group operation.
 //   - options - CapacityReservationGroupsClientUpdateOptions contains the optional parameters for the CapacityReservationGroupsClient.Update
 //     method.
-func (client *CapacityReservationGroupsClient) Update(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, parameters CapacityReservationGroupUpdate, options *CapacityReservationGroupsClientUpdateOptions) (CapacityReservationGroupsClientUpdateResponse, error) {
+func (client *CapacityReservationGroupsClient) Update(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, parameters CapacityReservationGroupUpdate, options *CapacityReservationGroupsClientUpdateOptions) (resp CapacityReservationGroupsClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationGroupsClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, capacityReservationGroupName, parameters, options)
 	if err != nil {
-		return CapacityReservationGroupsClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CapacityReservationGroupsClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CapacityReservationGroupsClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

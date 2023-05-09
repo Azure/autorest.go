@@ -55,19 +55,22 @@ func NewRestorePointCollectionsClient(subscriptionID string, credential azcore.T
 //   - parameters - Parameters supplied to the Create or Update restore point collection operation.
 //   - options - RestorePointCollectionsClientCreateOrUpdateOptions contains the optional parameters for the RestorePointCollectionsClient.CreateOrUpdate
 //     method.
-func (client *RestorePointCollectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, restorePointCollectionName string, parameters RestorePointCollection, options *RestorePointCollectionsClientCreateOrUpdateOptions) (RestorePointCollectionsClientCreateOrUpdateResponse, error) {
+func (client *RestorePointCollectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, restorePointCollectionName string, parameters RestorePointCollection, options *RestorePointCollectionsClientCreateOrUpdateOptions) (resp RestorePointCollectionsClientCreateOrUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "RestorePointCollectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, restorePointCollectionName, parameters, options)
 	if err != nil {
-		return RestorePointCollectionsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RestorePointCollectionsClientCreateOrUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return RestorePointCollectionsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	return client.createOrUpdateHandleResponse(httpResp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -117,15 +120,21 @@ func (client *RestorePointCollectionsClient) createOrUpdateHandleResponse(resp *
 //   - restorePointCollectionName - The name of the Restore Point Collection.
 //   - options - RestorePointCollectionsClientBeginDeleteOptions contains the optional parameters for the RestorePointCollectionsClient.BeginDelete
 //     method.
-func (client *RestorePointCollectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *RestorePointCollectionsClientBeginDeleteOptions) (*runtime.Poller[RestorePointCollectionsClientDeleteResponse], error) {
+func (client *RestorePointCollectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *RestorePointCollectionsClientBeginDeleteOptions) (resp *runtime.Poller[RestorePointCollectionsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "RestorePointCollectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, restorePointCollectionName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[RestorePointCollectionsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[RestorePointCollectionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[RestorePointCollectionsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[RestorePointCollectionsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -134,19 +143,20 @@ func (client *RestorePointCollectionsClient) BeginDelete(ctx context.Context, re
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *RestorePointCollectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *RestorePointCollectionsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *RestorePointCollectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *RestorePointCollectionsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, restorePointCollectionName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -183,19 +193,22 @@ func (client *RestorePointCollectionsClient) deleteCreateRequest(ctx context.Con
 //   - restorePointCollectionName - The name of the restore point collection.
 //   - options - RestorePointCollectionsClientGetOptions contains the optional parameters for the RestorePointCollectionsClient.Get
 //     method.
-func (client *RestorePointCollectionsClient) Get(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *RestorePointCollectionsClientGetOptions) (RestorePointCollectionsClientGetResponse, error) {
+func (client *RestorePointCollectionsClient) Get(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *RestorePointCollectionsClientGetOptions) (resp RestorePointCollectionsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "RestorePointCollectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, restorePointCollectionName, options)
 	if err != nil {
-		return RestorePointCollectionsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RestorePointCollectionsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RestorePointCollectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -267,6 +280,7 @@ func (client *RestorePointCollectionsClient) NewListPager(resourceGroupName stri
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -333,6 +347,7 @@ func (client *RestorePointCollectionsClient) NewListAllPager(options *RestorePoi
 			}
 			return client.listAllHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -372,19 +387,22 @@ func (client *RestorePointCollectionsClient) listAllHandleResponse(resp *http.Re
 //   - parameters - Parameters supplied to the Update restore point collection operation.
 //   - options - RestorePointCollectionsClientUpdateOptions contains the optional parameters for the RestorePointCollectionsClient.Update
 //     method.
-func (client *RestorePointCollectionsClient) Update(ctx context.Context, resourceGroupName string, restorePointCollectionName string, parameters RestorePointCollectionUpdate, options *RestorePointCollectionsClientUpdateOptions) (RestorePointCollectionsClientUpdateResponse, error) {
+func (client *RestorePointCollectionsClient) Update(ctx context.Context, resourceGroupName string, restorePointCollectionName string, parameters RestorePointCollectionUpdate, options *RestorePointCollectionsClientUpdateOptions) (resp RestorePointCollectionsClientUpdateResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "RestorePointCollectionsClient.Update", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, restorePointCollectionName, parameters, options)
 	if err != nil {
-		return RestorePointCollectionsClientUpdateResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RestorePointCollectionsClientUpdateResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RestorePointCollectionsClientUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.updateHandleResponse(resp)
+	return client.updateHandleResponse(httpResp)
 }
 
 // updateCreateRequest creates the Update request.

@@ -53,19 +53,22 @@ type BlockBlobClient struct {
 //   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *BlockBlobClient) CommitBlockList(ctx context.Context, containerName string, blob string, comp Enum31, blocks BlockLookupList, options *BlockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientCommitBlockListResponse, error) {
+func (client *BlockBlobClient) CommitBlockList(ctx context.Context, containerName string, blob string, comp Enum31, blocks BlockLookupList, options *BlockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (resp BlockBlobClientCommitBlockListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.CommitBlockList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.commitBlockListCreateRequest(ctx, containerName, blob, comp, blocks, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return BlockBlobClientCommitBlockListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BlockBlobClientCommitBlockListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobClientCommitBlockListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.commitBlockListHandleResponse(resp)
+	return client.commitBlockListHandleResponse(httpResp)
 }
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
@@ -249,19 +252,22 @@ func (client *BlockBlobClient) commitBlockListHandleResponse(resp *http.Response
 //   - options - BlockBlobClientGetBlockListOptions contains the optional parameters for the BlockBlobClient.GetBlockList method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *BlockBlobClient) GetBlockList(ctx context.Context, containerName string, blob string, comp Enum31, listType BlockListType, options *BlockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientGetBlockListResponse, error) {
+func (client *BlockBlobClient) GetBlockList(ctx context.Context, containerName string, blob string, comp Enum31, listType BlockListType, options *BlockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (resp BlockBlobClientGetBlockListResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.GetBlockList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBlockListCreateRequest(ctx, containerName, blob, comp, listType, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return BlockBlobClientGetBlockListResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BlockBlobClientGetBlockListResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BlockBlobClientGetBlockListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getBlockListHandleResponse(resp)
+	return client.getBlockListHandleResponse(httpResp)
 }
 
 // getBlockListCreateRequest creates the GetBlockList request.
@@ -371,19 +377,22 @@ func (client *BlockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 //   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Client.StartCopyFromURL
 //     method.
-func (client *BlockBlobClient) PutBlobFromURL(ctx context.Context, containerName string, blob string, contentLength int64, copySource string, options *BlockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientPutBlobFromURLResponse, error) {
+func (client *BlockBlobClient) PutBlobFromURL(ctx context.Context, containerName string, blob string, contentLength int64, copySource string, options *BlockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (resp BlockBlobClientPutBlobFromURLResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.PutBlobFromURL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putBlobFromURLCreateRequest(ctx, containerName, blob, contentLength, copySource, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return BlockBlobClientPutBlobFromURLResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BlockBlobClientPutBlobFromURLResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobClientPutBlobFromURLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.putBlobFromURLHandleResponse(resp)
+	return client.putBlobFromURLHandleResponse(httpResp)
 }
 
 // putBlobFromURLCreateRequest creates the PutBlobFromURL request.
@@ -579,19 +588,22 @@ func (client *BlockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
-func (client *BlockBlobClient) StageBlock(ctx context.Context, containerName string, blob string, comp Enum30, blockID string, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobClientStageBlockResponse, error) {
+func (client *BlockBlobClient) StageBlock(ctx context.Context, containerName string, blob string, comp Enum30, blockID string, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (resp BlockBlobClientStageBlockResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.StageBlock", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stageBlockCreateRequest(ctx, containerName, blob, comp, blockID, contentLength, body, options, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
-		return BlockBlobClientStageBlockResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BlockBlobClientStageBlockResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobClientStageBlockResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.stageBlockHandleResponse(resp)
+	return client.stageBlockHandleResponse(httpResp)
 }
 
 // stageBlockCreateRequest creates the StageBlock request.
@@ -718,19 +730,22 @@ func (client *BlockBlobClient) stageBlockHandleResponse(resp *http.Response) (Bl
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Client.StartCopyFromURL
 //     method.
-func (client *BlockBlobClient) StageBlockFromURL(ctx context.Context, containerName string, blob string, comp Enum30, blockID string, contentLength int64, sourceURL string, options *BlockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientStageBlockFromURLResponse, error) {
+func (client *BlockBlobClient) StageBlockFromURL(ctx context.Context, containerName string, blob string, comp Enum30, blockID string, contentLength int64, sourceURL string, options *BlockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (resp BlockBlobClientStageBlockFromURLResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.StageBlockFromURL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stageBlockFromURLCreateRequest(ctx, containerName, blob, comp, blockID, contentLength, sourceURL, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return BlockBlobClientStageBlockFromURLResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BlockBlobClientStageBlockFromURLResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobClientStageBlockFromURLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.stageBlockFromURLHandleResponse(resp)
+	return client.stageBlockFromURLHandleResponse(httpResp)
 }
 
 // stageBlockFromURLCreateRequest creates the StageBlockFromURL request.
@@ -870,19 +885,22 @@ func (client *BlockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 //   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-func (client *BlockBlobClient) Upload(ctx context.Context, containerName string, blob string, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientUploadResponse, error) {
+func (client *BlockBlobClient) Upload(ctx context.Context, containerName string, blob string, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (resp BlockBlobClientUploadResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.Upload", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.uploadCreateRequest(ctx, containerName, blob, contentLength, body, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return BlockBlobClientUploadResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BlockBlobClientUploadResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobClientUploadResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.uploadHandleResponse(resp)
+	return client.uploadHandleResponse(httpResp)
 }
 
 // uploadCreateRequest creates the Upload request.

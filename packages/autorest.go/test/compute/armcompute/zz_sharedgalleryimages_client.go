@@ -53,19 +53,22 @@ func NewSharedGalleryImagesClient(subscriptionID string, credential azcore.Token
 //   - galleryUniqueName - The unique name of the Shared Gallery.
 //   - galleryImageName - The name of the Shared Gallery Image Definition from which the Image Versions are to be listed.
 //   - options - SharedGalleryImagesClientGetOptions contains the optional parameters for the SharedGalleryImagesClient.Get method.
-func (client *SharedGalleryImagesClient) Get(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, options *SharedGalleryImagesClientGetOptions) (SharedGalleryImagesClientGetResponse, error) {
+func (client *SharedGalleryImagesClient) Get(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, options *SharedGalleryImagesClientGetOptions) (resp SharedGalleryImagesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "SharedGalleryImagesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, galleryUniqueName, galleryImageName, options)
 	if err != nil {
-		return SharedGalleryImagesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return SharedGalleryImagesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SharedGalleryImagesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -139,6 +142,7 @@ func (client *SharedGalleryImagesClient) NewListPager(location string, galleryUn
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

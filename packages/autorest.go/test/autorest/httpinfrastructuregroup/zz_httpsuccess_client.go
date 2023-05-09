@@ -28,19 +28,22 @@ type HTTPSuccessClient struct {
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
-func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessClientDelete200Options) (HTTPSuccessClientDelete200Response, error) {
+func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessClientDelete200Options) (resp HTTPSuccessClientDelete200Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Delete200", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientDelete200Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientDelete200Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientDelete200Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientDelete200Response{}, nil
+	return
 }
 
 // delete200CreateRequest creates the Delete200 request.
@@ -62,19 +65,22 @@ func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, opt
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
-func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessClientDelete202Options) (HTTPSuccessClientDelete202Response, error) {
+func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessClientDelete202Options) (resp HTTPSuccessClientDelete202Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Delete202", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientDelete202Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientDelete202Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientDelete202Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientDelete202Response{}, nil
+	return
 }
 
 // delete202CreateRequest creates the Delete202 request.
@@ -96,19 +102,22 @@ func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, opt
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
-func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessClientDelete204Options) (HTTPSuccessClientDelete204Response, error) {
+func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessClientDelete204Options) (resp HTTPSuccessClientDelete204Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Delete204", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientDelete204Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientDelete204Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientDelete204Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientDelete204Response{}, nil
+	return
 }
 
 // delete204CreateRequest creates the Delete204 request.
@@ -130,19 +139,22 @@ func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, opt
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
-func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessClientGet200Options) (HTTPSuccessClientGet200Response, error) {
+func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessClientGet200Options) (resp HTTPSuccessClientGet200Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Get200", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientGet200Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientGet200Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientGet200Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.get200HandleResponse(resp)
+	return client.get200HandleResponse(httpResp)
 }
 
 // get200CreateRequest creates the Get200 request.
@@ -169,19 +181,22 @@ func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTP
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
-func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (HTTPSuccessClientHead200Response, error) {
+func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (resp HTTPSuccessClientHead200Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head200", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientHead200Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientHead200Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientHead200Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientHead200Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPSuccessClientHead200Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head200CreateRequest creates the Head200 request.
@@ -199,19 +214,22 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
-func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (HTTPSuccessClientHead204Response, error) {
+func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (resp HTTPSuccessClientHead204Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head204", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientHead204Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientHead204Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientHead204Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientHead204Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPSuccessClientHead204Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head204CreateRequest creates the Head204 request.
@@ -229,19 +247,22 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
-func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (HTTPSuccessClientHead404Response, error) {
+func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (resp HTTPSuccessClientHead404Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head404", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientHead404Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientHead404Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent, http.StatusNotFound) {
-		return HTTPSuccessClientHead404Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent, http.StatusNotFound) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientHead404Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPSuccessClientHead404Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head404CreateRequest creates the Head404 request.
@@ -260,19 +281,22 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
-func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessClientOptions200Options) (HTTPSuccessClientOptions200Response, error) {
+func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessClientOptions200Options) (resp HTTPSuccessClientOptions200Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Options200", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.options200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientOptions200Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientOptions200Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientOptions200Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.options200HandleResponse(resp)
+	return client.options200HandleResponse(httpResp)
 }
 
 // options200CreateRequest creates the Options200 request.
@@ -300,19 +324,22 @@ func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
-func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessClientPatch200Options) (HTTPSuccessClientPatch200Response, error) {
+func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessClientPatch200Options) (resp HTTPSuccessClientPatch200Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Patch200", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPatch200Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPatch200Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientPatch200Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPatch200Response{}, nil
+	return
 }
 
 // patch200CreateRequest creates the Patch200 request.
@@ -334,19 +361,22 @@ func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, opti
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
-func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessClientPatch202Options) (HTTPSuccessClientPatch202Response, error) {
+func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessClientPatch202Options) (resp HTTPSuccessClientPatch202Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Patch202", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPatch202Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPatch202Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientPatch202Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPatch202Response{}, nil
+	return
 }
 
 // patch202CreateRequest creates the Patch202 request.
@@ -368,19 +398,22 @@ func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, opti
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
-func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessClientPatch204Options) (HTTPSuccessClientPatch204Response, error) {
+func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessClientPatch204Options) (resp HTTPSuccessClientPatch204Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Patch204", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPatch204Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPatch204Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientPatch204Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPatch204Response{}, nil
+	return
 }
 
 // patch204CreateRequest creates the Patch204 request.
@@ -402,19 +435,22 @@ func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, opti
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
-func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessClientPost200Options) (HTTPSuccessClientPost200Response, error) {
+func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessClientPost200Options) (resp HTTPSuccessClientPost200Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Post200", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPost200Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPost200Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientPost200Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPost200Response{}, nil
+	return
 }
 
 // post200CreateRequest creates the Post200 request.
@@ -436,19 +472,22 @@ func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
-func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessClientPost201Options) (HTTPSuccessClientPost201Response, error) {
+func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessClientPost201Options) (resp HTTPSuccessClientPost201Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Post201", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post201CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPost201Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPost201Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return HTTPSuccessClientPost201Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPost201Response{}, nil
+	return
 }
 
 // post201CreateRequest creates the Post201 request.
@@ -470,19 +509,22 @@ func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
-func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessClientPost202Options) (HTTPSuccessClientPost202Response, error) {
+func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessClientPost202Options) (resp HTTPSuccessClientPost202Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Post202", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPost202Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPost202Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientPost202Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPost202Response{}, nil
+	return
 }
 
 // post202CreateRequest creates the Post202 request.
@@ -504,19 +546,22 @@ func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
-func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessClientPost204Options) (HTTPSuccessClientPost204Response, error) {
+func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessClientPost204Options) (resp HTTPSuccessClientPost204Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Post204", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPost204Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPost204Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientPost204Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPost204Response{}, nil
+	return
 }
 
 // post204CreateRequest creates the Post204 request.
@@ -538,19 +583,22 @@ func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
-func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessClientPut200Options) (HTTPSuccessClientPut200Response, error) {
+func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessClientPut200Options) (resp HTTPSuccessClientPut200Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Put200", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPut200Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPut200Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientPut200Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPut200Response{}, nil
+	return
 }
 
 // put200CreateRequest creates the Put200 request.
@@ -572,19 +620,22 @@ func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, option
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
-func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessClientPut201Options) (HTTPSuccessClientPut201Response, error) {
+func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessClientPut201Options) (resp HTTPSuccessClientPut201Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Put201", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put201CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPut201Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPut201Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return HTTPSuccessClientPut201Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPut201Response{}, nil
+	return
 }
 
 // put201CreateRequest creates the Put201 request.
@@ -606,19 +657,22 @@ func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, option
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
-func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessClientPut202Options) (HTTPSuccessClientPut202Response, error) {
+func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessClientPut202Options) (resp HTTPSuccessClientPut202Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Put202", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPut202Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPut202Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientPut202Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPut202Response{}, nil
+	return
 }
 
 // put202CreateRequest creates the Put202 request.
@@ -640,19 +694,22 @@ func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, option
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
-func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessClientPut204Options) (HTTPSuccessClientPut204Response, error) {
+func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessClientPut204Options) (resp HTTPSuccessClientPut204Response, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Put204", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessClientPut204Response{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return HTTPSuccessClientPut204Response{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientPut204Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return HTTPSuccessClientPut204Response{}, nil
+	return
 }
 
 // put204CreateRequest creates the Put204 request.

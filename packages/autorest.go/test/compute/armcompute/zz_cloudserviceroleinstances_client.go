@@ -52,15 +52,21 @@ func NewCloudServiceRoleInstancesClient(subscriptionID string, credential azcore
 //   - roleInstanceName - Name of the role instance.
 //   - options - CloudServiceRoleInstancesClientBeginDeleteOptions contains the optional parameters for the CloudServiceRoleInstancesClient.BeginDelete
 //     method.
-func (client *CloudServiceRoleInstancesClient) BeginDelete(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginDeleteOptions) (*runtime.Poller[CloudServiceRoleInstancesClientDeleteResponse], error) {
+func (client *CloudServiceRoleInstancesClient) BeginDelete(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginDeleteOptions) (resp *runtime.Poller[CloudServiceRoleInstancesClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServiceRoleInstancesClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServiceRoleInstancesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServiceRoleInstancesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServiceRoleInstancesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -68,19 +74,20 @@ func (client *CloudServiceRoleInstancesClient) BeginDelete(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServiceRoleInstancesClient) deleteOperation(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *CloudServiceRoleInstancesClient) deleteOperation(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -120,19 +127,22 @@ func (client *CloudServiceRoleInstancesClient) deleteCreateRequest(ctx context.C
 //   - roleInstanceName - Name of the role instance.
 //   - options - CloudServiceRoleInstancesClientGetOptions contains the optional parameters for the CloudServiceRoleInstancesClient.Get
 //     method.
-func (client *CloudServiceRoleInstancesClient) Get(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetOptions) (CloudServiceRoleInstancesClientGetResponse, error) {
+func (client *CloudServiceRoleInstancesClient) Get(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetOptions) (resp CloudServiceRoleInstancesClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return CloudServiceRoleInstancesClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CloudServiceRoleInstancesClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServiceRoleInstancesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -184,19 +194,22 @@ func (client *CloudServiceRoleInstancesClient) getHandleResponse(resp *http.Resp
 //   - roleInstanceName - Name of the role instance.
 //   - options - CloudServiceRoleInstancesClientGetInstanceViewOptions contains the optional parameters for the CloudServiceRoleInstancesClient.GetInstanceView
 //     method.
-func (client *CloudServiceRoleInstancesClient) GetInstanceView(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetInstanceViewOptions) (CloudServiceRoleInstancesClientGetInstanceViewResponse, error) {
+func (client *CloudServiceRoleInstancesClient) GetInstanceView(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetInstanceViewOptions) (resp CloudServiceRoleInstancesClientGetInstanceViewResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.GetInstanceView", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInstanceViewCreateRequest(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return CloudServiceRoleInstancesClientGetInstanceViewResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CloudServiceRoleInstancesClientGetInstanceViewResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServiceRoleInstancesClientGetInstanceViewResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getInstanceViewHandleResponse(resp)
+	return client.getInstanceViewHandleResponse(httpResp)
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.
@@ -245,19 +258,22 @@ func (client *CloudServiceRoleInstancesClient) getInstanceViewHandleResponse(res
 //   - roleInstanceName - Name of the role instance.
 //   - options - CloudServiceRoleInstancesClientGetRemoteDesktopFileOptions contains the optional parameters for the CloudServiceRoleInstancesClient.GetRemoteDesktopFile
 //     method.
-func (client *CloudServiceRoleInstancesClient) GetRemoteDesktopFile(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetRemoteDesktopFileOptions) (CloudServiceRoleInstancesClientGetRemoteDesktopFileResponse, error) {
+func (client *CloudServiceRoleInstancesClient) GetRemoteDesktopFile(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetRemoteDesktopFileOptions) (resp CloudServiceRoleInstancesClientGetRemoteDesktopFileResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.GetRemoteDesktopFile", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getRemoteDesktopFileCreateRequest(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return CloudServiceRoleInstancesClientGetRemoteDesktopFileResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CloudServiceRoleInstancesClientGetRemoteDesktopFileResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServiceRoleInstancesClientGetRemoteDesktopFileResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return CloudServiceRoleInstancesClientGetRemoteDesktopFileResponse{Body: resp.Body}, nil
+	return CloudServiceRoleInstancesClientGetRemoteDesktopFileResponse{Body: httpResp.Body}, nil
 }
 
 // getRemoteDesktopFileCreateRequest creates the GetRemoteDesktopFile request.
@@ -322,6 +338,7 @@ func (client *CloudServiceRoleInstancesClient) NewListPager(resourceGroupName st
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -372,15 +389,21 @@ func (client *CloudServiceRoleInstancesClient) listHandleResponse(resp *http.Res
 //   - roleInstanceName - Name of the role instance.
 //   - options - CloudServiceRoleInstancesClientBeginRebuildOptions contains the optional parameters for the CloudServiceRoleInstancesClient.BeginRebuild
 //     method.
-func (client *CloudServiceRoleInstancesClient) BeginRebuild(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRebuildOptions) (*runtime.Poller[CloudServiceRoleInstancesClientRebuildResponse], error) {
+func (client *CloudServiceRoleInstancesClient) BeginRebuild(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRebuildOptions) (resp *runtime.Poller[CloudServiceRoleInstancesClientRebuildResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginRebuild", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.rebuild(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServiceRoleInstancesClientRebuildResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServiceRoleInstancesClientRebuildResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServiceRoleInstancesClientRebuildResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServiceRoleInstancesClientRebuildResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -390,19 +413,20 @@ func (client *CloudServiceRoleInstancesClient) BeginRebuild(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServiceRoleInstancesClient) rebuild(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRebuildOptions) (*http.Response, error) {
+func (client *CloudServiceRoleInstancesClient) rebuild(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRebuildOptions) (resp *http.Response, err error) {
 	req, err := client.rebuildCreateRequest(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // rebuildCreateRequest creates the Rebuild request.
@@ -443,15 +467,21 @@ func (client *CloudServiceRoleInstancesClient) rebuildCreateRequest(ctx context.
 //   - roleInstanceName - Name of the role instance.
 //   - options - CloudServiceRoleInstancesClientBeginReimageOptions contains the optional parameters for the CloudServiceRoleInstancesClient.BeginReimage
 //     method.
-func (client *CloudServiceRoleInstancesClient) BeginReimage(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginReimageOptions) (*runtime.Poller[CloudServiceRoleInstancesClientReimageResponse], error) {
+func (client *CloudServiceRoleInstancesClient) BeginReimage(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginReimageOptions) (resp *runtime.Poller[CloudServiceRoleInstancesClientReimageResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginReimage", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.reimage(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServiceRoleInstancesClientReimageResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServiceRoleInstancesClientReimageResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServiceRoleInstancesClientReimageResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServiceRoleInstancesClientReimageResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -460,19 +490,20 @@ func (client *CloudServiceRoleInstancesClient) BeginReimage(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServiceRoleInstancesClient) reimage(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginReimageOptions) (*http.Response, error) {
+func (client *CloudServiceRoleInstancesClient) reimage(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginReimageOptions) (resp *http.Response, err error) {
 	req, err := client.reimageCreateRequest(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // reimageCreateRequest creates the Reimage request.
@@ -512,15 +543,21 @@ func (client *CloudServiceRoleInstancesClient) reimageCreateRequest(ctx context.
 //   - roleInstanceName - Name of the role instance.
 //   - options - CloudServiceRoleInstancesClientBeginRestartOptions contains the optional parameters for the CloudServiceRoleInstancesClient.BeginRestart
 //     method.
-func (client *CloudServiceRoleInstancesClient) BeginRestart(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRestartOptions) (*runtime.Poller[CloudServiceRoleInstancesClientRestartResponse], error) {
+func (client *CloudServiceRoleInstancesClient) BeginRestart(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRestartOptions) (resp *runtime.Poller[CloudServiceRoleInstancesClientRestartResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginRestart", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.restart(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServiceRoleInstancesClientRestartResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServiceRoleInstancesClientRestartResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServiceRoleInstancesClientRestartResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServiceRoleInstancesClientRestartResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -528,19 +565,20 @@ func (client *CloudServiceRoleInstancesClient) BeginRestart(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-03-01
-func (client *CloudServiceRoleInstancesClient) restart(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRestartOptions) (*http.Response, error) {
+func (client *CloudServiceRoleInstancesClient) restart(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRestartOptions) (resp *http.Response, err error) {
 	req, err := client.restartCreateRequest(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // restartCreateRequest creates the Restart request.

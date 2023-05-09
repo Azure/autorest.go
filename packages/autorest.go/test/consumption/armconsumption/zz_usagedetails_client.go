@@ -86,6 +86,7 @@ func (client *UsageDetailsClient) NewListPager(scope string, options *UsageDetai
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

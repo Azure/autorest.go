@@ -55,15 +55,21 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 //   - containerParam - The container properties.
 //   - options - ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
 //     method.
-func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*runtime.Poller[ContainersClientCreateOrUpdateResponse], error) {
+func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[ContainersClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ContainersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ContainersClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ContainersClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ContainersClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ContainersClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -71,19 +77,20 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -129,15 +136,21 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 //   - containerName - The container name.
 //   - resourceGroupName - The resource group name.
 //   - options - ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
-func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*runtime.Poller[ContainersClientDeleteResponse], error) {
+func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (resp *runtime.Poller[ContainersClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ContainersClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ContainersClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ContainersClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ContainersClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ContainersClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -145,19 +158,20 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*http.Response, error) {
+func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -200,19 +214,22 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 //   - containerName - The container Name
 //   - resourceGroupName - The resource group name.
 //   - options - ContainersClientGetOptions contains the optional parameters for the ContainersClient.Get method.
-func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientGetOptions) (ContainersClientGetResponse, error) {
+func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientGetOptions) (resp ContainersClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainersClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return ContainersClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ContainersClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainersClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -288,6 +305,7 @@ func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, 
 			}
 			return client.listByStorageAccountHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -336,15 +354,21 @@ func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Re
 //   - containerName - The container name.
 //   - resourceGroupName - The resource group name.
 //   - options - ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
-func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*runtime.Poller[ContainersClientRefreshResponse], error) {
+func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (resp *runtime.Poller[ContainersClientRefreshResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "ContainersClient.BeginRefresh", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ContainersClientRefreshResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ContainersClientRefreshResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ContainersClientRefreshResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ContainersClientRefreshResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -352,19 +376,20 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*http.Response, error) {
+func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (resp *http.Response, err error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // refreshCreateRequest creates the Refresh request.

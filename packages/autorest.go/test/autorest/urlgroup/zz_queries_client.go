@@ -33,19 +33,22 @@ type QueriesClient struct {
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringCSVEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringCSVEmpty
 //     method.
-func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesClientArrayStringCSVEmptyOptions) (QueriesClientArrayStringCSVEmptyResponse, error) {
+func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesClientArrayStringCSVEmptyOptions) (resp QueriesClientArrayStringCSVEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringCSVEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringCSVEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringCSVEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringCSVEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringCSVEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringCSVEmptyResponse{}, nil
+	return
 }
 
 // arrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
@@ -70,19 +73,22 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringCSVNullOptions contains the optional parameters for the QueriesClient.ArrayStringCSVNull
 //     method.
-func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesClientArrayStringCSVNullOptions) (QueriesClientArrayStringCSVNullResponse, error) {
+func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesClientArrayStringCSVNullOptions) (resp QueriesClientArrayStringCSVNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringCSVNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringCSVNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringCSVNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringCSVNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringCSVNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringCSVNullResponse{}, nil
+	return
 }
 
 // arrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
@@ -108,19 +114,22 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringCSVValidOptions contains the optional parameters for the QueriesClient.ArrayStringCSVValid
 //     method.
-func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesClientArrayStringCSVValidOptions) (QueriesClientArrayStringCSVValidResponse, error) {
+func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesClientArrayStringCSVValidOptions) (resp QueriesClientArrayStringCSVValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringCSVValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringCSVValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringCSVValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringCSVValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringCSVValidResponse{}, nil
+	return
 }
 
 // arrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
@@ -146,19 +155,22 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringNoCollectionFormatEmpty
 //     method.
-func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesClientArrayStringNoCollectionFormatEmptyOptions) (QueriesClientArrayStringNoCollectionFormatEmptyResponse, error) {
+func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesClientArrayStringNoCollectionFormatEmptyOptions) (resp QueriesClientArrayStringNoCollectionFormatEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringNoCollectionFormatEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, nil
+	return
 }
 
 // arrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
@@ -184,19 +196,22 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringPipesValidOptions contains the optional parameters for the QueriesClient.ArrayStringPipesValid
 //     method.
-func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesClientArrayStringPipesValidOptions) (QueriesClientArrayStringPipesValidResponse, error) {
+func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesClientArrayStringPipesValidOptions) (resp QueriesClientArrayStringPipesValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringPipesValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringPipesValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringPipesValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringPipesValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringPipesValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringPipesValidResponse{}, nil
+	return
 }
 
 // arrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
@@ -222,19 +237,22 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringSsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringSsvValid
 //     method.
-func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesClientArrayStringSsvValidOptions) (QueriesClientArrayStringSsvValidResponse, error) {
+func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesClientArrayStringSsvValidOptions) (resp QueriesClientArrayStringSsvValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringSsvValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringSsvValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringSsvValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringSsvValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringSsvValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringSsvValidResponse{}, nil
+	return
 }
 
 // arrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
@@ -260,19 +278,22 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 // Generated from API version 1.0.0
 //   - options - QueriesClientArrayStringTsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringTsvValid
 //     method.
-func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesClientArrayStringTsvValidOptions) (QueriesClientArrayStringTsvValidResponse, error) {
+func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesClientArrayStringTsvValidOptions) (resp QueriesClientArrayStringTsvValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringTsvValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayStringTsvValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientArrayStringTsvValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientArrayStringTsvValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringTsvValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientArrayStringTsvValidResponse{}, nil
+	return
 }
 
 // arrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
@@ -296,19 +317,22 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
-func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClientByteEmptyOptions) (QueriesClientByteEmptyResponse, error) {
+func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClientByteEmptyOptions) (resp QueriesClientByteEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ByteEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientByteEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientByteEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientByteEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientByteEmptyResponse{}, nil
+	return
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
@@ -330,19 +354,22 @@ func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientByteMultiByteOptions contains the optional parameters for the QueriesClient.ByteMultiByte method.
-func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesClientByteMultiByteOptions) (QueriesClientByteMultiByteResponse, error) {
+func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesClientByteMultiByteOptions) (resp QueriesClientByteMultiByteResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ByteMultiByte", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.byteMultiByteCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientByteMultiByteResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientByteMultiByteResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientByteMultiByteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientByteMultiByteResponse{}, nil
+	return
 }
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -366,19 +393,22 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientByteNullOptions contains the optional parameters for the QueriesClient.ByteNull method.
-func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClientByteNullOptions) (QueriesClientByteNullResponse, error) {
+func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClientByteNullOptions) (resp QueriesClientByteNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ByteNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.byteNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientByteNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientByteNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientByteNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientByteNullResponse{}, nil
+	return
 }
 
 // byteNullCreateRequest creates the ByteNull request.
@@ -402,19 +432,22 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientDateNullOptions contains the optional parameters for the QueriesClient.DateNull method.
-func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClientDateNullOptions) (QueriesClientDateNullResponse, error) {
+func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClientDateNullOptions) (resp QueriesClientDateNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientDateNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientDateNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientDateNullResponse{}, nil
+	return
 }
 
 // dateNullCreateRequest creates the DateNull request.
@@ -438,19 +471,22 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientDateTimeNullOptions contains the optional parameters for the QueriesClient.DateTimeNull method.
-func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesClientDateTimeNullOptions) (QueriesClientDateTimeNullResponse, error) {
+func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesClientDateTimeNullOptions) (resp QueriesClientDateTimeNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateTimeNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateTimeNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientDateTimeNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientDateTimeNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateTimeNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientDateTimeNullResponse{}, nil
+	return
 }
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
@@ -474,19 +510,22 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientDateTimeValidOptions contains the optional parameters for the QueriesClient.DateTimeValid method.
-func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesClientDateTimeValidOptions) (QueriesClientDateTimeValidResponse, error) {
+func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesClientDateTimeValidOptions) (resp QueriesClientDateTimeValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateTimeValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientDateTimeValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientDateTimeValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateTimeValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientDateTimeValidResponse{}, nil
+	return
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
@@ -508,19 +547,22 @@ func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, opt
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientDateValidOptions contains the optional parameters for the QueriesClient.DateValid method.
-func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClientDateValidOptions) (QueriesClientDateValidResponse, error) {
+func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClientDateValidOptions) (resp QueriesClientDateValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientDateValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientDateValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientDateValidResponse{}, nil
+	return
 }
 
 // dateValidCreateRequest creates the DateValid request.
@@ -543,19 +585,22 @@ func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options
 // Generated from API version 1.0.0
 //   - options - QueriesClientDoubleDecimalNegativeOptions contains the optional parameters for the QueriesClient.DoubleDecimalNegative
 //     method.
-func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesClientDoubleDecimalNegativeOptions) (QueriesClientDoubleDecimalNegativeResponse, error) {
+func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesClientDoubleDecimalNegativeOptions) (resp QueriesClientDoubleDecimalNegativeResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DoubleDecimalNegative", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientDoubleDecimalNegativeResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientDoubleDecimalNegativeResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDoubleDecimalNegativeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientDoubleDecimalNegativeResponse{}, nil
+	return
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -578,19 +623,22 @@ func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Cont
 // Generated from API version 1.0.0
 //   - options - QueriesClientDoubleDecimalPositiveOptions contains the optional parameters for the QueriesClient.DoubleDecimalPositive
 //     method.
-func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesClientDoubleDecimalPositiveOptions) (QueriesClientDoubleDecimalPositiveResponse, error) {
+func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesClientDoubleDecimalPositiveOptions) (resp QueriesClientDoubleDecimalPositiveResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DoubleDecimalPositive", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientDoubleDecimalPositiveResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientDoubleDecimalPositiveResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDoubleDecimalPositiveResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientDoubleDecimalPositiveResponse{}, nil
+	return
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -612,19 +660,22 @@ func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Cont
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientDoubleNullOptions contains the optional parameters for the QueriesClient.DoubleNull method.
-func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesClientDoubleNullOptions) (QueriesClientDoubleNullResponse, error) {
+func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesClientDoubleNullOptions) (resp QueriesClientDoubleNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DoubleNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.doubleNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientDoubleNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientDoubleNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDoubleNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientDoubleNullResponse{}, nil
+	return
 }
 
 // doubleNullCreateRequest creates the DoubleNull request.
@@ -648,19 +699,22 @@ func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, option
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientEnumNullOptions contains the optional parameters for the QueriesClient.EnumNull method.
-func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClientEnumNullOptions) (QueriesClientEnumNullResponse, error) {
+func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClientEnumNullOptions) (resp QueriesClientEnumNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.EnumNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.enumNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientEnumNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientEnumNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientEnumNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientEnumNullResponse{}, nil
+	return
 }
 
 // enumNullCreateRequest creates the EnumNull request.
@@ -684,19 +738,22 @@ func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options 
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientEnumValidOptions contains the optional parameters for the QueriesClient.EnumValid method.
-func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClientEnumValidOptions) (QueriesClientEnumValidResponse, error) {
+func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClientEnumValidOptions) (resp QueriesClientEnumValidResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.EnumValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.enumValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientEnumValidResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientEnumValidResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientEnumValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientEnumValidResponse{}, nil
+	return
 }
 
 // enumValidCreateRequest creates the EnumValid request.
@@ -720,19 +777,22 @@ func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientFloatNullOptions contains the optional parameters for the QueriesClient.FloatNull method.
-func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClientFloatNullOptions) (QueriesClientFloatNullResponse, error) {
+func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClientFloatNullOptions) (resp QueriesClientFloatNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.FloatNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.floatNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientFloatNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientFloatNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientFloatNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientFloatNullResponse{}, nil
+	return
 }
 
 // floatNullCreateRequest creates the FloatNull request.
@@ -757,19 +817,22 @@ func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options
 // Generated from API version 1.0.0
 //   - options - QueriesClientFloatScientificNegativeOptions contains the optional parameters for the QueriesClient.FloatScientificNegative
 //     method.
-func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesClientFloatScientificNegativeOptions) (QueriesClientFloatScientificNegativeResponse, error) {
+func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesClientFloatScientificNegativeOptions) (resp QueriesClientFloatScientificNegativeResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.FloatScientificNegative", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientFloatScientificNegativeResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientFloatScientificNegativeResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientFloatScientificNegativeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientFloatScientificNegativeResponse{}, nil
+	return
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -792,19 +855,22 @@ func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Co
 // Generated from API version 1.0.0
 //   - options - QueriesClientFloatScientificPositiveOptions contains the optional parameters for the QueriesClient.FloatScientificPositive
 //     method.
-func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesClientFloatScientificPositiveOptions) (QueriesClientFloatScientificPositiveResponse, error) {
+func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesClientFloatScientificPositiveOptions) (resp QueriesClientFloatScientificPositiveResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.FloatScientificPositive", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientFloatScientificPositiveResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientFloatScientificPositiveResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientFloatScientificPositiveResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientFloatScientificPositiveResponse{}, nil
+	return
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -826,19 +892,22 @@ func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Co
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetBooleanFalseOptions contains the optional parameters for the QueriesClient.GetBooleanFalse method.
-func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesClientGetBooleanFalseOptions) (QueriesClientGetBooleanFalseResponse, error) {
+func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesClientGetBooleanFalseOptions) (resp QueriesClientGetBooleanFalseResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetBooleanFalse", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetBooleanFalseResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetBooleanFalseResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetBooleanFalseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetBooleanFalseResponse{}, nil
+	return
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -860,19 +929,22 @@ func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, o
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetBooleanNullOptions contains the optional parameters for the QueriesClient.GetBooleanNull method.
-func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesClientGetBooleanNullOptions) (QueriesClientGetBooleanNullResponse, error) {
+func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesClientGetBooleanNullOptions) (resp QueriesClientGetBooleanNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetBooleanNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetBooleanNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetBooleanNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetBooleanNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetBooleanNullResponse{}, nil
+	return
 }
 
 // getBooleanNullCreateRequest creates the GetBooleanNull request.
@@ -896,19 +968,22 @@ func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, op
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetBooleanTrueOptions contains the optional parameters for the QueriesClient.GetBooleanTrue method.
-func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesClientGetBooleanTrueOptions) (QueriesClientGetBooleanTrueResponse, error) {
+func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesClientGetBooleanTrueOptions) (resp QueriesClientGetBooleanTrueResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetBooleanTrue", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetBooleanTrueResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetBooleanTrueResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetBooleanTrueResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetBooleanTrueResponse{}, nil
+	return
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -931,19 +1006,22 @@ func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, op
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetIntNegativeOneMillionOptions contains the optional parameters for the QueriesClient.GetIntNegativeOneMillion
 //     method.
-func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesClientGetIntNegativeOneMillionOptions) (QueriesClientGetIntNegativeOneMillionResponse, error) {
+func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesClientGetIntNegativeOneMillionOptions) (resp QueriesClientGetIntNegativeOneMillionResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetIntNegativeOneMillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetIntNegativeOneMillionResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetIntNegativeOneMillionResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetIntNegativeOneMillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetIntNegativeOneMillionResponse{}, nil
+	return
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -965,19 +1043,22 @@ func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.C
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetIntNullOptions contains the optional parameters for the QueriesClient.GetIntNull method.
-func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesClientGetIntNullOptions) (QueriesClientGetIntNullResponse, error) {
+func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesClientGetIntNullOptions) (resp QueriesClientGetIntNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetIntNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetIntNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetIntNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetIntNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetIntNullResponse{}, nil
+	return
 }
 
 // getIntNullCreateRequest creates the GetIntNull request.
@@ -1002,19 +1083,22 @@ func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, option
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetIntOneMillionOptions contains the optional parameters for the QueriesClient.GetIntOneMillion
 //     method.
-func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesClientGetIntOneMillionOptions) (QueriesClientGetIntOneMillionResponse, error) {
+func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesClientGetIntOneMillionOptions) (resp QueriesClientGetIntOneMillionResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetIntOneMillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetIntOneMillionResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetIntOneMillionResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetIntOneMillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetIntOneMillionResponse{}, nil
+	return
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -1036,19 +1120,22 @@ func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, 
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetLongNullOptions contains the optional parameters for the QueriesClient.GetLongNull method.
-func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesClientGetLongNullOptions) (QueriesClientGetLongNullResponse, error) {
+func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesClientGetLongNullOptions) (resp QueriesClientGetLongNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetLongNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getLongNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetLongNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetLongNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetLongNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetLongNullResponse{}, nil
+	return
 }
 
 // getLongNullCreateRequest creates the GetLongNull request.
@@ -1073,19 +1160,22 @@ func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, optio
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetNegativeTenBillionOptions contains the optional parameters for the QueriesClient.GetNegativeTenBillion
 //     method.
-func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesClientGetNegativeTenBillionOptions) (QueriesClientGetNegativeTenBillionResponse, error) {
+func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesClientGetNegativeTenBillionOptions) (resp QueriesClientGetNegativeTenBillionResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetNegativeTenBillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetNegativeTenBillionResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetNegativeTenBillionResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetNegativeTenBillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetNegativeTenBillionResponse{}, nil
+	return
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -1107,19 +1197,22 @@ func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Cont
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientGetTenBillionOptions contains the optional parameters for the QueriesClient.GetTenBillion method.
-func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesClientGetTenBillionOptions) (QueriesClientGetTenBillionResponse, error) {
+func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesClientGetTenBillionOptions) (resp QueriesClientGetTenBillionResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetTenBillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientGetTenBillionResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientGetTenBillionResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetTenBillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientGetTenBillionResponse{}, nil
+	return
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
@@ -1141,19 +1234,22 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
-func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesClientStringEmptyOptions) (QueriesClientStringEmptyResponse, error) {
+func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesClientStringEmptyOptions) (resp QueriesClientStringEmptyResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientStringEmptyResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientStringEmptyResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientStringEmptyResponse{}, nil
+	return
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
@@ -1175,19 +1271,22 @@ func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientStringNullOptions contains the optional parameters for the QueriesClient.StringNull method.
-func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesClientStringNullOptions) (QueriesClientStringNullResponse, error) {
+func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesClientStringNullOptions) (resp QueriesClientStringNullResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientStringNullResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientStringNullResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientStringNullResponse{}, nil
+	return
 }
 
 // stringNullCreateRequest creates the StringNull request.
@@ -1212,19 +1311,22 @@ func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, option
 // Generated from API version 1.0.0
 //   - options - QueriesClientStringURLEncodedOptions contains the optional parameters for the QueriesClient.StringURLEncoded
 //     method.
-func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesClientStringURLEncodedOptions) (QueriesClientStringURLEncodedResponse, error) {
+func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesClientStringURLEncodedOptions) (resp QueriesClientStringURLEncodedResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringURLEncoded", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientStringURLEncodedResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientStringURLEncodedResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringURLEncodedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientStringURLEncodedResponse{}, nil
+	return
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -1246,19 +1348,22 @@ func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, 
 //
 // Generated from API version 1.0.0
 //   - options - QueriesClientStringUnicodeOptions contains the optional parameters for the QueriesClient.StringUnicode method.
-func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesClientStringUnicodeOptions) (QueriesClientStringUnicodeResponse, error) {
+func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesClientStringUnicodeOptions) (resp QueriesClientStringUnicodeResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringUnicode", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesClientStringUnicodeResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueriesClientStringUnicodeResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringUnicodeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return QueriesClientStringUnicodeResponse{}, nil
+	return
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.

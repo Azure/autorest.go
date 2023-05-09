@@ -55,15 +55,21 @@ func NewVirtualMachineRunCommandsClient(subscriptionID string, credential azcore
 //   - runCommand - Parameters supplied to the Create Virtual Machine RunCommand operation.
 //   - options - VirtualMachineRunCommandsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineRunCommandsClient.BeginCreateOrUpdate
 //     method.
-func (client *VirtualMachineRunCommandsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommand, options *VirtualMachineRunCommandsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualMachineRunCommandsClientCreateOrUpdateResponse], error) {
+func (client *VirtualMachineRunCommandsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommand, options *VirtualMachineRunCommandsClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[VirtualMachineRunCommandsClientCreateOrUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineRunCommandsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, runCommandName, runCommand, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineRunCommandsClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachineRunCommandsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineRunCommandsClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualMachineRunCommandsClientCreateOrUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -71,19 +77,20 @@ func (client *VirtualMachineRunCommandsClient) BeginCreateOrUpdate(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *VirtualMachineRunCommandsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommand, options *VirtualMachineRunCommandsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachineRunCommandsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommand, options *VirtualMachineRunCommandsClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, runCommandName, runCommand, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -128,15 +135,21 @@ func (client *VirtualMachineRunCommandsClient) createOrUpdateCreateRequest(ctx c
 //   - runCommandName - The name of the virtual machine run command.
 //   - options - VirtualMachineRunCommandsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineRunCommandsClient.BeginDelete
 //     method.
-func (client *VirtualMachineRunCommandsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *VirtualMachineRunCommandsClientBeginDeleteOptions) (*runtime.Poller[VirtualMachineRunCommandsClientDeleteResponse], error) {
+func (client *VirtualMachineRunCommandsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *VirtualMachineRunCommandsClientBeginDeleteOptions) (resp *runtime.Poller[VirtualMachineRunCommandsClientDeleteResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineRunCommandsClient.BeginDelete", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, runCommandName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineRunCommandsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachineRunCommandsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineRunCommandsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualMachineRunCommandsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -144,19 +157,20 @@ func (client *VirtualMachineRunCommandsClient) BeginDelete(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *VirtualMachineRunCommandsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *VirtualMachineRunCommandsClientBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualMachineRunCommandsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *VirtualMachineRunCommandsClientBeginDeleteOptions) (resp *http.Response, err error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmName, runCommandName, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -197,19 +211,22 @@ func (client *VirtualMachineRunCommandsClient) deleteCreateRequest(ctx context.C
 //   - commandID - The command id.
 //   - options - VirtualMachineRunCommandsClientGetOptions contains the optional parameters for the VirtualMachineRunCommandsClient.Get
 //     method.
-func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsClientGetOptions) (VirtualMachineRunCommandsClientGetResponse, error) {
+func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsClientGetOptions) (resp VirtualMachineRunCommandsClientGetResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineRunCommandsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, commandID, options)
 	if err != nil {
-		return VirtualMachineRunCommandsClientGetResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineRunCommandsClientGetResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineRunCommandsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getHandleResponse(resp)
+	return client.getHandleResponse(httpResp)
 }
 
 // getCreateRequest creates the Get request.
@@ -256,19 +273,22 @@ func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Resp
 //   - runCommandName - The name of the virtual machine run command.
 //   - options - VirtualMachineRunCommandsClientGetByVirtualMachineOptions contains the optional parameters for the VirtualMachineRunCommandsClient.GetByVirtualMachine
 //     method.
-func (client *VirtualMachineRunCommandsClient) GetByVirtualMachine(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *VirtualMachineRunCommandsClientGetByVirtualMachineOptions) (VirtualMachineRunCommandsClientGetByVirtualMachineResponse, error) {
+func (client *VirtualMachineRunCommandsClient) GetByVirtualMachine(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *VirtualMachineRunCommandsClientGetByVirtualMachineOptions) (resp VirtualMachineRunCommandsClientGetByVirtualMachineResponse, err error) {
+	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineRunCommandsClient.GetByVirtualMachine", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getByVirtualMachineCreateRequest(ctx, resourceGroupName, vmName, runCommandName, options)
 	if err != nil {
-		return VirtualMachineRunCommandsClientGetByVirtualMachineResponse{}, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return VirtualMachineRunCommandsClientGetByVirtualMachineResponse{}, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineRunCommandsClientGetByVirtualMachineResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return client.getByVirtualMachineHandleResponse(resp)
+	return client.getByVirtualMachineHandleResponse(httpResp)
 }
 
 // getByVirtualMachineCreateRequest creates the GetByVirtualMachine request.
@@ -344,6 +364,7 @@ func (client *VirtualMachineRunCommandsClient) NewListPager(location string, opt
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -410,6 +431,7 @@ func (client *VirtualMachineRunCommandsClient) NewListByVirtualMachinePager(reso
 			}
 			return client.listByVirtualMachineHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -461,15 +483,21 @@ func (client *VirtualMachineRunCommandsClient) listByVirtualMachineHandleRespons
 //   - runCommand - Parameters supplied to the Update Virtual Machine RunCommand operation.
 //   - options - VirtualMachineRunCommandsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineRunCommandsClient.BeginUpdate
 //     method.
-func (client *VirtualMachineRunCommandsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommandUpdate, options *VirtualMachineRunCommandsClientBeginUpdateOptions) (*runtime.Poller[VirtualMachineRunCommandsClientUpdateResponse], error) {
+func (client *VirtualMachineRunCommandsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommandUpdate, options *VirtualMachineRunCommandsClientBeginUpdateOptions) (resp *runtime.Poller[VirtualMachineRunCommandsClientUpdateResponse], err error) {
 	if options == nil || options.ResumeToken == "" {
+		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineRunCommandsClient.BeginUpdate", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, vmName, runCommandName, runCommand, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[VirtualMachineRunCommandsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualMachineRunCommandsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualMachineRunCommandsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualMachineRunCommandsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -477,19 +505,20 @@ func (client *VirtualMachineRunCommandsClient) BeginUpdate(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01
-func (client *VirtualMachineRunCommandsClient) update(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommandUpdate, options *VirtualMachineRunCommandsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachineRunCommandsClient) update(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand VirtualMachineRunCommandUpdate, options *VirtualMachineRunCommandsClientBeginUpdateOptions) (resp *http.Response, err error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmName, runCommandName, runCommand, options)
 	if err != nil {
-		return nil, err
+		return
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // updateCreateRequest creates the Update request.
