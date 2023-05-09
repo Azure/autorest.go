@@ -14,16 +14,16 @@ const host = "http://localhost:3000"
 type URIColor string
 
 const (
-	URIColorRedColor   URIColor = "red color"
-	URIColorGreenColor URIColor = "green color"
 	URIColorBlueColor  URIColor = "blue color"
+	URIColorGreenColor URIColor = "green color"
+	URIColorRedColor   URIColor = "red color"
 )
 
 // PossibleURIColorValues returns the possible values for the URIColor const type.
 func PossibleURIColorValues() []URIColor {
 	return []URIColor{
-		URIColorRedColor,
-		URIColorGreenColor,
 		URIColorBlueColor,
+		URIColorGreenColor,
+		URIColorRedColor,
 	}
 }

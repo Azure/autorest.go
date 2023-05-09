@@ -64,22 +64,22 @@ func PossibleArtifactArchitectureValues() []ArtifactArchitecture {
 type ArtifactManifestOrderBy string
 
 const (
-	// ArtifactManifestOrderByNone - Do not provide an orderby value in the request.
-	ArtifactManifestOrderByNone ArtifactManifestOrderBy = "none"
-	// ArtifactManifestOrderByLastUpdatedOnDescending - Order manifests by LastUpdatedOn field, from most recently updated to
-	// least recently updated.
-	ArtifactManifestOrderByLastUpdatedOnDescending ArtifactManifestOrderBy = "timedesc"
 	// ArtifactManifestOrderByLastUpdatedOnAscending - Order manifest by LastUpdatedOn field, from least recently updated to most
 	// recently updated.
 	ArtifactManifestOrderByLastUpdatedOnAscending ArtifactManifestOrderBy = "timeasc"
+	// ArtifactManifestOrderByLastUpdatedOnDescending - Order manifests by LastUpdatedOn field, from most recently updated to
+	// least recently updated.
+	ArtifactManifestOrderByLastUpdatedOnDescending ArtifactManifestOrderBy = "timedesc"
+	// ArtifactManifestOrderByNone - Do not provide an orderby value in the request.
+	ArtifactManifestOrderByNone ArtifactManifestOrderBy = "none"
 )
 
 // PossibleArtifactManifestOrderByValues returns the possible values for the ArtifactManifestOrderBy const type.
 func PossibleArtifactManifestOrderByValues() []ArtifactManifestOrderBy {
 	return []ArtifactManifestOrderBy{
-		ArtifactManifestOrderByNone,
-		ArtifactManifestOrderByLastUpdatedOnDescending,
 		ArtifactManifestOrderByLastUpdatedOnAscending,
+		ArtifactManifestOrderByLastUpdatedOnDescending,
+		ArtifactManifestOrderByNone,
 	}
 }
 
@@ -126,22 +126,22 @@ func PossibleArtifactOperatingSystemValues() []ArtifactOperatingSystem {
 type ArtifactTagOrderBy string
 
 const (
-	// ArtifactTagOrderByNone - Do not provide an orderby value in the request.
-	ArtifactTagOrderByNone ArtifactTagOrderBy = "none"
-	// ArtifactTagOrderByLastUpdatedOnDescending - Order tags by LastUpdatedOn field, from most recently updated to least recently
-	// updated.
-	ArtifactTagOrderByLastUpdatedOnDescending ArtifactTagOrderBy = "timedesc"
 	// ArtifactTagOrderByLastUpdatedOnAscending - Order tags by LastUpdatedOn field, from least recently updated to most recently
 	// updated.
 	ArtifactTagOrderByLastUpdatedOnAscending ArtifactTagOrderBy = "timeasc"
+	// ArtifactTagOrderByLastUpdatedOnDescending - Order tags by LastUpdatedOn field, from most recently updated to least recently
+	// updated.
+	ArtifactTagOrderByLastUpdatedOnDescending ArtifactTagOrderBy = "timedesc"
+	// ArtifactTagOrderByNone - Do not provide an orderby value in the request.
+	ArtifactTagOrderByNone ArtifactTagOrderBy = "none"
 )
 
 // PossibleArtifactTagOrderByValues returns the possible values for the ArtifactTagOrderBy const type.
 func PossibleArtifactTagOrderByValues() []ArtifactTagOrderBy {
 	return []ArtifactTagOrderBy{
-		ArtifactTagOrderByNone,
-		ArtifactTagOrderByLastUpdatedOnDescending,
 		ArtifactTagOrderByLastUpdatedOnAscending,
+		ArtifactTagOrderByLastUpdatedOnDescending,
+		ArtifactTagOrderByNone,
 	}
 }
 
@@ -167,14 +167,14 @@ func PossiblePostContentSchemaGrantTypeValues() []PostContentSchemaGrantType {
 type TokenGrantType string
 
 const (
-	TokenGrantTypeRefreshToken TokenGrantType = "refresh_token"
 	TokenGrantTypePassword     TokenGrantType = "password"
+	TokenGrantTypeRefreshToken TokenGrantType = "refresh_token"
 )
 
 // PossibleTokenGrantTypeValues returns the possible values for the TokenGrantType const type.
 func PossibleTokenGrantTypeValues() []TokenGrantType {
 	return []TokenGrantType{
-		TokenGrantTypeRefreshToken,
 		TokenGrantTypePassword,
+		TokenGrantTypeRefreshToken,
 	}
 }

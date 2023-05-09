@@ -911,19 +911,19 @@ func PossibleInstanceViewTypesValues() []InstanceViewTypes {
 type IntervalInMins string
 
 const (
-	IntervalInMinsThreeMins  IntervalInMins = "ThreeMins"
 	IntervalInMinsFiveMins   IntervalInMins = "FiveMins"
-	IntervalInMinsThirtyMins IntervalInMins = "ThirtyMins"
 	IntervalInMinsSixtyMins  IntervalInMins = "SixtyMins"
+	IntervalInMinsThirtyMins IntervalInMins = "ThirtyMins"
+	IntervalInMinsThreeMins  IntervalInMins = "ThreeMins"
 )
 
 // PossibleIntervalInMinsValues returns the possible values for the IntervalInMins const type.
 func PossibleIntervalInMinsValues() []IntervalInMins {
 	return []IntervalInMins{
-		IntervalInMinsThreeMins,
 		IntervalInMinsFiveMins,
-		IntervalInMinsThirtyMins,
 		IntervalInMinsSixtyMins,
+		IntervalInMinsThirtyMins,
+		IntervalInMinsThreeMins,
 	}
 }
 
@@ -971,19 +971,19 @@ func PossibleLinuxVMGuestPatchModeValues() []LinuxVMGuestPatchMode {
 type MaintenanceOperationResultCodeTypes string
 
 const (
-	MaintenanceOperationResultCodeTypesNone                 MaintenanceOperationResultCodeTypes = "None"
-	MaintenanceOperationResultCodeTypesRetryLater           MaintenanceOperationResultCodeTypes = "RetryLater"
 	MaintenanceOperationResultCodeTypesMaintenanceAborted   MaintenanceOperationResultCodeTypes = "MaintenanceAborted"
 	MaintenanceOperationResultCodeTypesMaintenanceCompleted MaintenanceOperationResultCodeTypes = "MaintenanceCompleted"
+	MaintenanceOperationResultCodeTypesNone                 MaintenanceOperationResultCodeTypes = "None"
+	MaintenanceOperationResultCodeTypesRetryLater           MaintenanceOperationResultCodeTypes = "RetryLater"
 )
 
 // PossibleMaintenanceOperationResultCodeTypesValues returns the possible values for the MaintenanceOperationResultCodeTypes const type.
 func PossibleMaintenanceOperationResultCodeTypesValues() []MaintenanceOperationResultCodeTypes {
 	return []MaintenanceOperationResultCodeTypes{
-		MaintenanceOperationResultCodeTypesNone,
-		MaintenanceOperationResultCodeTypesRetryLater,
 		MaintenanceOperationResultCodeTypesMaintenanceAborted,
 		MaintenanceOperationResultCodeTypesMaintenanceCompleted,
+		MaintenanceOperationResultCodeTypesNone,
+		MaintenanceOperationResultCodeTypesRetryLater,
 	}
 }
 
@@ -1064,15 +1064,15 @@ func PossibleOperatingSystemTypeValues() []OperatingSystemType {
 type OperatingSystemTypes string
 
 const (
-	OperatingSystemTypesWindows OperatingSystemTypes = "Windows"
 	OperatingSystemTypesLinux   OperatingSystemTypes = "Linux"
+	OperatingSystemTypesWindows OperatingSystemTypes = "Windows"
 )
 
 // PossibleOperatingSystemTypesValues returns the possible values for the OperatingSystemTypes const type.
 func PossibleOperatingSystemTypesValues() []OperatingSystemTypes {
 	return []OperatingSystemTypes{
-		OperatingSystemTypesWindows,
 		OperatingSystemTypesLinux,
+		OperatingSystemTypesWindows,
 	}
 }
 
@@ -1424,19 +1424,19 @@ func PossibleReplicationStatusTypesValues() []ReplicationStatusTypes {
 type ResourceIdentityType string
 
 const (
-	ResourceIdentityTypeSystemAssigned             ResourceIdentityType = "SystemAssigned"
-	ResourceIdentityTypeUserAssigned               ResourceIdentityType = "UserAssigned"
-	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
 	ResourceIdentityTypeNone                       ResourceIdentityType = "None"
+	ResourceIdentityTypeSystemAssigned             ResourceIdentityType = "SystemAssigned"
+	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
+	ResourceIdentityTypeUserAssigned               ResourceIdentityType = "UserAssigned"
 )
 
 // PossibleResourceIdentityTypeValues returns the possible values for the ResourceIdentityType const type.
 func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
 	return []ResourceIdentityType{
-		ResourceIdentityTypeSystemAssigned,
-		ResourceIdentityTypeUserAssigned,
-		ResourceIdentityTypeSystemAssignedUserAssigned,
 		ResourceIdentityTypeNone,
+		ResourceIdentityTypeSystemAssigned,
+		ResourceIdentityTypeSystemAssignedUserAssigned,
+		ResourceIdentityTypeUserAssigned,
 	}
 }
 
@@ -1462,15 +1462,15 @@ func PossibleResourceSKUCapacityScaleTypeValues() []ResourceSKUCapacityScaleType
 type ResourceSKURestrictionsReasonCode string
 
 const (
-	ResourceSKURestrictionsReasonCodeQuotaID                     ResourceSKURestrictionsReasonCode = "QuotaId"
 	ResourceSKURestrictionsReasonCodeNotAvailableForSubscription ResourceSKURestrictionsReasonCode = "NotAvailableForSubscription"
+	ResourceSKURestrictionsReasonCodeQuotaID                     ResourceSKURestrictionsReasonCode = "QuotaId"
 )
 
 // PossibleResourceSKURestrictionsReasonCodeValues returns the possible values for the ResourceSKURestrictionsReasonCode const type.
 func PossibleResourceSKURestrictionsReasonCodeValues() []ResourceSKURestrictionsReasonCode {
 	return []ResourceSKURestrictionsReasonCode{
-		ResourceSKURestrictionsReasonCodeQuotaID,
 		ResourceSKURestrictionsReasonCodeNotAvailableForSubscription,
+		ResourceSKURestrictionsReasonCodeQuotaID,
 	}
 }
 
@@ -1520,15 +1520,15 @@ func PossibleRestorePointExpandOptionsValues() []RestorePointExpandOptions {
 type RollingUpgradeActionType string
 
 const (
-	RollingUpgradeActionTypeStart  RollingUpgradeActionType = "Start"
 	RollingUpgradeActionTypeCancel RollingUpgradeActionType = "Cancel"
+	RollingUpgradeActionTypeStart  RollingUpgradeActionType = "Start"
 )
 
 // PossibleRollingUpgradeActionTypeValues returns the possible values for the RollingUpgradeActionType const type.
 func PossibleRollingUpgradeActionTypeValues() []RollingUpgradeActionType {
 	return []RollingUpgradeActionType{
-		RollingUpgradeActionTypeStart,
 		RollingUpgradeActionTypeCancel,
+		RollingUpgradeActionTypeStart,
 	}
 }
 
@@ -1536,19 +1536,19 @@ func PossibleRollingUpgradeActionTypeValues() []RollingUpgradeActionType {
 type RollingUpgradeStatusCode string
 
 const (
-	RollingUpgradeStatusCodeRollingForward RollingUpgradeStatusCode = "RollingForward"
 	RollingUpgradeStatusCodeCancelled      RollingUpgradeStatusCode = "Cancelled"
 	RollingUpgradeStatusCodeCompleted      RollingUpgradeStatusCode = "Completed"
 	RollingUpgradeStatusCodeFaulted        RollingUpgradeStatusCode = "Faulted"
+	RollingUpgradeStatusCodeRollingForward RollingUpgradeStatusCode = "RollingForward"
 )
 
 // PossibleRollingUpgradeStatusCodeValues returns the possible values for the RollingUpgradeStatusCode const type.
 func PossibleRollingUpgradeStatusCodeValues() []RollingUpgradeStatusCode {
 	return []RollingUpgradeStatusCode{
-		RollingUpgradeStatusCodeRollingForward,
 		RollingUpgradeStatusCodeCancelled,
 		RollingUpgradeStatusCodeCompleted,
 		RollingUpgradeStatusCodeFaulted,
+		RollingUpgradeStatusCodeRollingForward,
 	}
 }
 
@@ -1722,17 +1722,17 @@ func PossibleSnapshotStorageAccountTypesValues() []SnapshotStorageAccountTypes {
 type StatusLevelTypes string
 
 const (
+	StatusLevelTypesError   StatusLevelTypes = "Error"
 	StatusLevelTypesInfo    StatusLevelTypes = "Info"
 	StatusLevelTypesWarning StatusLevelTypes = "Warning"
-	StatusLevelTypesError   StatusLevelTypes = "Error"
 )
 
 // PossibleStatusLevelTypesValues returns the possible values for the StatusLevelTypes const type.
 func PossibleStatusLevelTypesValues() []StatusLevelTypes {
 	return []StatusLevelTypes{
+		StatusLevelTypesError,
 		StatusLevelTypesInfo,
 		StatusLevelTypesWarning,
-		StatusLevelTypesError,
 	}
 }
 
@@ -1812,17 +1812,17 @@ func PossibleUpgradeModeValues() []UpgradeMode {
 type UpgradeOperationInvoker string
 
 const (
+	UpgradeOperationInvokerPlatform UpgradeOperationInvoker = "Platform"
 	UpgradeOperationInvokerUnknown  UpgradeOperationInvoker = "Unknown"
 	UpgradeOperationInvokerUser     UpgradeOperationInvoker = "User"
-	UpgradeOperationInvokerPlatform UpgradeOperationInvoker = "Platform"
 )
 
 // PossibleUpgradeOperationInvokerValues returns the possible values for the UpgradeOperationInvoker const type.
 func PossibleUpgradeOperationInvokerValues() []UpgradeOperationInvoker {
 	return []UpgradeOperationInvoker{
+		UpgradeOperationInvokerPlatform,
 		UpgradeOperationInvokerUnknown,
 		UpgradeOperationInvokerUser,
-		UpgradeOperationInvokerPlatform,
 	}
 }
 
@@ -1830,19 +1830,19 @@ func PossibleUpgradeOperationInvokerValues() []UpgradeOperationInvoker {
 type UpgradeState string
 
 const (
-	UpgradeStateRollingForward UpgradeState = "RollingForward"
 	UpgradeStateCancelled      UpgradeState = "Cancelled"
 	UpgradeStateCompleted      UpgradeState = "Completed"
 	UpgradeStateFaulted        UpgradeState = "Faulted"
+	UpgradeStateRollingForward UpgradeState = "RollingForward"
 )
 
 // PossibleUpgradeStateValues returns the possible values for the UpgradeState const type.
 func PossibleUpgradeStateValues() []UpgradeState {
 	return []UpgradeState{
-		UpgradeStateRollingForward,
 		UpgradeStateCancelled,
 		UpgradeStateCompleted,
 		UpgradeStateFaulted,
+		UpgradeStateRollingForward,
 	}
 }
 

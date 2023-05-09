@@ -60,51 +60,51 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 type BlobType string
 
 const (
+	BlobTypeAppendBlob BlobType = "AppendBlob"
 	BlobTypeBlockBlob  BlobType = "BlockBlob"
 	BlobTypePageBlob   BlobType = "PageBlob"
-	BlobTypeAppendBlob BlobType = "AppendBlob"
 )
 
 // PossibleBlobTypeValues returns the possible values for the BlobType const type.
 func PossibleBlobTypeValues() []BlobType {
 	return []BlobType{
+		BlobTypeAppendBlob,
 		BlobTypeBlockBlob,
 		BlobTypePageBlob,
-		BlobTypeAppendBlob,
 	}
 }
 
 type CopyStatusType string
 
 const (
-	CopyStatusTypePending CopyStatusType = "pending"
-	CopyStatusTypeSuccess CopyStatusType = "success"
 	CopyStatusTypeAborted CopyStatusType = "aborted"
 	CopyStatusTypeFailed  CopyStatusType = "failed"
+	CopyStatusTypePending CopyStatusType = "pending"
+	CopyStatusTypeSuccess CopyStatusType = "success"
 )
 
 // PossibleCopyStatusTypeValues returns the possible values for the CopyStatusType const type.
 func PossibleCopyStatusTypeValues() []CopyStatusType {
 	return []CopyStatusType{
-		CopyStatusTypePending,
-		CopyStatusTypeSuccess,
 		CopyStatusTypeAborted,
 		CopyStatusTypeFailed,
+		CopyStatusTypePending,
+		CopyStatusTypeSuccess,
 	}
 }
 
 type LeaseDurationType string
 
 const (
-	LeaseDurationTypeInfinite LeaseDurationType = "infinite"
 	LeaseDurationTypeFixed    LeaseDurationType = "fixed"
+	LeaseDurationTypeInfinite LeaseDurationType = "infinite"
 )
 
 // PossibleLeaseDurationTypeValues returns the possible values for the LeaseDurationType const type.
 func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 	return []LeaseDurationType{
-		LeaseDurationTypeInfinite,
 		LeaseDurationTypeFixed,
+		LeaseDurationTypeInfinite,
 	}
 }
 
@@ -112,20 +112,20 @@ type LeaseStateType string
 
 const (
 	LeaseStateTypeAvailable LeaseStateType = "available"
-	LeaseStateTypeLeased    LeaseStateType = "leased"
-	LeaseStateTypeExpired   LeaseStateType = "expired"
 	LeaseStateTypeBreaking  LeaseStateType = "breaking"
 	LeaseStateTypeBroken    LeaseStateType = "broken"
+	LeaseStateTypeExpired   LeaseStateType = "expired"
+	LeaseStateTypeLeased    LeaseStateType = "leased"
 )
 
 // PossibleLeaseStateTypeValues returns the possible values for the LeaseStateType const type.
 func PossibleLeaseStateTypeValues() []LeaseStateType {
 	return []LeaseStateType{
 		LeaseStateTypeAvailable,
-		LeaseStateTypeLeased,
-		LeaseStateTypeExpired,
 		LeaseStateTypeBreaking,
 		LeaseStateTypeBroken,
+		LeaseStateTypeExpired,
+		LeaseStateTypeLeased,
 	}
 }
 

@@ -15,16 +15,16 @@ const host = "http://localhost:3000"
 type Colors string
 
 const (
-	ColorsRedColor   Colors = "red color"
-	ColorsGreenColor Colors = "green-color"
 	ColorsBlueColor  Colors = "blue_color"
+	ColorsGreenColor Colors = "green-color"
+	ColorsRedColor   Colors = "red color"
 )
 
 // PossibleColorsValues returns the possible values for the Colors const type.
 func PossibleColorsValues() []Colors {
 	return []Colors{
-		ColorsRedColor,
-		ColorsGreenColor,
 		ColorsBlueColor,
+		ColorsGreenColor,
+		ColorsRedColor,
 	}
 }

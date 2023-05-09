@@ -55,21 +55,21 @@ func PossibleAccessTierValues() []AccessTier {
 type AccountKind string
 
 const (
-	AccountKindStorage          AccountKind = "Storage"
 	AccountKindBlobStorage      AccountKind = "BlobStorage"
-	AccountKindStorageV2        AccountKind = "StorageV2"
-	AccountKindFileStorage      AccountKind = "FileStorage"
 	AccountKindBlockBlobStorage AccountKind = "BlockBlobStorage"
+	AccountKindFileStorage      AccountKind = "FileStorage"
+	AccountKindStorage          AccountKind = "Storage"
+	AccountKindStorageV2        AccountKind = "StorageV2"
 )
 
 // PossibleAccountKindValues returns the possible values for the AccountKind const type.
 func PossibleAccountKindValues() []AccountKind {
 	return []AccountKind{
-		AccountKindStorage,
 		AccountKindBlobStorage,
-		AccountKindStorageV2,
-		AccountKindFileStorage,
 		AccountKindBlockBlobStorage,
+		AccountKindFileStorage,
+		AccountKindStorage,
+		AccountKindStorageV2,
 	}
 }
 
@@ -91,15 +91,15 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 type BlobCopySourceTags string
 
 const (
-	BlobCopySourceTagsREPLACE BlobCopySourceTags = "REPLACE"
 	BlobCopySourceTagsCOPY    BlobCopySourceTags = "COPY"
+	BlobCopySourceTagsREPLACE BlobCopySourceTags = "REPLACE"
 )
 
 // PossibleBlobCopySourceTagsValues returns the possible values for the BlobCopySourceTags const type.
 func PossibleBlobCopySourceTagsValues() []BlobCopySourceTags {
 	return []BlobCopySourceTags{
-		BlobCopySourceTagsREPLACE,
 		BlobCopySourceTagsCOPY,
+		BlobCopySourceTagsREPLACE,
 	}
 }
 
@@ -125,70 +125,70 @@ func PossibleBlobExpiryOptionsValues() []BlobExpiryOptions {
 type BlobImmutabilityPolicyMode string
 
 const (
+	BlobImmutabilityPolicyModeLocked   BlobImmutabilityPolicyMode = "Locked"
 	BlobImmutabilityPolicyModeMutable  BlobImmutabilityPolicyMode = "Mutable"
 	BlobImmutabilityPolicyModeUnlocked BlobImmutabilityPolicyMode = "Unlocked"
-	BlobImmutabilityPolicyModeLocked   BlobImmutabilityPolicyMode = "Locked"
 )
 
 // PossibleBlobImmutabilityPolicyModeValues returns the possible values for the BlobImmutabilityPolicyMode const type.
 func PossibleBlobImmutabilityPolicyModeValues() []BlobImmutabilityPolicyMode {
 	return []BlobImmutabilityPolicyMode{
+		BlobImmutabilityPolicyModeLocked,
 		BlobImmutabilityPolicyModeMutable,
 		BlobImmutabilityPolicyModeUnlocked,
-		BlobImmutabilityPolicyModeLocked,
 	}
 }
 
 type BlobType string
 
 const (
+	BlobTypeAppendBlob BlobType = "AppendBlob"
 	BlobTypeBlockBlob  BlobType = "BlockBlob"
 	BlobTypePageBlob   BlobType = "PageBlob"
-	BlobTypeAppendBlob BlobType = "AppendBlob"
 )
 
 // PossibleBlobTypeValues returns the possible values for the BlobType const type.
 func PossibleBlobTypeValues() []BlobType {
 	return []BlobType{
+		BlobTypeAppendBlob,
 		BlobTypeBlockBlob,
 		BlobTypePageBlob,
-		BlobTypeAppendBlob,
 	}
 }
 
 type BlockListType string
 
 const (
+	BlockListTypeAll         BlockListType = "all"
 	BlockListTypeCommitted   BlockListType = "committed"
 	BlockListTypeUncommitted BlockListType = "uncommitted"
-	BlockListTypeAll         BlockListType = "all"
 )
 
 // PossibleBlockListTypeValues returns the possible values for the BlockListType const type.
 func PossibleBlockListTypeValues() []BlockListType {
 	return []BlockListType{
+		BlockListTypeAll,
 		BlockListTypeCommitted,
 		BlockListTypeUncommitted,
-		BlockListTypeAll,
 	}
 }
 
 type CopyStatusType string
 
 const (
-	CopyStatusTypePending CopyStatusType = "pending"
-	CopyStatusTypeSuccess CopyStatusType = "success"
 	CopyStatusTypeAborted CopyStatusType = "aborted"
 	CopyStatusTypeFailed  CopyStatusType = "failed"
+	CopyStatusTypePending CopyStatusType = "pending"
+	CopyStatusTypeSuccess CopyStatusType = "success"
 )
 
 // PossibleCopyStatusTypeValues returns the possible values for the CopyStatusType const type.
 func PossibleCopyStatusTypeValues() []CopyStatusType {
 	return []CopyStatusType{
-		CopyStatusTypePending,
-		CopyStatusTypeSuccess,
 		CopyStatusTypeAborted,
 		CopyStatusTypeFailed,
+		CopyStatusTypePending,
+		CopyStatusTypeSuccess,
 	}
 }
 
@@ -659,15 +659,15 @@ func PossibleGeoReplicationStatusTypeValues() []GeoReplicationStatusType {
 type LeaseDurationType string
 
 const (
-	LeaseDurationTypeInfinite LeaseDurationType = "infinite"
 	LeaseDurationTypeFixed    LeaseDurationType = "fixed"
+	LeaseDurationTypeInfinite LeaseDurationType = "infinite"
 )
 
 // PossibleLeaseDurationTypeValues returns the possible values for the LeaseDurationType const type.
 func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 	return []LeaseDurationType{
-		LeaseDurationTypeInfinite,
 		LeaseDurationTypeFixed,
+		LeaseDurationTypeInfinite,
 	}
 }
 
@@ -675,20 +675,20 @@ type LeaseStateType string
 
 const (
 	LeaseStateTypeAvailable LeaseStateType = "available"
-	LeaseStateTypeLeased    LeaseStateType = "leased"
-	LeaseStateTypeExpired   LeaseStateType = "expired"
 	LeaseStateTypeBreaking  LeaseStateType = "breaking"
 	LeaseStateTypeBroken    LeaseStateType = "broken"
+	LeaseStateTypeExpired   LeaseStateType = "expired"
+	LeaseStateTypeLeased    LeaseStateType = "leased"
 )
 
 // PossibleLeaseStateTypeValues returns the possible values for the LeaseStateType const type.
 func PossibleLeaseStateTypeValues() []LeaseStateType {
 	return []LeaseStateType{
 		LeaseStateTypeAvailable,
-		LeaseStateTypeLeased,
-		LeaseStateTypeExpired,
 		LeaseStateTypeBreaking,
 		LeaseStateTypeBroken,
+		LeaseStateTypeExpired,
+		LeaseStateTypeLeased,
 	}
 }
 
@@ -712,14 +712,14 @@ type ListBlobsIncludeItem string
 const (
 	ListBlobsIncludeItemCopy                ListBlobsIncludeItem = "copy"
 	ListBlobsIncludeItemDeleted             ListBlobsIncludeItem = "deleted"
-	ListBlobsIncludeItemMetadata            ListBlobsIncludeItem = "metadata"
-	ListBlobsIncludeItemSnapshots           ListBlobsIncludeItem = "snapshots"
-	ListBlobsIncludeItemUncommittedblobs    ListBlobsIncludeItem = "uncommittedblobs"
-	ListBlobsIncludeItemVersions            ListBlobsIncludeItem = "versions"
-	ListBlobsIncludeItemTags                ListBlobsIncludeItem = "tags"
+	ListBlobsIncludeItemDeletedwithversions ListBlobsIncludeItem = "deletedwithversions"
 	ListBlobsIncludeItemImmutabilitypolicy  ListBlobsIncludeItem = "immutabilitypolicy"
 	ListBlobsIncludeItemLegalhold           ListBlobsIncludeItem = "legalhold"
-	ListBlobsIncludeItemDeletedwithversions ListBlobsIncludeItem = "deletedwithversions"
+	ListBlobsIncludeItemMetadata            ListBlobsIncludeItem = "metadata"
+	ListBlobsIncludeItemSnapshots           ListBlobsIncludeItem = "snapshots"
+	ListBlobsIncludeItemTags                ListBlobsIncludeItem = "tags"
+	ListBlobsIncludeItemUncommittedblobs    ListBlobsIncludeItem = "uncommittedblobs"
+	ListBlobsIncludeItemVersions            ListBlobsIncludeItem = "versions"
 )
 
 // PossibleListBlobsIncludeItemValues returns the possible values for the ListBlobsIncludeItem const type.
@@ -727,30 +727,30 @@ func PossibleListBlobsIncludeItemValues() []ListBlobsIncludeItem {
 	return []ListBlobsIncludeItem{
 		ListBlobsIncludeItemCopy,
 		ListBlobsIncludeItemDeleted,
-		ListBlobsIncludeItemMetadata,
-		ListBlobsIncludeItemSnapshots,
-		ListBlobsIncludeItemUncommittedblobs,
-		ListBlobsIncludeItemVersions,
-		ListBlobsIncludeItemTags,
+		ListBlobsIncludeItemDeletedwithversions,
 		ListBlobsIncludeItemImmutabilitypolicy,
 		ListBlobsIncludeItemLegalhold,
-		ListBlobsIncludeItemDeletedwithversions,
+		ListBlobsIncludeItemMetadata,
+		ListBlobsIncludeItemSnapshots,
+		ListBlobsIncludeItemTags,
+		ListBlobsIncludeItemUncommittedblobs,
+		ListBlobsIncludeItemVersions,
 	}
 }
 
 type ListContainersIncludeType string
 
 const (
-	ListContainersIncludeTypeMetadata ListContainersIncludeType = "metadata"
 	ListContainersIncludeTypeDeleted  ListContainersIncludeType = "deleted"
+	ListContainersIncludeTypeMetadata ListContainersIncludeType = "metadata"
 	ListContainersIncludeTypeSystem   ListContainersIncludeType = "system"
 )
 
 // PossibleListContainersIncludeTypeValues returns the possible values for the ListContainersIncludeType const type.
 func PossibleListContainersIncludeTypeValues() []ListContainersIncludeType {
 	return []ListContainersIncludeType{
-		ListContainersIncludeTypeMetadata,
 		ListContainersIncludeTypeDeleted,
+		ListContainersIncludeTypeMetadata,
 		ListContainersIncludeTypeSystem,
 	}
 }
@@ -807,18 +807,18 @@ func PossiblePublicAccessTypeValues() []PublicAccessType {
 type QueryFormatType string
 
 const (
+	QueryFormatTypeArrow     QueryFormatType = "arrow"
 	QueryFormatTypeDelimited QueryFormatType = "delimited"
 	QueryFormatTypeJSON      QueryFormatType = "json"
-	QueryFormatTypeArrow     QueryFormatType = "arrow"
 	QueryFormatTypeParquet   QueryFormatType = "parquet"
 )
 
 // PossibleQueryFormatTypeValues returns the possible values for the QueryFormatType const type.
 func PossibleQueryFormatTypeValues() []QueryFormatType {
 	return []QueryFormatType{
+		QueryFormatTypeArrow,
 		QueryFormatTypeDelimited,
 		QueryFormatTypeJSON,
-		QueryFormatTypeArrow,
 		QueryFormatTypeParquet,
 	}
 }
@@ -857,38 +857,38 @@ func PossibleRehydratePriorityValues() []RehydratePriority {
 type SKUName string
 
 const (
-	SKUNameStandardLRS   SKUName = "Standard_LRS"
+	SKUNamePremiumLRS    SKUName = "Premium_LRS"
 	SKUNameStandardGRS   SKUName = "Standard_GRS"
+	SKUNameStandardLRS   SKUName = "Standard_LRS"
 	SKUNameStandardRAGRS SKUName = "Standard_RAGRS"
 	SKUNameStandardZRS   SKUName = "Standard_ZRS"
-	SKUNamePremiumLRS    SKUName = "Premium_LRS"
 )
 
 // PossibleSKUNameValues returns the possible values for the SKUName const type.
 func PossibleSKUNameValues() []SKUName {
 	return []SKUName{
-		SKUNameStandardLRS,
+		SKUNamePremiumLRS,
 		SKUNameStandardGRS,
+		SKUNameStandardLRS,
 		SKUNameStandardRAGRS,
 		SKUNameStandardZRS,
-		SKUNamePremiumLRS,
 	}
 }
 
 type SequenceNumberActionType string
 
 const (
+	SequenceNumberActionTypeIncrement SequenceNumberActionType = "increment"
 	SequenceNumberActionTypeMax       SequenceNumberActionType = "max"
 	SequenceNumberActionTypeUpdate    SequenceNumberActionType = "update"
-	SequenceNumberActionTypeIncrement SequenceNumberActionType = "increment"
 )
 
 // PossibleSequenceNumberActionTypeValues returns the possible values for the SequenceNumberActionType const type.
 func PossibleSequenceNumberActionTypeValues() []SequenceNumberActionType {
 	return []SequenceNumberActionType{
+		SequenceNumberActionTypeIncrement,
 		SequenceNumberActionTypeMax,
 		SequenceNumberActionTypeUpdate,
-		SequenceNumberActionTypeIncrement,
 	}
 }
 

@@ -1547,17 +1547,17 @@ func PossibleFirewallPolicyIDPSQuerySortOrderValues() []FirewallPolicyIDPSQueryS
 type FirewallPolicyIDPSSignatureDirection int32
 
 const (
-	FirewallPolicyIDPSSignatureDirectionZero FirewallPolicyIDPSSignatureDirection = 0
 	FirewallPolicyIDPSSignatureDirectionOne  FirewallPolicyIDPSSignatureDirection = 1
 	FirewallPolicyIDPSSignatureDirectionTwo  FirewallPolicyIDPSSignatureDirection = 2
+	FirewallPolicyIDPSSignatureDirectionZero FirewallPolicyIDPSSignatureDirection = 0
 )
 
 // PossibleFirewallPolicyIDPSSignatureDirectionValues returns the possible values for the FirewallPolicyIDPSSignatureDirection const type.
 func PossibleFirewallPolicyIDPSSignatureDirectionValues() []FirewallPolicyIDPSSignatureDirection {
 	return []FirewallPolicyIDPSSignatureDirection{
-		FirewallPolicyIDPSSignatureDirectionZero,
 		FirewallPolicyIDPSSignatureDirectionOne,
 		FirewallPolicyIDPSSignatureDirectionTwo,
+		FirewallPolicyIDPSSignatureDirectionZero,
 	}
 }
 
@@ -1565,17 +1565,17 @@ func PossibleFirewallPolicyIDPSSignatureDirectionValues() []FirewallPolicyIDPSSi
 type FirewallPolicyIDPSSignatureMode int32
 
 const (
-	FirewallPolicyIDPSSignatureModeZero FirewallPolicyIDPSSignatureMode = 0
 	FirewallPolicyIDPSSignatureModeOne  FirewallPolicyIDPSSignatureMode = 1
 	FirewallPolicyIDPSSignatureModeTwo  FirewallPolicyIDPSSignatureMode = 2
+	FirewallPolicyIDPSSignatureModeZero FirewallPolicyIDPSSignatureMode = 0
 )
 
 // PossibleFirewallPolicyIDPSSignatureModeValues returns the possible values for the FirewallPolicyIDPSSignatureMode const type.
 func PossibleFirewallPolicyIDPSSignatureModeValues() []FirewallPolicyIDPSSignatureMode {
 	return []FirewallPolicyIDPSSignatureMode{
-		FirewallPolicyIDPSSignatureModeZero,
 		FirewallPolicyIDPSSignatureModeOne,
 		FirewallPolicyIDPSSignatureModeTwo,
+		FirewallPolicyIDPSSignatureModeZero,
 	}
 }
 
@@ -1584,16 +1584,16 @@ type FirewallPolicyIDPSSignatureSeverity int32
 
 const (
 	FirewallPolicyIDPSSignatureSeverityOne   FirewallPolicyIDPSSignatureSeverity = 1
-	FirewallPolicyIDPSSignatureSeverityTwo   FirewallPolicyIDPSSignatureSeverity = 2
 	FirewallPolicyIDPSSignatureSeverityThree FirewallPolicyIDPSSignatureSeverity = 3
+	FirewallPolicyIDPSSignatureSeverityTwo   FirewallPolicyIDPSSignatureSeverity = 2
 )
 
 // PossibleFirewallPolicyIDPSSignatureSeverityValues returns the possible values for the FirewallPolicyIDPSSignatureSeverity const type.
 func PossibleFirewallPolicyIDPSSignatureSeverityValues() []FirewallPolicyIDPSSignatureSeverity {
 	return []FirewallPolicyIDPSSignatureSeverity{
 		FirewallPolicyIDPSSignatureSeverityOne,
-		FirewallPolicyIDPSSignatureSeverityTwo,
 		FirewallPolicyIDPSSignatureSeverityThree,
+		FirewallPolicyIDPSSignatureSeverityTwo,
 	}
 }
 
@@ -2827,19 +2827,19 @@ func PossiblePublicIPPrefixSKUTierValues() []PublicIPPrefixSKUTier {
 type ResourceIdentityType string
 
 const (
-	ResourceIdentityTypeSystemAssigned             ResourceIdentityType = "SystemAssigned"
-	ResourceIdentityTypeUserAssigned               ResourceIdentityType = "UserAssigned"
-	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
 	ResourceIdentityTypeNone                       ResourceIdentityType = "None"
+	ResourceIdentityTypeSystemAssigned             ResourceIdentityType = "SystemAssigned"
+	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
+	ResourceIdentityTypeUserAssigned               ResourceIdentityType = "UserAssigned"
 )
 
 // PossibleResourceIdentityTypeValues returns the possible values for the ResourceIdentityType const type.
 func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
 	return []ResourceIdentityType{
-		ResourceIdentityTypeSystemAssigned,
-		ResourceIdentityTypeUserAssigned,
-		ResourceIdentityTypeSystemAssignedUserAssigned,
 		ResourceIdentityTypeNone,
+		ResourceIdentityTypeSystemAssigned,
+		ResourceIdentityTypeSystemAssignedUserAssigned,
+		ResourceIdentityTypeUserAssigned,
 	}
 }
 
