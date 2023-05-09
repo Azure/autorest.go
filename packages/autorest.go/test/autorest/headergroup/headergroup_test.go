@@ -25,14 +25,6 @@ func newHeaderClient(t *testing.T) *HeaderClient {
 	return client
 }
 
-func NewHeaderClient(options *azcore.ClientOptions) (*HeaderClient, error) {
-	client, err := azcore.NewClient("headergroup.HeaderClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &HeaderClient{internal: client}, nil
-}
-
 func TestHeaderCustomRequestID(t *testing.T) {
 	client := newHeaderClient(t)
 	header := http.Header{}

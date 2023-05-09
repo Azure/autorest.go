@@ -55,7 +55,9 @@ func NewProfilesClient(subscriptionID string, credential azcore.TokenCredential,
 //   - options - ProfilesClientCreateOrUpdateOptions contains the optional parameters for the ProfilesClient.CreateOrUpdate method.
 func (client *ProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, options *ProfilesClientCreateOrUpdateOptions) (ProfilesClientCreateOrUpdateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ProfilesClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	const operationName = "ProfilesClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
@@ -120,10 +122,6 @@ func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) 
 //   - options - ProfilesClientBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
 func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*runtime.Poller[ProfilesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ProfilesClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkProfileName, options)
 		if err != nil {
 			return nil, err
@@ -143,6 +141,10 @@ func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName
 // Generated from API version 2022-09-01
 func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ProfilesClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
 		return nil, err
@@ -193,7 +195,9 @@ func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceG
 //   - options - ProfilesClientGetOptions contains the optional parameters for the ProfilesClient.Get method.
 func (client *ProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientGetOptions) (ProfilesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ProfilesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "ProfilesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -260,6 +264,7 @@ func (client *ProfilesClient) NewListPager(resourceGroupName string, options *Pr
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ProfilesClientListResponse) (ProfilesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ProfilesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -324,6 +329,7 @@ func (client *ProfilesClient) NewListAllPager(options *ProfilesClientListAllOpti
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ProfilesClientListAllResponse) (ProfilesClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ProfilesClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -384,7 +390,9 @@ func (client *ProfilesClient) listAllHandleResponse(resp *http.Response) (Profil
 //   - options - ProfilesClientUpdateTagsOptions contains the optional parameters for the ProfilesClient.UpdateTags method.
 func (client *ProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *ProfilesClientUpdateTagsOptions) (ProfilesClientUpdateTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ProfilesClient.UpdateTags", client.internal.Tracer(), nil)
+	const operationName = "ProfilesClient.UpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {

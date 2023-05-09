@@ -37,7 +37,9 @@ type ContainerRegistryClient struct {
 //     method.
 func (client *ContainerRegistryClient) CheckDockerV2Support(ctx context.Context, options *ContainerRegistryClientCheckDockerV2SupportOptions) (ContainerRegistryClientCheckDockerV2SupportResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.CheckDockerV2Support", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.CheckDockerV2Support"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.checkDockerV2SupportCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *ContainerRegistryClient) checkDockerV2SupportCreateRequest(ctx con
 //     method.
 func (client *ContainerRegistryClient) CreateManifest(ctx context.Context, name string, reference string, payload Manifest, options *ContainerRegistryClientCreateManifestOptions) (ContainerRegistryClientCreateManifestResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.CreateManifest", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.CreateManifest"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createManifestCreateRequest(ctx, name, reference, payload, options)
 	if err != nil {
@@ -150,7 +154,9 @@ func (client *ContainerRegistryClient) createManifestHandleResponse(resp *http.R
 //     method.
 func (client *ContainerRegistryClient) DeleteManifest(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteManifestOptions) (ContainerRegistryClientDeleteManifestResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.DeleteManifest", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.DeleteManifest"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteManifestCreateRequest(ctx, name, reference, options)
 	if err != nil {
@@ -195,7 +201,9 @@ func (client *ContainerRegistryClient) deleteManifestCreateRequest(ctx context.C
 //     method.
 func (client *ContainerRegistryClient) DeleteRepository(ctx context.Context, name string, options *ContainerRegistryClientDeleteRepositoryOptions) (ContainerRegistryClientDeleteRepositoryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.DeleteRepository", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.DeleteRepository"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteRepositoryCreateRequest(ctx, name, options)
 	if err != nil {
@@ -252,7 +260,9 @@ func (client *ContainerRegistryClient) deleteRepositoryHandleResponse(resp *http
 //     method.
 func (client *ContainerRegistryClient) DeleteTag(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteTagOptions) (ContainerRegistryClientDeleteTagResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.DeleteTag", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.DeleteTag"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteTagCreateRequest(ctx, name, reference, options)
 	if err != nil {
@@ -303,7 +313,9 @@ func (client *ContainerRegistryClient) deleteTagCreateRequest(ctx context.Contex
 //     method.
 func (client *ContainerRegistryClient) GetManifest(ctx context.Context, name string, reference string, options *ContainerRegistryClientGetManifestOptions) (ContainerRegistryClientGetManifestResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetManifest", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.GetManifest"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getManifestCreateRequest(ctx, name, reference, options)
 	if err != nil {
@@ -362,7 +374,9 @@ func (client *ContainerRegistryClient) getManifestHandleResponse(resp *http.Resp
 //     method.
 func (client *ContainerRegistryClient) GetManifestProperties(ctx context.Context, name string, digest string, options *ContainerRegistryClientGetManifestPropertiesOptions) (ContainerRegistryClientGetManifestPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetManifestProperties", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.GetManifestProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getManifestPropertiesCreateRequest(ctx, name, digest, options)
 	if err != nil {
@@ -425,6 +439,7 @@ func (client *ContainerRegistryClient) NewGetManifestsPager(name string, options
 			return page.Link != nil && len(*page.Link) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetManifestsResponse) (ContainerRegistryClientGetManifestsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetManifestsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -498,7 +513,9 @@ func (client *ContainerRegistryClient) getManifestsHandleResponse(resp *http.Res
 //     method.
 func (client *ContainerRegistryClient) GetProperties(ctx context.Context, name string, options *ContainerRegistryClientGetPropertiesOptions) (ContainerRegistryClientGetPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetProperties", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.GetProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, name, options)
 	if err != nil {
@@ -556,6 +573,7 @@ func (client *ContainerRegistryClient) NewGetRepositoriesPager(options *Containe
 			return page.Link != nil && len(*page.Link) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetRepositoriesResponse) (ContainerRegistryClientGetRepositoriesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetRepositoriesPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -623,7 +641,9 @@ func (client *ContainerRegistryClient) getRepositoriesHandleResponse(resp *http.
 //     method.
 func (client *ContainerRegistryClient) GetTagProperties(ctx context.Context, name string, reference string, options *ContainerRegistryClientGetTagPropertiesOptions) (ContainerRegistryClientGetTagPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetTagProperties", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.GetTagProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getTagPropertiesCreateRequest(ctx, name, reference, options)
 	if err != nil {
@@ -686,6 +706,7 @@ func (client *ContainerRegistryClient) NewGetTagsPager(name string, options *Con
 			return page.Link != nil && len(*page.Link) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetTagsResponse) (ContainerRegistryClientGetTagsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetTagsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -764,7 +785,9 @@ func (client *ContainerRegistryClient) getTagsHandleResponse(resp *http.Response
 //     method.
 func (client *ContainerRegistryClient) UpdateManifestProperties(ctx context.Context, name string, digest string, value ManifestWriteableProperties, options *ContainerRegistryClientUpdateManifestPropertiesOptions) (ContainerRegistryClientUpdateManifestPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.UpdateManifestProperties", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.UpdateManifestProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateManifestPropertiesCreateRequest(ctx, name, digest, value, options)
 	if err != nil {
@@ -828,7 +851,9 @@ func (client *ContainerRegistryClient) updateManifestPropertiesHandleResponse(re
 //     method.
 func (client *ContainerRegistryClient) UpdateProperties(ctx context.Context, name string, value RepositoryWriteableProperties, options *ContainerRegistryClientUpdatePropertiesOptions) (ContainerRegistryClientUpdatePropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.UpdateProperties", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.UpdateProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updatePropertiesCreateRequest(ctx, name, value, options)
 	if err != nil {
@@ -889,7 +914,9 @@ func (client *ContainerRegistryClient) updatePropertiesHandleResponse(resp *http
 //     method.
 func (client *ContainerRegistryClient) UpdateTagAttributes(ctx context.Context, name string, reference string, value TagWriteableProperties, options *ContainerRegistryClientUpdateTagAttributesOptions) (ContainerRegistryClientUpdateTagAttributesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.UpdateTagAttributes", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryClient.UpdateTagAttributes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagAttributesCreateRequest(ctx, name, reference, value, options)
 	if err != nil {

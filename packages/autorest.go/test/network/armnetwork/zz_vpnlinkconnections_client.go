@@ -57,10 +57,6 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 //     method.
 func (client *VPNLinkConnectionsClient) BeginGetIkeSas(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginGetIkeSasOptions) (*runtime.Poller[VPNLinkConnectionsClientGetIkeSasResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VPNLinkConnectionsClient.BeginGetIkeSas", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getIkeSas(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 		if err != nil {
 			return nil, err
@@ -80,6 +76,10 @@ func (client *VPNLinkConnectionsClient) BeginGetIkeSas(ctx context.Context, reso
 // Generated from API version 2022-09-01
 func (client *VPNLinkConnectionsClient) getIkeSas(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginGetIkeSasOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VPNLinkConnectionsClient.BeginGetIkeSas"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIkeSasCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {
 		return nil, err
@@ -143,6 +143,7 @@ func (client *VPNLinkConnectionsClient) NewListByVPNConnectionPager(resourceGrou
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VPNLinkConnectionsClientListByVPNConnectionResponse) (VPNLinkConnectionsClientListByVPNConnectionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VPNLinkConnectionsClient.NewListByVPNConnectionPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -217,10 +218,6 @@ func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *
 //     method.
 func (client *VPNLinkConnectionsClient) BeginResetConnection(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginResetConnectionOptions) (*runtime.Poller[VPNLinkConnectionsClientResetConnectionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VPNLinkConnectionsClient.BeginResetConnection", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.resetConnection(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 		if err != nil {
 			return nil, err
@@ -240,6 +237,10 @@ func (client *VPNLinkConnectionsClient) BeginResetConnection(ctx context.Context
 // Generated from API version 2022-09-01
 func (client *VPNLinkConnectionsClient) resetConnection(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginResetConnectionOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VPNLinkConnectionsClient.BeginResetConnection"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.resetConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {
 		return nil, err

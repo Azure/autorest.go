@@ -39,17 +39,6 @@ func httpClientWithCookieJar() policy.Transporter {
 	return http.DefaultClient
 }
 
-func NewLROsClient(options *azcore.ClientOptions) (*LROsClient, error) {
-	cl, err := azcore.NewClient("lrogroup.LROsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	client := &LROsClient{
-		internal: cl,
-	}
-	return client, nil
-}
-
 func TestLROResumeWrongPoller(t *testing.T) {
 	op := newLROSClient(t)
 	poller, err := op.BeginDelete202NoRetry204(context.Background(), nil)

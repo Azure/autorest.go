@@ -55,7 +55,9 @@ func NewFirewallPolicyIdpsSignaturesFilterValuesClient(subscriptionID string, cr
 //     method.
 func (client *FirewallPolicyIdpsSignaturesFilterValuesClient) List(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignatureOverridesFilterValuesQuery, options *FirewallPolicyIdpsSignaturesFilterValuesClientListOptions) (FirewallPolicyIdpsSignaturesFilterValuesClientListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesFilterValuesClient.List", client.internal.Tracer(), nil)
+	const operationName = "FirewallPolicyIdpsSignaturesFilterValuesClient.List"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {

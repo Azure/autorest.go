@@ -32,7 +32,9 @@ type StringClient struct {
 //   - options - StringClientGetBase64EncodedOptions contains the optional parameters for the StringClient.GetBase64Encoded method.
 func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringClientGetBase64EncodedOptions) (StringClientGetBase64EncodedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetBase64Encoded", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetBase64Encoded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBase64EncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -78,7 +80,9 @@ func (client *StringClient) getBase64EncodedHandleResponse(resp *http.Response) 
 //     method.
 func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringClientGetBase64URLEncodedOptions) (StringClientGetBase64URLEncodedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetBase64URLEncoded", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetBase64URLEncoded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -123,7 +127,9 @@ func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Respons
 //   - options - StringClientGetEmptyOptions contains the optional parameters for the StringClient.GetEmpty method.
 func (client *StringClient) GetEmpty(ctx context.Context, options *StringClientGetEmptyOptions) (StringClientGetEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetEmpty", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -168,7 +174,9 @@ func (client *StringClient) getEmptyHandleResponse(resp *http.Response) (StringC
 //   - options - StringClientGetMBCSOptions contains the optional parameters for the StringClient.GetMBCS method.
 func (client *StringClient) GetMBCS(ctx context.Context, options *StringClientGetMBCSOptions) (StringClientGetMBCSResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetMBCS", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetMBCS"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getMBCSCreateRequest(ctx, options)
 	if err != nil {
@@ -213,7 +221,9 @@ func (client *StringClient) getMBCSHandleResponse(resp *http.Response) (StringCl
 //   - options - StringClientGetNotProvidedOptions contains the optional parameters for the StringClient.GetNotProvided method.
 func (client *StringClient) GetNotProvided(ctx context.Context, options *StringClientGetNotProvidedOptions) (StringClientGetNotProvidedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetNotProvided", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetNotProvided"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -258,7 +268,9 @@ func (client *StringClient) getNotProvidedHandleResponse(resp *http.Response) (S
 //   - options - StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
 func (client *StringClient) GetNull(ctx context.Context, options *StringClientGetNullOptions) (StringClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -304,7 +316,9 @@ func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringCl
 //     method.
 func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringClientGetNullBase64URLEncodedOptions) (StringClientGetNullBase64URLEncodedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetNullBase64URLEncoded", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetNullBase64URLEncoded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -350,7 +364,9 @@ func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *http.Res
 //   - options - StringClientGetWhitespaceOptions contains the optional parameters for the StringClient.GetWhitespace method.
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringClientGetWhitespaceOptions) (StringClientGetWhitespaceResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetWhitespace", client.internal.Tracer(), nil)
+	const operationName = "StringClient.GetWhitespace"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getWhitespaceCreateRequest(ctx, options)
 	if err != nil {
@@ -397,7 +413,9 @@ func (client *StringClient) getWhitespaceHandleResponse(resp *http.Response) (St
 //     method.
 func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringClientPutBase64URLEncodedOptions) (StringClientPutBase64URLEncodedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutBase64URLEncoded", client.internal.Tracer(), nil)
+	const operationName = "StringClient.PutBase64URLEncoded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBase64URLEncodedCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -435,7 +453,9 @@ func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context
 //   - options - StringClientPutEmptyOptions contains the optional parameters for the StringClient.PutEmpty method.
 func (client *StringClient) PutEmpty(ctx context.Context, options *StringClientPutEmptyOptions) (StringClientPutEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutEmpty", client.internal.Tracer(), nil)
+	const operationName = "StringClient.PutEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -473,7 +493,9 @@ func (client *StringClient) putEmptyCreateRequest(ctx context.Context, options *
 //   - options - StringClientPutMBCSOptions contains the optional parameters for the StringClient.PutMBCS method.
 func (client *StringClient) PutMBCS(ctx context.Context, options *StringClientPutMBCSOptions) (StringClientPutMBCSResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutMBCS", client.internal.Tracer(), nil)
+	const operationName = "StringClient.PutMBCS"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMBCSCreateRequest(ctx, options)
 	if err != nil {
@@ -512,7 +534,9 @@ func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *S
 //   - options - StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
 func (client *StringClient) PutNull(ctx context.Context, stringBody string, options *StringClientPutNullOptions) (StringClientPutNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutNull", client.internal.Tracer(), nil)
+	const operationName = "StringClient.PutNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putNullCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -553,7 +577,9 @@ func (client *StringClient) putNullCreateRequest(ctx context.Context, stringBody
 //   - options - StringClientPutWhitespaceOptions contains the optional parameters for the StringClient.PutWhitespace method.
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringClientPutWhitespaceOptions) (StringClientPutWhitespaceResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutWhitespace", client.internal.Tracer(), nil)
+	const operationName = "StringClient.PutWhitespace"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putWhitespaceCreateRequest(ctx, options)
 	if err != nil {

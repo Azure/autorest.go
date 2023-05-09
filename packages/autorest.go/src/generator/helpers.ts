@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { aggregateParameters, commentLength, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
-import { ArraySchema, ChoiceSchema, ChoiceValue, CodeModel, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SealedChoiceSchema, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
+import { ArraySchema, ChoiceSchema, ChoiceValue, CodeModel, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SealedChoiceSchema, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema, DictionarySchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
@@ -15,11 +15,14 @@ export const datetimeRFC3339Format = 'time.RFC3339Nano';
 export const datetimeRFC1123Format = 'time.RFC1123';
 
 // returns the common source-file preamble (license comment, package name etc)
-export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
+export async function contentPreamble(session: Session<CodeModel>, packageName?: string): Promise<string> {
+  if (!packageName) {
+    packageName = session.model.language.go!.packageName;
+  }
   const headerText = comment(await session.getValue('header-text', 'MISSING LICENSE HEADER'), '// ');
   let text = `//go:build go1.18\n`;
   text += `// +build go1.18\n\n${headerText}\n// DO NOT EDIT.\n\n`;
-  text += `package ${session.model.language.go!.packageName}\n\n`;
+  text += `package ${packageName}\n\n`;
   return text;
 }
 
@@ -34,13 +37,47 @@ export function sortAscending(a: string, b: string): number {
 }
 
 // returns the type name with possible * prefix
-export function formatParameterTypeName(param: Parameter): string {
-  const typeName = param.schema.language.go!.name;
+export function formatParameterTypeName(param: Parameter, pkgName?: string): string {
+  const typeName = formatTypeName(param.schema, pkgName);
   // client params with default values are treated as optional
   if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
     return typeName;
   }
   return `*${typeName}`;
+}
+
+// returns the type name with possible pkgName prefix
+export function formatTypeName(schema: Schema, pkgName?: string): string {
+  const typeName = schema.language.go!.name;
+  if (!pkgName) {
+    return typeName;
+  }
+  
+  // if not an array/dictionary, just prepend the package name
+  if (schema.type !== SchemaType.Array && schema.type !== SchemaType.Dictionary) {
+    if (schema.type === SchemaType.Choice || schema.type === SchemaType.SealedChoice || schema.type === SchemaType.Object) {
+      return `${pkgName}.${typeName}`;
+    }
+    return typeName;
+  }
+
+  // for array/dictionary, we need to splice the package name into the correct location
+  const elementType = unwrapSchemaType(schema);
+  if (elementType.type === SchemaType.Choice || elementType.type === SchemaType.SealedChoice || elementType.type === SchemaType.Object) {
+    return typeName.replace(`*${elementType.language.go!.name}`, `*${pkgName}.${elementType.language.go!.name}`);
+  }
+
+  return typeName;
+}
+
+// recursively gets the element schema from an array/dictionary
+function unwrapSchemaType(schema: Schema): Schema {
+  if (schema.type === SchemaType.Array) {
+    return unwrapSchemaType((<ArraySchema>schema).elementType);
+  } else if (schema.type === SchemaType.Dictionary) {
+    return unwrapSchemaType((<DictionarySchema>schema).elementType);
+  }
+  return schema;
 }
 
 // returns true if the parameter should not be URL encoded
@@ -198,13 +235,20 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
   return formatValue(paramName, param.schema, imports);
 }
 
-export function formatValue(paramName: string, schema: Schema, imports: ImportManager): string {
+export function formatValue(paramName: string, schema: Schema, imports: ImportManager, defef?: boolean): string {
+  // callers don't have enough context to know if paramName needs to be
+  // deferenced so we track that here when specified. note that not all
+  // cases will require paramName to be dereferenced.
+  let star = '';
+  if (defef === true) {
+    star = '*';
+  }
   switch (schema.type) {
     case SchemaType.Array:
       throw new Error(`can't format array without parameter info`);
     case SchemaType.Boolean:
       imports.add('strconv');
-      return `strconv.FormatBool(${paramName})`;
+      return `strconv.FormatBool(${star}${paramName})`;
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
@@ -215,7 +259,7 @@ export function formatValue(paramName: string, schema: Schema, imports: ImportMa
       return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
-      return `string(${paramName})`;
+      return `string(${star}${paramName})`;
     case SchemaType.Constant:
       const constSchema = <ConstantSchema>schema;
       // cannot use formatConstantValue() since all values are treated as strings
@@ -231,25 +275,27 @@ export function formatValue(paramName: string, schema: Schema, imports: ImportMa
       }
       return `${paramName}.Format(${format})`;
     case SchemaType.UnixTime:
-      return `timeUnix(${paramName}).String()`;
+      return `timeUnix(${star}${paramName}).String()`;
     case SchemaType.Integer:
       imports.add('strconv');
       const intSchema = <NumberSchema>schema;
       let intParam = paramName;
       if (intSchema.precision === 32) {
-        intParam = `int64(${intParam})`;
+        intParam = `int64(${star}${intParam})`;
+        star = '';
       }
-      return `strconv.FormatInt(${intParam}, 10)`;
+      return `strconv.FormatInt(${star}${intParam}, 10)`;
     case SchemaType.Number:
       imports.add('strconv');
       const numberSchema = <NumberSchema>schema;
       let floatParam = paramName;
       if (numberSchema.precision === 32) {
-        floatParam = `float64(${floatParam})`;
+        floatParam = `float64(${star}${floatParam})`;
+        star = '';
       }
-      return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;
+      return `strconv.FormatFloat(${star}${floatParam}, 'f', -1, ${numberSchema.precision})`;
     default:
-      return paramName;
+      return `${star}${paramName}`;
   }
 }
 
@@ -510,4 +556,17 @@ export function formatCommentAsBulletItem(description: string): string {
     }
   }
   return chunks.join('\n');
+}
+
+export async function getParentImport(session: Session<CodeModel>): Promise<string> {
+  const clientPkg = session.model.language.go!.packageName;
+  const modName = await session.getValue('module', 'none');
+  const containingMod = await session.getValue('containing-module', 'none');
+  if (modName !== 'none') {
+    return modName;
+  } else if (containingMod !== 'none') {
+    return containingMod + '/' + clientPkg;
+  } else {
+    throw new Error('unable to determine containing module for fakes. specify either the module or containing-module switch');
+  }
 }

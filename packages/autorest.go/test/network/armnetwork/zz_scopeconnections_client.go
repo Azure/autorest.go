@@ -58,7 +58,9 @@ func NewScopeConnectionsClient(subscriptionID string, credential azcore.TokenCre
 //     method.
 func (client *ScopeConnectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, parameters ScopeConnection, options *ScopeConnectionsClientCreateOrUpdateOptions) (ScopeConnectionsClientCreateOrUpdateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ScopeConnectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	const operationName = "ScopeConnectionsClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, scopeConnectionName, parameters, options)
 	if err != nil {
@@ -128,7 +130,9 @@ func (client *ScopeConnectionsClient) createOrUpdateHandleResponse(resp *http.Re
 //   - options - ScopeConnectionsClientDeleteOptions contains the optional parameters for the ScopeConnectionsClient.Delete method.
 func (client *ScopeConnectionsClient) Delete(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, options *ScopeConnectionsClientDeleteOptions) (ScopeConnectionsClientDeleteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ScopeConnectionsClient.Delete", client.internal.Tracer(), nil)
+	const operationName = "ScopeConnectionsClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, scopeConnectionName, options)
 	if err != nil {
@@ -185,7 +189,9 @@ func (client *ScopeConnectionsClient) deleteCreateRequest(ctx context.Context, r
 //   - options - ScopeConnectionsClientGetOptions contains the optional parameters for the ScopeConnectionsClient.Get method.
 func (client *ScopeConnectionsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, options *ScopeConnectionsClientGetOptions) (ScopeConnectionsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ScopeConnectionsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "ScopeConnectionsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, scopeConnectionName, options)
 	if err != nil {
@@ -255,6 +261,7 @@ func (client *ScopeConnectionsClient) NewListPager(resourceGroupName string, net
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ScopeConnectionsClientListResponse) (ScopeConnectionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ScopeConnectionsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

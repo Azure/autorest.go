@@ -34,7 +34,9 @@ type PetClient struct {
 //   - options - PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetClientDoSomethingOptions) (PetClientDoSomethingResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PetClient.DoSomething", client.internal.Tracer(), nil)
+	const operationName = "PetClient.DoSomething"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
@@ -84,7 +86,9 @@ func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClie
 //   - options - PetClientGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
 func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetClientGetPetByIDOptions) (PetClientGetPetByIDResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PetClient.GetPetByID", client.internal.Tracer(), nil)
+	const operationName = "PetClient.GetPetByID"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPetByIDCreateRequest(ctx, petID, options)
 	if err != nil {
@@ -134,7 +138,9 @@ func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClien
 //   - options - PetClientHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
 func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientHasModelsParamOptions) (PetClientHasModelsParamResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PetClient.HasModelsParam", client.internal.Tracer(), nil)
+	const operationName = "PetClient.HasModelsParam"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.hasModelsParamCreateRequest(ctx, options)
 	if err != nil {

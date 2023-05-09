@@ -59,7 +59,9 @@ func NewSharedGalleryImageVersionsClient(subscriptionID string, credential azcor
 //     method.
 func (client *SharedGalleryImageVersionsClient) Get(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, galleryImageVersionName string, options *SharedGalleryImageVersionsClientGetOptions) (SharedGalleryImageVersionsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SharedGalleryImageVersionsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "SharedGalleryImageVersionsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, galleryUniqueName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
@@ -134,6 +136,7 @@ func (client *SharedGalleryImageVersionsClient) NewListPager(location string, ga
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SharedGalleryImageVersionsClientListResponse) (SharedGalleryImageVersionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharedGalleryImageVersionsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

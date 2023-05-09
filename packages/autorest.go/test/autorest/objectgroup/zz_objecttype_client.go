@@ -32,7 +32,9 @@ type ObjectTypeClient struct {
 //   - options - ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
 func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectTypeClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ObjectTypeClient.Get", client.internal.Tracer(), nil)
+	const operationName = "ObjectTypeClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -80,7 +82,9 @@ func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTy
 //   - options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
 func (client *ObjectTypeClient) Put(ctx context.Context, putObject []byte, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ObjectTypeClient.Put", client.internal.Tracer(), nil)
+	const operationName = "ObjectTypeClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {

@@ -32,7 +32,9 @@ type DictionaryClient struct {
 //     method.
 func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryClientGetArrayEmptyOptions) (DictionaryClientGetArrayEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetArrayEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetArrayEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -78,7 +80,9 @@ func (client *DictionaryClient) getArrayEmptyHandleResponse(resp *http.Response)
 //     method.
 func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryClientGetArrayItemEmptyOptions) (DictionaryClientGetArrayItemEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetArrayItemEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetArrayItemEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -124,7 +128,9 @@ func (client *DictionaryClient) getArrayItemEmptyHandleResponse(resp *http.Respo
 //     method.
 func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryClientGetArrayItemNullOptions) (DictionaryClientGetArrayItemNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetArrayItemNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetArrayItemNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -169,7 +175,9 @@ func (client *DictionaryClient) getArrayItemNullHandleResponse(resp *http.Respon
 //   - options - DictionaryClientGetArrayNullOptions contains the optional parameters for the DictionaryClient.GetArrayNull method.
 func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryClientGetArrayNullOptions) (DictionaryClientGetArrayNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetArrayNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetArrayNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
@@ -215,7 +223,9 @@ func (client *DictionaryClient) getArrayNullHandleResponse(resp *http.Response) 
 //     method.
 func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryClientGetArrayValidOptions) (DictionaryClientGetArrayValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetArrayValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetArrayValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
@@ -261,7 +271,9 @@ func (client *DictionaryClient) getArrayValidHandleResponse(resp *http.Response)
 //   - options - DictionaryClientGetBase64URLOptions contains the optional parameters for the DictionaryClient.GetBase64URL method.
 func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryClientGetBase64URLOptions) (DictionaryClientGetBase64URLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetBase64URL", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetBase64URL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
@@ -307,7 +319,9 @@ func (client *DictionaryClient) getBase64URLHandleResponse(resp *http.Response) 
 //     method.
 func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryClientGetBooleanInvalidNullOptions) (DictionaryClientGetBooleanInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetBooleanInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetBooleanInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -353,7 +367,9 @@ func (client *DictionaryClient) getBooleanInvalidNullHandleResponse(resp *http.R
 //     method.
 func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryClientGetBooleanInvalidStringOptions) (DictionaryClientGetBooleanInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetBooleanInvalidString", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetBooleanInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -399,7 +415,9 @@ func (client *DictionaryClient) getBooleanInvalidStringHandleResponse(resp *http
 //     method.
 func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryClientGetBooleanTfftOptions) (DictionaryClientGetBooleanTfftResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetBooleanTfft", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetBooleanTfft"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
@@ -445,7 +463,9 @@ func (client *DictionaryClient) getBooleanTfftHandleResponse(resp *http.Response
 //     method.
 func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryClientGetByteInvalidNullOptions) (DictionaryClientGetByteInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetByteInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetByteInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -491,7 +511,9 @@ func (client *DictionaryClient) getByteInvalidNullHandleResponse(resp *http.Resp
 //   - options - DictionaryClientGetByteValidOptions contains the optional parameters for the DictionaryClient.GetByteValid method.
 func (client *DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryClientGetByteValidOptions) (DictionaryClientGetByteValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetByteValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetByteValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
@@ -537,7 +559,9 @@ func (client *DictionaryClient) getByteValidHandleResponse(resp *http.Response) 
 //     method.
 func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryClientGetComplexEmptyOptions) (DictionaryClientGetComplexEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetComplexEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetComplexEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -584,7 +608,9 @@ func (client *DictionaryClient) getComplexEmptyHandleResponse(resp *http.Respons
 //     method.
 func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryClientGetComplexItemEmptyOptions) (DictionaryClientGetComplexItemEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetComplexItemEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetComplexItemEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -631,7 +657,9 @@ func (client *DictionaryClient) getComplexItemEmptyHandleResponse(resp *http.Res
 //     method.
 func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryClientGetComplexItemNullOptions) (DictionaryClientGetComplexItemNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetComplexItemNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetComplexItemNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -677,7 +705,9 @@ func (client *DictionaryClient) getComplexItemNullHandleResponse(resp *http.Resp
 //     method.
 func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryClientGetComplexNullOptions) (DictionaryClientGetComplexNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetComplexNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetComplexNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
@@ -724,7 +754,9 @@ func (client *DictionaryClient) getComplexNullHandleResponse(resp *http.Response
 //     method.
 func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryClientGetComplexValidOptions) (DictionaryClientGetComplexValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetComplexValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetComplexValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
@@ -770,7 +802,9 @@ func (client *DictionaryClient) getComplexValidHandleResponse(resp *http.Respons
 //     method.
 func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryClientGetDateInvalidCharsOptions) (DictionaryClientGetDateInvalidCharsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDateInvalidChars", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDateInvalidChars"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -822,7 +856,9 @@ func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *http.Res
 //     method.
 func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryClientGetDateInvalidNullOptions) (DictionaryClientGetDateInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDateInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDateInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -874,7 +910,9 @@ func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *http.Resp
 //     method.
 func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryClientGetDateTimeInvalidCharsOptions) (DictionaryClientGetDateTimeInvalidCharsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDateTimeInvalidChars", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDateTimeInvalidChars"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -926,7 +964,9 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *http
 //     method.
 func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryClientGetDateTimeInvalidNullOptions) (DictionaryClientGetDateTimeInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDateTimeInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDateTimeInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -979,7 +1019,9 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *http.
 //     method.
 func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryClientGetDateTimeRFC1123ValidOptions) (DictionaryClientGetDateTimeRFC1123ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDateTimeRFC1123Valid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDateTimeRFC1123Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1032,7 +1074,9 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *http
 //     method.
 func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryClientGetDateTimeValidOptions) (DictionaryClientGetDateTimeValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDateTimeValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDateTimeValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1083,7 +1127,9 @@ func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *http.Respon
 //   - options - DictionaryClientGetDateValidOptions contains the optional parameters for the DictionaryClient.GetDateValid method.
 func (client *DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryClientGetDateValidOptions) (DictionaryClientGetDateValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDateValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDateValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1135,7 +1181,9 @@ func (client *DictionaryClient) getDateValidHandleResponse(resp *http.Response) 
 //     method.
 func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryClientGetDictionaryEmptyOptions) (DictionaryClientGetDictionaryEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDictionaryEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDictionaryEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1182,7 +1230,9 @@ func (client *DictionaryClient) getDictionaryEmptyHandleResponse(resp *http.Resp
 //     method.
 func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryClientGetDictionaryItemEmptyOptions) (DictionaryClientGetDictionaryItemEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDictionaryItemEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDictionaryItemEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1229,7 +1279,9 @@ func (client *DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *http.
 //     method.
 func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryClientGetDictionaryItemNullOptions) (DictionaryClientGetDictionaryItemNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDictionaryItemNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDictionaryItemNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1275,7 +1327,9 @@ func (client *DictionaryClient) getDictionaryItemNullHandleResponse(resp *http.R
 //     method.
 func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryClientGetDictionaryNullOptions) (DictionaryClientGetDictionaryNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDictionaryNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDictionaryNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1322,7 +1376,9 @@ func (client *DictionaryClient) getDictionaryNullHandleResponse(resp *http.Respo
 //     method.
 func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryClientGetDictionaryValidOptions) (DictionaryClientGetDictionaryValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDictionaryValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDictionaryValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1368,7 +1424,9 @@ func (client *DictionaryClient) getDictionaryValidHandleResponse(resp *http.Resp
 //     method.
 func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryClientGetDoubleInvalidNullOptions) (DictionaryClientGetDoubleInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDoubleInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDoubleInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1414,7 +1472,9 @@ func (client *DictionaryClient) getDoubleInvalidNullHandleResponse(resp *http.Re
 //     method.
 func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryClientGetDoubleInvalidStringOptions) (DictionaryClientGetDoubleInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDoubleInvalidString", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDoubleInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1460,7 +1520,9 @@ func (client *DictionaryClient) getDoubleInvalidStringHandleResponse(resp *http.
 //     method.
 func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryClientGetDoubleValidOptions) (DictionaryClientGetDoubleValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDoubleValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDoubleValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1506,7 +1568,9 @@ func (client *DictionaryClient) getDoubleValidHandleResponse(resp *http.Response
 //     method.
 func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryClientGetDurationValidOptions) (DictionaryClientGetDurationValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetDurationValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetDurationValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1551,7 +1615,9 @@ func (client *DictionaryClient) getDurationValidHandleResponse(resp *http.Respon
 //   - options - DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryClientGetEmptyOptions) (DictionaryClientGetEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1597,7 +1663,9 @@ func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (Dic
 //     method.
 func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryClientGetEmptyStringKeyOptions) (DictionaryClientGetEmptyStringKeyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetEmptyStringKey", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetEmptyStringKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyStringKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1643,7 +1711,9 @@ func (client *DictionaryClient) getEmptyStringKeyHandleResponse(resp *http.Respo
 //     method.
 func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryClientGetFloatInvalidNullOptions) (DictionaryClientGetFloatInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetFloatInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetFloatInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1689,7 +1759,9 @@ func (client *DictionaryClient) getFloatInvalidNullHandleResponse(resp *http.Res
 //     method.
 func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryClientGetFloatInvalidStringOptions) (DictionaryClientGetFloatInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetFloatInvalidString", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetFloatInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1735,7 +1807,9 @@ func (client *DictionaryClient) getFloatInvalidStringHandleResponse(resp *http.R
 //     method.
 func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryClientGetFloatValidOptions) (DictionaryClientGetFloatValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetFloatValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetFloatValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1781,7 +1855,9 @@ func (client *DictionaryClient) getFloatValidHandleResponse(resp *http.Response)
 //     method.
 func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryClientGetIntInvalidNullOptions) (DictionaryClientGetIntInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetIntInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetIntInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1827,7 +1903,9 @@ func (client *DictionaryClient) getIntInvalidNullHandleResponse(resp *http.Respo
 //     method.
 func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryClientGetIntInvalidStringOptions) (DictionaryClientGetIntInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetIntInvalidString", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetIntInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1873,7 +1951,9 @@ func (client *DictionaryClient) getIntInvalidStringHandleResponse(resp *http.Res
 //     method.
 func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryClientGetIntegerValidOptions) (DictionaryClientGetIntegerValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetIntegerValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetIntegerValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1918,7 +1998,9 @@ func (client *DictionaryClient) getIntegerValidHandleResponse(resp *http.Respons
 //   - options - DictionaryClientGetInvalidOptions contains the optional parameters for the DictionaryClient.GetInvalid method.
 func (client *DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryClientGetInvalidOptions) (DictionaryClientGetInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetInvalid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1964,7 +2046,9 @@ func (client *DictionaryClient) getInvalidHandleResponse(resp *http.Response) (D
 //     method.
 func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryClientGetLongInvalidNullOptions) (DictionaryClientGetLongInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetLongInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetLongInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2010,7 +2094,9 @@ func (client *DictionaryClient) getLongInvalidNullHandleResponse(resp *http.Resp
 //     method.
 func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryClientGetLongInvalidStringOptions) (DictionaryClientGetLongInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetLongInvalidString", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetLongInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2055,7 +2141,9 @@ func (client *DictionaryClient) getLongInvalidStringHandleResponse(resp *http.Re
 //   - options - DictionaryClientGetLongValidOptions contains the optional parameters for the DictionaryClient.GetLongValid method.
 func (client *DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryClientGetLongValidOptions) (DictionaryClientGetLongValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetLongValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetLongValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2100,7 +2188,9 @@ func (client *DictionaryClient) getLongValidHandleResponse(resp *http.Response) 
 //   - options - DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
 func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryClientGetNullOptions) (DictionaryClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2145,7 +2235,9 @@ func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (Dict
 //   - options - DictionaryClientGetNullKeyOptions contains the optional parameters for the DictionaryClient.GetNullKey method.
 func (client *DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryClientGetNullKeyOptions) (DictionaryClientGetNullKeyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetNullKey", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetNullKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -2190,7 +2282,9 @@ func (client *DictionaryClient) getNullKeyHandleResponse(resp *http.Response) (D
 //   - options - DictionaryClientGetNullValueOptions contains the optional parameters for the DictionaryClient.GetNullValue method.
 func (client *DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryClientGetNullValueOptions) (DictionaryClientGetNullValueResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetNullValue", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetNullValue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullValueCreateRequest(ctx, options)
 	if err != nil {
@@ -2236,7 +2330,9 @@ func (client *DictionaryClient) getNullValueHandleResponse(resp *http.Response) 
 //     method.
 func (client *DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryClientGetStringValidOptions) (DictionaryClientGetStringValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetStringValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetStringValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2282,7 +2378,9 @@ func (client *DictionaryClient) getStringValidHandleResponse(resp *http.Response
 //     method.
 func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryClientGetStringWithInvalidOptions) (DictionaryClientGetStringWithInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetStringWithInvalid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetStringWithInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2328,7 +2426,9 @@ func (client *DictionaryClient) getStringWithInvalidHandleResponse(resp *http.Re
 //     method.
 func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryClientGetStringWithNullOptions) (DictionaryClientGetStringWithNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetStringWithNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetStringWithNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2374,7 +2474,9 @@ func (client *DictionaryClient) getStringWithNullHandleResponse(resp *http.Respo
 //     method.
 func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]*string, options *DictionaryClientPutArrayValidOptions) (DictionaryClientPutArrayValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutArrayValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutArrayValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2413,7 +2515,9 @@ func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, 
 //     method.
 func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool, options *DictionaryClientPutBooleanTfftOptions) (DictionaryClientPutBooleanTfftResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutBooleanTfft", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutBooleanTfft"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2452,7 +2556,9 @@ func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context,
 //   - options - DictionaryClientPutByteValidOptions contains the optional parameters for the DictionaryClient.PutByteValid method.
 func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryClientPutByteValidOptions) (DictionaryClientPutByteValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutByteValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutByteValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2492,7 +2598,9 @@ func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, a
 //     method.
 func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryClientPutComplexValidOptions) (DictionaryClientPutComplexValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutComplexValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutComplexValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2532,7 +2640,9 @@ func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context
 //     method.
 func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeRFC1123ValidOptions) (DictionaryClientPutDateTimeRFC1123ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutDateTimeRFC1123Valid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutDateTimeRFC1123Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2575,7 +2685,9 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 //     method.
 func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeValidOptions) (DictionaryClientPutDateTimeValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutDateTimeValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutDateTimeValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2617,7 +2729,9 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 //   - options - DictionaryClientPutDateValidOptions contains the optional parameters for the DictionaryClient.PutDateValid method.
 func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateValidOptions) (DictionaryClientPutDateValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutDateValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutDateValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2661,7 +2775,9 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 //     method.
 func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryClientPutDictionaryValidOptions) (DictionaryClientPutDictionaryValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutDictionaryValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutDictionaryValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2700,7 +2816,9 @@ func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Cont
 //     method.
 func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64, options *DictionaryClientPutDoubleValidOptions) (DictionaryClientPutDoubleValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutDoubleValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutDoubleValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2739,7 +2857,9 @@ func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context,
 //     method.
 func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutDurationValidOptions) (DictionaryClientPutDurationValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutDurationValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutDurationValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2777,7 +2897,9 @@ func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Contex
 //   - options - DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
 func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutEmptyOptions) (DictionaryClientPutEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2816,7 +2938,9 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, array
 //     method.
 func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float32, options *DictionaryClientPutFloatValidOptions) (DictionaryClientPutFloatValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutFloatValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutFloatValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2855,7 +2979,9 @@ func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, 
 //     method.
 func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32, options *DictionaryClientPutIntegerValidOptions) (DictionaryClientPutIntegerValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutIntegerValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutIntegerValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2893,7 +3019,9 @@ func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context
 //   - options - DictionaryClientPutLongValidOptions contains the optional parameters for the DictionaryClient.PutLongValid method.
 func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64, options *DictionaryClientPutLongValidOptions) (DictionaryClientPutLongValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutLongValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutLongValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2932,7 +3060,9 @@ func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, a
 //     method.
 func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutStringValidOptions) (DictionaryClientPutStringValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutStringValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutStringValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {

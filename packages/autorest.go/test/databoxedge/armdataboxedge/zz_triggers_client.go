@@ -56,7 +56,6 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 //     method.
 func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*runtime.Poller[TriggersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
 		if err != nil {
 			return nil, err
@@ -74,6 +73,7 @@ func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceNam
 // Generated from API version 2021-02-01
 func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggersClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, trigger, options)
 	if err != nil {
 		return nil, err
@@ -129,7 +129,6 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 //   - options - TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
 func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*runtime.Poller[TriggersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 		if err != nil {
 			return nil, err
@@ -147,6 +146,7 @@ func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string
 // Generated from API version 2021-02-01
 func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggersClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -199,6 +199,7 @@ func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceNam
 //   - options - TriggersClientGetOptions contains the optional parameters for the TriggersClient.Get method.
 func (client *TriggersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientGetOptions) (TriggersClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggersClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return TriggersClientGetResponse{}, err
@@ -264,6 +265,7 @@ func (client *TriggersClient) NewListByDataBoxEdgeDevicePager(deviceName string,
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *TriggersClientListByDataBoxEdgeDeviceResponse) (TriggersClientListByDataBoxEdgeDeviceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggersClient.NewListByDataBoxEdgeDevicePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

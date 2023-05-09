@@ -39,7 +39,9 @@ type ParameterGroupingClient struct {
 //     method.
 func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup *ParameterGroupingClientPostMultiParamGroupsSecondParamGroup, options *ParameterGroupingClientPostMultiParamGroupsOptions) (ParameterGroupingClientPostMultiParamGroupsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ParameterGroupingClient.PostMultiParamGroups", client.internal.Tracer(), nil)
+	const operationName = "ParameterGroupingClient.PostMultiParamGroups"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postMultiParamGroupsCreateRequest(ctx, firstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup, options)
 	if err != nil {
@@ -91,7 +93,9 @@ func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx con
 //     method.
 func (client *ParameterGroupingClient) PostOptional(ctx context.Context, parameterGroupingClientPostOptionalParameters *ParameterGroupingClientPostOptionalParameters, options *ParameterGroupingClientPostOptionalOptions) (ParameterGroupingClientPostOptionalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ParameterGroupingClient.PostOptional", client.internal.Tracer(), nil)
+	const operationName = "ParameterGroupingClient.PostOptional"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalCreateRequest(ctx, parameterGroupingClientPostOptionalParameters, options)
 	if err != nil {
@@ -137,7 +141,9 @@ func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Con
 //     method.
 func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingClientPostRequiredParameters ParameterGroupingClientPostRequiredParameters, options *ParameterGroupingClientPostRequiredOptions) (ParameterGroupingClientPostRequiredResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ParameterGroupingClient.PostRequired", client.internal.Tracer(), nil)
+	const operationName = "ParameterGroupingClient.PostRequired"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredCreateRequest(ctx, parameterGroupingClientPostRequiredParameters, options)
 	if err != nil {
@@ -190,7 +196,9 @@ func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Con
 //     method.
 func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, parameterGroupingClientPostReservedWordsParameters *ParameterGroupingClientPostReservedWordsParameters, options *ParameterGroupingClientPostReservedWordsOptions) (ParameterGroupingClientPostReservedWordsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ParameterGroupingClient.PostReservedWords", client.internal.Tracer(), nil)
+	const operationName = "ParameterGroupingClient.PostReservedWords"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postReservedWordsCreateRequest(ctx, parameterGroupingClientPostReservedWordsParameters, options)
 	if err != nil {
@@ -236,7 +244,9 @@ func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx contex
 //     method.
 func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, firstParameterGroup *FirstParameterGroup, options *ParameterGroupingClientPostSharedParameterGroupObjectOptions) (ParameterGroupingClientPostSharedParameterGroupObjectResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ParameterGroupingClient.PostSharedParameterGroupObject", client.internal.Tracer(), nil)
+	const operationName = "ParameterGroupingClient.PostSharedParameterGroupObject"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postSharedParameterGroupObjectCreateRequest(ctx, firstParameterGroup, options)
 	if err != nil {

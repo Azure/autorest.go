@@ -31,7 +31,9 @@ type PolymorphicrecursiveClient struct {
 //     method.
 func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveClientGetValidOptions) (PolymorphicrecursiveClientGetValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphicrecursiveClient.GetValid", client.internal.Tracer(), nil)
+	const operationName = "PolymorphicrecursiveClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -84,7 +86,9 @@ func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Resp
 //     method.
 func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursiveClientPutValidOptions) (PolymorphicrecursiveClientPutValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphicrecursiveClient.PutValid", client.internal.Tracer(), nil)
+	const operationName = "PolymorphicrecursiveClient.PutValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

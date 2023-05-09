@@ -32,7 +32,9 @@ type HeaderClient struct {
 //     method.
 func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDOptions) (HeaderClientCustomNamedRequestIDResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.CustomNamedRequestID", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.CustomNamedRequestID"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.customNamedRequestIDCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
@@ -79,7 +81,9 @@ func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *http.Respon
 //     method.
 func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDHeadOptions) (HeaderClientCustomNamedRequestIDHeadResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.CustomNamedRequestIDHead", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.CustomNamedRequestIDHead"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.customNamedRequestIDHeadCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
@@ -130,7 +134,9 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 //     method.
 func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerClientCustomNamedRequestIDParamGroupingParameters HeaderClientCustomNamedRequestIDParamGroupingParameters, options *HeaderClientCustomNamedRequestIDParamGroupingOptions) (HeaderClientCustomNamedRequestIDParamGroupingResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.CustomNamedRequestIDParamGrouping", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.CustomNamedRequestIDParamGrouping"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.customNamedRequestIDParamGroupingCreateRequest(ctx, headerClientCustomNamedRequestIDParamGroupingParameters, options)
 	if err != nil {

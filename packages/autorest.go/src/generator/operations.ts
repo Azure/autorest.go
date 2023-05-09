@@ -159,6 +159,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
     // generate operations
     const injectSpans = await session.getValue('inject-spans', false);
+    const generateFakes = await session.getValue('generate-fakes', false);
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
@@ -168,7 +169,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         // generate Begin method
         opText += generateLROBeginMethod(op, injectSpans, imports);
       }
-      opText += generateOperation(op, injectSpans, imports);
+      opText += generateOperation(op, injectSpans, generateFakes, imports);
       opText += createProtocolRequest(group, op, imports);
       if (!isLROOperation(op) || isPageableOperation(op)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
@@ -317,6 +318,7 @@ function emitPagerDefinition(op: Operation, injectSpans: boolean, imports: Impor
   }
   text += `\t\tFetcher: func(ctx context.Context, page *${getResponseEnvelopeName(op)}) (${getResponseEnvelopeName(op)}, error) {\n`;
   const reqParams = getCreateRequestParameters(op);
+  text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${op.language.go!.clientName}.${fixUpOperationName(op)}")\n`;
   if (op.language.go!.paging.nextLinkName) {
     const isLRO = isLROOperation(op);
     const defineOrAssign = isLRO ? ':=' : '=';
@@ -381,7 +383,7 @@ function genApiVersionDoc(apiVersions?: ApiVersions): string {
   return `//\n// Generated from API version ${versions.join(',')}\n`;
 }
 
-function generateOperation(op: Operation, injectSpans: boolean, imports: ImportManager): string {
+function generateOperation(op: Operation, injectSpans: boolean, generateFakes: boolean, imports: ImportManager): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
@@ -392,7 +394,7 @@ function generateOperation(op: Operation, injectSpans: boolean, imports: ImportM
   const clientName = op.language.go!.clientName;
   let opName = op.language.go!.name;
   if(isPageableOperation(op) && !isLROOperation(op)) {
-    opName = `New${opName}Pager`;
+    opName = fixUpOperationName(op);
   }
   let text = '';
   if (hasDescription(op.language.go!)) {
@@ -419,8 +421,16 @@ function generateOperation(op: Operation, injectSpans: boolean, imports: ImportM
     return text;
   }
   text += '\tvar err error\n';
-  if (!isLROOperation(op) && injectSpans) {
-    text += `\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.${opName}", client.internal.Tracer(), nil)\n`;
+  let operationName = `"${clientName}.${fixUpOperationName(op)}"`;
+  if (generateFakes && injectSpans) {
+    text += `\tconst operationName = ${operationName}\n`;
+    operationName = 'operationName';
+  }
+  if (generateFakes) {
+    text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, ${operationName})\n`;
+  }
+  if (injectSpans) {
+    text += `\tctx, endSpan := runtime.StartSpan(ctx, ${operationName}, client.internal.Tracer(), nil)\n`;
     text += '\tdefer func() { endSpan(err) }()\n';
   }
   const zeroResp = getZeroReturnValue(op, 'op');
@@ -775,7 +785,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
-  } else if (mediaType === 'text') {
+  } else if (mediaType === 'Text') {
     imports.add('strings');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
@@ -934,7 +944,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
       unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
       unmarshallerText += '\t}\n';
     }
-  } else if (mediaType === 'text') {
+  } else if (mediaType === 'Text') {
     unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
     unmarshallerText += '\tif err != nil {\n';
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
@@ -1053,7 +1063,7 @@ function isMapOfDate(schema: Schema): boolean {
 }
 
 // returns the media type used by the protocol
-function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' | 'form' | 'multipart' | 'none' {
+export function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'Text' | 'form' | 'multipart' | 'none' {
   // TODO: binary, forms etc
   switch (protocol.http!.knownMediaType) {
     case KnownMediaType.Json:
@@ -1063,7 +1073,7 @@ function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' |
     case KnownMediaType.Binary:
       return 'binary';
     case KnownMediaType.Text:
-      return 'text';
+      return 'Text';
     case KnownMediaType.Form:
       return 'form';
     case KnownMediaType.Multipart:
@@ -1085,7 +1095,7 @@ function hasBinaryResponse(responses: Response[]): boolean {
 
 // returns the parameters for the public API
 // e.g. "ctx context.Context, i int, s string"
-function getAPIParametersSig(op: Operation, imports: ImportManager): string {
+export function getAPIParametersSig(op: Operation, imports: ImportManager, pkgName?: string): string {
   const methodParams = getMethodParameters(op);
   const params = new Array<string>();
   if (!isPageableOperation(op) || isLROOperation(op)) {
@@ -1093,7 +1103,7 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${uncapitalize(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam, pkgName)}`);
   }
   return params.join(', ');
 }
@@ -1147,7 +1157,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   let text = '';
   if (hasDescription(op.language.go!)) {
-    text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
+    text += `${comment(`${fixUpOperationName(op)} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
     text += genApiVersionDoc(op.apiVersions);
   }
   const zeroResp = getZeroReturnValue(op, 'api');
@@ -1157,7 +1167,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
       text += `${formatCommentAsBulletItem(`${param.language.go!.name} - ${param.language.go!.description}`)}\n`;
     }
   }
-  text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${fixUpOperationName(op)}(${params}) (${returns.join(', ')}) {\n`;
   let pollerType = 'nil';
   let pollerTypeParam = `[${getResponseEnvelopeName(op)}]`;
   if (isPageableOperation(op)) {
@@ -1169,12 +1179,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';
-  text += '\t\tvar err error\n';
-  if (injectSpans) {
-    text += '\t\tvar endSpan func(error)\n';
-    text += `\t\tctx, endSpan = runtime.StartSpan(ctx, "${clientName}.Begin${op.language.go!.name}", client.internal.Tracer(), nil)\n`;
-    text += '\t\tdefer func() { endSpan(err) }()\n';
-  }
+
   // creating the poller from response branch
 
   let opName = op.language.go!.name;
@@ -1249,4 +1254,13 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
 
   text += '}\n\n';
   return text;
+}
+
+export function fixUpOperationName(op: Operation): string {
+  if (isLROOperation(op)) {
+    return `Begin${op.language.go!.name}`;
+  } else if (isPageableOperation(op)) {
+    return `New${op.language.go!.name}Pager`;
+  }
+  return op.language.go!.name;
 }

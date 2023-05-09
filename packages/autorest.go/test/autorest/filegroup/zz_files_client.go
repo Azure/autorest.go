@@ -30,7 +30,9 @@ type FilesClient struct {
 //   - options - FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClientGetEmptyFileOptions) (FilesClientGetEmptyFileResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FilesClient.GetEmptyFile", client.internal.Tracer(), nil)
+	const operationName = "FilesClient.GetEmptyFile"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
@@ -66,7 +68,9 @@ func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, option
 //   - options - FilesClientGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
 func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetFileOptions) (FilesClientGetFileResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FilesClient.GetFile", client.internal.Tracer(), nil)
+	const operationName = "FilesClient.GetFile"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFileCreateRequest(ctx, options)
 	if err != nil {
@@ -102,7 +106,9 @@ func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *Fi
 //   - options - FilesClientGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
 func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClientGetFileLargeOptions) (FilesClientGetFileLargeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FilesClient.GetFileLarge", client.internal.Tracer(), nil)
+	const operationName = "FilesClient.GetFileLarge"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFileLargeCreateRequest(ctx, options)
 	if err != nil {

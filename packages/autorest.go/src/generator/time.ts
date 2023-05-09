@@ -22,7 +22,7 @@ export class Content {
 
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateTimeHelpers(session: Session<CodeModel>): Promise<Content[]> {
+export async function generateTimeHelpers(session: Session<CodeModel>, packageName?: string): Promise<Content[]> {
   const content = new Array<Content>();
   if (!session.model.language.go!.hasTimeRFC1123 &&
     !session.model.language.go!.hasTimeRFC3339 &&
@@ -46,7 +46,7 @@ export async function generateTimeHelpers(session: Session<CodeModel>): Promise<
       break;
     }
   }
-  const preamble = await contentPreamble(session);
+  const preamble = await contentPreamble(session, packageName);
   if (session.model.language.go!.hasTimeRFC1123) {
     content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsPopulate)));
   }

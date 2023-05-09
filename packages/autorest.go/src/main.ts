@@ -6,13 +6,15 @@
 import { AutoRestExtension, } from '@autorest/extension-base';
 import { transform } from './transform/transform';
 import { protocolGen } from './generator/generator';
+import { fakeGen } from './fake/fake';
 
 require('source-map-support').install();
 
 export async function main() {
   const pluginHost = new AutoRestExtension();
-  pluginHost.Add('go-transform', transform);
-  pluginHost.Add('go-protocol', protocolGen);
+  pluginHost.add('go-transform', transform);
+  pluginHost.add('go-protocol', protocolGen);
+  pluginHost.add('go-fake', fakeGen);
   await pluginHost.Run();
 }
 

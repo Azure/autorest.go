@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
@@ -21,14 +20,6 @@ func newDatetimerfc1123Client(t *testing.T) *Datetimerfc1123Client {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewDatetimerfc1123Client(options *azcore.ClientOptions) (*Datetimerfc1123Client, error) {
-	client, err := azcore.NewClient("datetimerfc1123group.Datetimerfc1123Client", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &Datetimerfc1123Client{internal: client}, nil
 }
 
 func TestGetInvalid(t *testing.T) {

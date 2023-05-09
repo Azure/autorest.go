@@ -31,7 +31,9 @@ type XMLClient struct {
 //   - options - XMLClientGetACLsOptions contains the optional parameters for the XMLClient.GetACLs method.
 func (client *XMLClient) GetACLs(ctx context.Context, options *XMLClientGetACLsOptions) (XMLClientGetACLsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetACLs", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetACLs"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getACLsCreateRequest(ctx, options)
 	if err != nil {
@@ -80,7 +82,9 @@ func (client *XMLClient) getACLsHandleResponse(resp *http.Response) (XMLClientGe
 //   - options - XMLClientGetBytesOptions contains the optional parameters for the XMLClient.GetBytes method.
 func (client *XMLClient) GetBytes(ctx context.Context, options *XMLClientGetBytesOptions) (XMLClientGetBytesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetBytes", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetBytes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBytesCreateRequest(ctx, options)
 	if err != nil {
@@ -126,7 +130,9 @@ func (client *XMLClient) getBytesHandleResponse(resp *http.Response) (XMLClientG
 //     method.
 func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLClientGetComplexTypeRefNoMetaOptions) (XMLClientGetComplexTypeRefNoMetaResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetComplexTypeRefNoMeta", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetComplexTypeRefNoMeta"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexTypeRefNoMetaCreateRequest(ctx, options)
 	if err != nil {
@@ -172,7 +178,9 @@ func (client *XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *http.Respon
 //     method.
 func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *XMLClientGetComplexTypeRefWithMetaOptions) (XMLClientGetComplexTypeRefWithMetaResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetComplexTypeRefWithMeta", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetComplexTypeRefWithMeta"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexTypeRefWithMetaCreateRequest(ctx, options)
 	if err != nil {
@@ -218,7 +226,9 @@ func (client *XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *http.Resp
 //     method.
 func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLClientGetEmptyChildElementOptions) (XMLClientGetEmptyChildElementResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyChildElement", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetEmptyChildElement"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyChildElementCreateRequest(ctx, options)
 	if err != nil {
@@ -263,7 +273,9 @@ func (client *XMLClient) getEmptyChildElementHandleResponse(resp *http.Response)
 //   - options - XMLClientGetEmptyListOptions contains the optional parameters for the XMLClient.GetEmptyList method.
 func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLClientGetEmptyListOptions) (XMLClientGetEmptyListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyList", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetEmptyList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyListCreateRequest(ctx, options)
 	if err != nil {
@@ -308,7 +320,9 @@ func (client *XMLClient) getEmptyListHandleResponse(resp *http.Response) (XMLCli
 //   - options - XMLClientGetEmptyRootListOptions contains the optional parameters for the XMLClient.GetEmptyRootList method.
 func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLClientGetEmptyRootListOptions) (XMLClientGetEmptyRootListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyRootList", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetEmptyRootList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyRootListCreateRequest(ctx, options)
 	if err != nil {
@@ -354,7 +368,9 @@ func (client *XMLClient) getEmptyRootListHandleResponse(resp *http.Response) (XM
 //     method.
 func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLClientGetEmptyWrappedListsOptions) (XMLClientGetEmptyWrappedListsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyWrappedLists", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetEmptyWrappedLists"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyWrappedListsCreateRequest(ctx, options)
 	if err != nil {
@@ -399,7 +415,9 @@ func (client *XMLClient) getEmptyWrappedListsHandleResponse(resp *http.Response)
 //   - options - XMLClientGetHeadersOptions contains the optional parameters for the XMLClient.GetHeaders method.
 func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLClientGetHeadersOptions) (XMLClientGetHeadersResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetHeaders", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetHeaders"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getHeadersCreateRequest(ctx, options)
 	if err != nil {
@@ -443,7 +461,9 @@ func (client *XMLClient) getHeadersHandleResponse(resp *http.Response) (XMLClien
 //   - options - XMLClientGetRootListOptions contains the optional parameters for the XMLClient.GetRootList method.
 func (client *XMLClient) GetRootList(ctx context.Context, options *XMLClientGetRootListOptions) (XMLClientGetRootListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetRootList", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetRootList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getRootListCreateRequest(ctx, options)
 	if err != nil {
@@ -489,7 +509,9 @@ func (client *XMLClient) getRootListHandleResponse(resp *http.Response) (XMLClie
 //     method.
 func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLClientGetRootListSingleItemOptions) (XMLClientGetRootListSingleItemResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetRootListSingleItem", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetRootListSingleItem"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getRootListSingleItemCreateRequest(ctx, options)
 	if err != nil {
@@ -535,7 +557,9 @@ func (client *XMLClient) getRootListSingleItemHandleResponse(resp *http.Response
 //     method.
 func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLClientGetServicePropertiesOptions) (XMLClientGetServicePropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetServiceProperties", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetServiceProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getServicePropertiesCreateRequest(ctx, options)
 	if err != nil {
@@ -584,7 +608,9 @@ func (client *XMLClient) getServicePropertiesHandleResponse(resp *http.Response)
 //   - options - XMLClientGetSimpleOptions contains the optional parameters for the XMLClient.GetSimple method.
 func (client *XMLClient) GetSimple(ctx context.Context, options *XMLClientGetSimpleOptions) (XMLClientGetSimpleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetSimple", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetSimple"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSimpleCreateRequest(ctx, options)
 	if err != nil {
@@ -629,7 +655,9 @@ func (client *XMLClient) getSimpleHandleResponse(resp *http.Response) (XMLClient
 //   - options - XMLClientGetURIOptions contains the optional parameters for the XMLClient.GetURI method.
 func (client *XMLClient) GetURI(ctx context.Context, options *XMLClientGetURIOptions) (XMLClientGetURIResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetURI", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetURI"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getURICreateRequest(ctx, options)
 	if err != nil {
@@ -674,7 +702,9 @@ func (client *XMLClient) getURIHandleResponse(resp *http.Response) (XMLClientGet
 //   - options - XMLClientGetWrappedListsOptions contains the optional parameters for the XMLClient.GetWrappedLists method.
 func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLClientGetWrappedListsOptions) (XMLClientGetWrappedListsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetWrappedLists", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetWrappedLists"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getWrappedListsCreateRequest(ctx, options)
 	if err != nil {
@@ -720,7 +750,9 @@ func (client *XMLClient) getWrappedListsHandleResponse(resp *http.Response) (XML
 //   - options - XMLClientGetXMsTextOptions contains the optional parameters for the XMLClient.GetXMsText method.
 func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLClientGetXMsTextOptions) (XMLClientGetXMsTextResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetXMsText", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.GetXMsText"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getXMsTextCreateRequest(ctx, options)
 	if err != nil {
@@ -765,7 +797,9 @@ func (client *XMLClient) getXMsTextHandleResponse(resp *http.Response) (XMLClien
 //   - options - XMLClientJSONInputOptions contains the optional parameters for the XMLClient.JSONInput method.
 func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, options *XMLClientJSONInputOptions) (XMLClientJSONInputResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.JSONInput", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.JSONInput"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.jsonInputCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -802,7 +836,9 @@ func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties 
 //   - options - XMLClientJSONOutputOptions contains the optional parameters for the XMLClient.JSONOutput method.
 func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLClientJSONOutputOptions) (XMLClientJSONOutputResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.JSONOutput", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.JSONOutput"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.jsonOutputCreateRequest(ctx, options)
 	if err != nil {
@@ -847,7 +883,9 @@ func (client *XMLClient) jsonOutputHandleResponse(resp *http.Response) (XMLClien
 //   - options - XMLClientListBlobsOptions contains the optional parameters for the XMLClient.ListBlobs method.
 func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLClientListBlobsOptions) (XMLClientListBlobsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.ListBlobs", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.ListBlobs"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listBlobsCreateRequest(ctx, options)
 	if err != nil {
@@ -896,7 +934,9 @@ func (client *XMLClient) listBlobsHandleResponse(resp *http.Response) (XMLClient
 //   - options - XMLClientListContainersOptions contains the optional parameters for the XMLClient.ListContainers method.
 func (client *XMLClient) ListContainers(ctx context.Context, options *XMLClientListContainersOptions) (XMLClientListContainersResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.ListContainers", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.ListContainers"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listContainersCreateRequest(ctx, options)
 	if err != nil {
@@ -944,7 +984,9 @@ func (client *XMLClient) listContainersHandleResponse(resp *http.Response) (XMLC
 //   - options - XMLClientPutACLsOptions contains the optional parameters for the XMLClient.PutACLs method.
 func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdentifier, options *XMLClientPutACLsOptions) (XMLClientPutACLsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutACLs", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutACLs"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putACLsCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -989,7 +1031,9 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 //   - options - XMLClientPutBinaryOptions contains the optional parameters for the XMLClient.PutBinary method.
 func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteProperty, options *XMLClientPutBinaryOptions) (XMLClientPutBinaryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutBinary", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutBinary"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBinaryCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1028,7 +1072,9 @@ func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow M
 //     method.
 func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta, options *XMLClientPutComplexTypeRefNoMetaOptions) (XMLClientPutComplexTypeRefNoMetaResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutComplexTypeRefNoMeta", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutComplexTypeRefNoMeta"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putComplexTypeRefNoMetaCreateRequest(ctx, model, options)
 	if err != nil {
@@ -1066,7 +1112,9 @@ func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 //     method.
 func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta, options *XMLClientPutComplexTypeRefWithMetaOptions) (XMLClientPutComplexTypeRefWithMetaResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutComplexTypeRefWithMeta", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutComplexTypeRefWithMeta"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putComplexTypeRefWithMetaCreateRequest(ctx, model, options)
 	if err != nil {
@@ -1104,7 +1152,9 @@ func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 //     method.
 func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana, options *XMLClientPutEmptyChildElementOptions) (XMLClientPutEmptyChildElementResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyChildElement", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutEmptyChildElement"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyChildElementCreateRequest(ctx, banana, options)
 	if err != nil {
@@ -1141,7 +1191,9 @@ func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, 
 //   - options - XMLClientPutEmptyListOptions contains the optional parameters for the XMLClient.PutEmptyList method.
 func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, options *XMLClientPutEmptyListOptions) (XMLClientPutEmptyListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyList", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutEmptyList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyListCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1178,7 +1230,9 @@ func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slidesho
 //   - options - XMLClientPutEmptyRootListOptions contains the optional parameters for the XMLClient.PutEmptyRootList method.
 func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana, options *XMLClientPutEmptyRootListOptions) (XMLClientPutEmptyRootListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyRootList", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutEmptyRootList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1220,7 +1274,9 @@ func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bana
 //     method.
 func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel, options *XMLClientPutEmptyWrappedListsOptions) (XMLClientPutEmptyWrappedListsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyWrappedLists", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutEmptyWrappedLists"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyWrappedListsCreateRequest(ctx, appleBarrel, options)
 	if err != nil {
@@ -1257,7 +1313,9 @@ func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, 
 //   - options - XMLClientPutRootListOptions contains the optional parameters for the XMLClient.PutRootList method.
 func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, options *XMLClientPutRootListOptions) (XMLClientPutRootListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutRootList", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutRootList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1299,7 +1357,9 @@ func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas [
 //     method.
 func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*Banana, options *XMLClientPutRootListSingleItemOptions) (XMLClientPutRootListSingleItemResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutRootListSingleItem", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutRootListSingleItem"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putRootListSingleItemCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1341,7 +1401,9 @@ func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context,
 //     method.
 func (client *XMLClient) PutServiceProperties(ctx context.Context, properties StorageServiceProperties, options *XMLClientPutServicePropertiesOptions) (XMLClientPutServicePropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutServiceProperties", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutServiceProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putServicePropertiesCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -1382,7 +1444,9 @@ func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, 
 //   - options - XMLClientPutSimpleOptions contains the optional parameters for the XMLClient.PutSimple method.
 func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, options *XMLClientPutSimpleOptions) (XMLClientPutSimpleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutSimple", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutSimple"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putSimpleCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1420,7 +1484,9 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 //   - options - XMLClientPutURIOptions contains the optional parameters for the XMLClient.PutURI method.
 func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty, options *XMLClientPutURIOptions) (XMLClientPutURIResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutURI", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutURI"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putURICreateRequest(ctx, model, options)
 	if err != nil {
@@ -1458,7 +1524,9 @@ func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWit
 //   - options - XMLClientPutWrappedListsOptions contains the optional parameters for the XMLClient.PutWrappedLists method.
 func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel, options *XMLClientPutWrappedListsOptions) (XMLClientPutWrappedListsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutWrappedLists", client.internal.Tracer(), nil)
+	const operationName = "XMLClient.PutWrappedLists"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putWrappedListsCreateRequest(ctx, wrappedLists, options)
 	if err != nil {

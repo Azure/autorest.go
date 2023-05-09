@@ -36,7 +36,9 @@ type AutoRestValidationTestClient struct {
 //     method.
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestClientGetWithConstantInPathOptions) (AutoRestValidationTestClientGetWithConstantInPathResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestValidationTestClient.GetWithConstantInPath", client.internal.Tracer(), nil)
+	const operationName = "AutoRestValidationTestClient.GetWithConstantInPath"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getWithConstantInPathCreateRequest(ctx, options)
 	if err != nil {
@@ -72,7 +74,9 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(c
 //     method.
 func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestClientPostWithConstantInBodyOptions) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestValidationTestClient.PostWithConstantInBody", client.internal.Tracer(), nil)
+	const operationName = "AutoRestValidationTestClient.PostWithConstantInBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postWithConstantInBodyCreateRequest(ctx, options)
 	if err != nil {
@@ -127,7 +131,9 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse
 //     method.
 func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, body Product, options *AutoRestValidationTestClientValidationOfBodyOptions) (AutoRestValidationTestClientValidationOfBodyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestValidationTestClient.ValidationOfBody", client.internal.Tracer(), nil)
+	const operationName = "AutoRestValidationTestClient.ValidationOfBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.validationOfBodyCreateRequest(ctx, resourceGroupName, id, body, options)
 	if err != nil {
@@ -190,7 +196,9 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp 
 //     method.
 func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfMethodParametersOptions) (AutoRestValidationTestClientValidationOfMethodParametersResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestValidationTestClient.ValidationOfMethodParameters", client.internal.Tracer(), nil)
+	const operationName = "AutoRestValidationTestClient.ValidationOfMethodParameters"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.validationOfMethodParametersCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {

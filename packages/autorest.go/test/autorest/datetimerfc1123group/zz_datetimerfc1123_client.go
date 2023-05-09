@@ -32,7 +32,9 @@ type Datetimerfc1123Client struct {
 //     method.
 func (client *Datetimerfc1123Client) GetInvalid(ctx context.Context, options *Datetimerfc1123ClientGetInvalidOptions) (Datetimerfc1123ClientGetInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.GetInvalid", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.GetInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -79,7 +81,9 @@ func (client *Datetimerfc1123Client) getInvalidHandleResponse(resp *http.Respons
 //   - options - Datetimerfc1123ClientGetNullOptions contains the optional parameters for the Datetimerfc1123Client.GetNull method.
 func (client *Datetimerfc1123Client) GetNull(ctx context.Context, options *Datetimerfc1123ClientGetNullOptions) (Datetimerfc1123ClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.GetNull", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -127,7 +131,9 @@ func (client *Datetimerfc1123Client) getNullHandleResponse(resp *http.Response) 
 //     method.
 func (client *Datetimerfc1123Client) GetOverflow(ctx context.Context, options *Datetimerfc1123ClientGetOverflowOptions) (Datetimerfc1123ClientGetOverflowResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.GetOverflow", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.GetOverflow"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOverflowCreateRequest(ctx, options)
 	if err != nil {
@@ -175,7 +181,9 @@ func (client *Datetimerfc1123Client) getOverflowHandleResponse(resp *http.Respon
 //     method.
 func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTime(ctx context.Context, options *Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeOptions) (Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.GetUTCLowercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.GetUTCLowercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUTCLowercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -223,7 +231,9 @@ func (client *Datetimerfc1123Client) getUTCLowercaseMaxDateTimeHandleResponse(re
 //     method.
 func (client *Datetimerfc1123Client) GetUTCMinDateTime(ctx context.Context, options *Datetimerfc1123ClientGetUTCMinDateTimeOptions) (Datetimerfc1123ClientGetUTCMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.GetUTCMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.GetUTCMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUTCMinDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -271,7 +281,9 @@ func (client *Datetimerfc1123Client) getUTCMinDateTimeHandleResponse(resp *http.
 //     method.
 func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTime(ctx context.Context, options *Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeOptions) (Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.GetUTCUppercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.GetUTCUppercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUTCUppercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -319,7 +331,9 @@ func (client *Datetimerfc1123Client) getUTCUppercaseMaxDateTimeHandleResponse(re
 //     method.
 func (client *Datetimerfc1123Client) GetUnderflow(ctx context.Context, options *Datetimerfc1123ClientGetUnderflowOptions) (Datetimerfc1123ClientGetUnderflowResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.GetUnderflow", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.GetUnderflow"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowCreateRequest(ctx, options)
 	if err != nil {
@@ -368,7 +382,9 @@ func (client *Datetimerfc1123Client) getUnderflowHandleResponse(resp *http.Respo
 //     method.
 func (client *Datetimerfc1123Client) PutUTCMaxDateTime(ctx context.Context, datetimeBody time.Time, options *Datetimerfc1123ClientPutUTCMaxDateTimeOptions) (Datetimerfc1123ClientPutUTCMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.PutUTCMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.PutUTCMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putUTCMaxDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -409,7 +425,9 @@ func (client *Datetimerfc1123Client) putUTCMaxDateTimeCreateRequest(ctx context.
 //     method.
 func (client *Datetimerfc1123Client) PutUTCMinDateTime(ctx context.Context, datetimeBody time.Time, options *Datetimerfc1123ClientPutUTCMinDateTimeOptions) (Datetimerfc1123ClientPutUTCMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Datetimerfc1123Client.PutUTCMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "Datetimerfc1123Client.PutUTCMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putUTCMinDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {

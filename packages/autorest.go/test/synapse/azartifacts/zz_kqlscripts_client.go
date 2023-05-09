@@ -34,6 +34,7 @@ func (client *KqlScriptsClient) NewGetAllPager(options *KqlScriptsClientGetAllOp
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *KqlScriptsClientGetAllResponse) (KqlScriptsClientGetAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KqlScriptsClient.NewGetAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

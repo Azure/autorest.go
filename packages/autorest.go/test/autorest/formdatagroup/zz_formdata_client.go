@@ -33,7 +33,9 @@ type FormdataClient struct {
 //   - options - FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
 func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataClientUploadFileOptions) (FormdataClientUploadFileResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FormdataClient.UploadFile", client.internal.Tracer(), nil)
+	const operationName = "FormdataClient.UploadFile"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.uploadFileCreateRequest(ctx, fileContent, fileName, options)
 	if err != nil {
@@ -77,7 +79,9 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 //     method.
 func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (FormdataClientUploadFileViaBodyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FormdataClient.UploadFileViaBody", client.internal.Tracer(), nil)
+	const operationName = "FormdataClient.UploadFileViaBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
@@ -117,7 +121,9 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 //   - options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (FormdataClientUploadFilesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FormdataClient.UploadFiles", client.internal.Tracer(), nil)
+	const operationName = "FormdataClient.UploadFiles"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.uploadFilesCreateRequest(ctx, fileContent, options)
 	if err != nil {

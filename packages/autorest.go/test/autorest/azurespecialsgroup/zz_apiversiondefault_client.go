@@ -31,7 +31,9 @@ type APIVersionDefaultClient struct {
 //     method.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions) (APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetMethodGlobalNotProvidedValid", client.internal.Tracer(), nil)
+	const operationName = "APIVersionDefaultClient.GetMethodGlobalNotProvidedValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
@@ -70,7 +72,9 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 //     method.
 func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalValidOptions) (APIVersionDefaultClientGetMethodGlobalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetMethodGlobalValid", client.internal.Tracer(), nil)
+	const operationName = "APIVersionDefaultClient.GetMethodGlobalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -109,7 +113,9 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 //     method.
 func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetPathGlobalValidOptions) (APIVersionDefaultClientGetPathGlobalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetPathGlobalValid", client.internal.Tracer(), nil)
+	const operationName = "APIVersionDefaultClient.GetPathGlobalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -148,7 +154,9 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 //     method.
 func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetSwaggerGlobalValidOptions) (APIVersionDefaultClientGetSwaggerGlobalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetSwaggerGlobalValid", client.internal.Tracer(), nil)
+	const operationName = "APIVersionDefaultClient.GetSwaggerGlobalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {

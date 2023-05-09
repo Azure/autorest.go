@@ -51,6 +51,7 @@ func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.Cli
 //     method.
 func (client *AggregatedCostClient) GetByManagementGroup(ctx context.Context, managementGroupID string, options *AggregatedCostClientGetByManagementGroupOptions) (AggregatedCostClientGetByManagementGroupResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AggregatedCostClient.GetByManagementGroup")
 	req, err := client.getByManagementGroupCreateRequest(ctx, managementGroupID, options)
 	if err != nil {
 		return AggregatedCostClientGetByManagementGroupResponse{}, err
@@ -108,6 +109,7 @@ func (client *AggregatedCostClient) getByManagementGroupHandleResponse(resp *htt
 //     method.
 func (client *AggregatedCostClient) GetForBillingPeriodByManagementGroup(ctx context.Context, managementGroupID string, billingPeriodName string, options *AggregatedCostClientGetForBillingPeriodByManagementGroupOptions) (AggregatedCostClientGetForBillingPeriodByManagementGroupResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AggregatedCostClient.GetForBillingPeriodByManagementGroup")
 	req, err := client.getForBillingPeriodByManagementGroupCreateRequest(ctx, managementGroupID, billingPeriodName, options)
 	if err != nil {
 		return AggregatedCostClientGetForBillingPeriodByManagementGroupResponse{}, err

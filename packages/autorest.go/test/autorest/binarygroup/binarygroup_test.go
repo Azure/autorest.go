@@ -11,7 +11,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"github.com/stretchr/testify/require"
 )
@@ -22,14 +21,6 @@ func newUploadClient(t *testing.T) *UploadClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewUploadClient(options *azcore.ClientOptions) (*UploadClient, error) {
-	client, err := azcore.NewClient("binarygroup.UploadClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &UploadClient{internal: client}, nil
 }
 
 func TestBinary(t *testing.T) {

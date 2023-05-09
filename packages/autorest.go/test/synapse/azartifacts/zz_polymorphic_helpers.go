@@ -106,7 +106,10 @@ func unmarshalActivityClassification(rawMsg json.RawMessage) (ActivityClassifica
 	default:
 		b = &Activity{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalActivityClassificationArray(rawMsg json.RawMessage) ([]ActivityClassification, error) {
@@ -147,7 +150,10 @@ func unmarshalCompressionReadSettingsClassification(rawMsg json.RawMessage) (Com
 	default:
 		b = &CompressionReadSettings{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalCopySinkClassification(rawMsg json.RawMessage) (CopySinkClassification, error) {
@@ -237,7 +243,10 @@ func unmarshalCopySinkClassification(rawMsg json.RawMessage) (CopySinkClassifica
 	default:
 		b = &CopySink{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalCopySourceClassification(rawMsg json.RawMessage) (CopySourceClassification, error) {
@@ -445,7 +454,10 @@ func unmarshalCopySourceClassification(rawMsg json.RawMessage) (CopySourceClassi
 	default:
 		b = &CopySource{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetupBaseClassification, error) {
@@ -461,7 +473,10 @@ func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetup
 	default:
 		b = &CustomSetupBase{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) ([]CustomSetupBaseClassification, error) {
@@ -500,7 +515,10 @@ func unmarshalDataFlowClassification(rawMsg json.RawMessage) (DataFlowClassifica
 	default:
 		b = &DataFlow{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalDatasetClassification(rawMsg json.RawMessage) (DatasetClassification, error) {
@@ -708,7 +726,10 @@ func unmarshalDatasetClassification(rawMsg json.RawMessage) (DatasetClassificati
 	default:
 		b = &Dataset{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalDatasetLocationClassification(rawMsg json.RawMessage) (DatasetLocationClassification, error) {
@@ -746,7 +767,10 @@ func unmarshalDatasetLocationClassification(rawMsg json.RawMessage) (DatasetLoca
 	default:
 		b = &DatasetLocation{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalDatasetStorageFormatClassification(rawMsg json.RawMessage) (DatasetStorageFormatClassification, error) {
@@ -772,7 +796,10 @@ func unmarshalDatasetStorageFormatClassification(rawMsg json.RawMessage) (Datase
 	default:
 		b = &DatasetStorageFormat{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalDependencyReferenceClassification(rawMsg json.RawMessage) (DependencyReferenceClassification, error) {
@@ -794,7 +821,10 @@ func unmarshalDependencyReferenceClassification(rawMsg json.RawMessage) (Depende
 	default:
 		b = &DependencyReference{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalDependencyReferenceClassificationArray(rawMsg json.RawMessage) ([]DependencyReferenceClassification, error) {
@@ -837,7 +867,10 @@ func unmarshalFormatReadSettingsClassification(rawMsg json.RawMessage) (FormatRe
 	default:
 		b = &FormatReadSettings{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (IntegrationRuntimeClassification, error) {
@@ -857,7 +890,10 @@ func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (Integrat
 	default:
 		b = &IntegrationRuntime{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage) (LinkedIntegrationRuntimeTypeClassification, error) {
@@ -877,7 +913,10 @@ func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage)
 	default:
 		b = &LinkedIntegrationRuntimeType{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalLinkedServiceClassification(rawMsg json.RawMessage) (LinkedServiceClassification, error) {
@@ -1117,7 +1156,10 @@ func unmarshalLinkedServiceClassification(rawMsg json.RawMessage) (LinkedService
 	default:
 		b = &LinkedService{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalSecretBaseClassification(rawMsg json.RawMessage) (SecretBaseClassification, error) {
@@ -1137,7 +1179,10 @@ func unmarshalSecretBaseClassification(rawMsg json.RawMessage) (SecretBaseClassi
 	default:
 		b = &SecretBase{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalStoreReadSettingsClassification(rawMsg json.RawMessage) (StoreReadSettingsClassification, error) {
@@ -1175,7 +1220,10 @@ func unmarshalStoreReadSettingsClassification(rawMsg json.RawMessage) (StoreRead
 	default:
 		b = &StoreReadSettings{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalStoreWriteSettingsClassification(rawMsg json.RawMessage) (StoreWriteSettingsClassification, error) {
@@ -1203,7 +1251,10 @@ func unmarshalStoreWriteSettingsClassification(rawMsg json.RawMessage) (StoreWri
 	default:
 		b = &StoreWriteSettings{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassification, error) {
@@ -1235,7 +1286,10 @@ func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassificati
 	default:
 		b = &Trigger{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg json.RawMessage) (WebLinkedServiceTypePropertiesClassification, error) {
@@ -1257,5 +1311,8 @@ func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg json.RawMessag
 	default:
 		b = &WebLinkedServiceTypeProperties{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }

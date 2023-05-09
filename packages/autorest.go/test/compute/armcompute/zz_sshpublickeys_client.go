@@ -55,7 +55,9 @@ func NewSSHPublicKeysClient(subscriptionID string, credential azcore.TokenCreden
 //   - options - SSHPublicKeysClientCreateOptions contains the optional parameters for the SSHPublicKeysClient.Create method.
 func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysClientCreateOptions) (SSHPublicKeysClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Create", client.internal.Tracer(), nil)
+	const operationName = "SSHPublicKeysClient.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
@@ -120,7 +122,9 @@ func (client *SSHPublicKeysClient) createHandleResponse(resp *http.Response) (SS
 //   - options - SSHPublicKeysClientDeleteOptions contains the optional parameters for the SSHPublicKeysClient.Delete method.
 func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientDeleteOptions) (SSHPublicKeysClientDeleteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Delete", client.internal.Tracer(), nil)
+	const operationName = "SSHPublicKeysClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
@@ -175,7 +179,9 @@ func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, reso
 //     method.
 func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGenerateKeyPairOptions) (SSHPublicKeysClientGenerateKeyPairResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.GenerateKeyPair", client.internal.Tracer(), nil)
+	const operationName = "SSHPublicKeysClient.GenerateKeyPair"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.generateKeyPairCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
@@ -237,7 +243,9 @@ func (client *SSHPublicKeysClient) generateKeyPairHandleResponse(resp *http.Resp
 //   - options - SSHPublicKeysClientGetOptions contains the optional parameters for the SSHPublicKeysClient.Get method.
 func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGetOptions) (SSHPublicKeysClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Get", client.internal.Tracer(), nil)
+	const operationName = "SSHPublicKeysClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
@@ -303,6 +311,7 @@ func (client *SSHPublicKeysClient) NewListByResourceGroupPager(resourceGroupName
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SSHPublicKeysClientListByResourceGroupResponse) (SSHPublicKeysClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SSHPublicKeysClient.NewListByResourceGroupPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -369,6 +378,7 @@ func (client *SSHPublicKeysClient) NewListBySubscriptionPager(options *SSHPublic
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SSHPublicKeysClientListBySubscriptionResponse) (SSHPublicKeysClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SSHPublicKeysClient.NewListBySubscriptionPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -429,7 +439,9 @@ func (client *SSHPublicKeysClient) listBySubscriptionHandleResponse(resp *http.R
 //   - options - SSHPublicKeysClientUpdateOptions contains the optional parameters for the SSHPublicKeysClient.Update method.
 func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysClientUpdateOptions) (SSHPublicKeysClientUpdateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SSHPublicKeysClient.Update", client.internal.Tracer(), nil)
+	const operationName = "SSHPublicKeysClient.Update"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {

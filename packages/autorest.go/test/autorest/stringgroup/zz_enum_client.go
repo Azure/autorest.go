@@ -30,7 +30,9 @@ type EnumClient struct {
 //   - options - EnumClientGetNotExpandableOptions contains the optional parameters for the EnumClient.GetNotExpandable method.
 func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumClientGetNotExpandableOptions) (EnumClientGetNotExpandableResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.GetNotExpandable", client.internal.Tracer(), nil)
+	const operationName = "EnumClient.GetNotExpandable"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNotExpandableCreateRequest(ctx, options)
 	if err != nil {
@@ -75,7 +77,9 @@ func (client *EnumClient) getNotExpandableHandleResponse(resp *http.Response) (E
 //   - options - EnumClientGetReferencedOptions contains the optional parameters for the EnumClient.GetReferenced method.
 func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumClientGetReferencedOptions) (EnumClientGetReferencedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.GetReferenced", client.internal.Tracer(), nil)
+	const operationName = "EnumClient.GetReferenced"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getReferencedCreateRequest(ctx, options)
 	if err != nil {
@@ -121,7 +125,9 @@ func (client *EnumClient) getReferencedHandleResponse(resp *http.Response) (Enum
 //     method.
 func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumClientGetReferencedConstantOptions) (EnumClientGetReferencedConstantResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.GetReferencedConstant", client.internal.Tracer(), nil)
+	const operationName = "EnumClient.GetReferencedConstant"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getReferencedConstantCreateRequest(ctx, options)
 	if err != nil {
@@ -167,7 +173,9 @@ func (client *EnumClient) getReferencedConstantHandleResponse(resp *http.Respons
 //   - options - EnumClientPutNotExpandableOptions contains the optional parameters for the EnumClient.PutNotExpandable method.
 func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumClientPutNotExpandableOptions) (EnumClientPutNotExpandableResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.PutNotExpandable", client.internal.Tracer(), nil)
+	const operationName = "EnumClient.PutNotExpandable"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putNotExpandableCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -206,7 +214,9 @@ func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, str
 //   - options - EnumClientPutReferencedOptions contains the optional parameters for the EnumClient.PutReferenced method.
 func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumClientPutReferencedOptions) (EnumClientPutReferencedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.PutReferenced", client.internal.Tracer(), nil)
+	const operationName = "EnumClient.PutReferenced"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putReferencedCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
@@ -246,7 +256,9 @@ func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumSt
 //     method.
 func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumClientPutReferencedConstantOptions) (EnumClientPutReferencedConstantResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.PutReferencedConstant", client.internal.Tracer(), nil)
+	const operationName = "EnumClient.PutReferencedConstant"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putReferencedConstantCreateRequest(ctx, enumStringBody, options)
 	if err != nil {

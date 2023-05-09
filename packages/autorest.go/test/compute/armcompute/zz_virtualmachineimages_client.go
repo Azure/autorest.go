@@ -59,7 +59,9 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 //     method.
 func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesClientGetOptions) (VirtualMachineImagesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachineImagesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
@@ -136,7 +138,9 @@ func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response)
 //     method.
 func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesClientListOptions) (VirtualMachineImagesClientListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.List", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachineImagesClient.List"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
@@ -216,7 +220,9 @@ func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response
 //     method.
 func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesClientListOffersOptions) (VirtualMachineImagesClientListOffersResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.ListOffers", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachineImagesClient.ListOffers"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
@@ -278,7 +284,9 @@ func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Re
 //     method.
 func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesClientListPublishersOptions) (VirtualMachineImagesClientListPublishersResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.ListPublishers", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachineImagesClient.ListPublishers"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
 	if err != nil {
@@ -338,7 +346,9 @@ func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *htt
 //     method.
 func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesClientListSKUsOptions) (VirtualMachineImagesClientListSKUsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineImagesClient.ListSKUs", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachineImagesClient.ListSKUs"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {

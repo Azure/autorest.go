@@ -58,6 +58,7 @@ func (client *InterfaceLoadBalancersClient) NewListPager(resourceGroupName strin
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *InterfaceLoadBalancersClientListResponse) (InterfaceLoadBalancersClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfaceLoadBalancersClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

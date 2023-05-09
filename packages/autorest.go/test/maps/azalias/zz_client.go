@@ -48,7 +48,9 @@ type Client struct {
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
 func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.Create", client.internal.Tracer(), nil)
+	const operationName = "Client.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
@@ -115,7 +117,9 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
 func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetScript", client.internal.Tracer(), nil)
+	const operationName = "Client.GetScript"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
@@ -186,6 +190,7 @@ func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[Cl
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientListResponse) (ClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -244,7 +249,9 @@ func (client *Client) listHandleResponse(resp *http.Response) (ClientListRespons
 //   - options - ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
 func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.PolicyAssignment", client.internal.Tracer(), nil)
+	const operationName = "Client.PolicyAssignment"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
 	if err != nil {

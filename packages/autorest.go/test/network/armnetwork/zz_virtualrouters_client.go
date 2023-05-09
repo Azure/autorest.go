@@ -56,10 +56,6 @@ func NewVirtualRoutersClient(subscriptionID string, credential azcore.TokenCrede
 //     method.
 func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualRoutersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualRoutersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 // Generated from API version 2022-09-01
 func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualRoutersClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -133,10 +133,6 @@ func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Cont
 //     method.
 func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*runtime.Poller[VirtualRoutersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualRoutersClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
 		if err != nil {
 			return nil, err
@@ -156,6 +152,10 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 // Generated from API version 2022-09-01
 func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualRoutersClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
 		return nil, err
@@ -206,7 +206,9 @@ func (client *VirtualRoutersClient) deleteCreateRequest(ctx context.Context, res
 //   - options - VirtualRoutersClientGetOptions contains the optional parameters for the VirtualRoutersClient.Get method.
 func (client *VirtualRoutersClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientGetOptions) (VirtualRoutersClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualRoutersClient.Get", client.internal.Tracer(), nil)
+	const operationName = "VirtualRoutersClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
@@ -272,6 +274,7 @@ func (client *VirtualRoutersClient) NewListPager(options *VirtualRoutersClientLi
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualRoutersClientListResponse) (VirtualRoutersClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualRoutersClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -334,6 +337,7 @@ func (client *VirtualRoutersClient) NewListByResourceGroupPager(resourceGroupNam
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualRoutersClientListByResourceGroupResponse) (VirtualRoutersClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualRoutersClient.NewListByResourceGroupPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

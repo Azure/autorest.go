@@ -56,10 +56,6 @@ func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredenti
 //     method.
 func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesClientBeginCreateOrUpdateOptions) (*runtime.Poller[RouteTablesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RouteTablesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 // Generated from API version 2022-09-01
 func (client *RouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RouteTablesClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -132,10 +132,6 @@ func (client *RouteTablesClient) createOrUpdateCreateRequest(ctx context.Context
 //   - options - RouteTablesClientBeginDeleteOptions contains the optional parameters for the RouteTablesClient.BeginDelete method.
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesClientBeginDeleteOptions) (*runtime.Poller[RouteTablesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RouteTablesClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 		if err != nil {
 			return nil, err
@@ -155,6 +151,10 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 // Generated from API version 2022-09-01
 func (client *RouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RouteTablesClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
 		return nil, err
@@ -205,7 +205,9 @@ func (client *RouteTablesClient) deleteCreateRequest(ctx context.Context, resour
 //   - options - RouteTablesClientGetOptions contains the optional parameters for the RouteTablesClient.Get method.
 func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesClientGetOptions) (RouteTablesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "RouteTablesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "RouteTablesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -272,6 +274,7 @@ func (client *RouteTablesClient) NewListPager(resourceGroupName string, options 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RouteTablesClientListResponse) (RouteTablesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RouteTablesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -336,6 +339,7 @@ func (client *RouteTablesClient) NewListAllPager(options *RouteTablesClientListA
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RouteTablesClientListAllResponse) (RouteTablesClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RouteTablesClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -396,7 +400,9 @@ func (client *RouteTablesClient) listAllHandleResponse(resp *http.Response) (Rou
 //   - options - RouteTablesClientUpdateTagsOptions contains the optional parameters for the RouteTablesClient.UpdateTags method.
 func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject, options *RouteTablesClientUpdateTagsOptions) (RouteTablesClientUpdateTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "RouteTablesClient.UpdateTags", client.internal.Tracer(), nil)
+	const operationName = "RouteTablesClient.UpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {

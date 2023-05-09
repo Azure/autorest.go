@@ -57,7 +57,9 @@ func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credenti
 //     method.
 func (client *PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *PeerExpressRouteCircuitConnectionsClientGetOptions) (PeerExpressRouteCircuitConnectionsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PeerExpressRouteCircuitConnectionsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "PeerExpressRouteCircuitConnectionsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -132,6 +134,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) NewListPager(resourceGro
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PeerExpressRouteCircuitConnectionsClientListResponse) (PeerExpressRouteCircuitConnectionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PeerExpressRouteCircuitConnectionsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

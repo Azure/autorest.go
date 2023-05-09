@@ -32,10 +32,6 @@ type LRORetrysClient struct {
 //     method.
 func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (*runtime.Poller[LRORetrysClientDelete202Retry200Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "LRORetrysClient.BeginDelete202Retry200", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.delete202Retry200(ctx, options)
 		if err != nil {
 			return nil, err
@@ -54,6 +50,10 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (*http.Response, error) {
 	var err error
+	const operationName = "LRORetrysClient.BeginDelete202Retry200"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete202Retry200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -89,10 +89,6 @@ func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Contex
 //     method.
 func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteAsyncRelativeRetrySucceeded(ctx, options)
 		if err != nil {
 			return nil, err
@@ -111,6 +107,10 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	var err error
+	const operationName = "LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -148,10 +148,6 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ct
 //     LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded method.
 func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*runtime.Poller[LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteProvisioning202Accepted200Succeeded(ctx, options)
 		if err != nil {
 			return nil, err
@@ -172,6 +168,10 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*http.Response, error) {
 	var err error
+	const operationName = "LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -207,10 +207,6 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRe
 //     method.
 func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (*runtime.Poller[LRORetrysClientPost202Retry200Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "LRORetrysClient.BeginPost202Retry200", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.post202Retry200(ctx, options)
 		if err != nil {
 			return nil, err
@@ -229,6 +225,10 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (*http.Response, error) {
 	var err error
+	const operationName = "LRORetrysClient.BeginPost202Retry200"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post202Retry200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -271,10 +271,6 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 //     method.
 func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientPostAsyncRelativeRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.postAsyncRelativeRetrySucceeded(ctx, options)
 		if err != nil {
 			return nil, err
@@ -294,6 +290,10 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	var err error
+	const operationName = "LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.postAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -337,10 +337,6 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 //     method.
 func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*runtime.Poller[LRORetrysClientPut201CreatingSucceeded200Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "LRORetrysClient.BeginPut201CreatingSucceeded200", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.put201CreatingSucceeded200(ctx, product, options)
 		if err != nil {
 			return nil, err
@@ -360,6 +356,10 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
 	var err error
+	const operationName = "LRORetrysClient.BeginPut201CreatingSucceeded200"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
@@ -400,10 +400,6 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 //     method.
 func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientPutAsyncRelativeRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.putAsyncRelativeRetrySucceeded(ctx, product, options)
 		if err != nil {
 			return nil, err
@@ -423,6 +419,10 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	var err error
+	const operationName = "LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err

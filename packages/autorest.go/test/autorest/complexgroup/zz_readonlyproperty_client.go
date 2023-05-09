@@ -31,7 +31,9 @@ type ReadonlypropertyClient struct {
 //     method.
 func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyClientGetValidOptions) (ReadonlypropertyClientGetValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ReadonlypropertyClient.GetValid", client.internal.Tracer(), nil)
+	const operationName = "ReadonlypropertyClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -77,7 +79,9 @@ func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response
 //     method.
 func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyClientPutValidOptions) (ReadonlypropertyClientPutValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ReadonlypropertyClient.PutValid", client.internal.Tracer(), nil)
+	const operationName = "ReadonlypropertyClient.PutValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

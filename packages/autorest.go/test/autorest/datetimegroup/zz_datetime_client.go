@@ -31,7 +31,9 @@ type DatetimeClient struct {
 //   - options - DatetimeClientGetInvalidOptions contains the optional parameters for the DatetimeClient.GetInvalid method.
 func (client *DatetimeClient) GetInvalid(ctx context.Context, options *DatetimeClientGetInvalidOptions) (DatetimeClientGetInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetInvalid", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -79,7 +81,9 @@ func (client *DatetimeClient) getInvalidHandleResponse(resp *http.Response) (Dat
 //     method.
 func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx context.Context, options *DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeOptions) (DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -127,7 +131,9 @@ func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleRe
 //     method.
 func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Context, options *DatetimeClientGetLocalNegativeOffsetMinDateTimeOptions) (DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetLocalNegativeOffsetMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetLocalNegativeOffsetMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalNegativeOffsetMinDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -175,7 +181,9 @@ func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleResponse(re
 //     method.
 func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx context.Context, options *DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeOptions) (DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -223,7 +231,9 @@ func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleRe
 //     method.
 func (client *DatetimeClient) GetLocalNoOffsetMinDateTime(ctx context.Context, options *DatetimeClientGetLocalNoOffsetMinDateTimeOptions) (DatetimeClientGetLocalNoOffsetMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetLocalNoOffsetMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetLocalNoOffsetMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalNoOffsetMinDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -271,7 +281,9 @@ func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleResponse(resp *ht
 //     method.
 func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx context.Context, options *DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeOptions) (DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -319,7 +331,9 @@ func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleRe
 //     method.
 func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Context, options *DatetimeClientGetLocalPositiveOffsetMinDateTimeOptions) (DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetLocalPositiveOffsetMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetLocalPositiveOffsetMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalPositiveOffsetMinDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -367,7 +381,9 @@ func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleResponse(re
 //     method.
 func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx context.Context, options *DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeOptions) (DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -414,7 +430,9 @@ func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleRe
 //   - options - DatetimeClientGetNullOptions contains the optional parameters for the DatetimeClient.GetNull method.
 func (client *DatetimeClient) GetNull(ctx context.Context, options *DatetimeClientGetNullOptions) (DatetimeClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -461,7 +479,9 @@ func (client *DatetimeClient) getNullHandleResponse(resp *http.Response) (Dateti
 //   - options - DatetimeClientGetOverflowOptions contains the optional parameters for the DatetimeClient.GetOverflow method.
 func (client *DatetimeClient) GetOverflow(ctx context.Context, options *DatetimeClientGetOverflowOptions) (DatetimeClientGetOverflowResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetOverflow", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetOverflow"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOverflowCreateRequest(ctx, options)
 	if err != nil {
@@ -509,7 +529,9 @@ func (client *DatetimeClient) getOverflowHandleResponse(resp *http.Response) (Da
 //     method.
 func (client *DatetimeClient) GetUTCLowercaseMaxDateTime(ctx context.Context, options *DatetimeClientGetUTCLowercaseMaxDateTimeOptions) (DatetimeClientGetUTCLowercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetUTCLowercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetUTCLowercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUTCLowercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -557,7 +579,9 @@ func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleResponse(resp *htt
 //     method.
 func (client *DatetimeClient) GetUTCMinDateTime(ctx context.Context, options *DatetimeClientGetUTCMinDateTimeOptions) (DatetimeClientGetUTCMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetUTCMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetUTCMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUTCMinDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -605,7 +629,9 @@ func (client *DatetimeClient) getUTCMinDateTimeHandleResponse(resp *http.Respons
 //     method.
 func (client *DatetimeClient) GetUTCUppercaseMaxDateTime(ctx context.Context, options *DatetimeClientGetUTCUppercaseMaxDateTimeOptions) (DatetimeClientGetUTCUppercaseMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetUTCUppercaseMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetUTCUppercaseMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUTCUppercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -654,7 +680,9 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *htt
 //     method.
 func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7Digits(ctx context.Context, options *DatetimeClientGetUTCUppercaseMaxDateTime7DigitsOptions) (DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetUTCUppercaseMaxDateTime7Digits", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetUTCUppercaseMaxDateTime7Digits"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx, options)
 	if err != nil {
@@ -701,7 +729,9 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleResponse(re
 //   - options - DatetimeClientGetUnderflowOptions contains the optional parameters for the DatetimeClient.GetUnderflow method.
 func (client *DatetimeClient) GetUnderflow(ctx context.Context, options *DatetimeClientGetUnderflowOptions) (DatetimeClientGetUnderflowResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.GetUnderflow", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.GetUnderflow"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowCreateRequest(ctx, options)
 	if err != nil {
@@ -750,7 +780,9 @@ func (client *DatetimeClient) getUnderflowHandleResponse(resp *http.Response) (D
 //     method.
 func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody time.Time, options *DatetimeClientPutLocalNegativeOffsetMaxDateTimeOptions) (DatetimeClientPutLocalNegativeOffsetMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.PutLocalNegativeOffsetMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.PutLocalNegativeOffsetMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -790,7 +822,9 @@ func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx
 //     method.
 func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Context, datetimeBody time.Time, options *DatetimeClientPutLocalNegativeOffsetMinDateTimeOptions) (DatetimeClientPutLocalNegativeOffsetMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.PutLocalNegativeOffsetMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.PutLocalNegativeOffsetMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLocalNegativeOffsetMinDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -830,7 +864,9 @@ func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 //     method.
 func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody time.Time, options *DatetimeClientPutLocalPositiveOffsetMaxDateTimeOptions) (DatetimeClientPutLocalPositiveOffsetMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.PutLocalPositiveOffsetMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.PutLocalPositiveOffsetMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -870,7 +906,9 @@ func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx
 //     method.
 func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Context, datetimeBody time.Time, options *DatetimeClientPutLocalPositiveOffsetMinDateTimeOptions) (DatetimeClientPutLocalPositiveOffsetMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.PutLocalPositiveOffsetMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.PutLocalPositiveOffsetMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLocalPositiveOffsetMinDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -910,7 +948,9 @@ func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 //     method.
 func (client *DatetimeClient) PutUTCMaxDateTime(ctx context.Context, datetimeBody time.Time, options *DatetimeClientPutUTCMaxDateTimeOptions) (DatetimeClientPutUTCMaxDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.PutUTCMaxDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.PutUTCMaxDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putUTCMaxDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -951,7 +991,9 @@ func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context
 //     method.
 func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, datetimeBody time.Time, options *DatetimeClientPutUTCMaxDateTime7DigitsOptions) (DatetimeClientPutUTCMaxDateTime7DigitsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.PutUTCMaxDateTime7Digits", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.PutUTCMaxDateTime7Digits"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putUTCMaxDateTime7DigitsCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -991,7 +1033,9 @@ func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.
 //     method.
 func (client *DatetimeClient) PutUTCMinDateTime(ctx context.Context, datetimeBody time.Time, options *DatetimeClientPutUTCMinDateTimeOptions) (DatetimeClientPutUTCMinDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DatetimeClient.PutUTCMinDateTime", client.internal.Tracer(), nil)
+	const operationName = "DatetimeClient.PutUTCMinDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putUTCMinDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {

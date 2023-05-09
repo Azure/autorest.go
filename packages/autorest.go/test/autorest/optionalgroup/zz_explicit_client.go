@@ -35,7 +35,9 @@ type ExplicitClient struct {
 //     method.
 func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, options *ExplicitClientPostOptionalArrayHeaderOptions) (ExplicitClientPostOptionalArrayHeaderResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalArrayHeader", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalArrayHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalArrayHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -74,7 +76,9 @@ func (client *ExplicitClient) postOptionalArrayHeaderCreateRequest(ctx context.C
 //     method.
 func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, options *ExplicitClientPostOptionalArrayParameterOptions) (ExplicitClientPostOptionalArrayParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalArrayParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalArrayParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalArrayParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -116,7 +120,9 @@ func (client *ExplicitClient) postOptionalArrayParameterCreateRequest(ctx contex
 //     method.
 func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, options *ExplicitClientPostOptionalArrayPropertyOptions) (ExplicitClientPostOptionalArrayPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalArrayProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalArrayProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalArrayPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -158,7 +164,9 @@ func (client *ExplicitClient) postOptionalArrayPropertyCreateRequest(ctx context
 //     method.
 func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, options *ExplicitClientPostOptionalClassParameterOptions) (ExplicitClientPostOptionalClassParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalClassParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalClassParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalClassParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -200,7 +208,9 @@ func (client *ExplicitClient) postOptionalClassParameterCreateRequest(ctx contex
 //     method.
 func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, options *ExplicitClientPostOptionalClassPropertyOptions) (ExplicitClientPostOptionalClassPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalClassProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalClassProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalClassPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -242,7 +252,9 @@ func (client *ExplicitClient) postOptionalClassPropertyCreateRequest(ctx context
 //     method.
 func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, options *ExplicitClientPostOptionalIntegerHeaderOptions) (ExplicitClientPostOptionalIntegerHeaderResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalIntegerHeader", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalIntegerHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalIntegerHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -281,7 +293,9 @@ func (client *ExplicitClient) postOptionalIntegerHeaderCreateRequest(ctx context
 //     method.
 func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, options *ExplicitClientPostOptionalIntegerParameterOptions) (ExplicitClientPostOptionalIntegerParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalIntegerParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalIntegerParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalIntegerParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -323,7 +337,9 @@ func (client *ExplicitClient) postOptionalIntegerParameterCreateRequest(ctx cont
 //     method.
 func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, options *ExplicitClientPostOptionalIntegerPropertyOptions) (ExplicitClientPostOptionalIntegerPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalIntegerProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalIntegerProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalIntegerPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -365,7 +381,9 @@ func (client *ExplicitClient) postOptionalIntegerPropertyCreateRequest(ctx conte
 //     method.
 func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, options *ExplicitClientPostOptionalStringHeaderOptions) (ExplicitClientPostOptionalStringHeaderResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalStringHeader", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalStringHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalStringHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -404,7 +422,9 @@ func (client *ExplicitClient) postOptionalStringHeaderCreateRequest(ctx context.
 //     method.
 func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, options *ExplicitClientPostOptionalStringParameterOptions) (ExplicitClientPostOptionalStringParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalStringParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalStringParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalStringParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -447,7 +467,9 @@ func (client *ExplicitClient) postOptionalStringParameterCreateRequest(ctx conte
 //     method.
 func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, options *ExplicitClientPostOptionalStringPropertyOptions) (ExplicitClientPostOptionalStringPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostOptionalStringProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostOptionalStringProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postOptionalStringPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -490,7 +512,9 @@ func (client *ExplicitClient) postOptionalStringPropertyCreateRequest(ctx contex
 //     method.
 func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string, options *ExplicitClientPostRequiredArrayHeaderOptions) (ExplicitClientPostRequiredArrayHeaderResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredArrayHeader", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredArrayHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredArrayHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
@@ -528,7 +552,9 @@ func (client *ExplicitClient) postRequiredArrayHeaderCreateRequest(ctx context.C
 //     method.
 func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []*string, options *ExplicitClientPostRequiredArrayParameterOptions) (ExplicitClientPostRequiredArrayParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredArrayParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredArrayParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredArrayParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -568,7 +594,9 @@ func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx contex
 //     method.
 func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitClientPostRequiredArrayPropertyOptions) (ExplicitClientPostRequiredArrayPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredArrayProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredArrayProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredArrayPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -608,7 +636,9 @@ func (client *ExplicitClient) postRequiredArrayPropertyCreateRequest(ctx context
 //     method.
 func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product, options *ExplicitClientPostRequiredClassParameterOptions) (ExplicitClientPostRequiredClassParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredClassParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredClassParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredClassParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -648,7 +678,9 @@ func (client *ExplicitClient) postRequiredClassParameterCreateRequest(ctx contex
 //     method.
 func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper, options *ExplicitClientPostRequiredClassPropertyOptions) (ExplicitClientPostRequiredClassPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredClassProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredClassProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredClassPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -688,7 +720,9 @@ func (client *ExplicitClient) postRequiredClassPropertyCreateRequest(ctx context
 //     method.
 func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32, options *ExplicitClientPostRequiredIntegerHeaderOptions) (ExplicitClientPostRequiredIntegerHeaderResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredIntegerHeader", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredIntegerHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredIntegerHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
@@ -726,7 +760,9 @@ func (client *ExplicitClient) postRequiredIntegerHeaderCreateRequest(ctx context
 //     method.
 func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32, options *ExplicitClientPostRequiredIntegerParameterOptions) (ExplicitClientPostRequiredIntegerParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredIntegerParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredIntegerParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredIntegerParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -766,7 +802,9 @@ func (client *ExplicitClient) postRequiredIntegerParameterCreateRequest(ctx cont
 //     method.
 func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper, options *ExplicitClientPostRequiredIntegerPropertyOptions) (ExplicitClientPostRequiredIntegerPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredIntegerProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredIntegerProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredIntegerPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -806,7 +844,9 @@ func (client *ExplicitClient) postRequiredIntegerPropertyCreateRequest(ctx conte
 //     method.
 func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string, options *ExplicitClientPostRequiredStringHeaderOptions) (ExplicitClientPostRequiredStringHeaderResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredStringHeader", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredStringHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredStringHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
@@ -844,7 +884,9 @@ func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.
 //     method.
 func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string, options *ExplicitClientPostRequiredStringParameterOptions) (ExplicitClientPostRequiredStringParameterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredStringParameter", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredStringParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredStringParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -886,7 +928,9 @@ func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx conte
 //     method.
 func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper, options *ExplicitClientPostRequiredStringPropertyOptions) (ExplicitClientPostRequiredStringPropertyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PostRequiredStringProperty", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PostRequiredStringProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postRequiredStringPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -925,7 +969,9 @@ func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx contex
 //     method.
 func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutOptionalBinaryBodyOptions) (ExplicitClientPutOptionalBinaryBodyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PutOptionalBinaryBody", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PutOptionalBinaryBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -964,7 +1010,9 @@ func (client *ExplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 //     method.
 func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutRequiredBinaryBodyOptions) (ExplicitClientPutRequiredBinaryBodyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExplicitClient.PutRequiredBinaryBody", client.internal.Tracer(), nil)
+	const operationName = "ExplicitClient.PutRequiredBinaryBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putRequiredBinaryBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {

@@ -53,7 +53,9 @@ func NewWebCategoriesClient(subscriptionID string, credential azcore.TokenCreden
 //   - options - WebCategoriesClientGetOptions contains the optional parameters for the WebCategoriesClient.Get method.
 func (client *WebCategoriesClient) Get(ctx context.Context, name string, options *WebCategoriesClientGetOptions) (WebCategoriesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "WebCategoriesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "WebCategoriesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, name, options)
 	if err != nil {
@@ -116,6 +118,7 @@ func (client *WebCategoriesClient) NewListBySubscriptionPager(options *WebCatego
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *WebCategoriesClientListBySubscriptionResponse) (WebCategoriesClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WebCategoriesClient.NewListBySubscriptionPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

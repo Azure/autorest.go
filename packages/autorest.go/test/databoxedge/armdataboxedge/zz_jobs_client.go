@@ -54,6 +54,7 @@ func NewJobsClient(subscriptionID string, credential azcore.TokenCredential, opt
 //   - options - JobsClientGetOptions contains the optional parameters for the JobsClient.Get method.
 func (client *JobsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *JobsClientGetOptions) (JobsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "JobsClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return JobsClientGetResponse{}, err

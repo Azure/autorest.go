@@ -53,7 +53,9 @@ func NewManagementGroupNetworkManagerConnectionsClient(credential azcore.TokenCr
 //     ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate method.
 func (client *ManagementGroupNetworkManagerConnectionsClient) CreateOrUpdate(ctx context.Context, managementGroupID string, networkManagerConnectionName string, parameters ManagerConnection, options *ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateOptions) (ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	const operationName = "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, managementGroupID, networkManagerConnectionName, parameters, options)
 	if err != nil {
@@ -115,7 +117,9 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) createOrUpdateHand
 //     method.
 func (client *ManagementGroupNetworkManagerConnectionsClient) Delete(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientDeleteOptions) (ManagementGroupNetworkManagerConnectionsClientDeleteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ManagementGroupNetworkManagerConnectionsClient.Delete", client.internal.Tracer(), nil)
+	const operationName = "ManagementGroupNetworkManagerConnectionsClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, managementGroupID, networkManagerConnectionName, options)
 	if err != nil {
@@ -164,7 +168,9 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) deleteCreateReques
 //     method.
 func (client *ManagementGroupNetworkManagerConnectionsClient) Get(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientGetOptions) (ManagementGroupNetworkManagerConnectionsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ManagementGroupNetworkManagerConnectionsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "ManagementGroupNetworkManagerConnectionsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, managementGroupID, networkManagerConnectionName, options)
 	if err != nil {
@@ -225,6 +231,7 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) NewListPager(manag
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ManagementGroupNetworkManagerConnectionsClientListResponse) (ManagementGroupNetworkManagerConnectionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ManagementGroupNetworkManagerConnectionsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

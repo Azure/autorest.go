@@ -56,10 +56,6 @@ func NewSecurityGroupsClient(subscriptionID string, credential azcore.TokenCrede
 //     method.
 func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *SecurityGroupsClientBeginCreateOrUpdateOptions) (*runtime.Poller[SecurityGroupsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "SecurityGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, res
 // Generated from API version 2022-09-01
 func (client *SecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *SecurityGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "SecurityGroupsClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -133,10 +133,6 @@ func (client *SecurityGroupsClient) createOrUpdateCreateRequest(ctx context.Cont
 //     method.
 func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientBeginDeleteOptions) (*runtime.Poller[SecurityGroupsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "SecurityGroupsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, options)
 		if err != nil {
 			return nil, err
@@ -156,6 +152,10 @@ func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGro
 // Generated from API version 2022-09-01
 func (client *SecurityGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "SecurityGroupsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
 		return nil, err
@@ -206,7 +206,9 @@ func (client *SecurityGroupsClient) deleteCreateRequest(ctx context.Context, res
 //   - options - SecurityGroupsClientGetOptions contains the optional parameters for the SecurityGroupsClient.Get method.
 func (client *SecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientGetOptions) (SecurityGroupsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SecurityGroupsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "SecurityGroupsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
@@ -273,6 +275,7 @@ func (client *SecurityGroupsClient) NewListPager(resourceGroupName string, optio
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SecurityGroupsClientListResponse) (SecurityGroupsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SecurityGroupsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -338,6 +341,7 @@ func (client *SecurityGroupsClient) NewListAllPager(options *SecurityGroupsClien
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SecurityGroupsClientListAllResponse) (SecurityGroupsClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SecurityGroupsClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -399,7 +403,9 @@ func (client *SecurityGroupsClient) listAllHandleResponse(resp *http.Response) (
 //     method.
 func (client *SecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters TagsObject, options *SecurityGroupsClientUpdateTagsOptions) (SecurityGroupsClientUpdateTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SecurityGroupsClient.UpdateTags", client.internal.Tracer(), nil)
+	const operationName = "SecurityGroupsClient.UpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {

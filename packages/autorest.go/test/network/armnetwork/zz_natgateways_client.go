@@ -56,10 +56,6 @@ func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 //     method.
 func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[NatGatewaysClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "NatGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 // Generated from API version 2022-09-01
 func (client *NatGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "NatGatewaysClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -132,10 +132,6 @@ func (client *NatGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 //   - options - NatGatewaysClientBeginDeleteOptions contains the optional parameters for the NatGatewaysClient.BeginDelete method.
 func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (*runtime.Poller[NatGatewaysClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "NatGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, natGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -155,6 +151,10 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 // Generated from API version 2022-09-01
 func (client *NatGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "NatGatewaysClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -205,7 +205,9 @@ func (client *NatGatewaysClient) deleteCreateRequest(ctx context.Context, resour
 //   - options - NatGatewaysClientGetOptions contains the optional parameters for the NatGatewaysClient.Get method.
 func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientGetOptions) (NatGatewaysClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NatGatewaysClient.Get", client.internal.Tracer(), nil)
+	const operationName = "NatGatewaysClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
@@ -272,6 +274,7 @@ func (client *NatGatewaysClient) NewListPager(resourceGroupName string, options 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *NatGatewaysClientListResponse) (NatGatewaysClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NatGatewaysClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -336,6 +339,7 @@ func (client *NatGatewaysClient) NewListAllPager(options *NatGatewaysClientListA
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *NatGatewaysClientListAllResponse) (NatGatewaysClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NatGatewaysClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -396,7 +400,9 @@ func (client *NatGatewaysClient) listAllHandleResponse(resp *http.Response) (Nat
 //   - options - NatGatewaysClientUpdateTagsOptions contains the optional parameters for the NatGatewaysClient.UpdateTags method.
 func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject, options *NatGatewaysClientUpdateTagsOptions) (NatGatewaysClientUpdateTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NatGatewaysClient.UpdateTags", client.internal.Tracer(), nil)
+	const operationName = "NatGatewaysClient.UpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {

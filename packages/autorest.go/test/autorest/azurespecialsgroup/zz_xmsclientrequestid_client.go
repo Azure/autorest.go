@@ -30,7 +30,9 @@ type XMSClientRequestIDClient struct {
 //   - options - XMSClientRequestIDClientGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
 func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (XMSClientRequestIDClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMSClientRequestIDClient.Get", client.internal.Tracer(), nil)
+	const operationName = "XMSClientRequestIDClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -66,7 +68,9 @@ func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, op
 //     method.
 func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDClientParamGetOptions) (XMSClientRequestIDClientParamGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "XMSClientRequestIDClient.ParamGet", client.internal.Tracer(), nil)
+	const operationName = "XMSClientRequestIDClient.ParamGet"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramGetCreateRequest(ctx, xmsClientRequestID, options)
 	if err != nil {

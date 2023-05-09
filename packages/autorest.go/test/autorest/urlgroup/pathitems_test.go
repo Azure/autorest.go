@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
@@ -20,18 +19,6 @@ func newPathItemsClient(t *testing.T, globalStringPath string, globalStringQuery
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewPathItemsClient(globalStringPath string, globalStringQuery *string, options *azcore.ClientOptions) (*PathItemsClient, error) {
-	client, err := azcore.NewClient("urlgroup.PathItemsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &PathItemsClient{
-		internal:          client,
-		globalStringPath:  globalStringPath,
-		globalStringQuery: globalStringQuery,
-	}, nil
 }
 
 func TestGetAllWithValues(t *testing.T) {

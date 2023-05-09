@@ -31,7 +31,9 @@ type APIVersionLocalClient struct {
 //     method.
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalClientGetMethodLocalNullOptions) (APIVersionLocalClientGetMethodLocalNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetMethodLocalNull", client.internal.Tracer(), nil)
+	const operationName = "APIVersionLocalClient.GetMethodLocalNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -72,7 +74,9 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 //     method.
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalClientGetMethodLocalValidOptions) (APIVersionLocalClientGetMethodLocalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetMethodLocalValid", client.internal.Tracer(), nil)
+	const operationName = "APIVersionLocalClient.GetMethodLocalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -111,7 +115,9 @@ func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx contex
 //     method.
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalClientGetPathLocalValidOptions) (APIVersionLocalClientGetPathLocalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetPathLocalValid", client.internal.Tracer(), nil)
+	const operationName = "APIVersionLocalClient.GetPathLocalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -150,7 +156,9 @@ func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.
 //     method.
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalClientGetSwaggerLocalValidOptions) (APIVersionLocalClientGetSwaggerLocalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetSwaggerLocalValid", client.internal.Tracer(), nil)
+	const operationName = "APIVersionLocalClient.GetSwaggerLocalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {

@@ -49,7 +49,9 @@ type PageBlobClient struct {
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) ClearPages(ctx context.Context, containerName string, blob string, comp Enum32, contentLength int64, options *PageBlobClientClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientClearPagesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.ClearPages", client.internal.Tracer(), nil)
+	const operationName = "PageBlobClient.ClearPages"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.clearPagesCreateRequest(ctx, containerName, blob, comp, contentLength, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -212,7 +214,9 @@ func (client *PageBlobClient) clearPagesHandleResponse(resp *http.Response) (Pag
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) CopyIncremental(ctx context.Context, containerName string, blob string, comp Enum34, copySource string, options *PageBlobClientCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientCopyIncrementalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.CopyIncremental", client.internal.Tracer(), nil)
+	const operationName = "PageBlobClient.CopyIncremental"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.copyIncrementalCreateRequest(ctx, containerName, blob, comp, copySource, options, modifiedAccessConditions)
 	if err != nil {
@@ -330,7 +334,9 @@ func (client *PageBlobClient) copyIncrementalHandleResponse(resp *http.Response)
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) Create(ctx context.Context, containerName string, blob string, contentLength int64, blobContentLength int64, options *PageBlobClientCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.Create", client.internal.Tracer(), nil)
+	const operationName = "PageBlobClient.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, containerName, blob, contentLength, blobContentLength, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -524,6 +530,7 @@ func (client *PageBlobClient) NewGetPageRangesPager(containerName string, blob s
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageBlobClientGetPageRangesResponse) (PageBlobClientGetPageRangesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageBlobClient.NewGetPageRangesPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -665,6 +672,7 @@ func (client *PageBlobClient) NewGetPageRangesDiffPager(containerName string, bl
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageBlobClientGetPageRangesDiffResponse) (PageBlobClientGetPageRangesDiffResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageBlobClient.NewGetPageRangesDiffPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -811,7 +819,9 @@ func (client *PageBlobClient) getPageRangesDiffHandleResponse(resp *http.Respons
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) Resize(ctx context.Context, containerName string, blob string, comp Enum1, blobContentLength int64, options *PageBlobClientResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientResizeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.Resize", client.internal.Tracer(), nil)
+	const operationName = "PageBlobClient.Resize"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.resizeCreateRequest(ctx, containerName, blob, comp, blobContentLength, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -943,7 +953,9 @@ func (client *PageBlobClient) resizeHandleResponse(resp *http.Response) (PageBlo
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) UpdateSequenceNumber(ctx context.Context, containerName string, blob string, comp Enum1, sequenceNumberAction SequenceNumberActionType, options *PageBlobClientUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientUpdateSequenceNumberResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.UpdateSequenceNumber", client.internal.Tracer(), nil)
+	const operationName = "PageBlobClient.UpdateSequenceNumber"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateSequenceNumberCreateRequest(ctx, containerName, blob, comp, sequenceNumberAction, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1069,7 +1081,9 @@ func (client *PageBlobClient) updateSequenceNumberHandleResponse(resp *http.Resp
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) UploadPages(ctx context.Context, containerName string, blob string, comp Enum32, contentLength int64, body io.ReadSeekCloser, options *PageBlobClientUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientUploadPagesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.UploadPages", client.internal.Tracer(), nil)
+	const operationName = "PageBlobClient.UploadPages"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.uploadPagesCreateRequest(ctx, containerName, blob, comp, contentLength, body, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1261,7 +1275,9 @@ func (client *PageBlobClient) uploadPagesHandleResponse(resp *http.Response) (Pa
 //     method.
 func (client *PageBlobClient) UploadPagesFromURL(ctx context.Context, containerName string, blob string, comp Enum32, sourceURL string, sourceRange string, contentLength int64, rangeParam string, options *PageBlobClientUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (PageBlobClientUploadPagesFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.UploadPagesFromURL", client.internal.Tracer(), nil)
+	const operationName = "PageBlobClient.UploadPagesFromURL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.uploadPagesFromURLCreateRequest(ctx, containerName, blob, comp, sourceURL, sourceRange, contentLength, rangeParam, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {

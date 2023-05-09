@@ -31,7 +31,9 @@ type IntClient struct {
 //   - options - IntClientGetInvalidOptions contains the optional parameters for the IntClient.GetInvalid method.
 func (client *IntClient) GetInvalid(ctx context.Context, options *IntClientGetInvalidOptions) (IntClientGetInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetInvalid", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *IntClient) getInvalidHandleResponse(resp *http.Response) (IntClien
 //   - options - IntClientGetInvalidUnixTimeOptions contains the optional parameters for the IntClient.GetInvalidUnixTime method.
 func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntClientGetInvalidUnixTimeOptions) (IntClientGetInvalidUnixTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetInvalidUnixTime", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetInvalidUnixTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidUnixTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -123,7 +127,9 @@ func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *http.Response) (
 //   - options - IntClientGetNullOptions contains the optional parameters for the IntClient.GetNull method.
 func (client *IntClient) GetNull(ctx context.Context, options *IntClientGetNullOptions) (IntClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -168,7 +174,9 @@ func (client *IntClient) getNullHandleResponse(resp *http.Response) (IntClientGe
 //   - options - IntClientGetNullUnixTimeOptions contains the optional parameters for the IntClient.GetNullUnixTime method.
 func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntClientGetNullUnixTimeOptions) (IntClientGetNullUnixTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetNullUnixTime", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetNullUnixTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullUnixTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -215,7 +223,9 @@ func (client *IntClient) getNullUnixTimeHandleResponse(resp *http.Response) (Int
 //   - options - IntClientGetOverflowInt32Options contains the optional parameters for the IntClient.GetOverflowInt32 method.
 func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntClientGetOverflowInt32Options) (IntClientGetOverflowInt32Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetOverflowInt32", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetOverflowInt32"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOverflowInt32CreateRequest(ctx, options)
 	if err != nil {
@@ -260,7 +270,9 @@ func (client *IntClient) getOverflowInt32HandleResponse(resp *http.Response) (In
 //   - options - IntClientGetOverflowInt64Options contains the optional parameters for the IntClient.GetOverflowInt64 method.
 func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntClientGetOverflowInt64Options) (IntClientGetOverflowInt64Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetOverflowInt64", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetOverflowInt64"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOverflowInt64CreateRequest(ctx, options)
 	if err != nil {
@@ -305,7 +317,9 @@ func (client *IntClient) getOverflowInt64HandleResponse(resp *http.Response) (In
 //   - options - IntClientGetUnderflowInt32Options contains the optional parameters for the IntClient.GetUnderflowInt32 method.
 func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntClientGetUnderflowInt32Options) (IntClientGetUnderflowInt32Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetUnderflowInt32", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetUnderflowInt32"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowInt32CreateRequest(ctx, options)
 	if err != nil {
@@ -350,7 +364,9 @@ func (client *IntClient) getUnderflowInt32HandleResponse(resp *http.Response) (I
 //   - options - IntClientGetUnderflowInt64Options contains the optional parameters for the IntClient.GetUnderflowInt64 method.
 func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntClientGetUnderflowInt64Options) (IntClientGetUnderflowInt64Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetUnderflowInt64", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetUnderflowInt64"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowInt64CreateRequest(ctx, options)
 	if err != nil {
@@ -395,7 +411,9 @@ func (client *IntClient) getUnderflowInt64HandleResponse(resp *http.Response) (I
 //   - options - IntClientGetUnixTimeOptions contains the optional parameters for the IntClient.GetUnixTime method.
 func (client *IntClient) GetUnixTime(ctx context.Context, options *IntClientGetUnixTimeOptions) (IntClientGetUnixTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetUnixTime", client.internal.Tracer(), nil)
+	const operationName = "IntClient.GetUnixTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUnixTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -443,7 +461,9 @@ func (client *IntClient) getUnixTimeHandleResponse(resp *http.Response) (IntClie
 //   - options - IntClientPutMax32Options contains the optional parameters for the IntClient.PutMax32 method.
 func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *IntClientPutMax32Options) (IntClientPutMax32Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMax32", client.internal.Tracer(), nil)
+	const operationName = "IntClient.PutMax32"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMax32CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -482,7 +502,9 @@ func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int3
 //   - options - IntClientPutMax64Options contains the optional parameters for the IntClient.PutMax64 method.
 func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *IntClientPutMax64Options) (IntClientPutMax64Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMax64", client.internal.Tracer(), nil)
+	const operationName = "IntClient.PutMax64"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMax64CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -521,7 +543,9 @@ func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int6
 //   - options - IntClientPutMin32Options contains the optional parameters for the IntClient.PutMin32 method.
 func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *IntClientPutMin32Options) (IntClientPutMin32Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMin32", client.internal.Tracer(), nil)
+	const operationName = "IntClient.PutMin32"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMin32CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -560,7 +584,9 @@ func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int3
 //   - options - IntClientPutMin64Options contains the optional parameters for the IntClient.PutMin64 method.
 func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *IntClientPutMin64Options) (IntClientPutMin64Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMin64", client.internal.Tracer(), nil)
+	const operationName = "IntClient.PutMin64"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMin64CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -599,7 +625,9 @@ func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int6
 //   - options - IntClientPutUnixTimeDateOptions contains the optional parameters for the IntClient.PutUnixTimeDate method.
 func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time, options *IntClientPutUnixTimeDateOptions) (IntClientPutUnixTimeDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutUnixTimeDate", client.internal.Tracer(), nil)
+	const operationName = "IntClient.PutUnixTimeDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putUnixTimeDateCreateRequest(ctx, intBody, options)
 	if err != nil {

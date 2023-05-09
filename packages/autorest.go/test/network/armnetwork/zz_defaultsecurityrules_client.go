@@ -56,7 +56,9 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 //     method.
 func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesClientGetOptions) (DefaultSecurityRulesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DefaultSecurityRulesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "DefaultSecurityRulesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *DefaultSecurityRulesClient) NewListPager(resourceGroupName string,
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DefaultSecurityRulesClientListResponse) (DefaultSecurityRulesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DefaultSecurityRulesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

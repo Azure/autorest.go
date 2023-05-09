@@ -59,7 +59,9 @@ func NewAdminRuleCollectionsClient(subscriptionID string, credential azcore.Toke
 //     method.
 func (client *AdminRuleCollectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, ruleCollection AdminRuleCollection, options *AdminRuleCollectionsClientCreateOrUpdateOptions) (AdminRuleCollectionsClientCreateOrUpdateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AdminRuleCollectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	const operationName = "AdminRuleCollectionsClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleCollection, options)
 	if err != nil {
@@ -135,10 +137,6 @@ func (client *AdminRuleCollectionsClient) createOrUpdateHandleResponse(resp *htt
 //     method.
 func (client *AdminRuleCollectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientBeginDeleteOptions) (*runtime.Poller[AdminRuleCollectionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "AdminRuleCollectionsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, options)
 		if err != nil {
 			return nil, err
@@ -158,6 +156,10 @@ func (client *AdminRuleCollectionsClient) BeginDelete(ctx context.Context, resou
 // Generated from API version 2022-09-01
 func (client *AdminRuleCollectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "AdminRuleCollectionsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, options)
 	if err != nil {
 		return nil, err
@@ -222,7 +224,9 @@ func (client *AdminRuleCollectionsClient) deleteCreateRequest(ctx context.Contex
 //     method.
 func (client *AdminRuleCollectionsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientGetOptions) (AdminRuleCollectionsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AdminRuleCollectionsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "AdminRuleCollectionsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, options)
 	if err != nil {
@@ -297,6 +301,7 @@ func (client *AdminRuleCollectionsClient) NewListPager(resourceGroupName string,
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AdminRuleCollectionsClientListResponse) (AdminRuleCollectionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AdminRuleCollectionsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

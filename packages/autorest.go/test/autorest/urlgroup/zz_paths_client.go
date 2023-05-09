@@ -36,7 +36,9 @@ type PathsClient struct {
 //   - options - PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
 func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (PathsClientArrayCSVInPathResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ArrayCSVInPath", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.ArrayCSVInPath"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayCSVInPathCreateRequest(ctx, arrayPath, options)
 	if err != nil {
@@ -73,7 +75,9 @@ func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arra
 //   - options - PathsClientBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
 func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsClientBase64URLOptions) (PathsClientBase64URLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.Base64URL", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.Base64URL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.base64URLCreateRequest(ctx, base64URLPath, options)
 	if err != nil {
@@ -109,7 +113,9 @@ func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URL
 //   - options - PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
 func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientByteEmptyOptions) (PathsClientByteEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ByteEmpty", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.ByteEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -146,7 +152,9 @@ func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *
 //   - options - PathsClientByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
 func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, options *PathsClientByteMultiByteOptions) (PathsClientByteMultiByteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ByteMultiByte", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.ByteMultiByte"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.byteMultiByteCreateRequest(ctx, bytePath, options)
 	if err != nil {
@@ -183,7 +191,9 @@ func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, byteP
 //   - options - PathsClientByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
 func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, options *PathsClientByteNullOptions) (PathsClientByteNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ByteNull", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.ByteNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.byteNullCreateRequest(ctx, bytePath, options)
 	if err != nil {
@@ -220,7 +230,9 @@ func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath [
 //   - options - PathsClientDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
 func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, options *PathsClientDateNullOptions) (PathsClientDateNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateNull", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.DateNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateNullCreateRequest(ctx, datePath, options)
 	if err != nil {
@@ -257,7 +269,9 @@ func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath t
 //   - options - PathsClientDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
 func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.Time, options *PathsClientDateTimeNullOptions) (PathsClientDateTimeNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateTimeNull", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.DateTimeNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateTimeNullCreateRequest(ctx, dateTimePath, options)
 	if err != nil {
@@ -293,7 +307,9 @@ func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTi
 //   - options - PathsClientDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
 func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClientDateTimeValidOptions) (PathsClientDateTimeValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateTimeValid", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.DateTimeValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -329,7 +345,9 @@ func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, optio
 //   - options - PathsClientDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
 func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDateValidOptions) (PathsClientDateValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateValid", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.DateValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -366,7 +384,9 @@ func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *
 //     method.
 func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *PathsClientDoubleDecimalNegativeOptions) (PathsClientDoubleDecimalNegativeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DoubleDecimalNegative", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.DoubleDecimalNegative"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -403,7 +423,9 @@ func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Contex
 //     method.
 func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *PathsClientDoubleDecimalPositiveOptions) (PathsClientDoubleDecimalPositiveResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DoubleDecimalPositive", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.DoubleDecimalPositive"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -440,7 +462,9 @@ func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Contex
 //   - options - PathsClientEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
 func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, options *PathsClientEnumNullOptions) (PathsClientEnumNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.EnumNull", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.EnumNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.enumNullCreateRequest(ctx, enumPath, options)
 	if err != nil {
@@ -480,7 +504,9 @@ func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath U
 //   - options - PathsClientEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
 func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, options *PathsClientEnumValidOptions) (PathsClientEnumValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.EnumValid", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.EnumValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.enumValidCreateRequest(ctx, enumPath, options)
 	if err != nil {
@@ -520,7 +546,9 @@ func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath 
 //     method.
 func (client *PathsClient) FloatScientificNegative(ctx context.Context, options *PathsClientFloatScientificNegativeOptions) (PathsClientFloatScientificNegativeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.FloatScientificNegative", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.FloatScientificNegative"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -557,7 +585,9 @@ func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Cont
 //     method.
 func (client *PathsClient) FloatScientificPositive(ctx context.Context, options *PathsClientFloatScientificPositiveOptions) (PathsClientFloatScientificPositiveResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.FloatScientificPositive", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.FloatScientificPositive"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -593,7 +623,9 @@ func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Cont
 //   - options - PathsClientGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
 func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsClientGetBooleanFalseOptions) (PathsClientGetBooleanFalseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetBooleanFalse", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.GetBooleanFalse"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -629,7 +661,9 @@ func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, opt
 //   - options - PathsClientGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
 func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsClientGetBooleanTrueOptions) (PathsClientGetBooleanTrueResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetBooleanTrue", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.GetBooleanTrue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -666,7 +700,9 @@ func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, opti
 //     method.
 func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsClientGetIntNegativeOneMillionOptions) (PathsClientGetIntNegativeOneMillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetIntNegativeOneMillion", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.GetIntNegativeOneMillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -702,7 +738,9 @@ func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Con
 //   - options - PathsClientGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
 func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsClientGetIntOneMillionOptions) (PathsClientGetIntOneMillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetIntOneMillion", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.GetIntOneMillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -739,7 +777,9 @@ func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, op
 //     method.
 func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *PathsClientGetNegativeTenBillionOptions) (PathsClientGetNegativeTenBillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetNegativeTenBillion", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.GetNegativeTenBillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -775,7 +815,9 @@ func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Contex
 //   - options - PathsClientGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
 func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClientGetTenBillionOptions) (PathsClientGetTenBillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetTenBillion", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.GetTenBillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -811,7 +853,9 @@ func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, optio
 //   - options - PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
 func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClientStringEmptyOptions) (PathsClientStringEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringEmpty", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.StringEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -848,7 +892,9 @@ func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options
 //   - options - PathsClientStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
 func (client *PathsClient) StringNull(ctx context.Context, stringPath string, options *PathsClientStringNullOptions) (PathsClientStringNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringNull", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.StringNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringNullCreateRequest(ctx, stringPath, options)
 	if err != nil {
@@ -887,7 +933,9 @@ func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPa
 //   - options - PathsClientStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
 func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsClientStringURLEncodedOptions) (PathsClientStringURLEncodedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringURLEncoded", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.StringURLEncoded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -924,7 +972,9 @@ func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, op
 //     method.
 func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsClientStringURLNonEncodedOptions) (PathsClientStringURLNonEncodedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringURLNonEncoded", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.StringURLNonEncoded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringURLNonEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -960,7 +1010,9 @@ func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context,
 //   - options - PathsClientStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
 func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClientStringUnicodeOptions) (PathsClientStringUnicodeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringUnicode", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.StringUnicode"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
@@ -997,7 +1049,9 @@ func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, optio
 //   - options - PathsClientUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
 func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsClientUnixTimeURLOptions) (PathsClientUnixTimeURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.UnixTimeURL", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.UnixTimeURL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.unixTimeURLCreateRequest(ctx, unixTimeURLPath, options)
 	if err != nil {

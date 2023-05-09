@@ -30,7 +30,9 @@ type IntClient struct {
 //   - options - IntClientGetOptions contains the optional parameters for the IntClient.Get method.
 func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) (IntClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.Get", client.internal.Tracer(), nil)
+	const operationName = "IntClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetRes
 //   - options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.
 func (client *IntClient) Put(ctx context.Context, input IntEnum, options *IntClientPutOptions) (IntClientPutResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.Put", client.internal.Tracer(), nil)
+	const operationName = "IntClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {

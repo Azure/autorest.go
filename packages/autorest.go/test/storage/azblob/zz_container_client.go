@@ -46,7 +46,9 @@ type ContainerClient struct {
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) AcquireLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, options *ContainerClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientAcquireLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.AcquireLease", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.AcquireLease"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.acquireLeaseCreateRequest(ctx, containerName, comp, restype, options, modifiedAccessConditions)
 	if err != nil {
@@ -150,7 +152,9 @@ func (client *ContainerClient) acquireLeaseHandleResponse(resp *http.Response) (
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) BreakLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, options *ContainerClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientBreakLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.BreakLease", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.BreakLease"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.breakLeaseCreateRequest(ctx, containerName, comp, restype, options, modifiedAccessConditions)
 	if err != nil {
@@ -260,7 +264,9 @@ func (client *ContainerClient) breakLeaseHandleResponse(resp *http.Response) (Co
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) ChangeLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, options *ContainerClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientChangeLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.ChangeLease", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.ChangeLease"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.changeLeaseCreateRequest(ctx, containerName, comp, restype, leaseID, proposedLeaseID, options, modifiedAccessConditions)
 	if err != nil {
@@ -359,7 +365,9 @@ func (client *ContainerClient) changeLeaseHandleResponse(resp *http.Response) (C
 //   - ContainerCpkScopeInfo - ContainerCpkScopeInfo contains a group of parameters for the ContainerClient.Create method.
 func (client *ContainerClient) Create(ctx context.Context, containerName string, restype Enum11, options *ContainerClientCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (ContainerClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Create", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, containerName, restype, options, containerCpkScopeInfo)
 	if err != nil {
@@ -462,7 +470,9 @@ func (client *ContainerClient) createHandleResponse(resp *http.Response) (Contai
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) Delete(ctx context.Context, containerName string, restype Enum11, options *ContainerClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientDeleteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Delete", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, containerName, restype, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -547,7 +557,9 @@ func (client *ContainerClient) deleteHandleResponse(resp *http.Response) (Contai
 //   - options - ContainerClientFilterBlobsOptions contains the optional parameters for the ContainerClient.FilterBlobs method.
 func (client *ContainerClient) FilterBlobs(ctx context.Context, containerName string, restype Enum11, comp Enum10, options *ContainerClientFilterBlobsOptions) (ContainerClientFilterBlobsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.FilterBlobs", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.FilterBlobs"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.filterBlobsCreateRequest(ctx, containerName, restype, comp, options)
 	if err != nil {
@@ -641,7 +653,9 @@ func (client *ContainerClient) filterBlobsHandleResponse(resp *http.Response) (C
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *ContainerClient) GetAccessPolicy(ctx context.Context, containerName string, restype Enum11, comp Enum13, options *ContainerClientGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (ContainerClientGetAccessPolicyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetAccessPolicy", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.GetAccessPolicy"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getAccessPolicyCreateRequest(ctx, containerName, restype, comp, options, leaseAccessConditions)
 	if err != nil {
@@ -737,7 +751,9 @@ func (client *ContainerClient) getAccessPolicyHandleResponse(resp *http.Response
 //     method.
 func (client *ContainerClient) GetAccountInfo(ctx context.Context, containerName string, restype Enum8, comp Enum1, options *ContainerClientGetAccountInfoOptions) (ContainerClientGetAccountInfoResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetAccountInfo", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.GetAccountInfo"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getAccountInfoCreateRequest(ctx, containerName, restype, comp, options)
 	if err != nil {
@@ -814,7 +830,9 @@ func (client *ContainerClient) getAccountInfoHandleResponse(resp *http.Response)
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *ContainerClient) GetProperties(ctx context.Context, containerName string, restype Enum11, options *ContainerClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (ContainerClientGetPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetProperties", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.GetProperties"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, containerName, restype, options, leaseAccessConditions)
 	if err != nil {
@@ -957,6 +975,7 @@ func (client *ContainerClient) NewListBlobFlatSegmentPager(containerName string,
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobFlatSegmentResponse) (ContainerClientListBlobFlatSegmentResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerClient.NewListBlobFlatSegmentPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1063,6 +1082,7 @@ func (client *ContainerClient) NewListBlobHierarchySegmentPager(containerName st
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobHierarchySegmentResponse) (ContainerClientListBlobHierarchySegmentResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerClient.NewListBlobHierarchySegmentPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1166,7 +1186,9 @@ func (client *ContainerClient) listBlobHierarchySegmentHandleResponse(resp *http
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) ReleaseLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, leaseID string, options *ContainerClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientReleaseLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.ReleaseLease", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.ReleaseLease"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.releaseLeaseCreateRequest(ctx, containerName, comp, restype, leaseID, options, modifiedAccessConditions)
 	if err != nil {
@@ -1261,7 +1283,9 @@ func (client *ContainerClient) releaseLeaseHandleResponse(resp *http.Response) (
 //   - options - ContainerClientRenameOptions contains the optional parameters for the ContainerClient.Rename method.
 func (client *ContainerClient) Rename(ctx context.Context, containerName string, restype Enum11, comp Enum15, sourceContainerName string, options *ContainerClientRenameOptions) (ContainerClientRenameResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Rename", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.Rename"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.renameCreateRequest(ctx, containerName, restype, comp, sourceContainerName, options)
 	if err != nil {
@@ -1344,7 +1368,9 @@ func (client *ContainerClient) renameHandleResponse(resp *http.Response) (Contai
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) RenewLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, leaseID string, options *ContainerClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientRenewLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.RenewLease", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.RenewLease"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.renewLeaseCreateRequest(ctx, containerName, comp, restype, leaseID, options, modifiedAccessConditions)
 	if err != nil {
@@ -1441,7 +1467,9 @@ func (client *ContainerClient) renewLeaseHandleResponse(resp *http.Response) (Co
 //   - options - ContainerClientRestoreOptions contains the optional parameters for the ContainerClient.Restore method.
 func (client *ContainerClient) Restore(ctx context.Context, containerName string, restype Enum11, comp Enum14, options *ContainerClientRestoreOptions) (ContainerClientRestoreResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Restore", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.Restore"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.restoreCreateRequest(ctx, containerName, restype, comp, options)
 	if err != nil {
@@ -1527,7 +1555,9 @@ func (client *ContainerClient) restoreHandleResponse(resp *http.Response) (Conta
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerName string, restype Enum11, comp Enum13, options *ContainerClientSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientSetAccessPolicyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SetAccessPolicy", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.SetAccessPolicy"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.setAccessPolicyCreateRequest(ctx, containerName, restype, comp, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1637,7 +1667,9 @@ func (client *ContainerClient) setAccessPolicyHandleResponse(resp *http.Response
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) SetMetadata(ctx context.Context, containerName string, restype Enum11, comp Enum12, options *ContainerClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientSetMetadataResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SetMetadata", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.SetMetadata"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.setMetadataCreateRequest(ctx, containerName, restype, comp, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1740,7 +1772,9 @@ func (client *ContainerClient) setMetadataHandleResponse(resp *http.Response) (C
 //   - options - ContainerClientSubmitBatchOptions contains the optional parameters for the ContainerClient.SubmitBatch method.
 func (client *ContainerClient) SubmitBatch(ctx context.Context, containerName string, restype Enum11, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ContainerClientSubmitBatchOptions) (ContainerClientSubmitBatchResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SubmitBatch", client.internal.Tracer(), nil)
+	const operationName = "ContainerClient.SubmitBatch"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.submitBatchCreateRequest(ctx, containerName, restype, comp, contentLength, multipartContentType, body, options)
 	if err != nil {

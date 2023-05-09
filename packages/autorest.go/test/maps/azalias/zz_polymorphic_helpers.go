@@ -26,7 +26,10 @@ func unmarshalGeoJSONObjectClassification(rawMsg json.RawMessage) (GeoJSONObject
 	default:
 		b = &GeoJSONObject{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalGeoJSONObjectClassificationMap(rawMsg json.RawMessage) (map[string]GeoJSONObjectClassification, error) {

@@ -56,10 +56,6 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 //     method.
 func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*runtime.Poller[PrivateEndpointsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 // Generated from API version 2022-09-01
 func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "PrivateEndpointsClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -133,10 +133,6 @@ func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Co
 //     method.
 func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*runtime.Poller[PrivateEndpointsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
 		if err != nil {
 			return nil, err
@@ -156,6 +152,10 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 // Generated from API version 2022-09-01
 func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "PrivateEndpointsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
 		return nil, err
@@ -206,7 +206,9 @@ func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, r
 //   - options - PrivateEndpointsClientGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
 func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientGetOptions) (PrivateEndpointsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrivateEndpointsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "PrivateEndpointsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -274,6 +276,7 @@ func (client *PrivateEndpointsClient) NewListPager(resourceGroupName string, opt
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PrivateEndpointsClientListResponse) (PrivateEndpointsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PrivateEndpointsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -339,6 +342,7 @@ func (client *PrivateEndpointsClient) NewListBySubscriptionPager(options *Privat
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PrivateEndpointsClientListBySubscriptionResponse) (PrivateEndpointsClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PrivateEndpointsClient.NewListBySubscriptionPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

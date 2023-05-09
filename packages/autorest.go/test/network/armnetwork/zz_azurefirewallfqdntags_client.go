@@ -56,6 +56,7 @@ func (client *AzureFirewallFqdnTagsClient) NewListAllPager(options *AzureFirewal
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AzureFirewallFqdnTagsClientListAllResponse) (AzureFirewallFqdnTagsClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureFirewallFqdnTagsClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

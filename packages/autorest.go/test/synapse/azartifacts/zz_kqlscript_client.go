@@ -37,7 +37,6 @@ type KqlScriptClient struct {
 //     method.
 func (client *KqlScriptClient) BeginCreateOrUpdate(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (*runtime.Poller[KqlScriptClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdate(ctx, kqlScriptName, kqlScript, options)
 		if err != nil {
 			return nil, err
@@ -55,6 +54,7 @@ func (client *KqlScriptClient) BeginCreateOrUpdate(ctx context.Context, kqlScrip
 // Generated from API version 2021-11-01-preview
 func (client *KqlScriptClient) createOrUpdate(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KqlScriptClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, kqlScriptName, kqlScript, options)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,6 @@ func (client *KqlScriptClient) createOrUpdateCreateRequest(ctx context.Context, 
 //     method.
 func (client *KqlScriptClient) BeginDeleteByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (*runtime.Poller[KqlScriptClientDeleteByNameResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteByName(ctx, kqlScriptName, options)
 		if err != nil {
 			return nil, err
@@ -118,6 +117,7 @@ func (client *KqlScriptClient) BeginDeleteByName(ctx context.Context, kqlScriptN
 // Generated from API version 2021-11-01-preview
 func (client *KqlScriptClient) deleteByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KqlScriptClient.BeginDeleteByName")
 	req, err := client.deleteByNameCreateRequest(ctx, kqlScriptName, options)
 	if err != nil {
 		return nil, err
@@ -159,6 +159,7 @@ func (client *KqlScriptClient) deleteByNameCreateRequest(ctx context.Context, kq
 //   - options - KqlScriptClientGetByNameOptions contains the optional parameters for the KqlScriptClient.GetByName method.
 func (client *KqlScriptClient) GetByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientGetByNameOptions) (KqlScriptClientGetByNameResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KqlScriptClient.GetByName")
 	req, err := client.getByNameCreateRequest(ctx, kqlScriptName, options)
 	if err != nil {
 		return KqlScriptClientGetByNameResponse{}, err
@@ -211,7 +212,6 @@ func (client *KqlScriptClient) getByNameHandleResponse(resp *http.Response) (Kql
 //   - options - KqlScriptClientBeginRenameOptions contains the optional parameters for the KqlScriptClient.BeginRename method.
 func (client *KqlScriptClient) BeginRename(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (*runtime.Poller[KqlScriptClientRenameResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.rename(ctx, kqlScriptName, renameRequest, options)
 		if err != nil {
 			return nil, err
@@ -229,6 +229,7 @@ func (client *KqlScriptClient) BeginRename(ctx context.Context, kqlScriptName st
 // Generated from API version 2021-11-01-preview
 func (client *KqlScriptClient) rename(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KqlScriptClient.BeginRename")
 	req, err := client.renameCreateRequest(ctx, kqlScriptName, renameRequest, options)
 	if err != nil {
 		return nil, err

@@ -57,10 +57,6 @@ func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenC
 //     method.
 func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ConnectionMonitorsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -80,6 +76,10 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 // Generated from API version 2022-09-01
 func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ConnectionMonitorsClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -142,10 +142,6 @@ func (client *ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.
 //     method.
 func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*runtime.Poller[ConnectionMonitorsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
@@ -165,6 +161,10 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 // Generated from API version 2022-09-01
 func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ConnectionMonitorsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -220,7 +220,9 @@ func (client *ConnectionMonitorsClient) deleteCreateRequest(ctx context.Context,
 //   - options - ConnectionMonitorsClientGetOptions contains the optional parameters for the ConnectionMonitorsClient.Get method.
 func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientGetOptions) (ConnectionMonitorsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "ConnectionMonitorsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -290,6 +292,7 @@ func (client *ConnectionMonitorsClient) NewListPager(resourceGroupName string, n
 			return false
 		},
 		Fetcher: func(ctx context.Context, page *ConnectionMonitorsClientListResponse) (ConnectionMonitorsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ConnectionMonitorsClient.NewListPager")
 			req, err := client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 			if err != nil {
 				return ConnectionMonitorsClientListResponse{}, err
@@ -353,10 +356,6 @@ func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) 
 //     method.
 func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*runtime.Poller[ConnectionMonitorsClientQueryResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginQuery", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.query(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
@@ -376,6 +375,10 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 // Generated from API version 2022-09-01
 func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ConnectionMonitorsClient.BeginQuery"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.queryCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -432,10 +435,6 @@ func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, 
 //     method.
 func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*runtime.Poller[ConnectionMonitorsClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginStart", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.start(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
@@ -455,6 +454,10 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 // Generated from API version 2022-09-01
 func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ConnectionMonitorsClient.BeginStart"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.startCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -511,10 +514,6 @@ func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, 
 //     method.
 func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*runtime.Poller[ConnectionMonitorsClientStopResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ConnectionMonitorsClient.BeginStop", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 		if err != nil {
 			return nil, err
@@ -534,6 +533,10 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 // Generated from API version 2022-09-01
 func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ConnectionMonitorsClient.BeginStop"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -591,7 +594,9 @@ func (client *ConnectionMonitorsClient) stopCreateRequest(ctx context.Context, r
 //     method.
 func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsClientUpdateTagsOptions) (ConnectionMonitorsClientUpdateTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ConnectionMonitorsClient.UpdateTags", client.internal.Tracer(), nil)
+	const operationName = "ConnectionMonitorsClient.UpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {

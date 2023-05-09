@@ -55,7 +55,9 @@ func NewFirewallPolicyIdpsSignaturesOverridesClient(subscriptionID string, crede
 //     method.
 func (client *FirewallPolicyIdpsSignaturesOverridesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPolicyIdpsSignaturesOverridesClientGetOptions) (FirewallPolicyIdpsSignaturesOverridesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "FirewallPolicyIdpsSignaturesOverridesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -118,7 +120,9 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) getHandleResponse(res
 //     method.
 func (client *FirewallPolicyIdpsSignaturesOverridesClient) List(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPolicyIdpsSignaturesOverridesClientListOptions) (FirewallPolicyIdpsSignaturesOverridesClientListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.List", client.internal.Tracer(), nil)
+	const operationName = "FirewallPolicyIdpsSignaturesOverridesClient.List"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -182,7 +186,9 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) listHandleResponse(re
 //     method.
 func (client *FirewallPolicyIdpsSignaturesOverridesClient) Patch(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignaturesOverrides, options *FirewallPolicyIdpsSignaturesOverridesClientPatchOptions) (FirewallPolicyIdpsSignaturesOverridesClientPatchResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.Patch", client.internal.Tracer(), nil)
+	const operationName = "FirewallPolicyIdpsSignaturesOverridesClient.Patch"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.patchCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
@@ -249,7 +255,9 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) patchHandleResponse(r
 //     method.
 func (client *FirewallPolicyIdpsSignaturesOverridesClient) Put(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignaturesOverrides, options *FirewallPolicyIdpsSignaturesOverridesClientPutOptions) (FirewallPolicyIdpsSignaturesOverridesClientPutResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.Put", client.internal.Tracer(), nil)
+	const operationName = "FirewallPolicyIdpsSignaturesOverridesClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {

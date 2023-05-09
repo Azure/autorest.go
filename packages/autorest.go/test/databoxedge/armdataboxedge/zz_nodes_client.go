@@ -57,6 +57,7 @@ func (client *NodesClient) NewListByDataBoxEdgeDevicePager(deviceName string, re
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *NodesClientListByDataBoxEdgeDeviceResponse) (NodesClientListByDataBoxEdgeDeviceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NodesClient.NewListByDataBoxEdgeDevicePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

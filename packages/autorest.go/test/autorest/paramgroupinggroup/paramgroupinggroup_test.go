@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
@@ -19,14 +18,6 @@ func newParameterGroupingClient(t *testing.T) *ParameterGroupingClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewParameterGroupingClient(options *azcore.ClientOptions) (*ParameterGroupingClient, error) {
-	client, err := azcore.NewClient("paramgroupinggroup.ParameterGroupingClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &ParameterGroupingClient{internal: client}, nil
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups

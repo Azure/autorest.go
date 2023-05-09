@@ -31,9 +31,15 @@ pipeline:
   go-protocol:
     input: go-transform
 
+  # generate code for the fakes
+  go-fake:
+    input: go-protocol
+
   # extensibility: allow text-transforms after the code gen
   go/text-transform:
-    input: go-protocol
+    input:
+      - go-protocol
+      - go-fake
 
   # output the files to disk
   go/emitter:
@@ -89,4 +95,7 @@ help-content:
       - key: rawjson-as-bytes
         type: boolean
         description: When true, properties that are untyped (i.e. raw JSON) are exposed as []byte instead of any or map[string]any. The default is false.
+      - key: generate-fakes
+        type: boolean
+        description: When true, enables generation of fake servers. The default is false.
 ```

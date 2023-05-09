@@ -30,7 +30,9 @@ type DurationClient struct {
 //   - options - DurationClientGetInvalidOptions contains the optional parameters for the DurationClient.GetInvalid method.
 func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationClientGetInvalidOptions) (DurationClientGetInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DurationClient.GetInvalid", client.internal.Tracer(), nil)
+	const operationName = "DurationClient.GetInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -75,7 +77,9 @@ func (client *DurationClient) getInvalidHandleResponse(resp *http.Response) (Dur
 //   - options - DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
 func (client *DurationClient) GetNull(ctx context.Context, options *DurationClientGetNullOptions) (DurationClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DurationClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "DurationClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -121,7 +125,9 @@ func (client *DurationClient) getNullHandleResponse(resp *http.Response) (Durati
 //     method.
 func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *DurationClientGetPositiveDurationOptions) (DurationClientGetPositiveDurationResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DurationClient.GetPositiveDuration", client.internal.Tracer(), nil)
+	const operationName = "DurationClient.GetPositiveDuration"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPositiveDurationCreateRequest(ctx, options)
 	if err != nil {
@@ -168,7 +174,9 @@ func (client *DurationClient) getPositiveDurationHandleResponse(resp *http.Respo
 //     method.
 func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationBody string, options *DurationClientPutPositiveDurationOptions) (DurationClientPutPositiveDurationResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DurationClient.PutPositiveDuration", client.internal.Tracer(), nil)
+	const operationName = "DurationClient.PutPositiveDuration"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putPositiveDurationCreateRequest(ctx, durationBody, options)
 	if err != nil {

@@ -55,7 +55,9 @@ func NewSharedGalleryImagesClient(subscriptionID string, credential azcore.Token
 //   - options - SharedGalleryImagesClientGetOptions contains the optional parameters for the SharedGalleryImagesClient.Get method.
 func (client *SharedGalleryImagesClient) Get(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, options *SharedGalleryImagesClientGetOptions) (SharedGalleryImagesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SharedGalleryImagesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "SharedGalleryImagesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, galleryUniqueName, galleryImageName, options)
 	if err != nil {
@@ -125,6 +127,7 @@ func (client *SharedGalleryImagesClient) NewListPager(location string, galleryUn
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SharedGalleryImagesClientListResponse) (SharedGalleryImagesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharedGalleryImagesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

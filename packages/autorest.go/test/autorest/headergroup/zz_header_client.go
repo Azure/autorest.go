@@ -33,7 +33,9 @@ type HeaderClient struct {
 //   - options - HeaderClientCustomRequestIDOptions contains the optional parameters for the HeaderClient.CustomRequestID method.
 func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderClientCustomRequestIDOptions) (HeaderClientCustomRequestIDResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.CustomRequestID", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.CustomRequestID"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.customRequestIDCreateRequest(ctx, options)
 	if err != nil {
@@ -70,7 +72,9 @@ func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, op
 //   - options - HeaderClientParamBoolOptions contains the optional parameters for the HeaderClient.ParamBool method.
 func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, value bool, options *HeaderClientParamBoolOptions) (HeaderClientParamBoolResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamBool", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamBool"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramBoolCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -109,7 +113,9 @@ func (client *HeaderClient) paramBoolCreateRequest(ctx context.Context, scenario
 //   - options - HeaderClientParamByteOptions contains the optional parameters for the HeaderClient.ParamByte method.
 func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte, options *HeaderClientParamByteOptions) (HeaderClientParamByteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamByte", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamByte"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramByteCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -149,7 +155,9 @@ func (client *HeaderClient) paramByteCreateRequest(ctx context.Context, scenario
 //   - options - HeaderClientParamDateOptions contains the optional parameters for the HeaderClient.ParamDate method.
 func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderClientParamDateOptions) (HeaderClientParamDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamDate", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramDateCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -189,7 +197,9 @@ func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario
 //   - options - HeaderClientParamDatetimeOptions contains the optional parameters for the HeaderClient.ParamDatetime method.
 func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderClientParamDatetimeOptions) (HeaderClientParamDatetimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamDatetime", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamDatetime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramDatetimeCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -229,7 +239,9 @@ func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scen
 //     method.
 func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderClientParamDatetimeRFC1123Options) (HeaderClientParamDatetimeRFC1123Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamDatetimeRFC1123", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamDatetimeRFC1123"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -271,7 +283,9 @@ func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Contex
 //   - options - HeaderClientParamDoubleOptions contains the optional parameters for the HeaderClient.ParamDouble method.
 func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderClientParamDoubleOptions) (HeaderClientParamDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamDouble", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramDoubleCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -310,7 +324,9 @@ func (client *HeaderClient) paramDoubleCreateRequest(ctx context.Context, scenar
 //   - options - HeaderClientParamDurationOptions contains the optional parameters for the HeaderClient.ParamDuration method.
 func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, value string, options *HeaderClientParamDurationOptions) (HeaderClientParamDurationResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamDuration", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamDuration"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramDurationCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -349,7 +365,9 @@ func (client *HeaderClient) paramDurationCreateRequest(ctx context.Context, scen
 //   - options - HeaderClientParamEnumOptions contains the optional parameters for the HeaderClient.ParamEnum method.
 func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, options *HeaderClientParamEnumOptions) (HeaderClientParamEnumResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamEnum", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamEnum"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -389,7 +407,9 @@ func (client *HeaderClient) paramEnumCreateRequest(ctx context.Context, scenario
 //   - options - HeaderClientParamExistingKeyOptions contains the optional parameters for the HeaderClient.ParamExistingKey method.
 func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent string, options *HeaderClientParamExistingKeyOptions) (HeaderClientParamExistingKeyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamExistingKey", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamExistingKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramExistingKeyCreateRequest(ctx, userAgent, options)
 	if err != nil {
@@ -428,7 +448,9 @@ func (client *HeaderClient) paramExistingKeyCreateRequest(ctx context.Context, u
 //   - options - HeaderClientParamFloatOptions contains the optional parameters for the HeaderClient.ParamFloat method.
 func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, value float32, options *HeaderClientParamFloatOptions) (HeaderClientParamFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamFloat", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramFloatCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -468,7 +490,9 @@ func (client *HeaderClient) paramFloatCreateRequest(ctx context.Context, scenari
 //   - options - HeaderClientParamIntegerOptions contains the optional parameters for the HeaderClient.ParamInteger method.
 func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32, options *HeaderClientParamIntegerOptions) (HeaderClientParamIntegerResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamInteger", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamInteger"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramIntegerCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -508,7 +532,9 @@ func (client *HeaderClient) paramIntegerCreateRequest(ctx context.Context, scena
 //   - options - HeaderClientParamLongOptions contains the optional parameters for the HeaderClient.ParamLong method.
 func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, value int64, options *HeaderClientParamLongOptions) (HeaderClientParamLongResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamLong", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamLong"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramLongCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -547,7 +573,9 @@ func (client *HeaderClient) paramLongCreateRequest(ctx context.Context, scenario
 //     method.
 func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType string, options *HeaderClientParamProtectedKeyOptions) (HeaderClientParamProtectedKeyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamProtectedKey", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamProtectedKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramProtectedKeyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -585,7 +613,9 @@ func (client *HeaderClient) paramProtectedKeyCreateRequest(ctx context.Context, 
 //   - options - HeaderClientParamStringOptions contains the optional parameters for the HeaderClient.ParamString method.
 func (client *HeaderClient) ParamString(ctx context.Context, scenario string, options *HeaderClientParamStringOptions) (HeaderClientParamStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ParamString", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ParamString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.paramStringCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -625,7 +655,9 @@ func (client *HeaderClient) paramStringCreateRequest(ctx context.Context, scenar
 //   - options - HeaderClientResponseBoolOptions contains the optional parameters for the HeaderClient.ResponseBool method.
 func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, options *HeaderClientResponseBoolOptions) (HeaderClientResponseBoolResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseBool", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseBool"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseBoolCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -676,7 +708,9 @@ func (client *HeaderClient) responseBoolHandleResponse(resp *http.Response) (Hea
 //   - options - HeaderClientResponseByteOptions contains the optional parameters for the HeaderClient.ResponseByte method.
 func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, options *HeaderClientResponseByteOptions) (HeaderClientResponseByteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseByte", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseByte"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseByteCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -727,7 +761,9 @@ func (client *HeaderClient) responseByteHandleResponse(resp *http.Response) (Hea
 //   - options - HeaderClientResponseDateOptions contains the optional parameters for the HeaderClient.ResponseDate method.
 func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, options *HeaderClientResponseDateOptions) (HeaderClientResponseDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseDate", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseDateCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -778,7 +814,9 @@ func (client *HeaderClient) responseDateHandleResponse(resp *http.Response) (Hea
 //   - options - HeaderClientResponseDatetimeOptions contains the optional parameters for the HeaderClient.ResponseDatetime method.
 func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario string, options *HeaderClientResponseDatetimeOptions) (HeaderClientResponseDatetimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseDatetime", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseDatetime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseDatetimeCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -831,7 +869,9 @@ func (client *HeaderClient) responseDatetimeHandleResponse(resp *http.Response) 
 //     method.
 func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderClientResponseDatetimeRFC1123Options) (HeaderClientResponseDatetimeRFC1123Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseDatetimeRFC1123", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseDatetimeRFC1123"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -882,7 +922,9 @@ func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *http.Res
 //   - options - HeaderClientResponseDoubleOptions contains the optional parameters for the HeaderClient.ResponseDouble method.
 func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string, options *HeaderClientResponseDoubleOptions) (HeaderClientResponseDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseDouble", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseDoubleCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -933,7 +975,9 @@ func (client *HeaderClient) responseDoubleHandleResponse(resp *http.Response) (H
 //   - options - HeaderClientResponseDurationOptions contains the optional parameters for the HeaderClient.ResponseDuration method.
 func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario string, options *HeaderClientResponseDurationOptions) (HeaderClientResponseDurationResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseDuration", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseDuration"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseDurationCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -980,7 +1024,9 @@ func (client *HeaderClient) responseDurationHandleResponse(resp *http.Response) 
 //   - options - HeaderClientResponseEnumOptions contains the optional parameters for the HeaderClient.ResponseEnum method.
 func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, options *HeaderClientResponseEnumOptions) (HeaderClientResponseEnumResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseEnum", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseEnum"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1027,7 +1073,9 @@ func (client *HeaderClient) responseEnumHandleResponse(resp *http.Response) (Hea
 //     method.
 func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *HeaderClientResponseExistingKeyOptions) (HeaderClientResponseExistingKeyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseExistingKey", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseExistingKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseExistingKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1073,7 +1121,9 @@ func (client *HeaderClient) responseExistingKeyHandleResponse(resp *http.Respons
 //   - options - HeaderClientResponseFloatOptions contains the optional parameters for the HeaderClient.ResponseFloat method.
 func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, options *HeaderClientResponseFloatOptions) (HeaderClientResponseFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseFloat", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseFloatCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1125,7 +1175,9 @@ func (client *HeaderClient) responseFloatHandleResponse(resp *http.Response) (He
 //   - options - HeaderClientResponseIntegerOptions contains the optional parameters for the HeaderClient.ResponseInteger method.
 func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string, options *HeaderClientResponseIntegerOptions) (HeaderClientResponseIntegerResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseInteger", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseInteger"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseIntegerCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1177,7 +1229,9 @@ func (client *HeaderClient) responseIntegerHandleResponse(resp *http.Response) (
 //   - options - HeaderClientResponseLongOptions contains the optional parameters for the HeaderClient.ResponseLong method.
 func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, options *HeaderClientResponseLongOptions) (HeaderClientResponseLongResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseLong", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseLong"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseLongCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1228,7 +1282,9 @@ func (client *HeaderClient) responseLongHandleResponse(resp *http.Response) (Hea
 //     method.
 func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *HeaderClientResponseProtectedKeyOptions) (HeaderClientResponseProtectedKeyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseProtectedKey", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseProtectedKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseProtectedKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1274,7 +1330,9 @@ func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *http.Respon
 //   - options - HeaderClientResponseStringOptions contains the optional parameters for the HeaderClient.ResponseString method.
 func (client *HeaderClient) ResponseString(ctx context.Context, scenario string, options *HeaderClientResponseStringOptions) (HeaderClientResponseStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.ResponseString", client.internal.Tracer(), nil)
+	const operationName = "HeaderClient.ResponseString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.responseStringCreateRequest(ctx, scenario, options)
 	if err != nil {

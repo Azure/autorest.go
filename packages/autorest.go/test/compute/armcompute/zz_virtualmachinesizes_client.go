@@ -57,6 +57,7 @@ func (client *VirtualMachineSizesClient) NewListPager(location string, options *
 			return false
 		},
 		Fetcher: func(ctx context.Context, page *VirtualMachineSizesClientListResponse) (VirtualMachineSizesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachineSizesClient.NewListPager")
 			req, err := client.listCreateRequest(ctx, location, options)
 			if err != nil {
 				return VirtualMachineSizesClientListResponse{}, err

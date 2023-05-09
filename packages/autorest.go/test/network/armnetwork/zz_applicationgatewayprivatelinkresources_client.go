@@ -58,6 +58,7 @@ func (client *ApplicationGatewayPrivateLinkResourcesClient) NewListPager(resourc
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ApplicationGatewayPrivateLinkResourcesClientListResponse) (ApplicationGatewayPrivateLinkResourcesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewayPrivateLinkResourcesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

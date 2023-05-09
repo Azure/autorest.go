@@ -40,7 +40,9 @@ type PathItemsClient struct {
 //     method.
 func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetAllWithValuesOptions) (PathItemsClientGetAllWithValuesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetAllWithValues", client.internal.Tracer(), nil)
+	const operationName = "PathItemsClient.GetAllWithValues"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getAllWithValuesCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -103,7 +105,9 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 //     method.
 func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalAndLocalQueryNullOptions) (PathItemsClientGetGlobalAndLocalQueryNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetGlobalAndLocalQueryNull", client.internal.Tracer(), nil)
+	const operationName = "PathItemsClient.GetGlobalAndLocalQueryNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getGlobalAndLocalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -166,7 +170,9 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 //     method.
 func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalQueryNullOptions) (PathItemsClientGetGlobalQueryNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetGlobalQueryNull", client.internal.Tracer(), nil)
+	const operationName = "PathItemsClient.GetGlobalQueryNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getGlobalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -229,7 +235,9 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 //     method.
 func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetLocalPathItemQueryNullOptions) (PathItemsClientGetLocalPathItemQueryNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetLocalPathItemQueryNull", client.internal.Tracer(), nil)
+	const operationName = "PathItemsClient.GetLocalPathItemQueryNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalPathItemQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {

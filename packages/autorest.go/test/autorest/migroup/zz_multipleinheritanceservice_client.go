@@ -31,7 +31,9 @@ type MultipleInheritanceServiceClient struct {
 //     method.
 func (client *MultipleInheritanceServiceClient) GetCat(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (MultipleInheritanceServiceClientGetCatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetCat", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.GetCat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCatCreateRequest(ctx, options)
 	if err != nil {
@@ -77,7 +79,9 @@ func (client *MultipleInheritanceServiceClient) getCatHandleResponse(resp *http.
 //     method.
 func (client *MultipleInheritanceServiceClient) GetFeline(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (MultipleInheritanceServiceClientGetFelineResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetFeline", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.GetFeline"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFelineCreateRequest(ctx, options)
 	if err != nil {
@@ -123,7 +127,9 @@ func (client *MultipleInheritanceServiceClient) getFelineHandleResponse(resp *ht
 //     method.
 func (client *MultipleInheritanceServiceClient) GetHorse(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (MultipleInheritanceServiceClientGetHorseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetHorse", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.GetHorse"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getHorseCreateRequest(ctx, options)
 	if err != nil {
@@ -169,7 +175,9 @@ func (client *MultipleInheritanceServiceClient) getHorseHandleResponse(resp *htt
 //     method.
 func (client *MultipleInheritanceServiceClient) GetKitten(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (MultipleInheritanceServiceClientGetKittenResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetKitten", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.GetKitten"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getKittenCreateRequest(ctx, options)
 	if err != nil {
@@ -215,7 +223,9 @@ func (client *MultipleInheritanceServiceClient) getKittenHandleResponse(resp *ht
 //     method.
 func (client *MultipleInheritanceServiceClient) GetPet(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (MultipleInheritanceServiceClientGetPetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetPet", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.GetPet"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPetCreateRequest(ctx, options)
 	if err != nil {
@@ -262,7 +272,9 @@ func (client *MultipleInheritanceServiceClient) getPetHandleResponse(resp *http.
 //     method.
 func (client *MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (MultipleInheritanceServiceClientPutCatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutCat", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.PutCat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCatCreateRequest(ctx, cat, options)
 	if err != nil {
@@ -312,7 +324,9 @@ func (client *MultipleInheritanceServiceClient) putCatHandleResponse(resp *http.
 //     method.
 func (client *MultipleInheritanceServiceClient) PutFeline(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (MultipleInheritanceServiceClientPutFelineResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutFeline", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.PutFeline"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putFelineCreateRequest(ctx, feline, options)
 	if err != nil {
@@ -362,7 +376,9 @@ func (client *MultipleInheritanceServiceClient) putFelineHandleResponse(resp *ht
 //     method.
 func (client *MultipleInheritanceServiceClient) PutHorse(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (MultipleInheritanceServiceClientPutHorseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutHorse", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.PutHorse"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putHorseCreateRequest(ctx, horse, options)
 	if err != nil {
@@ -412,7 +428,9 @@ func (client *MultipleInheritanceServiceClient) putHorseHandleResponse(resp *htt
 //     method.
 func (client *MultipleInheritanceServiceClient) PutKitten(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (MultipleInheritanceServiceClientPutKittenResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutKitten", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.PutKitten"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putKittenCreateRequest(ctx, kitten, options)
 	if err != nil {
@@ -462,7 +480,9 @@ func (client *MultipleInheritanceServiceClient) putKittenHandleResponse(resp *ht
 //     method.
 func (client *MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (MultipleInheritanceServiceClientPutPetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutPet", client.internal.Tracer(), nil)
+	const operationName = "MultipleInheritanceServiceClient.PutPet"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putPetCreateRequest(ctx, pet, options)
 	if err != nil {

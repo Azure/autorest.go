@@ -40,7 +40,9 @@ type ImplicitClient struct {
 //     method.
 func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitClientGetOptionalGlobalQueryOptions) (ImplicitClientGetOptionalGlobalQueryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetOptionalGlobalQuery", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.GetOptionalGlobalQuery"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOptionalGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
@@ -81,7 +83,9 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 //     method.
 func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options *ImplicitClientGetRequiredGlobalPathOptions) (ImplicitClientGetRequiredGlobalPathResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetRequiredGlobalPath", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.GetRequiredGlobalPath"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getRequiredGlobalPathCreateRequest(ctx, options)
 	if err != nil {
@@ -121,7 +125,9 @@ func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Con
 //     method.
 func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, options *ImplicitClientGetRequiredGlobalQueryOptions) (ImplicitClientGetRequiredGlobalQueryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetRequiredGlobalQuery", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.GetRequiredGlobalQuery"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getRequiredGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
@@ -160,7 +166,9 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 //     method.
 func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string, options *ImplicitClientGetRequiredPathOptions) (ImplicitClientGetRequiredPathResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetRequiredPath", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.GetRequiredPath"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getRequiredPathCreateRequest(ctx, pathParameter, options)
 	if err != nil {
@@ -200,7 +208,9 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 //     method.
 func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ImplicitClientPutOptionalBinaryBodyOptions) (ImplicitClientPutOptionalBinaryBodyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalBinaryBody", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.PutOptionalBinaryBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -239,7 +249,9 @@ func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 //     method.
 func (client *ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string, options *ImplicitClientPutOptionalBodyOptions) (ImplicitClientPutOptionalBodyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalBody", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.PutOptionalBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putOptionalBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -280,7 +292,9 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 //     method.
 func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *ImplicitClientPutOptionalHeaderOptions) (ImplicitClientPutOptionalHeaderResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalHeader", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.PutOptionalHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putOptionalHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -319,7 +333,9 @@ func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context
 //     method.
 func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *ImplicitClientPutOptionalQueryOptions) (ImplicitClientPutOptionalQueryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalQuery", client.internal.Tracer(), nil)
+	const operationName = "ImplicitClient.PutOptionalQuery"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putOptionalQueryCreateRequest(ctx, options)
 	if err != nil {

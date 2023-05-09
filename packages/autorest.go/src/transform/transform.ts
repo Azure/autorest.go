@@ -888,6 +888,7 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
 function newParameter(name: string, desc: string, schema: Schema): Parameter {
   const param = new Parameter(name, desc, schema);
   param.language.go! = param.language.default;
+  param.implementation = ImplementationLocation.Method;
   return param;
 }
 

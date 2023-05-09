@@ -54,7 +54,9 @@ func NewApplicationGatewayWafDynamicManifestsDefaultClient(subscriptionID string
 //     method.
 func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) Get(ctx context.Context, location string, options *ApplicationGatewayWafDynamicManifestsDefaultClientGetOptions) (ApplicationGatewayWafDynamicManifestsDefaultClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewayWafDynamicManifestsDefaultClient.Get", client.internal.Tracer(), nil)
+	const operationName = "ApplicationGatewayWafDynamicManifestsDefaultClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, options)
 	if err != nil {

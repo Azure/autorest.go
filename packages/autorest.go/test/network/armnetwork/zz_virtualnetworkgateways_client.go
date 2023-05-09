@@ -56,10 +56,6 @@ func NewVirtualNetworkGatewaysClient(subscriptionID string, credential azcore.To
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworkGatewaysClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -133,10 +133,6 @@ func (client *VirtualNetworkGatewaysClient) createOrUpdateCreateRequest(ctx cont
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworkGatewaysClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -156,6 +152,10 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -209,10 +209,6 @@ func (client *VirtualNetworkGatewaysClient) deleteCreateRequest(ctx context.Cont
 //     for the VirtualNetworkGatewaysClient.BeginDisconnectVirtualNetworkGatewayVPNConnections method.
 func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGatewayVPNConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*runtime.Poller[VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginDisconnectVirtualNetworkGatewayVPNConnections", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.disconnectVirtualNetworkGatewayVPNConnections(ctx, resourceGroupName, virtualNetworkGatewayName, request, options)
 		if err != nil {
 			return nil, err
@@ -233,6 +229,10 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginDisconnectVirtualNetworkGatewayVPNConnections"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, request, options)
 	if err != nil {
 		return nil, err
@@ -289,10 +289,6 @@ func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNCo
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGenerateVPNProfileResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGenerateVPNProfile", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.generateVPNProfile(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -313,6 +309,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) generateVPNProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGenerateVPNProfile"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.generateVPNProfileCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -369,10 +369,6 @@ func (client *VirtualNetworkGatewaysClient) generateVPNProfileCreateRequest(ctx 
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGeneratevpnclientpackage", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.generatevpnclientpackage(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -393,6 +389,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) generatevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGeneratevpnclientpackage"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.generatevpnclientpackageCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -447,7 +447,9 @@ func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageCreateReques
 //     method.
 func (client *VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientGetOptions) (VirtualNetworkGatewaysClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.Get", client.internal.Tracer(), nil)
+	const operationName = "VirtualNetworkGatewaysClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -512,10 +514,6 @@ func (client *VirtualNetworkGatewaysClient) getHandleResponse(resp *http.Respons
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGetAdvertisedRoutes", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getAdvertisedRoutes(ctx, resourceGroupName, virtualNetworkGatewayName, peer, options)
 		if err != nil {
 			return nil, err
@@ -536,6 +534,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGetAdvertisedRoutes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getAdvertisedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, peer, options)
 	if err != nil {
 		return nil, err
@@ -588,10 +590,6 @@ func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesCreateRequest(ctx
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetBgpPeerStatusOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGetBgpPeerStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGetBgpPeerStatus", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getBgpPeerStatus(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -611,6 +609,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) getBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetBgpPeerStatusOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGetBgpPeerStatus"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBgpPeerStatusCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -666,10 +668,6 @@ func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusCreateRequest(ctx co
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGetLearnedRoutesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGetLearnedRoutes", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getLearnedRoutes(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -690,6 +688,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) getLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGetLearnedRoutes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getLearnedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -742,10 +744,6 @@ func (client *VirtualNetworkGatewaysClient) getLearnedRoutesCreateRequest(ctx co
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGetVPNProfilePackageURL", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getVPNProfilePackageURL(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -766,6 +764,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx con
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGetVPNProfilePackageURL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getVPNProfilePackageURLCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -818,10 +820,6 @@ func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLCreateRequest
 //     VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth method.
 func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getVpnclientConnectionHealth(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -842,6 +840,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getVpnclientConnectionHealthCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -895,10 +897,6 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthCreateRe
 //     VirtualNetworkGatewaysClient.BeginGetVpnclientIPSecParameters method.
 func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions) (*runtime.Poller[VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginGetVpnclientIPSecParameters", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getVpnclientIPSecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -920,6 +918,10 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginGetVpnclientIPSecParameters"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getVpnclientIPSecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -973,6 +975,7 @@ func (client *VirtualNetworkGatewaysClient) NewListPager(resourceGroupName strin
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworkGatewaysClientListResponse) (VirtualNetworkGatewaysClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworkGatewaysClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1040,6 +1043,7 @@ func (client *VirtualNetworkGatewaysClient) NewListConnectionsPager(resourceGrou
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworkGatewaysClientListConnectionsResponse) (VirtualNetworkGatewaysClientListConnectionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworkGatewaysClient.NewListConnectionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1108,10 +1112,6 @@ func (client *VirtualNetworkGatewaysClient) listConnectionsHandleResponse(resp *
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetOptions) (*runtime.Poller[VirtualNetworkGatewaysClientResetResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginReset", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.reset(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -1131,6 +1131,10 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) reset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginReset"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.resetCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -1186,10 +1190,6 @@ func (client *VirtualNetworkGatewaysClient) resetCreateRequest(ctx context.Conte
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (*runtime.Poller[VirtualNetworkGatewaysClientResetVPNClientSharedKeyResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginResetVPNClientSharedKey", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.resetVPNClientSharedKey(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -1209,6 +1209,10 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx con
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginResetVPNClientSharedKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.resetVPNClientSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -1263,10 +1267,6 @@ func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyCreateRequest
 //     VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters method.
 func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions) (*runtime.Poller[VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.setVpnclientIPSecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIPSecParams, options)
 		if err != nil {
 			return nil, err
@@ -1287,6 +1287,10 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setVpnclientIPSecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIPSecParams, options)
 	if err != nil {
 		return nil, err
@@ -1341,10 +1345,6 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersCreateReq
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginStartPacketCaptureOptions) (*runtime.Poller[VirtualNetworkGatewaysClientStartPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.startPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -1364,6 +1364,10 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) startPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginStartPacketCaptureOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginStartPacketCapture"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.startPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -1422,10 +1426,6 @@ func (client *VirtualNetworkGatewaysClient) startPacketCaptureCreateRequest(ctx 
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions) (*runtime.Poller[VirtualNetworkGatewaysClientStopPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.stopPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -1445,6 +1445,10 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) stopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginStopPacketCapture"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stopPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1499,7 +1503,9 @@ func (client *VirtualNetworkGatewaysClient) stopPacketCaptureCreateRequest(ctx c
 //     method.
 func (client *VirtualNetworkGatewaysClient) SupportedVPNDevices(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientSupportedVPNDevicesOptions) (VirtualNetworkGatewaysClientSupportedVPNDevicesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.SupportedVPNDevices", client.internal.Tracer(), nil)
+	const operationName = "VirtualNetworkGatewaysClient.SupportedVPNDevices"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.supportedVPNDevicesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
@@ -1563,10 +1569,6 @@ func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleResponse(re
 //     method.
 func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysClientBeginUpdateTagsOptions) (*runtime.Poller[VirtualNetworkGatewaysClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.BeginUpdateTags", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -1586,6 +1588,10 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 // Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewaysClient) updateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysClientBeginUpdateTagsOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworkGatewaysClient.BeginUpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1642,7 +1648,9 @@ func (client *VirtualNetworkGatewaysClient) updateTagsCreateRequest(ctx context.
 //     method.
 func (client *VirtualNetworkGatewaysClient) VPNDeviceConfigurationScript(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, options *VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptOptions) (VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript", client.internal.Tracer(), nil)
+	const operationName = "VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.vpnDeviceConfigurationScriptCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 	if err != nil {

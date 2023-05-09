@@ -55,10 +55,6 @@ func NewPrivateLinkServicesClient(subscriptionID string, credential azcore.Token
 //     PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility method.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions) (*runtime.Poller[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.checkPrivateLinkServiceVisibility(ctx, location, parameters, options)
 		if err != nil {
 			return nil, err
@@ -78,6 +74,10 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(
 // Generated from API version 2022-09-01
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions) (*http.Response, error) {
 	var err error
+	const operationName = "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.checkPrivateLinkServiceVisibilityCreateRequest(ctx, location, parameters, options)
 	if err != nil {
 		return nil, err
@@ -130,10 +130,6 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityCreate
 //     for the PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup method.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*runtime.Poller[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.checkPrivateLinkServiceVisibilityByResourceGroup(ctx, location, resourceGroupName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -154,6 +150,10 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityB
 // Generated from API version 2022-09-01
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*http.Response, error) {
 	var err error
+	const operationName = "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.checkPrivateLinkServiceVisibilityByResourceGroupCreateRequest(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -209,10 +209,6 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 //     method.
 func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesClientBeginCreateOrUpdateOptions) (*runtime.Poller[PrivateLinkServicesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -232,6 +228,10 @@ func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context
 // Generated from API version 2022-09-01
 func (client *PrivateLinkServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "PrivateLinkServicesClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -286,10 +286,6 @@ func (client *PrivateLinkServicesClient) createOrUpdateCreateRequest(ctx context
 //     method.
 func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesClientBeginDeleteOptions) (*runtime.Poller[PrivateLinkServicesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, serviceName, options)
 		if err != nil {
 			return nil, err
@@ -309,6 +305,10 @@ func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resour
 // Generated from API version 2022-09-01
 func (client *PrivateLinkServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "PrivateLinkServicesClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
 		return nil, err
@@ -361,10 +361,6 @@ func (client *PrivateLinkServicesClient) deleteCreateRequest(ctx context.Context
 //     PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection method.
 func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesClientBeginDeletePrivateEndpointConnectionOptions) (*runtime.Poller[PrivateLinkServicesClientDeletePrivateEndpointConnectionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deletePrivateEndpointConnection(ctx, resourceGroupName, serviceName, peConnectionName, options)
 		if err != nil {
 			return nil, err
@@ -384,6 +380,10 @@ func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ct
 // Generated from API version 2022-09-01
 func (client *PrivateLinkServicesClient) deletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesClientBeginDeletePrivateEndpointConnectionOptions) (*http.Response, error) {
 	var err error
+	const operationName = "PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deletePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
 		return nil, err
@@ -438,7 +438,9 @@ func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionCreateRe
 //   - options - PrivateLinkServicesClientGetOptions contains the optional parameters for the PrivateLinkServicesClient.Get method.
 func (client *PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesClientGetOptions) (PrivateLinkServicesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "PrivateLinkServicesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -506,7 +508,9 @@ func (client *PrivateLinkServicesClient) getHandleResponse(resp *http.Response) 
 //     method.
 func (client *PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesClientGetPrivateEndpointConnectionOptions) (PrivateLinkServicesClientGetPrivateEndpointConnectionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.GetPrivateEndpointConnection", client.internal.Tracer(), nil)
+	const operationName = "PrivateLinkServicesClient.GetPrivateEndpointConnection"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -578,6 +582,7 @@ func (client *PrivateLinkServicesClient) NewListPager(resourceGroupName string, 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PrivateLinkServicesClientListResponse) (PrivateLinkServicesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PrivateLinkServicesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -645,6 +650,7 @@ func (client *PrivateLinkServicesClient) NewListAutoApprovedPrivateLinkServicesP
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse) (PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -713,6 +719,7 @@ func (client *PrivateLinkServicesClient) NewListAutoApprovedPrivateLinkServicesB
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse) (PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesByResourceGroupPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -782,6 +789,7 @@ func (client *PrivateLinkServicesClient) NewListBySubscriptionPager(options *Pri
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PrivateLinkServicesClientListBySubscriptionResponse) (PrivateLinkServicesClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PrivateLinkServicesClient.NewListBySubscriptionPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -845,6 +853,7 @@ func (client *PrivateLinkServicesClient) NewListPrivateEndpointConnectionsPager(
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PrivateLinkServicesClientListPrivateEndpointConnectionsResponse) (PrivateLinkServicesClientListPrivateEndpointConnectionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PrivateLinkServicesClient.NewListPrivateEndpointConnectionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -915,7 +924,9 @@ func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleRes
 //     method.
 func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesClientUpdatePrivateEndpointConnectionOptions) (PrivateLinkServicesClientUpdatePrivateEndpointConnectionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.UpdatePrivateEndpointConnection", client.internal.Tracer(), nil)
+	const operationName = "PrivateLinkServicesClient.UpdatePrivateEndpointConnection"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updatePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, parameters, options)
 	if err != nil {

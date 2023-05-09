@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -22,14 +21,6 @@ func newPolymorphismClient(t *testing.T) *PolymorphismClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewPolymorphismClient(options *azcore.ClientOptions) (*PolymorphismClient, error) {
-	client, err := azcore.NewClient("complexgroup.PolymorphismClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &PolymorphismClient{internal: client}, nil
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties

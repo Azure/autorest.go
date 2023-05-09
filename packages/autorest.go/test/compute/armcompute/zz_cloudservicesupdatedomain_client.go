@@ -59,7 +59,9 @@ func NewCloudServicesUpdateDomainClient(subscriptionID string, credential azcore
 //     method.
 func (client *CloudServicesUpdateDomainClient) GetUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, options *CloudServicesUpdateDomainClientGetUpdateDomainOptions) (CloudServicesUpdateDomainClientGetUpdateDomainResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.GetUpdateDomain", client.internal.Tracer(), nil)
+	const operationName = "CloudServicesUpdateDomainClient.GetUpdateDomain"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUpdateDomainCreateRequest(ctx, resourceGroupName, cloudServiceName, updateDomain, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *CloudServicesUpdateDomainClient) NewListUpdateDomainsPager(resourc
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *CloudServicesUpdateDomainClientListUpdateDomainsResponse) (CloudServicesUpdateDomainClientListUpdateDomainsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CloudServicesUpdateDomainClient.NewListUpdateDomainsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -197,10 +200,6 @@ func (client *CloudServicesUpdateDomainClient) listUpdateDomainsHandleResponse(r
 //     method.
 func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*runtime.Poller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.walkUpdateDomain(ctx, resourceGroupName, cloudServiceName, updateDomain, parameters, options)
 		if err != nil {
 			return nil, err
@@ -218,6 +217,10 @@ func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context
 // Generated from API version 2021-03-01
 func (client *CloudServicesUpdateDomainClient) walkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*http.Response, error) {
 	var err error
+	const operationName = "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.walkUpdateDomainCreateRequest(ctx, resourceGroupName, cloudServiceName, updateDomain, parameters, options)
 	if err != nil {
 		return nil, err

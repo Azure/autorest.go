@@ -32,7 +32,9 @@ type UploadClient struct {
 //   - options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
 func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (UploadClientBinaryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "UploadClient.Binary", client.internal.Tracer(), nil)
+	const operationName = "UploadClient.Binary"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.binaryCreateRequest(ctx, fileParam, options)
 	if err != nil {
@@ -70,7 +72,9 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 //   - options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
 func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (UploadClientFileResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "UploadClient.File", client.internal.Tracer(), nil)
+	const operationName = "UploadClient.File"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.fileCreateRequest(ctx, fileParam, options)
 	if err != nil {

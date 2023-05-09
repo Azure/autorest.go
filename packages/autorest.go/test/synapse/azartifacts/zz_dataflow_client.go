@@ -37,7 +37,6 @@ type DataFlowClient struct {
 //     method.
 func (client *DataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowClientBeginCreateOrUpdateDataFlowOptions) (*runtime.Poller[DataFlowClientCreateOrUpdateDataFlowResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdateDataFlow(ctx, dataFlowName, dataFlow, options)
 		if err != nil {
 			return nil, err
@@ -55,6 +54,7 @@ func (client *DataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 // Generated from API version 2020-12-01
 func (client *DataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowClientBeginCreateOrUpdateDataFlowOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowClient.BeginCreateOrUpdateDataFlow")
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
 		return nil, err
@@ -103,7 +103,6 @@ func (client *DataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 //     method.
 func (client *DataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowClientBeginDeleteDataFlowOptions) (*runtime.Poller[DataFlowClientDeleteDataFlowResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteDataFlow(ctx, dataFlowName, options)
 		if err != nil {
 			return nil, err
@@ -121,6 +120,7 @@ func (client *DataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 // Generated from API version 2020-12-01
 func (client *DataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowClientBeginDeleteDataFlowOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowClient.BeginDeleteDataFlow")
 	req, err := client.deleteDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return nil, err
@@ -162,6 +162,7 @@ func (client *DataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, d
 //   - options - DataFlowClientGetDataFlowOptions contains the optional parameters for the DataFlowClient.GetDataFlow method.
 func (client *DataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowClientGetDataFlowOptions) (DataFlowClientGetDataFlowResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowClient.GetDataFlow")
 	req, err := client.getDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return DataFlowClientGetDataFlowResponse{}, err
@@ -219,6 +220,7 @@ func (client *DataFlowClient) NewGetDataFlowsByWorkspacePager(options *DataFlowC
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DataFlowClientGetDataFlowsByWorkspaceResponse) (DataFlowClientGetDataFlowsByWorkspaceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowClient.NewGetDataFlowsByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -274,7 +276,6 @@ func (client *DataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.R
 //     method.
 func (client *DataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowClientBeginRenameDataFlowOptions) (*runtime.Poller[DataFlowClientRenameDataFlowResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.renameDataFlow(ctx, dataFlowName, request, options)
 		if err != nil {
 			return nil, err
@@ -292,6 +293,7 @@ func (client *DataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 // Generated from API version 2020-12-01
 func (client *DataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowClientBeginRenameDataFlowOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowClient.BeginRenameDataFlow")
 	req, err := client.renameDataFlowCreateRequest(ctx, dataFlowName, request, options)
 	if err != nil {
 		return nil, err

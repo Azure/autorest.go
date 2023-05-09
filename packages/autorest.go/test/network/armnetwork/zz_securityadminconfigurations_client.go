@@ -58,7 +58,9 @@ func NewSecurityAdminConfigurationsClient(subscriptionID string, credential azco
 //     method.
 func (client *SecurityAdminConfigurationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, securityAdminConfiguration SecurityAdminConfiguration, options *SecurityAdminConfigurationsClientCreateOrUpdateOptions) (SecurityAdminConfigurationsClientCreateOrUpdateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SecurityAdminConfigurationsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	const operationName = "SecurityAdminConfigurationsClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, securityAdminConfiguration, options)
 	if err != nil {
@@ -129,10 +131,6 @@ func (client *SecurityAdminConfigurationsClient) createOrUpdateHandleResponse(re
 //     method.
 func (client *SecurityAdminConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *SecurityAdminConfigurationsClientBeginDeleteOptions) (*runtime.Poller[SecurityAdminConfigurationsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "SecurityAdminConfigurationsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, configurationName, options)
 		if err != nil {
 			return nil, err
@@ -152,6 +150,10 @@ func (client *SecurityAdminConfigurationsClient) BeginDelete(ctx context.Context
 // Generated from API version 2022-09-01
 func (client *SecurityAdminConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *SecurityAdminConfigurationsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "SecurityAdminConfigurationsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, options)
 	if err != nil {
 		return nil, err
@@ -211,7 +213,9 @@ func (client *SecurityAdminConfigurationsClient) deleteCreateRequest(ctx context
 //     method.
 func (client *SecurityAdminConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *SecurityAdminConfigurationsClientGetOptions) (SecurityAdminConfigurationsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SecurityAdminConfigurationsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "SecurityAdminConfigurationsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, configurationName, options)
 	if err != nil {
@@ -281,6 +285,7 @@ func (client *SecurityAdminConfigurationsClient) NewListPager(resourceGroupName 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SecurityAdminConfigurationsClientListResponse) (SecurityAdminConfigurationsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SecurityAdminConfigurationsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

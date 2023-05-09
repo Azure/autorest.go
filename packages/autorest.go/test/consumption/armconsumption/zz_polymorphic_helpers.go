@@ -28,7 +28,10 @@ func unmarshalChargeSummaryClassification(rawMsg json.RawMessage) (ChargeSummary
 	default:
 		b = &ChargeSummary{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalChargeSummaryClassificationArray(rawMsg json.RawMessage) ([]ChargeSummaryClassification, error) {
@@ -67,7 +70,10 @@ func unmarshalReservationRecommendationClassification(rawMsg json.RawMessage) (R
 	default:
 		b = &ReservationRecommendation{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalReservationRecommendationClassificationArray(rawMsg json.RawMessage) ([]ReservationRecommendationClassification, error) {
@@ -106,7 +112,10 @@ func unmarshalUsageDetailClassification(rawMsg json.RawMessage) (UsageDetailClas
 	default:
 		b = &UsageDetail{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalUsageDetailClassificationArray(rawMsg json.RawMessage) ([]UsageDetailClassification, error) {

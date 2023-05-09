@@ -36,7 +36,9 @@ type SubscriptionInMethodClient struct {
 //     method.
 func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalNullOptions) (SubscriptionInMethodClientPostMethodLocalNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInMethodClient.PostMethodLocalNull", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInMethodClient.PostMethodLocalNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postMethodLocalNullCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -78,7 +80,9 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx c
 //     method.
 func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalValidOptions) (SubscriptionInMethodClientPostMethodLocalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInMethodClient.PostMethodLocalValid", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInMethodClient.PostMethodLocalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postMethodLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -120,7 +124,9 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx 
 //     method.
 func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostPathLocalValidOptions) (SubscriptionInMethodClientPostPathLocalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInMethodClient.PostPathLocalValid", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInMethodClient.PostPathLocalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postPathLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -162,7 +168,9 @@ func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx co
 //     method.
 func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostSwaggerLocalValidOptions) (SubscriptionInMethodClientPostSwaggerLocalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInMethodClient.PostSwaggerLocalValid", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInMethodClient.PostSwaggerLocalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postSwaggerLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {

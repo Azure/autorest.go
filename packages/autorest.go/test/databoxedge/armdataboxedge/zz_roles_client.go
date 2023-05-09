@@ -56,7 +56,6 @@ func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, op
 //     method.
 func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*runtime.Poller[RolesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, role, options)
 		if err != nil {
 			return nil, err
@@ -74,6 +73,7 @@ func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 // Generated from API version 2021-02-01
 func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RolesClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, role, options)
 	if err != nil {
 		return nil, err
@@ -129,7 +129,6 @@ func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, devi
 //   - options - RolesClientBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
 func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*runtime.Poller[RolesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 		if err != nil {
 			return nil, err
@@ -147,6 +146,7 @@ func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, n
 // Generated from API version 2021-02-01
 func (client *RolesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RolesClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -199,6 +199,7 @@ func (client *RolesClient) deleteCreateRequest(ctx context.Context, deviceName s
 //   - options - RolesClientGetOptions contains the optional parameters for the RolesClient.Get method.
 func (client *RolesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientGetOptions) (RolesClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RolesClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return RolesClientGetResponse{}, err
@@ -264,6 +265,7 @@ func (client *RolesClient) NewListByDataBoxEdgeDevicePager(deviceName string, re
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RolesClientListByDataBoxEdgeDeviceResponse) (RolesClientListByDataBoxEdgeDeviceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RolesClient.NewListByDataBoxEdgeDevicePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

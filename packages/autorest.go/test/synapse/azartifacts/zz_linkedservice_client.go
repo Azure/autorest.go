@@ -37,7 +37,6 @@ type LinkedServiceClient struct {
 //     method.
 func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 		if err != nil {
 			return nil, err
@@ -55,6 +54,7 @@ func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 // Generated from API version 2020-12-01
 func (client *LinkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkedServiceClient.BeginCreateOrUpdateLinkedService")
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
 		return nil, err
@@ -103,7 +103,6 @@ func (client *LinkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 //     method.
 func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientDeleteLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 		if err != nil {
 			return nil, err
@@ -121,6 +120,7 @@ func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 // Generated from API version 2020-12-01
 func (client *LinkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkedServiceClient.BeginDeleteLinkedService")
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
 		return nil, err
@@ -163,6 +163,7 @@ func (client *LinkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 //     method.
 func (client *LinkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientGetLinkedServiceOptions) (LinkedServiceClientGetLinkedServiceResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkedServiceClient.GetLinkedService")
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
 		return LinkedServiceClientGetLinkedServiceResponse{}, err
@@ -220,6 +221,7 @@ func (client *LinkedServiceClient) NewGetLinkedServicesByWorkspacePager(options 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *LinkedServiceClientGetLinkedServicesByWorkspaceResponse) (LinkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkedServiceClient.NewGetLinkedServicesByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -275,7 +277,6 @@ func (client *LinkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 //     method.
 func (client *LinkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientRenameLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 		if err != nil {
 			return nil, err
@@ -293,6 +294,7 @@ func (client *LinkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 // Generated from API version 2020-12-01
 func (client *LinkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkedServiceClient.BeginRenameLinkedService")
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {
 		return nil, err
