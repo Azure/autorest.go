@@ -374,25 +374,25 @@ func PossibleDatasetReferenceTypeValues() []DatasetReferenceType {
 type DayOfWeek string
 
 const (
-	DayOfWeekSunday    DayOfWeek = "Sunday"
+	DayOfWeekFriday    DayOfWeek = "Friday"
 	DayOfWeekMonday    DayOfWeek = "Monday"
+	DayOfWeekSaturday  DayOfWeek = "Saturday"
+	DayOfWeekSunday    DayOfWeek = "Sunday"
+	DayOfWeekThursday  DayOfWeek = "Thursday"
 	DayOfWeekTuesday   DayOfWeek = "Tuesday"
 	DayOfWeekWednesday DayOfWeek = "Wednesday"
-	DayOfWeekThursday  DayOfWeek = "Thursday"
-	DayOfWeekFriday    DayOfWeek = "Friday"
-	DayOfWeekSaturday  DayOfWeek = "Saturday"
 )
 
 // PossibleDayOfWeekValues returns the possible values for the DayOfWeek const type.
 func PossibleDayOfWeekValues() []DayOfWeek {
 	return []DayOfWeek{
-		DayOfWeekSunday,
+		DayOfWeekFriday,
 		DayOfWeekMonday,
+		DayOfWeekSaturday,
+		DayOfWeekSunday,
+		DayOfWeekThursday,
 		DayOfWeekTuesday,
 		DayOfWeekWednesday,
-		DayOfWeekThursday,
-		DayOfWeekFriday,
-		DayOfWeekSaturday,
 	}
 }
 

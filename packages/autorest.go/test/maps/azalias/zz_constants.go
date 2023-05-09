@@ -14,16 +14,16 @@ type DataSetting string
 
 const (
 	DataSettingOne   DataSetting = "one"
-	DataSettingTwo   DataSetting = "two"
 	DataSettingThree DataSetting = "three"
+	DataSettingTwo   DataSetting = "two"
 )
 
 // PossibleDataSettingValues returns the possible values for the DataSetting const type.
 func PossibleDataSettingValues() []DataSetting {
 	return []DataSetting{
 		DataSettingOne,
-		DataSettingTwo,
 		DataSettingThree,
+		DataSettingTwo,
 	}
 }
 
@@ -33,38 +33,38 @@ func PossibleDataSettingValues() []DataSetting {
 type GeoJSONObjectType string
 
 const (
-	// GeoJSONObjectTypeGeoJSONPoint - `GeoJSON Point` geometry.
-	GeoJSONObjectTypeGeoJSONPoint GeoJSONObjectType = "Point"
-	// GeoJSONObjectTypeGeoJSONMultiPoint - `GeoJSON MultiPoint` geometry.
-	GeoJSONObjectTypeGeoJSONMultiPoint GeoJSONObjectType = "MultiPoint"
-	// GeoJSONObjectTypeGeoJSONLineString - `GeoJSON LineString` geometry.
-	GeoJSONObjectTypeGeoJSONLineString GeoJSONObjectType = "LineString"
-	// GeoJSONObjectTypeGeoJSONMultiLineString - `GeoJSON MultiLineString` geometry.
-	GeoJSONObjectTypeGeoJSONMultiLineString GeoJSONObjectType = "MultiLineString"
-	// GeoJSONObjectTypeGeoJSONPolygon - `GeoJSON Polygon` geometry.
-	GeoJSONObjectTypeGeoJSONPolygon GeoJSONObjectType = "Polygon"
-	// GeoJSONObjectTypeGeoJSONMultiPolygon - `GeoJSON MultiPolygon` geometry.
-	GeoJSONObjectTypeGeoJSONMultiPolygon GeoJSONObjectType = "MultiPolygon"
-	// GeoJSONObjectTypeGeoJSONGeometryCollection - `GeoJSON GeometryCollection` geometry.
-	GeoJSONObjectTypeGeoJSONGeometryCollection GeoJSONObjectType = "GeometryCollection"
 	// GeoJSONObjectTypeGeoJSONFeature - `GeoJSON Feature` object.
 	GeoJSONObjectTypeGeoJSONFeature GeoJSONObjectType = "Feature"
 	// GeoJSONObjectTypeGeoJSONFeatureCollection - `GeoJSON FeatureCollection` object.
 	GeoJSONObjectTypeGeoJSONFeatureCollection GeoJSONObjectType = "FeatureCollection"
+	// GeoJSONObjectTypeGeoJSONGeometryCollection - `GeoJSON GeometryCollection` geometry.
+	GeoJSONObjectTypeGeoJSONGeometryCollection GeoJSONObjectType = "GeometryCollection"
+	// GeoJSONObjectTypeGeoJSONLineString - `GeoJSON LineString` geometry.
+	GeoJSONObjectTypeGeoJSONLineString GeoJSONObjectType = "LineString"
+	// GeoJSONObjectTypeGeoJSONMultiLineString - `GeoJSON MultiLineString` geometry.
+	GeoJSONObjectTypeGeoJSONMultiLineString GeoJSONObjectType = "MultiLineString"
+	// GeoJSONObjectTypeGeoJSONMultiPoint - `GeoJSON MultiPoint` geometry.
+	GeoJSONObjectTypeGeoJSONMultiPoint GeoJSONObjectType = "MultiPoint"
+	// GeoJSONObjectTypeGeoJSONMultiPolygon - `GeoJSON MultiPolygon` geometry.
+	GeoJSONObjectTypeGeoJSONMultiPolygon GeoJSONObjectType = "MultiPolygon"
+	// GeoJSONObjectTypeGeoJSONPoint - `GeoJSON Point` geometry.
+	GeoJSONObjectTypeGeoJSONPoint GeoJSONObjectType = "Point"
+	// GeoJSONObjectTypeGeoJSONPolygon - `GeoJSON Polygon` geometry.
+	GeoJSONObjectTypeGeoJSONPolygon GeoJSONObjectType = "Polygon"
 )
 
 // PossibleGeoJSONObjectTypeValues returns the possible values for the GeoJSONObjectType const type.
 func PossibleGeoJSONObjectTypeValues() []GeoJSONObjectType {
 	return []GeoJSONObjectType{
-		GeoJSONObjectTypeGeoJSONPoint,
-		GeoJSONObjectTypeGeoJSONMultiPoint,
-		GeoJSONObjectTypeGeoJSONLineString,
-		GeoJSONObjectTypeGeoJSONMultiLineString,
-		GeoJSONObjectTypeGeoJSONPolygon,
-		GeoJSONObjectTypeGeoJSONMultiPolygon,
-		GeoJSONObjectTypeGeoJSONGeometryCollection,
 		GeoJSONObjectTypeGeoJSONFeature,
 		GeoJSONObjectTypeGeoJSONFeatureCollection,
+		GeoJSONObjectTypeGeoJSONGeometryCollection,
+		GeoJSONObjectTypeGeoJSONLineString,
+		GeoJSONObjectTypeGeoJSONMultiLineString,
+		GeoJSONObjectTypeGeoJSONMultiPoint,
+		GeoJSONObjectTypeGeoJSONMultiPolygon,
+		GeoJSONObjectTypeGeoJSONPoint,
+		GeoJSONObjectTypeGeoJSONPolygon,
 	}
 }
 
@@ -125,18 +125,18 @@ func PossibleLogMetricsGroupByValues() []LogMetricsGroupBy {
 type SomethingCount int32
 
 const (
-	SomethingCountTen    SomethingCount = 10
-	SomethingCountTwenty SomethingCount = 20
-	SomethingCountThirty SomethingCount = 30
 	SomethingCountForty  SomethingCount = 40
+	SomethingCountTen    SomethingCount = 10
+	SomethingCountThirty SomethingCount = 30
+	SomethingCountTwenty SomethingCount = 20
 )
 
 // PossibleSomethingCountValues returns the possible values for the SomethingCount const type.
 func PossibleSomethingCountValues() []SomethingCount {
 	return []SomethingCount{
-		SomethingCountTen,
-		SomethingCountTwenty,
-		SomethingCountThirty,
 		SomethingCountForty,
+		SomethingCountTen,
+		SomethingCountThirty,
+		SomethingCountTwenty,
 	}
 }

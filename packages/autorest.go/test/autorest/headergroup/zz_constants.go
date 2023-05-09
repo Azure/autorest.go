@@ -14,16 +14,16 @@ const host = "http://localhost:3000"
 type GreyscaleColors string
 
 const (
-	GreyscaleColorsWhite GreyscaleColors = "White"
 	GreyscaleColorsBlack GreyscaleColors = "black"
 	GreyscaleColorsGREY  GreyscaleColors = "GREY"
+	GreyscaleColorsWhite GreyscaleColors = "White"
 )
 
 // PossibleGreyscaleColorsValues returns the possible values for the GreyscaleColors const type.
 func PossibleGreyscaleColorsValues() []GreyscaleColors {
 	return []GreyscaleColors{
-		GreyscaleColorsWhite,
 		GreyscaleColorsBlack,
 		GreyscaleColorsGREY,
+		GreyscaleColorsWhite,
 	}
 }

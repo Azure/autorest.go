@@ -13,15 +13,15 @@ package azkeyvault
 type ActionType string
 
 const (
-	ActionTypeEmailContacts ActionType = "EmailContacts"
 	ActionTypeAutoRenew     ActionType = "AutoRenew"
+	ActionTypeEmailContacts ActionType = "EmailContacts"
 )
 
 // PossibleActionTypeValues returns the possible values for the ActionType const type.
 func PossibleActionTypeValues() []ActionType {
 	return []ActionType{
-		ActionTypeEmailContacts,
 		ActionTypeAutoRenew,
+		ActionTypeEmailContacts,
 	}
 }
 
@@ -384,17 +384,17 @@ func PossibleKeyUsageTypeValues() []KeyUsageType {
 type OperationStatus string
 
 const (
-	OperationStatusSuccess    OperationStatus = "Success"
-	OperationStatusInProgress OperationStatus = "InProgress"
 	OperationStatusFailed     OperationStatus = "Failed"
+	OperationStatusInProgress OperationStatus = "InProgress"
+	OperationStatusSuccess    OperationStatus = "Success"
 )
 
 // PossibleOperationStatusValues returns the possible values for the OperationStatus const type.
 func PossibleOperationStatusValues() []OperationStatus {
 	return []OperationStatus{
-		OperationStatusSuccess,
-		OperationStatusInProgress,
 		OperationStatusFailed,
+		OperationStatusInProgress,
+		OperationStatusSuccess,
 	}
 }
 

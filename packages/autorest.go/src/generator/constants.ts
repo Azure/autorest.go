@@ -92,6 +92,7 @@ function getEnums(schemas: Schemas): EnumEntry[] {
     if (choice.choices.length === 1) {
       continue;
     }
+    choice.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
     if (hasDescription(choice.language.go!)) {
       entry.desc = choice.language.go!.description;
