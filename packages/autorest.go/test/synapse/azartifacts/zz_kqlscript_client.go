@@ -81,7 +81,10 @@ func (client *KqlScriptClient) createOrUpdateCreateRequest(ctx context.Context, 
 	reqQP.Set("api-version", "2021-11-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, kqlScript)
+	if err := runtime.MarshalAsJSON(req, kqlScript); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteByName - Delete KQL script by name
@@ -241,5 +244,8 @@ func (client *KqlScriptClient) renameCreateRequest(ctx context.Context, kqlScrip
 	reqQP.Set("api-version", "2021-11-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, renameRequest)
+	if err := runtime.MarshalAsJSON(req, renameRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

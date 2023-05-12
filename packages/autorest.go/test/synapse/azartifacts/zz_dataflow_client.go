@@ -84,7 +84,10 @@ func (client *DataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, dataFlow)
+	if err := runtime.MarshalAsJSON(req, dataFlow); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteDataFlow - Deletes a data flow.
@@ -304,5 +307,8 @@ func (client *DataFlowClient) renameDataFlowCreateRequest(ctx context.Context, d
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

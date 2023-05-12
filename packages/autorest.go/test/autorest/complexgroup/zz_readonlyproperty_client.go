@@ -93,5 +93,8 @@ func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, complexBody)
+	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -174,5 +174,8 @@ func (client *DurationClient) putPositiveDurationCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, durationBody)
+	if err := runtime.MarshalAsJSON(req, durationBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

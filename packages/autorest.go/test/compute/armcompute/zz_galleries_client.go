@@ -109,7 +109,10 @@ func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, 
 	reqQP.Set("api-version", "2021-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, gallery)
+	if err := runtime.MarshalAsJSON(req, gallery); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Delete a Shared Image Gallery.
@@ -426,5 +429,8 @@ func (client *GalleriesClient) updateCreateRequest(ctx context.Context, resource
 	reqQP.Set("api-version", "2021-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, gallery)
+	if err := runtime.MarshalAsJSON(req, gallery); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

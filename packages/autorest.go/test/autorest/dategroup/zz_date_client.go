@@ -305,7 +305,10 @@ func (client *DateClient) putMaxDateCreateRequest(ctx context.Context, dateBody 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, dateType(dateBody))
+	if err := runtime.MarshalAsJSON(req, dateType(dateBody)); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutMinDate - Put min date value 0000-01-01
@@ -337,5 +340,8 @@ func (client *DateClient) putMinDateCreateRequest(ctx context.Context, dateBody 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, dateType(dateBody))
+	if err := runtime.MarshalAsJSON(req, dateType(dateBody)); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

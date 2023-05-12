@@ -110,5 +110,8 @@ func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Con
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

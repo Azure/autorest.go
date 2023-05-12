@@ -51,7 +51,10 @@ func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
@@ -82,7 +85,10 @@ func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
@@ -113,7 +119,10 @@ func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Get200 - Get 200 success
@@ -314,7 +323,10 @@ func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, opti
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Patch202 - Patch true Boolean value in request returns 202
@@ -345,7 +357,10 @@ func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, opti
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
@@ -376,7 +391,10 @@ func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, opti
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post200 - Post bollean value true in request that returns a 200
@@ -407,7 +425,10 @@ func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
@@ -438,7 +459,10 @@ func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
@@ -469,7 +493,10 @@ func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
@@ -500,7 +527,10 @@ func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put200 - Put boolean value true returning 200 success
@@ -531,7 +561,10 @@ func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put201 - Put true Boolean value in request returns 201
@@ -562,7 +595,10 @@ func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
@@ -593,7 +629,10 @@ func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
@@ -624,5 +663,8 @@ func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

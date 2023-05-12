@@ -115,7 +115,10 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateReq
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, peeringParameters)
+	if err := runtime.MarshalAsJSON(req, peeringParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the specified peering from the ExpressRouteCrossConnection.

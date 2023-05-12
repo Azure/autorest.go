@@ -84,7 +84,10 @@ func (client *SparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRe
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sparkJobDefinition)
+	if err := runtime.MarshalAsJSON(req, sparkJobDefinition); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDebugSparkJobDefinition - Debug the spark job definition.
@@ -138,7 +141,10 @@ func (client *SparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sparkJobDefinitionAzureResource)
+	if err := runtime.MarshalAsJSON(req, sparkJobDefinitionAzureResource); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteSparkJobDefinition - Deletes a Spark Job Definition.
@@ -417,5 +423,8 @@ func (client *SparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ct
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

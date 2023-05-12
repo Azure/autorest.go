@@ -212,5 +212,8 @@ func (client *ByteClient) putNonASCIICreateRequest(ctx context.Context, byteBody
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsByteArray(req, byteBody, runtime.Base64StdFormat)
+	if err := runtime.MarshalAsByteArray(req, byteBody, runtime.Base64StdFormat); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

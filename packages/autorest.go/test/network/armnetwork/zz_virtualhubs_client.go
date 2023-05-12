@@ -110,7 +110,10 @@ func (client *VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, virtualHubParameters)
+	if err := runtime.MarshalAsJSON(req, virtualHubParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes a VirtualHub.
@@ -303,7 +306,10 @@ func (client *VirtualHubsClient) getEffectiveVirtualHubRoutesCreateRequest(ctx c
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.EffectiveRoutesParameters != nil {
-		return req, runtime.MarshalAsJSON(req, *options.EffectiveRoutesParameters)
+		if err := runtime.MarshalAsJSON(req, *options.EffectiveRoutesParameters); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -373,7 +379,10 @@ func (client *VirtualHubsClient) getInboundRoutesCreateRequest(ctx context.Conte
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, getInboundRoutesParameters)
+	if err := runtime.MarshalAsJSON(req, getInboundRoutesParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginGetOutboundRoutes - Gets the outbound routes configured for the Virtual Hub on a particular connection.
@@ -441,7 +450,10 @@ func (client *VirtualHubsClient) getOutboundRoutesCreateRequest(ctx context.Cont
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, getOutboundRoutesParameters)
+	if err := runtime.MarshalAsJSON(req, getOutboundRoutesParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // NewListPager - Lists all the VirtualHubs in a subscription.
@@ -614,7 +626,10 @@ func (client *VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, re
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, virtualHubParameters)
+	if err := runtime.MarshalAsJSON(req, virtualHubParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.

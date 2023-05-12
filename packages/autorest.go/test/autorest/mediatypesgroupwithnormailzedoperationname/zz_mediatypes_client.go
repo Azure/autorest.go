@@ -55,7 +55,10 @@ func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, op
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Input != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Input)
+		if err := runtime.MarshalAsJSON(req, *options.Input); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -99,7 +102,10 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx conte
 		return nil, err
 	}
 	if options != nil && options.Input != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Input)
+		if err := runtime.MarshalAsJSON(req, *options.Input); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -136,7 +142,10 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithBinaryCreateRequest
 	}
 	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	if options != nil && options.Input != nil {
-		return req, req.SetBody(options.Input, string(contentType))
+		if err := req.SetBody(options.Input, string(contentType)); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -173,7 +182,10 @@ func (client *MediaTypesClient) analyzeBodyWithBinaryCreateRequest(ctx context.C
 	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Input != nil {
-		return req, req.SetBody(options.Input, string(contentType))
+		if err := req.SetBody(options.Input, string(contentType)); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -221,7 +233,10 @@ func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithBinaryCreateR
 	}
 	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	req.Raw().Header["Accept"] = []string{"text/plain"}
-	return req, req.SetBody(message, string(contentType))
+	if err := req.SetBody(message, string(contentType)); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // binaryBodyWithThreeContentTypesWithBinaryHandleResponse handles the BinaryBodyWithThreeContentTypesWithBinary response.
@@ -269,7 +284,10 @@ func (client *MediaTypesClient) binaryBodyWithTwoContentTypesWithBinaryCreateReq
 	}
 	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	req.Raw().Header["Accept"] = []string{"text/plain"}
-	return req, req.SetBody(message, string(contentType))
+	if err := req.SetBody(message, string(contentType)); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // binaryBodyWithTwoContentTypesWithBinaryHandleResponse handles the BinaryBodyWithTwoContentTypesWithBinary response.
@@ -316,7 +334,10 @@ func (client *MediaTypesClient) contentTypeWithEncodingWithTextCreateRequest(ctx
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Input != nil {
 		body := streaming.NopCloser(strings.NewReader(*options.Input))
-		return req, req.SetBody(body, "text/plain; charset=UTF-8")
+		if err := req.SetBody(body, "text/plain; charset=UTF-8"); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -363,7 +384,11 @@ func (client *MediaTypesClient) putTextAndJSONBodyWithTextCreateRequest(ctx cont
 	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	req.Raw().Header["Accept"] = []string{"text/plain"}
 	body := streaming.NopCloser(strings.NewReader(message))
-	return req, req.SetBody(body, "application/json")
+	if err := req.SetBody(body, "application/json"); err != nil {
+		return nil, err
+	}
+
+	return req, nil
 }
 
 // putTextAndJSONBodyWithTextHandleResponse handles the PutTextAndJSONBodyWithText response.

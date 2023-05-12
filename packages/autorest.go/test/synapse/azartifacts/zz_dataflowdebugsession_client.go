@@ -57,7 +57,10 @@ func (client *DataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.C
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // addDataFlowHandleResponse handles the AddDataFlow response.
@@ -118,7 +121,10 @@ func (client *DataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
@@ -154,7 +160,10 @@ func (client *DataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginExecuteCommand - Execute a data flow debug command.
@@ -206,7 +215,10 @@ func (client *DataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // NewQueryDataFlowDebugSessionsByWorkspacePager - Query all active data flow debug sessions.

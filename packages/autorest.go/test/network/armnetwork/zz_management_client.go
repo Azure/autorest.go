@@ -166,7 +166,10 @@ func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx cont
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, bslRequest)
+	if err := runtime.MarshalAsJSON(req, bslRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // NewDisconnectActiveSessionsPager - Returns the list of currently active sessions on the Bastion.
@@ -228,7 +231,10 @@ func (client *ManagementClient) disconnectActiveSessionsCreateRequest(ctx contex
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sessionIDs)
+	if err := runtime.MarshalAsJSON(req, sessionIDs); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // disconnectActiveSessionsHandleResponse handles the DisconnectActiveSessions response.
@@ -360,7 +366,10 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, vpnClientParams)
+	if err := runtime.MarshalAsJSON(req, vpnClientParams); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginGetActiveSessions - Returns the list of currently active sessions on the Bastion.
@@ -518,7 +527,10 @@ func (client *ManagementClient) getBastionShareableLinkCreateRequest(ctx context
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, bslRequest)
+	if err := runtime.MarshalAsJSON(req, bslRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // getBastionShareableLinkHandleResponse handles the GetBastionShareableLink response.
@@ -580,7 +592,10 @@ func (client *ManagementClient) listActiveConnectivityConfigurationsCreateReques
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // listActiveConnectivityConfigurationsHandleResponse handles the ListActiveConnectivityConfigurations response.
@@ -642,7 +657,10 @@ func (client *ManagementClient) listActiveSecurityAdminRulesCreateRequest(ctx co
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // listActiveSecurityAdminRulesHandleResponse handles the ListActiveSecurityAdminRules response.
@@ -705,7 +723,10 @@ func (client *ManagementClient) listNetworkManagerEffectiveConnectivityConfigura
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // listNetworkManagerEffectiveConnectivityConfigurationsHandleResponse handles the ListNetworkManagerEffectiveConnectivityConfigurations response.
@@ -767,7 +788,10 @@ func (client *ManagementClient) listNetworkManagerEffectiveSecurityAdminRulesCre
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // listNetworkManagerEffectiveSecurityAdminRulesHandleResponse handles the ListNetworkManagerEffectiveSecurityAdminRules response.
@@ -864,7 +888,10 @@ func (client *ManagementClient) putBastionShareableLinkCreateRequest(ctx context
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, bslRequest)
+	if err := runtime.MarshalAsJSON(req, bslRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // putBastionShareableLinkHandleResponse handles the PutBastionShareableLink response.

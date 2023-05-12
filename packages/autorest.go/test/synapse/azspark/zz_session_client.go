@@ -148,7 +148,10 @@ func (client *SessionClient) createSparkSessionCreateRequest(ctx context.Context
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sparkSessionOptions)
+	if err := runtime.MarshalAsJSON(req, sparkSessionOptions); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createSparkSessionHandleResponse handles the CreateSparkSession response.
@@ -194,7 +197,10 @@ func (client *SessionClient) createSparkStatementCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sparkStatementOptions)
+	if err := runtime.MarshalAsJSON(req, sparkStatementOptions); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createSparkStatementHandleResponse handles the CreateSparkStatement response.

@@ -110,7 +110,10 @@ func (client *DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, diskEncryptionSet)
+	if err := runtime.MarshalAsJSON(req, diskEncryptionSet); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes a disk encryption set.
@@ -501,5 +504,8 @@ func (client *DiskEncryptionSetsClient) updateCreateRequest(ctx context.Context,
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, diskEncryptionSet)
+	if err := runtime.MarshalAsJSON(req, diskEncryptionSet); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

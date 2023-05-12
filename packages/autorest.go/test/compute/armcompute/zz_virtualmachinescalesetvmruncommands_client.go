@@ -118,7 +118,10 @@ func (client *VirtualMachineScaleSetVMRunCommandsClient) createOrUpdateCreateReq
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
-	return req, runtime.MarshalAsJSON(req, runCommand)
+	if err := runtime.MarshalAsJSON(req, runCommand); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - The operation to delete the VMSS VM run command.
@@ -418,5 +421,8 @@ func (client *VirtualMachineScaleSetVMRunCommandsClient) updateCreateRequest(ctx
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
-	return req, runtime.MarshalAsJSON(req, runCommand)
+	if err := runtime.MarshalAsJSON(req, runCommand); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

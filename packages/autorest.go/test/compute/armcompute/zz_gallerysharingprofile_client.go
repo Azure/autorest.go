@@ -108,5 +108,8 @@ func (client *GallerySharingProfileClient) updateCreateRequest(ctx context.Conte
 	reqQP.Set("api-version", "2021-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sharingUpdate)
+	if err := runtime.MarshalAsJSON(req, sharingUpdate); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -68,7 +68,10 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createHandleResponse handles the Create response.

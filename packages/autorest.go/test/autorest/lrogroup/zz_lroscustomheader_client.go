@@ -73,7 +73,10 @@ func (client *LROsCustomHeaderClient) post202Retry200CreateRequest(ctx context.C
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -128,7 +131,10 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceededCreateRequest(ctx c
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -183,7 +189,10 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ct
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header
@@ -236,5 +245,8 @@ func (client *LROsCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx co
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

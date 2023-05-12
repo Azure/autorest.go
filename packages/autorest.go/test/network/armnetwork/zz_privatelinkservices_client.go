@@ -105,7 +105,10 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityCreate
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service
@@ -175,7 +178,10 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginCreateOrUpdate - Creates or updates an private link service in the specified resource group.
@@ -243,7 +249,10 @@ func (client *PrivateLinkServicesClient) createOrUpdateCreateRequest(ctx context
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the specified private link service.
@@ -896,7 +905,10 @@ func (client *PrivateLinkServicesClient) updatePrivateEndpointConnectionCreateRe
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updatePrivateEndpointConnectionHandleResponse handles the UpdatePrivateEndpointConnection response.

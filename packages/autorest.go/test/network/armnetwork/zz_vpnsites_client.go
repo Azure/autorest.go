@@ -110,7 +110,10 @@ func (client *VPNSitesClient) createOrUpdateCreateRequest(ctx context.Context, r
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, vpnSiteParameters)
+	if err := runtime.MarshalAsJSON(req, vpnSiteParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes a VpnSite.
@@ -406,7 +409,10 @@ func (client *VPNSitesClient) updateTagsCreateRequest(ctx context.Context, resou
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, vpnSiteParameters)
+	if err := runtime.MarshalAsJSON(req, vpnSiteParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.

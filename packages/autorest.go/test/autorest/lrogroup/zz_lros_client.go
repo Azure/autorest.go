@@ -679,7 +679,10 @@ func (client *LROsClient) patch200SucceededIgnoreHeadersCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPatch201RetryWithAsyncHeader - Long running patch request, service returns a 201 to the initial request with async
@@ -731,7 +734,10 @@ func (client *LROsClient) patch201RetryWithAsyncHeaderCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPatch202RetryWithAsyncAndLocationHeader - Long running patch request, service returns a 202 to the initial request
@@ -782,7 +788,10 @@ func (client *LROsClient) patch202RetryWithAsyncAndLocationHeaderCreateRequest(c
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header.
@@ -932,7 +941,10 @@ func (client *LROsClient) post202NoRetry204CreateRequest(ctx context.Context, op
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -985,7 +997,10 @@ func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, opti
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1040,7 +1055,10 @@ func (client *LROsClient) postAsyncNoRetrySucceededCreateRequest(ctx context.Con
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1095,7 +1113,10 @@ func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context,
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1150,7 +1171,10 @@ func (client *LROsClient) postAsyncRetrySucceededCreateRequest(ctx context.Conte
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1205,7 +1229,10 @@ func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Contex
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1417,7 +1444,10 @@ func (client *LROsClient) put200Acceptedcanceled200CreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPut200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains
@@ -1468,7 +1498,10 @@ func (client *LROsClient) put200SucceededCreateRequest(ctx context.Context, prod
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPut200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that
@@ -1519,7 +1552,10 @@ func (client *LROsClient) put200SucceededNoStateCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPut200UpdatingSucceeded204 - Long running put request, service returns a 201 to the initial request, with an entity
@@ -1572,7 +1608,10 @@ func (client *LROsClient) put200UpdatingSucceeded204CreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPut201CreatingFailed200 - Long running put request, service returns a 201 to the initial request, with an entity that
@@ -1625,7 +1664,10 @@ func (client *LROsClient) put201CreatingFailed200CreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPut201CreatingSucceeded200 - Long running put request, service returns a 201 to the initial request, with an entity
@@ -1678,7 +1720,10 @@ func (client *LROsClient) put201CreatingSucceeded200CreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPut201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains
@@ -1729,7 +1774,10 @@ func (client *LROsClient) put201SucceededCreateRequest(ctx context.Context, prod
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPut202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that
@@ -1780,7 +1828,10 @@ func (client *LROsClient) put202Retry200CreateRequest(ctx context.Context, produ
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation
@@ -1831,7 +1882,10 @@ func (client *LROsClient) putAsyncNoHeaderInRetryCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncNoRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity
@@ -1884,7 +1938,10 @@ func (client *LROsClient) putAsyncNoRetrySucceededCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncNoRetrycanceled - Long running put request, service returns a 200 to the initial request, with an entity that
@@ -1937,7 +1994,10 @@ func (client *LROsClient) putAsyncNoRetrycanceledCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncNonResource - Long running put request with non resource.
@@ -1986,7 +2046,10 @@ func (client *LROsClient) putAsyncNonResourceCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sku)
+	if err := runtime.MarshalAsJSON(req, sku); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRetryFailed - Long running put request, service returns a 200 to the initial request, with an entity that
@@ -2039,7 +2102,10 @@ func (client *LROsClient) putAsyncRetryFailedCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that
@@ -2092,7 +2158,10 @@ func (client *LROsClient) putAsyncRetrySucceededCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncSubResource - Long running put request with sub resource.
@@ -2141,7 +2210,10 @@ func (client *LROsClient) putAsyncSubResourceCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header.
@@ -2192,7 +2264,10 @@ func (client *LROsClient) putNoHeaderInRetryCreateRequest(ctx context.Context, p
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutNonResource - Long running put request with non resource.
@@ -2241,7 +2316,10 @@ func (client *LROsClient) putNonResourceCreateRequest(ctx context.Context, sku S
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sku)
+	if err := runtime.MarshalAsJSON(req, sku); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutSubResource - Long running put request with sub resource.
@@ -2290,5 +2368,8 @@ func (client *LROsClient) putSubResourceCreateRequest(ctx context.Context, produ
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

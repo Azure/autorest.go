@@ -110,7 +110,10 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, disk)
+	if err := runtime.MarshalAsJSON(req, disk); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes a disk.
@@ -303,7 +306,10 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, grantAccessData)
+	if err := runtime.MarshalAsJSON(req, grantAccessData); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // NewListPager - Lists all the disks under a subscription.
@@ -561,5 +567,8 @@ func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGrou
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, disk)
+	if err := runtime.MarshalAsJSON(req, disk); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

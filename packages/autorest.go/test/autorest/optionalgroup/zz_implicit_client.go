@@ -205,7 +205,10 @@ func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, req.SetBody(bodyParameter, "application/octet-stream")
+	if err := req.SetBody(bodyParameter, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutOptionalBody - Test implicitly optional body parameter
@@ -238,7 +241,11 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	body := streaming.NopCloser(strings.NewReader(bodyParameter))
-	return req, req.SetBody(body, "application/json")
+	if err := req.SetBody(body, "application/json"); err != nil {
+		return nil, err
+	}
+
+	return req, nil
 }
 
 // PutOptionalHeader - Test implicitly optional header parameter

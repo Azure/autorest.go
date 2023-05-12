@@ -68,7 +68,10 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 	reqQP.Set("api-version", "2014-04-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, bodyParameter)
+	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createHandleResponse handles the Create response.
@@ -173,7 +176,10 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 	reqQP.Set("api-version", "2014-04-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, bodyParameter)
+	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateHandleResponse handles the Update response.

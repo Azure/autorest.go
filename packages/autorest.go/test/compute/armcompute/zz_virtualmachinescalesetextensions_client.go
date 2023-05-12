@@ -113,7 +113,10 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateCreateReques
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, extensionParameters)
+	if err := runtime.MarshalAsJSON(req, extensionParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - The operation to delete the extension.
@@ -390,5 +393,8 @@ func (client *VirtualMachineScaleSetExtensionsClient) updateCreateRequest(ctx co
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, extensionParameters)
+	if err := runtime.MarshalAsJSON(req, extensionParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

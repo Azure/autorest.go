@@ -109,7 +109,10 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, monitoringMetricConfiguration)
+	if err := runtime.MarshalAsJSON(req, monitoringMetricConfiguration); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - deletes a new metric configuration for a role.

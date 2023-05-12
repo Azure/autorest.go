@@ -96,5 +96,8 @@ func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, req.SetBody(streaming.NopCloser(bytes.NewReader(putObject)), "application/json")
+	if err := req.SetBody(streaming.NopCloser(bytes.NewReader(putObject)), "application/json"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

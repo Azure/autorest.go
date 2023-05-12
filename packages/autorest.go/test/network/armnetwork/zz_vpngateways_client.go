@@ -110,7 +110,10 @@ func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, vpnGatewayParameters)
+	if err := runtime.MarshalAsJSON(req, vpnGatewayParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes a virtual wan vpn gateway.
@@ -494,7 +497,10 @@ func (client *VPNGatewaysClient) startPacketCaptureCreateRequest(ctx context.Con
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Parameters)
+		if err := runtime.MarshalAsJSON(req, *options.Parameters); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -564,7 +570,10 @@ func (client *VPNGatewaysClient) stopPacketCaptureCreateRequest(ctx context.Cont
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Parameters)
+		if err := runtime.MarshalAsJSON(req, *options.Parameters); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -634,5 +643,8 @@ func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, vpnGatewayParameters)
+	if err := runtime.MarshalAsJSON(req, vpnGatewayParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

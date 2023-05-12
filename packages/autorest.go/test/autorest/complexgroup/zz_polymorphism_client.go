@@ -260,7 +260,10 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, complexBody)
+	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
@@ -292,7 +295,10 @@ func (client *PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, complexBody)
+	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // putMissingDiscriminatorHandleResponse handles the PutMissingDiscriminator response.
@@ -338,7 +344,10 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, complexBody)
+	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request
@@ -376,5 +385,8 @@ func (client *PolymorphismClient) putValidMissingRequiredCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, complexBody)
+	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

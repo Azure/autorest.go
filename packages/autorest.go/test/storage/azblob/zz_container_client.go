@@ -1513,7 +1513,10 @@ func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if options != nil && options.ContainerACL != nil {
-		return req, runtime.MarshalAsXML(req, wrapper{ContainerACL: &options.ContainerACL})
+		if err := runtime.MarshalAsXML(req, wrapper{ContainerACL: &options.ContainerACL}); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1699,7 +1702,10 @@ func (client *ContainerClient) submitBatchCreateRequest(ctx context.Context, con
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, req.SetBody(body, "application/xml")
+	if err := req.SetBody(body, "application/xml"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // submitBatchHandleResponse handles the SubmitBatch response.

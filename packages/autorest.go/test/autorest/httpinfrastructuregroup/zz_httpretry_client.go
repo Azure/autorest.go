@@ -51,7 +51,10 @@ func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Get502 - Return 502 status code, then 200 after retry
@@ -183,7 +186,10 @@ func (client *HTTPRetryClient) patch500CreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Patch504 - Return 504 status code, then 200 after retry
@@ -214,7 +220,10 @@ func (client *HTTPRetryClient) patch504CreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post503 - Return 503 status code, then 200 after retry
@@ -245,7 +254,10 @@ func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put500 - Return 500 status code, then 200 after retry
@@ -276,7 +288,10 @@ func (client *HTTPRetryClient) put500CreateRequest(ctx context.Context, options 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put504 - Return 504 status code, then 200 after retry
@@ -307,5 +322,8 @@ func (client *HTTPRetryClient) put504CreateRequest(ctx context.Context, options 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -110,7 +110,10 @@ func (client *SnapshotsClient) createOrUpdateCreateRequest(ctx context.Context, 
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, snapshot)
+	if err := runtime.MarshalAsJSON(req, snapshot); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes a snapshot.
@@ -304,7 +307,10 @@ func (client *SnapshotsClient) grantAccessCreateRequest(ctx context.Context, res
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, grantAccessData)
+	if err := runtime.MarshalAsJSON(req, grantAccessData); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // NewListPager - Lists snapshots under a subscription.
@@ -563,5 +569,8 @@ func (client *SnapshotsClient) updateCreateRequest(ctx context.Context, resource
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, snapshot)
+	if err := runtime.MarshalAsJSON(req, snapshot); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

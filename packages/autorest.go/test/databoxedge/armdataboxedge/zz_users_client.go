@@ -110,7 +110,10 @@ func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, devi
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, userParam)
+	if err := runtime.MarshalAsJSON(req, userParam); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the user on a databox edge/gateway device.

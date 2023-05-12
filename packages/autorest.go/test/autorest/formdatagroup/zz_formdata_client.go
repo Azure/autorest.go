@@ -95,7 +95,10 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 	}
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"application/octet-stream, application/json"}
-	return req, req.SetBody(fileContent, "application/octet-stream")
+	if err := req.SetBody(fileContent, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // UploadFiles - Upload multiple files

@@ -218,7 +218,10 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, proactiveLogCollectionSettings)
+	if err := runtime.MarshalAsJSON(req, proactiveLogCollectionSettings); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginUpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box
@@ -283,5 +286,8 @@ func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettingsCre
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, diagnosticRemoteSupportSettings)
+	if err := runtime.MarshalAsJSON(req, diagnosticRemoteSupportSettings); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

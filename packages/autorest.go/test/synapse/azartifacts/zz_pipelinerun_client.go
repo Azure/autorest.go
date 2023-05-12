@@ -163,7 +163,10 @@ func (client *PipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, filterParameters)
+	if err := runtime.MarshalAsJSON(req, filterParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // queryActivityRunsHandleResponse handles the QueryActivityRuns response.
@@ -208,7 +211,10 @@ func (client *PipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, filterParameters)
+	if err := runtime.MarshalAsJSON(req, filterParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // queryPipelineRunsByWorkspaceHandleResponse handles the QueryPipelineRunsByWorkspace response.

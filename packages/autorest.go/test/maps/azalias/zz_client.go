@@ -131,7 +131,10 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, props GeoJSONO
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
-	return req, runtime.MarshalAsJSON(req, props)
+	if err := runtime.MarshalAsJSON(req, props); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // getScriptHandleResponse handles the GetScript response.
@@ -251,7 +254,10 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props S
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, props)
+	if err := runtime.MarshalAsJSON(req, props); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // policyAssignmentHandleResponse handles the PolicyAssignment response.

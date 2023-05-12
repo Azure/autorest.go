@@ -59,7 +59,10 @@ func (client *WorkspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, gitHubAccessTokenRequest)
+	if err := runtime.MarshalAsJSON(req, gitHubAccessTokenRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // getGitHubAccessTokenHandleResponse handles the GetGitHubAccessToken response.

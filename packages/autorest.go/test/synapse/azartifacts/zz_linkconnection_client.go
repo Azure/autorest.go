@@ -65,7 +65,10 @@ func (client *LinkConnectionClient) createOrUpdateCreateRequest(ctx context.Cont
 	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, linkConnection)
+	if err := runtime.MarshalAsJSON(req, linkConnection); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
@@ -154,7 +157,10 @@ func (client *LinkConnectionClient) editTablesCreateRequest(ctx context.Context,
 	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, editTablesRequest)
+	if err := runtime.MarshalAsJSON(req, editTablesRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Get - Get a link connection
@@ -436,7 +442,10 @@ func (client *LinkConnectionClient) queryTableStatusCreateRequest(ctx context.Co
 	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, queryTableStatusRequest)
+	if err := runtime.MarshalAsJSON(req, queryTableStatusRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // queryTableStatusHandleResponse handles the QueryTableStatus response.
@@ -603,5 +612,8 @@ func (client *LinkConnectionClient) updateLandingZoneCredentialCreateRequest(ctx
 	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, updateLandingZoneCredentialRequest)
+	if err := runtime.MarshalAsJSON(req, updateLandingZoneCredentialRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

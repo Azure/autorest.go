@@ -170,7 +170,10 @@ func (client *BlockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 		req.Raw().Header["x-ms-legal-hold"] = []string{strconv.FormatBool(*options.LegalHold)}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, blocks)
+	if err := runtime.MarshalAsXML(req, blocks); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // commitBlockListHandleResponse handles the CommitBlockList response.
@@ -640,7 +643,10 @@ func (client *BlockBlobClient) stageBlockCreateRequest(ctx context.Context, cont
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, req.SetBody(body, "application/octet-stream")
+	if err := req.SetBody(body, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // stageBlockHandleResponse handles the StageBlock response.
@@ -982,7 +988,10 @@ func (client *BlockBlobClient) uploadCreateRequest(ctx context.Context, containe
 		req.Raw().Header["x-ms-content-crc64"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentCRC64)}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, req.SetBody(body, "application/octet-stream")
+	if err := req.SetBody(body, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // uploadHandleResponse handles the Upload response.

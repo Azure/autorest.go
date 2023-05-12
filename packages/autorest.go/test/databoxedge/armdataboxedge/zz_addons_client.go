@@ -114,7 +114,10 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, addon)
+	if err := runtime.MarshalAsJSON(req, addon); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the addon on the device.

@@ -93,7 +93,10 @@ func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupCreate
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginCreateOrUpdate - Create or update a VM scale set.
@@ -159,7 +162,10 @@ func (client *VirtualMachineScaleSetsClient) createOrUpdateCreateRequest(ctx con
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeallocate - Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases
@@ -229,7 +235,10 @@ func (client *VirtualMachineScaleSetsClient) deallocateCreateRequest(ctx context
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
+		if err := runtime.MarshalAsJSON(req, *options.VMInstanceIDs); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -368,7 +377,10 @@ func (client *VirtualMachineScaleSetsClient) deleteInstancesCreateRequest(ctx co
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, vmInstanceIDs)
+	if err := runtime.MarshalAsJSON(req, vmInstanceIDs); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // ForceRecoveryServiceFabricPlatformUpdateDomainWalk - Manual platform update domain walk to update virtual machines in a
@@ -957,7 +969,10 @@ func (client *VirtualMachineScaleSetsClient) performMaintenanceCreateRequest(ctx
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
+		if err := runtime.MarshalAsJSON(req, *options.VMInstanceIDs); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1032,7 +1047,10 @@ func (client *VirtualMachineScaleSetsClient) powerOffCreateRequest(ctx context.C
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
+		if err := runtime.MarshalAsJSON(req, *options.VMInstanceIDs); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1102,7 +1120,10 @@ func (client *VirtualMachineScaleSetsClient) redeployCreateRequest(ctx context.C
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
+		if err := runtime.MarshalAsJSON(req, *options.VMInstanceIDs); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1174,7 +1195,10 @@ func (client *VirtualMachineScaleSetsClient) reimageCreateRequest(ctx context.Co
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMScaleSetReimageInput != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMScaleSetReimageInput)
+		if err := runtime.MarshalAsJSON(req, *options.VMScaleSetReimageInput); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1244,7 +1268,10 @@ func (client *VirtualMachineScaleSetsClient) reimageAllCreateRequest(ctx context
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
+		if err := runtime.MarshalAsJSON(req, *options.VMInstanceIDs); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1312,7 +1339,10 @@ func (client *VirtualMachineScaleSetsClient) restartCreateRequest(ctx context.Co
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
+		if err := runtime.MarshalAsJSON(req, *options.VMInstanceIDs); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1380,7 +1410,10 @@ func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateCreateR
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginStart - Starts one or more virtual machines in a VM scale set.
@@ -1446,7 +1479,10 @@ func (client *VirtualMachineScaleSetsClient) startCreateRequest(ctx context.Cont
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
+		if err := runtime.MarshalAsJSON(req, *options.VMInstanceIDs); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1514,7 +1550,10 @@ func (client *VirtualMachineScaleSetsClient) updateCreateRequest(ctx context.Con
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginUpdateInstances - Upgrades one or more virtual machines to the latest SKU set in the VM scale set model.
@@ -1580,5 +1619,8 @@ func (client *VirtualMachineScaleSetsClient) updateInstancesCreateRequest(ctx co
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, vmInstanceIDs)
+	if err := runtime.MarshalAsJSON(req, vmInstanceIDs); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

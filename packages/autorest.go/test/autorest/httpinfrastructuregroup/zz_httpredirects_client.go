@@ -51,7 +51,10 @@ func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, o
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Get300 - Return 300 status code and redirect to /http/success/200
@@ -381,7 +384,10 @@ func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, op
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // patch302HandleResponse handles the Patch302 response.
@@ -421,7 +427,10 @@ func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, op
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get,
@@ -453,7 +462,10 @@ func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // post303HandleResponse handles the Post303 response.
@@ -493,7 +505,10 @@ func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should
@@ -525,7 +540,10 @@ func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, opti
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // put301HandleResponse handles the Put301 response.
@@ -565,5 +583,8 @@ func (client *HTTPRedirectsClient) put307CreateRequest(ctx context.Context, opti
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

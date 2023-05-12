@@ -110,7 +110,10 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the specified load balancer.
@@ -434,7 +437,10 @@ func (client *LoadBalancersClient) listInboundNatRulePortMappingsCreateRequest(c
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginSwapPublicIPAddresses - Swaps VIPs between two load balancers.
@@ -497,7 +503,10 @@ func (client *LoadBalancersClient) swapPublicIPAddressesCreateRequest(ctx contex
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // UpdateTags - Updates a load balancer tags.
@@ -547,7 +556,10 @@ func (client *LoadBalancersClient) updateTagsCreateRequest(ctx context.Context, 
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.

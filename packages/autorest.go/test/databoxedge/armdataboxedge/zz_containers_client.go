@@ -114,7 +114,10 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, containerParam)
+	if err := runtime.MarshalAsJSON(req, containerParam); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the container on the Data Box Edge/Data Box Gateway device.

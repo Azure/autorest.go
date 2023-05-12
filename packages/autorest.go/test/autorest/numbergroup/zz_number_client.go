@@ -617,7 +617,10 @@ func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numb
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, numberBody)
+	if err := runtime.MarshalAsJSON(req, numberBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
@@ -649,7 +652,10 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, -99999999.99)
+	if err := runtime.MarshalAsJSON(req, -99999999.99); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
@@ -681,7 +687,10 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, 99999999.99)
+	if err := runtime.MarshalAsJSON(req, 99999999.99); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBigDouble - Put big double value 2.5976931e+101
@@ -713,7 +722,10 @@ func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numbe
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, numberBody)
+	if err := runtime.MarshalAsJSON(req, numberBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
@@ -745,7 +757,10 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, -99999999.99)
+	if err := runtime.MarshalAsJSON(req, -99999999.99); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
@@ -777,7 +792,10 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, 99999999.99)
+	if err := runtime.MarshalAsJSON(req, 99999999.99); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBigFloat - Put big float value 3.402823e+20
@@ -809,7 +827,10 @@ func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, number
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, numberBody)
+	if err := runtime.MarshalAsJSON(req, numberBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
@@ -841,7 +862,10 @@ func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, nu
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, numberBody)
+	if err := runtime.MarshalAsJSON(req, numberBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutSmallDouble - Put small double value 2.5976931e-101
@@ -873,7 +897,10 @@ func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, num
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, numberBody)
+	if err := runtime.MarshalAsJSON(req, numberBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutSmallFloat - Put small float value 3.402823e-20
@@ -905,5 +932,8 @@ func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numb
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, numberBody)
+	if err := runtime.MarshalAsJSON(req, numberBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

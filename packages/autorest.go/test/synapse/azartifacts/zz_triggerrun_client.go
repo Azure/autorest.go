@@ -105,7 +105,10 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx con
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, filterParameters)
+	if err := runtime.MarshalAsJSON(req, filterParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // queryTriggerRunsByWorkspaceHandleResponse handles the QueryTriggerRunsByWorkspace response.

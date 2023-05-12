@@ -688,7 +688,10 @@ func (client *VirtualMachineScaleSetVMsClient) reimageCreateRequest(ctx context.
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMScaleSetVMReimageInput != nil {
-		return req, runtime.MarshalAsJSON(req, *options.VMScaleSetVMReimageInput)
+		if err := runtime.MarshalAsJSON(req, *options.VMScaleSetVMReimageInput); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -972,7 +975,10 @@ func (client *VirtualMachineScaleSetVMsClient) runCommandCreateRequest(ctx conte
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set.
@@ -1167,5 +1173,8 @@ func (client *VirtualMachineScaleSetVMsClient) updateCreateRequest(ctx context.C
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
