@@ -284,7 +284,10 @@ func (client *Client) createCertificateCreateRequest(ctx context.Context, vaultB
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createCertificateHandleResponse handles the CreateCertificate response.
@@ -338,7 +341,10 @@ func (client *Client) createKeyCreateRequest(ctx context.Context, vaultBaseURL s
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createKeyHandleResponse handles the CreateKey response.
@@ -399,7 +405,10 @@ func (client *Client) decryptCreateRequest(ctx context.Context, vaultBaseURL str
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // decryptHandleResponse handles the Decrypt response.
@@ -882,7 +891,10 @@ func (client *Client) encryptCreateRequest(ctx context.Context, vaultBaseURL str
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // encryptHandleResponse handles the Encrypt response.
@@ -949,7 +961,10 @@ func (client *Client) fullBackupCreateRequest(ctx context.Context, vaultBaseURL 
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.AzureStorageBlobContainerURI != nil {
-		return req, runtime.MarshalAsJSON(req, *options.AzureStorageBlobContainerURI)
+		if err := runtime.MarshalAsJSON(req, *options.AzureStorageBlobContainerURI); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1061,7 +1076,10 @@ func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vau
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, restoreBlobDetails)
+	if err := runtime.MarshalAsJSON(req, restoreBlobDetails); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
@@ -2772,7 +2790,10 @@ func (client *Client) importCertificateCreateRequest(ctx context.Context, vaultB
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // importCertificateHandleResponse handles the ImportCertificate response.
@@ -2826,7 +2847,10 @@ func (client *Client) importKeyCreateRequest(ctx context.Context, vaultBaseURL s
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // importKeyHandleResponse handles the ImportKey response.
@@ -2880,7 +2904,10 @@ func (client *Client) mergeCertificateCreateRequest(ctx context.Context, vaultBa
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // mergeCertificateHandleResponse handles the MergeCertificate response.
@@ -3383,7 +3410,10 @@ func (client *Client) regenerateStorageAccountKeyCreateRequest(ctx context.Conte
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // regenerateStorageAccountKeyHandleResponse handles the RegenerateStorageAccountKey response.
@@ -3431,7 +3461,10 @@ func (client *Client) restoreCertificateCreateRequest(ctx context.Context, vault
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // restoreCertificateHandleResponse handles the RestoreCertificate response.
@@ -3486,7 +3519,10 @@ func (client *Client) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL 
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // restoreKeyHandleResponse handles the RestoreKey response.
@@ -3534,7 +3570,10 @@ func (client *Client) restoreSecretCreateRequest(ctx context.Context, vaultBaseU
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // restoreSecretHandleResponse handles the RestoreSecret response.
@@ -3632,7 +3671,10 @@ func (client *Client) restoreStorageAccountCreateRequest(ctx context.Context, va
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // restoreStorageAccountHandleResponse handles the RestoreStorageAccount response.
@@ -3705,7 +3747,10 @@ func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Cont
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, restoreBlobDetails)
+	if err := runtime.MarshalAsJSON(req, restoreBlobDetails); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts
@@ -3744,7 +3789,10 @@ func (client *Client) setCertificateContactsCreateRequest(ctx context.Context, v
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, contacts)
+	if err := runtime.MarshalAsJSON(req, contacts); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setCertificateContactsHandleResponse handles the SetCertificateContacts response.
@@ -3797,7 +3845,10 @@ func (client *Client) setCertificateIssuerCreateRequest(ctx context.Context, vau
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameter)
+	if err := runtime.MarshalAsJSON(req, parameter); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setCertificateIssuerHandleResponse handles the SetCertificateIssuer response.
@@ -3855,7 +3906,10 @@ func (client *Client) setSasDefinitionCreateRequest(ctx context.Context, vaultBa
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setSasDefinitionHandleResponse handles the SetSasDefinition response.
@@ -3908,7 +3962,10 @@ func (client *Client) setSecretCreateRequest(ctx context.Context, vaultBaseURL s
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setSecretHandleResponse handles the SetSecret response.
@@ -3960,7 +4017,10 @@ func (client *Client) setStorageAccountCreateRequest(ctx context.Context, vaultB
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setStorageAccountHandleResponse handles the SetStorageAccount response.
@@ -4018,7 +4078,10 @@ func (client *Client) signCreateRequest(ctx context.Context, vaultBaseURL string
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // signHandleResponse handles the Sign response.
@@ -4078,7 +4141,10 @@ func (client *Client) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL s
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // unwrapKeyHandleResponse handles the UnwrapKey response.
@@ -4137,7 +4203,10 @@ func (client *Client) updateCertificateCreateRequest(ctx context.Context, vaultB
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateCertificateHandleResponse handles the UpdateCertificate response.
@@ -4191,7 +4260,10 @@ func (client *Client) updateCertificateIssuerCreateRequest(ctx context.Context, 
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameter)
+	if err := runtime.MarshalAsJSON(req, parameter); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateCertificateIssuerHandleResponse handles the UpdateCertificateIssuer response.
@@ -4245,7 +4317,10 @@ func (client *Client) updateCertificateOperationCreateRequest(ctx context.Contex
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, certificateOperation)
+	if err := runtime.MarshalAsJSON(req, certificateOperation); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateCertificateOperationHandleResponse handles the UpdateCertificateOperation response.
@@ -4299,7 +4374,10 @@ func (client *Client) updateCertificatePolicyCreateRequest(ctx context.Context, 
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, certificatePolicy)
+	if err := runtime.MarshalAsJSON(req, certificatePolicy); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateCertificatePolicyHandleResponse handles the UpdateCertificatePolicy response.
@@ -4357,7 +4435,10 @@ func (client *Client) updateKeyCreateRequest(ctx context.Context, vaultBaseURL s
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateKeyHandleResponse handles the UpdateKey response.
@@ -4415,7 +4496,10 @@ func (client *Client) updateSasDefinitionCreateRequest(ctx context.Context, vaul
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateSasDefinitionHandleResponse handles the UpdateSasDefinition response.
@@ -4474,7 +4558,10 @@ func (client *Client) updateSecretCreateRequest(ctx context.Context, vaultBaseUR
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateSecretHandleResponse handles the UpdateSecret response.
@@ -4527,7 +4614,10 @@ func (client *Client) updateStorageAccountCreateRequest(ctx context.Context, vau
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateStorageAccountHandleResponse handles the UpdateStorageAccount response.
@@ -4588,7 +4678,10 @@ func (client *Client) verifyCreateRequest(ctx context.Context, vaultBaseURL stri
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // verifyHandleResponse handles the Verify response.
@@ -4650,7 +4743,10 @@ func (client *Client) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL str
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // wrapKeyHandleResponse handles the WrapKey response.

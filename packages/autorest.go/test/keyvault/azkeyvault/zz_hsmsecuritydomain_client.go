@@ -81,7 +81,10 @@ func (client *HSMSecurityDomainClient) downloadCreateRequest(ctx context.Context
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, certificateInfoObject)
+	if err := runtime.MarshalAsJSON(req, certificateInfoObject); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // DownloadPending - Retrieves the Security Domain download operation status
@@ -226,7 +229,10 @@ func (client *HSMSecurityDomainClient) uploadCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, securityDomain)
+	if err := runtime.MarshalAsJSON(req, securityDomain); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // UploadPending - Get Security Domain upload operation status

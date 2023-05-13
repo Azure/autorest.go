@@ -108,7 +108,10 @@ func (client *VipSwapClient) createCreateRequest(ctx context.Context, groupName 
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Get - Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service

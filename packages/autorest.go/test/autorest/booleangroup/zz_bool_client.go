@@ -211,7 +211,10 @@ func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *Bo
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, false)
+	if err := runtime.MarshalAsJSON(req, false); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutTrue - Set Boolean value true
@@ -242,5 +245,8 @@ func (client *BoolClient) putTrueCreateRequest(ctx context.Context, options *Boo
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -96,7 +96,10 @@ func (client *ManagerDeploymentStatusClient) listCreateRequest(ctx context.Conte
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // listHandleResponse handles the List response.

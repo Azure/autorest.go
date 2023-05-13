@@ -378,7 +378,10 @@ func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsByteArray(req, stringBody, runtime.Base64URLFormat)
+	if err := runtime.MarshalAsByteArray(req, stringBody, runtime.Base64URLFormat); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEmpty - Set string value empty ”
@@ -409,7 +412,10 @@ func (client *StringClient) putEmptyCreateRequest(ctx context.Context, options *
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, "")
+	if err := runtime.MarshalAsJSON(req, ""); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
@@ -440,7 +446,10 @@ func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *S
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
+	if err := runtime.MarshalAsJSON(req, "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutNull - Set string value null
@@ -473,7 +482,11 @@ func (client *StringClient) putNullCreateRequest(ctx context.Context, stringBody
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	body := streaming.NopCloser(strings.NewReader(stringBody))
-	return req, req.SetBody(body, "application/json")
+	if err := req.SetBody(body, "application/json"); err != nil {
+		return nil, err
+	}
+
+	return req, nil
 }
 
 // PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the
@@ -505,5 +518,8 @@ func (client *StringClient) putWhitespaceCreateRequest(ctx context.Context, opti
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, "    Now is the time for all good men to come to the aid of their country    ")
+	if err := runtime.MarshalAsJSON(req, "    Now is the time for all good men to come to the aid of their country    "); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

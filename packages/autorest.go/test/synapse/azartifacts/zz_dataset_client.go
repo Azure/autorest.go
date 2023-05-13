@@ -84,7 +84,10 @@ func (client *DatasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, dataset)
+	if err := runtime.MarshalAsJSON(req, dataset); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteDataset - Deletes a dataset.
@@ -304,5 +307,8 @@ func (client *DatasetClient) renameDatasetCreateRequest(ctx context.Context, dat
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

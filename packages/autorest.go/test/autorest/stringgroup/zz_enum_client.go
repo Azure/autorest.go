@@ -173,7 +173,10 @@ func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, str
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, stringBody)
+	if err := runtime.MarshalAsJSON(req, stringBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
@@ -205,7 +208,10 @@ func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumSt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, enumStringBody)
+	if err := runtime.MarshalAsJSON(req, enumStringBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutReferencedConstant - Sends value 'green-color' from a constant
@@ -238,5 +244,8 @@ func (client *EnumClient) putReferencedConstantCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, enumStringBody)
+	if err := runtime.MarshalAsJSON(req, enumStringBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

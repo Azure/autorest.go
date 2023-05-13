@@ -696,7 +696,10 @@ func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, datetimeBody)
+	if err := runtime.MarshalAsJSON(req, datetimeBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutLocalNegativeOffsetMinDateTime - Put min datetime value 0001-01-01T00:00:00-14:00
@@ -729,7 +732,10 @@ func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, datetimeBody)
+	if err := runtime.MarshalAsJSON(req, datetimeBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutLocalPositiveOffsetMaxDateTime - Put max datetime value with positive numoffset 9999-12-31t23:59:59.999+14:00
@@ -762,7 +768,10 @@ func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, datetimeBody)
+	if err := runtime.MarshalAsJSON(req, datetimeBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutLocalPositiveOffsetMinDateTime - Put min datetime value 0001-01-01T00:00:00+14:00
@@ -795,7 +804,10 @@ func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, datetimeBody)
+	if err := runtime.MarshalAsJSON(req, datetimeBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutUTCMaxDateTime - Put max datetime value 9999-12-31T23:59:59.999Z
@@ -828,7 +840,10 @@ func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, datetimeBody)
+	if err := runtime.MarshalAsJSON(req, datetimeBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutUTCMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in
@@ -862,7 +877,10 @@ func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, datetimeBody)
+	if err := runtime.MarshalAsJSON(req, datetimeBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutUTCMinDateTime - Put min datetime value 0001-01-01T00:00:00Z
@@ -895,5 +913,8 @@ func (client *DatetimeClient) putUTCMinDateTimeCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, datetimeBody)
+	if err := runtime.MarshalAsJSON(req, datetimeBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

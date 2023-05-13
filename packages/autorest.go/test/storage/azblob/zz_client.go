@@ -1850,7 +1850,10 @@ func (client *Client) queryCreateRequest(ctx context.Context, containerName stri
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.QueryRequest != nil {
-		return req, runtime.MarshalAsXML(req, *options.QueryRequest)
+		if err := runtime.MarshalAsXML(req, *options.QueryRequest); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -2820,7 +2823,10 @@ func (client *Client) setTagsCreateRequest(ctx context.Context, containerName st
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.Tags != nil {
-		return req, runtime.MarshalAsXML(req, *options.Tags)
+		if err := runtime.MarshalAsXML(req, *options.Tags); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }

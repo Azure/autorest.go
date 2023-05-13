@@ -77,7 +77,10 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCrea
 		formData.Set("access_token", *options.AccessToken)
 	}
 	body := streaming.NopCloser(strings.NewReader(formData.Encode()))
-	return req, req.SetBody(body, "application/x-www-form-urlencoded")
+	if err := req.SetBody(body, "application/x-www-form-urlencoded"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // exchangeAADAccessTokenForAcrRefreshTokenHandleResponse handles the ExchangeAADAccessTokenForAcrRefreshToken response.
@@ -135,7 +138,10 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCrea
 		formData.Set("grant_type", string(*options.GrantType))
 	}
 	body := streaming.NopCloser(strings.NewReader(formData.Encode()))
-	return req, req.SetBody(body, "application/x-www-form-urlencoded")
+	if err := req.SetBody(body, "application/x-www-form-urlencoded"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // exchangeAcrRefreshTokenForAcrAccessTokenHandleResponse handles the ExchangeAcrRefreshTokenForAcrAccessToken response.

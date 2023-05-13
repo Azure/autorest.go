@@ -355,7 +355,10 @@ func (client *Datetimerfc1123Client) putUTCMaxDateTimeCreateRequest(ctx context.
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := timeRFC1123(datetimeBody)
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutUTCMinDateTime - Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
@@ -389,5 +392,8 @@ func (client *Datetimerfc1123Client) putUTCMinDateTimeCreateRequest(ctx context.
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := timeRFC1123(datetimeBody)
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

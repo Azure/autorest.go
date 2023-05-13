@@ -180,7 +180,10 @@ func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, r
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated
@@ -315,7 +318,10 @@ func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Con
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute
@@ -634,7 +640,10 @@ func (client *VirtualMachinesClient) installPatchesCreateRequest(ctx context.Con
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, installPatchesInput)
+	if err := runtime.MarshalAsJSON(req, installPatchesInput); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // InstanceView - Retrieves information about the run-time state of a virtual machine.
@@ -1288,7 +1297,10 @@ func (client *VirtualMachinesClient) reimageCreateRequest(ctx context.Context, r
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Parameters)
+		if err := runtime.MarshalAsJSON(req, *options.Parameters); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -1484,7 +1496,10 @@ func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // SimulateEviction - The operation to simulate the eviction of spot virtual machine.
@@ -1664,5 +1679,8 @@ func (client *VirtualMachinesClient) updateCreateRequest(ctx context.Context, re
 	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

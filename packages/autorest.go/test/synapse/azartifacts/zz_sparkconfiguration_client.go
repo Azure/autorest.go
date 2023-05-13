@@ -84,7 +84,10 @@ func (client *SparkConfigurationClient) createOrUpdateSparkConfigurationCreateRe
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sparkConfiguration)
+	if err := runtime.MarshalAsJSON(req, sparkConfiguration); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteSparkConfiguration - Deletes a sparkConfiguration.
@@ -305,5 +308,8 @@ func (client *SparkConfigurationClient) renameSparkConfigurationCreateRequest(ct
 	reqQP.Set("api-version", "2021-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -705,7 +705,10 @@ func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties 
 	if err != nil {
 		return nil, err
 	}
-	return req, runtime.MarshalAsJSON(req, properties)
+	if err := runtime.MarshalAsJSON(req, properties); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
@@ -870,7 +873,10 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 		XMLName    xml.Name             `xml:"SignedIdentifiers"`
 		Properties *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
-	return req, runtime.MarshalAsXML(req, wrapper{Properties: &properties})
+	if err := runtime.MarshalAsXML(req, wrapper{Properties: &properties}); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBinary - Put an XML document with binary property
@@ -901,7 +907,10 @@ func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow M
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, slideshow)
+	if err := runtime.MarshalAsXML(req, slideshow); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
@@ -932,7 +941,10 @@ func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	return req, runtime.MarshalAsXML(req, model)
+	if err := runtime.MarshalAsXML(req, model); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
@@ -963,7 +975,10 @@ func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	return req, runtime.MarshalAsXML(req, model)
+	if err := runtime.MarshalAsXML(req, model); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEmptyChildElement - Puts a value with an empty child element.
@@ -994,7 +1009,10 @@ func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	return req, runtime.MarshalAsXML(req, banana)
+	if err := runtime.MarshalAsXML(req, banana); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEmptyList - Puts an empty list.
@@ -1024,7 +1042,10 @@ func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slidesho
 	if err != nil {
 		return nil, err
 	}
-	return req, runtime.MarshalAsXML(req, slideshow)
+	if err := runtime.MarshalAsXML(req, slideshow); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEmptyRootList - Puts an empty list as the root element.
@@ -1058,7 +1079,10 @@ func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bana
 		XMLName xml.Name   `xml:"bananas"`
 		Bananas *[]*Banana `xml:"banana"`
 	}
-	return req, runtime.MarshalAsXML(req, wrapper{Bananas: &bananas})
+	if err := runtime.MarshalAsXML(req, wrapper{Bananas: &bananas}); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEmptyWrappedLists - Puts some empty wrapped lists.
@@ -1089,7 +1113,10 @@ func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	return req, runtime.MarshalAsXML(req, appleBarrel)
+	if err := runtime.MarshalAsXML(req, appleBarrel); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutRootList - Puts a list as the root element.
@@ -1123,7 +1150,10 @@ func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas [
 		XMLName xml.Name   `xml:"bananas"`
 		Bananas *[]*Banana `xml:"banana"`
 	}
-	return req, runtime.MarshalAsXML(req, wrapper{Bananas: &bananas})
+	if err := runtime.MarshalAsXML(req, wrapper{Bananas: &bananas}); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutRootListSingleItem - Puts a list with a single item.
@@ -1158,7 +1188,10 @@ func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context,
 		XMLName xml.Name   `xml:"bananas"`
 		Bananas *[]*Banana `xml:"banana"`
 	}
-	return req, runtime.MarshalAsXML(req, wrapper{Bananas: &bananas})
+	if err := runtime.MarshalAsXML(req, wrapper{Bananas: &bananas}); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutServiceProperties - Puts storage service properties.
@@ -1193,7 +1226,10 @@ func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, 
 	reqQP.Set("comp", "properties")
 	reqQP.Set("restype", "service")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	return req, runtime.MarshalAsXML(req, properties)
+	if err := runtime.MarshalAsXML(req, properties); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutSimple - Put a simple XML document
@@ -1224,7 +1260,10 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, slideshow)
+	if err := runtime.MarshalAsXML(req, slideshow); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutURI - Put an XML document with uri property
@@ -1255,7 +1294,10 @@ func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWit
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, model)
+	if err := runtime.MarshalAsXML(req, model); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutWrappedLists - Put an XML document with multiple wrapped lists
@@ -1286,5 +1328,8 @@ func (client *XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrapp
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, wrappedLists)
+	if err := runtime.MarshalAsXML(req, wrappedLists); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -193,7 +193,10 @@ func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, tab
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, tableServiceProperties)
+	if err := runtime.MarshalAsXML(req, tableServiceProperties); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setPropertiesHandleResponse handles the SetProperties response.

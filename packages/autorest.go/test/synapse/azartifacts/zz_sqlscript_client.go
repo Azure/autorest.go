@@ -84,7 +84,10 @@ func (client *SQLScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sqlScript)
+	if err := runtime.MarshalAsJSON(req, sqlScript); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteSQLScript - Deletes a Sql Script.
@@ -304,5 +307,8 @@ func (client *SQLScriptClient) renameSQLScriptCreateRequest(ctx context.Context,
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

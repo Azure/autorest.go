@@ -104,7 +104,10 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, order)
+	if err := runtime.MarshalAsJSON(req, order); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the order related to the device.

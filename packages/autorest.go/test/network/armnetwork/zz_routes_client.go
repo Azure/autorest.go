@@ -115,7 +115,10 @@ func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, res
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, routeParameters)
+	if err := runtime.MarshalAsJSON(req, routeParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the specified route from a route table.

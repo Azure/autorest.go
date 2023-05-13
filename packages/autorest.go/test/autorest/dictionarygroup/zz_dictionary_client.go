@@ -2145,7 +2145,10 @@ func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
@@ -2177,7 +2180,10 @@ func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded
@@ -2209,7 +2215,10 @@ func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, a
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
@@ -2242,7 +2251,10 @@ func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35
@@ -2279,7 +2291,10 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 	for k, v := range arrayBody {
 		aux[k] = (*timeRFC1123)(v)
 	}
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
@@ -2315,7 +2330,10 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 	for k, v := range arrayBody {
 		aux[k] = (*timeRFC3339)(v)
 	}
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
@@ -2350,7 +2368,10 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 	for k, v := range arrayBody {
 		aux[k] = (*dateType)(v)
 	}
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
@@ -2383,7 +2404,10 @@ func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -2415,7 +2439,10 @@ func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
@@ -2447,7 +2474,10 @@ func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEmpty - Set dictionary value empty {}
@@ -2478,7 +2508,10 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, array
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -2510,7 +2543,10 @@ func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -2542,7 +2578,10 @@ func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -2573,7 +2612,10 @@ func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, a
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
@@ -2605,5 +2647,8 @@ func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

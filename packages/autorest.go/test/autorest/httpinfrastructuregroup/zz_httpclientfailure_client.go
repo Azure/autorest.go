@@ -52,7 +52,10 @@ func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Delete407 - Return 407 status code - should be represented in the client as an error
@@ -84,7 +87,10 @@ func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Delete417 - Return 417 status code - should be represented in the client as an error
@@ -116,7 +122,10 @@ func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Get400 - Return 400 status code - should be represented in the client as an error
@@ -560,7 +569,10 @@ func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Patch405 - Return 405 status code - should be represented in the client as an error
@@ -592,7 +604,10 @@ func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Patch414 - Return 414 status code - should be represented in the client as an error
@@ -624,7 +639,10 @@ func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post400 - Return 400 status code - should be represented in the client as an error
@@ -656,7 +674,10 @@ func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post406 - Return 406 status code - should be represented in the client as an error
@@ -688,7 +709,10 @@ func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Post415 - Return 415 status code - should be represented in the client as an error
@@ -720,7 +744,10 @@ func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put400 - Return 400 status code - should be represented in the client as an error
@@ -752,7 +779,10 @@ func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put404 - Return 404 status code - should be represented in the client as an error
@@ -784,7 +814,10 @@ func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put409 - Return 409 status code - should be represented in the client as an error
@@ -816,7 +849,10 @@ func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // Put413 - Return 413 status code - should be represented in the client as an error
@@ -848,5 +884,8 @@ func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, true)
+	if err := runtime.MarshalAsJSON(req, true); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

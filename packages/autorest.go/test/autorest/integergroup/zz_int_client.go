@@ -419,7 +419,10 @@ func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int3
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, intBody)
+	if err := runtime.MarshalAsJSON(req, intBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutMax64 - Put max int64 value
@@ -451,7 +454,10 @@ func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int6
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, intBody)
+	if err := runtime.MarshalAsJSON(req, intBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutMin32 - Put min int32 value
@@ -483,7 +489,10 @@ func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int3
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, intBody)
+	if err := runtime.MarshalAsJSON(req, intBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutMin64 - Put min int64 value
@@ -515,7 +524,10 @@ func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int6
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, intBody)
+	if err := runtime.MarshalAsJSON(req, intBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutUnixTimeDate - Put datetime encoded as Unix time
@@ -548,5 +560,8 @@ func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBo
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := timeUnix(intBody)
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

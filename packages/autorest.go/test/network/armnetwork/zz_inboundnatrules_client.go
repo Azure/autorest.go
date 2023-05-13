@@ -115,7 +115,10 @@ func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Con
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, inboundNatRuleParameters)
+	if err := runtime.MarshalAsJSON(req, inboundNatRuleParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the specified load balancer inbound NAT rule.

@@ -187,7 +187,10 @@ func (client *DiskRestorePointClient) grantAccessCreateRequest(ctx context.Conte
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, grantAccessData)
+	if err := runtime.MarshalAsJSON(req, grantAccessData); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // NewListByRestorePointPager - Lists diskRestorePoints under a vmRestorePoint.

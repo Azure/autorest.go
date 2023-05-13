@@ -101,7 +101,10 @@ func (client *ContainerRegistryClient) createManifestCreateRequest(ctx context.C
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, payload)
+	if err := runtime.MarshalAsJSON(req, payload); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createManifestHandleResponse handles the CreateManifest response.
@@ -750,7 +753,10 @@ func (client *ContainerRegistryClient) updateManifestPropertiesCreateRequest(ctx
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, value)
+	if err := runtime.MarshalAsJSON(req, value); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateManifestPropertiesHandleResponse handles the UpdateManifestProperties response.
@@ -802,7 +808,10 @@ func (client *ContainerRegistryClient) updatePropertiesCreateRequest(ctx context
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, value)
+	if err := runtime.MarshalAsJSON(req, value); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updatePropertiesHandleResponse handles the UpdateProperties response.
@@ -859,7 +868,10 @@ func (client *ContainerRegistryClient) updateTagAttributesCreateRequest(ctx cont
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, value)
+	if err := runtime.MarshalAsJSON(req, value); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateTagAttributesHandleResponse handles the UpdateTagAttributes response.

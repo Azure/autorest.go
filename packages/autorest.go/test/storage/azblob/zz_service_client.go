@@ -356,7 +356,10 @@ func (client *ServiceClient) getUserDelegationKeyCreateRequest(ctx context.Conte
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, keyInfo)
+	if err := runtime.MarshalAsXML(req, keyInfo); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // getUserDelegationKeyHandleResponse handles the GetUserDelegationKey response.
@@ -511,7 +514,10 @@ func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, res
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, runtime.MarshalAsXML(req, storageServiceProperties)
+	if err := runtime.MarshalAsXML(req, storageServiceProperties); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setPropertiesHandleResponse handles the SetProperties response.
@@ -574,7 +580,10 @@ func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, comp 
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, req.SetBody(body, "application/xml")
+	if err := req.SetBody(body, "application/xml"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // submitBatchHandleResponse handles the SubmitBatch response.

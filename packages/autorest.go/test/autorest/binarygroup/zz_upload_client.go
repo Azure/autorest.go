@@ -52,7 +52,10 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 	if err != nil {
 		return nil, err
 	}
-	return req, req.SetBody(fileParam, "application/octet-stream")
+	if err := req.SetBody(fileParam, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // File - Uploading json file
@@ -83,5 +86,8 @@ func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.
 	if err != nil {
 		return nil, err
 	}
-	return req, req.SetBody(fileParam, "application/json")
+	if err := req.SetBody(fileParam, "application/json"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

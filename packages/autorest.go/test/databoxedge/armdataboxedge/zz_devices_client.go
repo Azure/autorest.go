@@ -87,7 +87,10 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, dataBoxEdgeDevice)
+	if err := runtime.MarshalAsJSON(req, dataBoxEdgeDevice); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
@@ -159,7 +162,10 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, securitySettings)
+	if err := runtime.MarshalAsJSON(req, securitySettings); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the Data Box Edge/Data Box Gateway device.
@@ -858,7 +864,10 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateHandleResponse handles the Update response.
@@ -914,7 +923,10 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateExtendedInformationHandleResponse handles the UpdateExtendedInformation response.
@@ -970,7 +982,10 @@ func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context,
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameters)
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // uploadCertificateHandleResponse handles the UploadCertificate response.

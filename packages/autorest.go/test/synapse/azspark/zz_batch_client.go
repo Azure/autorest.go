@@ -101,7 +101,10 @@ func (client *BatchClient) createSparkBatchJobCreateRequest(ctx context.Context,
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, sparkBatchJobOptions)
+	if err := runtime.MarshalAsJSON(req, sparkBatchJobOptions); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createSparkBatchJobHandleResponse handles the CreateSparkBatchJob response.

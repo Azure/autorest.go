@@ -72,7 +72,10 @@ func (client *Client) createCreateRequest(ctx context.Context, tableProperties P
 		req.Raw().Header["Prefer"] = []string{string(*options.ResponsePreference)}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
-	return req, runtime.MarshalAsJSON(req, tableProperties)
+	if err := runtime.MarshalAsJSON(req, tableProperties); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createHandleResponse handles the Create response.
@@ -371,7 +374,10 @@ func (client *Client) insertEntityCreateRequest(ctx context.Context, table strin
 	}
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
 	if options != nil && options.TableEntityProperties != nil {
-		return req, runtime.MarshalAsJSON(req, options.TableEntityProperties)
+		if err := runtime.MarshalAsJSON(req, options.TableEntityProperties); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -470,7 +476,10 @@ func (client *Client) mergeEntityCreateRequest(ctx context.Context, table string
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, tableEntityProperties)
+	if err := runtime.MarshalAsJSON(req, tableEntityProperties); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // mergeEntityHandleResponse handles the MergeEntity response.
@@ -822,7 +831,10 @@ func (client *Client) setAccessPolicyCreateRequest(ctx context.Context, table st
 		XMLName  xml.Name             `xml:"SignedIdentifiers"`
 		TableACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
-	return req, runtime.MarshalAsXML(req, wrapper{TableACL: &tableACL})
+	if err := runtime.MarshalAsXML(req, wrapper{TableACL: &tableACL}); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // setAccessPolicyHandleResponse handles the SetAccessPolicy response.
@@ -907,7 +919,10 @@ func (client *Client) updateEntityCreateRequest(ctx context.Context, table strin
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, tableEntityProperties)
+	if err := runtime.MarshalAsJSON(req, tableEntityProperties); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateEntityHandleResponse handles the UpdateEntity response.

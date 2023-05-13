@@ -151,7 +151,10 @@ func (client *MetastoreClient) registerCreateRequest(ctx context.Context, id str
 	reqQP.Set("api-version", "2021-07-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, registerBody)
+	if err := runtime.MarshalAsJSON(req, registerBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // registerHandleResponse handles the Register response.
@@ -200,7 +203,10 @@ func (client *MetastoreClient) updateCreateRequest(ctx context.Context, id strin
 	reqQP.Set("api-version", "2021-07-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, updateBody)
+	if err := runtime.MarshalAsJSON(req, updateBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // updateHandleResponse handles the Update response.

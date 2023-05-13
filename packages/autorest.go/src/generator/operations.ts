@@ -669,6 +669,9 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += `\t}\n`;
     }
   });
+  const emitSetBodyWithErrCheck = function(setBodyParam: string): string {
+    return `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n`;
+  }
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
@@ -730,10 +733,12 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${mediaType.toLowerCase()}")`;
     }
     if (bodyParam!.required || bodyParam!.schema.type === SchemaType.Constant) {
-      text += `\treturn req, ${setBody}\n`;
+      text += `\t${emitSetBodyWithErrCheck(setBody)}`;
+      text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
-      text += `\t\treturn req, ${setBody}\n`;
+      text += `\t\t${emitSetBodyWithErrCheck(setBody)}`;
+      text += '\t\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
@@ -750,10 +755,12 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     }
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     if (bodyParam!.required) {
-      text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name}, ${contentType})\n`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam?.language.go!.name}, ${contentType})`)}`;
+      text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
-      text += `\treturn req, req.SetBody(${getParamName(bodyParam!)}, ${contentType})\n`;
+      text += `\t\t${emitSetBodyWithErrCheck(`req.SetBody(${getParamName(bodyParam!)}, ${contentType})`)}`;
+      text += '\t\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
@@ -764,11 +771,13 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     const contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
     if (bodyParam!.required) {
       text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam!.language.go!.name}))\n`;
-      text += `\treturn req, req.SetBody(body, ${contentType})\n`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${contentType})`)}\n`;
+      text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
       text += `\tbody := streaming.NopCloser(strings.NewReader(${getParamName(bodyParam!)}))\n`;
-      text += `\treturn req, req.SetBody(body, ${contentType})\n`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${contentType})`)}`;
+      text += '\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
@@ -806,7 +815,8 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       }
     }
     text += `\tbody := streaming.NopCloser(strings.NewReader(formData.Encode()))\n`;
-    text += `\treturn req, req.SetBody(body, "application/x-www-form-urlencoded")\n`;
+    text += `\t${emitSetBodyWithErrCheck('req.SetBody(body, "application/x-www-form-urlencoded")')}`;
+    text += '\treturn req, nil\n';
   } else {
     text += `\treturn req, nil\n`;
   }

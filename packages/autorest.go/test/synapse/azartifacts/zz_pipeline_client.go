@@ -85,7 +85,10 @@ func (client *PipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, pipeline)
+	if err := runtime.MarshalAsJSON(req, pipeline); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
@@ -135,7 +138,10 @@ func (client *PipelineClient) createPipelineRunCreateRequest(ctx context.Context
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
-		return req, runtime.MarshalAsJSON(req, options.Parameters)
+		if err := runtime.MarshalAsJSON(req, options.Parameters); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -366,5 +372,8 @@ func (client *PipelineClient) renamePipelineCreateRequest(ctx context.Context, p
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

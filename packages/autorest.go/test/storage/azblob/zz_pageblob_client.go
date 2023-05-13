@@ -1131,7 +1131,10 @@ func (client *PageBlobClient) uploadPagesCreateRequest(ctx context.Context, cont
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, req.SetBody(body, "application/octet-stream")
+	if err := req.SetBody(body, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // uploadPagesHandleResponse handles the UploadPages response.

@@ -92,7 +92,10 @@ func (client *FloatClient) putCreateRequest(ctx context.Context, input FloatEnum
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, input)
+	if err := runtime.MarshalAsJSON(req, input); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // putHandleResponse handles the Put response.

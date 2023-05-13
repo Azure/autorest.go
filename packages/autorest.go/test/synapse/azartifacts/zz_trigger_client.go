@@ -84,7 +84,10 @@ func (client *TriggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, trigger)
+	if err := runtime.MarshalAsJSON(req, trigger); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteTrigger - Deletes a trigger.

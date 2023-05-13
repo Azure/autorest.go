@@ -115,7 +115,10 @@ func (client *GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context
 	reqQP.Set("api-version", "2021-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, galleryApplication)
+	if err := runtime.MarshalAsJSON(req, galleryApplication); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Delete a gallery Application.
@@ -390,5 +393,8 @@ func (client *GalleryApplicationsClient) updateCreateRequest(ctx context.Context
 	reqQP.Set("api-version", "2021-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, galleryApplication)
+	if err := runtime.MarshalAsJSON(req, galleryApplication); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

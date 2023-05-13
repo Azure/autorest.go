@@ -109,7 +109,10 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, trigger)
+	if err := runtime.MarshalAsJSON(req, trigger); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the trigger on the gateway device.

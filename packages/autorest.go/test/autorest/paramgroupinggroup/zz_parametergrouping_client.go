@@ -162,7 +162,10 @@ func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Con
 		req.Raw().Header["customHeader"] = []string{*parameterGroupingClientPostRequiredParameters.CustomHeader}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, parameterGroupingClientPostRequiredParameters.Body)
+	if err := runtime.MarshalAsJSON(req, parameterGroupingClientPostRequiredParameters.Body); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PostReservedWords - Post a grouped parameters with reserved words

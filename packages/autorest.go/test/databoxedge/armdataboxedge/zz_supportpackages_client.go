@@ -104,5 +104,8 @@ func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx cont
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, triggerSupportPackageRequest)
+	if err := runtime.MarshalAsJSON(req, triggerSupportPackageRequest); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -225,7 +225,10 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -280,7 +283,10 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -335,7 +341,10 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request,
@@ -388,5 +397,8 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx c
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

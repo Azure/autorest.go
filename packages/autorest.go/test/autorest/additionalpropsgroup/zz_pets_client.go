@@ -52,7 +52,10 @@ func (client *PetsClient) createAPInPropertiesCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, createParameters)
+	if err := runtime.MarshalAsJSON(req, createParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createAPInPropertiesHandleResponse handles the CreateAPInProperties response.
@@ -93,7 +96,10 @@ func (client *PetsClient) createAPInPropertiesWithAPStringCreateRequest(ctx cont
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, createParameters)
+	if err := runtime.MarshalAsJSON(req, createParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createAPInPropertiesWithAPStringHandleResponse handles the CreateAPInPropertiesWithAPString response.
@@ -133,7 +139,10 @@ func (client *PetsClient) createAPObjectCreateRequest(ctx context.Context, creat
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, createParameters)
+	if err := runtime.MarshalAsJSON(req, createParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createAPObjectHandleResponse handles the CreateAPObject response.
@@ -173,7 +182,10 @@ func (client *PetsClient) createAPStringCreateRequest(ctx context.Context, creat
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, createParameters)
+	if err := runtime.MarshalAsJSON(req, createParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createAPStringHandleResponse handles the CreateAPString response.
@@ -213,7 +225,10 @@ func (client *PetsClient) createAPTrueCreateRequest(ctx context.Context, createP
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, createParameters)
+	if err := runtime.MarshalAsJSON(req, createParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createAPTrueHandleResponse handles the CreateAPTrue response.
@@ -253,7 +268,10 @@ func (client *PetsClient) createCatAPTrueCreateRequest(ctx context.Context, crea
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, createParameters)
+	if err := runtime.MarshalAsJSON(req, createParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // createCatAPTrueHandleResponse handles the CreateCatAPTrue response.

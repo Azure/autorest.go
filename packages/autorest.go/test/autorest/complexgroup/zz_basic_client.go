@@ -255,5 +255,8 @@ func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBod
 	reqQP.Set("api-version", "2016-02-29")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, complexBody)
+	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

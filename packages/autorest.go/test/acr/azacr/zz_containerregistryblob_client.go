@@ -219,7 +219,10 @@ func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx conte
 	reqQP.Set("digest", digest)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, req.SetBody(value, "application/octet-stream")
+	if err := req.SetBody(value, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // completeUploadHandleResponse handles the CompleteUpload response.
@@ -600,7 +603,10 @@ func (client *ContainerRegistryBlobClient) uploadChunkCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, req.SetBody(value, "application/octet-stream")
+	if err := req.SetBody(value, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // uploadChunkHandleResponse handles the UploadChunk response.

@@ -110,7 +110,10 @@ func (client *DiskAccessesClient) createOrUpdateCreateRequest(ctx context.Contex
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, diskAccess)
+	if err := runtime.MarshalAsJSON(req, diskAccess); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes a disk access resource.
@@ -697,7 +700,10 @@ func (client *DiskAccessesClient) updateCreateRequest(ctx context.Context, resou
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, diskAccess)
+	if err := runtime.MarshalAsJSON(req, diskAccess); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginUpdateAPrivateEndpointConnection - Approve or reject a private endpoint connection under disk access resource, this
@@ -773,5 +779,8 @@ func (client *DiskAccessesClient) updateAPrivateEndpointConnectionCreateRequest(
 	reqQP.Set("api-version", "2021-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, privateEndpointConnection)
+	if err := runtime.MarshalAsJSON(req, privateEndpointConnection); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

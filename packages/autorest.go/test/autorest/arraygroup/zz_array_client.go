@@ -2166,7 +2166,10 @@ func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, array
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
@@ -2197,7 +2200,10 @@ func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arra
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
@@ -2229,7 +2235,10 @@ func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayB
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
@@ -2261,7 +2270,10 @@ func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arr
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
@@ -2298,7 +2310,10 @@ func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 	for i := 0; i < len(arrayBody); i++ {
 		aux[i] = (*timeRFC1123)(arrayBody[i])
 	}
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
@@ -2329,7 +2344,10 @@ func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, ar
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
@@ -2364,7 +2382,10 @@ func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayB
 	for i := 0; i < len(arrayBody); i++ {
 		aux[i] = (*dateType)(arrayBody[i])
 	}
-	return req, runtime.MarshalAsJSON(req, aux)
+	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
@@ -2397,7 +2418,10 @@ func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
@@ -2428,7 +2452,10 @@ func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arra
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
@@ -2459,7 +2486,10 @@ func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, ar
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEmpty - Set array value empty []
@@ -2490,7 +2520,10 @@ func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -2521,7 +2554,10 @@ func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayB
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
@@ -2552,7 +2588,10 @@ func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, array
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
@@ -2583,7 +2622,10 @@ func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arr
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
@@ -2614,7 +2656,10 @@ func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayB
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -2646,7 +2691,10 @@ func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -2677,7 +2725,10 @@ func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arra
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
@@ -2708,5 +2759,8 @@ func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayB
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, arrayBody)
+	if err := runtime.MarshalAsJSON(req, arrayBody); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

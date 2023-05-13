@@ -115,7 +115,10 @@ func (client *SubnetsClient) createOrUpdateCreateRequest(ctx context.Context, re
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, subnetParameters)
+	if err := runtime.MarshalAsJSON(req, subnetParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDelete - Deletes the specified subnet.
@@ -393,7 +396,10 @@ func (client *SubnetsClient) prepareNetworkPoliciesCreateRequest(ctx context.Con
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, prepareNetworkPoliciesRequestParameters)
+	if err := runtime.MarshalAsJSON(req, prepareNetworkPoliciesRequestParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginUnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
@@ -466,5 +472,8 @@ func (client *SubnetsClient) unprepareNetworkPoliciesCreateRequest(ctx context.C
 	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, unprepareNetworkPoliciesRequestParameters)
+	if err := runtime.MarshalAsJSON(req, unprepareNetworkPoliciesRequestParameters); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

@@ -463,7 +463,10 @@ func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context,
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -514,7 +517,10 @@ func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -567,7 +573,10 @@ func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -620,7 +629,10 @@ func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -675,7 +687,10 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -731,7 +746,10 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateReque
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -786,7 +804,10 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -837,7 +858,10 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
+		if err := runtime.MarshalAsJSON(req, *options.Product); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -890,7 +914,10 @@ func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll
@@ -941,7 +968,10 @@ func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.C
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with
@@ -992,7 +1022,10 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request,
@@ -1046,7 +1079,10 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateReques
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity
@@ -1099,7 +1135,10 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with
@@ -1152,7 +1191,10 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with
@@ -1203,7 +1245,10 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating'
@@ -1254,7 +1299,10 @@ func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState'
@@ -1305,7 +1353,10 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(c
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginPutNonRetry400 - Long running put request, service returns a 400 to the initial request
@@ -1354,5 +1405,8 @@ func (client *LROSADsClient) putNonRetry400CreateRequest(ctx context.Context, pr
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, product)
+	if err := runtime.MarshalAsJSON(req, product); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

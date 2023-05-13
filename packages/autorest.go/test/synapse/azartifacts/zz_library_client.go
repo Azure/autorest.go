@@ -72,7 +72,10 @@ func (client *LibraryClient) appendCreateRequest(ctx context.Context, comp Enum9
 		req.Raw().Header["x-ms-blob-condition-appendpos"] = []string{strconv.FormatInt(*options.BlobConditionAppendPosition, 10)}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, req.SetBody(content, "application/octet-stream")
+	if err := req.SetBody(content, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginCreate - Creates a library with the library name.

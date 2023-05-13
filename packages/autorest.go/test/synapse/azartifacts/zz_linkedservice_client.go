@@ -84,7 +84,10 @@ func (client *LinkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, linkedService)
+	if err := runtime.MarshalAsJSON(req, linkedService); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BeginDeleteLinkedService - Deletes a linked service.
@@ -305,5 +308,8 @@ func (client *LinkedServiceClient) renameLinkedServiceCreateRequest(ctx context.
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, runtime.MarshalAsJSON(req, request)
+	if err := runtime.MarshalAsJSON(req, request); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
