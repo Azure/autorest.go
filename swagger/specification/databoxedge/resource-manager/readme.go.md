@@ -26,6 +26,14 @@ directive:
     to: 'SkuInfo'
 ```
 
+``` yaml $(go)
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Addon["x-ms-go-omit-serde-methods"] = true;
+```
+
 ```yaml $(go)
 # stuttering clean-up causes a name collision so we fix up the name
 # https://github.com/Azure/autorest/blob/main/docs/generate/built-in-directives.md#rename-model

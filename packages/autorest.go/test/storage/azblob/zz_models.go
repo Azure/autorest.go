@@ -1260,7 +1260,7 @@ type ModifiedAccessConditions struct {
 
 type Name struct {
 	// The name of the blob.
-	Content *string `xml:"content"`
+	Content *string `xml:",chardata"`
 
 	// Indicates if the blob name is encoded.
 	Encoded *bool `xml:"Encoded,attr"`

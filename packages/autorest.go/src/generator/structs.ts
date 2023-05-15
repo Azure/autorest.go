@@ -182,6 +182,9 @@ export function getXMLSerialization(prop: Property, lang: Language): string {
   if (prop.schema.serialization?.xml?.name) {
     // xml can specifiy its own name, prefer that if available
     serialization = prop.schema.serialization.xml.name;
+  } else if (prop.schema.serialization?.xml?.text) {
+    // see https://github.com/Azure/autorest/tree/main/docs/extensions#x-ms-text
+    serialization = ',chardata';
   }
   if (prop.schema.serialization?.xml?.attribute) {
     // value comes from an xml attribute

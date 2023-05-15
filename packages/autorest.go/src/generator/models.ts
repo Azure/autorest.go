@@ -135,7 +135,7 @@ function generateStructs(modelImports: ImportManager, serdeImports: ImportManage
       continue;
     }
     const structDef = generateStruct(modelImports, obj.language.go!, aggregateProperties(obj));
-    if (obj.language.go!.marshallingFormat === 'xml') {
+    if (obj.language.go!.marshallingFormat === 'xml' && !obj.language.go!.omitSerDeMethods) {
       serdeImports.add('encoding/xml');
       if (obj.language.go!.needsDateTimeMarshalling) {
         serdeImports.add('time');
@@ -165,8 +165,10 @@ function generateStructs(modelImports: ImportManager, serdeImports: ImportManage
     if (obj.language.go!.byteArrayFormat) {
       structDef.HasJSONByteArray = true;
     }
-    generateJSONMarshaller(serdeImports, obj, structDef);
-    generateJSONUnmarshaller(serdeImports, structDef);
+    if (!obj.language.go!.omitSerDeMethods) {
+      generateJSONMarshaller(serdeImports, obj, structDef);
+      generateJSONUnmarshaller(serdeImports, structDef);
+    }
     structTypes.push(structDef);
   }
   return structTypes;
