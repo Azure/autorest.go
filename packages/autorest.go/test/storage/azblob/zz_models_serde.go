@@ -19,39 +19,6 @@ import (
 	"time"
 )
 
-// MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
-func (a AccessPolicy) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	type alias AccessPolicy
-	aux := &struct {
-		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
-	}{
-		alias:  (*alias)(&a),
-		Expiry: (*timeRFC3339)(a.Expiry),
-		Start:  (*timeRFC3339)(a.Start),
-	}
-	return enc.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type AccessPolicy.
-func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
-	type alias AccessPolicy
-	aux := &struct {
-		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
-	}{
-		alias: (*alias)(a),
-	}
-	if err := dec.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	a.Expiry = (*time.Time)(aux.Expiry)
-	a.Start = (*time.Time)(aux.Start)
-	return nil
-}
-
 // MarshalXML implements the xml.Marshaller interface for type ArrowConfiguration.
 func (a ArrowConfiguration) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ArrowConfiguration
@@ -235,22 +202,6 @@ func (h HierarchyListSegment) MarshalXML(enc *xml.Encoder, start xml.StartElemen
 		aux.BlobPrefixes = &h.BlobPrefixes
 	}
 	return enc.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type ItemInternal.
-func (i *ItemInternal) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
-	type alias ItemInternal
-	aux := &struct {
-		*alias
-		ObjectReplicationMetadata additionalProperties `xml:"OrMetadata"`
-	}{
-		alias: (*alias)(i),
-	}
-	if err := dec.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	i.ObjectReplicationMetadata = (map[string]*string)(aux.ObjectReplicationMetadata)
-	return nil
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ListContainersSegmentResponse.

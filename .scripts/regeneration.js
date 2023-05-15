@@ -93,8 +93,8 @@ for (namespace in goMappings) {
     generate(namespace, inputFile, 'test/autorest/' + namespace, extraParams.join(' '));
 }
 
-const blobStorage = './swagger/specification/storage/data-plane/Microsoft.BlobStorage/preview/2021-12-02/blob.json';
-generate("azblob", blobStorage, 'test/storage/azblob', '--security=AzureKey --module="azblob" --openapi-type="data-plane" --honor-body-placement');
+const blobStorage = './swagger/specification/storage/data-plane/Microsoft.BlobStorage/readme.md';
+generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob');
 
 const network = './swagger/specification/network/resource-manager/readme.md';
 generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types');

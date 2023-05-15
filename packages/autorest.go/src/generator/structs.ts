@@ -182,6 +182,10 @@ export function getXMLSerialization(prop: Property, lang: Language): string {
   if (prop.schema.serialization?.xml?.name) {
     // xml can specifiy its own name, prefer that if available
     serialization = prop.schema.serialization.xml.name;
+  } else if (prop.schema.serialization?.xml?.text) {
+    // type has the x-ms-text attribute applied so it should be character data, not a node (https://github.com/Azure/autorest/tree/main/docs/extensions#x-ms-text)
+    // see https://pkg.go.dev/encoding/xml#Unmarshal for what ,chardata actually means
+    serialization = ',chardata';
   }
   if (prop.schema.serialization?.xml?.attribute) {
     // value comes from an xml attribute

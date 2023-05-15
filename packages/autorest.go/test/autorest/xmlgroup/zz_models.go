@@ -257,7 +257,7 @@ type ModelWithURLProperty struct {
 // ObjectWithXMsTextProperty - Contans property
 type ObjectWithXMsTextProperty struct {
 	// Returned value should be 'I am text'
-	Content *string `xml:"content"`
+	Content *string `xml:",chardata"`
 
 	// Returned value should be 'english'
 	Language *string `xml:"language,attr"`

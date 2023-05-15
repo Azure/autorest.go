@@ -133,6 +133,10 @@ export async function namer(session: Session<CodeModel>) {
         details.name = 'AdditionalProperties1';
       }
     }
+    // adding this extension to a type will skip generatings its serde (marshalling/unmarshalling) methods
+    if (obj.extensions?.['x-ms-go-omit-serde-methods']) {
+      obj.language.go!.omitSerDeMethods = true;
+    }
   }
 
   // fix up operation group names
