@@ -269,7 +269,6 @@ func TestGetWrappedLists(t *testing.T) {
 }
 
 func TestGetXMsText(t *testing.T) {
-	t.Skip("support NYI")
 	client := newXMLClient(t)
 	result, err := client.GetXMsText(context.Background(), nil)
 	require.NoError(t, err)
