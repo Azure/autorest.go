@@ -2,7 +2,7 @@ module armcompute
 
 go 1.18
 
-require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.6.1-0.20230509175118-ce926c4cadfc
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.7.0-beta.1
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.3.0 // indirect
