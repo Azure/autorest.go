@@ -150,7 +150,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
         console.log('generating ' + inputFile);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
+        exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --inject-spans --azcore-version=1.7.0-beta.1 --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
     });
 }
 
@@ -165,7 +165,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
         console.log('generating ' + readme);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
+        exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --inject-spans --azcore-version=1.7.0-beta.1 --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
 }
 

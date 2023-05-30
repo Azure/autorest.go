@@ -158,6 +158,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
 
     // generate operations
+    const injectSpans = await session.getValue('inject-spans', false);
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
@@ -165,9 +166,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // it must be done before the imports are written out
       if (isLROOperation(op)) {
         // generate Begin method
-        opText += generateLROBeginMethod(op, imports);
+        opText += generateLROBeginMethod(op, injectSpans, imports);
       }
-      opText += generateOperation(op, imports);
+      opText += generateOperation(op, injectSpans, imports);
       opText += createProtocolRequest(group, op, imports);
       if (!isLROOperation(op) || isPageableOperation(op)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
@@ -378,7 +379,7 @@ function genApiVersionDoc(apiVersions?: ApiVersions): string {
   return `//\n// Generated from API version ${versions.join(',')}\n`;
 }
 
-function generateOperation(op: Operation, imports: ImportManager): string {
+function generateOperation(op: Operation, injectSpans: boolean, imports: ImportManager): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
@@ -415,7 +416,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     text += '}\n\n';
     return text;
   }
-  if (!isLROOperation(op)) {
+  if (!isLROOperation(op) && injectSpans) {
     text += `\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.${opName}", client.internal.Tracer(), nil)\n`;
     text += '\tdefer func() { endSpan(err) }()\n';
   }
@@ -1139,7 +1140,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   return [returnType, errorType];
 }
 
-function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
+function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
   const returns = generateReturnsInfo(op, 'api');
@@ -1169,8 +1170,10 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';
-  text += `\t\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.Begin${op.language.go!.name}", client.internal.Tracer(), nil)\n`;
-  text += '\t\tdefer func() { endSpan(err) }()\n';
+  if (injectSpans) {
+    text += `\t\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.Begin${op.language.go!.name}", client.internal.Tracer(), nil)\n`;
+    text += '\t\tdefer func() { endSpan(err) }()\n';
+  }
   // creating the poller from response branch
 
   let opName = op.language.go!.name;
