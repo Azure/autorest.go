@@ -284,7 +284,6 @@ func (client *BandwidthSchedulesClient) NewListByDataBoxEdgeDevicePager(deviceNa
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

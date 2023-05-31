@@ -264,7 +264,6 @@ func (client *DataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspa
 			}
 			return client.queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

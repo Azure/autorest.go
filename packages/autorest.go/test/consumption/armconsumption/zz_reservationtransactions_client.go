@@ -72,7 +72,6 @@ func (client *ReservationTransactionsClient) NewListPager(billingAccountID strin
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -138,7 +137,6 @@ func (client *ReservationTransactionsClient) NewListByBillingProfilePager(billin
 			}
 			return client.listByBillingProfileHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

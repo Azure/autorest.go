@@ -306,7 +306,6 @@ func (client *PipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineC
 			}
 			return client.getPipelinesByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

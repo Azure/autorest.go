@@ -283,7 +283,6 @@ func (client *TriggersClient) NewListByDataBoxEdgeDevicePager(deviceName string,
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

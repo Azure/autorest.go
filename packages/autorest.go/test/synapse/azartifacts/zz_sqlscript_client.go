@@ -238,7 +238,6 @@ func (client *SQLScriptClient) NewGetSQLScriptsByWorkspacePager(options *SQLScri
 			}
 			return client.getSQLScriptsByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

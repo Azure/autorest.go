@@ -303,7 +303,6 @@ func (client *LinkConnectionClient) NewListByWorkspacePager(options *LinkConnect
 			}
 			return client.listByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

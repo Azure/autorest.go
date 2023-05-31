@@ -67,7 +67,6 @@ func (client *OperationsClient) NewListPager(options *OperationsClientListOption
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

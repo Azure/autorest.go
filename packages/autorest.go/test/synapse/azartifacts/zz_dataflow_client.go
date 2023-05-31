@@ -238,7 +238,6 @@ func (client *DataFlowClient) NewGetDataFlowsByWorkspacePager(options *DataFlowC
 			}
 			return client.getDataFlowsByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

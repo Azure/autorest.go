@@ -238,7 +238,6 @@ func (client *DatasetClient) NewGetDatasetsByWorkspacePager(options *DatasetClie
 			}
 			return client.getDatasetsByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

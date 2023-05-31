@@ -73,7 +73,6 @@ func (client *EventsClient) NewListPager(startDate string, endDate string, scope
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

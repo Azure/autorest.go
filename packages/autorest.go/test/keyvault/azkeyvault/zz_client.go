@@ -1338,7 +1338,6 @@ func (client *Client) NewGetCertificateIssuersPager(vaultBaseURL string, options
 			}
 			return client.getCertificateIssuersHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -1514,7 +1513,6 @@ func (client *Client) NewGetCertificateVersionsPager(vaultBaseURL string, certif
 			}
 			return client.getCertificateVersionsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -1581,7 +1579,6 @@ func (client *Client) NewGetCertificatesPager(vaultBaseURL string, options *Clie
 			}
 			return client.getCertificatesHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -1706,7 +1703,6 @@ func (client *Client) NewGetDeletedCertificatesPager(vaultBaseURL string, option
 			}
 			return client.getDeletedCertificatesHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -1831,7 +1827,6 @@ func (client *Client) NewGetDeletedKeysPager(vaultBaseURL string, options *Clien
 			}
 			return client.getDeletedKeysHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -1957,7 +1952,6 @@ func (client *Client) NewGetDeletedSasDefinitionsPager(vaultBaseURL string, stor
 			}
 			return client.getDeletedSasDefinitionsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2079,7 +2073,6 @@ func (client *Client) NewGetDeletedSecretsPager(vaultBaseURL string, options *Cl
 			}
 			return client.getDeletedSecretsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2199,7 +2192,6 @@ func (client *Client) NewGetDeletedStorageAccountsPager(vaultBaseURL string, opt
 			}
 			return client.getDeletedStorageAccountsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2324,7 +2316,6 @@ func (client *Client) NewGetKeyVersionsPager(vaultBaseURL string, keyName string
 			}
 			return client.getKeyVersionsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2393,7 +2384,6 @@ func (client *Client) NewGetKeysPager(vaultBaseURL string, options *ClientGetKey
 			}
 			return client.getKeysHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2517,7 +2507,6 @@ func (client *Client) NewGetSasDefinitionsPager(vaultBaseURL string, storageAcco
 			}
 			return client.getSasDefinitionsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2646,7 +2635,6 @@ func (client *Client) NewGetSecretVersionsPager(vaultBaseURL string, secretName 
 			}
 			return client.getSecretVersionsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2714,7 +2702,6 @@ func (client *Client) NewGetSecretsPager(vaultBaseURL string, options *ClientGet
 			}
 			return client.getSecretsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -2831,7 +2818,6 @@ func (client *Client) NewGetStorageAccountsPager(vaultBaseURL string, options *C
 			}
 			return client.getStorageAccountsHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

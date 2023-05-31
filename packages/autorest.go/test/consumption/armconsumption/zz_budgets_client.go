@@ -258,7 +258,6 @@ func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientLi
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

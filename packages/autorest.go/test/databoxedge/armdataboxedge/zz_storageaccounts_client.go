@@ -284,7 +284,6 @@ func (client *StorageAccountsClient) NewListByDataBoxEdgeDevicePager(deviceName 
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

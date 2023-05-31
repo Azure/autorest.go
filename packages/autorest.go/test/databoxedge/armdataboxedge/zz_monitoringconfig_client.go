@@ -285,7 +285,6 @@ func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName s
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

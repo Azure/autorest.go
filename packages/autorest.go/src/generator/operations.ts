@@ -301,7 +301,7 @@ function responseHasHeaders(op: Operation): boolean {
   return false;
 }
 
-function emitPagerDefinition(op: Operation, imports: ImportManager): string {
+function emitPagerDefinition(op: Operation, injectSpans: boolean, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const nextLink = op.language.go!.paging.nextLinkName;
   imports.add('context');
@@ -363,7 +363,9 @@ function emitPagerDefinition(op: Operation, imports: ImportManager): string {
   text += '\t\t\t}\n';
   text += `\t\t\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
   text += '\t\t},\n';
-  text += '\t\tTracer: client.internal.Tracer(),\n';
+  if (injectSpans) {
+    text += '\t\tTracer: client.internal.Tracer(),\n';
+  }
   text += `\t})\n`;
   return text;
 }
@@ -412,7 +414,7 @@ function generateOperation(op: Operation, injectSpans: boolean, imports: ImportM
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     text += '\treturn ';
-    text += emitPagerDefinition(op, imports);
+    text += emitPagerDefinition(op, injectSpans, imports);
     text += '}\n\n';
     return text;
   }
@@ -1163,7 +1165,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
-    text += emitPagerDefinition(op, imports);
+    text += emitPagerDefinition(op, injectSpans, imports);
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';

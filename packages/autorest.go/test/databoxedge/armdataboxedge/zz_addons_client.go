@@ -298,7 +298,6 @@ func (client *AddonsClient) NewListByRolePager(deviceName string, roleName strin
 			}
 			return client.listByRoleHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

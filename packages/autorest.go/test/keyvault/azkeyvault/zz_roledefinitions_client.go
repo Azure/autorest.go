@@ -231,7 +231,6 @@ func (client *RoleDefinitionsClient) NewListPager(vaultBaseURL string, scope str
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

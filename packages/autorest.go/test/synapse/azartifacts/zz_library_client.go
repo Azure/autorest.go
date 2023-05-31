@@ -402,7 +402,6 @@ func (client *LibraryClient) NewListPager(options *LibraryClientListOptions) *ru
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

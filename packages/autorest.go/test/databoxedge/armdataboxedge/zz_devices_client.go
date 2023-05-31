@@ -693,7 +693,6 @@ func (client *DevicesClient) NewListByResourceGroupPager(resourceGroupName strin
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -761,7 +760,6 @@ func (client *DevicesClient) NewListBySubscriptionPager(options *DevicesClientLi
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

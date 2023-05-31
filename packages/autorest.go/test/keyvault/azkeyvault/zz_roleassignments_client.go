@@ -230,7 +230,6 @@ func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, s
 			}
 			return client.listForScopeHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

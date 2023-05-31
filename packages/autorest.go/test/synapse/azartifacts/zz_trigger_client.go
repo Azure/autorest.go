@@ -290,7 +290,6 @@ func (client *TriggerClient) NewGetTriggersByWorkspacePager(options *TriggerClie
 			}
 			return client.getTriggersByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

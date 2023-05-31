@@ -76,7 +76,6 @@ func (client *NodesClient) NewListByDataBoxEdgeDevicePager(deviceName string, re
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

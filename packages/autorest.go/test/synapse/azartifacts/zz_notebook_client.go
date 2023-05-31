@@ -238,7 +238,6 @@ func (client *NotebookClient) NewGetNotebookSummaryByWorkSpacePager(options *Not
 			}
 			return client.getNotebookSummaryByWorkSpaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -295,7 +294,6 @@ func (client *NotebookClient) NewGetNotebooksByWorkspacePager(options *NotebookC
 			}
 			return client.getNotebooksByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -239,7 +239,6 @@ func (client *SparkConfigurationClient) NewGetSparkConfigurationsByWorkspacePage
 			}
 			return client.getSparkConfigurationsByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -299,7 +299,6 @@ func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, 
 			}
 			return client.listByStorageAccountHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

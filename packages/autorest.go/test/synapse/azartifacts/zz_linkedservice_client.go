@@ -239,7 +239,6 @@ func (client *LinkedServiceClient) NewGetLinkedServicesByWorkspacePager(options 
 			}
 			return client.getLinkedServicesByWorkspaceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

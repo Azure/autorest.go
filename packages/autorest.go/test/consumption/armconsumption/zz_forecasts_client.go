@@ -69,7 +69,6 @@ func (client *ForecastsClient) NewListPager(options *ForecastsClientListOptions)
 			}
 			return client.listHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 

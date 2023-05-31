@@ -138,7 +138,6 @@ func (client *AlertsClient) NewListByDataBoxEdgeDevicePager(deviceName string, r
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
