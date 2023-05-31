@@ -15,7 +15,9 @@ import (
 )
 
 func newSubscriptionInMethodClient(t *testing.T) *SubscriptionInMethodClient {
-	client, err := NewSubscriptionInMethodClient(nil)
+	client, err := NewSubscriptionInMethodClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

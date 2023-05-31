@@ -20,6 +20,7 @@ import (
 func newLrOSCustomHeaderClient(t *testing.T) *LROsCustomHeaderClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
+	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
 	client, err := NewLROsCustomHeaderClient(&options)
 	require.NoError(t, err)

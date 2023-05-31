@@ -17,7 +17,9 @@ import (
 )
 
 func newArrayClient(t *testing.T) *ArrayClient {
-	client, err := NewArrayClient(nil)
+	client, err := NewArrayClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

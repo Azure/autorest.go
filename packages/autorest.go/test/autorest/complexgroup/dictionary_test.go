@@ -15,7 +15,9 @@ import (
 )
 
 func newDictionaryClient(t *testing.T) *DictionaryClient {
-	client, err := NewDictionaryClient(nil)
+	client, err := NewDictionaryClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

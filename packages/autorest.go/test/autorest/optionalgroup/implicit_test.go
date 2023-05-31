@@ -14,7 +14,9 @@ import (
 )
 
 func newImplicitClient(t *testing.T) *ImplicitClient {
-	client, err := NewImplicitClient("", "", nil, nil)
+	client, err := NewImplicitClient("", "", nil, &azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

@@ -17,7 +17,9 @@ import (
 )
 
 func newUploadClient(t *testing.T) *UploadClient {
-	client, err := NewUploadClient(nil)
+	client, err := NewUploadClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

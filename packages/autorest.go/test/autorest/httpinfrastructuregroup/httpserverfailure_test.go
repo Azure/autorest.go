@@ -14,7 +14,9 @@ import (
 )
 
 func newHTTPServerFailureClient(t *testing.T) *HTTPServerFailureClient {
-	client, err := NewHTTPServerFailureClient(nil)
+	client, err := NewHTTPServerFailureClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

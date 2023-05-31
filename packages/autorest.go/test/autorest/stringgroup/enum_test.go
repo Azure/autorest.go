@@ -16,7 +16,9 @@ import (
 )
 
 func newEnumClient(t *testing.T) *EnumClient {
-	client, err := NewEnumClient(nil)
+	client, err := NewEnumClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

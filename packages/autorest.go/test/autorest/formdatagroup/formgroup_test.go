@@ -17,7 +17,9 @@ import (
 )
 
 func newFormdataClient(t *testing.T) *FormdataClient {
-	client, err := NewFormdataClient(nil)
+	client, err := NewFormdataClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

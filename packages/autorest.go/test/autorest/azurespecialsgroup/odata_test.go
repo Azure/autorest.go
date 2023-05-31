@@ -15,7 +15,9 @@ import (
 )
 
 func newODataClient(t *testing.T) *ODataClient {
-	client, err := NewODataClient(nil)
+	client, err := NewODataClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

@@ -18,7 +18,9 @@ import (
 )
 
 func newHeaderClient(t *testing.T) *HeaderClient {
-	client, err := NewHeaderClient(nil)
+	client, err := NewHeaderClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

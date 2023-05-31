@@ -17,7 +17,9 @@ import (
 )
 
 func newPolymorphicrecursiveClient(t *testing.T) *PolymorphicrecursiveClient {
-	client, err := NewPolymorphicrecursiveClient(nil)
+	client, err := NewPolymorphicrecursiveClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

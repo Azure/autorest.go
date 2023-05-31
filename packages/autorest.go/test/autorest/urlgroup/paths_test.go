@@ -15,7 +15,9 @@ import (
 )
 
 func newPathsClient(t *testing.T) *PathsClient {
-	client, err := NewPathsClient(nil)
+	client, err := NewPathsClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

@@ -14,7 +14,9 @@ import (
 )
 
 func newComplexModelClient(t *testing.T) *ComplexModelClient {
-	client, err := NewComplexModelClient(nil)
+	client, err := NewComplexModelClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

@@ -17,7 +17,9 @@ import (
 )
 
 func newPolymorphismClient(t *testing.T) *PolymorphismClient {
-	client, err := NewPolymorphismClient(nil)
+	client, err := NewPolymorphismClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

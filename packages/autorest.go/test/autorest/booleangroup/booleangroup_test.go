@@ -16,7 +16,9 @@ import (
 )
 
 func newBoolClient(t *testing.T) *BoolClient {
-	client, err := NewBoolClient(nil)
+	client, err := NewBoolClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

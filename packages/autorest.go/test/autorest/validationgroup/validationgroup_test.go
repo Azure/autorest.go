@@ -15,7 +15,9 @@ import (
 )
 
 func newAutoRestValidationTestClient(t *testing.T) *AutoRestValidationTestClient {
-	client, err := NewAutoRestValidationTestClient("", nil)
+	client, err := NewAutoRestValidationTestClient("", &azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }
