@@ -29,22 +29,22 @@ type WorkspaceClient struct {
 //
 // Generated from API version 2020-12-01
 //   - options - WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
-func (client *WorkspaceClient) Get(ctx context.Context, options *WorkspaceClientGetOptions) (resp WorkspaceClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "WorkspaceClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *WorkspaceClient) Get(ctx context.Context, options *WorkspaceClientGetOptions) (WorkspaceClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return WorkspaceClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return WorkspaceClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return WorkspaceClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

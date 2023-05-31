@@ -30,22 +30,24 @@ type HeaderClient struct {
 //   - fooClientRequestID - The fooRequestId
 //   - options - HeaderClientCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID
 //     method.
-func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDOptions) (resp HeaderClientCustomNamedRequestIDResponse, err error) {
+func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDOptions) (HeaderClientCustomNamedRequestIDResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.CustomNamedRequestID", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.customNamedRequestIDCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
-		return
+		return HeaderClientCustomNamedRequestIDResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HeaderClientCustomNamedRequestIDResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HeaderClientCustomNamedRequestIDResponse{}, err
 	}
-	return client.customNamedRequestIDHandleResponse(httpResp)
+	resp, err := client.customNamedRequestIDHandleResponse(httpResp)
+	return resp, err
 }
 
 // customNamedRequestIDCreateRequest creates the CustomNamedRequestID request.
@@ -75,22 +77,24 @@ func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *http.Respon
 //   - fooClientRequestID - The fooRequestId
 //   - options - HeaderClientCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
 //     method.
-func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDHeadOptions) (resp HeaderClientCustomNamedRequestIDHeadResponse, err error) {
+func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDHeadOptions) (HeaderClientCustomNamedRequestIDHeadResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.CustomNamedRequestIDHead", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.customNamedRequestIDHeadCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
-		return
+		return HeaderClientCustomNamedRequestIDHeadResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HeaderClientCustomNamedRequestIDHeadResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HeaderClientCustomNamedRequestIDHeadResponse{}, err
 	}
-	return client.customNamedRequestIDHeadHandleResponse(httpResp)
+	resp, err := client.customNamedRequestIDHeadHandleResponse(httpResp)
+	return resp, err
 }
 
 // customNamedRequestIDHeadCreateRequest creates the CustomNamedRequestIDHead request.
@@ -124,22 +128,24 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 //     a group of parameters for the HeaderClient.CustomNamedRequestIDParamGrouping method.
 //   - options - HeaderClientCustomNamedRequestIDParamGroupingOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDParamGrouping
 //     method.
-func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerClientCustomNamedRequestIDParamGroupingParameters HeaderClientCustomNamedRequestIDParamGroupingParameters, options *HeaderClientCustomNamedRequestIDParamGroupingOptions) (resp HeaderClientCustomNamedRequestIDParamGroupingResponse, err error) {
+func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerClientCustomNamedRequestIDParamGroupingParameters HeaderClientCustomNamedRequestIDParamGroupingParameters, options *HeaderClientCustomNamedRequestIDParamGroupingOptions) (HeaderClientCustomNamedRequestIDParamGroupingResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "HeaderClient.CustomNamedRequestIDParamGrouping", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.customNamedRequestIDParamGroupingCreateRequest(ctx, headerClientCustomNamedRequestIDParamGroupingParameters, options)
 	if err != nil {
-		return
+		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, err
 	}
-	return client.customNamedRequestIDParamGroupingHandleResponse(httpResp)
+	resp, err := client.customNamedRequestIDParamGroupingHandleResponse(httpResp)
+	return resp, err
 }
 
 // customNamedRequestIDParamGroupingCreateRequest creates the CustomNamedRequestIDParamGrouping request.

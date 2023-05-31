@@ -27,20 +27,21 @@ type HTTPSuccessClient struct {
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
-func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (resp HTTPSuccessClientHead200Response, err error) {
+func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (HTTPSuccessClientHead200Response, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head200", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
-		return
+		return HTTPSuccessClientHead200Response{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HTTPSuccessClientHead200Response{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HTTPSuccessClientHead200Response{}, err
 	}
 	return HTTPSuccessClientHead200Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
@@ -59,20 +60,21 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
-func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (resp HTTPSuccessClientHead204Response, err error) {
+func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (HTTPSuccessClientHead204Response, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head204", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
-		return
+		return HTTPSuccessClientHead204Response{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HTTPSuccessClientHead204Response{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HTTPSuccessClientHead204Response{}, err
 	}
 	return HTTPSuccessClientHead204Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
@@ -91,20 +93,21 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 //
 // Generated from API version 1.0.0
 //   - options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
-func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (resp HTTPSuccessClientHead404Response, err error) {
+func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (HTTPSuccessClientHead404Response, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head404", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
-		return
+		return HTTPSuccessClientHead404Response{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HTTPSuccessClientHead404Response{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HTTPSuccessClientHead404Response{}, err
 	}
 	return HTTPSuccessClientHead404Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }

@@ -38,22 +38,23 @@ type PathItemsClient struct {
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetAllWithValuesOptions contains the optional parameters for the PathItemsClient.GetAllWithValues
 //     method.
-func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetAllWithValuesOptions) (resp PathItemsClientGetAllWithValuesResponse, err error) {
+func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetAllWithValuesOptions) (PathItemsClientGetAllWithValuesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetAllWithValues", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getAllWithValuesCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
-		return
+		return PathItemsClientGetAllWithValuesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PathItemsClientGetAllWithValuesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PathItemsClientGetAllWithValuesResponse{}, err
 	}
-	return
+	return PathItemsClientGetAllWithValuesResponse{}, nil
 }
 
 // getAllWithValuesCreateRequest creates the GetAllWithValues request.
@@ -100,22 +101,23 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalAndLocalQueryNull
 //     method.
-func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalAndLocalQueryNullOptions) (resp PathItemsClientGetGlobalAndLocalQueryNullResponse, err error) {
+func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalAndLocalQueryNullOptions) (PathItemsClientGetGlobalAndLocalQueryNullResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetGlobalAndLocalQueryNull", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getGlobalAndLocalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
-		return
+		return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, err
 	}
-	return
+	return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, nil
 }
 
 // getGlobalAndLocalQueryNullCreateRequest creates the GetGlobalAndLocalQueryNull request.
@@ -162,22 +164,23 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetGlobalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalQueryNull
 //     method.
-func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalQueryNullOptions) (resp PathItemsClientGetGlobalQueryNullResponse, err error) {
+func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalQueryNullOptions) (PathItemsClientGetGlobalQueryNullResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetGlobalQueryNull", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getGlobalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
-		return
+		return PathItemsClientGetGlobalQueryNullResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PathItemsClientGetGlobalQueryNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PathItemsClientGetGlobalQueryNullResponse{}, err
 	}
-	return
+	return PathItemsClientGetGlobalQueryNullResponse{}, nil
 }
 
 // getGlobalQueryNullCreateRequest creates the GetGlobalQueryNull request.
@@ -224,22 +227,23 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItemsClient.GetLocalPathItemQueryNull
 //     method.
-func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetLocalPathItemQueryNullOptions) (resp PathItemsClientGetLocalPathItemQueryNullResponse, err error) {
+func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetLocalPathItemQueryNullOptions) (PathItemsClientGetLocalPathItemQueryNullResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PathItemsClient.GetLocalPathItemQueryNull", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLocalPathItemQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
-		return
+		return PathItemsClientGetLocalPathItemQueryNullResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PathItemsClientGetLocalPathItemQueryNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PathItemsClientGetLocalPathItemQueryNullResponse{}, err
 	}
-	return
+	return PathItemsClientGetLocalPathItemQueryNullResponse{}, nil
 }
 
 // getLocalPathItemQueryNullCreateRequest creates the GetLocalPathItemQueryNull request.

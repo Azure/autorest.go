@@ -54,22 +54,24 @@ func NewManagementClient(subscriptionID string, credential azcore.TokenCredentia
 //   - domainNameLabel - The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
 //   - options - ManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the ManagementClient.CheckDNSNameAvailability
 //     method.
-func (client *ManagementClient) CheckDNSNameAvailability(ctx context.Context, location string, domainNameLabel string, options *ManagementClientCheckDNSNameAvailabilityOptions) (resp ManagementClientCheckDNSNameAvailabilityResponse, err error) {
+func (client *ManagementClient) CheckDNSNameAvailability(ctx context.Context, location string, domainNameLabel string, options *ManagementClientCheckDNSNameAvailabilityOptions) (ManagementClientCheckDNSNameAvailabilityResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.CheckDNSNameAvailability", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.checkDNSNameAvailabilityCreateRequest(ctx, location, domainNameLabel, options)
 	if err != nil {
-		return
+		return ManagementClientCheckDNSNameAvailabilityResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagementClientCheckDNSNameAvailabilityResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagementClientCheckDNSNameAvailabilityResponse{}, err
 	}
-	return client.checkDNSNameAvailabilityHandleResponse(httpResp)
+	resp, err := client.checkDNSNameAvailabilityHandleResponse(httpResp)
+	return resp, err
 }
 
 // checkDNSNameAvailabilityCreateRequest creates the CheckDNSNameAvailability request.
@@ -113,22 +115,21 @@ func (client *ManagementClient) checkDNSNameAvailabilityHandleResponse(resp *htt
 //   - bslRequest - Post request for all the Bastion Shareable Link endpoints.
 //   - options - ManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginDeleteBastionShareableLink
 //     method.
-func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (resp *runtime.Poller[ManagementClientDeleteBastionShareableLinkResponse], err error) {
+func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*runtime.Poller[ManagementClientDeleteBastionShareableLinkResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginDeleteBastionShareableLink", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ManagementClientDeleteBastionShareableLinkResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ManagementClientDeleteBastionShareableLinkResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ManagementClientDeleteBastionShareableLinkResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ManagementClientDeleteBastionShareableLinkResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -136,18 +137,19 @@ func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Cont
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ManagementClient) deleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (resp *http.Response, err error) {
+func (client *ManagementClient) deleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -263,22 +265,24 @@ func (client *ManagementClient) disconnectActiveSessionsHandleResponse(resp *htt
 //   - providerport - The name of the provider port.
 //   - options - ManagementClientExpressRouteProviderPortOptions contains the optional parameters for the ManagementClient.ExpressRouteProviderPort
 //     method.
-func (client *ManagementClient) ExpressRouteProviderPort(ctx context.Context, providerport string, options *ManagementClientExpressRouteProviderPortOptions) (resp ManagementClientExpressRouteProviderPortResponse, err error) {
+func (client *ManagementClient) ExpressRouteProviderPort(ctx context.Context, providerport string, options *ManagementClientExpressRouteProviderPortOptions) (ManagementClientExpressRouteProviderPortResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.ExpressRouteProviderPort", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.expressRouteProviderPortCreateRequest(ctx, providerport, options)
 	if err != nil {
-		return
+		return ManagementClientExpressRouteProviderPortResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagementClientExpressRouteProviderPortResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagementClientExpressRouteProviderPortResponse{}, err
 	}
-	return client.expressRouteProviderPortHandleResponse(httpResp)
+	resp, err := client.expressRouteProviderPortHandleResponse(httpResp)
+	return resp, err
 }
 
 // expressRouteProviderPortCreateRequest creates the ExpressRouteProviderPort request.
@@ -322,22 +326,21 @@ func (client *ManagementClient) expressRouteProviderPortHandleResponse(resp *htt
 //   - vpnClientParams - Parameters supplied to the generate VirtualWan VPN profile generation operation.
 //   - options - ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters
 //     for the ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
-func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (resp *runtime.Poller[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse], err error) {
+func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*runtime.Poller[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -346,18 +349,19 @@ func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpn
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (resp *http.Response, err error) {
+func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*http.Response, error) {
+	var err error
 	req, err := client.generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -398,7 +402,7 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 //   - bastionHostName - The name of the Bastion Host.
 //   - options - ManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the ManagementClient.BeginGetActiveSessions
 //     method.
-func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (resp *runtime.Poller[*runtime.Pager[ManagementClientGetActiveSessionsResponse]], err error) {
+func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*runtime.Poller[*runtime.Pager[ManagementClientGetActiveSessionsResponse]], error) {
 	pager := runtime.NewPager(runtime.PagingHandler[ManagementClientGetActiveSessionsResponse]{
 		More: func(page ManagementClientGetActiveSessionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -420,21 +424,21 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 		Tracer: client.internal.Tracer(),
 	})
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginGetActiveSessions", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getActiveSessions(ctx, resourceGroupName, bastionHostName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ManagementClientGetActiveSessionsResponse]]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ManagementClientGetActiveSessionsResponse]]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 			Response:      &pager,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[ManagementClientGetActiveSessionsResponse]]{
 			Response: &pager,
-			Tracer:   client.internal.Tracer(),
 		})
 	}
 }
@@ -442,18 +446,19 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 // GetActiveSessions - Returns the list of currently active sessions on the Bastion.
 //
 // Generated from API version 2022-09-01
-func (client *ManagementClient) getActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (resp *http.Response, err error) {
+func (client *ManagementClient) getActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*http.Response, error) {
+	var err error
 	req, err := client.getActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -577,22 +582,24 @@ func (client *ManagementClient) getBastionShareableLinkHandleResponse(resp *http
 //   - parameters - Active Configuration Parameter.
 //   - options - ManagementClientListActiveConnectivityConfigurationsOptions contains the optional parameters for the ManagementClient.ListActiveConnectivityConfigurations
 //     method.
-func (client *ManagementClient) ListActiveConnectivityConfigurations(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ActiveConfigurationParameter, options *ManagementClientListActiveConnectivityConfigurationsOptions) (resp ManagementClientListActiveConnectivityConfigurationsResponse, err error) {
+func (client *ManagementClient) ListActiveConnectivityConfigurations(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ActiveConfigurationParameter, options *ManagementClientListActiveConnectivityConfigurationsOptions) (ManagementClientListActiveConnectivityConfigurationsResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.ListActiveConnectivityConfigurations", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listActiveConnectivityConfigurationsCreateRequest(ctx, resourceGroupName, networkManagerName, parameters, options)
 	if err != nil {
-		return
+		return ManagementClientListActiveConnectivityConfigurationsResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagementClientListActiveConnectivityConfigurationsResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagementClientListActiveConnectivityConfigurationsResponse{}, err
 	}
-	return client.listActiveConnectivityConfigurationsHandleResponse(httpResp)
+	resp, err := client.listActiveConnectivityConfigurationsHandleResponse(httpResp)
+	return resp, err
 }
 
 // listActiveConnectivityConfigurationsCreateRequest creates the ListActiveConnectivityConfigurations request.
@@ -645,22 +652,24 @@ func (client *ManagementClient) listActiveConnectivityConfigurationsHandleRespon
 //   - parameters - Active Configuration Parameter.
 //   - options - ManagementClientListActiveSecurityAdminRulesOptions contains the optional parameters for the ManagementClient.ListActiveSecurityAdminRules
 //     method.
-func (client *ManagementClient) ListActiveSecurityAdminRules(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ActiveConfigurationParameter, options *ManagementClientListActiveSecurityAdminRulesOptions) (resp ManagementClientListActiveSecurityAdminRulesResponse, err error) {
+func (client *ManagementClient) ListActiveSecurityAdminRules(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ActiveConfigurationParameter, options *ManagementClientListActiveSecurityAdminRulesOptions) (ManagementClientListActiveSecurityAdminRulesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.ListActiveSecurityAdminRules", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listActiveSecurityAdminRulesCreateRequest(ctx, resourceGroupName, networkManagerName, parameters, options)
 	if err != nil {
-		return
+		return ManagementClientListActiveSecurityAdminRulesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagementClientListActiveSecurityAdminRulesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagementClientListActiveSecurityAdminRulesResponse{}, err
 	}
-	return client.listActiveSecurityAdminRulesHandleResponse(httpResp)
+	resp, err := client.listActiveSecurityAdminRulesHandleResponse(httpResp)
+	return resp, err
 }
 
 // listActiveSecurityAdminRulesCreateRequest creates the ListActiveSecurityAdminRules request.
@@ -714,22 +723,24 @@ func (client *ManagementClient) listActiveSecurityAdminRulesHandleResponse(resp 
 //   - parameters - Parameters supplied to list correct page.
 //   - options - ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsOptions contains the optional parameters
 //     for the ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations method.
-func (client *ManagementClient) ListNetworkManagerEffectiveConnectivityConfigurations(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters QueryRequestOptions, options *ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsOptions) (resp ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsResponse, err error) {
+func (client *ManagementClient) ListNetworkManagerEffectiveConnectivityConfigurations(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters QueryRequestOptions, options *ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsOptions) (ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listNetworkManagerEffectiveConnectivityConfigurationsCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
-		return
+		return ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagementClientListNetworkManagerEffectiveConnectivityConfigurationsResponse{}, err
 	}
-	return client.listNetworkManagerEffectiveConnectivityConfigurationsHandleResponse(httpResp)
+	resp, err := client.listNetworkManagerEffectiveConnectivityConfigurationsHandleResponse(httpResp)
+	return resp, err
 }
 
 // listNetworkManagerEffectiveConnectivityConfigurationsCreateRequest creates the ListNetworkManagerEffectiveConnectivityConfigurations request.
@@ -782,22 +793,24 @@ func (client *ManagementClient) listNetworkManagerEffectiveConnectivityConfigura
 //   - parameters - Parameters supplied to list correct page.
 //   - options - ManagementClientListNetworkManagerEffectiveSecurityAdminRulesOptions contains the optional parameters for the
 //     ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules method.
-func (client *ManagementClient) ListNetworkManagerEffectiveSecurityAdminRules(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters QueryRequestOptions, options *ManagementClientListNetworkManagerEffectiveSecurityAdminRulesOptions) (resp ManagementClientListNetworkManagerEffectiveSecurityAdminRulesResponse, err error) {
+func (client *ManagementClient) ListNetworkManagerEffectiveSecurityAdminRules(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters QueryRequestOptions, options *ManagementClientListNetworkManagerEffectiveSecurityAdminRulesOptions) (ManagementClientListNetworkManagerEffectiveSecurityAdminRulesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listNetworkManagerEffectiveSecurityAdminRulesCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
-		return
+		return ManagementClientListNetworkManagerEffectiveSecurityAdminRulesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagementClientListNetworkManagerEffectiveSecurityAdminRulesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagementClientListNetworkManagerEffectiveSecurityAdminRulesResponse{}, err
 	}
-	return client.listNetworkManagerEffectiveSecurityAdminRulesHandleResponse(httpResp)
+	resp, err := client.listNetworkManagerEffectiveSecurityAdminRulesHandleResponse(httpResp)
+	return resp, err
 }
 
 // listNetworkManagerEffectiveSecurityAdminRulesCreateRequest creates the ListNetworkManagerEffectiveSecurityAdminRules request.
@@ -849,7 +862,7 @@ func (client *ManagementClient) listNetworkManagerEffectiveSecurityAdminRulesHan
 //   - bslRequest - Post request for all the Bastion Shareable Link endpoints.
 //   - options - ManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginPutBastionShareableLink
 //     method.
-func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (resp *runtime.Poller[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]], err error) {
+func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*runtime.Poller[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]], error) {
 	pager := runtime.NewPager(runtime.PagingHandler[ManagementClientPutBastionShareableLinkResponse]{
 		More: func(page ManagementClientPutBastionShareableLinkResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -871,21 +884,21 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 		Tracer: client.internal.Tracer(),
 	})
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginPutBastionShareableLink", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 			Response:      &pager,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]]{
 			Response: &pager,
-			Tracer:   client.internal.Tracer(),
 		})
 	}
 }
@@ -893,18 +906,19 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 // PutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
 //
 // Generated from API version 2022-09-01
-func (client *ManagementClient) putBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (resp *http.Response, err error) {
+func (client *ManagementClient) putBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*http.Response, error) {
+	var err error
 	req, err := client.putBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -955,22 +969,24 @@ func (client *ManagementClient) putBastionShareableLinkHandleResponse(resp *http
 //   - virtualWANName - The name of the VirtualWAN for which supported security providers are needed.
 //   - options - ManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the ManagementClient.SupportedSecurityProviders
 //     method.
-func (client *ManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualWANName string, options *ManagementClientSupportedSecurityProvidersOptions) (resp ManagementClientSupportedSecurityProvidersResponse, err error) {
+func (client *ManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualWANName string, options *ManagementClientSupportedSecurityProvidersOptions) (ManagementClientSupportedSecurityProvidersResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.SupportedSecurityProviders", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.supportedSecurityProvidersCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return
+		return ManagementClientSupportedSecurityProvidersResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagementClientSupportedSecurityProvidersResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagementClientSupportedSecurityProvidersResponse{}, err
 	}
-	return client.supportedSecurityProvidersHandleResponse(httpResp)
+	resp, err := client.supportedSecurityProvidersHandleResponse(httpResp)
+	return resp, err
 }
 
 // supportedSecurityProvidersCreateRequest creates the SupportedSecurityProviders request.

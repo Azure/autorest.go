@@ -54,22 +54,24 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 //   - defaultSecurityRuleName - The name of the default security rule.
 //   - options - DefaultSecurityRulesClientGetOptions contains the optional parameters for the DefaultSecurityRulesClient.Get
 //     method.
-func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesClientGetOptions) (resp DefaultSecurityRulesClientGetResponse, err error) {
+func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesClientGetOptions) (DefaultSecurityRulesClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "DefaultSecurityRulesClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
-		return
+		return DefaultSecurityRulesClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return DefaultSecurityRulesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return DefaultSecurityRulesClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

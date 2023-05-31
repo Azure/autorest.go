@@ -55,22 +55,24 @@ func NewManagerDeploymentStatusClient(subscriptionID string, credential azcore.T
 //   - parameters - Parameters supplied to specify which Managed Network deployment status is.
 //   - options - ManagerDeploymentStatusClientListOptions contains the optional parameters for the ManagerDeploymentStatusClient.List
 //     method.
-func (client *ManagerDeploymentStatusClient) List(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ManagerDeploymentStatusParameter, options *ManagerDeploymentStatusClientListOptions) (resp ManagerDeploymentStatusClientListResponse, err error) {
+func (client *ManagerDeploymentStatusClient) List(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ManagerDeploymentStatusParameter, options *ManagerDeploymentStatusClientListOptions) (ManagerDeploymentStatusClientListResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ManagerDeploymentStatusClient.List", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, networkManagerName, parameters, options)
 	if err != nil {
-		return
+		return ManagerDeploymentStatusClientListResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ManagerDeploymentStatusClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ManagerDeploymentStatusClientListResponse{}, err
 	}
-	return client.listHandleResponse(httpResp)
+	resp, err := client.listHandleResponse(httpResp)
+	return resp, err
 }
 
 // listCreateRequest creates the List request.

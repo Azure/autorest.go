@@ -54,22 +54,21 @@ func NewInterfacesClient(subscriptionID string, credential azcore.TokenCredentia
 //   - parameters - Parameters supplied to the create or update network interface operation.
 //   - options - InterfacesClientBeginCreateOrUpdateOptions contains the optional parameters for the InterfacesClient.BeginCreateOrUpdate
 //     method.
-func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[InterfacesClientCreateOrUpdateResponse], err error) {
+func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*runtime.Poller[InterfacesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientCreateOrUpdateResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[InterfacesClientCreateOrUpdateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[InterfacesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -77,18 +76,19 @@ func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *InterfacesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
+func (client *InterfacesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -129,22 +129,21 @@ func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context,
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfacesClientBeginDeleteOptions contains the optional parameters for the InterfacesClient.BeginDelete method.
-func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (resp *runtime.Poller[InterfacesClientDeleteResponse], err error) {
+func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*runtime.Poller[InterfacesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientDeleteResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[InterfacesClientDeleteResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[InterfacesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -152,18 +151,19 @@ func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupNa
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *InterfacesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (resp *http.Response, err error) {
+func (client *InterfacesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -201,22 +201,24 @@ func (client *InterfacesClient) deleteCreateRequest(ctx context.Context, resourc
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfacesClientGetOptions contains the optional parameters for the InterfacesClient.Get method.
-func (client *InterfacesClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientGetOptions) (resp InterfacesClientGetResponse, err error) {
+func (client *InterfacesClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientGetOptions) (InterfacesClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
-		return
+		return InterfacesClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return InterfacesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return InterfacesClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -267,22 +269,24 @@ func (client *InterfacesClient) getHandleResponse(resp *http.Response) (Interfac
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfacesClientGetCloudServiceNetworkInterfaceOptions contains the optional parameters for the InterfacesClient.GetCloudServiceNetworkInterface
 //     method.
-func (client *InterfacesClient) GetCloudServiceNetworkInterface(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, networkInterfaceName string, options *InterfacesClientGetCloudServiceNetworkInterfaceOptions) (resp InterfacesClientGetCloudServiceNetworkInterfaceResponse, err error) {
+func (client *InterfacesClient) GetCloudServiceNetworkInterface(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, networkInterfaceName string, options *InterfacesClientGetCloudServiceNetworkInterfaceOptions) (InterfacesClientGetCloudServiceNetworkInterfaceResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.GetCloudServiceNetworkInterface", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCloudServiceNetworkInterfaceCreateRequest(ctx, resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, options)
 	if err != nil {
-		return
+		return InterfacesClientGetCloudServiceNetworkInterfaceResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return InterfacesClientGetCloudServiceNetworkInterfaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return InterfacesClientGetCloudServiceNetworkInterfaceResponse{}, err
 	}
-	return client.getCloudServiceNetworkInterfaceHandleResponse(httpResp)
+	resp, err := client.getCloudServiceNetworkInterfaceHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCloudServiceNetworkInterfaceCreateRequest creates the GetCloudServiceNetworkInterface request.
@@ -339,22 +343,21 @@ func (client *InterfacesClient) getCloudServiceNetworkInterfaceHandleResponse(re
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfacesClientBeginGetEffectiveRouteTableOptions contains the optional parameters for the InterfacesClient.BeginGetEffectiveRouteTable
 //     method.
-func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (resp *runtime.Poller[InterfacesClientGetEffectiveRouteTableResponse], err error) {
+func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*runtime.Poller[InterfacesClientGetEffectiveRouteTableResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginGetEffectiveRouteTable", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientGetEffectiveRouteTableResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientGetEffectiveRouteTableResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[InterfacesClientGetEffectiveRouteTableResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[InterfacesClientGetEffectiveRouteTableResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -362,18 +365,19 @@ func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *InterfacesClient) getEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (resp *http.Response, err error) {
+func (client *InterfacesClient) getEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*http.Response, error) {
+	var err error
 	req, err := client.getEffectiveRouteTableCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -416,22 +420,24 @@ func (client *InterfacesClient) getEffectiveRouteTableCreateRequest(ctx context.
 //   - ipConfigurationName - The name of the ip configuration.
 //   - options - InterfacesClientGetVirtualMachineScaleSetIPConfigurationOptions contains the optional parameters for the InterfacesClient.GetVirtualMachineScaleSetIPConfiguration
 //     method.
-func (client *InterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *InterfacesClientGetVirtualMachineScaleSetIPConfigurationOptions) (resp InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse, err error) {
+func (client *InterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *InterfacesClientGetVirtualMachineScaleSetIPConfigurationOptions) (InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.GetVirtualMachineScaleSetIPConfiguration", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getVirtualMachineScaleSetIPConfigurationCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
-		return
+		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, err
 	}
-	return client.getVirtualMachineScaleSetIPConfigurationHandleResponse(httpResp)
+	resp, err := client.getVirtualMachineScaleSetIPConfigurationHandleResponse(httpResp)
+	return resp, err
 }
 
 // getVirtualMachineScaleSetIPConfigurationCreateRequest creates the GetVirtualMachineScaleSetIPConfiguration request.
@@ -494,22 +500,24 @@ func (client *InterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleRe
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceOptions contains the optional parameters for the InterfacesClient.GetVirtualMachineScaleSetNetworkInterface
 //     method.
-func (client *InterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceOptions) (resp InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse, err error) {
+func (client *InterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceOptions) (InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.GetVirtualMachineScaleSetNetworkInterface", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
 	if err != nil {
-		return
+		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, err
 	}
-	return client.getVirtualMachineScaleSetNetworkInterfaceHandleResponse(httpResp)
+	resp, err := client.getVirtualMachineScaleSetNetworkInterfaceHandleResponse(httpResp)
+	return resp, err
 }
 
 // getVirtualMachineScaleSetNetworkInterfaceCreateRequest creates the GetVirtualMachineScaleSetNetworkInterface request.
@@ -839,22 +847,21 @@ func (client *InterfacesClient) listCloudServiceRoleInstanceNetworkInterfacesHan
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the InterfacesClient.BeginListEffectiveNetworkSecurityGroups
 //     method.
-func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (resp *runtime.Poller[InterfacesClientListEffectiveNetworkSecurityGroupsResponse], err error) {
+func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*runtime.Poller[InterfacesClientListEffectiveNetworkSecurityGroupsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginListEffectiveNetworkSecurityGroups", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[InterfacesClientListEffectiveNetworkSecurityGroupsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -862,18 +869,19 @@ func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx cont
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *InterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (resp *http.Response, err error) {
+func (client *InterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*http.Response, error) {
+	var err error
 	req, err := client.listEffectiveNetworkSecurityGroupsCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -1145,22 +1153,24 @@ func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHan
 //   - networkInterfaceName - The name of the network interface.
 //   - parameters - Parameters supplied to update network interface tags.
 //   - options - InterfacesClientUpdateTagsOptions contains the optional parameters for the InterfacesClient.UpdateTags method.
-func (client *InterfacesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *InterfacesClientUpdateTagsOptions) (resp InterfacesClientUpdateTagsResponse, err error) {
+func (client *InterfacesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *InterfacesClientUpdateTagsOptions) (InterfacesClientUpdateTagsResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.UpdateTags", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
-		return
+		return InterfacesClientUpdateTagsResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return InterfacesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return InterfacesClientUpdateTagsResponse{}, err
 	}
-	return client.updateTagsHandleResponse(httpResp)
+	resp, err := client.updateTagsHandleResponse(httpResp)
+	return resp, err
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

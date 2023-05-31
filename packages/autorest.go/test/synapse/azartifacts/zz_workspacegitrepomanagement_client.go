@@ -30,22 +30,22 @@ type WorkspaceGitRepoManagementClient struct {
 // Generated from API version 2020-12-01
 //   - options - WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagementClient.GetGitHubAccessToken
 //     method.
-func (client *WorkspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (resp WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "WorkspaceGitRepoManagementClient.GetGitHubAccessToken", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *WorkspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
+	var err error
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
-		return
+		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
 	}
-	return client.getGitHubAccessTokenHandleResponse(httpResp)
+	resp, err := client.getGitHubAccessTokenHandleResponse(httpResp)
+	return resp, err
 }
 
 // getGitHubAccessTokenCreateRequest creates the GetGitHubAccessToken request.

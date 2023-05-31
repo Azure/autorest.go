@@ -53,22 +53,24 @@ func NewServiceTagsClient(subscriptionID string, credential azcore.TokenCredenti
 //     list of service tags with prefix details across all regions but limited to the cloud that
 //     your subscription belongs to).
 //   - options - ServiceTagsClientListOptions contains the optional parameters for the ServiceTagsClient.List method.
-func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsClientListOptions) (resp ServiceTagsClientListResponse, err error) {
+func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsClientListOptions) (ServiceTagsClientListResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ServiceTagsClient.List", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {
-		return
+		return ServiceTagsClientListResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ServiceTagsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ServiceTagsClientListResponse{}, err
 	}
-	return client.listHandleResponse(httpResp)
+	resp, err := client.listHandleResponse(httpResp)
+	return resp, err
 }
 
 // listCreateRequest creates the List request.

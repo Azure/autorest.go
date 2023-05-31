@@ -35,21 +35,17 @@ type LinkedServiceClient struct {
 //   - linkedService - Linked service resource definition.
 //   - options - LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginCreateOrUpdateLinkedService
 //     method.
-func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (resp *runtime.Poller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse], err error) {
+func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "LinkedServiceClient.BeginCreateOrUpdateLinkedService", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LinkedServiceClientCreateOrUpdateLinkedServiceResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LinkedServiceClientCreateOrUpdateLinkedServiceResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -57,18 +53,19 @@ func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *LinkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (resp *http.Response, err error) {
+func (client *LinkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -104,21 +101,17 @@ func (client *LinkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 //   - linkedServiceName - The linked service name.
 //   - options - LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginDeleteLinkedService
 //     method.
-func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (resp *runtime.Poller[LinkedServiceClientDeleteLinkedServiceResponse], err error) {
+func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientDeleteLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "LinkedServiceClient.BeginDeleteLinkedService", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LinkedServiceClientDeleteLinkedServiceResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[LinkedServiceClientDeleteLinkedServiceResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LinkedServiceClientDeleteLinkedServiceResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientDeleteLinkedServiceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -126,18 +119,19 @@ func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *LinkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (resp *http.Response, err error) {
+func (client *LinkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -167,22 +161,22 @@ func (client *LinkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 //   - linkedServiceName - The linked service name.
 //   - options - LinkedServiceClientGetLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.GetLinkedService
 //     method.
-func (client *LinkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientGetLinkedServiceOptions) (resp LinkedServiceClientGetLinkedServiceResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "LinkedServiceClient.GetLinkedService", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *LinkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientGetLinkedServiceOptions) (LinkedServiceClientGetLinkedServiceResponse, error) {
+	var err error
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
-		return
+		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotModified) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
-	return client.getLinkedServiceHandleResponse(httpResp)
+	resp, err := client.getLinkedServiceHandleResponse(httpResp)
+	return resp, err
 }
 
 // getLinkedServiceCreateRequest creates the GetLinkedService request.
@@ -280,21 +274,17 @@ func (client *LinkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 //   - request - proposed new name.
 //   - options - LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginRenameLinkedService
 //     method.
-func (client *LinkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (resp *runtime.Poller[LinkedServiceClientRenameLinkedServiceResponse], err error) {
+func (client *LinkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientRenameLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "LinkedServiceClient.BeginRenameLinkedService", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LinkedServiceClientRenameLinkedServiceResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[LinkedServiceClientRenameLinkedServiceResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LinkedServiceClientRenameLinkedServiceResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientRenameLinkedServiceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -302,18 +292,19 @@ func (client *LinkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *LinkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (resp *http.Response, err error) {
+func (client *LinkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*http.Response, error) {
+	var err error
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }

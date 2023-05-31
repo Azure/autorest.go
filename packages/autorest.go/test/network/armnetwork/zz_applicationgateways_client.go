@@ -53,22 +53,21 @@ func NewApplicationGatewaysClient(subscriptionID string, credential azcore.Token
 //   - applicationGatewayName - The name of the application gateway.
 //   - options - ApplicationGatewaysClientBeginBackendHealthOptions contains the optional parameters for the ApplicationGatewaysClient.BeginBackendHealth
 //     method.
-func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (resp *runtime.Poller[ApplicationGatewaysClientBackendHealthResponse], err error) {
+func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (*runtime.Poller[ApplicationGatewaysClientBackendHealthResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginBackendHealth", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.backendHealth(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientBackendHealthResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientBackendHealthResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewaysClientBackendHealthResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -76,18 +75,19 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewaysClient) backendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (resp *http.Response, err error) {
+func (client *ApplicationGatewaysClient) backendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (*http.Response, error) {
+	var err error
 	req, err := client.backendHealthCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -131,22 +131,21 @@ func (client *ApplicationGatewaysClient) backendHealthCreateRequest(ctx context.
 //   - probeRequest - Request body for on-demand test probe operation.
 //   - options - ApplicationGatewaysClientBeginBackendHealthOnDemandOptions contains the optional parameters for the ApplicationGatewaysClient.BeginBackendHealthOnDemand
 //     method.
-func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (resp *runtime.Poller[ApplicationGatewaysClientBackendHealthOnDemandResponse], err error) {
+func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (*runtime.Poller[ApplicationGatewaysClientBackendHealthOnDemandResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginBackendHealthOnDemand", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.backendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientBackendHealthOnDemandResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientBackendHealthOnDemandResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewaysClientBackendHealthOnDemandResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthOnDemandResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -155,18 +154,19 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewaysClient) backendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (resp *http.Response, err error) {
+func (client *ApplicationGatewaysClient) backendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (*http.Response, error) {
+	var err error
 	req, err := client.backendHealthOnDemandCreateRequest(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -212,22 +212,21 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandCreateRequest(ctx 
 //   - parameters - Parameters supplied to the create or update application gateway operation.
 //   - options - ApplicationGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationGatewaysClient.BeginCreateOrUpdate
 //     method.
-func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[ApplicationGatewaysClientCreateOrUpdateResponse], err error) {
+func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[ApplicationGatewaysClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientCreateOrUpdateResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientCreateOrUpdateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewaysClientCreateOrUpdateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ApplicationGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -235,18 +234,19 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
+func (client *ApplicationGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -288,22 +288,21 @@ func (client *ApplicationGatewaysClient) createOrUpdateCreateRequest(ctx context
 //   - applicationGatewayName - The name of the application gateway.
 //   - options - ApplicationGatewaysClientBeginDeleteOptions contains the optional parameters for the ApplicationGatewaysClient.BeginDelete
 //     method.
-func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (resp *runtime.Poller[ApplicationGatewaysClientDeleteResponse], err error) {
+func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (*runtime.Poller[ApplicationGatewaysClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientDeleteResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientDeleteResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewaysClientDeleteResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ApplicationGatewaysClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -311,18 +310,19 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (resp *http.Response, err error) {
+func (client *ApplicationGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -360,22 +360,24 @@ func (client *ApplicationGatewaysClient) deleteCreateRequest(ctx context.Context
 //   - resourceGroupName - The name of the resource group.
 //   - applicationGatewayName - The name of the application gateway.
 //   - options - ApplicationGatewaysClientGetOptions contains the optional parameters for the ApplicationGatewaysClient.Get method.
-func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientGetOptions) (resp ApplicationGatewaysClientGetResponse, err error) {
+func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientGetOptions) (ApplicationGatewaysClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -420,22 +422,24 @@ func (client *ApplicationGatewaysClient) getHandleResponse(resp *http.Response) 
 //   - predefinedPolicyName - Name of Ssl predefined policy.
 //   - options - ApplicationGatewaysClientGetSSLPredefinedPolicyOptions contains the optional parameters for the ApplicationGatewaysClient.GetSSLPredefinedPolicy
 //     method.
-func (client *ApplicationGatewaysClient) GetSSLPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysClientGetSSLPredefinedPolicyOptions) (resp ApplicationGatewaysClientGetSSLPredefinedPolicyResponse, err error) {
+func (client *ApplicationGatewaysClient) GetSSLPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysClientGetSSLPredefinedPolicyOptions) (ApplicationGatewaysClientGetSSLPredefinedPolicyResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.GetSSLPredefinedPolicy", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSSLPredefinedPolicyCreateRequest(ctx, predefinedPolicyName, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientGetSSLPredefinedPolicyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientGetSSLPredefinedPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientGetSSLPredefinedPolicyResponse{}, err
 	}
-	return client.getSSLPredefinedPolicyHandleResponse(httpResp)
+	resp, err := client.getSSLPredefinedPolicyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getSSLPredefinedPolicyCreateRequest creates the GetSSLPredefinedPolicy request.
@@ -602,22 +606,24 @@ func (client *ApplicationGatewaysClient) listAllHandleResponse(resp *http.Respon
 // Generated from API version 2022-09-01
 //   - options - ApplicationGatewaysClientListAvailableRequestHeadersOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableRequestHeaders
 //     method.
-func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context, options *ApplicationGatewaysClientListAvailableRequestHeadersOptions) (resp ApplicationGatewaysClientListAvailableRequestHeadersResponse, err error) {
+func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context, options *ApplicationGatewaysClientListAvailableRequestHeadersOptions) (ApplicationGatewaysClientListAvailableRequestHeadersResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.ListAvailableRequestHeaders", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listAvailableRequestHeadersCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableRequestHeadersResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableRequestHeadersResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientListAvailableRequestHeadersResponse{}, err
 	}
-	return client.listAvailableRequestHeadersHandleResponse(httpResp)
+	resp, err := client.listAvailableRequestHeadersHandleResponse(httpResp)
+	return resp, err
 }
 
 // listAvailableRequestHeadersCreateRequest creates the ListAvailableRequestHeaders request.
@@ -653,22 +659,24 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleRespon
 // Generated from API version 2022-09-01
 //   - options - ApplicationGatewaysClientListAvailableResponseHeadersOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableResponseHeaders
 //     method.
-func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context, options *ApplicationGatewaysClientListAvailableResponseHeadersOptions) (resp ApplicationGatewaysClientListAvailableResponseHeadersResponse, err error) {
+func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context, options *ApplicationGatewaysClientListAvailableResponseHeadersOptions) (ApplicationGatewaysClientListAvailableResponseHeadersResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.ListAvailableResponseHeaders", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listAvailableResponseHeadersCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableResponseHeadersResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableResponseHeadersResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientListAvailableResponseHeadersResponse{}, err
 	}
-	return client.listAvailableResponseHeadersHandleResponse(httpResp)
+	resp, err := client.listAvailableResponseHeadersHandleResponse(httpResp)
+	return resp, err
 }
 
 // listAvailableResponseHeadersCreateRequest creates the ListAvailableResponseHeaders request.
@@ -704,22 +712,24 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleRespo
 // Generated from API version 2022-09-01
 //   - options - ApplicationGatewaysClientListAvailableSSLOptionsOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLOptions
 //     method.
-func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysClientListAvailableSSLOptionsOptions) (resp ApplicationGatewaysClientListAvailableSSLOptionsResponse, err error) {
+func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysClientListAvailableSSLOptionsOptions) (ApplicationGatewaysClientListAvailableSSLOptionsResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.ListAvailableSSLOptions", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listAvailableSSLOptionsCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableSSLOptionsResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableSSLOptionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientListAvailableSSLOptionsResponse{}, err
 	}
-	return client.listAvailableSSLOptionsHandleResponse(httpResp)
+	resp, err := client.listAvailableSSLOptionsHandleResponse(httpResp)
+	return resp, err
 }
 
 // listAvailableSSLOptionsCreateRequest creates the ListAvailableSSLOptions request.
@@ -816,22 +826,24 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandl
 // Generated from API version 2022-09-01
 //   - options - ApplicationGatewaysClientListAvailableServerVariablesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableServerVariables
 //     method.
-func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysClientListAvailableServerVariablesOptions) (resp ApplicationGatewaysClientListAvailableServerVariablesResponse, err error) {
+func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysClientListAvailableServerVariablesOptions) (ApplicationGatewaysClientListAvailableServerVariablesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.ListAvailableServerVariables", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listAvailableServerVariablesCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableServerVariablesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableServerVariablesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientListAvailableServerVariablesResponse{}, err
 	}
-	return client.listAvailableServerVariablesHandleResponse(httpResp)
+	resp, err := client.listAvailableServerVariablesHandleResponse(httpResp)
+	return resp, err
 }
 
 // listAvailableServerVariablesCreateRequest creates the ListAvailableServerVariables request.
@@ -867,22 +879,24 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleRespo
 // Generated from API version 2022-09-01
 //   - options - ApplicationGatewaysClientListAvailableWafRuleSetsOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableWafRuleSets
 //     method.
-func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context, options *ApplicationGatewaysClientListAvailableWafRuleSetsOptions) (resp ApplicationGatewaysClientListAvailableWafRuleSetsResponse, err error) {
+func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context, options *ApplicationGatewaysClientListAvailableWafRuleSetsOptions) (ApplicationGatewaysClientListAvailableWafRuleSetsResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.ListAvailableWafRuleSets", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listAvailableWafRuleSetsCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableWafRuleSetsResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientListAvailableWafRuleSetsResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientListAvailableWafRuleSetsResponse{}, err
 	}
-	return client.listAvailableWafRuleSetsHandleResponse(httpResp)
+	resp, err := client.listAvailableWafRuleSetsHandleResponse(httpResp)
+	return resp, err
 }
 
 // listAvailableWafRuleSetsCreateRequest creates the ListAvailableWafRuleSets request.
@@ -920,22 +934,21 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(
 //   - applicationGatewayName - The name of the application gateway.
 //   - options - ApplicationGatewaysClientBeginStartOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStart
 //     method.
-func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (resp *runtime.Poller[ApplicationGatewaysClientStartResponse], err error) {
+func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (*runtime.Poller[ApplicationGatewaysClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginStart", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.start(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientStartResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientStartResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewaysClientStartResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ApplicationGatewaysClientStartResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -943,18 +956,19 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewaysClient) start(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (resp *http.Response, err error) {
+func (client *ApplicationGatewaysClient) start(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (*http.Response, error) {
+	var err error
 	req, err := client.startCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -993,22 +1007,21 @@ func (client *ApplicationGatewaysClient) startCreateRequest(ctx context.Context,
 //   - applicationGatewayName - The name of the application gateway.
 //   - options - ApplicationGatewaysClientBeginStopOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStop
 //     method.
-func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (resp *runtime.Poller[ApplicationGatewaysClientStopResponse], err error) {
+func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (*runtime.Poller[ApplicationGatewaysClientStopResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginStop", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.stop(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientStopResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApplicationGatewaysClientStopResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApplicationGatewaysClientStopResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[ApplicationGatewaysClientStopResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -1016,18 +1029,19 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *ApplicationGatewaysClient) stop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (resp *http.Response, err error) {
+func (client *ApplicationGatewaysClient) stop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (*http.Response, error) {
+	var err error
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -1067,22 +1081,24 @@ func (client *ApplicationGatewaysClient) stopCreateRequest(ctx context.Context, 
 //   - parameters - Parameters supplied to update application gateway tags.
 //   - options - ApplicationGatewaysClientUpdateTagsOptions contains the optional parameters for the ApplicationGatewaysClient.UpdateTags
 //     method.
-func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject, options *ApplicationGatewaysClientUpdateTagsOptions) (resp ApplicationGatewaysClientUpdateTagsResponse, err error) {
+func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject, options *ApplicationGatewaysClientUpdateTagsOptions) (ApplicationGatewaysClientUpdateTagsResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.UpdateTags", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientUpdateTagsResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ApplicationGatewaysClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ApplicationGatewaysClientUpdateTagsResponse{}, err
 	}
-	return client.updateTagsHandleResponse(httpResp)
+	resp, err := client.updateTagsHandleResponse(httpResp)
+	return resp, err
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

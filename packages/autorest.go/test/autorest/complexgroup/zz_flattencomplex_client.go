@@ -28,22 +28,24 @@ type FlattencomplexClient struct {
 //
 // Generated from API version 2016-02-29
 //   - options - FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
-func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexClientGetValidOptions) (resp FlattencomplexClientGetValidResponse, err error) {
+func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexClientGetValidOptions) (FlattencomplexClientGetValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "FlattencomplexClient.GetValid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return FlattencomplexClientGetValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return FlattencomplexClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return FlattencomplexClientGetValidResponse{}, err
 	}
-	return client.getValidHandleResponse(httpResp)
+	resp, err := client.getValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getValidCreateRequest creates the GetValid request.

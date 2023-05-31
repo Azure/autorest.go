@@ -51,22 +51,24 @@ func NewWebCategoriesClient(subscriptionID string, credential azcore.TokenCreden
 // Generated from API version 2022-09-01
 //   - name - The name of the azureWebCategory.
 //   - options - WebCategoriesClientGetOptions contains the optional parameters for the WebCategoriesClient.Get method.
-func (client *WebCategoriesClient) Get(ctx context.Context, name string, options *WebCategoriesClientGetOptions) (resp WebCategoriesClientGetResponse, err error) {
+func (client *WebCategoriesClient) Get(ctx context.Context, name string, options *WebCategoriesClientGetOptions) (WebCategoriesClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "WebCategoriesClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, name, options)
 	if err != nil {
-		return
+		return WebCategoriesClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return WebCategoriesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return WebCategoriesClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

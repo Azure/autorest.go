@@ -54,21 +54,17 @@ func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, o
 //   - share - The share properties.
 //   - options - SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate
 //     method.
-func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[SharesClientCreateOrUpdateResponse], err error) {
+func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*runtime.Poller[SharesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SharesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, share, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SharesClientCreateOrUpdateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[SharesClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SharesClientCreateOrUpdateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SharesClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -76,18 +72,19 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
+func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -130,21 +127,17 @@ func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, dev
 //   - name - The share name.
 //   - resourceGroupName - The resource group name.
 //   - options - SharesClientBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
-func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (resp *runtime.Poller[SharesClientDeleteResponse], err error) {
+func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*runtime.Poller[SharesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SharesClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SharesClientDeleteResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[SharesClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SharesClientDeleteResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SharesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -152,18 +145,19 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *SharesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (resp *http.Response, err error) {
+func (client *SharesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -203,22 +197,22 @@ func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName 
 //   - name - The share name.
 //   - resourceGroupName - The resource group name.
 //   - options - SharesClientGetOptions contains the optional parameters for the SharesClient.Get method.
-func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientGetOptions) (resp SharesClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "SharesClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientGetOptions) (SharesClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return
+		return SharesClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return SharesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return SharesClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -333,21 +327,17 @@ func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Res
 //   - name - The share name.
 //   - resourceGroupName - The resource group name.
 //   - options - SharesClientBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
-func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (resp *runtime.Poller[SharesClientRefreshResponse], err error) {
+func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*runtime.Poller[SharesClientRefreshResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SharesClient.BeginRefresh", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.refresh(ctx, deviceName, name, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SharesClientRefreshResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[SharesClientRefreshResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SharesClientRefreshResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SharesClientRefreshResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -355,18 +345,19 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-func (client *SharesClient) refresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (resp *http.Response, err error) {
+func (client *SharesClient) refresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*http.Response, error) {
+	var err error
 	req, err := client.refreshCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }

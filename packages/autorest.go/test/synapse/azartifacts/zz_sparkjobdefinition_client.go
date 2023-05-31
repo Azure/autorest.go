@@ -35,21 +35,17 @@ type SparkJobDefinitionClient struct {
 //   - sparkJobDefinition - Spark Job Definition resource definition.
 //   - options - SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the
 //     SparkJobDefinitionClient.BeginCreateOrUpdateSparkJobDefinition method.
-func (client *SparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions) (resp *runtime.Poller[SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse], err error) {
+func (client *SparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions) (*runtime.Poller[SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SparkJobDefinitionClient.BeginCreateOrUpdateSparkJobDefinition", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.createOrUpdateSparkJobDefinition(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -57,18 +53,19 @@ func (client *SparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *SparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions) (resp *http.Response, err error) {
+func (client *SparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -104,22 +101,19 @@ func (client *SparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRe
 //   - sparkJobDefinitionAzureResource - Spark Job Definition resource definition.
 //   - options - SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDebugSparkJobDefinition
 //     method.
-func (client *SparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions) (resp *runtime.Poller[SparkJobDefinitionClientDebugSparkJobDefinitionResponse], err error) {
+func (client *SparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions) (*runtime.Poller[SparkJobDefinitionClientDebugSparkJobDefinitionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SparkJobDefinitionClient.BeginDebugSparkJobDefinition", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.debugSparkJobDefinition(ctx, sparkJobDefinitionAzureResource, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkJobDefinitionClientDebugSparkJobDefinitionResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkJobDefinitionClientDebugSparkJobDefinitionResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkJobDefinitionClientDebugSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SparkJobDefinitionClientDebugSparkJobDefinitionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -127,18 +121,19 @@ func (client *SparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *SparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions) (resp *http.Response, err error) {
+func (client *SparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions) (*http.Response, error) {
+	var err error
 	req, err := client.debugSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionAzureResource, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -167,21 +162,17 @@ func (client *SparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx
 //   - sparkJobDefinitionName - The spark job definition name.
 //   - options - SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDeleteSparkJobDefinition
 //     method.
-func (client *SparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions) (resp *runtime.Poller[SparkJobDefinitionClientDeleteSparkJobDefinitionResponse], err error) {
+func (client *SparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions) (*runtime.Poller[SparkJobDefinitionClientDeleteSparkJobDefinitionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SparkJobDefinitionClient.BeginDeleteSparkJobDefinition", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.deleteSparkJobDefinition(ctx, sparkJobDefinitionName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkJobDefinitionClientDeleteSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[SparkJobDefinitionClientDeleteSparkJobDefinitionResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkJobDefinitionClientDeleteSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SparkJobDefinitionClientDeleteSparkJobDefinitionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -189,18 +180,19 @@ func (client *SparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *SparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions) (resp *http.Response, err error) {
+func (client *SparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -230,22 +222,19 @@ func (client *SparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ct
 //   - sparkJobDefinitionName - The spark job definition name.
 //   - options - SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginExecuteSparkJobDefinition
 //     method.
-func (client *SparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions) (resp *runtime.Poller[SparkJobDefinitionClientExecuteSparkJobDefinitionResponse], err error) {
+func (client *SparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions) (*runtime.Poller[SparkJobDefinitionClientExecuteSparkJobDefinitionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SparkJobDefinitionClient.BeginExecuteSparkJobDefinition", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.executeSparkJobDefinition(ctx, sparkJobDefinitionName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkJobDefinitionClientExecuteSparkJobDefinitionResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkJobDefinitionClientExecuteSparkJobDefinitionResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkJobDefinitionClientExecuteSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SparkJobDefinitionClientExecuteSparkJobDefinitionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -253,18 +242,19 @@ func (client *SparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *SparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions) (resp *http.Response, err error) {
+func (client *SparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions) (*http.Response, error) {
+	var err error
 	req, err := client.executeSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -294,22 +284,22 @@ func (client *SparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(c
 //   - sparkJobDefinitionName - The spark job definition name.
 //   - options - SparkJobDefinitionClientGetSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.GetSparkJobDefinition
 //     method.
-func (client *SparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientGetSparkJobDefinitionOptions) (resp SparkJobDefinitionClientGetSparkJobDefinitionResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "SparkJobDefinitionClient.GetSparkJobDefinition", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *SparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientGetSparkJobDefinitionOptions) (SparkJobDefinitionClientGetSparkJobDefinitionResponse, error) {
+	var err error
 	req, err := client.getSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
-		return
+		return SparkJobDefinitionClientGetSparkJobDefinitionResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return SparkJobDefinitionClientGetSparkJobDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotModified) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return SparkJobDefinitionClientGetSparkJobDefinitionResponse{}, err
 	}
-	return client.getSparkJobDefinitionHandleResponse(httpResp)
+	resp, err := client.getSparkJobDefinitionHandleResponse(httpResp)
+	return resp, err
 }
 
 // getSparkJobDefinitionCreateRequest creates the GetSparkJobDefinition request.
@@ -407,21 +397,17 @@ func (client *SparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleR
 //   - request - proposed new name.
 //   - options - SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginRenameSparkJobDefinition
 //     method.
-func (client *SparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions) (resp *runtime.Poller[SparkJobDefinitionClientRenameSparkJobDefinitionResponse], err error) {
+func (client *SparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions) (*runtime.Poller[SparkJobDefinitionClientRenameSparkJobDefinitionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "SparkJobDefinitionClient.BeginRenameSparkJobDefinition", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.renameSparkJobDefinition(ctx, sparkJobDefinitionName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[SparkJobDefinitionClientRenameSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[SparkJobDefinitionClientRenameSparkJobDefinitionResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[SparkJobDefinitionClientRenameSparkJobDefinitionResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[SparkJobDefinitionClientRenameSparkJobDefinitionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -429,18 +415,19 @@ func (client *SparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *SparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions) (resp *http.Response, err error) {
+func (client *SparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions) (*http.Response, error) {
+	var err error
 	req, err := client.renameSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, request, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }

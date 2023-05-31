@@ -445,7 +445,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleRe
 // Generated from API version 1.0.0
 //   - options - PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 //     method.
-func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (resp *runtime.Poller[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]], err error) {
+func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*runtime.Poller[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]], error) {
 	pager := runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesLROResponse]{
 		More: func(page PagingClientGetMultiplePagesLROResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -467,20 +467,20 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 		Tracer: client.internal.Tracer(),
 	})
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "PagingClient.BeginGetMultiplePagesLRO", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getMultiplePagesLRO(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
-			Tracer:   client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
-			Tracer:   client.internal.Tracer(),
 		})
 	}
 }
@@ -488,18 +488,19 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
 //
 // Generated from API version 1.0.0
-func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (resp *http.Response, err error) {
+func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*http.Response, error) {
+	var err error
 	req, err := client.getMultiplePagesLROCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }

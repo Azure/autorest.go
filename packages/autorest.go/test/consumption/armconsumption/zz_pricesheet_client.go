@@ -51,22 +51,22 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 //
 // Generated from API version 2019-10-01
 //   - options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
-func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClientGetOptions) (resp PriceSheetClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "PriceSheetClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClientGetOptions) (PriceSheetClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PriceSheetClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PriceSheetClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PriceSheetClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -113,22 +113,22 @@ func (client *PriceSheetClient) getHandleResponse(resp *http.Response) (PriceShe
 //   - billingPeriodName - Billing Period Name.
 //   - options - PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
 //     method.
-func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingPeriodName string, options *PriceSheetClientGetByBillingPeriodOptions) (resp PriceSheetClientGetByBillingPeriodResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "PriceSheetClient.GetByBillingPeriod", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingPeriodName string, options *PriceSheetClientGetByBillingPeriodOptions) (PriceSheetClientGetByBillingPeriodResponse, error) {
+	var err error
 	req, err := client.getByBillingPeriodCreateRequest(ctx, billingPeriodName, options)
 	if err != nil {
-		return
+		return PriceSheetClientGetByBillingPeriodResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PriceSheetClientGetByBillingPeriodResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PriceSheetClientGetByBillingPeriodResponse{}, err
 	}
-	return client.getByBillingPeriodHandleResponse(httpResp)
+	resp, err := client.getByBillingPeriodHandleResponse(httpResp)
+	return resp, err
 }
 
 // getByBillingPeriodCreateRequest creates the GetByBillingPeriod request.

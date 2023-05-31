@@ -33,22 +33,22 @@ type SQLPoolsClient struct {
 // Generated from API version 2020-12-01
 //   - sqlPoolName - The Sql Pool name
 //   - options - SQLPoolsClientGetOptions contains the optional parameters for the SQLPoolsClient.Get method.
-func (client *SQLPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsClientGetOptions) (resp SQLPoolsClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "SQLPoolsClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *SQLPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsClientGetOptions) (SQLPoolsClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
-		return
+		return SQLPoolsClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return SQLPoolsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return SQLPoolsClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -83,22 +83,22 @@ func (client *SQLPoolsClient) getHandleResponse(resp *http.Response) (SQLPoolsCl
 //
 // Generated from API version 2020-12-01
 //   - options - SQLPoolsClientListOptions contains the optional parameters for the SQLPoolsClient.List method.
-func (client *SQLPoolsClient) List(ctx context.Context, options *SQLPoolsClientListOptions) (resp SQLPoolsClientListResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "SQLPoolsClient.List", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *SQLPoolsClient) List(ctx context.Context, options *SQLPoolsClientListOptions) (SQLPoolsClientListResponse, error) {
+	var err error
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return SQLPoolsClientListResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return SQLPoolsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return SQLPoolsClientListResponse{}, err
 	}
-	return client.listHandleResponse(httpResp)
+	resp, err := client.listHandleResponse(httpResp)
+	return resp, err
 }
 
 // listCreateRequest creates the List request.

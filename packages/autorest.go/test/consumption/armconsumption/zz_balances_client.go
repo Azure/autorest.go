@@ -49,22 +49,22 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 //   - billingAccountID - BillingAccount ID
 //   - options - BalancesClientGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount
 //     method.
-func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesClientGetByBillingAccountOptions) (resp BalancesClientGetByBillingAccountResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "BalancesClient.GetByBillingAccount", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesClientGetByBillingAccountOptions) (BalancesClientGetByBillingAccountResponse, error) {
+	var err error
 	req, err := client.getByBillingAccountCreateRequest(ctx, billingAccountID, options)
 	if err != nil {
-		return
+		return BalancesClientGetByBillingAccountResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return BalancesClientGetByBillingAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return BalancesClientGetByBillingAccountResponse{}, err
 	}
-	return client.getByBillingAccountHandleResponse(httpResp)
+	resp, err := client.getByBillingAccountHandleResponse(httpResp)
+	return resp, err
 }
 
 // getByBillingAccountCreateRequest creates the GetByBillingAccount request.
@@ -103,22 +103,22 @@ func (client *BalancesClient) getByBillingAccountHandleResponse(resp *http.Respo
 //   - billingPeriodName - Billing Period Name.
 //   - options - BalancesClientGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
 //     method.
-func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesClientGetForBillingPeriodByBillingAccountOptions) (resp BalancesClientGetForBillingPeriodByBillingAccountResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "BalancesClient.GetForBillingPeriodByBillingAccount", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesClientGetForBillingPeriodByBillingAccountOptions) (BalancesClientGetForBillingPeriodByBillingAccountResponse, error) {
+	var err error
 	req, err := client.getForBillingPeriodByBillingAccountCreateRequest(ctx, billingAccountID, billingPeriodName, options)
 	if err != nil {
-		return
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, err
 	}
-	return client.getForBillingPeriodByBillingAccountHandleResponse(httpResp)
+	resp, err := client.getForBillingPeriodByBillingAccountHandleResponse(httpResp)
+	return resp, err
 }
 
 // getForBillingPeriodByBillingAccountCreateRequest creates the GetForBillingPeriodByBillingAccount request.

@@ -46,22 +46,24 @@ type Client struct {
 //
 // Generated from API version 2.0
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
-func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (resp ClientCreateResponse, err error) {
+func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "Client.Create", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ClientCreateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientCreateResponse{}, err
 	}
-	return client.createHandleResponse(httpResp)
+	resp, err := client.createHandleResponse(httpResp)
+	return resp, err
 }
 
 // createCreateRequest creates the Create request.
@@ -111,22 +113,24 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 //
 // Generated from API version 2.0
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (resp ClientGetScriptResponse, err error) {
+func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetScript", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
-		return
+		return ClientGetScriptResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientGetScriptResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientGetScriptResponse{}, err
 	}
-	return client.getScriptHandleResponse(httpResp)
+	resp, err := client.getScriptHandleResponse(httpResp)
+	return resp, err
 }
 
 // getScriptCreateRequest creates the GetScript request.
@@ -238,22 +242,24 @@ func (client *Client) listHandleResponse(resp *http.Response) (ClientListRespons
 //
 // Generated from API version 2.0
 //   - options - ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
-func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (resp ClientPolicyAssignmentResponse, err error) {
+func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "Client.PolicyAssignment", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
 	if err != nil {
-		return
+		return ClientPolicyAssignmentResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientPolicyAssignmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientPolicyAssignmentResponse{}, err
 	}
-	return client.policyAssignmentHandleResponse(httpResp)
+	resp, err := client.policyAssignmentHandleResponse(httpResp)
+	return resp, err
 }
 
 // policyAssignmentCreateRequest creates the PolicyAssignment request.

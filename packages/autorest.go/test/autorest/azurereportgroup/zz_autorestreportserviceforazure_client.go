@@ -29,22 +29,24 @@ type AutoRestReportServiceForAzureClient struct {
 // Generated from API version 1.0.0
 //   - options - AutoRestReportServiceForAzureClientGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzureClient.GetReport
 //     method.
-func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (resp AutoRestReportServiceForAzureClientGetReportResponse, err error) {
+func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestReportServiceForAzureClient.GetReport", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
-	return client.getReportHandleResponse(httpResp)
+	resp, err := client.getReportHandleResponse(httpResp)
+	return resp, err
 }
 
 // getReportCreateRequest creates the GetReport request.

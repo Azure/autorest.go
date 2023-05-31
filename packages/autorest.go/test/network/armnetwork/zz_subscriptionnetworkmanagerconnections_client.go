@@ -54,22 +54,24 @@ func NewSubscriptionNetworkManagerConnectionsClient(subscriptionID string, crede
 //   - parameters - Network manager connection to be created/updated.
 //   - options - SubscriptionNetworkManagerConnectionsClientCreateOrUpdateOptions contains the optional parameters for the SubscriptionNetworkManagerConnectionsClient.CreateOrUpdate
 //     method.
-func (client *SubscriptionNetworkManagerConnectionsClient) CreateOrUpdate(ctx context.Context, networkManagerConnectionName string, parameters ManagerConnection, options *SubscriptionNetworkManagerConnectionsClientCreateOrUpdateOptions) (resp SubscriptionNetworkManagerConnectionsClientCreateOrUpdateResponse, err error) {
+func (client *SubscriptionNetworkManagerConnectionsClient) CreateOrUpdate(ctx context.Context, networkManagerConnectionName string, parameters ManagerConnection, options *SubscriptionNetworkManagerConnectionsClientCreateOrUpdateOptions) (SubscriptionNetworkManagerConnectionsClientCreateOrUpdateResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionNetworkManagerConnectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, networkManagerConnectionName, parameters, options)
 	if err != nil {
-		return
+		return SubscriptionNetworkManagerConnectionsClientCreateOrUpdateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return SubscriptionNetworkManagerConnectionsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return SubscriptionNetworkManagerConnectionsClientCreateOrUpdateResponse{}, err
 	}
-	return client.createOrUpdateHandleResponse(httpResp)
+	resp, err := client.createOrUpdateHandleResponse(httpResp)
+	return resp, err
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -113,22 +115,23 @@ func (client *SubscriptionNetworkManagerConnectionsClient) createOrUpdateHandleR
 //   - networkManagerConnectionName - Name for the network manager connection.
 //   - options - SubscriptionNetworkManagerConnectionsClientDeleteOptions contains the optional parameters for the SubscriptionNetworkManagerConnectionsClient.Delete
 //     method.
-func (client *SubscriptionNetworkManagerConnectionsClient) Delete(ctx context.Context, networkManagerConnectionName string, options *SubscriptionNetworkManagerConnectionsClientDeleteOptions) (resp SubscriptionNetworkManagerConnectionsClientDeleteResponse, err error) {
+func (client *SubscriptionNetworkManagerConnectionsClient) Delete(ctx context.Context, networkManagerConnectionName string, options *SubscriptionNetworkManagerConnectionsClientDeleteOptions) (SubscriptionNetworkManagerConnectionsClientDeleteResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionNetworkManagerConnectionsClient.Delete", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, networkManagerConnectionName, options)
 	if err != nil {
-		return
+		return SubscriptionNetworkManagerConnectionsClientDeleteResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return SubscriptionNetworkManagerConnectionsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return SubscriptionNetworkManagerConnectionsClientDeleteResponse{}, err
 	}
-	return
+	return SubscriptionNetworkManagerConnectionsClientDeleteResponse{}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -160,22 +163,24 @@ func (client *SubscriptionNetworkManagerConnectionsClient) deleteCreateRequest(c
 //   - networkManagerConnectionName - Name for the network manager connection.
 //   - options - SubscriptionNetworkManagerConnectionsClientGetOptions contains the optional parameters for the SubscriptionNetworkManagerConnectionsClient.Get
 //     method.
-func (client *SubscriptionNetworkManagerConnectionsClient) Get(ctx context.Context, networkManagerConnectionName string, options *SubscriptionNetworkManagerConnectionsClientGetOptions) (resp SubscriptionNetworkManagerConnectionsClientGetResponse, err error) {
+func (client *SubscriptionNetworkManagerConnectionsClient) Get(ctx context.Context, networkManagerConnectionName string, options *SubscriptionNetworkManagerConnectionsClientGetOptions) (SubscriptionNetworkManagerConnectionsClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionNetworkManagerConnectionsClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, networkManagerConnectionName, options)
 	if err != nil {
-		return
+		return SubscriptionNetworkManagerConnectionsClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return SubscriptionNetworkManagerConnectionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return SubscriptionNetworkManagerConnectionsClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

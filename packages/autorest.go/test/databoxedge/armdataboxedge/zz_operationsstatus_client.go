@@ -52,22 +52,22 @@ func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCre
 //   - name - The job name.
 //   - resourceGroupName - The resource group name.
 //   - options - OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
-func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusClientGetOptions) (resp OperationsStatusClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "OperationsStatusClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusClientGetOptions) (OperationsStatusClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return
+		return OperationsStatusClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return OperationsStatusClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return OperationsStatusClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

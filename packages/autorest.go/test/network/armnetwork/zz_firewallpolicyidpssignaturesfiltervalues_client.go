@@ -53,22 +53,24 @@ func NewFirewallPolicyIdpsSignaturesFilterValuesClient(subscriptionID string, cr
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPolicyIdpsSignaturesFilterValuesClientListOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesFilterValuesClient.List
 //     method.
-func (client *FirewallPolicyIdpsSignaturesFilterValuesClient) List(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignatureOverridesFilterValuesQuery, options *FirewallPolicyIdpsSignaturesFilterValuesClientListOptions) (resp FirewallPolicyIdpsSignaturesFilterValuesClientListResponse, err error) {
+func (client *FirewallPolicyIdpsSignaturesFilterValuesClient) List(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignatureOverridesFilterValuesQuery, options *FirewallPolicyIdpsSignaturesFilterValuesClientListOptions) (FirewallPolicyIdpsSignaturesFilterValuesClientListResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesFilterValuesClient.List", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesFilterValuesClientListResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesFilterValuesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return FirewallPolicyIdpsSignaturesFilterValuesClientListResponse{}, err
 	}
-	return client.listHandleResponse(httpResp)
+	resp, err := client.listHandleResponse(httpResp)
+	return resp, err
 }
 
 // listCreateRequest creates the List request.

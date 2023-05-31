@@ -36,22 +36,22 @@ type Client struct {
 // Generated from API version 2019-02-02
 //   - tableProperties - The Table properties.
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
-func (client *Client) Create(ctx context.Context, tableProperties Properties, options *ClientCreateOptions) (resp ClientCreateResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.Create", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) Create(ctx context.Context, tableProperties Properties, options *ClientCreateOptions) (ClientCreateResponse, error) {
+	var err error
 	req, err := client.createCreateRequest(ctx, tableProperties, options)
 	if err != nil {
-		return
+		return ClientCreateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusCreated, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientCreateResponse{}, err
 	}
-	return client.createHandleResponse(httpResp)
+	resp, err := client.createHandleResponse(httpResp)
+	return resp, err
 }
 
 // createCreateRequest creates the Create request.
@@ -115,22 +115,22 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
-func (client *Client) Delete(ctx context.Context, table string, options *ClientDeleteOptions) (resp ClientDeleteResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.Delete", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) Delete(ctx context.Context, table string, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
+	var err error
 	req, err := client.deleteCreateRequest(ctx, table, options)
 	if err != nil {
-		return
+		return ClientDeleteResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientDeleteResponse{}, err
 	}
-	return client.deleteHandleResponse(httpResp)
+	resp, err := client.deleteHandleResponse(httpResp)
+	return resp, err
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -184,22 +184,22 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 //   - ifMatch - Match condition for an entity to be deleted. If specified and a matching entity is not found, an error will be
 //     raised. To force an unconditional delete, set to the wildcard character (*).
 //   - options - ClientDeleteEntityOptions contains the optional parameters for the Client.DeleteEntity method.
-func (client *Client) DeleteEntity(ctx context.Context, table string, partitionKey string, rowKey string, ifMatch string, options *ClientDeleteEntityOptions) (resp ClientDeleteEntityResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.DeleteEntity", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) DeleteEntity(ctx context.Context, table string, partitionKey string, rowKey string, ifMatch string, options *ClientDeleteEntityOptions) (ClientDeleteEntityResponse, error) {
+	var err error
 	req, err := client.deleteEntityCreateRequest(ctx, table, partitionKey, rowKey, ifMatch, options)
 	if err != nil {
-		return
+		return ClientDeleteEntityResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientDeleteEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientDeleteEntityResponse{}, err
 	}
-	return client.deleteEntityHandleResponse(httpResp)
+	resp, err := client.deleteEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // deleteEntityCreateRequest creates the DeleteEntity request.
@@ -268,22 +268,22 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 // Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
-func (client *Client) GetAccessPolicy(ctx context.Context, table string, options *ClientGetAccessPolicyOptions) (resp ClientGetAccessPolicyResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetAccessPolicy", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) GetAccessPolicy(ctx context.Context, table string, options *ClientGetAccessPolicyOptions) (ClientGetAccessPolicyResponse, error) {
+	var err error
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
-		return
+		return ClientGetAccessPolicyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientGetAccessPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientGetAccessPolicyResponse{}, err
 	}
-	return client.getAccessPolicyHandleResponse(httpResp)
+	resp, err := client.getAccessPolicyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getAccessPolicyCreateRequest creates the GetAccessPolicy request.
@@ -342,22 +342,22 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 // Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
-func (client *Client) InsertEntity(ctx context.Context, table string, options *ClientInsertEntityOptions) (resp ClientInsertEntityResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.InsertEntity", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) InsertEntity(ctx context.Context, table string, options *ClientInsertEntityOptions) (ClientInsertEntityResponse, error) {
+	var err error
 	req, err := client.insertEntityCreateRequest(ctx, table, options)
 	if err != nil {
-		return
+		return ClientInsertEntityResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientInsertEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusCreated, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientInsertEntityResponse{}, err
 	}
-	return client.insertEntityHandleResponse(httpResp)
+	resp, err := client.insertEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // insertEntityCreateRequest creates the InsertEntity request.
@@ -440,22 +440,22 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 //   - rowKey - The row key of the entity.
 //   - tableEntityProperties - The properties for the table entity.
 //   - options - ClientMergeEntityOptions contains the optional parameters for the Client.MergeEntity method.
-func (client *Client) MergeEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientMergeEntityOptions) (resp ClientMergeEntityResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.MergeEntity", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) MergeEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientMergeEntityOptions) (ClientMergeEntityResponse, error) {
+	var err error
 	req, err := client.mergeEntityCreateRequest(ctx, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
-		return
+		return ClientMergeEntityResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientMergeEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientMergeEntityResponse{}, err
 	}
-	return client.mergeEntityHandleResponse(httpResp)
+	resp, err := client.mergeEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // mergeEntityCreateRequest creates the MergeEntity request.
@@ -530,22 +530,22 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 //
 // Generated from API version 2019-02-02
 //   - options - ClientQueryOptions contains the optional parameters for the Client.Query method.
-func (client *Client) Query(ctx context.Context, options *ClientQueryOptions) (resp ClientQueryResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.Query", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) Query(ctx context.Context, options *ClientQueryOptions) (ClientQueryResponse, error) {
+	var err error
 	req, err := client.queryCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ClientQueryResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientQueryResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientQueryResponse{}, err
 	}
-	return client.queryHandleResponse(httpResp)
+	resp, err := client.queryHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryCreateRequest creates the Query request.
@@ -615,22 +615,22 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 // Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
-func (client *Client) QueryEntities(ctx context.Context, table string, options *ClientQueryEntitiesOptions) (resp ClientQueryEntitiesResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.QueryEntities", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) QueryEntities(ctx context.Context, table string, options *ClientQueryEntitiesOptions) (ClientQueryEntitiesResponse, error) {
+	var err error
 	req, err := client.queryEntitiesCreateRequest(ctx, table, options)
 	if err != nil {
-		return
+		return ClientQueryEntitiesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientQueryEntitiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientQueryEntitiesResponse{}, err
 	}
-	return client.queryEntitiesHandleResponse(httpResp)
+	resp, err := client.queryEntitiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryEntitiesCreateRequest creates the QueryEntities request.
@@ -716,22 +716,22 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 //   - rowKey - The row key of the entity.
 //   - options - ClientQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Client.QueryEntityWithPartitionAndRowKey
 //     method.
-func (client *Client) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, options *ClientQueryEntityWithPartitionAndRowKeyOptions) (resp ClientQueryEntityWithPartitionAndRowKeyResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.QueryEntityWithPartitionAndRowKey", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, options *ClientQueryEntityWithPartitionAndRowKeyOptions) (ClientQueryEntityWithPartitionAndRowKeyResponse, error) {
+	var err error
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, table, partitionKey, rowKey, options)
 	if err != nil {
-		return
+		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
-	return client.queryEntityWithPartitionAndRowKeyHandleResponse(httpResp)
+	resp, err := client.queryEntityWithPartitionAndRowKeyHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryEntityWithPartitionAndRowKeyCreateRequest creates the QueryEntityWithPartitionAndRowKey request.
@@ -817,22 +817,22 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 //   - table - The name of the table.
 //   - tableACL - The acls for the table.
 //   - options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
-func (client *Client) SetAccessPolicy(ctx context.Context, table string, tableACL []*SignedIdentifier, options *ClientSetAccessPolicyOptions) (resp ClientSetAccessPolicyResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetAccessPolicy", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) SetAccessPolicy(ctx context.Context, table string, tableACL []*SignedIdentifier, options *ClientSetAccessPolicyOptions) (ClientSetAccessPolicyResponse, error) {
+	var err error
 	req, err := client.setAccessPolicyCreateRequest(ctx, table, tableACL, options)
 	if err != nil {
-		return
+		return ClientSetAccessPolicyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientSetAccessPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientSetAccessPolicyResponse{}, err
 	}
-	return client.setAccessPolicyHandleResponse(httpResp)
+	resp, err := client.setAccessPolicyHandleResponse(httpResp)
+	return resp, err
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
@@ -898,22 +898,22 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 //   - rowKey - The row key of the entity.
 //   - tableEntityProperties - The properties for the table entity.
 //   - options - ClientUpdateEntityOptions contains the optional parameters for the Client.UpdateEntity method.
-func (client *Client) UpdateEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientUpdateEntityOptions) (resp ClientUpdateEntityResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.UpdateEntity", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *Client) UpdateEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientUpdateEntityOptions) (ClientUpdateEntityResponse, error) {
+	var err error
 	req, err := client.updateEntityCreateRequest(ctx, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
-		return
+		return ClientUpdateEntityResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ClientUpdateEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ClientUpdateEntityResponse{}, err
 	}
-	return client.updateEntityHandleResponse(httpResp)
+	resp, err := client.updateEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // updateEntityCreateRequest creates the UpdateEntity request.

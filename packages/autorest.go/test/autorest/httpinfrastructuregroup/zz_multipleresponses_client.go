@@ -30,22 +30,24 @@ type MultipleResponsesClient struct {
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the
 //     MultipleResponsesClient.Get200Model201ModelDefaultError200Valid method.
-func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions) (resp MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model201ModelDefaultError200Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model201ModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 	}
-	return client.get200Model201ModelDefaultError200ValidHandleResponse(httpResp)
+	resp, err := client.get200Model201ModelDefaultError200ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model201ModelDefaultError200ValidCreateRequest creates the Get200Model201ModelDefaultError200Valid request.
@@ -88,22 +90,24 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the
 //     MultipleResponsesClient.Get200Model201ModelDefaultError201Valid method.
-func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions) (resp MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model201ModelDefaultError201Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model201ModelDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 	}
-	return client.get200Model201ModelDefaultError201ValidHandleResponse(httpResp)
+	resp, err := client.get200Model201ModelDefaultError201ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model201ModelDefaultError201ValidCreateRequest creates the Get200Model201ModelDefaultError201Valid request.
@@ -145,22 +149,24 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the
 //     MultipleResponsesClient.Get200Model201ModelDefaultError400Valid method.
-func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions) (resp MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model201ModelDefaultError400Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model201ModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 	}
-	return client.get200Model201ModelDefaultError400ValidHandleResponse(httpResp)
+	resp, err := client.get200Model201ModelDefaultError400ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model201ModelDefaultError400ValidCreateRequest creates the Get200Model201ModelDefaultError400Valid request.
@@ -202,22 +208,24 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid method.
-func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions) (resp MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
-	return client.get200Model204NoModelDefaultError200ValidHandleResponse(httpResp)
+	resp, err := client.get200Model204NoModelDefaultError200ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model204NoModelDefaultError200ValidCreateRequest creates the Get200Model204NoModelDefaultError200Valid request.
@@ -246,22 +254,24 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid method.
-func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions) (resp MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError201InvalidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
-	return client.get200Model204NoModelDefaultError201InvalidHandleResponse(httpResp)
+	resp, err := client.get200Model204NoModelDefaultError201InvalidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model204NoModelDefaultError201InvalidCreateRequest creates the Get200Model204NoModelDefaultError201Invalid request.
@@ -290,22 +300,24 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the
 //     MultipleResponsesClient.Get200Model204NoModelDefaultError202None method.
-func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions) (resp MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError202None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
-	return client.get200Model204NoModelDefaultError202NoneHandleResponse(httpResp)
+	resp, err := client.get200Model204NoModelDefaultError202NoneHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model204NoModelDefaultError202NoneCreateRequest creates the Get200Model204NoModelDefaultError202None request.
@@ -334,22 +346,24 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneH
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid method.
-func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions) (resp MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError204ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
-	return client.get200Model204NoModelDefaultError204ValidHandleResponse(httpResp)
+	resp, err := client.get200Model204NoModelDefaultError204ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model204NoModelDefaultError204ValidCreateRequest creates the Get200Model204NoModelDefaultError204Valid request.
@@ -379,22 +393,24 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid method.
-func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions) (resp MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
-	return client.get200Model204NoModelDefaultError400ValidHandleResponse(httpResp)
+	resp, err := client.get200Model204NoModelDefaultError400ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200Model204NoModelDefaultError400ValidCreateRequest creates the Get200Model204NoModelDefaultError400Valid request.
@@ -423,22 +439,24 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Invalid
 //     method.
-func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200InvalidOptions) (resp MultipleResponsesClientGet200ModelA200InvalidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200InvalidOptions) (MultipleResponsesClientGet200ModelA200InvalidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA200Invalid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA200InvalidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
-	return client.get200ModelA200InvalidHandleResponse(httpResp)
+	resp, err := client.get200ModelA200InvalidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA200InvalidCreateRequest creates the Get200ModelA200Invalid request.
@@ -468,22 +486,24 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidHandleResponse(resp
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200None
 //     method.
-func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, options *MultipleResponsesClientGet200ModelA200NoneOptions) (resp MultipleResponsesClientGet200ModelA200NoneResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, options *MultipleResponsesClientGet200ModelA200NoneOptions) (MultipleResponsesClientGet200ModelA200NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA200None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
-	return client.get200ModelA200NoneHandleResponse(httpResp)
+	resp, err := client.get200ModelA200NoneHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA200NoneCreateRequest creates the Get200ModelA200None request.
@@ -512,22 +532,24 @@ func (client *MultipleResponsesClient) get200ModelA200NoneHandleResponse(resp *h
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Valid
 //     method.
-func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200ValidOptions) (resp MultipleResponsesClientGet200ModelA200ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200ValidOptions) (MultipleResponsesClientGet200ModelA200ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA200Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
-	return client.get200ModelA200ValidHandleResponse(httpResp)
+	resp, err := client.get200ModelA200ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA200ValidCreateRequest creates the Get200ModelA200Valid request.
@@ -556,22 +578,24 @@ func (client *MultipleResponsesClient) get200ModelA200ValidHandleResponse(resp *
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
-func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions) (resp MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError200ValidHandleResponse(httpResp)
+	resp, err := client.get200ModelA201ModelC404ModelDDefaultError200ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA201ModelC404ModelDDefaultError200ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError200Valid request.
@@ -619,22 +643,24 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
-func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions) (resp MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError201ValidHandleResponse(httpResp)
+	resp, err := client.get200ModelA201ModelC404ModelDDefaultError201ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA201ModelC404ModelDDefaultError201ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError201Valid request.
@@ -683,22 +709,24 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
-func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (resp MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError400ValidHandleResponse(httpResp)
+	resp, err := client.get200ModelA201ModelC404ModelDDefaultError400ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA201ModelC404ModelDDefaultError400ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError400Valid request.
@@ -746,22 +774,24 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
-func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions) (resp MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError404ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError404ValidHandleResponse(httpResp)
+	resp, err := client.get200ModelA201ModelC404ModelDDefaultError404ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA201ModelC404ModelDDefaultError404ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError404Valid request.
@@ -809,22 +839,24 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA202Valid
 //     method.
-func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA202ValidOptions) (resp MultipleResponsesClientGet200ModelA202ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA202ValidOptions) (MultipleResponsesClientGet200ModelA202ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA202Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA202ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
-	return client.get200ModelA202ValidHandleResponse(httpResp)
+	resp, err := client.get200ModelA202ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA202ValidCreateRequest creates the Get200ModelA202Valid request.
@@ -853,22 +885,24 @@ func (client *MultipleResponsesClient) get200ModelA202ValidHandleResponse(resp *
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Invalid
 //     method.
-func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400InvalidOptions) (resp MultipleResponsesClientGet200ModelA400InvalidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400InvalidOptions) (MultipleResponsesClientGet200ModelA400InvalidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA400Invalid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA400InvalidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
-	return client.get200ModelA400InvalidHandleResponse(httpResp)
+	resp, err := client.get200ModelA400InvalidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA400InvalidCreateRequest creates the Get200ModelA400Invalid request.
@@ -897,22 +931,24 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidHandleResponse(resp
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400None
 //     method.
-func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, options *MultipleResponsesClientGet200ModelA400NoneOptions) (resp MultipleResponsesClientGet200ModelA400NoneResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, options *MultipleResponsesClientGet200ModelA400NoneOptions) (MultipleResponsesClientGet200ModelA400NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA400None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
-	return client.get200ModelA400NoneHandleResponse(httpResp)
+	resp, err := client.get200ModelA400NoneHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA400NoneCreateRequest creates the Get200ModelA400None request.
@@ -941,22 +977,24 @@ func (client *MultipleResponsesClient) get200ModelA400NoneHandleResponse(resp *h
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Valid
 //     method.
-func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400ValidOptions) (resp MultipleResponsesClientGet200ModelA400ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400ValidOptions) (MultipleResponsesClientGet200ModelA400ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA400Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
-	return client.get200ModelA400ValidHandleResponse(httpResp)
+	resp, err := client.get200ModelA400ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // get200ModelA400ValidCreateRequest creates the Get200ModelA400Valid request.
@@ -985,22 +1023,23 @@ func (client *MultipleResponsesClient) get200ModelA400ValidHandleResponse(resp *
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError202None
 //     method.
-func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions) (resp MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse, err error) {
+func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultError202None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultError202NoneCreateRequest creates the Get202None204NoneDefaultError202None request.
@@ -1020,22 +1059,23 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneCreat
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError204None
 //     method.
-func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions) (resp MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse, err error) {
+func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultError204None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultError204NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultError204NoneCreateRequest creates the Get202None204NoneDefaultError204None request.
@@ -1055,22 +1095,23 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneCreat
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the
 //     MultipleResponsesClient.Get202None204NoneDefaultError400Valid method.
-func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions) (resp MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse, err error) {
+func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions) (MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultError400Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, nil
 }
 
 // get202None204NoneDefaultError400ValidCreateRequest creates the Get202None204NoneDefaultError400Valid request.
@@ -1090,22 +1131,23 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidCrea
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the
 //     MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid method.
-func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions) (resp MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse, err error) {
+func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone202InvalidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, nil
 }
 
 // get202None204NoneDefaultNone202InvalidCreateRequest creates the Get202None204NoneDefaultNone202Invalid request.
@@ -1124,22 +1166,23 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone202InvalidCre
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone204None
 //     method.
-func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions) (resp MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse, err error) {
+func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone204None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone204NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultNone204NoneCreateRequest creates the Get202None204NoneDefaultNone204None request.
@@ -1158,22 +1201,23 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone204NoneCreate
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the
 //     MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid method.
-func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions) (resp MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse, err error) {
+func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, nil
 }
 
 // get202None204NoneDefaultNone400InvalidCreateRequest creates the Get202None204NoneDefaultNone400Invalid request.
@@ -1192,22 +1236,23 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400InvalidCre
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400None
 //     method.
-func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions) (resp MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse, err error) {
+func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone400None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultNone400NoneCreateRequest creates the Get202None204NoneDefaultNone400None request.
@@ -1226,22 +1271,24 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400NoneCreate
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200None
 //     method.
-func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200NoneOptions) (resp MultipleResponsesClientGetDefaultModelA200NoneResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200NoneOptions) (MultipleResponsesClientGetDefaultModelA200NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA200None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
-	return client.getDefaultModelA200NoneHandleResponse(httpResp)
+	resp, err := client.getDefaultModelA200NoneHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDefaultModelA200NoneCreateRequest creates the GetDefaultModelA200None request.
@@ -1270,22 +1317,24 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleResponse(res
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200Valid
 //     method.
-func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200ValidOptions) (resp MultipleResponsesClientGetDefaultModelA200ValidResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200ValidOptions) (MultipleResponsesClientGetDefaultModelA200ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA200Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
-	return client.getDefaultModelA200ValidHandleResponse(httpResp)
+	resp, err := client.getDefaultModelA200ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDefaultModelA200ValidCreateRequest creates the GetDefaultModelA200Valid request.
@@ -1314,22 +1363,23 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleResponse(re
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400None
 //     method.
-func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400NoneOptions) (resp MultipleResponsesClientGetDefaultModelA400NoneResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400NoneOptions) (MultipleResponsesClientGetDefaultModelA400NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA400None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, nil
 }
 
 // getDefaultModelA400NoneCreateRequest creates the GetDefaultModelA400None request.
@@ -1349,22 +1399,23 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneCreateRequest(ctx 
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400Valid
 //     method.
-func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400ValidOptions) (resp MultipleResponsesClientGetDefaultModelA400ValidResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400ValidOptions) (MultipleResponsesClientGetDefaultModelA400ValidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA400Valid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, nil
 }
 
 // getDefaultModelA400ValidCreateRequest creates the GetDefaultModelA400Valid request.
@@ -1384,22 +1435,23 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidCreateRequest(ctx
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200Invalid
 //     method.
-func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200InvalidOptions) (resp MultipleResponsesClientGetDefaultNone200InvalidResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200InvalidOptions) (MultipleResponsesClientGetDefaultNone200InvalidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone200Invalid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone200InvalidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, nil
 }
 
 // getDefaultNone200InvalidCreateRequest creates the GetDefaultNone200Invalid request.
@@ -1418,22 +1470,23 @@ func (client *MultipleResponsesClient) getDefaultNone200InvalidCreateRequest(ctx
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200None
 //     method.
-func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200NoneOptions) (resp MultipleResponsesClientGetDefaultNone200NoneResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200NoneOptions) (MultipleResponsesClientGetDefaultNone200NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone200None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone200NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGetDefaultNone200NoneResponse{}, nil
 }
 
 // getDefaultNone200NoneCreateRequest creates the GetDefaultNone200None request.
@@ -1452,22 +1505,23 @@ func (client *MultipleResponsesClient) getDefaultNone200NoneCreateRequest(ctx co
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400Invalid
 //     method.
-func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400InvalidOptions) (resp MultipleResponsesClientGetDefaultNone400InvalidResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400InvalidOptions) (MultipleResponsesClientGetDefaultNone400InvalidResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone400Invalid", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, nil
 }
 
 // getDefaultNone400InvalidCreateRequest creates the GetDefaultNone400Invalid request.
@@ -1486,22 +1540,23 @@ func (client *MultipleResponsesClient) getDefaultNone400InvalidCreateRequest(ctx
 // Generated from API version 1.0.0
 //   - options - MultipleResponsesClientGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400None
 //     method.
-func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400NoneOptions) (resp MultipleResponsesClientGetDefaultNone400NoneResponse, err error) {
+func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400NoneOptions) (MultipleResponsesClientGetDefaultNone400NoneResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone400None", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, err
 	}
-	return
+	return MultipleResponsesClientGetDefaultNone400NoneResponse{}, nil
 }
 
 // getDefaultNone400NoneCreateRequest creates the GetDefaultNone400None request.

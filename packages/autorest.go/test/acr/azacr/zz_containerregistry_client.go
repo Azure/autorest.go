@@ -35,22 +35,23 @@ type ContainerRegistryClient struct {
 // Generated from API version 2021-07-01
 //   - options - ContainerRegistryClientCheckDockerV2SupportOptions contains the optional parameters for the ContainerRegistryClient.CheckDockerV2Support
 //     method.
-func (client *ContainerRegistryClient) CheckDockerV2Support(ctx context.Context, options *ContainerRegistryClientCheckDockerV2SupportOptions) (resp ContainerRegistryClientCheckDockerV2SupportResponse, err error) {
+func (client *ContainerRegistryClient) CheckDockerV2Support(ctx context.Context, options *ContainerRegistryClientCheckDockerV2SupportOptions) (ContainerRegistryClientCheckDockerV2SupportResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.CheckDockerV2Support", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.checkDockerV2SupportCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientCheckDockerV2SupportResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientCheckDockerV2SupportResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientCheckDockerV2SupportResponse{}, err
 	}
-	return
+	return ContainerRegistryClientCheckDockerV2SupportResponse{}, nil
 }
 
 // checkDockerV2SupportCreateRequest creates the CheckDockerV2Support request.
@@ -73,22 +74,24 @@ func (client *ContainerRegistryClient) checkDockerV2SupportCreateRequest(ctx con
 //   - payload - Manifest body, can take v1 or v2 values depending on accept header
 //   - options - ContainerRegistryClientCreateManifestOptions contains the optional parameters for the ContainerRegistryClient.CreateManifest
 //     method.
-func (client *ContainerRegistryClient) CreateManifest(ctx context.Context, name string, reference string, payload Manifest, options *ContainerRegistryClientCreateManifestOptions) (resp ContainerRegistryClientCreateManifestResponse, err error) {
+func (client *ContainerRegistryClient) CreateManifest(ctx context.Context, name string, reference string, payload Manifest, options *ContainerRegistryClientCreateManifestOptions) (ContainerRegistryClientCreateManifestResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.CreateManifest", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createManifestCreateRequest(ctx, name, reference, payload, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientCreateManifestResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientCreateManifestResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientCreateManifestResponse{}, err
 	}
-	return client.createManifestHandleResponse(httpResp)
+	resp, err := client.createManifestHandleResponse(httpResp)
+	return resp, err
 }
 
 // createManifestCreateRequest creates the CreateManifest request.
@@ -145,22 +148,23 @@ func (client *ContainerRegistryClient) createManifestHandleResponse(resp *http.R
 //   - reference - Digest of a BLOB
 //   - options - ContainerRegistryClientDeleteManifestOptions contains the optional parameters for the ContainerRegistryClient.DeleteManifest
 //     method.
-func (client *ContainerRegistryClient) DeleteManifest(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteManifestOptions) (resp ContainerRegistryClientDeleteManifestResponse, err error) {
+func (client *ContainerRegistryClient) DeleteManifest(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteManifestOptions) (ContainerRegistryClientDeleteManifestResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.DeleteManifest", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteManifestCreateRequest(ctx, name, reference, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientDeleteManifestResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientDeleteManifestResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientDeleteManifestResponse{}, err
 	}
-	return
+	return ContainerRegistryClientDeleteManifestResponse{}, nil
 }
 
 // deleteManifestCreateRequest creates the DeleteManifest request.
@@ -189,22 +193,24 @@ func (client *ContainerRegistryClient) deleteManifestCreateRequest(ctx context.C
 //   - name - Name of the image (including the namespace)
 //   - options - ContainerRegistryClientDeleteRepositoryOptions contains the optional parameters for the ContainerRegistryClient.DeleteRepository
 //     method.
-func (client *ContainerRegistryClient) DeleteRepository(ctx context.Context, name string, options *ContainerRegistryClientDeleteRepositoryOptions) (resp ContainerRegistryClientDeleteRepositoryResponse, err error) {
+func (client *ContainerRegistryClient) DeleteRepository(ctx context.Context, name string, options *ContainerRegistryClientDeleteRepositoryOptions) (ContainerRegistryClientDeleteRepositoryResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.DeleteRepository", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteRepositoryCreateRequest(ctx, name, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientDeleteRepositoryResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientDeleteRepositoryResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientDeleteRepositoryResponse{}, err
 	}
-	return client.deleteRepositoryHandleResponse(httpResp)
+	resp, err := client.deleteRepositoryHandleResponse(httpResp)
+	return resp, err
 }
 
 // deleteRepositoryCreateRequest creates the DeleteRepository request.
@@ -244,22 +250,23 @@ func (client *ContainerRegistryClient) deleteRepositoryHandleResponse(resp *http
 //   - reference - Tag name
 //   - options - ContainerRegistryClientDeleteTagOptions contains the optional parameters for the ContainerRegistryClient.DeleteTag
 //     method.
-func (client *ContainerRegistryClient) DeleteTag(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteTagOptions) (resp ContainerRegistryClientDeleteTagResponse, err error) {
+func (client *ContainerRegistryClient) DeleteTag(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteTagOptions) (ContainerRegistryClientDeleteTagResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.DeleteTag", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteTagCreateRequest(ctx, name, reference, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientDeleteTagResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientDeleteTagResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNotFound) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientDeleteTagResponse{}, err
 	}
-	return
+	return ContainerRegistryClientDeleteTagResponse{}, nil
 }
 
 // deleteTagCreateRequest creates the DeleteTag request.
@@ -294,22 +301,24 @@ func (client *ContainerRegistryClient) deleteTagCreateRequest(ctx context.Contex
 //   - reference - A tag or a digest, pointing to a specific image
 //   - options - ContainerRegistryClientGetManifestOptions contains the optional parameters for the ContainerRegistryClient.GetManifest
 //     method.
-func (client *ContainerRegistryClient) GetManifest(ctx context.Context, name string, reference string, options *ContainerRegistryClientGetManifestOptions) (resp ContainerRegistryClientGetManifestResponse, err error) {
+func (client *ContainerRegistryClient) GetManifest(ctx context.Context, name string, reference string, options *ContainerRegistryClientGetManifestOptions) (ContainerRegistryClientGetManifestResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetManifest", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getManifestCreateRequest(ctx, name, reference, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetManifestResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetManifestResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientGetManifestResponse{}, err
 	}
-	return client.getManifestHandleResponse(httpResp)
+	resp, err := client.getManifestHandleResponse(httpResp)
+	return resp, err
 }
 
 // getManifestCreateRequest creates the GetManifest request.
@@ -351,22 +360,24 @@ func (client *ContainerRegistryClient) getManifestHandleResponse(resp *http.Resp
 //   - digest - Digest of a BLOB
 //   - options - ContainerRegistryClientGetManifestPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetManifestProperties
 //     method.
-func (client *ContainerRegistryClient) GetManifestProperties(ctx context.Context, name string, digest string, options *ContainerRegistryClientGetManifestPropertiesOptions) (resp ContainerRegistryClientGetManifestPropertiesResponse, err error) {
+func (client *ContainerRegistryClient) GetManifestProperties(ctx context.Context, name string, digest string, options *ContainerRegistryClientGetManifestPropertiesOptions) (ContainerRegistryClientGetManifestPropertiesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetManifestProperties", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getManifestPropertiesCreateRequest(ctx, name, digest, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetManifestPropertiesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetManifestPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientGetManifestPropertiesResponse{}, err
 	}
-	return client.getManifestPropertiesHandleResponse(httpResp)
+	resp, err := client.getManifestPropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // getManifestPropertiesCreateRequest creates the GetManifestProperties request.
@@ -485,22 +496,24 @@ func (client *ContainerRegistryClient) getManifestsHandleResponse(resp *http.Res
 //   - name - Name of the image (including the namespace)
 //   - options - ContainerRegistryClientGetPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetProperties
 //     method.
-func (client *ContainerRegistryClient) GetProperties(ctx context.Context, name string, options *ContainerRegistryClientGetPropertiesOptions) (resp ContainerRegistryClientGetPropertiesResponse, err error) {
+func (client *ContainerRegistryClient) GetProperties(ctx context.Context, name string, options *ContainerRegistryClientGetPropertiesOptions) (ContainerRegistryClientGetPropertiesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetProperties", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, name, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetPropertiesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientGetPropertiesResponse{}, err
 	}
-	return client.getPropertiesHandleResponse(httpResp)
+	resp, err := client.getPropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -608,22 +621,24 @@ func (client *ContainerRegistryClient) getRepositoriesHandleResponse(resp *http.
 //   - reference - Tag name
 //   - options - ContainerRegistryClientGetTagPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetTagProperties
 //     method.
-func (client *ContainerRegistryClient) GetTagProperties(ctx context.Context, name string, reference string, options *ContainerRegistryClientGetTagPropertiesOptions) (resp ContainerRegistryClientGetTagPropertiesResponse, err error) {
+func (client *ContainerRegistryClient) GetTagProperties(ctx context.Context, name string, reference string, options *ContainerRegistryClientGetTagPropertiesOptions) (ContainerRegistryClientGetTagPropertiesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.GetTagProperties", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getTagPropertiesCreateRequest(ctx, name, reference, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetTagPropertiesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientGetTagPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientGetTagPropertiesResponse{}, err
 	}
-	return client.getTagPropertiesHandleResponse(httpResp)
+	resp, err := client.getTagPropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // getTagPropertiesCreateRequest creates the GetTagProperties request.
@@ -747,22 +762,24 @@ func (client *ContainerRegistryClient) getTagsHandleResponse(resp *http.Response
 //   - value - Manifest attribute value
 //   - options - ContainerRegistryClientUpdateManifestPropertiesOptions contains the optional parameters for the ContainerRegistryClient.UpdateManifestProperties
 //     method.
-func (client *ContainerRegistryClient) UpdateManifestProperties(ctx context.Context, name string, digest string, value ManifestWriteableProperties, options *ContainerRegistryClientUpdateManifestPropertiesOptions) (resp ContainerRegistryClientUpdateManifestPropertiesResponse, err error) {
+func (client *ContainerRegistryClient) UpdateManifestProperties(ctx context.Context, name string, digest string, value ManifestWriteableProperties, options *ContainerRegistryClientUpdateManifestPropertiesOptions) (ContainerRegistryClientUpdateManifestPropertiesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.UpdateManifestProperties", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateManifestPropertiesCreateRequest(ctx, name, digest, value, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientUpdateManifestPropertiesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientUpdateManifestPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientUpdateManifestPropertiesResponse{}, err
 	}
-	return client.updateManifestPropertiesHandleResponse(httpResp)
+	resp, err := client.updateManifestPropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // updateManifestPropertiesCreateRequest creates the UpdateManifestProperties request.
@@ -809,22 +826,24 @@ func (client *ContainerRegistryClient) updateManifestPropertiesHandleResponse(re
 //   - value - Repository attribute value
 //   - options - ContainerRegistryClientUpdatePropertiesOptions contains the optional parameters for the ContainerRegistryClient.UpdateProperties
 //     method.
-func (client *ContainerRegistryClient) UpdateProperties(ctx context.Context, name string, value RepositoryWriteableProperties, options *ContainerRegistryClientUpdatePropertiesOptions) (resp ContainerRegistryClientUpdatePropertiesResponse, err error) {
+func (client *ContainerRegistryClient) UpdateProperties(ctx context.Context, name string, value RepositoryWriteableProperties, options *ContainerRegistryClientUpdatePropertiesOptions) (ContainerRegistryClientUpdatePropertiesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.UpdateProperties", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updatePropertiesCreateRequest(ctx, name, value, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientUpdatePropertiesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientUpdatePropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientUpdatePropertiesResponse{}, err
 	}
-	return client.updatePropertiesHandleResponse(httpResp)
+	resp, err := client.updatePropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // updatePropertiesCreateRequest creates the UpdateProperties request.
@@ -868,22 +887,24 @@ func (client *ContainerRegistryClient) updatePropertiesHandleResponse(resp *http
 //   - value - Tag attribute value
 //   - options - ContainerRegistryClientUpdateTagAttributesOptions contains the optional parameters for the ContainerRegistryClient.UpdateTagAttributes
 //     method.
-func (client *ContainerRegistryClient) UpdateTagAttributes(ctx context.Context, name string, reference string, value TagWriteableProperties, options *ContainerRegistryClientUpdateTagAttributesOptions) (resp ContainerRegistryClientUpdateTagAttributesResponse, err error) {
+func (client *ContainerRegistryClient) UpdateTagAttributes(ctx context.Context, name string, reference string, value TagWriteableProperties, options *ContainerRegistryClientUpdateTagAttributesOptions) (ContainerRegistryClientUpdateTagAttributesResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryClient.UpdateTagAttributes", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagAttributesCreateRequest(ctx, name, reference, value, options)
 	if err != nil {
-		return
+		return ContainerRegistryClientUpdateTagAttributesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return ContainerRegistryClientUpdateTagAttributesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return ContainerRegistryClientUpdateTagAttributesResponse{}, err
 	}
-	return client.updateTagAttributesHandleResponse(httpResp)
+	resp, err := client.updateTagAttributesHandleResponse(httpResp)
+	return resp, err
 }
 
 // updateTagAttributesCreateRequest creates the UpdateTagAttributes request.

@@ -53,22 +53,24 @@ func NewFirewallPolicyIdpsSignaturesOverridesClient(subscriptionID string, crede
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPolicyIdpsSignaturesOverridesClientGetOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesOverridesClient.Get
 //     method.
-func (client *FirewallPolicyIdpsSignaturesOverridesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPolicyIdpsSignaturesOverridesClientGetOptions) (resp FirewallPolicyIdpsSignaturesOverridesClientGetResponse, err error) {
+func (client *FirewallPolicyIdpsSignaturesOverridesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPolicyIdpsSignaturesOverridesClientGetOptions) (FirewallPolicyIdpsSignaturesOverridesClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -114,22 +116,24 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) getHandleResponse(res
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPolicyIdpsSignaturesOverridesClientListOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesOverridesClient.List
 //     method.
-func (client *FirewallPolicyIdpsSignaturesOverridesClient) List(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPolicyIdpsSignaturesOverridesClientListOptions) (resp FirewallPolicyIdpsSignaturesOverridesClientListResponse, err error) {
+func (client *FirewallPolicyIdpsSignaturesOverridesClient) List(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPolicyIdpsSignaturesOverridesClientListOptions) (FirewallPolicyIdpsSignaturesOverridesClientListResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.List", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientListResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientListResponse{}, err
 	}
-	return client.listHandleResponse(httpResp)
+	resp, err := client.listHandleResponse(httpResp)
+	return resp, err
 }
 
 // listCreateRequest creates the List request.
@@ -176,22 +180,24 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) listHandleResponse(re
 //   - parameters - Will contain all properties of the object to put
 //   - options - FirewallPolicyIdpsSignaturesOverridesClientPatchOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesOverridesClient.Patch
 //     method.
-func (client *FirewallPolicyIdpsSignaturesOverridesClient) Patch(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignaturesOverrides, options *FirewallPolicyIdpsSignaturesOverridesClientPatchOptions) (resp FirewallPolicyIdpsSignaturesOverridesClientPatchResponse, err error) {
+func (client *FirewallPolicyIdpsSignaturesOverridesClient) Patch(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignaturesOverrides, options *FirewallPolicyIdpsSignaturesOverridesClientPatchOptions) (FirewallPolicyIdpsSignaturesOverridesClientPatchResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.Patch", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.patchCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientPatchResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientPatchResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientPatchResponse{}, err
 	}
-	return client.patchHandleResponse(httpResp)
+	resp, err := client.patchHandleResponse(httpResp)
+	return resp, err
 }
 
 // patchCreateRequest creates the Patch request.
@@ -241,22 +247,24 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) patchHandleResponse(r
 //   - parameters - Will contain all properties of the object to put
 //   - options - FirewallPolicyIdpsSignaturesOverridesClientPutOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesOverridesClient.Put
 //     method.
-func (client *FirewallPolicyIdpsSignaturesOverridesClient) Put(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignaturesOverrides, options *FirewallPolicyIdpsSignaturesOverridesClientPutOptions) (resp FirewallPolicyIdpsSignaturesOverridesClientPutResponse, err error) {
+func (client *FirewallPolicyIdpsSignaturesOverridesClient) Put(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignaturesOverrides, options *FirewallPolicyIdpsSignaturesOverridesClientPutOptions) (FirewallPolicyIdpsSignaturesOverridesClientPutResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "FirewallPolicyIdpsSignaturesOverridesClient.Put", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientPutResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return FirewallPolicyIdpsSignaturesOverridesClientPutResponse{}, err
 	}
-	return client.putHandleResponse(httpResp)
+	resp, err := client.putHandleResponse(httpResp)
+	return resp, err
 }
 
 // putCreateRequest creates the Put request.

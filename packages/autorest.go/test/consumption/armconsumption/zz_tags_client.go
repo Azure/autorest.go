@@ -51,22 +51,22 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 //     scope and
 //     '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope..
 //   - options - TagsClientGetOptions contains the optional parameters for the TagsClient.Get method.
-func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsClientGetOptions) (resp TagsClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "TagsClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsClientGetOptions) (TagsClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {
-		return
+		return TagsClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return TagsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return TagsClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

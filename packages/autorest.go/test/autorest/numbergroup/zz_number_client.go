@@ -28,22 +28,24 @@ type NumberClient struct {
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
-func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberClientGetBigDecimalOptions) (resp NumberClientGetBigDecimalResponse, err error) {
+func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberClientGetBigDecimalOptions) (NumberClientGetBigDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetBigDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetBigDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetBigDecimalResponse{}, err
 	}
-	return client.getBigDecimalHandleResponse(httpResp)
+	resp, err := client.getBigDecimalHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBigDecimalCreateRequest creates the GetBigDecimal request.
@@ -72,22 +74,24 @@ func (client *NumberClient) getBigDecimalHandleResponse(resp *http.Response) (Nu
 // Generated from API version 1.0.0
 //   - options - NumberClientGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
 //     method.
-func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientGetBigDecimalNegativeDecimalOptions) (resp NumberClientGetBigDecimalNegativeDecimalResponse, err error) {
+func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientGetBigDecimalNegativeDecimalOptions) (NumberClientGetBigDecimalNegativeDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDecimalNegativeDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, err
 	}
-	return client.getBigDecimalNegativeDecimalHandleResponse(httpResp)
+	resp, err := client.getBigDecimalNegativeDecimalHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBigDecimalNegativeDecimalCreateRequest creates the GetBigDecimalNegativeDecimal request.
@@ -116,22 +120,24 @@ func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *htt
 // Generated from API version 1.0.0
 //   - options - NumberClientGetBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalPositiveDecimal
 //     method.
-func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientGetBigDecimalPositiveDecimalOptions) (resp NumberClientGetBigDecimalPositiveDecimalResponse, err error) {
+func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientGetBigDecimalPositiveDecimalOptions) (NumberClientGetBigDecimalPositiveDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDecimalPositiveDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, err
 	}
-	return client.getBigDecimalPositiveDecimalHandleResponse(httpResp)
+	resp, err := client.getBigDecimalPositiveDecimalHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBigDecimalPositiveDecimalCreateRequest creates the GetBigDecimalPositiveDecimal request.
@@ -159,22 +165,24 @@ func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *htt
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
-func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberClientGetBigDoubleOptions) (resp NumberClientGetBigDoubleResponse, err error) {
+func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberClientGetBigDoubleOptions) (NumberClientGetBigDoubleResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDouble", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetBigDoubleResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetBigDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetBigDoubleResponse{}, err
 	}
-	return client.getBigDoubleHandleResponse(httpResp)
+	resp, err := client.getBigDoubleHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBigDoubleCreateRequest creates the GetBigDouble request.
@@ -203,22 +211,24 @@ func (client *NumberClient) getBigDoubleHandleResponse(resp *http.Response) (Num
 // Generated from API version 1.0.0
 //   - options - NumberClientGetBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDoubleNegativeDecimal
 //     method.
-func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientGetBigDoubleNegativeDecimalOptions) (resp NumberClientGetBigDoubleNegativeDecimalResponse, err error) {
+func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientGetBigDoubleNegativeDecimalOptions) (NumberClientGetBigDoubleNegativeDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDoubleNegativeDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, err
 	}
-	return client.getBigDoubleNegativeDecimalHandleResponse(httpResp)
+	resp, err := client.getBigDoubleNegativeDecimalHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBigDoubleNegativeDecimalCreateRequest creates the GetBigDoubleNegativeDecimal request.
@@ -247,22 +257,24 @@ func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *http
 // Generated from API version 1.0.0
 //   - options - NumberClientGetBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDoublePositiveDecimal
 //     method.
-func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberClientGetBigDoublePositiveDecimalOptions) (resp NumberClientGetBigDoublePositiveDecimalResponse, err error) {
+func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberClientGetBigDoublePositiveDecimalOptions) (NumberClientGetBigDoublePositiveDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDoublePositiveDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, err
 	}
-	return client.getBigDoublePositiveDecimalHandleResponse(httpResp)
+	resp, err := client.getBigDoublePositiveDecimalHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBigDoublePositiveDecimalCreateRequest creates the GetBigDoublePositiveDecimal request.
@@ -290,22 +302,24 @@ func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *http
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
-func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClientGetBigFloatOptions) (resp NumberClientGetBigFloatResponse, err error) {
+func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClientGetBigFloatOptions) (NumberClientGetBigFloatResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigFloat", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigFloatCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetBigFloatResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetBigFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetBigFloatResponse{}, err
 	}
-	return client.getBigFloatHandleResponse(httpResp)
+	resp, err := client.getBigFloatHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBigFloatCreateRequest creates the GetBigFloat request.
@@ -334,22 +348,24 @@ func (client *NumberClient) getBigFloatHandleResponse(resp *http.Response) (Numb
 // Generated from API version 1.0.0
 //   - options - NumberClientGetInvalidDecimalOptions contains the optional parameters for the NumberClient.GetInvalidDecimal
 //     method.
-func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberClientGetInvalidDecimalOptions) (resp NumberClientGetInvalidDecimalResponse, err error) {
+func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberClientGetInvalidDecimalOptions) (NumberClientGetInvalidDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetInvalidDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetInvalidDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetInvalidDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetInvalidDecimalResponse{}, err
 	}
-	return client.getInvalidDecimalHandleResponse(httpResp)
+	resp, err := client.getInvalidDecimalHandleResponse(httpResp)
+	return resp, err
 }
 
 // getInvalidDecimalCreateRequest creates the GetInvalidDecimal request.
@@ -377,22 +393,24 @@ func (client *NumberClient) getInvalidDecimalHandleResponse(resp *http.Response)
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
-func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (resp NumberClientGetInvalidDoubleResponse, err error) {
+func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (NumberClientGetInvalidDoubleResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetInvalidDouble", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetInvalidDoubleResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetInvalidDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetInvalidDoubleResponse{}, err
 	}
-	return client.getInvalidDoubleHandleResponse(httpResp)
+	resp, err := client.getInvalidDoubleHandleResponse(httpResp)
+	return resp, err
 }
 
 // getInvalidDoubleCreateRequest creates the GetInvalidDouble request.
@@ -420,22 +438,24 @@ func (client *NumberClient) getInvalidDoubleHandleResponse(resp *http.Response) 
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
-func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (resp NumberClientGetInvalidFloatResponse, err error) {
+func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (NumberClientGetInvalidFloatResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetInvalidFloat", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidFloatCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetInvalidFloatResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetInvalidFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetInvalidFloatResponse{}, err
 	}
-	return client.getInvalidFloatHandleResponse(httpResp)
+	resp, err := client.getInvalidFloatHandleResponse(httpResp)
+	return resp, err
 }
 
 // getInvalidFloatCreateRequest creates the GetInvalidFloat request.
@@ -463,22 +483,24 @@ func (client *NumberClient) getInvalidFloatHandleResponse(resp *http.Response) (
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
-func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGetNullOptions) (resp NumberClientGetNullResponse, err error) {
+func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGetNullOptions) (NumberClientGetNullResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetNull", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetNullResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetNullResponse{}, err
 	}
-	return client.getNullHandleResponse(httpResp)
+	resp, err := client.getNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -506,22 +528,24 @@ func (client *NumberClient) getNullHandleResponse(resp *http.Response) (NumberCl
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
-func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (resp NumberClientGetSmallDecimalResponse, err error) {
+func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (NumberClientGetSmallDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetSmallDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSmallDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetSmallDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetSmallDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetSmallDecimalResponse{}, err
 	}
-	return client.getSmallDecimalHandleResponse(httpResp)
+	resp, err := client.getSmallDecimalHandleResponse(httpResp)
+	return resp, err
 }
 
 // getSmallDecimalCreateRequest creates the GetSmallDecimal request.
@@ -549,22 +573,24 @@ func (client *NumberClient) getSmallDecimalHandleResponse(resp *http.Response) (
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
-func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (resp NumberClientGetSmallDoubleResponse, err error) {
+func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (NumberClientGetSmallDoubleResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetSmallDouble", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSmallDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetSmallDoubleResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetSmallDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetSmallDoubleResponse{}, err
 	}
-	return client.getSmallDoubleHandleResponse(httpResp)
+	resp, err := client.getSmallDoubleHandleResponse(httpResp)
+	return resp, err
 }
 
 // getSmallDoubleCreateRequest creates the GetSmallDouble request.
@@ -592,22 +618,24 @@ func (client *NumberClient) getSmallDoubleHandleResponse(resp *http.Response) (N
 //
 // Generated from API version 1.0.0
 //   - options - NumberClientGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
-func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberClientGetSmallFloatOptions) (resp NumberClientGetSmallFloatResponse, err error) {
+func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberClientGetSmallFloatOptions) (NumberClientGetSmallFloatResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetSmallFloat", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSmallFloatCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientGetSmallFloatResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientGetSmallFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientGetSmallFloatResponse{}, err
 	}
-	return client.getSmallFloatHandleResponse(httpResp)
+	resp, err := client.getSmallFloatHandleResponse(httpResp)
+	return resp, err
 }
 
 // getSmallFloatCreateRequest creates the GetSmallFloat request.
@@ -636,22 +664,23 @@ func (client *NumberClient) getSmallFloatHandleResponse(resp *http.Response) (Nu
 // Generated from API version 1.0.0
 //   - numberBody - number body
 //   - options - NumberClientPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
-func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberClientPutBigDecimalOptions) (resp NumberClientPutBigDecimalResponse, err error) {
+func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberClientPutBigDecimalOptions) (NumberClientPutBigDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return
+		return NumberClientPutBigDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutBigDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutBigDecimalResponse{}, err
 	}
-	return
+	return NumberClientPutBigDecimalResponse{}, nil
 }
 
 // putBigDecimalCreateRequest creates the PutBigDecimal request.
@@ -674,22 +703,23 @@ func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numb
 // Generated from API version 1.0.0
 //   - options - NumberClientPutBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalNegativeDecimal
 //     method.
-func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientPutBigDecimalNegativeDecimalOptions) (resp NumberClientPutBigDecimalNegativeDecimalResponse, err error) {
+func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientPutBigDecimalNegativeDecimalOptions) (NumberClientPutBigDecimalNegativeDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDecimalNegativeDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientPutBigDecimalNegativeDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutBigDecimalNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutBigDecimalNegativeDecimalResponse{}, err
 	}
-	return
+	return NumberClientPutBigDecimalNegativeDecimalResponse{}, nil
 }
 
 // putBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
@@ -712,22 +742,23 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 // Generated from API version 1.0.0
 //   - options - NumberClientPutBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalPositiveDecimal
 //     method.
-func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientPutBigDecimalPositiveDecimalOptions) (resp NumberClientPutBigDecimalPositiveDecimalResponse, err error) {
+func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientPutBigDecimalPositiveDecimalOptions) (NumberClientPutBigDecimalPositiveDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDecimalPositiveDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientPutBigDecimalPositiveDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutBigDecimalPositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutBigDecimalPositiveDecimalResponse{}, err
 	}
-	return
+	return NumberClientPutBigDecimalPositiveDecimalResponse{}, nil
 }
 
 // putBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
@@ -750,22 +781,23 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 // Generated from API version 1.0.0
 //   - numberBody - number body
 //   - options - NumberClientPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
-func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberClientPutBigDoubleOptions) (resp NumberClientPutBigDoubleResponse, err error) {
+func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberClientPutBigDoubleOptions) (NumberClientPutBigDoubleResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDouble", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return
+		return NumberClientPutBigDoubleResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutBigDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutBigDoubleResponse{}, err
 	}
-	return
+	return NumberClientPutBigDoubleResponse{}, nil
 }
 
 // putBigDoubleCreateRequest creates the PutBigDouble request.
@@ -788,22 +820,23 @@ func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numbe
 // Generated from API version 1.0.0
 //   - options - NumberClientPutBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDoubleNegativeDecimal
 //     method.
-func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientPutBigDoubleNegativeDecimalOptions) (resp NumberClientPutBigDoubleNegativeDecimalResponse, err error) {
+func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientPutBigDoubleNegativeDecimalOptions) (NumberClientPutBigDoubleNegativeDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDoubleNegativeDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientPutBigDoubleNegativeDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutBigDoubleNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutBigDoubleNegativeDecimalResponse{}, err
 	}
-	return
+	return NumberClientPutBigDoubleNegativeDecimalResponse{}, nil
 }
 
 // putBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
@@ -826,22 +859,23 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 // Generated from API version 1.0.0
 //   - options - NumberClientPutBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDoublePositiveDecimal
 //     method.
-func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberClientPutBigDoublePositiveDecimalOptions) (resp NumberClientPutBigDoublePositiveDecimalResponse, err error) {
+func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberClientPutBigDoublePositiveDecimalOptions) (NumberClientPutBigDoublePositiveDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDoublePositiveDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return NumberClientPutBigDoublePositiveDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutBigDoublePositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutBigDoublePositiveDecimalResponse{}, err
 	}
-	return
+	return NumberClientPutBigDoublePositiveDecimalResponse{}, nil
 }
 
 // putBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
@@ -864,22 +898,23 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 // Generated from API version 1.0.0
 //   - numberBody - number body
 //   - options - NumberClientPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
-func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberClientPutBigFloatOptions) (resp NumberClientPutBigFloatResponse, err error) {
+func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberClientPutBigFloatOptions) (NumberClientPutBigFloatResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigFloat", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return
+		return NumberClientPutBigFloatResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutBigFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutBigFloatResponse{}, err
 	}
-	return
+	return NumberClientPutBigFloatResponse{}, nil
 }
 
 // putBigFloatCreateRequest creates the PutBigFloat request.
@@ -902,22 +937,23 @@ func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, number
 // Generated from API version 1.0.0
 //   - numberBody - number body
 //   - options - NumberClientPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
-func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberClientPutSmallDecimalOptions) (resp NumberClientPutSmallDecimalResponse, err error) {
+func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberClientPutSmallDecimalOptions) (NumberClientPutSmallDecimalResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutSmallDecimal", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putSmallDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return
+		return NumberClientPutSmallDecimalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutSmallDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutSmallDecimalResponse{}, err
 	}
-	return
+	return NumberClientPutSmallDecimalResponse{}, nil
 }
 
 // putSmallDecimalCreateRequest creates the PutSmallDecimal request.
@@ -940,22 +976,23 @@ func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, nu
 // Generated from API version 1.0.0
 //   - numberBody - number body
 //   - options - NumberClientPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
-func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberClientPutSmallDoubleOptions) (resp NumberClientPutSmallDoubleResponse, err error) {
+func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberClientPutSmallDoubleOptions) (NumberClientPutSmallDoubleResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutSmallDouble", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putSmallDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return
+		return NumberClientPutSmallDoubleResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutSmallDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutSmallDoubleResponse{}, err
 	}
-	return
+	return NumberClientPutSmallDoubleResponse{}, nil
 }
 
 // putSmallDoubleCreateRequest creates the PutSmallDouble request.
@@ -978,22 +1015,23 @@ func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, num
 // Generated from API version 1.0.0
 //   - numberBody - number body
 //   - options - NumberClientPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.
-func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberClientPutSmallFloatOptions) (resp NumberClientPutSmallFloatResponse, err error) {
+func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberClientPutSmallFloatOptions) (NumberClientPutSmallFloatResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutSmallFloat", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putSmallFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return
+		return NumberClientPutSmallFloatResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return NumberClientPutSmallFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return NumberClientPutSmallFloatResponse{}, err
 	}
-	return
+	return NumberClientPutSmallFloatResponse{}, nil
 }
 
 // putSmallFloatCreateRequest creates the PutSmallFloat request.

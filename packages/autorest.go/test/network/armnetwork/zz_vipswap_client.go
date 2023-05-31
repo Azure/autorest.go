@@ -53,21 +53,19 @@ func NewVipSwapClient(subscriptionID string, credential azcore.TokenCredential, 
 //   - resourceName - The name of the cloud service.
 //   - parameters - SwapResource object where slot type should be the target slot after vip swap for the specified cloud service.
 //   - options - VipSwapClientBeginCreateOptions contains the optional parameters for the VipSwapClient.BeginCreate method.
-func (client *VipSwapClient) BeginCreate(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (resp *runtime.Poller[VipSwapClientCreateResponse], err error) {
+func (client *VipSwapClient) BeginCreate(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (*runtime.Poller[VipSwapClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		ctx, endSpan := runtime.StartSpan(ctx, "VipSwapClient.BeginCreate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.create(ctx, groupName, resourceName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VipSwapClientCreateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[VipSwapClientCreateResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VipSwapClientCreateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[VipSwapClientCreateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -75,18 +73,19 @@ func (client *VipSwapClient) BeginCreate(ctx context.Context, groupName string, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-09-01
-func (client *VipSwapClient) create(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (resp *http.Response, err error) {
+func (client *VipSwapClient) create(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createCreateRequest(ctx, groupName, resourceName, parameters, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -129,22 +128,24 @@ func (client *VipSwapClient) createCreateRequest(ctx context.Context, groupName 
 //   - groupName - The name of the resource group.
 //   - resourceName - The name of the cloud service.
 //   - options - VipSwapClientGetOptions contains the optional parameters for the VipSwapClient.Get method.
-func (client *VipSwapClient) Get(ctx context.Context, groupName string, resourceName string, options *VipSwapClientGetOptions) (resp VipSwapClientGetResponse, err error) {
+func (client *VipSwapClient) Get(ctx context.Context, groupName string, resourceName string, options *VipSwapClientGetOptions) (VipSwapClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "VipSwapClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, groupName, resourceName, options)
 	if err != nil {
-		return
+		return VipSwapClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return VipSwapClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return VipSwapClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -191,22 +192,24 @@ func (client *VipSwapClient) getHandleResponse(resp *http.Response) (VipSwapClie
 //   - groupName - The name of the resource group.
 //   - resourceName - The name of the cloud service.
 //   - options - VipSwapClientListOptions contains the optional parameters for the VipSwapClient.List method.
-func (client *VipSwapClient) List(ctx context.Context, groupName string, resourceName string, options *VipSwapClientListOptions) (resp VipSwapClientListResponse, err error) {
+func (client *VipSwapClient) List(ctx context.Context, groupName string, resourceName string, options *VipSwapClientListOptions) (VipSwapClientListResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "VipSwapClient.List", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, groupName, resourceName, options)
 	if err != nil {
-		return
+		return VipSwapClientListResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return VipSwapClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return VipSwapClientListResponse{}, err
 	}
-	return client.listHandleResponse(httpResp)
+	resp, err := client.listHandleResponse(httpResp)
+	return resp, err
 }
 
 // listCreateRequest creates the List request.

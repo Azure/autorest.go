@@ -28,22 +28,24 @@ type PrimitiveClient struct {
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetBoolOptions contains the optional parameters for the PrimitiveClient.GetBool method.
-func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveClientGetBoolOptions) (resp PrimitiveClientGetBoolResponse, err error) {
+func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveClientGetBoolOptions) (PrimitiveClientGetBoolResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetBool", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBoolCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetBoolResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetBoolResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetBoolResponse{}, err
 	}
-	return client.getBoolHandleResponse(httpResp)
+	resp, err := client.getBoolHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBoolCreateRequest creates the GetBool request.
@@ -71,22 +73,24 @@ func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (Primi
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetByteOptions contains the optional parameters for the PrimitiveClient.GetByte method.
-func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveClientGetByteOptions) (resp PrimitiveClientGetByteResponse, err error) {
+func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveClientGetByteOptions) (PrimitiveClientGetByteResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetByte", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getByteCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetByteResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetByteResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetByteResponse{}, err
 	}
-	return client.getByteHandleResponse(httpResp)
+	resp, err := client.getByteHandleResponse(httpResp)
+	return resp, err
 }
 
 // getByteCreateRequest creates the GetByte request.
@@ -114,22 +118,24 @@ func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (Primi
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDateOptions contains the optional parameters for the PrimitiveClient.GetDate method.
-func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveClientGetDateOptions) (resp PrimitiveClientGetDateResponse, err error) {
+func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveClientGetDateOptions) (PrimitiveClientGetDateResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDate", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetDateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetDateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetDateResponse{}, err
 	}
-	return client.getDateHandleResponse(httpResp)
+	resp, err := client.getDateHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateCreateRequest creates the GetDate request.
@@ -157,22 +163,24 @@ func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (Primi
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDateTimeOptions contains the optional parameters for the PrimitiveClient.GetDateTime method.
-func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveClientGetDateTimeOptions) (resp PrimitiveClientGetDateTimeResponse, err error) {
+func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveClientGetDateTimeOptions) (PrimitiveClientGetDateTimeResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDateTime", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetDateTimeResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetDateTimeResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetDateTimeResponse{}, err
 	}
-	return client.getDateTimeHandleResponse(httpResp)
+	resp, err := client.getDateTimeHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateTimeCreateRequest creates the GetDateTime request.
@@ -201,22 +209,24 @@ func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (P
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.GetDateTimeRFC1123
 //     method.
-func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveClientGetDateTimeRFC1123Options) (resp PrimitiveClientGetDateTimeRFC1123Response, err error) {
+func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveClientGetDateTimeRFC1123Options) (PrimitiveClientGetDateTimeRFC1123Response, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDateTimeRFC1123", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeRFC1123CreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetDateTimeRFC1123Response{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetDateTimeRFC1123Response{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetDateTimeRFC1123Response{}, err
 	}
-	return client.getDateTimeRFC1123HandleResponse(httpResp)
+	resp, err := client.getDateTimeRFC1123HandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateTimeRFC1123CreateRequest creates the GetDateTimeRFC1123 request.
@@ -244,22 +254,24 @@ func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Respo
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDoubleOptions contains the optional parameters for the PrimitiveClient.GetDouble method.
-func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveClientGetDoubleOptions) (resp PrimitiveClientGetDoubleResponse, err error) {
+func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveClientGetDoubleOptions) (PrimitiveClientGetDoubleResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDouble", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetDoubleResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetDoubleResponse{}, err
 	}
-	return client.getDoubleHandleResponse(httpResp)
+	resp, err := client.getDoubleHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDoubleCreateRequest creates the GetDouble request.
@@ -287,22 +299,24 @@ func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (Pri
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDurationOptions contains the optional parameters for the PrimitiveClient.GetDuration method.
-func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveClientGetDurationOptions) (resp PrimitiveClientGetDurationResponse, err error) {
+func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveClientGetDurationOptions) (PrimitiveClientGetDurationResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDuration", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDurationCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetDurationResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetDurationResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetDurationResponse{}, err
 	}
-	return client.getDurationHandleResponse(httpResp)
+	resp, err := client.getDurationHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDurationCreateRequest creates the GetDuration request.
@@ -330,22 +344,24 @@ func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (P
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetFloatOptions contains the optional parameters for the PrimitiveClient.GetFloat method.
-func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveClientGetFloatOptions) (resp PrimitiveClientGetFloatResponse, err error) {
+func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveClientGetFloatOptions) (PrimitiveClientGetFloatResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetFloat", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetFloatResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetFloatResponse{}, err
 	}
-	return client.getFloatHandleResponse(httpResp)
+	resp, err := client.getFloatHandleResponse(httpResp)
+	return resp, err
 }
 
 // getFloatCreateRequest creates the GetFloat request.
@@ -373,22 +389,24 @@ func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (Prim
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetIntOptions contains the optional parameters for the PrimitiveClient.GetInt method.
-func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveClientGetIntOptions) (resp PrimitiveClientGetIntResponse, err error) {
+func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveClientGetIntOptions) (PrimitiveClientGetIntResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetInt", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetIntResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetIntResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetIntResponse{}, err
 	}
-	return client.getIntHandleResponse(httpResp)
+	resp, err := client.getIntHandleResponse(httpResp)
+	return resp, err
 }
 
 // getIntCreateRequest creates the GetInt request.
@@ -416,22 +434,24 @@ func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (Primit
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetLongOptions contains the optional parameters for the PrimitiveClient.GetLong method.
-func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveClientGetLongOptions) (resp PrimitiveClientGetLongResponse, err error) {
+func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveClientGetLongOptions) (PrimitiveClientGetLongResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetLong", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetLongResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetLongResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetLongResponse{}, err
 	}
-	return client.getLongHandleResponse(httpResp)
+	resp, err := client.getLongHandleResponse(httpResp)
+	return resp, err
 }
 
 // getLongCreateRequest creates the GetLong request.
@@ -459,22 +479,24 @@ func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (Primi
 //
 // Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetStringOptions contains the optional parameters for the PrimitiveClient.GetString method.
-func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveClientGetStringOptions) (resp PrimitiveClientGetStringResponse, err error) {
+func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveClientGetStringOptions) (PrimitiveClientGetStringResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetString", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringCreateRequest(ctx, options)
 	if err != nil {
-		return
+		return PrimitiveClientGetStringResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientGetStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientGetStringResponse{}, err
 	}
-	return client.getStringHandleResponse(httpResp)
+	resp, err := client.getStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // getStringCreateRequest creates the GetString request.
@@ -503,22 +525,23 @@ func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (Pri
 // Generated from API version 2016-02-29
 //   - complexBody - Please put true and false
 //   - options - PrimitiveClientPutBoolOptions contains the optional parameters for the PrimitiveClient.PutBool method.
-func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitiveClientPutBoolOptions) (resp PrimitiveClientPutBoolResponse, err error) {
+func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitiveClientPutBoolOptions) (PrimitiveClientPutBoolResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutBool", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBoolCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutBoolResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutBoolResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutBoolResponse{}, err
 	}
-	return
+	return PrimitiveClientPutBoolResponse{}, nil
 }
 
 // putBoolCreateRequest creates the PutBool request.
@@ -541,22 +564,23 @@ func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complex
 // Generated from API version 2016-02-29
 //   - complexBody - Please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
 //   - options - PrimitiveClientPutByteOptions contains the optional parameters for the PrimitiveClient.PutByte method.
-func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitiveClientPutByteOptions) (resp PrimitiveClientPutByteResponse, err error) {
+func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitiveClientPutByteOptions) (PrimitiveClientPutByteResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutByte", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putByteCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutByteResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutByteResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutByteResponse{}, err
 	}
-	return
+	return PrimitiveClientPutByteResponse{}, nil
 }
 
 // putByteCreateRequest creates the PutByte request.
@@ -579,22 +603,23 @@ func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complex
 // Generated from API version 2016-02-29
 //   - complexBody - Please put '0001-01-01' and '2016-02-29'
 //   - options - PrimitiveClientPutDateOptions contains the optional parameters for the PrimitiveClient.PutDate method.
-func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitiveClientPutDateOptions) (resp PrimitiveClientPutDateResponse, err error) {
+func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitiveClientPutDateOptions) (PrimitiveClientPutDateResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDate", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutDateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutDateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutDateResponse{}, err
 	}
-	return
+	return PrimitiveClientPutDateResponse{}, nil
 }
 
 // putDateCreateRequest creates the PutDate request.
@@ -617,22 +642,23 @@ func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complex
 // Generated from API version 2016-02-29
 //   - complexBody - Please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
 //   - options - PrimitiveClientPutDateTimeOptions contains the optional parameters for the PrimitiveClient.PutDateTime method.
-func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitiveClientPutDateTimeOptions) (resp PrimitiveClientPutDateTimeResponse, err error) {
+func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitiveClientPutDateTimeOptions) (PrimitiveClientPutDateTimeResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDateTime", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutDateTimeResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutDateTimeResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutDateTimeResponse{}, err
 	}
-	return
+	return PrimitiveClientPutDateTimeResponse{}, nil
 }
 
 // putDateTimeCreateRequest creates the PutDateTime request.
@@ -656,22 +682,23 @@ func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, com
 //   - complexBody - Please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
 //   - options - PrimitiveClientPutDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.PutDateTimeRFC1123
 //     method.
-func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitiveClientPutDateTimeRFC1123Options) (resp PrimitiveClientPutDateTimeRFC1123Response, err error) {
+func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitiveClientPutDateTimeRFC1123Options) (PrimitiveClientPutDateTimeRFC1123Response, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDateTimeRFC1123", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeRFC1123CreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutDateTimeRFC1123Response{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutDateTimeRFC1123Response{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutDateTimeRFC1123Response{}, err
 	}
-	return
+	return PrimitiveClientPutDateTimeRFC1123Response{}, nil
 }
 
 // putDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
@@ -694,22 +721,23 @@ func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Conte
 // Generated from API version 2016-02-29
 //   - complexBody - Please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
 //   - options - PrimitiveClientPutDoubleOptions contains the optional parameters for the PrimitiveClient.PutDouble method.
-func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitiveClientPutDoubleOptions) (resp PrimitiveClientPutDoubleResponse, err error) {
+func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitiveClientPutDoubleOptions) (PrimitiveClientPutDoubleResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDouble", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDoubleCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutDoubleResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutDoubleResponse{}, err
 	}
-	return
+	return PrimitiveClientPutDoubleResponse{}, nil
 }
 
 // putDoubleCreateRequest creates the PutDouble request.
@@ -732,22 +760,23 @@ func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, compl
 // Generated from API version 2016-02-29
 //   - complexBody - Please put 'P123DT22H14M12.011S'
 //   - options - PrimitiveClientPutDurationOptions contains the optional parameters for the PrimitiveClient.PutDuration method.
-func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitiveClientPutDurationOptions) (resp PrimitiveClientPutDurationResponse, err error) {
+func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitiveClientPutDurationOptions) (PrimitiveClientPutDurationResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDuration", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDurationCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutDurationResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutDurationResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutDurationResponse{}, err
 	}
-	return
+	return PrimitiveClientPutDurationResponse{}, nil
 }
 
 // putDurationCreateRequest creates the PutDuration request.
@@ -770,22 +799,23 @@ func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, com
 // Generated from API version 2016-02-29
 //   - complexBody - Please put 1.05 and -0.003
 //   - options - PrimitiveClientPutFloatOptions contains the optional parameters for the PrimitiveClient.PutFloat method.
-func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitiveClientPutFloatOptions) (resp PrimitiveClientPutFloatResponse, err error) {
+func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitiveClientPutFloatOptions) (PrimitiveClientPutFloatResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutFloat", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putFloatCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutFloatResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutFloatResponse{}, err
 	}
-	return
+	return PrimitiveClientPutFloatResponse{}, nil
 }
 
 // putFloatCreateRequest creates the PutFloat request.
@@ -808,22 +838,23 @@ func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, comple
 // Generated from API version 2016-02-29
 //   - complexBody - Please put -1 and 2
 //   - options - PrimitiveClientPutIntOptions contains the optional parameters for the PrimitiveClient.PutInt method.
-func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitiveClientPutIntOptions) (resp PrimitiveClientPutIntResponse, err error) {
+func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitiveClientPutIntOptions) (PrimitiveClientPutIntResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutInt", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putIntCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutIntResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutIntResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutIntResponse{}, err
 	}
-	return
+	return PrimitiveClientPutIntResponse{}, nil
 }
 
 // putIntCreateRequest creates the PutInt request.
@@ -846,22 +877,23 @@ func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexB
 // Generated from API version 2016-02-29
 //   - complexBody - Please put 1099511627775 and -999511627788
 //   - options - PrimitiveClientPutLongOptions contains the optional parameters for the PrimitiveClient.PutLong method.
-func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitiveClientPutLongOptions) (resp PrimitiveClientPutLongResponse, err error) {
+func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitiveClientPutLongOptions) (PrimitiveClientPutLongResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutLong", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLongCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutLongResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutLongResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutLongResponse{}, err
 	}
-	return
+	return PrimitiveClientPutLongResponse{}, nil
 }
 
 // putLongCreateRequest creates the PutLong request.
@@ -884,22 +916,23 @@ func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complex
 // Generated from API version 2016-02-29
 //   - complexBody - Please put 'goodrequest', ”, and null
 //   - options - PrimitiveClientPutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
-func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitiveClientPutStringOptions) (resp PrimitiveClientPutStringResponse, err error) {
+func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitiveClientPutStringOptions) (PrimitiveClientPutStringResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutString", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putStringCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return
+		return PrimitiveClientPutStringResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return PrimitiveClientPutStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return PrimitiveClientPutStringResponse{}, err
 	}
-	return
+	return PrimitiveClientPutStringResponse{}, nil
 }
 
 // putStringCreateRequest creates the PutString request.

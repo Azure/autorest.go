@@ -416,35 +416,38 @@ function generateOperation(op: Operation, injectSpans: boolean, imports: ImportM
     text += '}\n\n';
     return text;
   }
+  text += '\tvar err error\n';
   if (!isLROOperation(op) && injectSpans) {
     text += `\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.${opName}", client.internal.Tracer(), nil)\n`;
     text += '\tdefer func() { endSpan(err) }()\n';
   }
+  const zeroResp = getZeroReturnValue(op, 'op');
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
   text += `\tif err != nil {\n`;
-  text += `\t\treturn\n`;
+  text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
   text += `\thttpResp, err := client.internal.Pipeline().Do(req)\n`;
   text += `\tif err != nil {\n`;
-  text += `\t\treturn\n`;
+  text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
   text += `\tif !runtime.HasStatusCode(httpResp, ${formatStatusCodes(statusCodes)}) {\n`;
-  text += `\t\terr = runtime.NewResponseError(httpResp)\n`;
-  text += `\t\treturn\n`;
+  text += '\t\terr = runtime.NewResponseError(httpResp)\n';
+  text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
   // HAB with headers response is handled in protocol responder
   if (op.language.go!.headAsBoolean && !responseHasHeaders(op)) {
     text += `\treturn ${getResponseEnvelopeName(op)}{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
   } else {
     if (isLROOperation(op)) {
-      text += '\t return httpResp, nil\n';
+      text += '\treturn httpResp, nil\n';
     } else if (needsResponseHandler(op)) {
       // also cheating here as at present the only param to the responder is an http.Response
-      text += `\treturn client.${info.protocolNaming.responseMethod}(httpResp)\n`;
+      text += `\tresp, err := client.${info.protocolNaming.responseMethod}(httpResp)\n`;
+      text += '\treturn resp, err\n';
     } else if (isBinaryResponseOperation(op)) {
       text += `\treturn ${getResponseEnvelopeName(op)}{Body: httpResp.Body}, nil\n`;
     } else {
-      text += `\treturn\n`;
+      text += `\treturn ${getResponseEnvelopeName(op)}{}, nil\n`;
     }
   }
   text += '}\n\n';
@@ -1101,16 +1104,14 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
 // handler - for the response handler
 function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): string[] {
   let returnType = getResponseEnvelopeName(op);
-  let errorType = 'error';
   if (isLROOperation(op)) {
     switch (apiType) {
       case 'api':
         if (isPageableOperation(op)) {
-          returnType = `resp *runtime.Poller[*runtime.Pager[${getResponseEnvelopeName(op)}]]`;
+          returnType = `*runtime.Poller[*runtime.Pager[${getResponseEnvelopeName(op)}]]`;
         } else {
-          returnType = `resp *runtime.Poller[${getResponseEnvelopeName(op)}]`;
+          returnType = `*runtime.Poller[${getResponseEnvelopeName(op)}]`;
         }
-        errorType = 'err error';
         break;
       case 'handler':
         // we only have a handler for operations that return a schema
@@ -1122,8 +1123,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
         }
         break;
       case 'op':
-        returnType = 'resp *http.Response';
-        errorType = 'err error';
+        returnType = '*http.Response';
         break;
     }
   } else if (isPageableOperation(op)) {
@@ -1133,11 +1133,8 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
         // pager operations don't return an error
         return [`*runtime.Pager[${returnType}]`];
     }
-  } else if (apiType === 'op') {
-    returnType = `resp ${returnType}`;
-    errorType = 'err error';
   }
-  return [returnType, errorType];
+  return [returnType, 'error'];
 }
 
 function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: ImportManager): string {
@@ -1170,6 +1167,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';
+  text += '\t\tvar err error\n';
   if (injectSpans) {
     text += `\t\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.Begin${op.language.go!.name}", client.internal.Tracer(), nil)\n`;
     text += '\t\tdefer func() { endSpan(err) }()\n';
@@ -1206,28 +1204,44 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
     }
   }
 
-  text += '\t\treturn runtime.NewPoller (resp, client.internal.Pipeline(), ';
-  text += `&runtime.NewPollerOptions${pollerTypeParam}{\n`;
-  if (finalStateVia !== '') {
-    text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;  
+  text += `\t\tpoller, err := runtime.NewPoller`;
+  if (finalStateVia === '' && pollerType === 'nil') {
+    // the generic type param is redundant when it's also specified in the
+    // options struct so we only include it when there's no options.
+    text += pollerTypeParam;
   }
-  if (pollerType !== 'nil') {
-    text += `\t\t\tResponse: ${pollerType},\n`;
+  text += '(resp, client.internal.Pipeline(), ';
+  if (finalStateVia === '' && pollerType === 'nil') {
+    // no options
+    text += 'nil)\n';
+  } else {
+    // at least one option
+    text += `&runtime.NewPollerOptions${pollerTypeParam}{\n`;
+    if (finalStateVia !== '') {
+      text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;  
+    }
+    if (pollerType !== 'nil') {
+      text += `\t\t\tResponse: ${pollerType},\n`;
+    }
+    text += '\t\t})\n';
   }
-  text += '\t\t\tTracer: client.internal.Tracer(),\n';
-  text += '\t\t})\n';
+  text += '\t\treturn poller, err\n';
   text += '\t} else {\n';
 
   // creating the poller from resume token branch
 
   text += `\t\treturn runtime.NewPollerFromResumeToken`;
-  text += '(options.ResumeToken, client.internal.Pipeline(), ';
-  text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
-  if (pollerType !== 'nil') {
-    text += `\t\t\tResponse: ${pollerType},\n`;
+  if (pollerType === 'nil') {
+    text += pollerTypeParam;
   }
-  text += '\t\t\tTracer: client.internal.Tracer(),\n';
-  text  += '\t\t})\n';
+  text += '(options.ResumeToken, client.internal.Pipeline(), ';
+  if (pollerType === 'nil') {
+    text += 'nil)\n';
+  } else {
+    text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
+    text += `\t\t\tResponse: ${pollerType},\n`;
+    text  += '\t\t})\n';
+  }
   text += '\t}\n';
 
   text += '}\n\n';

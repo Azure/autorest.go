@@ -52,22 +52,22 @@ func NewJobsClient(subscriptionID string, credential azcore.TokenCredential, opt
 //   - name - The job name.
 //   - resourceGroupName - The resource group name.
 //   - options - JobsClientGetOptions contains the optional parameters for the JobsClient.Get method.
-func (client *JobsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *JobsClientGetOptions) (resp JobsClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "JobsClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *JobsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *JobsClientGetOptions) (JobsClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return
+		return JobsClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return JobsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return JobsClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

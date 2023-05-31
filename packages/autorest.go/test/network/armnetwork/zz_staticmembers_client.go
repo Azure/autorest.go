@@ -57,22 +57,24 @@ func NewStaticMembersClient(subscriptionID string, credential azcore.TokenCreden
 //   - parameters - Parameters supplied to the specify the static member to create
 //   - options - StaticMembersClientCreateOrUpdateOptions contains the optional parameters for the StaticMembersClient.CreateOrUpdate
 //     method.
-func (client *StaticMembersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, parameters StaticMember, options *StaticMembersClientCreateOrUpdateOptions) (resp StaticMembersClientCreateOrUpdateResponse, err error) {
+func (client *StaticMembersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, parameters StaticMember, options *StaticMembersClientCreateOrUpdateOptions) (StaticMembersClientCreateOrUpdateResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "StaticMembersClient.CreateOrUpdate", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, networkGroupName, staticMemberName, parameters, options)
 	if err != nil {
-		return
+		return StaticMembersClientCreateOrUpdateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return StaticMembersClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return StaticMembersClientCreateOrUpdateResponse{}, err
 	}
-	return client.createOrUpdateHandleResponse(httpResp)
+	resp, err := client.createOrUpdateHandleResponse(httpResp)
+	return resp, err
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -130,22 +132,23 @@ func (client *StaticMembersClient) createOrUpdateHandleResponse(resp *http.Respo
 //   - networkGroupName - The name of the network group.
 //   - staticMemberName - The name of the static member.
 //   - options - StaticMembersClientDeleteOptions contains the optional parameters for the StaticMembersClient.Delete method.
-func (client *StaticMembersClient) Delete(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, options *StaticMembersClientDeleteOptions) (resp StaticMembersClientDeleteResponse, err error) {
+func (client *StaticMembersClient) Delete(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, options *StaticMembersClientDeleteOptions) (StaticMembersClientDeleteResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "StaticMembersClient.Delete", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, networkGroupName, staticMemberName, options)
 	if err != nil {
-		return
+		return StaticMembersClientDeleteResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return StaticMembersClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return StaticMembersClientDeleteResponse{}, err
 	}
-	return
+	return StaticMembersClientDeleteResponse{}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -191,22 +194,24 @@ func (client *StaticMembersClient) deleteCreateRequest(ctx context.Context, reso
 //   - networkGroupName - The name of the network group.
 //   - staticMemberName - The name of the static member.
 //   - options - StaticMembersClientGetOptions contains the optional parameters for the StaticMembersClient.Get method.
-func (client *StaticMembersClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, options *StaticMembersClientGetOptions) (resp StaticMembersClientGetResponse, err error) {
+func (client *StaticMembersClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, options *StaticMembersClientGetOptions) (StaticMembersClientGetResponse, error) {
+	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "StaticMembersClient.Get", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, networkGroupName, staticMemberName, options)
 	if err != nil {
-		return
+		return StaticMembersClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return StaticMembersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return StaticMembersClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.

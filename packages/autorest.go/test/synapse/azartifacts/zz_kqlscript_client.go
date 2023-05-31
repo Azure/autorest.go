@@ -35,21 +35,17 @@ type KqlScriptClient struct {
 //   - kqlScript - KQL script
 //   - options - KqlScriptClientBeginCreateOrUpdateOptions contains the optional parameters for the KqlScriptClient.BeginCreateOrUpdate
 //     method.
-func (client *KqlScriptClient) BeginCreateOrUpdate(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (resp *runtime.Poller[KqlScriptClientCreateOrUpdateResponse], err error) {
+func (client *KqlScriptClient) BeginCreateOrUpdate(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (*runtime.Poller[KqlScriptClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "KqlScriptClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.createOrUpdate(ctx, kqlScriptName, kqlScript, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[KqlScriptClientCreateOrUpdateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[KqlScriptClientCreateOrUpdateResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[KqlScriptClientCreateOrUpdateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[KqlScriptClientCreateOrUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -57,18 +53,19 @@ func (client *KqlScriptClient) BeginCreateOrUpdate(ctx context.Context, kqlScrip
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01-preview
-func (client *KqlScriptClient) createOrUpdate(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (resp *http.Response, err error) {
+func (client *KqlScriptClient) createOrUpdate(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateCreateRequest(ctx, kqlScriptName, kqlScript, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -101,21 +98,17 @@ func (client *KqlScriptClient) createOrUpdateCreateRequest(ctx context.Context, 
 //   - kqlScriptName - KQL script name
 //   - options - KqlScriptClientBeginDeleteByNameOptions contains the optional parameters for the KqlScriptClient.BeginDeleteByName
 //     method.
-func (client *KqlScriptClient) BeginDeleteByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (resp *runtime.Poller[KqlScriptClientDeleteByNameResponse], err error) {
+func (client *KqlScriptClient) BeginDeleteByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (*runtime.Poller[KqlScriptClientDeleteByNameResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "KqlScriptClient.BeginDeleteByName", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.deleteByName(ctx, kqlScriptName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[KqlScriptClientDeleteByNameResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[KqlScriptClientDeleteByNameResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[KqlScriptClientDeleteByNameResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[KqlScriptClientDeleteByNameResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -123,18 +116,19 @@ func (client *KqlScriptClient) BeginDeleteByName(ctx context.Context, kqlScriptN
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01-preview
-func (client *KqlScriptClient) deleteByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (resp *http.Response, err error) {
+func (client *KqlScriptClient) deleteByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteByNameCreateRequest(ctx, kqlScriptName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -163,22 +157,22 @@ func (client *KqlScriptClient) deleteByNameCreateRequest(ctx context.Context, kq
 // Generated from API version 2021-11-01-preview
 //   - kqlScriptName - KQL script name
 //   - options - KqlScriptClientGetByNameOptions contains the optional parameters for the KqlScriptClient.GetByName method.
-func (client *KqlScriptClient) GetByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientGetByNameOptions) (resp KqlScriptClientGetByNameResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "KqlScriptClient.GetByName", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *KqlScriptClient) GetByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientGetByNameOptions) (KqlScriptClientGetByNameResponse, error) {
+	var err error
 	req, err := client.getByNameCreateRequest(ctx, kqlScriptName, options)
 	if err != nil {
-		return
+		return KqlScriptClientGetByNameResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return KqlScriptClientGetByNameResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return KqlScriptClientGetByNameResponse{}, err
 	}
-	return client.getByNameHandleResponse(httpResp)
+	resp, err := client.getByNameHandleResponse(httpResp)
+	return resp, err
 }
 
 // getByNameCreateRequest creates the GetByName request.
@@ -215,21 +209,17 @@ func (client *KqlScriptClient) getByNameHandleResponse(resp *http.Response) (Kql
 //   - kqlScriptName - KQL script name
 //   - renameRequest - Rename request
 //   - options - KqlScriptClientBeginRenameOptions contains the optional parameters for the KqlScriptClient.BeginRename method.
-func (client *KqlScriptClient) BeginRename(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (resp *runtime.Poller[KqlScriptClientRenameResponse], err error) {
+func (client *KqlScriptClient) BeginRename(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (*runtime.Poller[KqlScriptClientRenameResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "KqlScriptClient.BeginRename", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.rename(ctx, kqlScriptName, renameRequest, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[KqlScriptClientRenameResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[KqlScriptClientRenameResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[KqlScriptClientRenameResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[KqlScriptClientRenameResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -237,18 +227,19 @@ func (client *KqlScriptClient) BeginRename(ctx context.Context, kqlScriptName st
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-11-01-preview
-func (client *KqlScriptClient) rename(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (resp *http.Response, err error) {
+func (client *KqlScriptClient) rename(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (*http.Response, error) {
+	var err error
 	req, err := client.renameCreateRequest(ctx, kqlScriptName, renameRequest, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }

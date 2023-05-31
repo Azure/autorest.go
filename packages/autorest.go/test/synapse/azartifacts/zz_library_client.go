@@ -38,22 +38,21 @@ type LibraryClient struct {
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - content - Library file chunk.
 //   - options - LibraryClientAppendOptions contains the optional parameters for the LibraryClient.Append method.
-func (client *LibraryClient) Append(ctx context.Context, comp Enum9, libraryName string, content io.ReadSeekCloser, options *LibraryClientAppendOptions) (resp LibraryClientAppendResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "LibraryClient.Append", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *LibraryClient) Append(ctx context.Context, comp Enum9, libraryName string, content io.ReadSeekCloser, options *LibraryClientAppendOptions) (LibraryClientAppendResponse, error) {
+	var err error
 	req, err := client.appendCreateRequest(ctx, comp, libraryName, content, options)
 	if err != nil {
-		return
+		return LibraryClientAppendResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return LibraryClientAppendResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return LibraryClientAppendResponse{}, err
 	}
-	return
+	return LibraryClientAppendResponse{}, nil
 }
 
 // appendCreateRequest creates the Append request.
@@ -87,21 +86,17 @@ func (client *LibraryClient) appendCreateRequest(ctx context.Context, comp Enum9
 // Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientBeginCreateOptions contains the optional parameters for the LibraryClient.BeginCreate method.
-func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (resp *runtime.Poller[LibraryClientCreateResponse], err error) {
+func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*runtime.Poller[LibraryClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "LibraryClient.BeginCreate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.create(ctx, libraryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LibraryClientCreateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[LibraryClientCreateResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LibraryClientCreateResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[LibraryClientCreateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -109,18 +104,19 @@ func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *LibraryClient) create(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (resp *http.Response, err error) {
+func (client *LibraryClient) create(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createCreateRequest(ctx, libraryName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -149,21 +145,17 @@ func (client *LibraryClient) createCreateRequest(ctx context.Context, libraryNam
 // Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientBeginDeleteOptions contains the optional parameters for the LibraryClient.BeginDelete method.
-func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (resp *runtime.Poller[LibraryClientDeleteResponse], err error) {
+func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*runtime.Poller[LibraryClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "LibraryClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.deleteOperation(ctx, libraryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LibraryClientDeleteResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[LibraryClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LibraryClientDeleteResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[LibraryClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -171,18 +163,19 @@ func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *LibraryClient) deleteOperation(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (resp *http.Response, err error) {
+func (client *LibraryClient) deleteOperation(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteCreateRequest(ctx, libraryName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusConflict) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -211,21 +204,17 @@ func (client *LibraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 // Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientBeginFlushOptions contains the optional parameters for the LibraryClient.BeginFlush method.
-func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (resp *runtime.Poller[LibraryClientFlushResponse], err error) {
+func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*runtime.Poller[LibraryClientFlushResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "LibraryClient.BeginFlush", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.flush(ctx, libraryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LibraryClientFlushResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		poller, err := runtime.NewPoller[LibraryClientFlushResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LibraryClientFlushResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[LibraryClientFlushResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -233,18 +222,19 @@ func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-12-01
-func (client *LibraryClient) flush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (resp *http.Response, err error) {
+func (client *LibraryClient) flush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*http.Response, error) {
+	var err error
 	req, err := client.flushCreateRequest(ctx, libraryName, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -273,22 +263,22 @@ func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName
 // Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientGetOptions contains the optional parameters for the LibraryClient.Get method.
-func (client *LibraryClient) Get(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (resp LibraryClientGetResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "LibraryClient.Get", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *LibraryClient) Get(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (LibraryClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, libraryName, options)
 	if err != nil {
-		return
+		return LibraryClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return LibraryClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotModified) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return LibraryClientGetResponse{}, err
 	}
-	return client.getHandleResponse(httpResp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -325,22 +315,22 @@ func (client *LibraryClient) getHandleResponse(resp *http.Response) (LibraryClie
 //   - operationID - operation id for which status is requested
 //   - options - LibraryClientGetOperationResultOptions contains the optional parameters for the LibraryClient.GetOperationResult
 //     method.
-func (client *LibraryClient) GetOperationResult(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (resp LibraryClientGetOperationResultResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "LibraryClient.GetOperationResult", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *LibraryClient) GetOperationResult(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (LibraryClientGetOperationResultResponse, error) {
+	var err error
 	req, err := client.getOperationResultCreateRequest(ctx, operationID, options)
 	if err != nil {
-		return
+		return LibraryClientGetOperationResultResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return LibraryClientGetOperationResultResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return LibraryClientGetOperationResultResponse{}, err
 	}
-	return client.getOperationResultHandleResponse(httpResp)
+	resp, err := client.getOperationResultHandleResponse(httpResp)
+	return resp, err
 }
 
 // getOperationResultCreateRequest creates the GetOperationResult request.

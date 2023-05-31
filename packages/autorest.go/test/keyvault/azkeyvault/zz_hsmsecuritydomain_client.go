@@ -34,22 +34,19 @@ type HSMSecurityDomainClient struct {
 //     maximum 10) containing a public key in JWK format.
 //   - options - HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
 //     method.
-func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (resp *runtime.Poller[HSMSecurityDomainClientDownloadResponse], err error) {
+func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*runtime.Poller[HSMSecurityDomainClientDownloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "HSMSecurityDomainClient.BeginDownload", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.download(ctx, vaultBaseURL, certificateInfoObject, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HSMSecurityDomainClientDownloadResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HSMSecurityDomainClientDownloadResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[HSMSecurityDomainClientDownloadResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientDownloadResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -58,18 +55,19 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
-func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (resp *http.Response, err error) {
+func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*http.Response, error) {
+	var err error
 	req, err := client.downloadCreateRequest(ctx, vaultBaseURL, certificateInfoObject, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -100,22 +98,22 @@ func (client *HSMSecurityDomainClient) downloadCreateRequest(ctx context.Context
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - options - HSMSecurityDomainClientDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
 //     method.
-func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientDownloadPendingOptions) (resp HSMSecurityDomainClientDownloadPendingResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "HSMSecurityDomainClient.DownloadPending", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientDownloadPendingOptions) (HSMSecurityDomainClientDownloadPendingResponse, error) {
+	var err error
 	req, err := client.downloadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return
+		return HSMSecurityDomainClientDownloadPendingResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HSMSecurityDomainClientDownloadPendingResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HSMSecurityDomainClientDownloadPendingResponse{}, err
 	}
-	return client.downloadPendingHandleResponse(httpResp)
+	resp, err := client.downloadPendingHandleResponse(httpResp)
+	return resp, err
 }
 
 // downloadPendingCreateRequest creates the DownloadPending request.
@@ -147,22 +145,22 @@ func (client *HSMSecurityDomainClient) downloadPendingHandleResponse(resp *http.
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - options - HSMSecurityDomainClientTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey
 //     method.
-func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientTransferKeyOptions) (resp HSMSecurityDomainClientTransferKeyResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "HSMSecurityDomainClient.TransferKey", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientTransferKeyOptions) (HSMSecurityDomainClientTransferKeyResponse, error) {
+	var err error
 	req, err := client.transferKeyCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return
+		return HSMSecurityDomainClientTransferKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HSMSecurityDomainClientTransferKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HSMSecurityDomainClientTransferKeyResponse{}, err
 	}
-	return client.transferKeyHandleResponse(httpResp)
+	resp, err := client.transferKeyHandleResponse(httpResp)
+	return resp, err
 }
 
 // transferKeyCreateRequest creates the TransferKey request.
@@ -198,22 +196,19 @@ func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *http.Resp
 //   - securityDomain - The Security Domain to be restored.
 //   - options - HSMSecurityDomainClientBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
 //     method.
-func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (resp *runtime.Poller[HSMSecurityDomainClientUploadResponse], err error) {
+func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*runtime.Poller[HSMSecurityDomainClientUploadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		ctx, endSpan := runtime.StartSpan(ctx, "HSMSecurityDomainClient.BeginUpload", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
+		var err error
 		resp, err := client.upload(ctx, vaultBaseURL, securityDomain, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HSMSecurityDomainClientUploadResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[HSMSecurityDomainClientUploadResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
-			Tracer:        client.internal.Tracer(),
 		})
+		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[HSMSecurityDomainClientUploadResponse]{
-			Tracer: client.internal.Tracer(),
-		})
+		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientUploadResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
 }
 
@@ -221,18 +216,19 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
-func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (resp *http.Response, err error) {
+func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*http.Response, error) {
+	var err error
 	req, err := client.uploadCreateRequest(ctx, vaultBaseURL, securityDomain, options)
 	if err != nil {
-		return
+		return nil, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusAccepted, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return nil, err
 	}
 	return httpResp, nil
 }
@@ -260,22 +256,22 @@ func (client *HSMSecurityDomainClient) uploadCreateRequest(ctx context.Context, 
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - options - HSMSecurityDomainClientUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending
 //     method.
-func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientUploadPendingOptions) (resp HSMSecurityDomainClientUploadPendingResponse, err error) {
-	ctx, endSpan := runtime.StartSpan(ctx, "HSMSecurityDomainClient.UploadPending", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
+func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientUploadPendingOptions) (HSMSecurityDomainClientUploadPendingResponse, error) {
+	var err error
 	req, err := client.uploadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return
+		return HSMSecurityDomainClientUploadPendingResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return
+		return HSMSecurityDomainClientUploadPendingResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return
+		return HSMSecurityDomainClientUploadPendingResponse{}, err
 	}
-	return client.uploadPendingHandleResponse(httpResp)
+	resp, err := client.uploadPendingHandleResponse(httpResp)
+	return resp, err
 }
 
 // uploadPendingCreateRequest creates the UploadPending request.
