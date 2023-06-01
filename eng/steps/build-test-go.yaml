@@ -64,7 +64,7 @@ steps:
         if (!$?) {
           $exit = 1
         }
-        $HOME/go/bin/shadow ./...
+        ~/go/bin/shadow ./...
         if (!$?) {
           $exit = 1
         }
