@@ -20,6 +20,7 @@ steps:
       set -e
       go version
       go install github.com/jstemmer/go-junit-report@v1.0.0
+      go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
     displayName: "Install Dependencies"
     workingDirectory: "${{ parameters.GoTestPath }}"
 
@@ -63,9 +64,29 @@ steps:
         if (!$?) {
           $exit = 1
         }
+        shadow ./...
+        if (!$?) {
+          $exit = 1
+        }
       }
       exit $exit
     displayName: "Vet"
+
+  - pwsh: |
+      curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.51.1
+      golangci-lint --version
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $exit = 0
+      foreach ($md in $modDirs) {
+        pushd $md
+        Write-Host "##[command]Executing golangci-lint run in $md"
+        golangci-lint run
+        if (!$?) {
+          $exit = 1
+        }
+      }
+      exit $exit
+    displayName: "Lint"
 
   - pwsh: |
       pushd ./packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver
