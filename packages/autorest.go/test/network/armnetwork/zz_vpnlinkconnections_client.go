@@ -57,13 +57,18 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 //     method.
 func (client *VPNLinkConnectionsClient) BeginGetIkeSas(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginGetIkeSasOptions) (*runtime.Poller[VPNLinkConnectionsClientGetIkeSasResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNLinkConnectionsClient.BeginGetIkeSas", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.getIkeSas(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNLinkConnectionsClientGetIkeSasResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNLinkConnectionsClientGetIkeSasResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 		})
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[VPNLinkConnectionsClientGetIkeSasResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -74,18 +79,20 @@ func (client *VPNLinkConnectionsClient) BeginGetIkeSas(ctx context.Context, reso
 //
 // Generated from API version 2022-09-01
 func (client *VPNLinkConnectionsClient) getIkeSas(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginGetIkeSasOptions) (*http.Response, error) {
+	var err error
 	req, err := client.getIkeSasCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // getIkeSasCreateRequest creates the GetIkeSas request.
@@ -155,6 +162,7 @@ func (client *VPNLinkConnectionsClient) NewListByVPNConnectionPager(resourceGrou
 			}
 			return client.listByVPNConnectionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -209,13 +217,18 @@ func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *
 //     method.
 func (client *VPNLinkConnectionsClient) BeginResetConnection(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginResetConnectionOptions) (*runtime.Poller[VPNLinkConnectionsClientResetConnectionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNLinkConnectionsClient.BeginResetConnection", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.resetConnection(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNLinkConnectionsClientResetConnectionResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNLinkConnectionsClientResetConnectionResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 		})
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[VPNLinkConnectionsClientResetConnectionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -226,18 +239,20 @@ func (client *VPNLinkConnectionsClient) BeginResetConnection(ctx context.Context
 //
 // Generated from API version 2022-09-01
 func (client *VPNLinkConnectionsClient) resetConnection(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNLinkConnectionsClientBeginResetConnectionOptions) (*http.Response, error) {
+	var err error
 	req, err := client.resetConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // resetConnectionCreateRequest creates the ResetConnection request.

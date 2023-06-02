@@ -15,7 +15,9 @@ import (
 )
 
 func newFilesClient(t *testing.T) *FilesClient {
-	client, err := NewFilesClient(nil)
+	client, err := NewFilesClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

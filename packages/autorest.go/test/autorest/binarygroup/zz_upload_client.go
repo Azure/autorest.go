@@ -31,16 +31,20 @@ type UploadClient struct {
 //   - fileParam - Non-empty binary file
 //   - options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
 func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (UploadClientBinaryResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "UploadClient.Binary", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.binaryCreateRequest(ctx, fileParam, options)
 	if err != nil {
 		return UploadClientBinaryResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return UploadClientBinaryResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadClientBinaryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return UploadClientBinaryResponse{}, err
 	}
 	return UploadClientBinaryResponse{}, nil
 }
@@ -65,16 +69,20 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 //   - fileParam - JSON file with payload { "more": "cowbell" }
 //   - options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
 func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (UploadClientFileResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "UploadClient.File", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fileCreateRequest(ctx, fileParam, options)
 	if err != nil {
 		return UploadClientFileResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return UploadClientFileResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadClientFileResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return UploadClientFileResponse{}, err
 	}
 	return UploadClientFileResponse{}, nil
 }

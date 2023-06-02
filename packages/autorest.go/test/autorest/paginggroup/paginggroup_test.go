@@ -22,6 +22,7 @@ import (
 func newPagingClient(t *testing.T) *PagingClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
+	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
 	client, err := NewPagingClient(&options)
 	require.NoError(t, err)

@@ -29,16 +29,20 @@ type HTTPRedirectsClient struct {
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
 func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsClientDelete307Options) (HTTPRedirectsClientDelete307Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Delete307", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete307CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientDelete307Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientDelete307Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientDelete307Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientDelete307Response{}, err
 	}
 	return HTTPRedirectsClientDelete307Response{}, nil
 }
@@ -63,18 +67,23 @@ func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, o
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
 func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsClientGet300Options) (HTTPRedirectsClientGet300Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get300", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get300CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientGet300Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet300Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusMultipleChoices) {
-		return HTTPRedirectsClientGet300Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusMultipleChoices) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientGet300Response{}, err
 	}
-	return client.get300HandleResponse(resp)
+	resp, err := client.get300HandleResponse(httpResp)
+	return resp, err
 }
 
 // get300CreateRequest creates the Get300 request.
@@ -106,16 +115,20 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HT
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
 func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsClientGet301Options) (HTTPRedirectsClientGet301Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get301", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get301CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientGet301Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet301Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientGet301Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientGet301Response{}, err
 	}
 	return HTTPRedirectsClientGet301Response{}, nil
 }
@@ -137,16 +150,20 @@ func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, opti
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
 func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsClientGet302Options) (HTTPRedirectsClientGet302Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get302", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get302CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientGet302Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet302Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientGet302Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientGet302Response{}, err
 	}
 	return HTTPRedirectsClientGet302Response{}, nil
 }
@@ -168,16 +185,20 @@ func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, opti
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
 func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsClientGet307Options) (HTTPRedirectsClientGet307Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get307", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get307CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientGet307Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientGet307Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientGet307Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientGet307Response{}, err
 	}
 	return HTTPRedirectsClientGet307Response{}, nil
 }
@@ -198,18 +219,23 @@ func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, opti
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
 func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsClientHead300Options) (HTTPRedirectsClientHead300Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head300", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head300CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientHead300Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead300Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusMultipleChoices) {
-		return HTTPRedirectsClientHead300Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusMultipleChoices) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientHead300Response{}, err
 	}
-	return client.head300HandleResponse(resp)
+	resp, err := client.head300HandleResponse(httpResp)
+	return resp, err
 }
 
 // head300CreateRequest creates the Head300 request.
@@ -238,18 +264,22 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (H
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
 func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsClientHead301Options) (HTTPRedirectsClientHead301Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head301", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head301CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientHead301Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead301Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientHead301Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientHead301Response{}, err
 	}
-	return HTTPRedirectsClientHead301Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPRedirectsClientHead301Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head301CreateRequest creates the Head301 request.
@@ -268,18 +298,22 @@ func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, opt
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
 func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsClientHead302Options) (HTTPRedirectsClientHead302Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head302", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head302CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientHead302Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead302Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientHead302Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientHead302Response{}, err
 	}
-	return HTTPRedirectsClientHead302Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPRedirectsClientHead302Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head302CreateRequest creates the Head302 request.
@@ -298,18 +332,22 @@ func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, opt
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
 func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsClientHead307Options) (HTTPRedirectsClientHead307Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head307", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head307CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientHead307Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientHead307Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientHead307Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientHead307Response{}, err
 	}
-	return HTTPRedirectsClientHead307Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPRedirectsClientHead307Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head307CreateRequest creates the Head307 request.
@@ -330,16 +368,20 @@ func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, opt
 //   - options - HTTPRedirectsClientOptions307Options contains the optional parameters for the HTTPRedirectsClient.Options307
 //     method.
 func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPRedirectsClientOptions307Options) (HTTPRedirectsClientOptions307Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Options307", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.options307CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientOptions307Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientOptions307Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientOptions307Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientOptions307Response{}, err
 	}
 	return HTTPRedirectsClientOptions307Response{}, nil
 }
@@ -362,18 +404,23 @@ func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, 
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
 func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsClientPatch302Options) (HTTPRedirectsClientPatch302Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Patch302", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch302CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientPatch302Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPatch302Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusFound) {
-		return HTTPRedirectsClientPatch302Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusFound) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientPatch302Response{}, err
 	}
-	return client.patch302HandleResponse(resp)
+	resp, err := client.patch302HandleResponse(httpResp)
+	return resp, err
 }
 
 // patch302CreateRequest creates the Patch302 request.
@@ -405,16 +452,20 @@ func (client *HTTPRedirectsClient) patch302HandleResponse(resp *http.Response) (
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
 func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsClientPatch307Options) (HTTPRedirectsClientPatch307Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Patch307", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch307CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientPatch307Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPatch307Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientPatch307Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientPatch307Response{}, err
 	}
 	return HTTPRedirectsClientPatch307Response{}, nil
 }
@@ -440,18 +491,23 @@ func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, op
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
 func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsClientPost303Options) (HTTPRedirectsClientPost303Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Post303", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post303CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientPost303Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPost303Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusSeeOther) {
-		return HTTPRedirectsClientPost303Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusSeeOther) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientPost303Response{}, err
 	}
-	return client.post303HandleResponse(resp)
+	resp, err := client.post303HandleResponse(httpResp)
+	return resp, err
 }
 
 // post303CreateRequest creates the Post303 request.
@@ -483,16 +539,20 @@ func (client *HTTPRedirectsClient) post303HandleResponse(resp *http.Response) (H
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
 func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsClientPost307Options) (HTTPRedirectsClientPost307Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Post307", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post307CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientPost307Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPost307Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientPost307Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientPost307Response{}, err
 	}
 	return HTTPRedirectsClientPost307Response{}, nil
 }
@@ -518,18 +578,23 @@ func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, opt
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
 func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsClientPut301Options) (HTTPRedirectsClientPut301Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Put301", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put301CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientPut301Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPut301Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusMovedPermanently) {
-		return HTTPRedirectsClientPut301Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusMovedPermanently) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientPut301Response{}, err
 	}
-	return client.put301HandleResponse(resp)
+	resp, err := client.put301HandleResponse(httpResp)
+	return resp, err
 }
 
 // put301CreateRequest creates the Put301 request.
@@ -561,16 +626,20 @@ func (client *HTTPRedirectsClient) put301HandleResponse(resp *http.Response) (HT
 // Generated from API version 1.0.0
 //   - options - HTTPRedirectsClientPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
 func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsClientPut307Options) (HTTPRedirectsClientPut307Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Put307", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put307CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsClientPut307Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRedirectsClientPut307Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsClientPut307Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRedirectsClientPut307Response{}, err
 	}
 	return HTTPRedirectsClientPut307Response{}, nil
 }

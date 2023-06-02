@@ -12,7 +12,7 @@ import { lt, toSemver } from '@azure-tools/codegen';
 export async function generateGoModFile(session: Session<CodeModel>, existingGoMod: string): Promise<string> {
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
-  const version = await session.getValue('azcore-version', '1.4.0');
+  const version = await session.getValue('azcore-version', '1.6.0');
   if (!version.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
     throw new Error(`azcore version ${version} must in the format major.minor.patch[-beta.N]`);
   }
@@ -31,7 +31,7 @@ export async function generateGoModFile(session: Session<CodeModel>, existingGoM
   }
 
   // check if the existing version of azcore is greater than or equal to the specified version
-  const match = existingGoMod.match(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v(\d+\.\d+\.\d+)/);
+  const match = existingGoMod.match(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v(\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?)/);
   if (!match) {
     throw new Error('preexisting go.mod is missing dependency on azcore');
   }
@@ -42,7 +42,7 @@ export async function generateGoModFile(session: Session<CodeModel>, existingGoM
   const specifiedVer = toSemver(version);
   if (lt(existingVer, specifiedVer)) {
     // the existing version of azcore is less than the specified version so update it
-    existingGoMod = existingGoMod.replace(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v\d+\.\d+\.\d+/, azcore);
+    existingGoMod = existingGoMod.replace(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?/, azcore);
   }
   return existingGoMod;
 }

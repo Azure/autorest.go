@@ -37,11 +37,13 @@ type SparkConfigurationClient struct {
 //     SparkConfigurationClient.BeginCreateOrUpdateSparkConfiguration method.
 func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.createOrUpdateSparkConfiguration(ctx, sparkConfigurationName, sparkConfiguration, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -52,18 +54,20 @@ func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ct
 //
 // Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) createOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateSparkConfigurationCreateRequest(ctx, sparkConfigurationName, sparkConfiguration, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateSparkConfigurationCreateRequest creates the CreateOrUpdateSparkConfiguration request.
@@ -99,11 +103,13 @@ func (client *SparkConfigurationClient) createOrUpdateSparkConfigurationCreateRe
 //     method.
 func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientDeleteSparkConfigurationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.deleteSparkConfiguration(ctx, sparkConfigurationName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SparkConfigurationClientDeleteSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[SparkConfigurationClientDeleteSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[SparkConfigurationClientDeleteSparkConfigurationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -114,18 +120,20 @@ func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx contex
 //
 // Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) deleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteSparkConfigurationCreateRequest(ctx, sparkConfigurationName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteSparkConfigurationCreateRequest creates the DeleteSparkConfiguration request.
@@ -154,18 +162,21 @@ func (client *SparkConfigurationClient) deleteSparkConfigurationCreateRequest(ct
 //   - options - SparkConfigurationClientGetSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.GetSparkConfiguration
 //     method.
 func (client *SparkConfigurationClient) GetSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientGetSparkConfigurationOptions) (SparkConfigurationClientGetSparkConfigurationResponse, error) {
+	var err error
 	req, err := client.getSparkConfigurationCreateRequest(ctx, sparkConfigurationName, options)
 	if err != nil {
 		return SparkConfigurationClientGetSparkConfigurationResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return SparkConfigurationClientGetSparkConfigurationResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return SparkConfigurationClientGetSparkConfigurationResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotModified) {
+		err = runtime.NewResponseError(httpResp)
+		return SparkConfigurationClientGetSparkConfigurationResponse{}, err
 	}
-	return client.getSparkConfigurationHandleResponse(resp)
+	resp, err := client.getSparkConfigurationHandleResponse(httpResp)
+	return resp, err
 }
 
 // getSparkConfigurationCreateRequest creates the GetSparkConfiguration request.
@@ -264,11 +275,13 @@ func (client *SparkConfigurationClient) getSparkConfigurationsByWorkspaceHandleR
 //     method.
 func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientRenameSparkConfigurationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.renameSparkConfiguration(ctx, sparkConfigurationName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[SparkConfigurationClientRenameSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[SparkConfigurationClientRenameSparkConfigurationResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[SparkConfigurationClientRenameSparkConfigurationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -279,18 +292,20 @@ func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx contex
 //
 // Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) renameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*http.Response, error) {
+	var err error
 	req, err := client.renameSparkConfigurationCreateRequest(ctx, sparkConfigurationName, request, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // renameSparkConfigurationCreateRequest creates the RenameSparkConfiguration request.

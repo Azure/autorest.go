@@ -34,18 +34,21 @@ type IntegrationRuntimesClient struct {
 //   - integrationRuntimeName - The Integration Runtime name
 //   - options - IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
 func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesClientGetOptions) (IntegrationRuntimesClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
 		return IntegrationRuntimesClientGetResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntegrationRuntimesClientGetResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntegrationRuntimesClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntegrationRuntimesClientGetResponse{}, err
 	}
-	return client.getHandleResponse(resp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -82,18 +85,21 @@ func (client *IntegrationRuntimesClient) getHandleResponse(resp *http.Response) 
 //   - options - IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List
 //     method.
 func (client *IntegrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesClientListOptions) (IntegrationRuntimesClientListResponse, error) {
+	var err error
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return IntegrationRuntimesClientListResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntegrationRuntimesClientListResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntegrationRuntimesClientListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntegrationRuntimesClientListResponse{}, err
 	}
-	return client.listHandleResponse(resp)
+	resp, err := client.listHandleResponse(httpResp)
+	return resp, err
 }
 
 // listCreateRequest creates the List request.

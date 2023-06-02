@@ -16,7 +16,9 @@ import (
 )
 
 func newInheritanceClient(t *testing.T) *InheritanceClient {
-	client, err := NewInheritanceClient(nil)
+	client, err := NewInheritanceClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

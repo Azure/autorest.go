@@ -30,18 +30,23 @@ type ReadonlypropertyClient struct {
 //   - options - ReadonlypropertyClientGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid
 //     method.
 func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyClientGetValidOptions) (ReadonlypropertyClientGetValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ReadonlypropertyClient.GetValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return ReadonlypropertyClientGetValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ReadonlypropertyClientGetValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ReadonlypropertyClientGetValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ReadonlypropertyClientGetValidResponse{}, err
 	}
-	return client.getValidHandleResponse(resp)
+	resp, err := client.getValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -71,16 +76,20 @@ func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response
 //   - options - ReadonlypropertyClientPutValidOptions contains the optional parameters for the ReadonlypropertyClient.PutValid
 //     method.
 func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyClientPutValidOptions) (ReadonlypropertyClientPutValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ReadonlypropertyClient.PutValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return ReadonlypropertyClientPutValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ReadonlypropertyClientPutValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ReadonlypropertyClientPutValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ReadonlypropertyClientPutValidResponse{}, err
 	}
 	return ReadonlypropertyClientPutValidResponse{}, nil
 }

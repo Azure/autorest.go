@@ -37,11 +37,13 @@ type NotebookClient struct {
 //     method.
 func (client *NotebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*runtime.Poller[NotebookClientCreateOrUpdateNotebookResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[NotebookClientCreateOrUpdateNotebookResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[NotebookClientCreateOrUpdateNotebookResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[NotebookClientCreateOrUpdateNotebookResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -52,18 +54,20 @@ func (client *NotebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 //
 // Generated from API version 2020-12-01
 func (client *NotebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
@@ -99,11 +103,13 @@ func (client *NotebookClient) createOrUpdateNotebookCreateRequest(ctx context.Co
 //     method.
 func (client *NotebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*runtime.Poller[NotebookClientDeleteNotebookResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.deleteNotebook(ctx, notebookName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[NotebookClientDeleteNotebookResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[NotebookClientDeleteNotebookResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[NotebookClientDeleteNotebookResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -114,18 +120,20 @@ func (client *NotebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 //
 // Generated from API version 2020-12-01
 func (client *NotebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteNotebookCreateRequest creates the DeleteNotebook request.
@@ -153,18 +161,21 @@ func (client *NotebookClient) deleteNotebookCreateRequest(ctx context.Context, n
 //   - notebookName - The notebook name.
 //   - options - NotebookClientGetNotebookOptions contains the optional parameters for the NotebookClient.GetNotebook method.
 func (client *NotebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookClientGetNotebookOptions) (NotebookClientGetNotebookResponse, error) {
+	var err error
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return NotebookClientGetNotebookResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return NotebookClientGetNotebookResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return NotebookClientGetNotebookResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotModified) {
+		err = runtime.NewResponseError(httpResp)
+		return NotebookClientGetNotebookResponse{}, err
 	}
-	return client.getNotebookHandleResponse(resp)
+	resp, err := client.getNotebookHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNotebookCreateRequest creates the GetNotebook request.
@@ -319,11 +330,13 @@ func (client *NotebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.R
 //     method.
 func (client *NotebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*runtime.Poller[NotebookClientRenameNotebookResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.renameNotebook(ctx, notebookName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[NotebookClientRenameNotebookResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[NotebookClientRenameNotebookResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[NotebookClientRenameNotebookResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -334,18 +347,20 @@ func (client *NotebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 //
 // Generated from API version 2020-12-01
 func (client *NotebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*http.Response, error) {
+	var err error
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // renameNotebookCreateRequest creates the RenameNotebook request.

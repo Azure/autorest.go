@@ -15,7 +15,9 @@ import (
 )
 
 func newXMSClientRequestIDClient(t *testing.T) *XMSClientRequestIDClient {
-	client, err := NewXMSClientRequestIDClient(nil)
+	client, err := NewXMSClientRequestIDClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

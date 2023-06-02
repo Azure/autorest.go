@@ -30,16 +30,20 @@ type HTTPServerFailureClient struct {
 //   - options - HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
 //     method.
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (HTTPServerFailureClientDelete505Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Delete505", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete505CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPServerFailureClientDelete505Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientDelete505Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureClientDelete505Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPServerFailureClientDelete505Response{}, err
 	}
 	return HTTPServerFailureClientDelete505Response{}, nil
 }
@@ -65,16 +69,20 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 //   - options - HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501
 //     method.
 func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureClientGet501Options) (HTTPServerFailureClientGet501Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Get501", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get501CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPServerFailureClientGet501Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientGet501Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureClientGet501Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPServerFailureClientGet501Response{}, err
 	}
 	return HTTPServerFailureClientGet501Response{}, nil
 }
@@ -96,18 +104,22 @@ func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, 
 //   - options - HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501
 //     method.
 func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureClientHead501Options) (HTTPServerFailureClientHead501Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Head501", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head501CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPServerFailureClientHead501Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientHead501Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureClientHead501Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPServerFailureClientHead501Response{}, err
 	}
-	return HTTPServerFailureClientHead501Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPServerFailureClientHead501Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head501CreateRequest creates the Head501 request.
@@ -128,16 +140,20 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 //   - options - HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505
 //     method.
 func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailureClientPost505Options) (HTTPServerFailureClientPost505Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Post505", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post505CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPServerFailureClientPost505Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPServerFailureClientPost505Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureClientPost505Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPServerFailureClientPost505Response{}, err
 	}
 	return HTTPServerFailureClientPost505Response{}, nil
 }

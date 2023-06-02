@@ -17,7 +17,9 @@ import (
 )
 
 func newPetsClient(t *testing.T) *PetsClient {
-	client, err := NewPetsClient(nil)
+	client, err := NewPetsClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

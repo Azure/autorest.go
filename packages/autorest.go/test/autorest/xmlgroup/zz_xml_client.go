@@ -30,18 +30,23 @@ type XMLClient struct {
 // Generated from API version 1.0.0
 //   - options - XMLClientGetACLsOptions contains the optional parameters for the XMLClient.GetACLs method.
 func (client *XMLClient) GetACLs(ctx context.Context, options *XMLClientGetACLsOptions) (XMLClientGetACLsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetACLs", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getACLsCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetACLsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetACLsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetACLsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetACLsResponse{}, err
 	}
-	return client.getACLsHandleResponse(resp)
+	resp, err := client.getACLsHandleResponse(httpResp)
+	return resp, err
 }
 
 // getACLsCreateRequest creates the GetACLs request.
@@ -74,18 +79,23 @@ func (client *XMLClient) getACLsHandleResponse(resp *http.Response) (XMLClientGe
 // Generated from API version 1.0.0
 //   - options - XMLClientGetBytesOptions contains the optional parameters for the XMLClient.GetBytes method.
 func (client *XMLClient) GetBytes(ctx context.Context, options *XMLClientGetBytesOptions) (XMLClientGetBytesResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetBytes", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBytesCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetBytesResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetBytesResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetBytesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetBytesResponse{}, err
 	}
-	return client.getBytesHandleResponse(resp)
+	resp, err := client.getBytesHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBytesCreateRequest creates the GetBytes request.
@@ -115,18 +125,23 @@ func (client *XMLClient) getBytesHandleResponse(resp *http.Response) (XMLClientG
 //   - options - XMLClientGetComplexTypeRefNoMetaOptions contains the optional parameters for the XMLClient.GetComplexTypeRefNoMeta
 //     method.
 func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLClientGetComplexTypeRefNoMetaOptions) (XMLClientGetComplexTypeRefNoMetaResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetComplexTypeRefNoMeta", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplexTypeRefNoMetaCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetComplexTypeRefNoMetaResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetComplexTypeRefNoMetaResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetComplexTypeRefNoMetaResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetComplexTypeRefNoMetaResponse{}, err
 	}
-	return client.getComplexTypeRefNoMetaHandleResponse(resp)
+	resp, err := client.getComplexTypeRefNoMetaHandleResponse(httpResp)
+	return resp, err
 }
 
 // getComplexTypeRefNoMetaCreateRequest creates the GetComplexTypeRefNoMeta request.
@@ -156,18 +171,23 @@ func (client *XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *http.Respon
 //   - options - XMLClientGetComplexTypeRefWithMetaOptions contains the optional parameters for the XMLClient.GetComplexTypeRefWithMeta
 //     method.
 func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *XMLClientGetComplexTypeRefWithMetaOptions) (XMLClientGetComplexTypeRefWithMetaResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetComplexTypeRefWithMeta", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplexTypeRefWithMetaCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetComplexTypeRefWithMetaResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetComplexTypeRefWithMetaResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetComplexTypeRefWithMetaResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetComplexTypeRefWithMetaResponse{}, err
 	}
-	return client.getComplexTypeRefWithMetaHandleResponse(resp)
+	resp, err := client.getComplexTypeRefWithMetaHandleResponse(httpResp)
+	return resp, err
 }
 
 // getComplexTypeRefWithMetaCreateRequest creates the GetComplexTypeRefWithMeta request.
@@ -197,18 +217,23 @@ func (client *XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *http.Resp
 //   - options - XMLClientGetEmptyChildElementOptions contains the optional parameters for the XMLClient.GetEmptyChildElement
 //     method.
 func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLClientGetEmptyChildElementOptions) (XMLClientGetEmptyChildElementResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyChildElement", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyChildElementCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetEmptyChildElementResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyChildElementResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetEmptyChildElementResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetEmptyChildElementResponse{}, err
 	}
-	return client.getEmptyChildElementHandleResponse(resp)
+	resp, err := client.getEmptyChildElementHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEmptyChildElementCreateRequest creates the GetEmptyChildElement request.
@@ -237,18 +262,23 @@ func (client *XMLClient) getEmptyChildElementHandleResponse(resp *http.Response)
 // Generated from API version 1.0.0
 //   - options - XMLClientGetEmptyListOptions contains the optional parameters for the XMLClient.GetEmptyList method.
 func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLClientGetEmptyListOptions) (XMLClientGetEmptyListResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyListCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetEmptyListResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyListResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetEmptyListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetEmptyListResponse{}, err
 	}
-	return client.getEmptyListHandleResponse(resp)
+	resp, err := client.getEmptyListHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEmptyListCreateRequest creates the GetEmptyList request.
@@ -277,18 +307,23 @@ func (client *XMLClient) getEmptyListHandleResponse(resp *http.Response) (XMLCli
 // Generated from API version 1.0.0
 //   - options - XMLClientGetEmptyRootListOptions contains the optional parameters for the XMLClient.GetEmptyRootList method.
 func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLClientGetEmptyRootListOptions) (XMLClientGetEmptyRootListResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyRootList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyRootListCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetEmptyRootListResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyRootListResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetEmptyRootListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetEmptyRootListResponse{}, err
 	}
-	return client.getEmptyRootListHandleResponse(resp)
+	resp, err := client.getEmptyRootListHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEmptyRootListCreateRequest creates the GetEmptyRootList request.
@@ -318,18 +353,23 @@ func (client *XMLClient) getEmptyRootListHandleResponse(resp *http.Response) (XM
 //   - options - XMLClientGetEmptyWrappedListsOptions contains the optional parameters for the XMLClient.GetEmptyWrappedLists
 //     method.
 func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLClientGetEmptyWrappedListsOptions) (XMLClientGetEmptyWrappedListsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetEmptyWrappedLists", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyWrappedListsCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetEmptyWrappedListsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetEmptyWrappedListsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetEmptyWrappedListsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetEmptyWrappedListsResponse{}, err
 	}
-	return client.getEmptyWrappedListsHandleResponse(resp)
+	resp, err := client.getEmptyWrappedListsHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEmptyWrappedListsCreateRequest creates the GetEmptyWrappedLists request.
@@ -358,18 +398,23 @@ func (client *XMLClient) getEmptyWrappedListsHandleResponse(resp *http.Response)
 // Generated from API version 1.0.0
 //   - options - XMLClientGetHeadersOptions contains the optional parameters for the XMLClient.GetHeaders method.
 func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLClientGetHeadersOptions) (XMLClientGetHeadersResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetHeaders", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getHeadersCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetHeadersResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetHeadersResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetHeadersResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetHeadersResponse{}, err
 	}
-	return client.getHeadersHandleResponse(resp)
+	resp, err := client.getHeadersHandleResponse(httpResp)
+	return resp, err
 }
 
 // getHeadersCreateRequest creates the GetHeaders request.
@@ -397,18 +442,23 @@ func (client *XMLClient) getHeadersHandleResponse(resp *http.Response) (XMLClien
 // Generated from API version 1.0.0
 //   - options - XMLClientGetRootListOptions contains the optional parameters for the XMLClient.GetRootList method.
 func (client *XMLClient) GetRootList(ctx context.Context, options *XMLClientGetRootListOptions) (XMLClientGetRootListResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetRootList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getRootListCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetRootListResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetRootListResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetRootListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetRootListResponse{}, err
 	}
-	return client.getRootListHandleResponse(resp)
+	resp, err := client.getRootListHandleResponse(httpResp)
+	return resp, err
 }
 
 // getRootListCreateRequest creates the GetRootList request.
@@ -438,18 +488,23 @@ func (client *XMLClient) getRootListHandleResponse(resp *http.Response) (XMLClie
 //   - options - XMLClientGetRootListSingleItemOptions contains the optional parameters for the XMLClient.GetRootListSingleItem
 //     method.
 func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLClientGetRootListSingleItemOptions) (XMLClientGetRootListSingleItemResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetRootListSingleItem", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getRootListSingleItemCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetRootListSingleItemResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetRootListSingleItemResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetRootListSingleItemResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetRootListSingleItemResponse{}, err
 	}
-	return client.getRootListSingleItemHandleResponse(resp)
+	resp, err := client.getRootListSingleItemHandleResponse(httpResp)
+	return resp, err
 }
 
 // getRootListSingleItemCreateRequest creates the GetRootListSingleItem request.
@@ -479,18 +534,23 @@ func (client *XMLClient) getRootListSingleItemHandleResponse(resp *http.Response
 //   - options - XMLClientGetServicePropertiesOptions contains the optional parameters for the XMLClient.GetServiceProperties
 //     method.
 func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLClientGetServicePropertiesOptions) (XMLClientGetServicePropertiesResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetServiceProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getServicePropertiesCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetServicePropertiesResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetServicePropertiesResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetServicePropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetServicePropertiesResponse{}, err
 	}
-	return client.getServicePropertiesHandleResponse(resp)
+	resp, err := client.getServicePropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // getServicePropertiesCreateRequest creates the GetServiceProperties request.
@@ -523,18 +583,23 @@ func (client *XMLClient) getServicePropertiesHandleResponse(resp *http.Response)
 // Generated from API version 1.0.0
 //   - options - XMLClientGetSimpleOptions contains the optional parameters for the XMLClient.GetSimple method.
 func (client *XMLClient) GetSimple(ctx context.Context, options *XMLClientGetSimpleOptions) (XMLClientGetSimpleResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetSimple", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getSimpleCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetSimpleResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetSimpleResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetSimpleResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetSimpleResponse{}, err
 	}
-	return client.getSimpleHandleResponse(resp)
+	resp, err := client.getSimpleHandleResponse(httpResp)
+	return resp, err
 }
 
 // getSimpleCreateRequest creates the GetSimple request.
@@ -563,18 +628,23 @@ func (client *XMLClient) getSimpleHandleResponse(resp *http.Response) (XMLClient
 // Generated from API version 1.0.0
 //   - options - XMLClientGetURIOptions contains the optional parameters for the XMLClient.GetURI method.
 func (client *XMLClient) GetURI(ctx context.Context, options *XMLClientGetURIOptions) (XMLClientGetURIResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetURI", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getURICreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetURIResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetURIResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetURIResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetURIResponse{}, err
 	}
-	return client.getURIHandleResponse(resp)
+	resp, err := client.getURIHandleResponse(httpResp)
+	return resp, err
 }
 
 // getURICreateRequest creates the GetURI request.
@@ -603,18 +673,23 @@ func (client *XMLClient) getURIHandleResponse(resp *http.Response) (XMLClientGet
 // Generated from API version 1.0.0
 //   - options - XMLClientGetWrappedListsOptions contains the optional parameters for the XMLClient.GetWrappedLists method.
 func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLClientGetWrappedListsOptions) (XMLClientGetWrappedListsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetWrappedLists", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getWrappedListsCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetWrappedListsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetWrappedListsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetWrappedListsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetWrappedListsResponse{}, err
 	}
-	return client.getWrappedListsHandleResponse(resp)
+	resp, err := client.getWrappedListsHandleResponse(httpResp)
+	return resp, err
 }
 
 // getWrappedListsCreateRequest creates the GetWrappedLists request.
@@ -644,18 +719,23 @@ func (client *XMLClient) getWrappedListsHandleResponse(resp *http.Response) (XML
 // Generated from API version 1.0.0
 //   - options - XMLClientGetXMsTextOptions contains the optional parameters for the XMLClient.GetXMsText method.
 func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLClientGetXMsTextOptions) (XMLClientGetXMsTextResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.GetXMsText", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getXMsTextCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientGetXMsTextResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientGetXMsTextResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientGetXMsTextResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientGetXMsTextResponse{}, err
 	}
-	return client.getXMsTextHandleResponse(resp)
+	resp, err := client.getXMsTextHandleResponse(httpResp)
+	return resp, err
 }
 
 // getXMsTextCreateRequest creates the GetXMsText request.
@@ -684,16 +764,20 @@ func (client *XMLClient) getXMsTextHandleResponse(resp *http.Response) (XMLClien
 // Generated from API version 1.0.0
 //   - options - XMLClientJSONInputOptions contains the optional parameters for the XMLClient.JSONInput method.
 func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, options *XMLClientJSONInputOptions) (XMLClientJSONInputResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.JSONInput", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.jsonInputCreateRequest(ctx, properties, options)
 	if err != nil {
 		return XMLClientJSONInputResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientJSONInputResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientJSONInputResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientJSONInputResponse{}, err
 	}
 	return XMLClientJSONInputResponse{}, nil
 }
@@ -717,18 +801,23 @@ func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties 
 // Generated from API version 1.0.0
 //   - options - XMLClientJSONOutputOptions contains the optional parameters for the XMLClient.JSONOutput method.
 func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLClientJSONOutputOptions) (XMLClientJSONOutputResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.JSONOutput", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.jsonOutputCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientJSONOutputResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientJSONOutputResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientJSONOutputResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientJSONOutputResponse{}, err
 	}
-	return client.jsonOutputHandleResponse(resp)
+	resp, err := client.jsonOutputHandleResponse(httpResp)
+	return resp, err
 }
 
 // jsonOutputCreateRequest creates the JSONOutput request.
@@ -757,18 +846,23 @@ func (client *XMLClient) jsonOutputHandleResponse(resp *http.Response) (XMLClien
 // Generated from API version 1.0.0
 //   - options - XMLClientListBlobsOptions contains the optional parameters for the XMLClient.ListBlobs method.
 func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLClientListBlobsOptions) (XMLClientListBlobsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.ListBlobs", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listBlobsCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientListBlobsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientListBlobsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientListBlobsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientListBlobsResponse{}, err
 	}
-	return client.listBlobsHandleResponse(resp)
+	resp, err := client.listBlobsHandleResponse(httpResp)
+	return resp, err
 }
 
 // listBlobsCreateRequest creates the ListBlobs request.
@@ -801,18 +895,23 @@ func (client *XMLClient) listBlobsHandleResponse(resp *http.Response) (XMLClient
 // Generated from API version 1.0.0
 //   - options - XMLClientListContainersOptions contains the optional parameters for the XMLClient.ListContainers method.
 func (client *XMLClient) ListContainers(ctx context.Context, options *XMLClientListContainersOptions) (XMLClientListContainersResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.ListContainers", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listContainersCreateRequest(ctx, options)
 	if err != nil {
 		return XMLClientListContainersResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientListContainersResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMLClientListContainersResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientListContainersResponse{}, err
 	}
-	return client.listContainersHandleResponse(resp)
+	resp, err := client.listContainersHandleResponse(httpResp)
+	return resp, err
 }
 
 // listContainersCreateRequest creates the ListContainers request.
@@ -844,16 +943,20 @@ func (client *XMLClient) listContainersHandleResponse(resp *http.Response) (XMLC
 // Generated from API version 1.0.0
 //   - options - XMLClientPutACLsOptions contains the optional parameters for the XMLClient.PutACLs method.
 func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdentifier, options *XMLClientPutACLsOptions) (XMLClientPutACLsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutACLs", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putACLsCreateRequest(ctx, properties, options)
 	if err != nil {
 		return XMLClientPutACLsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutACLsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutACLsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutACLsResponse{}, err
 	}
 	return XMLClientPutACLsResponse{}, nil
 }
@@ -885,16 +988,20 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 // Generated from API version 1.0.0
 //   - options - XMLClientPutBinaryOptions contains the optional parameters for the XMLClient.PutBinary method.
 func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteProperty, options *XMLClientPutBinaryOptions) (XMLClientPutBinaryResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutBinary", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putBinaryCreateRequest(ctx, slideshow, options)
 	if err != nil {
 		return XMLClientPutBinaryResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutBinaryResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutBinaryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutBinaryResponse{}, err
 	}
 	return XMLClientPutBinaryResponse{}, nil
 }
@@ -920,16 +1027,20 @@ func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow M
 //   - options - XMLClientPutComplexTypeRefNoMetaOptions contains the optional parameters for the XMLClient.PutComplexTypeRefNoMeta
 //     method.
 func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta, options *XMLClientPutComplexTypeRefNoMetaOptions) (XMLClientPutComplexTypeRefNoMetaResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutComplexTypeRefNoMeta", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putComplexTypeRefNoMetaCreateRequest(ctx, model, options)
 	if err != nil {
 		return XMLClientPutComplexTypeRefNoMetaResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutComplexTypeRefNoMetaResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutComplexTypeRefNoMetaResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutComplexTypeRefNoMetaResponse{}, err
 	}
 	return XMLClientPutComplexTypeRefNoMetaResponse{}, nil
 }
@@ -954,16 +1065,20 @@ func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 //   - options - XMLClientPutComplexTypeRefWithMetaOptions contains the optional parameters for the XMLClient.PutComplexTypeRefWithMeta
 //     method.
 func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta, options *XMLClientPutComplexTypeRefWithMetaOptions) (XMLClientPutComplexTypeRefWithMetaResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutComplexTypeRefWithMeta", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putComplexTypeRefWithMetaCreateRequest(ctx, model, options)
 	if err != nil {
 		return XMLClientPutComplexTypeRefWithMetaResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutComplexTypeRefWithMetaResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutComplexTypeRefWithMetaResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutComplexTypeRefWithMetaResponse{}, err
 	}
 	return XMLClientPutComplexTypeRefWithMetaResponse{}, nil
 }
@@ -988,16 +1103,20 @@ func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 //   - options - XMLClientPutEmptyChildElementOptions contains the optional parameters for the XMLClient.PutEmptyChildElement
 //     method.
 func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana, options *XMLClientPutEmptyChildElementOptions) (XMLClientPutEmptyChildElementResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyChildElement", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEmptyChildElementCreateRequest(ctx, banana, options)
 	if err != nil {
 		return XMLClientPutEmptyChildElementResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyChildElementResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutEmptyChildElementResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutEmptyChildElementResponse{}, err
 	}
 	return XMLClientPutEmptyChildElementResponse{}, nil
 }
@@ -1021,16 +1140,20 @@ func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, 
 // Generated from API version 1.0.0
 //   - options - XMLClientPutEmptyListOptions contains the optional parameters for the XMLClient.PutEmptyList method.
 func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, options *XMLClientPutEmptyListOptions) (XMLClientPutEmptyListResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEmptyListCreateRequest(ctx, slideshow, options)
 	if err != nil {
 		return XMLClientPutEmptyListResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyListResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutEmptyListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutEmptyListResponse{}, err
 	}
 	return XMLClientPutEmptyListResponse{}, nil
 }
@@ -1054,16 +1177,20 @@ func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slidesho
 // Generated from API version 1.0.0
 //   - options - XMLClientPutEmptyRootListOptions contains the optional parameters for the XMLClient.PutEmptyRootList method.
 func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana, options *XMLClientPutEmptyRootListOptions) (XMLClientPutEmptyRootListResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyRootList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEmptyRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return XMLClientPutEmptyRootListResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyRootListResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutEmptyRootListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutEmptyRootListResponse{}, err
 	}
 	return XMLClientPutEmptyRootListResponse{}, nil
 }
@@ -1092,16 +1219,20 @@ func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bana
 //   - options - XMLClientPutEmptyWrappedListsOptions contains the optional parameters for the XMLClient.PutEmptyWrappedLists
 //     method.
 func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel, options *XMLClientPutEmptyWrappedListsOptions) (XMLClientPutEmptyWrappedListsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutEmptyWrappedLists", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEmptyWrappedListsCreateRequest(ctx, appleBarrel, options)
 	if err != nil {
 		return XMLClientPutEmptyWrappedListsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutEmptyWrappedListsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutEmptyWrappedListsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutEmptyWrappedListsResponse{}, err
 	}
 	return XMLClientPutEmptyWrappedListsResponse{}, nil
 }
@@ -1125,16 +1256,20 @@ func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, 
 // Generated from API version 1.0.0
 //   - options - XMLClientPutRootListOptions contains the optional parameters for the XMLClient.PutRootList method.
 func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, options *XMLClientPutRootListOptions) (XMLClientPutRootListResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutRootList", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return XMLClientPutRootListResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutRootListResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutRootListResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutRootListResponse{}, err
 	}
 	return XMLClientPutRootListResponse{}, nil
 }
@@ -1163,16 +1298,20 @@ func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas [
 //   - options - XMLClientPutRootListSingleItemOptions contains the optional parameters for the XMLClient.PutRootListSingleItem
 //     method.
 func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*Banana, options *XMLClientPutRootListSingleItemOptions) (XMLClientPutRootListSingleItemResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutRootListSingleItem", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putRootListSingleItemCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return XMLClientPutRootListSingleItemResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutRootListSingleItemResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutRootListSingleItemResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutRootListSingleItemResponse{}, err
 	}
 	return XMLClientPutRootListSingleItemResponse{}, nil
 }
@@ -1201,16 +1340,20 @@ func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context,
 //   - options - XMLClientPutServicePropertiesOptions contains the optional parameters for the XMLClient.PutServiceProperties
 //     method.
 func (client *XMLClient) PutServiceProperties(ctx context.Context, properties StorageServiceProperties, options *XMLClientPutServicePropertiesOptions) (XMLClientPutServicePropertiesResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutServiceProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putServicePropertiesCreateRequest(ctx, properties, options)
 	if err != nil {
 		return XMLClientPutServicePropertiesResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutServicePropertiesResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutServicePropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutServicePropertiesResponse{}, err
 	}
 	return XMLClientPutServicePropertiesResponse{}, nil
 }
@@ -1238,16 +1381,20 @@ func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, 
 // Generated from API version 1.0.0
 //   - options - XMLClientPutSimpleOptions contains the optional parameters for the XMLClient.PutSimple method.
 func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, options *XMLClientPutSimpleOptions) (XMLClientPutSimpleResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutSimple", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putSimpleCreateRequest(ctx, slideshow, options)
 	if err != nil {
 		return XMLClientPutSimpleResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutSimpleResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutSimpleResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutSimpleResponse{}, err
 	}
 	return XMLClientPutSimpleResponse{}, nil
 }
@@ -1272,16 +1419,20 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 // Generated from API version 1.0.0
 //   - options - XMLClientPutURIOptions contains the optional parameters for the XMLClient.PutURI method.
 func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty, options *XMLClientPutURIOptions) (XMLClientPutURIResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutURI", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putURICreateRequest(ctx, model, options)
 	if err != nil {
 		return XMLClientPutURIResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutURIResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutURIResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutURIResponse{}, err
 	}
 	return XMLClientPutURIResponse{}, nil
 }
@@ -1306,16 +1457,20 @@ func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWit
 // Generated from API version 1.0.0
 //   - options - XMLClientPutWrappedListsOptions contains the optional parameters for the XMLClient.PutWrappedLists method.
 func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel, options *XMLClientPutWrappedListsOptions) (XMLClientPutWrappedListsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "XMLClient.PutWrappedLists", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putWrappedListsCreateRequest(ctx, wrappedLists, options)
 	if err != nil {
 		return XMLClientPutWrappedListsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return XMLClientPutWrappedListsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return XMLClientPutWrappedListsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return XMLClientPutWrappedListsResponse{}, err
 	}
 	return XMLClientPutWrappedListsResponse{}, nil
 }

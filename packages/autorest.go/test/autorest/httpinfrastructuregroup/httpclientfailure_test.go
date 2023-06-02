@@ -20,6 +20,7 @@ func newHTTPClientFailureClient(t *testing.T) *HTTPClientFailureClient {
 		Retry: policy.RetryOptions{
 			MaxRetryDelay: 2 * time.Second,
 		},
+		TracingProvider: generatortests.NewTracingProvider(t),
 	}
 	client, err := NewHTTPClientFailureClient(&options)
 	require.NoError(t, err)

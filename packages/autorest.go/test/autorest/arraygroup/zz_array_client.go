@@ -30,18 +30,23 @@ type ArrayClient struct {
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
 func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayClientGetArrayEmptyOptions) (ArrayClientGetArrayEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetArrayEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetArrayEmptyResponse{}, err
 	}
-	return client.getArrayEmptyHandleResponse(resp)
+	resp, err := client.getArrayEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
@@ -70,18 +75,23 @@ func (client *ArrayClient) getArrayEmptyHandleResponse(resp *http.Response) (Arr
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
 func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayClientGetArrayItemEmptyOptions) (ArrayClientGetArrayItemEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayItemEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
-	return client.getArrayItemEmptyHandleResponse(resp)
+	resp, err := client.getArrayItemEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
@@ -110,18 +120,23 @@ func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *http.Response) 
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
 func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayClientGetArrayItemNullOptions) (ArrayClientGetArrayItemNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayItemNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetArrayItemNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayItemNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayItemNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetArrayItemNullResponse{}, err
 	}
-	return client.getArrayItemNullHandleResponse(resp)
+	resp, err := client.getArrayItemNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
@@ -150,18 +165,23 @@ func (client *ArrayClient) getArrayItemNullHandleResponse(resp *http.Response) (
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
 func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayClientGetArrayNullOptions) (ArrayClientGetArrayNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetArrayNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetArrayNullResponse{}, err
 	}
-	return client.getArrayNullHandleResponse(resp)
+	resp, err := client.getArrayNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getArrayNullCreateRequest creates the GetArrayNull request.
@@ -190,18 +210,23 @@ func (client *ArrayClient) getArrayNullHandleResponse(resp *http.Response) (Arra
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
 func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayClientGetArrayValidOptions) (ArrayClientGetArrayValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetArrayValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetArrayValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetArrayValidResponse{}, err
 	}
-	return client.getArrayValidHandleResponse(resp)
+	resp, err := client.getArrayValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getArrayValidCreateRequest creates the GetArrayValid request.
@@ -231,18 +256,23 @@ func (client *ArrayClient) getArrayValidHandleResponse(resp *http.Response) (Arr
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayClientGetBase64URLOptions) (ArrayClientGetBase64URLResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBase64URL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetBase64URLResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBase64URLResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBase64URLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetBase64URLResponse{}, err
 	}
-	return client.getBase64URLHandleResponse(resp)
+	resp, err := client.getBase64URLHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBase64URLCreateRequest creates the GetBase64URL request.
@@ -272,18 +302,23 @@ func (client *ArrayClient) getBase64URLHandleResponse(resp *http.Response) (Arra
 //   - options - ArrayClientGetBooleanInvalidNullOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidNull
 //     method.
 func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *ArrayClientGetBooleanInvalidNullOptions) (ArrayClientGetBooleanInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBooleanInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
-	return client.getBooleanInvalidNullHandleResponse(resp)
+	resp, err := client.getBooleanInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
@@ -313,18 +348,23 @@ func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *http.Respon
 //   - options - ArrayClientGetBooleanInvalidStringOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidString
 //     method.
 func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options *ArrayClientGetBooleanInvalidStringOptions) (ArrayClientGetBooleanInvalidStringResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBooleanInvalidString", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
-	return client.getBooleanInvalidStringHandleResponse(resp)
+	resp, err := client.getBooleanInvalidStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
@@ -353,18 +393,23 @@ func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *http.Resp
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
 func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayClientGetBooleanTfftOptions) (ArrayClientGetBooleanTfftResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBooleanTfft", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetBooleanTfftResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetBooleanTfftResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBooleanTfftResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetBooleanTfftResponse{}, err
 	}
-	return client.getBooleanTfftHandleResponse(resp)
+	resp, err := client.getBooleanTfftHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
@@ -394,18 +439,23 @@ func (client *ArrayClient) getBooleanTfftHandleResponse(resp *http.Response) (Ar
 //   - options - ArrayClientGetByteInvalidNullOptions contains the optional parameters for the ArrayClient.GetByteInvalidNull
 //     method.
 func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *ArrayClientGetByteInvalidNullOptions) (ArrayClientGetByteInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetByteInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetByteInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
-	return client.getByteInvalidNullHandleResponse(resp)
+	resp, err := client.getByteInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
@@ -434,18 +484,23 @@ func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *http.Response)
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
 func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayClientGetByteValidOptions) (ArrayClientGetByteValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetByteValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetByteValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetByteValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetByteValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetByteValidResponse{}, err
 	}
-	return client.getByteValidHandleResponse(resp)
+	resp, err := client.getByteValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getByteValidCreateRequest creates the GetByteValid request.
@@ -474,18 +529,23 @@ func (client *ArrayClient) getByteValidHandleResponse(resp *http.Response) (Arra
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
 func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayClientGetComplexEmptyOptions) (ArrayClientGetComplexEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetComplexEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetComplexEmptyResponse{}, err
 	}
-	return client.getComplexEmptyHandleResponse(resp)
+	resp, err := client.getComplexEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
@@ -516,18 +576,23 @@ func (client *ArrayClient) getComplexEmptyHandleResponse(resp *http.Response) (A
 //   - options - ArrayClientGetComplexItemEmptyOptions contains the optional parameters for the ArrayClient.GetComplexItemEmpty
 //     method.
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayClientGetComplexItemEmptyOptions) (ArrayClientGetComplexItemEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexItemEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
-	return client.getComplexItemEmptyHandleResponse(resp)
+	resp, err := client.getComplexItemEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
@@ -558,18 +623,23 @@ func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *http.Response
 //   - options - ArrayClientGetComplexItemNullOptions contains the optional parameters for the ArrayClient.GetComplexItemNull
 //     method.
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayClientGetComplexItemNullOptions) (ArrayClientGetComplexItemNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexItemNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetComplexItemNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexItemNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexItemNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetComplexItemNullResponse{}, err
 	}
-	return client.getComplexItemNullHandleResponse(resp)
+	resp, err := client.getComplexItemNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
@@ -598,18 +668,23 @@ func (client *ArrayClient) getComplexItemNullHandleResponse(resp *http.Response)
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
 func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayClientGetComplexNullOptions) (ArrayClientGetComplexNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetComplexNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetComplexNullResponse{}, err
 	}
-	return client.getComplexNullHandleResponse(resp)
+	resp, err := client.getComplexNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getComplexNullCreateRequest creates the GetComplexNull request.
@@ -639,18 +714,23 @@ func (client *ArrayClient) getComplexNullHandleResponse(resp *http.Response) (Ar
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
 func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayClientGetComplexValidOptions) (ArrayClientGetComplexValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetComplexValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetComplexValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetComplexValidResponse{}, err
 	}
-	return client.getComplexValidHandleResponse(resp)
+	resp, err := client.getComplexValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getComplexValidCreateRequest creates the GetComplexValid request.
@@ -680,18 +760,23 @@ func (client *ArrayClient) getComplexValidHandleResponse(resp *http.Response) (A
 //   - options - ArrayClientGetDateInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateInvalidChars
 //     method.
 func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *ArrayClientGetDateInvalidCharsOptions) (ArrayClientGetDateInvalidCharsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateInvalidChars", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
-	return client.getDateInvalidCharsHandleResponse(resp)
+	resp, err := client.getDateInvalidCharsHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
@@ -727,18 +812,23 @@ func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response
 //   - options - ArrayClientGetDateInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateInvalidNull
 //     method.
 func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *ArrayClientGetDateInvalidNullOptions) (ArrayClientGetDateInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
-	return client.getDateInvalidNullHandleResponse(resp)
+	resp, err := client.getDateInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
@@ -774,18 +864,23 @@ func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response)
 //   - options - ArrayClientGetDateTimeInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidChars
 //     method.
 func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *ArrayClientGetDateTimeInvalidCharsOptions) (ArrayClientGetDateTimeInvalidCharsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeInvalidChars", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
-	return client.getDateTimeInvalidCharsHandleResponse(resp)
+	resp, err := client.getDateTimeInvalidCharsHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
@@ -821,18 +916,23 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Resp
 //   - options - ArrayClientGetDateTimeInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidNull
 //     method.
 func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *ArrayClientGetDateTimeInvalidNullOptions) (ArrayClientGetDateTimeInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
-	return client.getDateTimeInvalidNullHandleResponse(resp)
+	resp, err := client.getDateTimeInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
@@ -869,18 +969,23 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Respo
 //   - options - ArrayClientGetDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.GetDateTimeRFC1123Valid
 //     method.
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayClientGetDateTimeRFC1123ValidOptions) (ArrayClientGetDateTimeRFC1123ValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeRFC1123Valid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
-	return client.getDateTimeRFC1123ValidHandleResponse(resp)
+	resp, err := client.getDateTimeRFC1123ValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
@@ -915,18 +1020,23 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Resp
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
 func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayClientGetDateTimeValidOptions) (ArrayClientGetDateTimeValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDateTimeValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateTimeValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDateTimeValidResponse{}, err
 	}
-	return client.getDateTimeValidHandleResponse(resp)
+	resp, err := client.getDateTimeValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
@@ -961,18 +1071,23 @@ func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
 func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayClientGetDateValidOptions) (ArrayClientGetDateValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDateValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDateValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDateValidResponse{}, err
 	}
-	return client.getDateValidHandleResponse(resp)
+	resp, err := client.getDateValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDateValidCreateRequest creates the GetDateValid request.
@@ -1008,18 +1123,23 @@ func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (Arra
 //   - options - ArrayClientGetDictionaryEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryEmpty
 //     method.
 func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayClientGetDictionaryEmptyOptions) (ArrayClientGetDictionaryEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
-	return client.getDictionaryEmptyHandleResponse(resp)
+	resp, err := client.getDictionaryEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
@@ -1050,18 +1170,23 @@ func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *http.Response)
 //   - options - ArrayClientGetDictionaryItemEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryItemEmpty
 //     method.
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayClientGetDictionaryItemEmptyOptions) (ArrayClientGetDictionaryItemEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryItemEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
-	return client.getDictionaryItemEmptyHandleResponse(resp)
+	resp, err := client.getDictionaryItemEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
@@ -1092,18 +1217,23 @@ func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *http.Respo
 //   - options - ArrayClientGetDictionaryItemNullOptions contains the optional parameters for the ArrayClient.GetDictionaryItemNull
 //     method.
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayClientGetDictionaryItemNullOptions) (ArrayClientGetDictionaryItemNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryItemNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
-	return client.getDictionaryItemNullHandleResponse(resp)
+	resp, err := client.getDictionaryItemNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
@@ -1132,18 +1262,23 @@ func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *http.Respon
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
 func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayClientGetDictionaryNullOptions) (ArrayClientGetDictionaryNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDictionaryNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDictionaryNullResponse{}, err
 	}
-	return client.getDictionaryNullHandleResponse(resp)
+	resp, err := client.getDictionaryNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
@@ -1174,18 +1309,23 @@ func (client *ArrayClient) getDictionaryNullHandleResponse(resp *http.Response) 
 //   - options - ArrayClientGetDictionaryValidOptions contains the optional parameters for the ArrayClient.GetDictionaryValid
 //     method.
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayClientGetDictionaryValidOptions) (ArrayClientGetDictionaryValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDictionaryValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDictionaryValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDictionaryValidResponse{}, err
 	}
-	return client.getDictionaryValidHandleResponse(resp)
+	resp, err := client.getDictionaryValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
@@ -1215,18 +1355,23 @@ func (client *ArrayClient) getDictionaryValidHandleResponse(resp *http.Response)
 //   - options - ArrayClientGetDoubleInvalidNullOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidNull
 //     method.
 func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *ArrayClientGetDoubleInvalidNullOptions) (ArrayClientGetDoubleInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDoubleInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
-	return client.getDoubleInvalidNullHandleResponse(resp)
+	resp, err := client.getDoubleInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
@@ -1256,18 +1401,23 @@ func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *http.Respons
 //   - options - ArrayClientGetDoubleInvalidStringOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidString
 //     method.
 func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *ArrayClientGetDoubleInvalidStringOptions) (ArrayClientGetDoubleInvalidStringResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDoubleInvalidString", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
-	return client.getDoubleInvalidStringHandleResponse(resp)
+	resp, err := client.getDoubleInvalidStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
@@ -1296,18 +1446,23 @@ func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *http.Respo
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
 func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayClientGetDoubleValidOptions) (ArrayClientGetDoubleValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDoubleValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDoubleValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDoubleValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDoubleValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDoubleValidResponse{}, err
 	}
-	return client.getDoubleValidHandleResponse(resp)
+	resp, err := client.getDoubleValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
@@ -1336,18 +1491,23 @@ func (client *ArrayClient) getDoubleValidHandleResponse(resp *http.Response) (Ar
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
 func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayClientGetDurationValidOptions) (ArrayClientGetDurationValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDurationValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetDurationValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetDurationValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDurationValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetDurationValidResponse{}, err
 	}
-	return client.getDurationValidHandleResponse(resp)
+	resp, err := client.getDurationValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getDurationValidCreateRequest creates the GetDurationValid request.
@@ -1376,18 +1536,23 @@ func (client *ArrayClient) getDurationValidHandleResponse(resp *http.Response) (
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGetEmptyOptions) (ArrayClientGetEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetEmptyResponse{}, err
 	}
-	return client.getEmptyHandleResponse(resp)
+	resp, err := client.getEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -1416,18 +1581,23 @@ func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayCli
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
 func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayClientGetEnumValidOptions) (ArrayClientGetEnumValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetEnumValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEnumValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetEnumValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetEnumValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetEnumValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetEnumValidResponse{}, err
 	}
-	return client.getEnumValidHandleResponse(resp)
+	resp, err := client.getEnumValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEnumValidCreateRequest creates the GetEnumValid request.
@@ -1457,18 +1627,23 @@ func (client *ArrayClient) getEnumValidHandleResponse(resp *http.Response) (Arra
 //   - options - ArrayClientGetFloatInvalidNullOptions contains the optional parameters for the ArrayClient.GetFloatInvalidNull
 //     method.
 func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *ArrayClientGetFloatInvalidNullOptions) (ArrayClientGetFloatInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetFloatInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
-	return client.getFloatInvalidNullHandleResponse(resp)
+	resp, err := client.getFloatInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
@@ -1498,18 +1673,23 @@ func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *http.Response
 //   - options - ArrayClientGetFloatInvalidStringOptions contains the optional parameters for the ArrayClient.GetFloatInvalidString
 //     method.
 func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *ArrayClientGetFloatInvalidStringOptions) (ArrayClientGetFloatInvalidStringResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetFloatInvalidString", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
-	return client.getFloatInvalidStringHandleResponse(resp)
+	resp, err := client.getFloatInvalidStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
@@ -1538,18 +1718,23 @@ func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *http.Respon
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
 func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayClientGetFloatValidOptions) (ArrayClientGetFloatValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetFloatValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetFloatValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetFloatValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetFloatValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetFloatValidResponse{}, err
 	}
-	return client.getFloatValidHandleResponse(resp)
+	resp, err := client.getFloatValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getFloatValidCreateRequest creates the GetFloatValid request.
@@ -1578,18 +1763,23 @@ func (client *ArrayClient) getFloatValidHandleResponse(resp *http.Response) (Arr
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
 func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayClientGetIntInvalidNullOptions) (ArrayClientGetIntInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetIntInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetIntInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
-	return client.getIntInvalidNullHandleResponse(resp)
+	resp, err := client.getIntInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
@@ -1619,18 +1809,23 @@ func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *http.Response) 
 //   - options - ArrayClientGetIntInvalidStringOptions contains the optional parameters for the ArrayClient.GetIntInvalidString
 //     method.
 func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *ArrayClientGetIntInvalidStringOptions) (ArrayClientGetIntInvalidStringResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetIntInvalidString", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetIntInvalidStringResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
-	return client.getIntInvalidStringHandleResponse(resp)
+	resp, err := client.getIntInvalidStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
@@ -1659,18 +1854,23 @@ func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *http.Response
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
 func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayClientGetIntegerValidOptions) (ArrayClientGetIntegerValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetIntegerValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetIntegerValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetIntegerValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetIntegerValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetIntegerValidResponse{}, err
 	}
-	return client.getIntegerValidHandleResponse(resp)
+	resp, err := client.getIntegerValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
@@ -1699,18 +1899,23 @@ func (client *ArrayClient) getIntegerValidHandleResponse(resp *http.Response) (A
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
 func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayClientGetInvalidOptions) (ArrayClientGetInvalidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetInvalid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetInvalidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetInvalidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetInvalidResponse{}, err
 	}
-	return client.getInvalidHandleResponse(resp)
+	resp, err := client.getInvalidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -1740,18 +1945,23 @@ func (client *ArrayClient) getInvalidHandleResponse(resp *http.Response) (ArrayC
 //   - options - ArrayClientGetLongInvalidNullOptions contains the optional parameters for the ArrayClient.GetLongInvalidNull
 //     method.
 func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *ArrayClientGetLongInvalidNullOptions) (ArrayClientGetLongInvalidNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetLongInvalidNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetLongInvalidNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
-	return client.getLongInvalidNullHandleResponse(resp)
+	resp, err := client.getLongInvalidNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
@@ -1781,18 +1991,23 @@ func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *http.Response)
 //   - options - ArrayClientGetLongInvalidStringOptions contains the optional parameters for the ArrayClient.GetLongInvalidString
 //     method.
 func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *ArrayClientGetLongInvalidStringOptions) (ArrayClientGetLongInvalidStringResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetLongInvalidString", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetLongInvalidStringResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
-	return client.getLongInvalidStringHandleResponse(resp)
+	resp, err := client.getLongInvalidStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
@@ -1821,18 +2036,23 @@ func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *http.Respons
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
 func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayClientGetLongValidOptions) (ArrayClientGetLongValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetLongValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetLongValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetLongValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetLongValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetLongValidResponse{}, err
 	}
-	return client.getLongValidHandleResponse(resp)
+	resp, err := client.getLongValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getLongValidCreateRequest creates the GetLongValid request.
@@ -1861,18 +2081,23 @@ func (client *ArrayClient) getLongValidHandleResponse(resp *http.Response) (Arra
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
 func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayClientGetNullOptions) (ArrayClientGetNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetNullResponse{}, err
 	}
-	return client.getNullHandleResponse(resp)
+	resp, err := client.getNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -1902,18 +2127,23 @@ func (client *ArrayClient) getNullHandleResponse(resp *http.Response) (ArrayClie
 //   - options - ArrayClientGetStringEnumValidOptions contains the optional parameters for the ArrayClient.GetStringEnumValid
 //     method.
 func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *ArrayClientGetStringEnumValidOptions) (ArrayClientGetStringEnumValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringEnumValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getStringEnumValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetStringEnumValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringEnumValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringEnumValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetStringEnumValidResponse{}, err
 	}
-	return client.getStringEnumValidHandleResponse(resp)
+	resp, err := client.getStringEnumValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getStringEnumValidCreateRequest creates the GetStringEnumValid request.
@@ -1942,18 +2172,23 @@ func (client *ArrayClient) getStringEnumValidHandleResponse(resp *http.Response)
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
 func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayClientGetStringValidOptions) (ArrayClientGetStringValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetStringValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetStringValidResponse{}, err
 	}
-	return client.getStringValidHandleResponse(resp)
+	resp, err := client.getStringValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getStringValidCreateRequest creates the GetStringValid request.
@@ -1983,18 +2218,23 @@ func (client *ArrayClient) getStringValidHandleResponse(resp *http.Response) (Ar
 //   - options - ArrayClientGetStringWithInvalidOptions contains the optional parameters for the ArrayClient.GetStringWithInvalid
 //     method.
 func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *ArrayClientGetStringWithInvalidOptions) (ArrayClientGetStringWithInvalidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringWithInvalid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringWithInvalidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
-	return client.getStringWithInvalidHandleResponse(resp)
+	resp, err := client.getStringWithInvalidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
@@ -2023,18 +2263,23 @@ func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *http.Respons
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
 func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayClientGetStringWithNullOptions) (ArrayClientGetStringWithNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringWithNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetStringWithNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetStringWithNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringWithNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetStringWithNullResponse{}, err
 	}
-	return client.getStringWithNullHandleResponse(resp)
+	resp, err := client.getStringWithNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getStringWithNullCreateRequest creates the GetStringWithNull request.
@@ -2064,18 +2309,23 @@ func (client *ArrayClient) getStringWithNullHandleResponse(resp *http.Response) 
 //   - options - ArrayClientGetUUIDInvalidCharsOptions contains the optional parameters for the ArrayClient.GetUUIDInvalidChars
 //     method.
 func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayClientGetUUIDInvalidCharsOptions) (ArrayClientGetUUIDInvalidCharsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetUUIDInvalidChars", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUUIDInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetUUIDInvalidCharsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
-	return client.getUUIDInvalidCharsHandleResponse(resp)
+	resp, err := client.getUUIDInvalidCharsHandleResponse(httpResp)
+	return resp, err
 }
 
 // getUUIDInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
@@ -2104,18 +2354,23 @@ func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *http.Response
 // Generated from API version 1.0.0
 //   - options - ArrayClientGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
 func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayClientGetUUIDValidOptions) (ArrayClientGetUUIDValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetUUIDValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUUIDValidCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayClientGetUUIDValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientGetUUIDValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetUUIDValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientGetUUIDValidResponse{}, err
 	}
-	return client.getUUIDValidHandleResponse(resp)
+	resp, err := client.getUUIDValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getUUIDValidCreateRequest creates the GetUUIDValid request.
@@ -2144,16 +2399,20 @@ func (client *ArrayClient) getUUIDValidHandleResponse(resp *http.Response) (Arra
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
 func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*string, options *ArrayClientPutArrayValidOptions) (ArrayClientPutArrayValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutArrayValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutArrayValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutArrayValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutArrayValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutArrayValidResponse{}, err
 	}
 	return ArrayClientPutArrayValidResponse{}, nil
 }
@@ -2178,16 +2437,20 @@ func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, array
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
 func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool, options *ArrayClientPutBooleanTfftOptions) (ArrayClientPutBooleanTfftResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutBooleanTfft", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutBooleanTfftResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutBooleanTfftResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutBooleanTfftResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutBooleanTfftResponse{}, err
 	}
 	return ArrayClientPutBooleanTfftResponse{}, nil
 }
@@ -2213,16 +2476,20 @@ func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arra
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayClientPutByteValidOptions) (ArrayClientPutByteValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutByteValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutByteValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutByteValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutByteValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutByteValidResponse{}, err
 	}
 	return ArrayClientPutByteValidResponse{}, nil
 }
@@ -2248,16 +2515,20 @@ func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayB
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayClientPutComplexValidOptions) (ArrayClientPutComplexValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutComplexValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutComplexValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutComplexValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutComplexValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutComplexValidResponse{}, err
 	}
 	return ArrayClientPutComplexValidResponse{}, nil
 }
@@ -2284,16 +2555,20 @@ func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arr
 //   - options - ArrayClientPutDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.PutDateTimeRFC1123Valid
 //     method.
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeRFC1123ValidOptions) (ArrayClientPutDateTimeRFC1123ValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDateTimeRFC1123Valid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
 	return ArrayClientPutDateTimeRFC1123ValidResponse{}, nil
 }
@@ -2322,16 +2597,20 @@ func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
 func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeValidOptions) (ArrayClientPutDateTimeValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDateTimeValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutDateTimeValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDateTimeValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDateTimeValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutDateTimeValidResponse{}, err
 	}
 	return ArrayClientPutDateTimeValidResponse{}, nil
 }
@@ -2356,16 +2635,20 @@ func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, ar
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
 func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateValidOptions) (ArrayClientPutDateValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDateValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutDateValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDateValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDateValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutDateValidResponse{}, err
 	}
 	return ArrayClientPutDateValidResponse{}, nil
 }
@@ -2396,16 +2679,20 @@ func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayB
 //   - options - ArrayClientPutDictionaryValidOptions contains the optional parameters for the ArrayClient.PutDictionaryValid
 //     method.
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayClientPutDictionaryValidOptions) (ArrayClientPutDictionaryValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDictionaryValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutDictionaryValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDictionaryValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDictionaryValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutDictionaryValidResponse{}, err
 	}
 	return ArrayClientPutDictionaryValidResponse{}, nil
 }
@@ -2430,16 +2717,20 @@ func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, 
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
 func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*float64, options *ArrayClientPutDoubleValidOptions) (ArrayClientPutDoubleValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDoubleValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutDoubleValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDoubleValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDoubleValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutDoubleValidResponse{}, err
 	}
 	return ArrayClientPutDoubleValidResponse{}, nil
 }
@@ -2464,16 +2755,20 @@ func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arra
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
 func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutDurationValidOptions) (ArrayClientPutDurationValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDurationValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutDurationValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutDurationValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDurationValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutDurationValidResponse{}, err
 	}
 	return ArrayClientPutDurationValidResponse{}, nil
 }
@@ -2498,16 +2793,20 @@ func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, ar
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
 func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, options *ArrayClientPutEmptyOptions) (ArrayClientPutEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutEmptyResponse{}, err
 	}
 	return ArrayClientPutEmptyResponse{}, nil
 }
@@ -2532,16 +2831,20 @@ func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody 
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
 func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnum, options *ArrayClientPutEnumValidOptions) (ArrayClientPutEnumValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutEnumValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutEnumValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutEnumValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutEnumValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutEnumValidResponse{}, err
 	}
 	return ArrayClientPutEnumValidResponse{}, nil
 }
@@ -2566,16 +2869,20 @@ func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayB
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
 func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float32, options *ArrayClientPutFloatValidOptions) (ArrayClientPutFloatValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutFloatValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutFloatValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutFloatValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutFloatValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutFloatValidResponse{}, err
 	}
 	return ArrayClientPutFloatValidResponse{}, nil
 }
@@ -2600,16 +2907,20 @@ func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, array
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
 func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int32, options *ArrayClientPutIntegerValidOptions) (ArrayClientPutIntegerValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutIntegerValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutIntegerValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutIntegerValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutIntegerValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutIntegerValidResponse{}, err
 	}
 	return ArrayClientPutIntegerValidResponse{}, nil
 }
@@ -2634,16 +2945,20 @@ func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arr
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
 func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64, options *ArrayClientPutLongValidOptions) (ArrayClientPutLongValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutLongValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutLongValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutLongValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutLongValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutLongValidResponse{}, err
 	}
 	return ArrayClientPutLongValidResponse{}, nil
 }
@@ -2669,16 +2984,20 @@ func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayB
 //   - options - ArrayClientPutStringEnumValidOptions contains the optional parameters for the ArrayClient.PutStringEnumValid
 //     method.
 func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*Enum1, options *ArrayClientPutStringEnumValidOptions) (ArrayClientPutStringEnumValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutStringEnumValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putStringEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutStringEnumValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutStringEnumValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutStringEnumValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutStringEnumValidResponse{}, err
 	}
 	return ArrayClientPutStringEnumValidResponse{}, nil
 }
@@ -2703,16 +3022,20 @@ func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, 
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
 func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutStringValidOptions) (ArrayClientPutStringValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutStringValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutStringValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutStringValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutStringValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutStringValidResponse{}, err
 	}
 	return ArrayClientPutStringValidResponse{}, nil
 }
@@ -2737,16 +3060,20 @@ func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arra
 // Generated from API version 1.0.0
 //   - options - ArrayClientPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutUUIDValidOptions) (ArrayClientPutUUIDValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutUUIDValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putUUIDValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return ArrayClientPutUUIDValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ArrayClientPutUUIDValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutUUIDValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ArrayClientPutUUIDValidResponse{}, err
 	}
 	return ArrayClientPutUUIDValidResponse{}, nil
 }

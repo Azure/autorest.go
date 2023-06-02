@@ -77,6 +77,7 @@ func (client *ApplicationGatewayPrivateLinkResourcesClient) NewListPager(resourc
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

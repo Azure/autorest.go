@@ -16,7 +16,9 @@ import (
 )
 
 func newDurationClient(t *testing.T) *DurationClient {
-	client, err := NewDurationClient(nil)
+	client, err := NewDurationClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

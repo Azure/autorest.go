@@ -20,6 +20,7 @@ import (
 func newHTTPRetryClient(t *testing.T) *HTTPRetryClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
+	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
 	client, err := NewHTTPRetryClient(&options)
 	require.NoError(t, err)

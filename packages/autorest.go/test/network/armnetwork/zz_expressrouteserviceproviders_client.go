@@ -75,6 +75,7 @@ func (client *ExpressRouteServiceProvidersClient) NewListPager(options *ExpressR
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

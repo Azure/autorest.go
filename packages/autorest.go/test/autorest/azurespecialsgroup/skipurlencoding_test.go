@@ -14,7 +14,9 @@ import (
 )
 
 func newSkipURLEncodingClient(t *testing.T) *SkipURLEncodingClient {
-	client, err := NewSkipURLEncodingClient(nil)
+	client, err := NewSkipURLEncodingClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

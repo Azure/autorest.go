@@ -18,7 +18,9 @@ import (
 )
 
 func newPetClient(t *testing.T) *PetClient {
-	options := azcore.ClientOptions{}
+	options := azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	}
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
 	client, err := NewPetClient(&options)
 	require.NoError(t, err)

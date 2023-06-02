@@ -15,7 +15,9 @@ import (
 )
 
 func newByteClient(t *testing.T) *ByteClient {
-	client, err := NewByteClient(nil)
+	client, err := NewByteClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

@@ -77,6 +77,7 @@ func (client *AvailablePrivateEndpointTypesClient) NewListPager(location string,
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -144,6 +145,7 @@ func (client *AvailablePrivateEndpointTypesClient) NewListByResourceGroupPager(l
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

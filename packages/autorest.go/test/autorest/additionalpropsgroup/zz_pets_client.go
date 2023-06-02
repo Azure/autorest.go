@@ -30,18 +30,23 @@ type PetsClient struct {
 //   - options - PetsClientCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties
 //     method.
 func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties, options *PetsClientCreateAPInPropertiesOptions) (PetsClientCreateAPInPropertiesResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PetsClient.CreateAPInProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createAPInPropertiesCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPInPropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
-	return client.createAPInPropertiesHandleResponse(resp)
+	resp, err := client.createAPInPropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // createAPInPropertiesCreateRequest creates the CreateAPInProperties request.
@@ -74,18 +79,23 @@ func (client *PetsClient) createAPInPropertiesHandleResponse(resp *http.Response
 //   - options - PetsClientCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the PetsClient.CreateAPInPropertiesWithAPString
 //     method.
 func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsClientCreateAPInPropertiesWithAPStringOptions) (PetsClientCreateAPInPropertiesWithAPStringResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PetsClient.CreateAPInPropertiesWithAPString", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createAPInPropertiesWithAPStringCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
-	return client.createAPInPropertiesWithAPStringHandleResponse(resp)
+	resp, err := client.createAPInPropertiesWithAPStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // createAPInPropertiesWithAPStringCreateRequest creates the CreateAPInPropertiesWithAPString request.
@@ -117,18 +127,23 @@ func (client *PetsClient) createAPInPropertiesWithAPStringHandleResponse(resp *h
 // Generated from API version 1.0.0
 //   - options - PetsClientCreateAPObjectOptions contains the optional parameters for the PetsClient.CreateAPObject method.
 func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject, options *PetsClientCreateAPObjectOptions) (PetsClientCreateAPObjectResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PetsClient.CreateAPObject", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createAPObjectCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return PetsClientCreateAPObjectResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPObjectResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPObjectResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PetsClientCreateAPObjectResponse{}, err
 	}
-	return client.createAPObjectHandleResponse(resp)
+	resp, err := client.createAPObjectHandleResponse(httpResp)
+	return resp, err
 }
 
 // createAPObjectCreateRequest creates the CreateAPObject request.
@@ -160,18 +175,23 @@ func (client *PetsClient) createAPObjectHandleResponse(resp *http.Response) (Pet
 // Generated from API version 1.0.0
 //   - options - PetsClientCreateAPStringOptions contains the optional parameters for the PetsClient.CreateAPString method.
 func (client *PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString, options *PetsClientCreateAPStringOptions) (PetsClientCreateAPStringResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PetsClient.CreateAPString", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createAPStringCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return PetsClientCreateAPStringResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPStringResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPStringResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PetsClientCreateAPStringResponse{}, err
 	}
-	return client.createAPStringHandleResponse(resp)
+	resp, err := client.createAPStringHandleResponse(httpResp)
+	return resp, err
 }
 
 // createAPStringCreateRequest creates the CreateAPString request.
@@ -203,18 +223,23 @@ func (client *PetsClient) createAPStringHandleResponse(resp *http.Response) (Pet
 // Generated from API version 1.0.0
 //   - options - PetsClientCreateAPTrueOptions contains the optional parameters for the PetsClient.CreateAPTrue method.
 func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue, options *PetsClientCreateAPTrueOptions) (PetsClientCreateAPTrueResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PetsClient.CreateAPTrue", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createAPTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return PetsClientCreateAPTrueResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateAPTrueResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPTrueResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PetsClientCreateAPTrueResponse{}, err
 	}
-	return client.createAPTrueHandleResponse(resp)
+	resp, err := client.createAPTrueHandleResponse(httpResp)
+	return resp, err
 }
 
 // createAPTrueCreateRequest creates the CreateAPTrue request.
@@ -246,18 +271,23 @@ func (client *PetsClient) createAPTrueHandleResponse(resp *http.Response) (PetsC
 // Generated from API version 1.0.0
 //   - options - PetsClientCreateCatAPTrueOptions contains the optional parameters for the PetsClient.CreateCatAPTrue method.
 func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue, options *PetsClientCreateCatAPTrueOptions) (PetsClientCreateCatAPTrueResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PetsClient.CreateCatAPTrue", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCatAPTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return PetsClientCreateCatAPTrueResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PetsClientCreateCatAPTrueResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateCatAPTrueResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PetsClientCreateCatAPTrueResponse{}, err
 	}
-	return client.createCatAPTrueHandleResponse(resp)
+	resp, err := client.createCatAPTrueHandleResponse(httpResp)
+	return resp, err
 }
 
 // createCatAPTrueCreateRequest creates the CreateCatAPTrue request.

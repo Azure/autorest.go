@@ -35,16 +35,18 @@ type NotebookOperationResultClient struct {
 //   - options - NotebookOperationResultClientGetOptions contains the optional parameters for the NotebookOperationResultClient.Get
 //     method.
 func (client *NotebookOperationResultClient) Get(ctx context.Context, operationID string, options *NotebookOperationResultClientGetOptions) (NotebookOperationResultClientGetResponse, error) {
+	var err error
 	req, err := client.getCreateRequest(ctx, operationID, options)
 	if err != nil {
 		return NotebookOperationResultClientGetResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return NotebookOperationResultClientGetResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return NotebookOperationResultClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return NotebookOperationResultClientGetResponse{}, err
 	}
 	return NotebookOperationResultClientGetResponse{}, nil
 }

@@ -57,18 +57,23 @@ func NewScopeConnectionsClient(subscriptionID string, credential azcore.TokenCre
 //   - options - ScopeConnectionsClientCreateOrUpdateOptions contains the optional parameters for the ScopeConnectionsClient.CreateOrUpdate
 //     method.
 func (client *ScopeConnectionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, parameters ScopeConnection, options *ScopeConnectionsClientCreateOrUpdateOptions) (ScopeConnectionsClientCreateOrUpdateResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ScopeConnectionsClient.CreateOrUpdate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkManagerName, scopeConnectionName, parameters, options)
 	if err != nil {
 		return ScopeConnectionsClientCreateOrUpdateResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ScopeConnectionsClientCreateOrUpdateResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return ScopeConnectionsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return ScopeConnectionsClientCreateOrUpdateResponse{}, err
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	resp, err := client.createOrUpdateHandleResponse(httpResp)
+	return resp, err
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -122,16 +127,20 @@ func (client *ScopeConnectionsClient) createOrUpdateHandleResponse(resp *http.Re
 //   - scopeConnectionName - Name for the cross-tenant connection.
 //   - options - ScopeConnectionsClientDeleteOptions contains the optional parameters for the ScopeConnectionsClient.Delete method.
 func (client *ScopeConnectionsClient) Delete(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, options *ScopeConnectionsClientDeleteOptions) (ScopeConnectionsClientDeleteResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ScopeConnectionsClient.Delete", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkManagerName, scopeConnectionName, options)
 	if err != nil {
 		return ScopeConnectionsClientDeleteResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ScopeConnectionsClientDeleteResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return ScopeConnectionsClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ScopeConnectionsClientDeleteResponse{}, err
 	}
 	return ScopeConnectionsClientDeleteResponse{}, nil
 }
@@ -175,18 +184,23 @@ func (client *ScopeConnectionsClient) deleteCreateRequest(ctx context.Context, r
 //   - scopeConnectionName - Name for the cross-tenant connection.
 //   - options - ScopeConnectionsClientGetOptions contains the optional parameters for the ScopeConnectionsClient.Get method.
 func (client *ScopeConnectionsClient) Get(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, options *ScopeConnectionsClientGetOptions) (ScopeConnectionsClientGetResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ScopeConnectionsClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkManagerName, scopeConnectionName, options)
 	if err != nil {
 		return ScopeConnectionsClientGetResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ScopeConnectionsClientGetResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ScopeConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ScopeConnectionsClientGetResponse{}, err
 	}
-	return client.getHandleResponse(resp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -260,6 +274,7 @@ func (client *ScopeConnectionsClient) NewListPager(resourceGroupName string, net
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

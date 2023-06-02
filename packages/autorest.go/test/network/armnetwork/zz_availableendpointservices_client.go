@@ -76,6 +76,7 @@ func (client *AvailableEndpointServicesClient) NewListPager(location string, opt
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

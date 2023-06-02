@@ -37,11 +37,13 @@ type TriggerClient struct {
 //     method.
 func (client *TriggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*runtime.Poller[TriggerClientCreateOrUpdateTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.createOrUpdateTrigger(ctx, triggerName, trigger, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggerClientCreateOrUpdateTriggerResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[TriggerClientCreateOrUpdateTriggerResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[TriggerClientCreateOrUpdateTriggerResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -52,18 +54,20 @@ func (client *TriggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 //
 // Generated from API version 2020-12-01
 func (client *TriggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*http.Response, error) {
+	var err error
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // createOrUpdateTriggerCreateRequest creates the CreateOrUpdateTrigger request.
@@ -99,11 +103,13 @@ func (client *TriggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 //     method.
 func (client *TriggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*runtime.Poller[TriggerClientDeleteTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.deleteTrigger(ctx, triggerName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggerClientDeleteTriggerResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[TriggerClientDeleteTriggerResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[TriggerClientDeleteTriggerResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -114,18 +120,20 @@ func (client *TriggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 //
 // Generated from API version 2020-12-01
 func (client *TriggerClient) deleteTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*http.Response, error) {
+	var err error
 	req, err := client.deleteTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // deleteTriggerCreateRequest creates the DeleteTrigger request.
@@ -154,18 +162,21 @@ func (client *TriggerClient) deleteTriggerCreateRequest(ctx context.Context, tri
 //   - options - TriggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the TriggerClient.GetEventSubscriptionStatus
 //     method.
 func (client *TriggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerClientGetEventSubscriptionStatusOptions) (TriggerClientGetEventSubscriptionStatusResponse, error) {
+	var err error
 	req, err := client.getEventSubscriptionStatusCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return TriggerClientGetEventSubscriptionStatusResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return TriggerClientGetEventSubscriptionStatusResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggerClientGetEventSubscriptionStatusResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return TriggerClientGetEventSubscriptionStatusResponse{}, err
 	}
-	return client.getEventSubscriptionStatusHandleResponse(resp)
+	resp, err := client.getEventSubscriptionStatusHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEventSubscriptionStatusCreateRequest creates the GetEventSubscriptionStatus request.
@@ -202,18 +213,21 @@ func (client *TriggerClient) getEventSubscriptionStatusHandleResponse(resp *http
 //   - triggerName - The trigger name.
 //   - options - TriggerClientGetTriggerOptions contains the optional parameters for the TriggerClient.GetTrigger method.
 func (client *TriggerClient) GetTrigger(ctx context.Context, triggerName string, options *TriggerClientGetTriggerOptions) (TriggerClientGetTriggerResponse, error) {
+	var err error
 	req, err := client.getTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return TriggerClientGetTriggerResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return TriggerClientGetTriggerResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return TriggerClientGetTriggerResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNotModified) {
+		err = runtime.NewResponseError(httpResp)
+		return TriggerClientGetTriggerResponse{}, err
 	}
-	return client.getTriggerHandleResponse(resp)
+	resp, err := client.getTriggerHandleResponse(httpResp)
+	return resp, err
 }
 
 // getTriggerCreateRequest creates the GetTrigger request.
@@ -311,11 +325,13 @@ func (client *TriggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Res
 //     method.
 func (client *TriggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*runtime.Poller[TriggerClientStartTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.startTrigger(ctx, triggerName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggerClientStartTriggerResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[TriggerClientStartTriggerResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[TriggerClientStartTriggerResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -326,18 +342,20 @@ func (client *TriggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 //
 // Generated from API version 2020-12-01
 func (client *TriggerClient) startTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*http.Response, error) {
+	var err error
 	req, err := client.startTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // startTriggerCreateRequest creates the StartTrigger request.
@@ -367,11 +385,13 @@ func (client *TriggerClient) startTriggerCreateRequest(ctx context.Context, trig
 //     method.
 func (client *TriggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*runtime.Poller[TriggerClientStopTriggerResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.stopTrigger(ctx, triggerName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggerClientStopTriggerResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[TriggerClientStopTriggerResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[TriggerClientStopTriggerResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -382,18 +402,20 @@ func (client *TriggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 //
 // Generated from API version 2020-12-01
 func (client *TriggerClient) stopTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*http.Response, error) {
+	var err error
 	req, err := client.stopTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // stopTriggerCreateRequest creates the StopTrigger request.
@@ -423,11 +445,13 @@ func (client *TriggerClient) stopTriggerCreateRequest(ctx context.Context, trigg
 //     method.
 func (client *TriggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*runtime.Poller[TriggerClientSubscribeTriggerToEventsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.subscribeTriggerToEvents(ctx, triggerName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggerClientSubscribeTriggerToEventsResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[TriggerClientSubscribeTriggerToEventsResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[TriggerClientSubscribeTriggerToEventsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -438,18 +462,20 @@ func (client *TriggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 //
 // Generated from API version 2020-12-01
 func (client *TriggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*http.Response, error) {
+	var err error
 	req, err := client.subscribeTriggerToEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // subscribeTriggerToEventsCreateRequest creates the SubscribeTriggerToEvents request.
@@ -479,11 +505,13 @@ func (client *TriggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 //     method.
 func (client *TriggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*runtime.Poller[TriggerClientUnsubscribeTriggerFromEventsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
 		resp, err := client.unsubscribeTriggerFromEvents(ctx, triggerName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[TriggerClientUnsubscribeTriggerFromEventsResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[TriggerClientUnsubscribeTriggerFromEventsResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[TriggerClientUnsubscribeTriggerFromEventsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -494,18 +522,20 @@ func (client *TriggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 //
 // Generated from API version 2020-12-01
 func (client *TriggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*http.Response, error) {
+	var err error
 	req, err := client.unsubscribeTriggerFromEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // unsubscribeTriggerFromEventsCreateRequest creates the UnsubscribeTriggerFromEvents request.

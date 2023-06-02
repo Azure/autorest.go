@@ -31,18 +31,23 @@ type StringClient struct {
 // Generated from API version 1.0.0
 //   - options - StringClientGetBase64EncodedOptions contains the optional parameters for the StringClient.GetBase64Encoded method.
 func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringClientGetBase64EncodedOptions) (StringClientGetBase64EncodedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetBase64Encoded", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBase64EncodedCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetBase64EncodedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetBase64EncodedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetBase64EncodedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetBase64EncodedResponse{}, err
 	}
-	return client.getBase64EncodedHandleResponse(resp)
+	resp, err := client.getBase64EncodedHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBase64EncodedCreateRequest creates the GetBase64Encoded request.
@@ -72,18 +77,23 @@ func (client *StringClient) getBase64EncodedHandleResponse(resp *http.Response) 
 //   - options - StringClientGetBase64URLEncodedOptions contains the optional parameters for the StringClient.GetBase64URLEncoded
 //     method.
 func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringClientGetBase64URLEncodedOptions) (StringClientGetBase64URLEncodedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetBase64URLEncoded", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetBase64URLEncodedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetBase64URLEncodedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetBase64URLEncodedResponse{}, err
 	}
-	return client.getBase64URLEncodedHandleResponse(resp)
+	resp, err := client.getBase64URLEncodedHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBase64URLEncodedCreateRequest creates the GetBase64URLEncoded request.
@@ -112,18 +122,23 @@ func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Respons
 // Generated from API version 1.0.0
 //   - options - StringClientGetEmptyOptions contains the optional parameters for the StringClient.GetEmpty method.
 func (client *StringClient) GetEmpty(ctx context.Context, options *StringClientGetEmptyOptions) (StringClientGetEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetEmptyResponse{}, err
 	}
-	return client.getEmptyHandleResponse(resp)
+	resp, err := client.getEmptyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -152,18 +167,23 @@ func (client *StringClient) getEmptyHandleResponse(resp *http.Response) (StringC
 // Generated from API version 1.0.0
 //   - options - StringClientGetMBCSOptions contains the optional parameters for the StringClient.GetMBCS method.
 func (client *StringClient) GetMBCS(ctx context.Context, options *StringClientGetMBCSOptions) (StringClientGetMBCSResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetMBCS", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMBCSCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetMBCSResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetMBCSResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetMBCSResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetMBCSResponse{}, err
 	}
-	return client.getMBCSHandleResponse(resp)
+	resp, err := client.getMBCSHandleResponse(httpResp)
+	return resp, err
 }
 
 // getMBCSCreateRequest creates the GetMBCS request.
@@ -192,18 +212,23 @@ func (client *StringClient) getMBCSHandleResponse(resp *http.Response) (StringCl
 // Generated from API version 1.0.0
 //   - options - StringClientGetNotProvidedOptions contains the optional parameters for the StringClient.GetNotProvided method.
 func (client *StringClient) GetNotProvided(ctx context.Context, options *StringClientGetNotProvidedOptions) (StringClientGetNotProvidedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetNotProvided", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetNotProvidedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetNotProvidedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetNotProvidedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetNotProvidedResponse{}, err
 	}
-	return client.getNotProvidedHandleResponse(resp)
+	resp, err := client.getNotProvidedHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
@@ -232,18 +257,23 @@ func (client *StringClient) getNotProvidedHandleResponse(resp *http.Response) (S
 // Generated from API version 1.0.0
 //   - options - StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
 func (client *StringClient) GetNull(ctx context.Context, options *StringClientGetNullOptions) (StringClientGetNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetNullResponse{}, err
 	}
-	return client.getNullHandleResponse(resp)
+	resp, err := client.getNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -273,18 +303,23 @@ func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringCl
 //   - options - StringClientGetNullBase64URLEncodedOptions contains the optional parameters for the StringClient.GetNullBase64URLEncoded
 //     method.
 func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringClientGetNullBase64URLEncodedOptions) (StringClientGetNullBase64URLEncodedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetNullBase64URLEncoded", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetNullBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
-	return client.getNullBase64URLEncodedHandleResponse(resp)
+	resp, err := client.getNullBase64URLEncodedHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNullBase64URLEncodedCreateRequest creates the GetNullBase64URLEncoded request.
@@ -314,18 +349,23 @@ func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *http.Res
 // Generated from API version 1.0.0
 //   - options - StringClientGetWhitespaceOptions contains the optional parameters for the StringClient.GetWhitespace method.
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringClientGetWhitespaceOptions) (StringClientGetWhitespaceResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.GetWhitespace", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getWhitespaceCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetWhitespaceResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientGetWhitespaceResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetWhitespaceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientGetWhitespaceResponse{}, err
 	}
-	return client.getWhitespaceHandleResponse(resp)
+	resp, err := client.getWhitespaceHandleResponse(httpResp)
+	return resp, err
 }
 
 // getWhitespaceCreateRequest creates the GetWhitespace request.
@@ -356,16 +396,20 @@ func (client *StringClient) getWhitespaceHandleResponse(resp *http.Response) (St
 //   - options - StringClientPutBase64URLEncodedOptions contains the optional parameters for the StringClient.PutBase64URLEncoded
 //     method.
 func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringClientPutBase64URLEncodedOptions) (StringClientPutBase64URLEncodedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutBase64URLEncoded", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putBase64URLEncodedCreateRequest(ctx, stringBody, options)
 	if err != nil {
 		return StringClientPutBase64URLEncodedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutBase64URLEncodedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientPutBase64URLEncodedResponse{}, err
 	}
 	return StringClientPutBase64URLEncodedResponse{}, nil
 }
@@ -390,16 +434,20 @@ func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context
 // Generated from API version 1.0.0
 //   - options - StringClientPutEmptyOptions contains the optional parameters for the StringClient.PutEmpty method.
 func (client *StringClient) PutEmpty(ctx context.Context, options *StringClientPutEmptyOptions) (StringClientPutEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientPutEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientPutEmptyResponse{}, err
 	}
 	return StringClientPutEmptyResponse{}, nil
 }
@@ -424,16 +472,20 @@ func (client *StringClient) putEmptyCreateRequest(ctx context.Context, options *
 // Generated from API version 1.0.0
 //   - options - StringClientPutMBCSOptions contains the optional parameters for the StringClient.PutMBCS method.
 func (client *StringClient) PutMBCS(ctx context.Context, options *StringClientPutMBCSOptions) (StringClientPutMBCSResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutMBCS", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMBCSCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientPutMBCSResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutMBCSResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutMBCSResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientPutMBCSResponse{}, err
 	}
 	return StringClientPutMBCSResponse{}, nil
 }
@@ -459,16 +511,20 @@ func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *S
 //   - stringBody - string body
 //   - options - StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
 func (client *StringClient) PutNull(ctx context.Context, stringBody string, options *StringClientPutNullOptions) (StringClientPutNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putNullCreateRequest(ctx, stringBody, options)
 	if err != nil {
 		return StringClientPutNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientPutNullResponse{}, err
 	}
 	return StringClientPutNullResponse{}, nil
 }
@@ -496,16 +552,20 @@ func (client *StringClient) putNullCreateRequest(ctx context.Context, stringBody
 // Generated from API version 1.0.0
 //   - options - StringClientPutWhitespaceOptions contains the optional parameters for the StringClient.PutWhitespace method.
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringClientPutWhitespaceOptions) (StringClientPutWhitespaceResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "StringClient.PutWhitespace", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putWhitespaceCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientPutWhitespaceResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return StringClientPutWhitespaceResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutWhitespaceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return StringClientPutWhitespaceResponse{}, err
 	}
 	return StringClientPutWhitespaceResponse{}, nil
 }

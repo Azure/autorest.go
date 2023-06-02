@@ -29,18 +29,23 @@ type IntClient struct {
 // Generated from API version 2.0-preview
 //   - options - IntClientGetOptions contains the optional parameters for the IntClient.Get method.
 func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) (IntClientGetResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.Get", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetResponse{}, err
 	}
-	return client.getHandleResponse(resp)
+	resp, err := client.getHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCreateRequest creates the Get request.
@@ -70,18 +75,23 @@ func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetRes
 //   - input - Input int enum.
 //   - options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.
 func (client *IntClient) Put(ctx context.Context, input IntEnum, options *IntClientPutOptions) (IntClientPutResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.Put", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {
 		return IntClientPutResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientPutResponse{}, err
 	}
-	return client.putHandleResponse(resp)
+	resp, err := client.putHandleResponse(httpResp)
+	return resp, err
 }
 
 // putCreateRequest creates the Put request.

@@ -29,18 +29,23 @@ type EnumClient struct {
 // Generated from API version 1.0.0
 //   - options - EnumClientGetNotExpandableOptions contains the optional parameters for the EnumClient.GetNotExpandable method.
 func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumClientGetNotExpandableOptions) (EnumClientGetNotExpandableResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.GetNotExpandable", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNotExpandableCreateRequest(ctx, options)
 	if err != nil {
 		return EnumClientGetNotExpandableResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientGetNotExpandableResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumClientGetNotExpandableResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return EnumClientGetNotExpandableResponse{}, err
 	}
-	return client.getNotExpandableHandleResponse(resp)
+	resp, err := client.getNotExpandableHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNotExpandableCreateRequest creates the GetNotExpandable request.
@@ -69,18 +74,23 @@ func (client *EnumClient) getNotExpandableHandleResponse(resp *http.Response) (E
 // Generated from API version 1.0.0
 //   - options - EnumClientGetReferencedOptions contains the optional parameters for the EnumClient.GetReferenced method.
 func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumClientGetReferencedOptions) (EnumClientGetReferencedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.GetReferenced", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getReferencedCreateRequest(ctx, options)
 	if err != nil {
 		return EnumClientGetReferencedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientGetReferencedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumClientGetReferencedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return EnumClientGetReferencedResponse{}, err
 	}
-	return client.getReferencedHandleResponse(resp)
+	resp, err := client.getReferencedHandleResponse(httpResp)
+	return resp, err
 }
 
 // getReferencedCreateRequest creates the GetReferenced request.
@@ -110,18 +120,23 @@ func (client *EnumClient) getReferencedHandleResponse(resp *http.Response) (Enum
 //   - options - EnumClientGetReferencedConstantOptions contains the optional parameters for the EnumClient.GetReferencedConstant
 //     method.
 func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumClientGetReferencedConstantOptions) (EnumClientGetReferencedConstantResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.GetReferencedConstant", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getReferencedConstantCreateRequest(ctx, options)
 	if err != nil {
 		return EnumClientGetReferencedConstantResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientGetReferencedConstantResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumClientGetReferencedConstantResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return EnumClientGetReferencedConstantResponse{}, err
 	}
-	return client.getReferencedConstantHandleResponse(resp)
+	resp, err := client.getReferencedConstantHandleResponse(httpResp)
+	return resp, err
 }
 
 // getReferencedConstantCreateRequest creates the GetReferencedConstant request.
@@ -151,16 +166,20 @@ func (client *EnumClient) getReferencedConstantHandleResponse(resp *http.Respons
 //   - stringBody - string body
 //   - options - EnumClientPutNotExpandableOptions contains the optional parameters for the EnumClient.PutNotExpandable method.
 func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumClientPutNotExpandableOptions) (EnumClientPutNotExpandableResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.PutNotExpandable", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putNotExpandableCreateRequest(ctx, stringBody, options)
 	if err != nil {
 		return EnumClientPutNotExpandableResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientPutNotExpandableResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumClientPutNotExpandableResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return EnumClientPutNotExpandableResponse{}, err
 	}
 	return EnumClientPutNotExpandableResponse{}, nil
 }
@@ -186,16 +205,20 @@ func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, str
 //   - enumStringBody - enum string body
 //   - options - EnumClientPutReferencedOptions contains the optional parameters for the EnumClient.PutReferenced method.
 func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumClientPutReferencedOptions) (EnumClientPutReferencedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.PutReferenced", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putReferencedCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
 		return EnumClientPutReferencedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientPutReferencedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumClientPutReferencedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return EnumClientPutReferencedResponse{}, err
 	}
 	return EnumClientPutReferencedResponse{}, nil
 }
@@ -222,16 +245,20 @@ func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumSt
 //   - options - EnumClientPutReferencedConstantOptions contains the optional parameters for the EnumClient.PutReferencedConstant
 //     method.
 func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumClientPutReferencedConstantOptions) (EnumClientPutReferencedConstantResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "EnumClient.PutReferencedConstant", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putReferencedConstantCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
 		return EnumClientPutReferencedConstantResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return EnumClientPutReferencedConstantResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumClientPutReferencedConstantResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return EnumClientPutReferencedConstantResponse{}, err
 	}
 	return EnumClientPutReferencedConstantResponse{}, nil
 }

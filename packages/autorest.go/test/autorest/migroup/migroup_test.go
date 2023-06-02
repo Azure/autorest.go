@@ -16,7 +16,9 @@ import (
 )
 
 func newMultipleInheritanceServiceClient(t *testing.T) *MultipleInheritanceServiceClient {
-	client, err := NewMultipleInheritanceServiceClient(nil)
+	client, err := NewMultipleInheritanceServiceClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

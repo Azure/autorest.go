@@ -15,7 +15,9 @@ import (
 )
 
 func newSubscriptionInCredentialsClient(t *testing.T) *SubscriptionInCredentialsClient {
-	client, err := NewSubscriptionInCredentialsClient("1234-5678-9012-3456", nil)
+	client, err := NewSubscriptionInCredentialsClient("1234-5678-9012-3456", &azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

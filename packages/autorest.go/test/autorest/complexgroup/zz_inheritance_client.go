@@ -29,18 +29,23 @@ type InheritanceClient struct {
 // Generated from API version 2016-02-29
 //   - options - InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
 func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceClientGetValidOptions) (InheritanceClientGetValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "InheritanceClient.GetValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return InheritanceClientGetValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return InheritanceClientGetValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InheritanceClientGetValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return InheritanceClientGetValidResponse{}, err
 	}
-	return client.getValidHandleResponse(resp)
+	resp, err := client.getValidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -72,16 +77,20 @@ func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (In
 //     food="french fries".
 //   - options - InheritanceClientPutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
 func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritanceClientPutValidOptions) (InheritanceClientPutValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "InheritanceClient.PutValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return InheritanceClientPutValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return InheritanceClientPutValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InheritanceClientPutValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return InheritanceClientPutValidResponse{}, err
 	}
 	return InheritanceClientPutValidResponse{}, nil
 }

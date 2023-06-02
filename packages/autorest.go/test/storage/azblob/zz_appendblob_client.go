@@ -51,18 +51,23 @@ type AppendBlobClient struct {
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *AppendBlobClient) AppendBlock(ctx context.Context, containerName string, blob string, comp Enum35, contentLength int64, body io.ReadSeekCloser, options *AppendBlobClientAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientAppendBlockResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.AppendBlock", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.appendBlockCreateRequest(ctx, containerName, blob, comp, contentLength, body, options, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return AppendBlobClientAppendBlockResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AppendBlobClientAppendBlockResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return AppendBlobClientAppendBlockResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return AppendBlobClientAppendBlockResponse{}, err
 	}
-	return client.appendBlockHandleResponse(resp)
+	resp, err := client.appendBlockHandleResponse(httpResp)
+	return resp, err
 }
 
 // appendBlockCreateRequest creates the AppendBlock request.
@@ -232,18 +237,23 @@ func (client *AppendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 //   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Client.StartCopyFromURL
 //     method.
 func (client *AppendBlobClient) AppendBlockFromURL(ctx context.Context, containerName string, blob string, comp Enum35, sourceURL string, contentLength int64, options *AppendBlobClientAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobClientAppendBlockFromURLResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.AppendBlockFromURL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.appendBlockFromURLCreateRequest(ctx, containerName, blob, comp, sourceURL, contentLength, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return AppendBlobClientAppendBlockFromURLResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AppendBlobClientAppendBlockFromURLResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return AppendBlobClientAppendBlockFromURLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return AppendBlobClientAppendBlockFromURLResponse{}, err
 	}
-	return client.appendBlockFromURLHandleResponse(resp)
+	resp, err := client.appendBlockFromURLHandleResponse(httpResp)
+	return resp, err
 }
 
 // appendBlockFromURLCreateRequest creates the AppendBlockFromURL request.
@@ -421,18 +431,23 @@ func (client *AppendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *AppendBlobClient) Create(ctx context.Context, containerName string, blob string, contentLength int64, options *AppendBlobClientCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientCreateResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.Create", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, containerName, blob, contentLength, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return AppendBlobClientCreateResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AppendBlobClientCreateResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return AppendBlobClientCreateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return AppendBlobClientCreateResponse{}, err
 	}
-	return client.createHandleResponse(resp)
+	resp, err := client.createHandleResponse(httpResp)
+	return resp, err
 }
 
 // createCreateRequest creates the Create request.
@@ -601,18 +616,23 @@ func (client *AppendBlobClient) createHandleResponse(resp *http.Response) (Appen
 //   - AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlobClient.AppendBlock
 //     method.
 func (client *AppendBlobClient) Seal(ctx context.Context, containerName string, blob string, comp Enum36, options *AppendBlobClientSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobClientSealResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.Seal", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sealCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
 	if err != nil {
 		return AppendBlobClientSealResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return AppendBlobClientSealResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AppendBlobClientSealResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return AppendBlobClientSealResponse{}, err
 	}
-	return client.sealHandleResponse(resp)
+	resp, err := client.sealHandleResponse(httpResp)
+	return resp, err
 }
 
 // sealCreateRequest creates the Seal request.

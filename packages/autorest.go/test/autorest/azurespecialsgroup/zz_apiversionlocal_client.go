@@ -30,16 +30,20 @@ type APIVersionLocalClient struct {
 //   - options - APIVersionLocalClientGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalNull
 //     method.
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalClientGetMethodLocalNullOptions) (APIVersionLocalClientGetMethodLocalNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetMethodLocalNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetMethodLocalNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionLocalClientGetMethodLocalNullResponse{}, err
 	}
 	return APIVersionLocalClientGetMethodLocalNullResponse{}, nil
 }
@@ -67,16 +71,20 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 //   - options - APIVersionLocalClientGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalValid
 //     method.
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalClientGetMethodLocalValidOptions) (APIVersionLocalClientGetMethodLocalValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetMethodLocalValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetMethodLocalValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetMethodLocalValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionLocalClientGetMethodLocalValidResponse{}, err
 	}
 	return APIVersionLocalClientGetMethodLocalValidResponse{}, nil
 }
@@ -102,16 +110,20 @@ func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx contex
 //   - options - APIVersionLocalClientGetPathLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetPathLocalValid
 //     method.
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalClientGetPathLocalValidOptions) (APIVersionLocalClientGetPathLocalValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetPathLocalValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionLocalClientGetPathLocalValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetPathLocalValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetPathLocalValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionLocalClientGetPathLocalValidResponse{}, err
 	}
 	return APIVersionLocalClientGetPathLocalValidResponse{}, nil
 }
@@ -137,16 +149,20 @@ func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.
 //   - options - APIVersionLocalClientGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetSwaggerLocalValid
 //     method.
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalClientGetSwaggerLocalValidOptions) (APIVersionLocalClientGetSwaggerLocalValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionLocalClient.GetSwaggerLocalValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, err
 	}
 	return APIVersionLocalClientGetSwaggerLocalValidResponse{}, nil
 }

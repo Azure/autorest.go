@@ -37,18 +37,21 @@ type Client struct {
 //   - tableProperties - The Table properties.
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
 func (client *Client) Create(ctx context.Context, tableProperties Properties, options *ClientCreateOptions) (ClientCreateResponse, error) {
+	var err error
 	req, err := client.createCreateRequest(ctx, tableProperties, options)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated, http.StatusNoContent) {
-		return ClientCreateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientCreateResponse{}, err
 	}
-	return client.createHandleResponse(resp)
+	resp, err := client.createHandleResponse(httpResp)
+	return resp, err
 }
 
 // createCreateRequest creates the Create request.
@@ -113,18 +116,21 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 //   - table - The name of the table.
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 func (client *Client) Delete(ctx context.Context, table string, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
+	var err error
 	req, err := client.deleteCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientDeleteResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientDeleteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientDeleteResponse{}, err
 	}
-	return client.deleteHandleResponse(resp)
+	resp, err := client.deleteHandleResponse(httpResp)
+	return resp, err
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -179,18 +185,21 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 //     raised. To force an unconditional delete, set to the wildcard character (*).
 //   - options - ClientDeleteEntityOptions contains the optional parameters for the Client.DeleteEntity method.
 func (client *Client) DeleteEntity(ctx context.Context, table string, partitionKey string, rowKey string, ifMatch string, options *ClientDeleteEntityOptions) (ClientDeleteEntityResponse, error) {
+	var err error
 	req, err := client.deleteEntityCreateRequest(ctx, table, partitionKey, rowKey, ifMatch, options)
 	if err != nil {
 		return ClientDeleteEntityResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientDeleteEntityResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientDeleteEntityResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientDeleteEntityResponse{}, err
 	}
-	return client.deleteEntityHandleResponse(resp)
+	resp, err := client.deleteEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // deleteEntityCreateRequest creates the DeleteEntity request.
@@ -260,18 +269,21 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 //   - table - The name of the table.
 //   - options - ClientGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
 func (client *Client) GetAccessPolicy(ctx context.Context, table string, options *ClientGetAccessPolicyOptions) (ClientGetAccessPolicyResponse, error) {
+	var err error
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientGetAccessPolicyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientGetAccessPolicyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetAccessPolicyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetAccessPolicyResponse{}, err
 	}
-	return client.getAccessPolicyHandleResponse(resp)
+	resp, err := client.getAccessPolicyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getAccessPolicyCreateRequest creates the GetAccessPolicy request.
@@ -331,18 +343,21 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 //   - table - The name of the table.
 //   - options - ClientInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
 func (client *Client) InsertEntity(ctx context.Context, table string, options *ClientInsertEntityOptions) (ClientInsertEntityResponse, error) {
+	var err error
 	req, err := client.insertEntityCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientInsertEntityResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientInsertEntityResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated, http.StatusNoContent) {
-		return ClientInsertEntityResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientInsertEntityResponse{}, err
 	}
-	return client.insertEntityHandleResponse(resp)
+	resp, err := client.insertEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // insertEntityCreateRequest creates the InsertEntity request.
@@ -426,18 +441,21 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 //   - tableEntityProperties - The properties for the table entity.
 //   - options - ClientMergeEntityOptions contains the optional parameters for the Client.MergeEntity method.
 func (client *Client) MergeEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientMergeEntityOptions) (ClientMergeEntityResponse, error) {
+	var err error
 	req, err := client.mergeEntityCreateRequest(ctx, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
 		return ClientMergeEntityResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientMergeEntityResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientMergeEntityResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientMergeEntityResponse{}, err
 	}
-	return client.mergeEntityHandleResponse(resp)
+	resp, err := client.mergeEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // mergeEntityCreateRequest creates the MergeEntity request.
@@ -513,18 +531,21 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 // Generated from API version 2019-02-02
 //   - options - ClientQueryOptions contains the optional parameters for the Client.Query method.
 func (client *Client) Query(ctx context.Context, options *ClientQueryOptions) (ClientQueryResponse, error) {
+	var err error
 	req, err := client.queryCreateRequest(ctx, options)
 	if err != nil {
 		return ClientQueryResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientQueryResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientQueryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientQueryResponse{}, err
 	}
-	return client.queryHandleResponse(resp)
+	resp, err := client.queryHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryCreateRequest creates the Query request.
@@ -595,18 +616,21 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 //   - table - The name of the table.
 //   - options - ClientQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
 func (client *Client) QueryEntities(ctx context.Context, table string, options *ClientQueryEntitiesOptions) (ClientQueryEntitiesResponse, error) {
+	var err error
 	req, err := client.queryEntitiesCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientQueryEntitiesResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientQueryEntitiesResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientQueryEntitiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientQueryEntitiesResponse{}, err
 	}
-	return client.queryEntitiesHandleResponse(resp)
+	resp, err := client.queryEntitiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryEntitiesCreateRequest creates the QueryEntities request.
@@ -693,18 +717,21 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 //   - options - ClientQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Client.QueryEntityWithPartitionAndRowKey
 //     method.
 func (client *Client) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, options *ClientQueryEntityWithPartitionAndRowKeyOptions) (ClientQueryEntityWithPartitionAndRowKeyResponse, error) {
+	var err error
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, table, partitionKey, rowKey, options)
 	if err != nil {
 		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
-	return client.queryEntityWithPartitionAndRowKeyHandleResponse(resp)
+	resp, err := client.queryEntityWithPartitionAndRowKeyHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryEntityWithPartitionAndRowKeyCreateRequest creates the QueryEntityWithPartitionAndRowKey request.
@@ -791,18 +818,21 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 //   - tableACL - The acls for the table.
 //   - options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
 func (client *Client) SetAccessPolicy(ctx context.Context, table string, tableACL []*SignedIdentifier, options *ClientSetAccessPolicyOptions) (ClientSetAccessPolicyResponse, error) {
+	var err error
 	req, err := client.setAccessPolicyCreateRequest(ctx, table, tableACL, options)
 	if err != nil {
 		return ClientSetAccessPolicyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientSetAccessPolicyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientSetAccessPolicyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientSetAccessPolicyResponse{}, err
 	}
-	return client.setAccessPolicyHandleResponse(resp)
+	resp, err := client.setAccessPolicyHandleResponse(httpResp)
+	return resp, err
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
@@ -869,18 +899,21 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 //   - tableEntityProperties - The properties for the table entity.
 //   - options - ClientUpdateEntityOptions contains the optional parameters for the Client.UpdateEntity method.
 func (client *Client) UpdateEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientUpdateEntityOptions) (ClientUpdateEntityResponse, error) {
+	var err error
 	req, err := client.updateEntityCreateRequest(ctx, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
 		return ClientUpdateEntityResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ClientUpdateEntityResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientUpdateEntityResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientUpdateEntityResponse{}, err
 	}
-	return client.updateEntityHandleResponse(resp)
+	resp, err := client.updateEntityHandleResponse(httpResp)
+	return resp, err
 }
 
 // updateEntityCreateRequest creates the UpdateEntity request.

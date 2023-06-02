@@ -30,16 +30,20 @@ type APIVersionDefaultClient struct {
 //   - options - APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalNotProvidedValid
 //     method.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions) (APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetMethodGlobalNotProvidedValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, err
 	}
 	return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, nil
 }
@@ -65,16 +69,20 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 //   - options - APIVersionDefaultClientGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalValid
 //     method.
 func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalValidOptions) (APIVersionDefaultClientGetMethodGlobalValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetMethodGlobalValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, err
 	}
 	return APIVersionDefaultClientGetMethodGlobalValidResponse{}, nil
 }
@@ -100,16 +108,20 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 //   - options - APIVersionDefaultClientGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetPathGlobalValid
 //     method.
 func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetPathGlobalValidOptions) (APIVersionDefaultClientGetPathGlobalValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetPathGlobalValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionDefaultClientGetPathGlobalValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetPathGlobalValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetPathGlobalValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionDefaultClientGetPathGlobalValidResponse{}, err
 	}
 	return APIVersionDefaultClientGetPathGlobalValidResponse{}, nil
 }
@@ -135,16 +147,20 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 //   - options - APIVersionDefaultClientGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetSwaggerGlobalValid
 //     method.
 func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetSwaggerGlobalValidOptions) (APIVersionDefaultClientGetSwaggerGlobalValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "APIVersionDefaultClient.GetSwaggerGlobalValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {
 		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, err
 	}
 	return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, nil
 }

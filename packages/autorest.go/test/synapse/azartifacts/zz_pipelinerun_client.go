@@ -36,16 +36,18 @@ type PipelineRunClient struct {
 //   - options - PipelineRunClientCancelPipelineRunOptions contains the optional parameters for the PipelineRunClient.CancelPipelineRun
 //     method.
 func (client *PipelineRunClient) CancelPipelineRun(ctx context.Context, runID string, options *PipelineRunClientCancelPipelineRunOptions) (PipelineRunClientCancelPipelineRunResponse, error) {
+	var err error
 	req, err := client.cancelPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
 		return PipelineRunClientCancelPipelineRunResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PipelineRunClientCancelPipelineRunResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PipelineRunClientCancelPipelineRunResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PipelineRunClientCancelPipelineRunResponse{}, err
 	}
 	return PipelineRunClientCancelPipelineRunResponse{}, nil
 }
@@ -79,18 +81,21 @@ func (client *PipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 //   - options - PipelineRunClientGetPipelineRunOptions contains the optional parameters for the PipelineRunClient.GetPipelineRun
 //     method.
 func (client *PipelineRunClient) GetPipelineRun(ctx context.Context, runID string, options *PipelineRunClientGetPipelineRunOptions) (PipelineRunClientGetPipelineRunResponse, error) {
+	var err error
 	req, err := client.getPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
 		return PipelineRunClientGetPipelineRunResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PipelineRunClientGetPipelineRunResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PipelineRunClientGetPipelineRunResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PipelineRunClientGetPipelineRunResponse{}, err
 	}
-	return client.getPipelineRunHandleResponse(resp)
+	resp, err := client.getPipelineRunHandleResponse(httpResp)
+	return resp, err
 }
 
 // getPipelineRunCreateRequest creates the GetPipelineRun request.
@@ -130,18 +135,21 @@ func (client *PipelineRunClient) getPipelineRunHandleResponse(resp *http.Respons
 //   - options - PipelineRunClientQueryActivityRunsOptions contains the optional parameters for the PipelineRunClient.QueryActivityRuns
 //     method.
 func (client *PipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunClientQueryActivityRunsOptions) (PipelineRunClientQueryActivityRunsResponse, error) {
+	var err error
 	req, err := client.queryActivityRunsCreateRequest(ctx, pipelineName, runID, filterParameters, options)
 	if err != nil {
 		return PipelineRunClientQueryActivityRunsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PipelineRunClientQueryActivityRunsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PipelineRunClientQueryActivityRunsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PipelineRunClientQueryActivityRunsResponse{}, err
 	}
-	return client.queryActivityRunsHandleResponse(resp)
+	resp, err := client.queryActivityRunsHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryActivityRunsCreateRequest creates the QueryActivityRuns request.
@@ -186,18 +194,21 @@ func (client *PipelineRunClient) queryActivityRunsHandleResponse(resp *http.Resp
 //   - options - PipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRunClient.QueryPipelineRunsByWorkspace
 //     method.
 func (client *PipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunClientQueryPipelineRunsByWorkspaceOptions) (PipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
+	var err error
 	req, err := client.queryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err
 	}
-	return client.queryPipelineRunsByWorkspaceHandleResponse(resp)
+	resp, err := client.queryPipelineRunsByWorkspaceHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.

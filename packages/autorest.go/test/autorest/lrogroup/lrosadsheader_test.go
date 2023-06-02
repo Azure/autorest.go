@@ -17,6 +17,7 @@ import (
 func newLrosaDsClient(t *testing.T) *LROSADsClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
+	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
 	client, err := NewLROSADsClient(&options)
 	require.NoError(t, err)

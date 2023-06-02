@@ -30,18 +30,23 @@ type MultipleInheritanceServiceClient struct {
 //   - options - MultipleInheritanceServiceClientGetCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetCat
 //     method.
 func (client *MultipleInheritanceServiceClient) GetCat(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (MultipleInheritanceServiceClientGetCatResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetCat", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCatCreateRequest(ctx, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetCatResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetCatResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientGetCatResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientGetCatResponse{}, err
 	}
-	return client.getCatHandleResponse(resp)
+	resp, err := client.getCatHandleResponse(httpResp)
+	return resp, err
 }
 
 // getCatCreateRequest creates the GetCat request.
@@ -71,18 +76,23 @@ func (client *MultipleInheritanceServiceClient) getCatHandleResponse(resp *http.
 //   - options - MultipleInheritanceServiceClientGetFelineOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetFeline
 //     method.
 func (client *MultipleInheritanceServiceClient) GetFeline(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (MultipleInheritanceServiceClientGetFelineResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetFeline", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFelineCreateRequest(ctx, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetFelineResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetFelineResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientGetFelineResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientGetFelineResponse{}, err
 	}
-	return client.getFelineHandleResponse(resp)
+	resp, err := client.getFelineHandleResponse(httpResp)
+	return resp, err
 }
 
 // getFelineCreateRequest creates the GetFeline request.
@@ -112,18 +122,23 @@ func (client *MultipleInheritanceServiceClient) getFelineHandleResponse(resp *ht
 //   - options - MultipleInheritanceServiceClientGetHorseOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetHorse
 //     method.
 func (client *MultipleInheritanceServiceClient) GetHorse(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (MultipleInheritanceServiceClientGetHorseResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetHorse", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getHorseCreateRequest(ctx, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetHorseResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetHorseResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientGetHorseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientGetHorseResponse{}, err
 	}
-	return client.getHorseHandleResponse(resp)
+	resp, err := client.getHorseHandleResponse(httpResp)
+	return resp, err
 }
 
 // getHorseCreateRequest creates the GetHorse request.
@@ -153,18 +168,23 @@ func (client *MultipleInheritanceServiceClient) getHorseHandleResponse(resp *htt
 //   - options - MultipleInheritanceServiceClientGetKittenOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetKitten
 //     method.
 func (client *MultipleInheritanceServiceClient) GetKitten(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (MultipleInheritanceServiceClientGetKittenResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetKitten", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getKittenCreateRequest(ctx, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetKittenResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetKittenResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientGetKittenResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientGetKittenResponse{}, err
 	}
-	return client.getKittenHandleResponse(resp)
+	resp, err := client.getKittenHandleResponse(httpResp)
+	return resp, err
 }
 
 // getKittenCreateRequest creates the GetKitten request.
@@ -194,18 +214,23 @@ func (client *MultipleInheritanceServiceClient) getKittenHandleResponse(resp *ht
 //   - options - MultipleInheritanceServiceClientGetPetOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetPet
 //     method.
 func (client *MultipleInheritanceServiceClient) GetPet(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (MultipleInheritanceServiceClientGetPetResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.GetPet", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getPetCreateRequest(ctx, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetPetResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientGetPetResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientGetPetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientGetPetResponse{}, err
 	}
-	return client.getPetHandleResponse(resp)
+	resp, err := client.getPetHandleResponse(httpResp)
+	return resp, err
 }
 
 // getPetCreateRequest creates the GetPet request.
@@ -236,18 +261,23 @@ func (client *MultipleInheritanceServiceClient) getPetHandleResponse(resp *http.
 //   - options - MultipleInheritanceServiceClientPutCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutCat
 //     method.
 func (client *MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (MultipleInheritanceServiceClientPutCatResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutCat", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCatCreateRequest(ctx, cat, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutCatResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutCatResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientPutCatResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientPutCatResponse{}, err
 	}
-	return client.putCatHandleResponse(resp)
+	resp, err := client.putCatHandleResponse(httpResp)
+	return resp, err
 }
 
 // putCatCreateRequest creates the PutCat request.
@@ -281,18 +311,23 @@ func (client *MultipleInheritanceServiceClient) putCatHandleResponse(resp *http.
 //   - options - MultipleInheritanceServiceClientPutFelineOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutFeline
 //     method.
 func (client *MultipleInheritanceServiceClient) PutFeline(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (MultipleInheritanceServiceClientPutFelineResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutFeline", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putFelineCreateRequest(ctx, feline, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutFelineResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutFelineResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientPutFelineResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientPutFelineResponse{}, err
 	}
-	return client.putFelineHandleResponse(resp)
+	resp, err := client.putFelineHandleResponse(httpResp)
+	return resp, err
 }
 
 // putFelineCreateRequest creates the PutFeline request.
@@ -326,18 +361,23 @@ func (client *MultipleInheritanceServiceClient) putFelineHandleResponse(resp *ht
 //   - options - MultipleInheritanceServiceClientPutHorseOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutHorse
 //     method.
 func (client *MultipleInheritanceServiceClient) PutHorse(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (MultipleInheritanceServiceClientPutHorseResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutHorse", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putHorseCreateRequest(ctx, horse, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutHorseResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutHorseResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientPutHorseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientPutHorseResponse{}, err
 	}
-	return client.putHorseHandleResponse(resp)
+	resp, err := client.putHorseHandleResponse(httpResp)
+	return resp, err
 }
 
 // putHorseCreateRequest creates the PutHorse request.
@@ -371,18 +411,23 @@ func (client *MultipleInheritanceServiceClient) putHorseHandleResponse(resp *htt
 //   - options - MultipleInheritanceServiceClientPutKittenOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutKitten
 //     method.
 func (client *MultipleInheritanceServiceClient) PutKitten(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (MultipleInheritanceServiceClientPutKittenResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutKitten", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putKittenCreateRequest(ctx, kitten, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutKittenResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutKittenResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientPutKittenResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientPutKittenResponse{}, err
 	}
-	return client.putKittenHandleResponse(resp)
+	resp, err := client.putKittenHandleResponse(httpResp)
+	return resp, err
 }
 
 // putKittenCreateRequest creates the PutKitten request.
@@ -416,18 +461,23 @@ func (client *MultipleInheritanceServiceClient) putKittenHandleResponse(resp *ht
 //   - options - MultipleInheritanceServiceClientPutPetOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutPet
 //     method.
 func (client *MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (MultipleInheritanceServiceClientPutPetResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "MultipleInheritanceServiceClient.PutPet", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putPetCreateRequest(ctx, pet, options)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutPetResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return MultipleInheritanceServiceClientPutPetResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleInheritanceServiceClientPutPetResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MultipleInheritanceServiceClientPutPetResponse{}, err
 	}
-	return client.putPetHandleResponse(resp)
+	resp, err := client.putPetHandleResponse(httpResp)
+	return resp, err
 }
 
 // putPetCreateRequest creates the PutPet request.

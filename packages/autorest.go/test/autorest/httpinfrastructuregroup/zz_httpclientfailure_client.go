@@ -30,16 +30,20 @@ type HTTPClientFailureClient struct {
 //   - options - HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400
 //     method.
 func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *HTTPClientFailureClientDelete400Options) (HTTPClientFailureClientDelete400Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Delete400", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete400CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientDelete400Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientDelete400Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientDelete400Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientDelete400Response{}, err
 	}
 	return HTTPClientFailureClientDelete400Response{}, nil
 }
@@ -65,16 +69,20 @@ func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Contex
 //   - options - HTTPClientFailureClientDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407
 //     method.
 func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *HTTPClientFailureClientDelete407Options) (HTTPClientFailureClientDelete407Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Delete407", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete407CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientDelete407Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientDelete407Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientDelete407Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientDelete407Response{}, err
 	}
 	return HTTPClientFailureClientDelete407Response{}, nil
 }
@@ -100,16 +108,20 @@ func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Contex
 //   - options - HTTPClientFailureClientDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417
 //     method.
 func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *HTTPClientFailureClientDelete417Options) (HTTPClientFailureClientDelete417Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Delete417", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete417CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientDelete417Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientDelete417Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientDelete417Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientDelete417Response{}, err
 	}
 	return HTTPClientFailureClientDelete417Response{}, nil
 }
@@ -135,16 +147,20 @@ func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Contex
 //   - options - HTTPClientFailureClientGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400
 //     method.
 func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTPClientFailureClientGet400Options) (HTTPClientFailureClientGet400Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Get400", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get400CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientGet400Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet400Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet400Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientGet400Response{}, err
 	}
 	return HTTPClientFailureClientGet400Response{}, nil
 }
@@ -167,16 +183,20 @@ func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402
 //     method.
 func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTPClientFailureClientGet402Options) (HTTPClientFailureClientGet402Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Get402", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get402CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientGet402Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet402Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet402Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientGet402Response{}, err
 	}
 	return HTTPClientFailureClientGet402Response{}, nil
 }
@@ -199,16 +219,20 @@ func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403
 //     method.
 func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTPClientFailureClientGet403Options) (HTTPClientFailureClientGet403Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Get403", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get403CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientGet403Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet403Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet403Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientGet403Response{}, err
 	}
 	return HTTPClientFailureClientGet403Response{}, nil
 }
@@ -231,16 +255,20 @@ func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411
 //     method.
 func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTPClientFailureClientGet411Options) (HTTPClientFailureClientGet411Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Get411", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get411CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientGet411Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet411Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet411Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientGet411Response{}, err
 	}
 	return HTTPClientFailureClientGet411Response{}, nil
 }
@@ -263,16 +291,20 @@ func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412
 //     method.
 func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTPClientFailureClientGet412Options) (HTTPClientFailureClientGet412Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Get412", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get412CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientGet412Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet412Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet412Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientGet412Response{}, err
 	}
 	return HTTPClientFailureClientGet412Response{}, nil
 }
@@ -295,16 +327,20 @@ func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416
 //     method.
 func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTPClientFailureClientGet416Options) (HTTPClientFailureClientGet416Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Get416", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get416CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientGet416Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientGet416Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet416Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientGet416Response{}, err
 	}
 	return HTTPClientFailureClientGet416Response{}, nil
 }
@@ -326,18 +362,22 @@ func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400
 //     method.
 func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTTPClientFailureClientHead400Options) (HTTPClientFailureClientHead400Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Head400", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head400CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientHead400Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead400Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientHead400Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientHead400Response{}, err
 	}
-	return HTTPClientFailureClientHead400Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPClientFailureClientHead400Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head400CreateRequest creates the Head400 request.
@@ -357,18 +397,22 @@ func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context,
 //   - options - HTTPClientFailureClientHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401
 //     method.
 func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTTPClientFailureClientHead401Options) (HTTPClientFailureClientHead401Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Head401", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head401CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientHead401Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead401Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientHead401Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientHead401Response{}, err
 	}
-	return HTTPClientFailureClientHead401Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPClientFailureClientHead401Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head401CreateRequest creates the Head401 request.
@@ -388,18 +432,22 @@ func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context,
 //   - options - HTTPClientFailureClientHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410
 //     method.
 func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTTPClientFailureClientHead410Options) (HTTPClientFailureClientHead410Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Head410", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head410CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientHead410Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead410Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientHead410Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientHead410Response{}, err
 	}
-	return HTTPClientFailureClientHead410Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPClientFailureClientHead410Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head410CreateRequest creates the Head410 request.
@@ -419,18 +467,22 @@ func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context,
 //   - options - HTTPClientFailureClientHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429
 //     method.
 func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTTPClientFailureClientHead429Options) (HTTPClientFailureClientHead429Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Head429", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head429CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientHead429Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientHead429Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientHead429Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientHead429Response{}, err
 	}
-	return HTTPClientFailureClientHead429Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPClientFailureClientHead429Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head429CreateRequest creates the Head429 request.
@@ -451,16 +503,20 @@ func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context,
 //   - options - HTTPClientFailureClientOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400
 //     method.
 func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *HTTPClientFailureClientOptions400Options) (HTTPClientFailureClientOptions400Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Options400", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.options400CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientOptions400Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientOptions400Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientOptions400Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientOptions400Response{}, err
 	}
 	return HTTPClientFailureClientOptions400Response{}, nil
 }
@@ -483,16 +539,20 @@ func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Conte
 //   - options - HTTPClientFailureClientOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403
 //     method.
 func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *HTTPClientFailureClientOptions403Options) (HTTPClientFailureClientOptions403Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Options403", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.options403CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientOptions403Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientOptions403Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientOptions403Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientOptions403Response{}, err
 	}
 	return HTTPClientFailureClientOptions403Response{}, nil
 }
@@ -515,16 +575,20 @@ func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Conte
 //   - options - HTTPClientFailureClientOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412
 //     method.
 func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *HTTPClientFailureClientOptions412Options) (HTTPClientFailureClientOptions412Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Options412", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.options412CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientOptions412Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientOptions412Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientOptions412Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientOptions412Response{}, err
 	}
 	return HTTPClientFailureClientOptions412Response{}, nil
 }
@@ -547,16 +611,20 @@ func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Conte
 //   - options - HTTPClientFailureClientPatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400
 //     method.
 func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HTTPClientFailureClientPatch400Options) (HTTPClientFailureClientPatch400Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Patch400", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch400CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPatch400Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPatch400Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPatch400Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPatch400Response{}, err
 	}
 	return HTTPClientFailureClientPatch400Response{}, nil
 }
@@ -582,16 +650,20 @@ func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context
 //   - options - HTTPClientFailureClientPatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405
 //     method.
 func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HTTPClientFailureClientPatch405Options) (HTTPClientFailureClientPatch405Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Patch405", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch405CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPatch405Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPatch405Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPatch405Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPatch405Response{}, err
 	}
 	return HTTPClientFailureClientPatch405Response{}, nil
 }
@@ -617,16 +689,20 @@ func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context
 //   - options - HTTPClientFailureClientPatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414
 //     method.
 func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HTTPClientFailureClientPatch414Options) (HTTPClientFailureClientPatch414Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Patch414", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch414CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPatch414Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPatch414Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPatch414Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPatch414Response{}, err
 	}
 	return HTTPClientFailureClientPatch414Response{}, nil
 }
@@ -652,16 +728,20 @@ func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context
 //   - options - HTTPClientFailureClientPost400Options contains the optional parameters for the HTTPClientFailureClient.Post400
 //     method.
 func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTTPClientFailureClientPost400Options) (HTTPClientFailureClientPost400Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Post400", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post400CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPost400Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPost400Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPost400Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPost400Response{}, err
 	}
 	return HTTPClientFailureClientPost400Response{}, nil
 }
@@ -687,16 +767,20 @@ func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context,
 //   - options - HTTPClientFailureClientPost406Options contains the optional parameters for the HTTPClientFailureClient.Post406
 //     method.
 func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTTPClientFailureClientPost406Options) (HTTPClientFailureClientPost406Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Post406", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post406CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPost406Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPost406Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPost406Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPost406Response{}, err
 	}
 	return HTTPClientFailureClientPost406Response{}, nil
 }
@@ -722,16 +806,20 @@ func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context,
 //   - options - HTTPClientFailureClientPost415Options contains the optional parameters for the HTTPClientFailureClient.Post415
 //     method.
 func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTTPClientFailureClientPost415Options) (HTTPClientFailureClientPost415Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Post415", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post415CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPost415Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPost415Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPost415Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPost415Response{}, err
 	}
 	return HTTPClientFailureClientPost415Response{}, nil
 }
@@ -757,16 +845,20 @@ func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context,
 //   - options - HTTPClientFailureClientPut400Options contains the optional parameters for the HTTPClientFailureClient.Put400
 //     method.
 func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTPClientFailureClientPut400Options) (HTTPClientFailureClientPut400Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Put400", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put400CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPut400Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut400Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut400Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPut400Response{}, err
 	}
 	return HTTPClientFailureClientPut400Response{}, nil
 }
@@ -792,16 +884,20 @@ func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientPut404Options contains the optional parameters for the HTTPClientFailureClient.Put404
 //     method.
 func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTPClientFailureClientPut404Options) (HTTPClientFailureClientPut404Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Put404", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put404CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPut404Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut404Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut404Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPut404Response{}, err
 	}
 	return HTTPClientFailureClientPut404Response{}, nil
 }
@@ -827,16 +923,20 @@ func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientPut409Options contains the optional parameters for the HTTPClientFailureClient.Put409
 //     method.
 func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTPClientFailureClientPut409Options) (HTTPClientFailureClientPut409Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Put409", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put409CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPut409Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut409Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut409Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPut409Response{}, err
 	}
 	return HTTPClientFailureClientPut409Response{}, nil
 }
@@ -862,16 +962,20 @@ func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, 
 //   - options - HTTPClientFailureClientPut413Options contains the optional parameters for the HTTPClientFailureClient.Put413
 //     method.
 func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTPClientFailureClientPut413Options) (HTTPClientFailureClientPut413Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPClientFailureClient.Put413", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put413CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPClientFailureClientPut413Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPClientFailureClientPut413Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut413Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPClientFailureClientPut413Response{}, err
 	}
 	return HTTPClientFailureClientPut413Response{}, nil
 }

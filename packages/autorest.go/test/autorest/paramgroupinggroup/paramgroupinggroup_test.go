@@ -14,7 +14,9 @@ import (
 )
 
 func newParameterGroupingClient(t *testing.T) *ParameterGroupingClient {
-	client, err := NewParameterGroupingClient(nil)
+	client, err := NewParameterGroupingClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

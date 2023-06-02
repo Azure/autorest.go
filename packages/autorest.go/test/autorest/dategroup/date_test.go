@@ -16,7 +16,9 @@ import (
 )
 
 func newDateClient(t *testing.T) *DateClient {
-	client, err := NewDateClient(nil)
+	client, err := NewDateClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

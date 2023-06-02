@@ -29,16 +29,20 @@ type HTTPRetryClient struct {
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientDelete503Options contains the optional parameters for the HTTPRetryClient.Delete503 method.
 func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetryClientDelete503Options) (HTTPRetryClientDelete503Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Delete503", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delete503CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientDelete503Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientDelete503Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientDelete503Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientDelete503Response{}, err
 	}
 	return HTTPRetryClientDelete503Response{}, nil
 }
@@ -63,16 +67,20 @@ func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, optio
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientGet502Options contains the optional parameters for the HTTPRetryClient.Get502 method.
 func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryClientGet502Options) (HTTPRetryClientGet502Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Get502", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.get502CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientGet502Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientGet502Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientGet502Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientGet502Response{}, err
 	}
 	return HTTPRetryClientGet502Response{}, nil
 }
@@ -93,18 +101,22 @@ func (client *HTTPRetryClient) get502CreateRequest(ctx context.Context, options 
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientHead408Options contains the optional parameters for the HTTPRetryClient.Head408 method.
 func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryClientHead408Options) (HTTPRetryClientHead408Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Head408", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.head408CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientHead408Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientHead408Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientHead408Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientHead408Response{}, err
 	}
-	return HTTPRetryClientHead408Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
+	return HTTPRetryClientHead408Response{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // head408CreateRequest creates the Head408 request.
@@ -124,18 +136,23 @@ func (client *HTTPRetryClient) head408CreateRequest(ctx context.Context, options
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientOptions502Options contains the optional parameters for the HTTPRetryClient.Options502 method.
 func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetryClientOptions502Options) (HTTPRetryClientOptions502Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Options502", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.options502CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientOptions502Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientOptions502Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientOptions502Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientOptions502Response{}, err
 	}
-	return client.options502HandleResponse(resp)
+	resp, err := client.options502HandleResponse(httpResp)
+	return resp, err
 }
 
 // options502CreateRequest creates the Options502 request.
@@ -164,16 +181,20 @@ func (client *HTTPRetryClient) options502HandleResponse(resp *http.Response) (HT
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientPatch500Options contains the optional parameters for the HTTPRetryClient.Patch500 method.
 func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryClientPatch500Options) (HTTPRetryClientPatch500Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Patch500", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch500CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientPatch500Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPatch500Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientPatch500Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientPatch500Response{}, err
 	}
 	return HTTPRetryClientPatch500Response{}, nil
 }
@@ -198,16 +219,20 @@ func (client *HTTPRetryClient) patch500CreateRequest(ctx context.Context, option
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientPatch504Options contains the optional parameters for the HTTPRetryClient.Patch504 method.
 func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryClientPatch504Options) (HTTPRetryClientPatch504Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Patch504", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patch504CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientPatch504Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPatch504Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientPatch504Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientPatch504Response{}, err
 	}
 	return HTTPRetryClientPatch504Response{}, nil
 }
@@ -232,16 +257,20 @@ func (client *HTTPRetryClient) patch504CreateRequest(ctx context.Context, option
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientPost503Options contains the optional parameters for the HTTPRetryClient.Post503 method.
 func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryClientPost503Options) (HTTPRetryClientPost503Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Post503", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.post503CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientPost503Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPost503Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientPost503Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientPost503Response{}, err
 	}
 	return HTTPRetryClientPost503Response{}, nil
 }
@@ -266,16 +295,20 @@ func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientPut500Options contains the optional parameters for the HTTPRetryClient.Put500 method.
 func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryClientPut500Options) (HTTPRetryClientPut500Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Put500", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put500CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientPut500Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPut500Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientPut500Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientPut500Response{}, err
 	}
 	return HTTPRetryClientPut500Response{}, nil
 }
@@ -300,16 +333,20 @@ func (client *HTTPRetryClient) put500CreateRequest(ctx context.Context, options 
 // Generated from API version 1.0.0
 //   - options - HTTPRetryClientPut504Options contains the optional parameters for the HTTPRetryClient.Put504 method.
 func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryClientPut504Options) (HTTPRetryClientPut504Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRetryClient.Put504", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.put504CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRetryClientPut504Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return HTTPRetryClientPut504Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRetryClientPut504Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return HTTPRetryClientPut504Response{}, err
 	}
 	return HTTPRetryClientPut504Response{}, nil
 }

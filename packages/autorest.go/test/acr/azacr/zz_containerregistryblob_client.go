@@ -38,16 +38,20 @@ type ContainerRegistryBlobClient struct {
 //   - options - ContainerRegistryBlobClientCancelUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CancelUpload
 //     method.
 func (client *ContainerRegistryBlobClient) CancelUpload(ctx context.Context, location string, options *ContainerRegistryBlobClientCancelUploadOptions) (ContainerRegistryBlobClientCancelUploadResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CancelUpload", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.cancelUploadCreateRequest(ctx, location, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCancelUploadResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCancelUploadResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ContainerRegistryBlobClientCancelUploadResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientCancelUploadResponse{}, err
 	}
 	return ContainerRegistryBlobClientCancelUploadResponse{}, nil
 }
@@ -73,18 +77,23 @@ func (client *ContainerRegistryBlobClient) cancelUploadCreateRequest(ctx context
 //   - options - ContainerRegistryBlobClientCheckBlobExistsOptions contains the optional parameters for the ContainerRegistryBlobClient.CheckBlobExists
 //     method.
 func (client *ContainerRegistryBlobClient) CheckBlobExists(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientCheckBlobExistsOptions) (ContainerRegistryBlobClientCheckBlobExistsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CheckBlobExists", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.checkBlobExistsCreateRequest(ctx, name, digest, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckBlobExistsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckBlobExistsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainerRegistryBlobClientCheckBlobExistsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientCheckBlobExistsResponse{}, err
 	}
-	return client.checkBlobExistsHandleResponse(resp)
+	resp, err := client.checkBlobExistsHandleResponse(httpResp)
+	return resp, err
 }
 
 // checkBlobExistsCreateRequest creates the CheckBlobExists request.
@@ -132,18 +141,23 @@ func (client *ContainerRegistryBlobClient) checkBlobExistsHandleResponse(resp *h
 //   - options - ContainerRegistryBlobClientCheckChunkExistsOptions contains the optional parameters for the ContainerRegistryBlobClient.CheckChunkExists
 //     method.
 func (client *ContainerRegistryBlobClient) CheckChunkExists(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientCheckChunkExistsOptions) (ContainerRegistryBlobClientCheckChunkExistsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CheckChunkExists", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.checkChunkExistsCreateRequest(ctx, name, digest, rangeParam, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckChunkExistsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCheckChunkExistsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainerRegistryBlobClientCheckChunkExistsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientCheckChunkExistsResponse{}, err
 	}
-	return client.checkChunkExistsHandleResponse(resp)
+	resp, err := client.checkChunkExistsHandleResponse(httpResp)
+	return resp, err
 }
 
 // checkChunkExistsCreateRequest creates the CheckChunkExists request.
@@ -193,18 +207,23 @@ func (client *ContainerRegistryBlobClient) checkChunkExistsHandleResponse(resp *
 //   - options - ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CompleteUpload
 //     method.
 func (client *ContainerRegistryBlobClient) CompleteUpload(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CompleteUpload", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.completeUploadCreateRequest(ctx, digest, location, value, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCompleteUploadResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientCompleteUploadResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return ContainerRegistryBlobClientCompleteUploadResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientCompleteUploadResponse{}, err
 	}
-	return client.completeUploadHandleResponse(resp)
+	resp, err := client.completeUploadHandleResponse(httpResp)
+	return resp, err
 }
 
 // completeUploadCreateRequest creates the CompleteUpload request.
@@ -249,18 +268,23 @@ func (client *ContainerRegistryBlobClient) completeUploadHandleResponse(resp *ht
 //   - options - ContainerRegistryBlobClientDeleteBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.DeleteBlob
 //     method.
 func (client *ContainerRegistryBlobClient) DeleteBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientDeleteBlobOptions) (ContainerRegistryBlobClientDeleteBlobResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.DeleteBlob", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteBlobCreateRequest(ctx, name, digest, options)
 	if err != nil {
 		return ContainerRegistryBlobClientDeleteBlobResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientDeleteBlobResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ContainerRegistryBlobClientDeleteBlobResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientDeleteBlobResponse{}, err
 	}
-	return client.deleteBlobHandleResponse(resp)
+	resp, err := client.deleteBlobHandleResponse(httpResp)
+	return resp, err
 }
 
 // deleteBlobCreateRequest creates the DeleteBlob request.
@@ -301,18 +325,23 @@ func (client *ContainerRegistryBlobClient) deleteBlobHandleResponse(resp *http.R
 //   - options - ContainerRegistryBlobClientGetBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.GetBlob
 //     method.
 func (client *ContainerRegistryBlobClient) GetBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientGetBlobOptions) (ContainerRegistryBlobClientGetBlobResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.GetBlob", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBlobCreateRequest(ctx, name, digest, options)
 	if err != nil {
 		return ContainerRegistryBlobClientGetBlobResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientGetBlobResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainerRegistryBlobClientGetBlobResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientGetBlobResponse{}, err
 	}
-	return client.getBlobHandleResponse(resp)
+	resp, err := client.getBlobHandleResponse(httpResp)
+	return resp, err
 }
 
 // getBlobCreateRequest creates the GetBlob request.
@@ -363,18 +392,23 @@ func (client *ContainerRegistryBlobClient) getBlobHandleResponse(resp *http.Resp
 //   - options - ContainerRegistryBlobClientGetChunkOptions contains the optional parameters for the ContainerRegistryBlobClient.GetChunk
 //     method.
 func (client *ContainerRegistryBlobClient) GetChunk(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientGetChunkOptions) (ContainerRegistryBlobClientGetChunkResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.GetChunk", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getChunkCreateRequest(ctx, name, digest, rangeParam, options)
 	if err != nil {
 		return ContainerRegistryBlobClientGetChunkResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientGetChunkResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusPartialContent) {
-		return ContainerRegistryBlobClientGetChunkResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusPartialContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientGetChunkResponse{}, err
 	}
-	return client.getChunkHandleResponse(resp)
+	resp, err := client.getChunkHandleResponse(httpResp)
+	return resp, err
 }
 
 // getChunkCreateRequest creates the GetChunk request.
@@ -423,18 +457,23 @@ func (client *ContainerRegistryBlobClient) getChunkHandleResponse(resp *http.Res
 //   - options - ContainerRegistryBlobClientGetUploadStatusOptions contains the optional parameters for the ContainerRegistryBlobClient.GetUploadStatus
 //     method.
 func (client *ContainerRegistryBlobClient) GetUploadStatus(ctx context.Context, location string, options *ContainerRegistryBlobClientGetUploadStatusOptions) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.GetUploadStatus", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUploadStatusCreateRequest(ctx, location, options)
 	if err != nil {
 		return ContainerRegistryBlobClientGetUploadStatusResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientGetUploadStatusResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ContainerRegistryBlobClientGetUploadStatusResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientGetUploadStatusResponse{}, err
 	}
-	return client.getUploadStatusHandleResponse(resp)
+	resp, err := client.getUploadStatusHandleResponse(httpResp)
+	return resp, err
 }
 
 // getUploadStatusCreateRequest creates the GetUploadStatus request.
@@ -471,18 +510,23 @@ func (client *ContainerRegistryBlobClient) getUploadStatusHandleResponse(resp *h
 //   - options - ContainerRegistryBlobClientMountBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.MountBlob
 //     method.
 func (client *ContainerRegistryBlobClient) MountBlob(ctx context.Context, name string, from string, mount string, options *ContainerRegistryBlobClientMountBlobOptions) (ContainerRegistryBlobClientMountBlobResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.MountBlob", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.mountBlobCreateRequest(ctx, name, from, mount, options)
 	if err != nil {
 		return ContainerRegistryBlobClientMountBlobResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientMountBlobResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return ContainerRegistryBlobClientMountBlobResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientMountBlobResponse{}, err
 	}
-	return client.mountBlobHandleResponse(resp)
+	resp, err := client.mountBlobHandleResponse(httpResp)
+	return resp, err
 }
 
 // mountBlobCreateRequest creates the MountBlob request.
@@ -527,18 +571,23 @@ func (client *ContainerRegistryBlobClient) mountBlobHandleResponse(resp *http.Re
 //   - options - ContainerRegistryBlobClientStartUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.StartUpload
 //     method.
 func (client *ContainerRegistryBlobClient) StartUpload(ctx context.Context, name string, options *ContainerRegistryBlobClientStartUploadOptions) (ContainerRegistryBlobClientStartUploadResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.StartUpload", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.startUploadCreateRequest(ctx, name, options)
 	if err != nil {
 		return ContainerRegistryBlobClientStartUploadResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientStartUploadResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ContainerRegistryBlobClientStartUploadResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientStartUploadResponse{}, err
 	}
-	return client.startUploadHandleResponse(resp)
+	resp, err := client.startUploadHandleResponse(httpResp)
+	return resp, err
 }
 
 // startUploadCreateRequest creates the StartUpload request.
@@ -580,18 +629,23 @@ func (client *ContainerRegistryBlobClient) startUploadHandleResponse(resp *http.
 //   - options - ContainerRegistryBlobClientUploadChunkOptions contains the optional parameters for the ContainerRegistryBlobClient.UploadChunk
 //     method.
 func (client *ContainerRegistryBlobClient) UploadChunk(ctx context.Context, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientUploadChunkOptions) (ContainerRegistryBlobClientUploadChunkResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.UploadChunk", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.uploadChunkCreateRequest(ctx, location, value, options)
 	if err != nil {
 		return ContainerRegistryBlobClientUploadChunkResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRegistryBlobClientUploadChunkResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ContainerRegistryBlobClientUploadChunkResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return ContainerRegistryBlobClientUploadChunkResponse{}, err
 	}
-	return client.uploadChunkHandleResponse(resp)
+	resp, err := client.uploadChunkHandleResponse(httpResp)
+	return resp, err
 }
 
 // uploadChunkCreateRequest creates the UploadChunk request.

@@ -30,16 +30,20 @@ type ODataClient struct {
 // Generated from API version 2015-07-01-preview
 //   - options - ODataClientGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
 func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClientGetWithFilterOptions) (ODataClientGetWithFilterResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ODataClient.GetWithFilter", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {
 		return ODataClientGetWithFilterResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ODataClientGetWithFilterResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ODataClientGetWithFilterResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ODataClientGetWithFilterResponse{}, err
 	}
 	return ODataClientGetWithFilterResponse{}, nil
 }

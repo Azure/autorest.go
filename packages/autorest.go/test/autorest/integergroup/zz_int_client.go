@@ -30,18 +30,23 @@ type IntClient struct {
 // Generated from API version 1.0.0
 //   - options - IntClientGetInvalidOptions contains the optional parameters for the IntClient.GetInvalid method.
 func (client *IntClient) GetInvalid(ctx context.Context, options *IntClientGetInvalidOptions) (IntClientGetInvalidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetInvalid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetInvalidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetInvalidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetInvalidResponse{}, err
 	}
-	return client.getInvalidHandleResponse(resp)
+	resp, err := client.getInvalidHandleResponse(httpResp)
+	return resp, err
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -70,18 +75,23 @@ func (client *IntClient) getInvalidHandleResponse(resp *http.Response) (IntClien
 // Generated from API version 1.0.0
 //   - options - IntClientGetInvalidUnixTimeOptions contains the optional parameters for the IntClient.GetInvalidUnixTime method.
 func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntClientGetInvalidUnixTimeOptions) (IntClientGetInvalidUnixTimeResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetInvalidUnixTime", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInvalidUnixTimeCreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetInvalidUnixTimeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
-	return client.getInvalidUnixTimeHandleResponse(resp)
+	resp, err := client.getInvalidUnixTimeHandleResponse(httpResp)
+	return resp, err
 }
 
 // getInvalidUnixTimeCreateRequest creates the GetInvalidUnixTime request.
@@ -112,18 +122,23 @@ func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *http.Response) (
 // Generated from API version 1.0.0
 //   - options - IntClientGetNullOptions contains the optional parameters for the IntClient.GetNull method.
 func (client *IntClient) GetNull(ctx context.Context, options *IntClientGetNullOptions) (IntClientGetNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetNullResponse{}, err
 	}
-	return client.getNullHandleResponse(resp)
+	resp, err := client.getNullHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -152,18 +167,23 @@ func (client *IntClient) getNullHandleResponse(resp *http.Response) (IntClientGe
 // Generated from API version 1.0.0
 //   - options - IntClientGetNullUnixTimeOptions contains the optional parameters for the IntClient.GetNullUnixTime method.
 func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntClientGetNullUnixTimeOptions) (IntClientGetNullUnixTimeResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetNullUnixTime", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullUnixTimeCreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetNullUnixTimeResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetNullUnixTimeResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetNullUnixTimeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetNullUnixTimeResponse{}, err
 	}
-	return client.getNullUnixTimeHandleResponse(resp)
+	resp, err := client.getNullUnixTimeHandleResponse(httpResp)
+	return resp, err
 }
 
 // getNullUnixTimeCreateRequest creates the GetNullUnixTime request.
@@ -194,18 +214,23 @@ func (client *IntClient) getNullUnixTimeHandleResponse(resp *http.Response) (Int
 // Generated from API version 1.0.0
 //   - options - IntClientGetOverflowInt32Options contains the optional parameters for the IntClient.GetOverflowInt32 method.
 func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntClientGetOverflowInt32Options) (IntClientGetOverflowInt32Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetOverflowInt32", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getOverflowInt32CreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetOverflowInt32Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetOverflowInt32Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetOverflowInt32Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetOverflowInt32Response{}, err
 	}
-	return client.getOverflowInt32HandleResponse(resp)
+	resp, err := client.getOverflowInt32HandleResponse(httpResp)
+	return resp, err
 }
 
 // getOverflowInt32CreateRequest creates the GetOverflowInt32 request.
@@ -234,18 +259,23 @@ func (client *IntClient) getOverflowInt32HandleResponse(resp *http.Response) (In
 // Generated from API version 1.0.0
 //   - options - IntClientGetOverflowInt64Options contains the optional parameters for the IntClient.GetOverflowInt64 method.
 func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntClientGetOverflowInt64Options) (IntClientGetOverflowInt64Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetOverflowInt64", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getOverflowInt64CreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetOverflowInt64Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetOverflowInt64Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetOverflowInt64Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetOverflowInt64Response{}, err
 	}
-	return client.getOverflowInt64HandleResponse(resp)
+	resp, err := client.getOverflowInt64HandleResponse(httpResp)
+	return resp, err
 }
 
 // getOverflowInt64CreateRequest creates the GetOverflowInt64 request.
@@ -274,18 +304,23 @@ func (client *IntClient) getOverflowInt64HandleResponse(resp *http.Response) (In
 // Generated from API version 1.0.0
 //   - options - IntClientGetUnderflowInt32Options contains the optional parameters for the IntClient.GetUnderflowInt32 method.
 func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntClientGetUnderflowInt32Options) (IntClientGetUnderflowInt32Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetUnderflowInt32", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowInt32CreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetUnderflowInt32Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetUnderflowInt32Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetUnderflowInt32Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetUnderflowInt32Response{}, err
 	}
-	return client.getUnderflowInt32HandleResponse(resp)
+	resp, err := client.getUnderflowInt32HandleResponse(httpResp)
+	return resp, err
 }
 
 // getUnderflowInt32CreateRequest creates the GetUnderflowInt32 request.
@@ -314,18 +349,23 @@ func (client *IntClient) getUnderflowInt32HandleResponse(resp *http.Response) (I
 // Generated from API version 1.0.0
 //   - options - IntClientGetUnderflowInt64Options contains the optional parameters for the IntClient.GetUnderflowInt64 method.
 func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntClientGetUnderflowInt64Options) (IntClientGetUnderflowInt64Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetUnderflowInt64", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowInt64CreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetUnderflowInt64Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetUnderflowInt64Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetUnderflowInt64Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetUnderflowInt64Response{}, err
 	}
-	return client.getUnderflowInt64HandleResponse(resp)
+	resp, err := client.getUnderflowInt64HandleResponse(httpResp)
+	return resp, err
 }
 
 // getUnderflowInt64CreateRequest creates the GetUnderflowInt64 request.
@@ -354,18 +394,23 @@ func (client *IntClient) getUnderflowInt64HandleResponse(resp *http.Response) (I
 // Generated from API version 1.0.0
 //   - options - IntClientGetUnixTimeOptions contains the optional parameters for the IntClient.GetUnixTime method.
 func (client *IntClient) GetUnixTime(ctx context.Context, options *IntClientGetUnixTimeOptions) (IntClientGetUnixTimeResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.GetUnixTime", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUnixTimeCreateRequest(ctx, options)
 	if err != nil {
 		return IntClientGetUnixTimeResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientGetUnixTimeResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetUnixTimeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientGetUnixTimeResponse{}, err
 	}
-	return client.getUnixTimeHandleResponse(resp)
+	resp, err := client.getUnixTimeHandleResponse(httpResp)
+	return resp, err
 }
 
 // getUnixTimeCreateRequest creates the GetUnixTime request.
@@ -397,16 +442,20 @@ func (client *IntClient) getUnixTimeHandleResponse(resp *http.Response) (IntClie
 //   - intBody - int body
 //   - options - IntClientPutMax32Options contains the optional parameters for the IntClient.PutMax32 method.
 func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *IntClientPutMax32Options) (IntClientPutMax32Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMax32", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMax32CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return IntClientPutMax32Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMax32Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMax32Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientPutMax32Response{}, err
 	}
 	return IntClientPutMax32Response{}, nil
 }
@@ -432,16 +481,20 @@ func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int3
 //   - intBody - int body
 //   - options - IntClientPutMax64Options contains the optional parameters for the IntClient.PutMax64 method.
 func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *IntClientPutMax64Options) (IntClientPutMax64Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMax64", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMax64CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return IntClientPutMax64Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMax64Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMax64Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientPutMax64Response{}, err
 	}
 	return IntClientPutMax64Response{}, nil
 }
@@ -467,16 +520,20 @@ func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int6
 //   - intBody - int body
 //   - options - IntClientPutMin32Options contains the optional parameters for the IntClient.PutMin32 method.
 func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *IntClientPutMin32Options) (IntClientPutMin32Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMin32", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMin32CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return IntClientPutMin32Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMin32Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMin32Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientPutMin32Response{}, err
 	}
 	return IntClientPutMin32Response{}, nil
 }
@@ -502,16 +559,20 @@ func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int3
 //   - intBody - int body
 //   - options - IntClientPutMin64Options contains the optional parameters for the IntClient.PutMin64 method.
 func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *IntClientPutMin64Options) (IntClientPutMin64Response, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutMin64", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putMin64CreateRequest(ctx, intBody, options)
 	if err != nil {
 		return IntClientPutMin64Response{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutMin64Response{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMin64Response{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientPutMin64Response{}, err
 	}
 	return IntClientPutMin64Response{}, nil
 }
@@ -537,16 +598,20 @@ func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int6
 //   - intBody - int body
 //   - options - IntClientPutUnixTimeDateOptions contains the optional parameters for the IntClient.PutUnixTimeDate method.
 func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time, options *IntClientPutUnixTimeDateOptions) (IntClientPutUnixTimeDateResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "IntClient.PutUnixTimeDate", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putUnixTimeDateCreateRequest(ctx, intBody, options)
 	if err != nil {
 		return IntClientPutUnixTimeDateResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return IntClientPutUnixTimeDateResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutUnixTimeDateResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return IntClientPutUnixTimeDateResponse{}, err
 	}
 	return IntClientPutUnixTimeDateResponse{}, nil
 }

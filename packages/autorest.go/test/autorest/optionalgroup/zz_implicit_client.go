@@ -39,16 +39,20 @@ type ImplicitClient struct {
 //   - options - ImplicitClientGetOptionalGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetOptionalGlobalQuery
 //     method.
 func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitClientGetOptionalGlobalQueryOptions) (ImplicitClientGetOptionalGlobalQueryResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetOptionalGlobalQuery", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getOptionalGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
 		return ImplicitClientGetOptionalGlobalQueryResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetOptionalGlobalQueryResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientGetOptionalGlobalQueryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientGetOptionalGlobalQueryResponse{}, err
 	}
 	return ImplicitClientGetOptionalGlobalQueryResponse{}, nil
 }
@@ -76,16 +80,20 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 //   - options - ImplicitClientGetRequiredGlobalPathOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalPath
 //     method.
 func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options *ImplicitClientGetRequiredGlobalPathOptions) (ImplicitClientGetRequiredGlobalPathResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetRequiredGlobalPath", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getRequiredGlobalPathCreateRequest(ctx, options)
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalPathResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalPathResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientGetRequiredGlobalPathResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientGetRequiredGlobalPathResponse{}, err
 	}
 	return ImplicitClientGetRequiredGlobalPathResponse{}, nil
 }
@@ -112,16 +120,20 @@ func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Con
 //   - options - ImplicitClientGetRequiredGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalQuery
 //     method.
 func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, options *ImplicitClientGetRequiredGlobalQueryOptions) (ImplicitClientGetRequiredGlobalQueryResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetRequiredGlobalQuery", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getRequiredGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalQueryResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetRequiredGlobalQueryResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientGetRequiredGlobalQueryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientGetRequiredGlobalQueryResponse{}, err
 	}
 	return ImplicitClientGetRequiredGlobalQueryResponse{}, nil
 }
@@ -147,16 +159,20 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 //   - options - ImplicitClientGetRequiredPathOptions contains the optional parameters for the ImplicitClient.GetRequiredPath
 //     method.
 func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string, options *ImplicitClientGetRequiredPathOptions) (ImplicitClientGetRequiredPathResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.GetRequiredPath", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getRequiredPathCreateRequest(ctx, pathParameter, options)
 	if err != nil {
 		return ImplicitClientGetRequiredPathResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientGetRequiredPathResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientGetRequiredPathResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientGetRequiredPathResponse{}, err
 	}
 	return ImplicitClientGetRequiredPathResponse{}, nil
 }
@@ -183,16 +199,20 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 //   - options - ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
 //     method.
 func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ImplicitClientPutOptionalBinaryBodyOptions) (ImplicitClientPutOptionalBinaryBodyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalBinaryBody", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
 		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientPutOptionalBinaryBodyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
 	return ImplicitClientPutOptionalBinaryBodyResponse{}, nil
 }
@@ -218,16 +238,20 @@ func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 //   - options - ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody
 //     method.
 func (client *ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string, options *ImplicitClientPutOptionalBodyOptions) (ImplicitClientPutOptionalBodyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalBody", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putOptionalBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
 		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientPutOptionalBodyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
 	return ImplicitClientPutOptionalBodyResponse{}, nil
 }
@@ -255,16 +279,20 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 //   - options - ImplicitClientPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader
 //     method.
 func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *ImplicitClientPutOptionalHeaderOptions) (ImplicitClientPutOptionalHeaderResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalHeader", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putOptionalHeaderCreateRequest(ctx, options)
 	if err != nil {
 		return ImplicitClientPutOptionalHeaderResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalHeaderResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientPutOptionalHeaderResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientPutOptionalHeaderResponse{}, err
 	}
 	return ImplicitClientPutOptionalHeaderResponse{}, nil
 }
@@ -290,16 +318,20 @@ func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context
 //   - options - ImplicitClientPutOptionalQueryOptions contains the optional parameters for the ImplicitClient.PutOptionalQuery
 //     method.
 func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *ImplicitClientPutOptionalQueryOptions) (ImplicitClientPutOptionalQueryResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ImplicitClient.PutOptionalQuery", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putOptionalQueryCreateRequest(ctx, options)
 	if err != nil {
 		return ImplicitClientPutOptionalQueryResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ImplicitClientPutOptionalQueryResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientPutOptionalQueryResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ImplicitClientPutOptionalQueryResponse{}, err
 	}
 	return ImplicitClientPutOptionalQueryResponse{}, nil
 }

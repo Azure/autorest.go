@@ -14,7 +14,9 @@ import (
 )
 
 func newHTTPRedirectsClient(t *testing.T) *HTTPRedirectsClient {
-	client, err := NewHTTPRedirectsClient(nil)
+	client, err := NewHTTPRedirectsClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

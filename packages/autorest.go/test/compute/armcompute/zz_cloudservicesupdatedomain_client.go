@@ -58,18 +58,23 @@ func NewCloudServicesUpdateDomainClient(subscriptionID string, credential azcore
 //   - options - CloudServicesUpdateDomainClientGetUpdateDomainOptions contains the optional parameters for the CloudServicesUpdateDomainClient.GetUpdateDomain
 //     method.
 func (client *CloudServicesUpdateDomainClient) GetUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, options *CloudServicesUpdateDomainClientGetUpdateDomainOptions) (CloudServicesUpdateDomainClientGetUpdateDomainResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.GetUpdateDomain", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUpdateDomainCreateRequest(ctx, resourceGroupName, cloudServiceName, updateDomain, options)
 	if err != nil {
 		return CloudServicesUpdateDomainClientGetUpdateDomainResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return CloudServicesUpdateDomainClientGetUpdateDomainResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServicesUpdateDomainClientGetUpdateDomainResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return CloudServicesUpdateDomainClientGetUpdateDomainResponse{}, err
 	}
-	return client.getUpdateDomainHandleResponse(resp)
+	resp, err := client.getUpdateDomainHandleResponse(httpResp)
+	return resp, err
 }
 
 // getUpdateDomainCreateRequest creates the GetUpdateDomain request.
@@ -140,6 +145,7 @@ func (client *CloudServicesUpdateDomainClient) NewListUpdateDomainsPager(resourc
 			}
 			return client.listUpdateDomainsHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -191,11 +197,16 @@ func (client *CloudServicesUpdateDomainClient) listUpdateDomainsHandleResponse(r
 //     method.
 func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*runtime.Poller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse], error) {
 	if options == nil || options.ResumeToken == "" {
+		var err error
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain", client.internal.Tracer(), nil)
+		defer func() { endSpan(err) }()
 		resp, err := client.walkUpdateDomain(ctx, resourceGroupName, cloudServiceName, updateDomain, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse](resp, client.internal.Pipeline(), nil)
+		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken[CloudServicesUpdateDomainClientWalkUpdateDomainResponse](options.ResumeToken, client.internal.Pipeline(), nil)
 	}
@@ -206,18 +217,20 @@ func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context
 //
 // Generated from API version 2021-03-01
 func (client *CloudServicesUpdateDomainClient) walkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*http.Response, error) {
+	var err error
 	req, err := client.walkUpdateDomainCreateRequest(ctx, resourceGroupName, cloudServiceName, updateDomain, parameters, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
 	}
-	return resp, nil
+	return httpResp, nil
 }
 
 // walkUpdateDomainCreateRequest creates the WalkUpdateDomain request.

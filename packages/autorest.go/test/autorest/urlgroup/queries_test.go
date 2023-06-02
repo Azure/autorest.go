@@ -15,7 +15,9 @@ import (
 )
 
 func newQueriesClient(t *testing.T) *QueriesClient {
-	client, err := NewQueriesClient(nil)
+	client, err := NewQueriesClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

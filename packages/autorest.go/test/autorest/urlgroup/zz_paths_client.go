@@ -35,16 +35,20 @@ type PathsClient struct {
 //   - arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
 //   - options - PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
 func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (PathsClientArrayCSVInPathResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ArrayCSVInPath", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.arrayCSVInPathCreateRequest(ctx, arrayPath, options)
 	if err != nil {
 		return PathsClientArrayCSVInPathResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientArrayCSVInPathResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientArrayCSVInPathResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientArrayCSVInPathResponse{}, err
 	}
 	return PathsClientArrayCSVInPathResponse{}, nil
 }
@@ -68,16 +72,20 @@ func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arra
 //   - base64URLPath - base64url encoded value
 //   - options - PathsClientBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
 func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsClientBase64URLOptions) (PathsClientBase64URLResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.Base64URL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.base64URLCreateRequest(ctx, base64URLPath, options)
 	if err != nil {
 		return PathsClientBase64URLResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientBase64URLResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientBase64URLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientBase64URLResponse{}, err
 	}
 	return PathsClientBase64URLResponse{}, nil
 }
@@ -100,16 +108,20 @@ func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URL
 // Generated from API version 1.0.0
 //   - options - PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
 func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientByteEmptyOptions) (PathsClientByteEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ByteEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientByteEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientByteEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientByteEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientByteEmptyResponse{}, err
 	}
 	return PathsClientByteEmptyResponse{}, nil
 }
@@ -133,16 +145,20 @@ func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *
 //   - bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 //   - options - PathsClientByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
 func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, options *PathsClientByteMultiByteOptions) (PathsClientByteMultiByteResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ByteMultiByte", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.byteMultiByteCreateRequest(ctx, bytePath, options)
 	if err != nil {
 		return PathsClientByteMultiByteResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientByteMultiByteResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientByteMultiByteResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientByteMultiByteResponse{}, err
 	}
 	return PathsClientByteMultiByteResponse{}, nil
 }
@@ -166,16 +182,20 @@ func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, byteP
 //   - bytePath - null as byte array (should throw)
 //   - options - PathsClientByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
 func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, options *PathsClientByteNullOptions) (PathsClientByteNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.ByteNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.byteNullCreateRequest(ctx, bytePath, options)
 	if err != nil {
 		return PathsClientByteNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientByteNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientByteNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusBadRequest) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientByteNullResponse{}, err
 	}
 	return PathsClientByteNullResponse{}, nil
 }
@@ -199,16 +219,20 @@ func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath [
 //   - datePath - null as date (should throw)
 //   - options - PathsClientDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
 func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, options *PathsClientDateNullOptions) (PathsClientDateNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateNullCreateRequest(ctx, datePath, options)
 	if err != nil {
 		return PathsClientDateNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientDateNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusBadRequest) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientDateNullResponse{}, err
 	}
 	return PathsClientDateNullResponse{}, nil
 }
@@ -232,16 +256,20 @@ func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath t
 //   - dateTimePath - null as date-time
 //   - options - PathsClientDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
 func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.Time, options *PathsClientDateTimeNullOptions) (PathsClientDateTimeNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateTimeNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateTimeNullCreateRequest(ctx, dateTimePath, options)
 	if err != nil {
 		return PathsClientDateTimeNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateTimeNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientDateTimeNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusBadRequest) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientDateTimeNullResponse{}, err
 	}
 	return PathsClientDateTimeNullResponse{}, nil
 }
@@ -264,16 +292,20 @@ func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTi
 // Generated from API version 1.0.0
 //   - options - PathsClientDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
 func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClientDateTimeValidOptions) (PathsClientDateTimeValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateTimeValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientDateTimeValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateTimeValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDateTimeValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientDateTimeValidResponse{}, err
 	}
 	return PathsClientDateTimeValidResponse{}, nil
 }
@@ -296,16 +328,20 @@ func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, optio
 // Generated from API version 1.0.0
 //   - options - PathsClientDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
 func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDateValidOptions) (PathsClientDateValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DateValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientDateValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDateValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDateValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientDateValidResponse{}, err
 	}
 	return PathsClientDateValidResponse{}, nil
 }
@@ -329,16 +365,20 @@ func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *
 //   - options - PathsClientDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative
 //     method.
 func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *PathsClientDoubleDecimalNegativeOptions) (PathsClientDoubleDecimalNegativeResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DoubleDecimalNegative", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDoubleDecimalNegativeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
 	return PathsClientDoubleDecimalNegativeResponse{}, nil
 }
@@ -362,16 +402,20 @@ func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Contex
 //   - options - PathsClientDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive
 //     method.
 func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *PathsClientDoubleDecimalPositiveOptions) (PathsClientDoubleDecimalPositiveResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.DoubleDecimalPositive", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDoubleDecimalPositiveResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
 	return PathsClientDoubleDecimalPositiveResponse{}, nil
 }
@@ -395,16 +439,20 @@ func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Contex
 //   - enumPath - send null should throw
 //   - options - PathsClientEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
 func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, options *PathsClientEnumNullOptions) (PathsClientEnumNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.EnumNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.enumNullCreateRequest(ctx, enumPath, options)
 	if err != nil {
 		return PathsClientEnumNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientEnumNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientEnumNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusBadRequest) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientEnumNullResponse{}, err
 	}
 	return PathsClientEnumNullResponse{}, nil
 }
@@ -431,16 +479,20 @@ func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath U
 //   - enumPath - send the value green
 //   - options - PathsClientEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
 func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, options *PathsClientEnumValidOptions) (PathsClientEnumValidResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.EnumValid", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.enumValidCreateRequest(ctx, enumPath, options)
 	if err != nil {
 		return PathsClientEnumValidResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientEnumValidResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientEnumValidResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientEnumValidResponse{}, err
 	}
 	return PathsClientEnumValidResponse{}, nil
 }
@@ -467,16 +519,20 @@ func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath 
 //   - options - PathsClientFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative
 //     method.
 func (client *PathsClient) FloatScientificNegative(ctx context.Context, options *PathsClientFloatScientificNegativeOptions) (PathsClientFloatScientificNegativeResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.FloatScientificNegative", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientFloatScientificNegativeResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientFloatScientificNegativeResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientFloatScientificNegativeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientFloatScientificNegativeResponse{}, err
 	}
 	return PathsClientFloatScientificNegativeResponse{}, nil
 }
@@ -500,16 +556,20 @@ func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Cont
 //   - options - PathsClientFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive
 //     method.
 func (client *PathsClient) FloatScientificPositive(ctx context.Context, options *PathsClientFloatScientificPositiveOptions) (PathsClientFloatScientificPositiveResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.FloatScientificPositive", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientFloatScientificPositiveResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientFloatScientificPositiveResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientFloatScientificPositiveResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientFloatScientificPositiveResponse{}, err
 	}
 	return PathsClientFloatScientificPositiveResponse{}, nil
 }
@@ -532,16 +592,20 @@ func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Cont
 // Generated from API version 1.0.0
 //   - options - PathsClientGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
 func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsClientGetBooleanFalseOptions) (PathsClientGetBooleanFalseResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetBooleanFalse", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientGetBooleanFalseResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetBooleanFalseResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetBooleanFalseResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientGetBooleanFalseResponse{}, err
 	}
 	return PathsClientGetBooleanFalseResponse{}, nil
 }
@@ -564,16 +628,20 @@ func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, opt
 // Generated from API version 1.0.0
 //   - options - PathsClientGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
 func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsClientGetBooleanTrueOptions) (PathsClientGetBooleanTrueResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetBooleanTrue", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientGetBooleanTrueResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetBooleanTrueResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetBooleanTrueResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientGetBooleanTrueResponse{}, err
 	}
 	return PathsClientGetBooleanTrueResponse{}, nil
 }
@@ -597,16 +665,20 @@ func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, opti
 //   - options - PathsClientGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion
 //     method.
 func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsClientGetIntNegativeOneMillionOptions) (PathsClientGetIntNegativeOneMillionResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetIntNegativeOneMillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetIntNegativeOneMillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
 	return PathsClientGetIntNegativeOneMillionResponse{}, nil
 }
@@ -629,16 +701,20 @@ func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Con
 // Generated from API version 1.0.0
 //   - options - PathsClientGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
 func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsClientGetIntOneMillionOptions) (PathsClientGetIntOneMillionResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetIntOneMillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientGetIntOneMillionResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetIntOneMillionResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetIntOneMillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientGetIntOneMillionResponse{}, err
 	}
 	return PathsClientGetIntOneMillionResponse{}, nil
 }
@@ -662,16 +738,20 @@ func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, op
 //   - options - PathsClientGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion
 //     method.
 func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *PathsClientGetNegativeTenBillionOptions) (PathsClientGetNegativeTenBillionResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetNegativeTenBillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetNegativeTenBillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
 	return PathsClientGetNegativeTenBillionResponse{}, nil
 }
@@ -694,16 +774,20 @@ func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Contex
 // Generated from API version 1.0.0
 //   - options - PathsClientGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
 func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClientGetTenBillionOptions) (PathsClientGetTenBillionResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetTenBillion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientGetTenBillionResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientGetTenBillionResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetTenBillionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientGetTenBillionResponse{}, err
 	}
 	return PathsClientGetTenBillionResponse{}, nil
 }
@@ -726,16 +810,20 @@ func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, optio
 // Generated from API version 1.0.0
 //   - options - PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
 func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClientStringEmptyOptions) (PathsClientStringEmptyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringEmpty", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientStringEmptyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringEmptyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringEmptyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientStringEmptyResponse{}, err
 	}
 	return PathsClientStringEmptyResponse{}, nil
 }
@@ -759,16 +847,20 @@ func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options
 //   - stringPath - null string value
 //   - options - PathsClientStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
 func (client *PathsClient) StringNull(ctx context.Context, stringPath string, options *PathsClientStringNullOptions) (PathsClientStringNullResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringNull", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringNullCreateRequest(ctx, stringPath, options)
 	if err != nil {
 		return PathsClientStringNullResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringNullResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientStringNullResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusBadRequest) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientStringNullResponse{}, err
 	}
 	return PathsClientStringNullResponse{}, nil
 }
@@ -794,16 +886,20 @@ func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPa
 // Generated from API version 1.0.0
 //   - options - PathsClientStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
 func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsClientStringURLEncodedOptions) (PathsClientStringURLEncodedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringURLEncoded", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientStringURLEncodedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringURLEncodedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringURLEncodedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientStringURLEncodedResponse{}, err
 	}
 	return PathsClientStringURLEncodedResponse{}, nil
 }
@@ -827,16 +923,20 @@ func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, op
 //   - options - PathsClientStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded
 //     method.
 func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsClientStringURLNonEncodedOptions) (PathsClientStringURLNonEncodedResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringURLNonEncoded", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringURLNonEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientStringURLNonEncodedResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringURLNonEncodedResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringURLNonEncodedResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientStringURLNonEncodedResponse{}, err
 	}
 	return PathsClientStringURLNonEncodedResponse{}, nil
 }
@@ -859,16 +959,20 @@ func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context,
 // Generated from API version 1.0.0
 //   - options - PathsClientStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
 func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClientStringUnicodeOptions) (PathsClientStringUnicodeResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.StringUnicode", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
 		return PathsClientStringUnicodeResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientStringUnicodeResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringUnicodeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientStringUnicodeResponse{}, err
 	}
 	return PathsClientStringUnicodeResponse{}, nil
 }
@@ -892,16 +996,20 @@ func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, optio
 //   - unixTimeURLPath - Unix time encoded value
 //   - options - PathsClientUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
 func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsClientUnixTimeURLOptions) (PathsClientUnixTimeURLResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.UnixTimeURL", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimeURLCreateRequest(ctx, unixTimeURLPath, options)
 	if err != nil {
 		return PathsClientUnixTimeURLResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return PathsClientUnixTimeURLResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientUnixTimeURLResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return PathsClientUnixTimeURLResponse{}, err
 	}
 	return PathsClientUnixTimeURLResponse{}, nil
 }

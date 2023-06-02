@@ -23,6 +23,7 @@ import (
 func newLROSClient(t *testing.T) *LROsClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
+	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
 	client, err := NewLROsClient(&options)
 	require.NoError(t, err)

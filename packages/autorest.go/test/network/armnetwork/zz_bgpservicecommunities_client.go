@@ -75,6 +75,7 @@ func (client *BgpServiceCommunitiesClient) NewListPager(options *BgpServiceCommu
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

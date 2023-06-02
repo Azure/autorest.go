@@ -36,16 +36,18 @@ type TriggerRunClient struct {
 //   - options - TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
 //     method.
 func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (TriggerRunClientCancelTriggerInstanceResponse, error) {
+	var err error
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
 		return TriggerRunClientCancelTriggerInstanceResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return TriggerRunClientCancelTriggerInstanceResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggerRunClientCancelTriggerInstanceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return TriggerRunClientCancelTriggerInstanceResponse{}, err
 	}
 	return TriggerRunClientCancelTriggerInstanceResponse{}, nil
 }
@@ -80,18 +82,21 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 //   - options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
 //     method.
 func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
+	var err error
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
 	}
-	return client.queryTriggerRunsByWorkspaceHandleResponse(resp)
+	resp, err := client.queryTriggerRunsByWorkspaceHandleResponse(httpResp)
+	return resp, err
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
@@ -129,16 +134,18 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 //   - options - TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
 //     method.
 func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (TriggerRunClientRerunTriggerInstanceResponse, error) {
+	var err error
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
 		return TriggerRunClientRerunTriggerInstanceResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return TriggerRunClientRerunTriggerInstanceResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggerRunClientRerunTriggerInstanceResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return TriggerRunClientRerunTriggerInstanceResponse{}, err
 	}
 	return TriggerRunClientRerunTriggerInstanceResponse{}, nil
 }

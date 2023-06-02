@@ -29,18 +29,22 @@ type FilesClient struct {
 // Generated from API version 1.0.0
 //   - options - FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClientGetEmptyFileOptions) (FilesClientGetEmptyFileResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "FilesClient.GetEmptyFile", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
 		return FilesClientGetEmptyFileResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FilesClientGetEmptyFileResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesClientGetEmptyFileResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return FilesClientGetEmptyFileResponse{}, err
 	}
-	return FilesClientGetEmptyFileResponse{Body: resp.Body}, nil
+	return FilesClientGetEmptyFileResponse{Body: httpResp.Body}, nil
 }
 
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
@@ -61,18 +65,22 @@ func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, option
 // Generated from API version 1.0.0
 //   - options - FilesClientGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
 func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetFileOptions) (FilesClientGetFileResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "FilesClient.GetFile", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFileCreateRequest(ctx, options)
 	if err != nil {
 		return FilesClientGetFileResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FilesClientGetFileResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesClientGetFileResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return FilesClientGetFileResponse{}, err
 	}
-	return FilesClientGetFileResponse{Body: resp.Body}, nil
+	return FilesClientGetFileResponse{Body: httpResp.Body}, nil
 }
 
 // getFileCreateRequest creates the GetFile request.
@@ -93,18 +101,22 @@ func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *Fi
 // Generated from API version 1.0.0
 //   - options - FilesClientGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
 func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClientGetFileLargeOptions) (FilesClientGetFileLargeResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "FilesClient.GetFileLarge", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFileLargeCreateRequest(ctx, options)
 	if err != nil {
 		return FilesClientGetFileLargeResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return FilesClientGetFileLargeResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesClientGetFileLargeResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return FilesClientGetFileLargeResponse{}, err
 	}
-	return FilesClientGetFileLargeResponse{Body: resp.Body}, nil
+	return FilesClientGetFileLargeResponse{Body: httpResp.Body}, nil
 }
 
 // getFileLargeCreateRequest creates the GetFileLarge request.

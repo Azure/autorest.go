@@ -18,7 +18,9 @@ import (
 )
 
 func newPrimitiveClient(t *testing.T) *PrimitiveClient {
-	client, err := NewPrimitiveClient(nil)
+	client, err := NewPrimitiveClient(&azcore.ClientOptions{
+		TracingProvider: generatortests.NewTracingProvider(t),
+	})
 	require.NoError(t, err)
 	return client
 }

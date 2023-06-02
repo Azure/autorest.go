@@ -55,18 +55,23 @@ func NewCloudServiceOperatingSystemsClient(subscriptionID string, credential azc
 //   - options - CloudServiceOperatingSystemsClientGetOSFamilyOptions contains the optional parameters for the CloudServiceOperatingSystemsClient.GetOSFamily
 //     method.
 func (client *CloudServiceOperatingSystemsClient) GetOSFamily(ctx context.Context, location string, osFamilyName string, options *CloudServiceOperatingSystemsClientGetOSFamilyOptions) (CloudServiceOperatingSystemsClientGetOSFamilyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceOperatingSystemsClient.GetOSFamily", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getOSFamilyCreateRequest(ctx, location, osFamilyName, options)
 	if err != nil {
 		return CloudServiceOperatingSystemsClientGetOSFamilyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return CloudServiceOperatingSystemsClientGetOSFamilyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServiceOperatingSystemsClientGetOSFamilyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return CloudServiceOperatingSystemsClientGetOSFamilyResponse{}, err
 	}
-	return client.getOSFamilyHandleResponse(resp)
+	resp, err := client.getOSFamilyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getOSFamilyCreateRequest creates the GetOSFamily request.
@@ -114,18 +119,23 @@ func (client *CloudServiceOperatingSystemsClient) getOSFamilyHandleResponse(resp
 //   - options - CloudServiceOperatingSystemsClientGetOSVersionOptions contains the optional parameters for the CloudServiceOperatingSystemsClient.GetOSVersion
 //     method.
 func (client *CloudServiceOperatingSystemsClient) GetOSVersion(ctx context.Context, location string, osVersionName string, options *CloudServiceOperatingSystemsClientGetOSVersionOptions) (CloudServiceOperatingSystemsClientGetOSVersionResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceOperatingSystemsClient.GetOSVersion", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getOSVersionCreateRequest(ctx, location, osVersionName, options)
 	if err != nil {
 		return CloudServiceOperatingSystemsClientGetOSVersionResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return CloudServiceOperatingSystemsClientGetOSVersionResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CloudServiceOperatingSystemsClientGetOSVersionResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return CloudServiceOperatingSystemsClientGetOSVersionResponse{}, err
 	}
-	return client.getOSVersionHandleResponse(resp)
+	resp, err := client.getOSVersionHandleResponse(httpResp)
+	return resp, err
 }
 
 // getOSVersionCreateRequest creates the GetOSVersion request.
@@ -196,6 +206,7 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSFamiliesPager(locatio
 			}
 			return client.listOSFamiliesHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -263,6 +274,7 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSVersionsPager(locatio
 			}
 			return client.listOSVersionsHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

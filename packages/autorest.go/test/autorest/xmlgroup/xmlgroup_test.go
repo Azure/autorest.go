@@ -30,6 +30,7 @@ func newXMLClient(t *testing.T) *XMLClient {
 		Logging: policy.LogOptions{
 			IncludeBody: true,
 		},
+		TracingProvider: generatortests.NewTracingProvider(t),
 	}
 	client, err := NewXMLClient(&options)
 	require.NoError(t, err)

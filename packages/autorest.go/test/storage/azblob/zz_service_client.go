@@ -39,18 +39,23 @@ type ServiceClient struct {
 //   - comp - comp
 //   - options - ServiceClientFilterBlobsOptions contains the optional parameters for the ServiceClient.FilterBlobs method.
 func (client *ServiceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.FilterBlobs", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
 		return ServiceClientFilterBlobsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientFilterBlobsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientFilterBlobsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ServiceClientFilterBlobsResponse{}, err
 	}
-	return client.filterBlobsHandleResponse(resp)
+	resp, err := client.filterBlobsHandleResponse(httpResp)
+	return resp, err
 }
 
 // filterBlobsCreateRequest creates the FilterBlobs request.
@@ -118,18 +123,23 @@ func (client *ServiceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 //   - comp - comp
 //   - options - ServiceClientGetAccountInfoOptions contains the optional parameters for the ServiceClient.GetAccountInfo method.
 func (client *ServiceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ServiceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetAccountInfo", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceClientGetAccountInfoResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientGetAccountInfoResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ServiceClientGetAccountInfoResponse{}, err
 	}
-	return client.getAccountInfoHandleResponse(resp)
+	resp, err := client.getAccountInfoHandleResponse(httpResp)
+	return resp, err
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
@@ -191,18 +201,23 @@ func (client *ServiceClient) getAccountInfoHandleResponse(resp *http.Response) (
 //   - comp - comp
 //   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
 func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceClientGetPropertiesResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientGetPropertiesResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ServiceClientGetPropertiesResponse{}, err
 	}
-	return client.getPropertiesHandleResponse(resp)
+	resp, err := client.getPropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -253,18 +268,23 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 //   - comp - comp
 //   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
 func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetStatistics", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceClientGetStatisticsResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientGetStatisticsResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetStatisticsResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ServiceClientGetStatisticsResponse{}, err
 	}
-	return client.getStatisticsHandleResponse(resp)
+	resp, err := client.getStatisticsHandleResponse(httpResp)
+	return resp, err
 }
 
 // getStatisticsCreateRequest creates the GetStatistics request.
@@ -324,18 +344,23 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 //   - options - ServiceClientGetUserDelegationKeyOptions contains the optional parameters for the ServiceClient.GetUserDelegationKey
 //     method.
 func (client *ServiceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceClientGetUserDelegationKeyOptions) (ServiceClientGetUserDelegationKeyResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetUserDelegationKey", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
 	if err != nil {
 		return ServiceClientGetUserDelegationKeyResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientGetUserDelegationKeyResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetUserDelegationKeyResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ServiceClientGetUserDelegationKeyResponse{}, err
 	}
-	return client.getUserDelegationKeyHandleResponse(resp)
+	resp, err := client.getUserDelegationKeyHandleResponse(httpResp)
+	return resp, err
 }
 
 // getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
@@ -419,6 +444,7 @@ func (client *ServiceClient) NewListContainersSegmentPager(comp Enum5, options *
 			}
 			return client.listContainersSegmentHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -482,18 +508,23 @@ func (client *ServiceClient) listContainersSegmentHandleResponse(resp *http.Resp
 //   - storageServiceProperties - The StorageService properties.
 //   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.SetProperties", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
 		return ServiceClientSetPropertiesResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientSetPropertiesResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ServiceClientSetPropertiesResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return ServiceClientSetPropertiesResponse{}, err
 	}
-	return client.setPropertiesHandleResponse(resp)
+	resp, err := client.setPropertiesHandleResponse(httpResp)
+	return resp, err
 }
 
 // setPropertiesCreateRequest creates the SetProperties request.
@@ -546,18 +577,23 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (S
 //   - body - Initial data
 //   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the ServiceClient.SubmitBatch method.
 func (client *ServiceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.SubmitBatch", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {
 		return ServiceClientSubmitBatchResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return ServiceClientSubmitBatchResponse{}, err
 	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientSubmitBatchResponse{}, runtime.NewResponseError(resp)
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ServiceClientSubmitBatchResponse{}, err
 	}
-	return client.submitBatchHandleResponse(resp)
+	resp, err := client.submitBatchHandleResponse(httpResp)
+	return resp, err
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.

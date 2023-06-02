@@ -158,6 +158,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
 
     // generate operations
+    const injectSpans = await session.getValue('inject-spans', false);
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
@@ -165,9 +166,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // it must be done before the imports are written out
       if (isLROOperation(op)) {
         // generate Begin method
-        opText += generateLROBeginMethod(op, imports);
+        opText += generateLROBeginMethod(op, injectSpans, imports);
       }
-      opText += generateOperation(op, imports);
+      opText += generateOperation(op, injectSpans, imports);
       opText += createProtocolRequest(group, op, imports);
       if (!isLROOperation(op) || isPageableOperation(op)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
@@ -300,7 +301,7 @@ function responseHasHeaders(op: Operation): boolean {
   return false;
 }
 
-function emitPagerDefinition(op: Operation, imports: ImportManager): string {
+function emitPagerDefinition(op: Operation, injectSpans: boolean, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const nextLink = op.language.go!.paging.nextLinkName;
   imports.add('context');
@@ -362,6 +363,9 @@ function emitPagerDefinition(op: Operation, imports: ImportManager): string {
   text += '\t\t\t}\n';
   text += `\t\t\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
   text += '\t\t},\n';
+  if (injectSpans) {
+    text += '\t\tTracer: client.internal.Tracer(),\n';
+  }
   text += `\t})\n`;
   return text;
 }
@@ -377,7 +381,7 @@ function genApiVersionDoc(apiVersions?: ApiVersions): string {
   return `//\n// Generated from API version ${versions.join(',')}\n`;
 }
 
-function generateOperation(op: Operation, imports: ImportManager): string {
+function generateOperation(op: Operation, injectSpans: boolean, imports: ImportManager): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
@@ -410,33 +414,40 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     text += '\treturn ';
-    text += emitPagerDefinition(op, imports);
+    text += emitPagerDefinition(op, injectSpans, imports);
     text += '}\n\n';
     return text;
+  }
+  text += '\tvar err error\n';
+  if (!isLROOperation(op) && injectSpans) {
+    text += `\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.${opName}", client.internal.Tracer(), nil)\n`;
+    text += '\tdefer func() { endSpan(err) }()\n';
   }
   const zeroResp = getZeroReturnValue(op, 'op');
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  text += `\tresp, err := client.internal.Pipeline().Do(req)\n`;
+  text += `\thttpResp, err := client.internal.Pipeline().Do(req)\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  text += `\tif !runtime.HasStatusCode(resp, ${formatStatusCodes(statusCodes)}) {\n`;
-  text += `\t\treturn ${zeroResp}, runtime.NewResponseError(resp)\n`;
+  text += `\tif !runtime.HasStatusCode(httpResp, ${formatStatusCodes(statusCodes)}) {\n`;
+  text += '\t\terr = runtime.NewResponseError(httpResp)\n';
+  text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
   // HAB with headers response is handled in protocol responder
   if (op.language.go!.headAsBoolean && !responseHasHeaders(op)) {
-    text += `\treturn ${getResponseEnvelopeName(op)}{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil\n`;
+    text += `\treturn ${getResponseEnvelopeName(op)}{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
   } else {
     if (isLROOperation(op)) {
-      text += '\t return resp, nil\n';
+      text += '\treturn httpResp, nil\n';
     } else if (needsResponseHandler(op)) {
       // also cheating here as at present the only param to the responder is an http.Response
-      text += `\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
+      text += `\tresp, err := client.${info.protocolNaming.responseMethod}(httpResp)\n`;
+      text += '\treturn resp, err\n';
     } else if (isBinaryResponseOperation(op)) {
-      text += `\treturn ${getResponseEnvelopeName(op)}{Body: resp.Body}, nil\n`;
+      text += `\treturn ${getResponseEnvelopeName(op)}{Body: httpResp.Body}, nil\n`;
     } else {
       text += `\treturn ${getResponseEnvelopeName(op)}{}, nil\n`;
     }
@@ -1128,7 +1139,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
+function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
   const returns = generateReturnsInfo(op, 'api');
@@ -1154,10 +1165,16 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
-    text += emitPagerDefinition(op, imports);
+    text += emitPagerDefinition(op, injectSpans, imports);
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';
+  text += '\t\tvar err error\n';
+  if (injectSpans) {
+    text += '\t\tvar endSpan func(error)\n';
+    text += `\t\tctx, endSpan = runtime.StartSpan(ctx, "${clientName}.Begin${op.language.go!.name}", client.internal.Tracer(), nil)\n`;
+    text += '\t\tdefer func() { endSpan(err) }()\n';
+  }
   // creating the poller from response branch
 
   let opName = op.language.go!.name;
@@ -1190,7 +1207,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
     }
   }
 
-  text += `\t\treturn runtime.NewPoller`;
+  text += `\t\tpoller, err := runtime.NewPoller`;
   if (finalStateVia === '' && pollerType === 'nil') {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
@@ -1211,6 +1228,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
     }
     text += '\t\t})\n';
   }
+  text += '\t\treturn poller, err\n';
   text += '\t} else {\n';
 
   // creating the poller from resume token branch
