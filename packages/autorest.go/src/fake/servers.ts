@@ -523,13 +523,15 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
               case SchemaType.Integer:
                 imports.add('strconv');
                 fromVar = 'parsedInt';
-                content += `\t\t${fromVar}, err := strconv.ParseInt(elements[i], 10, 32)\n`;
+                content += `\t\tvar ${fromVar} int64\n`;
+                content += `\t\t${fromVar}, err = strconv.ParseInt(elements[i], 10, 32)\n`;
                 content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
                 break;
               case SchemaType.Number:
                 imports.add('strconv');
                 fromVar = 'parsedNum';
-                content += `\t\t${fromVar}, err := strconv.ParseFloat(elements[i], 32)\n`;
+                content += `\t\tvar ${fromVar} float64\n`;
+                content += `\t\t${fromVar}, err = strconv.ParseFloat(elements[i], 32)\n`;
                 content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
                 break;
               case SchemaType.String:

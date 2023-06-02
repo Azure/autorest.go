@@ -115,7 +115,8 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	elements := strings.Split(qp.Get("groupBy"), ",")
 	groupByParam := make([]azalias.SomethingCount, len(elements))
 	for i := 0; i < len(elements); i++ {
-		parsedInt, err := strconv.ParseInt(elements[i], 10, 32)
+		var parsedInt int64
+		parsedInt, err = strconv.ParseInt(elements[i], 10, 32)
 		if err != nil {
 			return nil, err
 		}
