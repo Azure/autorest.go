@@ -138,9 +138,9 @@ func (p *PageBlobServerTransport) dispatchClearPages(req *http.Request) (*http.R
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -154,9 +154,9 @@ func (p *PageBlobServerTransport) dispatchClearPages(req *http.Request) (*http.R
 	encryptionAlgorithmParam := getOptional(getHeaderValue(req.Header, "x-ms-encryption-algorithm"))
 	encryptionScopeParam := getOptional(getHeaderValue(req.Header, "x-ms-encryption-scope"))
 	ifSequenceNumberLessThanOrEqualToParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-le"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -164,9 +164,9 @@ func (p *PageBlobServerTransport) dispatchClearPages(req *http.Request) (*http.R
 		return nil, err
 	}
 	ifSequenceNumberLessThanParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-lt"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -174,9 +174,9 @@ func (p *PageBlobServerTransport) dispatchClearPages(req *http.Request) (*http.R
 		return nil, err
 	}
 	ifSequenceNumberEqualToParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-eq"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -295,9 +295,9 @@ func (p *PageBlobServerTransport) dispatchCopyIncremental(req *http.Request) (*h
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -384,9 +384,9 @@ func (p *PageBlobServerTransport) dispatchCreate(req *http.Request) (*http.Respo
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -437,9 +437,9 @@ func (p *PageBlobServerTransport) dispatchCreate(req *http.Request) (*http.Respo
 		return nil, err
 	}
 	blobSequenceNumberParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-sequence-number"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -574,9 +574,9 @@ func (p *PageBlobServerTransport) dispatchNewGetPageRangesPager(req *http.Reques
 		qp := req.URL.Query()
 		snapshotParam := getOptional(qp.Get("snapshot"))
 		timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -599,9 +599,9 @@ func (p *PageBlobServerTransport) dispatchNewGetPageRangesPager(req *http.Reques
 		requestIDParam := getOptional(getHeaderValue(req.Header, "x-ms-client-request-id"))
 		markerParam := getOptional(qp.Get("marker"))
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -668,9 +668,9 @@ func (p *PageBlobServerTransport) dispatchNewGetPageRangesDiffPager(req *http.Re
 		qp := req.URL.Query()
 		snapshotParam := getOptional(qp.Get("snapshot"))
 		timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -695,9 +695,9 @@ func (p *PageBlobServerTransport) dispatchNewGetPageRangesDiffPager(req *http.Re
 		requestIDParam := getOptional(getHeaderValue(req.Header, "x-ms-client-request-id"))
 		markerParam := getOptional(qp.Get("marker"))
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -764,9 +764,9 @@ func (p *PageBlobServerTransport) dispatchResize(req *http.Request) (*http.Respo
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -879,9 +879,9 @@ func (p *PageBlobServerTransport) dispatchUpdateSequenceNumber(req *http.Request
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -901,9 +901,9 @@ func (p *PageBlobServerTransport) dispatchUpdateSequenceNumber(req *http.Request
 	ifNoneMatchParam := getOptional(getHeaderValue(req.Header, "If-None-Match"))
 	ifTagsParam := getOptional(getHeaderValue(req.Header, "x-ms-if-tags"))
 	blobSequenceNumberParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-sequence-number"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -995,9 +995,9 @@ func (p *PageBlobServerTransport) dispatchUploadPages(req *http.Request) (*http.
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1011,9 +1011,9 @@ func (p *PageBlobServerTransport) dispatchUploadPages(req *http.Request) (*http.
 	encryptionAlgorithmParam := getOptional(getHeaderValue(req.Header, "x-ms-encryption-algorithm"))
 	encryptionScopeParam := getOptional(getHeaderValue(req.Header, "x-ms-encryption-scope"))
 	ifSequenceNumberLessThanOrEqualToParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-le"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -1021,9 +1021,9 @@ func (p *PageBlobServerTransport) dispatchUploadPages(req *http.Request) (*http.
 		return nil, err
 	}
 	ifSequenceNumberLessThanParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-lt"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -1031,9 +1031,9 @@ func (p *PageBlobServerTransport) dispatchUploadPages(req *http.Request) (*http.
 		return nil, err
 	}
 	ifSequenceNumberEqualToParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-eq"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -1175,9 +1175,9 @@ func (p *PageBlobServerTransport) dispatchUploadPagesFromURL(req *http.Request) 
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1190,9 +1190,9 @@ func (p *PageBlobServerTransport) dispatchUploadPagesFromURL(req *http.Request) 
 	encryptionScopeParam := getOptional(getHeaderValue(req.Header, "x-ms-encryption-scope"))
 	leaseIDParam := getOptional(getHeaderValue(req.Header, "x-ms-lease-id"))
 	ifSequenceNumberLessThanOrEqualToParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-le"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -1200,9 +1200,9 @@ func (p *PageBlobServerTransport) dispatchUploadPagesFromURL(req *http.Request) 
 		return nil, err
 	}
 	ifSequenceNumberLessThanParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-lt"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -1210,9 +1210,9 @@ func (p *PageBlobServerTransport) dispatchUploadPagesFromURL(req *http.Request) 
 		return nil, err
 	}
 	ifSequenceNumberEqualToParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-if-sequence-number-eq"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})

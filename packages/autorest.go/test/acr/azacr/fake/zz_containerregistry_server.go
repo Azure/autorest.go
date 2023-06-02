@@ -363,9 +363,9 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 		qp := req.URL.Query()
 		lastParam := getOptional(qp.Get("last"))
 		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -433,9 +433,9 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetRepositoriesPager(req *
 		qp := req.URL.Query()
 		lastParam := getOptional(qp.Get("last"))
 		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -507,9 +507,9 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 		qp := req.URL.Query()
 		lastParam := getOptional(qp.Get("last"))
 		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})

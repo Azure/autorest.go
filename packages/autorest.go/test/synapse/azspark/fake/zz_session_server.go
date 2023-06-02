@@ -126,9 +126,9 @@ func (s *SessionServerTransport) dispatchCancelSparkSession(req *http.Request) (
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	sessionIDParam, err := parseWithCast(matches[regex.SubexpIndex("sessionId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -161,9 +161,9 @@ func (s *SessionServerTransport) dispatchCancelSparkStatement(req *http.Request)
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	sessionIDParam, err := parseWithCast(matches[regex.SubexpIndex("sessionId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -171,9 +171,9 @@ func (s *SessionServerTransport) dispatchCancelSparkStatement(req *http.Request)
 		return nil, err
 	}
 	statementIDParam, err := parseWithCast(matches[regex.SubexpIndex("statementId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -250,9 +250,9 @@ func (s *SessionServerTransport) dispatchCreateSparkStatement(req *http.Request)
 		return nil, err
 	}
 	sessionIDParam, err := parseWithCast(matches[regex.SubexpIndex("sessionId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -286,9 +286,9 @@ func (s *SessionServerTransport) dispatchGetSparkSession(req *http.Request) (*ht
 	}
 	qp := req.URL.Query()
 	sessionIDParam, err := parseWithCast(matches[regex.SubexpIndex("sessionId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -332,9 +332,9 @@ func (s *SessionServerTransport) dispatchGetSparkSessions(req *http.Request) (*h
 	}
 	qp := req.URL.Query()
 	fromParam, err := parseOptional(qp.Get("from"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -342,9 +342,9 @@ func (s *SessionServerTransport) dispatchGetSparkSessions(req *http.Request) (*h
 		return nil, err
 	}
 	sizeParam, err := parseOptional(qp.Get("size"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -389,9 +389,9 @@ func (s *SessionServerTransport) dispatchGetSparkStatement(req *http.Request) (*
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	sessionIDParam, err := parseWithCast(matches[regex.SubexpIndex("sessionId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -399,9 +399,9 @@ func (s *SessionServerTransport) dispatchGetSparkStatement(req *http.Request) (*
 		return nil, err
 	}
 	statementIDParam, err := parseWithCast(matches[regex.SubexpIndex("statementId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -434,9 +434,9 @@ func (s *SessionServerTransport) dispatchGetSparkStatements(req *http.Request) (
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	sessionIDParam, err := parseWithCast(matches[regex.SubexpIndex("sessionId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -469,9 +469,9 @@ func (s *SessionServerTransport) dispatchResetSparkSessionTimeout(req *http.Requ
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	sessionIDParam, err := parseWithCast(matches[regex.SubexpIndex("sessionId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

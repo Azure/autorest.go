@@ -209,9 +209,9 @@ func (g *GroupsServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 		}
 		qp := req.URL.Query()
 		topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})

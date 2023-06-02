@@ -118,9 +118,9 @@ func (b *BlockBlobServerTransport) dispatchCommitBlockList(req *http.Request) (*
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -301,9 +301,9 @@ func (b *BlockBlobServerTransport) dispatchGetBlockList(req *http.Request) (*htt
 	qp := req.URL.Query()
 	snapshotParam := getOptional(qp.Get("snapshot"))
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -384,9 +384,9 @@ func (b *BlockBlobServerTransport) dispatchPutBlobFromURL(req *http.Request) (*h
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -597,9 +597,9 @@ func (b *BlockBlobServerTransport) dispatchStageBlock(req *http.Request) (*http.
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -708,9 +708,9 @@ func (b *BlockBlobServerTransport) dispatchStageBlockFromURL(req *http.Request) 
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -828,9 +828,9 @@ func (b *BlockBlobServerTransport) dispatchUpload(req *http.Request) (*http.Resp
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

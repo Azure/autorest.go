@@ -1157,9 +1157,9 @@ func (s *ServerTransport) dispatchNewGetCertificateIssuersPager(req *http.Reques
 	if s.newGetCertificateIssuersPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1254,9 +1254,9 @@ func (s *ServerTransport) dispatchNewGetCertificateVersionsPager(req *http.Reque
 		}
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1295,9 +1295,9 @@ func (s *ServerTransport) dispatchNewGetCertificatesPager(req *http.Request) (*h
 	if s.newGetCertificatesPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1366,9 +1366,9 @@ func (s *ServerTransport) dispatchNewGetDeletedCertificatesPager(req *http.Reque
 	if s.newGetDeletedCertificatesPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1437,9 +1437,9 @@ func (s *ServerTransport) dispatchNewGetDeletedKeysPager(req *http.Request) (*ht
 	if s.newGetDeletedKeysPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1509,9 +1509,9 @@ func (s *ServerTransport) dispatchNewGetDeletedSasDefinitionsPager(req *http.Req
 		}
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1575,9 +1575,9 @@ func (s *ServerTransport) dispatchNewGetDeletedSecretsPager(req *http.Request) (
 	if s.newGetDeletedSecretsPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1641,9 +1641,9 @@ func (s *ServerTransport) dispatchNewGetDeletedStorageAccountsPager(req *http.Re
 	if s.newGetDeletedStorageAccountsPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1713,9 +1713,9 @@ func (s *ServerTransport) dispatchNewGetKeyVersionsPager(req *http.Request) (*ht
 		}
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1754,9 +1754,9 @@ func (s *ServerTransport) dispatchNewGetKeysPager(req *http.Request) (*http.Resp
 	if s.newGetKeysPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1826,9 +1826,9 @@ func (s *ServerTransport) dispatchNewGetSasDefinitionsPager(req *http.Request) (
 		}
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1898,9 +1898,9 @@ func (s *ServerTransport) dispatchNewGetSecretVersionsPager(req *http.Request) (
 		}
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1939,9 +1939,9 @@ func (s *ServerTransport) dispatchNewGetSecretsPager(req *http.Request) (*http.R
 	if s.newGetSecretsPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -2005,9 +2005,9 @@ func (s *ServerTransport) dispatchNewGetStorageAccountsPager(req *http.Request) 
 	if s.newGetStorageAccountsPager == nil {
 		qp := req.URL.Query()
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})

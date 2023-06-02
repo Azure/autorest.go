@@ -98,9 +98,9 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 	qp := req.URL.Query()
 	headerOneParam := getOptional(getHeaderValue(req.Header, "header-one"))
 	queryOneParam, err := parseOptional(qp.Get("query-one"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -109,9 +109,9 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 	}
 	headerTwoParam := getOptional(getHeaderValue(req.Header, "header-two"))
 	queryTwoParam, err := parseOptional(qp.Get("query-two"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -154,9 +154,9 @@ func (p *ParameterGroupingServerTransport) dispatchPostOptional(req *http.Reques
 	qp := req.URL.Query()
 	customHeaderParam := getOptional(getHeaderValue(req.Header, "customHeader"))
 	queryParam, err := parseOptional(qp.Get("query"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -202,9 +202,9 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 	}
 	customHeaderParam := getOptional(getHeaderValue(req.Header, "customHeader"))
 	queryParam, err := parseOptional(qp.Get("query"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -269,9 +269,9 @@ func (p *ParameterGroupingServerTransport) dispatchPostSharedParameterGroupObjec
 	qp := req.URL.Query()
 	headerOneParam := getOptional(getHeaderValue(req.Header, "header-one"))
 	queryOneParam, err := parseOptional(qp.Get("query-one"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

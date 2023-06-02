@@ -468,9 +468,9 @@ func (h *HeaderServerTransport) dispatchParamFloat(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("method ParamFloat not implemented")}
 	}
 	valueParam, err := parseWithCast(getHeaderValue(req.Header, "value"), func(v string) (float32, error) {
-		p, err := strconv.ParseFloat(v, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseFloat(v, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return float32(p), nil
 	})
@@ -497,9 +497,9 @@ func (h *HeaderServerTransport) dispatchParamInteger(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method ParamInteger not implemented")}
 	}
 	valueParam, err := parseWithCast(getHeaderValue(req.Header, "value"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

@@ -235,9 +235,9 @@ func (s *ServerTransport) dispatchDeleteEntity(req *http.Request) (*http.Respons
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -293,9 +293,9 @@ func (s *ServerTransport) dispatchGetAccessPolicy(req *http.Request) (*http.Resp
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -353,9 +353,9 @@ func (s *ServerTransport) dispatchInsertEntity(req *http.Request) (*http.Respons
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -427,9 +427,9 @@ func (s *ServerTransport) dispatchMergeEntity(req *http.Request) (*http.Response
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -486,9 +486,9 @@ func (s *ServerTransport) dispatchQuery(req *http.Request) (*http.Response, erro
 	requestIDParam := getOptional(getHeaderValue(req.Header, "x-ms-client-request-id"))
 	formatParam := getOptional(aztables.ODataMetadataFormat(qp.Get("$format")))
 	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -551,9 +551,9 @@ func (s *ServerTransport) dispatchQueryEntities(req *http.Request) (*http.Respon
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -563,9 +563,9 @@ func (s *ServerTransport) dispatchQueryEntities(req *http.Request) (*http.Respon
 	requestIDParam := getOptional(getHeaderValue(req.Header, "x-ms-client-request-id"))
 	formatParam := getOptional(aztables.ODataMetadataFormat(qp.Get("$format")))
 	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -634,9 +634,9 @@ func (s *ServerTransport) dispatchQueryEntityWithPartitionAndRowKey(req *http.Re
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -709,9 +709,9 @@ func (s *ServerTransport) dispatchSetAccessPolicy(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -769,9 +769,9 @@ func (s *ServerTransport) dispatchUpdateEntity(req *http.Request) (*http.Respons
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

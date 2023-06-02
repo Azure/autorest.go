@@ -102,9 +102,9 @@ func (a *AppendBlobServerTransport) dispatchAppendBlock(req *http.Request) (*htt
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -125,9 +125,9 @@ func (a *AppendBlobServerTransport) dispatchAppendBlock(req *http.Request) (*htt
 	}
 	leaseIDParam := getOptional(getHeaderValue(req.Header, "x-ms-lease-id"))
 	maxSizeParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-condition-maxsize"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -135,9 +135,9 @@ func (a *AppendBlobServerTransport) dispatchAppendBlock(req *http.Request) (*htt
 		return nil, err
 	}
 	appendPositionParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-condition-appendpos"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -281,9 +281,9 @@ func (a *AppendBlobServerTransport) dispatchAppendBlockFromURL(req *http.Request
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -304,9 +304,9 @@ func (a *AppendBlobServerTransport) dispatchAppendBlockFromURL(req *http.Request
 	encryptionScopeParam := getOptional(getHeaderValue(req.Header, "x-ms-encryption-scope"))
 	leaseIDParam := getOptional(getHeaderValue(req.Header, "x-ms-lease-id"))
 	maxSizeParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-condition-maxsize"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -314,9 +314,9 @@ func (a *AppendBlobServerTransport) dispatchAppendBlockFromURL(req *http.Request
 		return nil, err
 	}
 	appendPositionParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-condition-appendpos"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -467,9 +467,9 @@ func (a *AppendBlobServerTransport) dispatchCreate(req *http.Request) (*http.Res
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -638,9 +638,9 @@ func (a *AppendBlobServerTransport) dispatchSeal(req *http.Request) (*http.Respo
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -660,9 +660,9 @@ func (a *AppendBlobServerTransport) dispatchSeal(req *http.Request) (*http.Respo
 	ifMatchParam := getOptional(getHeaderValue(req.Header, "If-Match"))
 	ifNoneMatchParam := getOptional(getHeaderValue(req.Header, "If-None-Match"))
 	appendPositionParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-condition-appendpos"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})

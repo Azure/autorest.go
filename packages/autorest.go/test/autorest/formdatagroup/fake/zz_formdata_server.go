@@ -94,21 +94,23 @@ func (f *FormdataServerTransport) dispatchUploadFile(req *http.Request) (*http.R
 	var fileContent io.ReadSeekCloser
 	var fileName string
 	for {
-		part, err := reader.NextPart()
+		var part *multipart.Part
+		part, err = reader.NextPart()
 		if err == io.EOF {
 			break
 		} else if err != nil {
 			return nil, err
 		}
+		var content []byte
 		switch fn := part.FormName(); fn {
 		case "fileContent":
-			content, err := io.ReadAll(part)
+			content, err = io.ReadAll(part)
 			if err != nil {
 				return nil, err
 			}
 			fileContent = streaming.NopCloser(bytes.NewReader(content))
 		case "fileName":
-			content, err := io.ReadAll(part)
+			content, err = io.ReadAll(part)
 			if err != nil {
 				return nil, err
 			}
@@ -168,15 +170,17 @@ func (f *FormdataServerTransport) dispatchUploadFiles(req *http.Request) (*http.
 	reader := multipart.NewReader(req.Body, params["boundary"])
 	var fileContent []io.ReadSeekCloser
 	for {
-		part, err := reader.NextPart()
+		var part *multipart.Part
+		part, err = reader.NextPart()
 		if err == io.EOF {
 			break
 		} else if err != nil {
 			return nil, err
 		}
+		var content []byte
 		switch fn := part.FormName(); fn {
 		case "fileContent":
-			content, err := io.ReadAll(part)
+			content, err = io.ReadAll(part)
 			if err != nil {
 				return nil, err
 			}

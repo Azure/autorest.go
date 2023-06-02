@@ -93,9 +93,9 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	}
 	qp := req.URL.Query()
 	creatorIDParam, err := parseOptional(qp.Get("creator-id"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -103,9 +103,9 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 		return nil, err
 	}
 	assignedIDParam, err := parseOptional(getHeaderValue(req.Header, "assigned-id"), func(v string) (float32, error) {
-		p, err := strconv.ParseFloat(v, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseFloat(v, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return float32(p), nil
 	})

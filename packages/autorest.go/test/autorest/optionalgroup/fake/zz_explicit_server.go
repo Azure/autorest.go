@@ -354,9 +354,9 @@ func (e *ExplicitServerTransport) dispatchPostOptionalIntegerHeader(req *http.Re
 		return nil, &nonRetriableError{errors.New("method PostOptionalIntegerHeader not implemented")}
 	}
 	headerParameterParam, err := parseOptional(getHeaderValue(req.Header, "headerParameter"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -642,9 +642,9 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerHeader(req *http.Re
 		return nil, &nonRetriableError{errors.New("method PostRequiredIntegerHeader not implemented")}
 	}
 	headerParameterParam, err := parseWithCast(getHeaderValue(req.Header, "headerParameter"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

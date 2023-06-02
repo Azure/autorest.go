@@ -288,14 +288,16 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
       }
     }
     content += '\tfor {\n';
-    content += '\t\tpart, err := reader.NextPart()\n';
+    content += '\t\tvar part *multipart.Part\n';
+    content += '\t\tpart, err = reader.NextPart()\n';
     content += '\t\tif err == io.EOF {\n\t\t\tbreak\n';
     content += '\t\t} else if err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
+    content += '\t\tvar content []byte\n';
     content += '\t\tswitch fn := part.FormName(); fn {\n';
     for (const param of values(aggregateParameters(op))) {
       if (param.isPartialBody) {
         content += `\t\tcase "${param.language.go!.name}":\n`;
-        content += '\t\t\tcontent, err := io.ReadAll(part)\n';
+        content += '\t\t\tcontent, err = io.ReadAll(part)\n';
         content += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
         let assignedValue: string;
         if (param.schema.type === SchemaType.Binary) {
@@ -604,8 +606,8 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       }
       if (numSchema.precision === 32 || !param.required) {
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${getParamValue(param)}, func(v string) (${parseType.toLowerCase()}${precision}, error) {\n`;
-        content += `\t\tp, err := strconv.Parse${parseType}(v, ${base}${precision})\n`;
-        content += '\t\tif err != nil {\n\t\t\treturn 0, err\n\t\t}\n';
+        content += `\t\tp, parseErr := strconv.Parse${parseType}(v, ${base}${precision})\n`;
+        content += '\t\tif parseErr != nil {\n\t\t\treturn 0, parseErr\n\t\t}\n';
         let result = 'p';
         if (precision === '32') {
           result = `${parseType.toLowerCase()}${precision}(${result})`;

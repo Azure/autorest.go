@@ -96,9 +96,9 @@ func (b *BatchServerTransport) dispatchCancelSparkBatchJob(req *http.Request) (*
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	batchIDParam, err := parseWithCast(matches[regex.SubexpIndex("batchId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -172,9 +172,9 @@ func (b *BatchServerTransport) dispatchGetSparkBatchJob(req *http.Request) (*htt
 	}
 	qp := req.URL.Query()
 	batchIDParam, err := parseWithCast(matches[regex.SubexpIndex("batchId")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -218,9 +218,9 @@ func (b *BatchServerTransport) dispatchGetSparkBatchJobs(req *http.Request) (*ht
 	}
 	qp := req.URL.Query()
 	fromParam, err := parseOptional(qp.Get("from"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -228,9 +228,9 @@ func (b *BatchServerTransport) dispatchGetSparkBatchJobs(req *http.Request) (*ht
 		return nil, err
 	}
 	sizeParam, err := parseOptional(qp.Get("size"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

@@ -85,9 +85,9 @@ func (s *ServiceServerTransport) dispatchGetProperties(req *http.Request) (*http
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -132,9 +132,9 @@ func (s *ServiceServerTransport) dispatchGetStatistics(req *http.Request) (*http
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -186,9 +186,9 @@ func (s *ServiceServerTransport) dispatchSetProperties(req *http.Request) (*http
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

@@ -187,9 +187,9 @@ func (c *ContainerServerTransport) dispatchAcquireLease(req *http.Request) (*htt
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -197,9 +197,9 @@ func (c *ContainerServerTransport) dispatchAcquireLease(req *http.Request) (*htt
 		return nil, err
 	}
 	durationParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-lease-duration"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -280,9 +280,9 @@ func (c *ContainerServerTransport) dispatchBreakLease(req *http.Request) (*http.
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -290,9 +290,9 @@ func (c *ContainerServerTransport) dispatchBreakLease(req *http.Request) (*http.
 		return nil, err
 	}
 	breakPeriodParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-lease-break-period"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -371,9 +371,9 @@ func (c *ContainerServerTransport) dispatchChangeLease(req *http.Request) (*http
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -451,9 +451,9 @@ func (c *ContainerServerTransport) dispatchCreate(req *http.Request) (*http.Resp
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -537,9 +537,9 @@ func (c *ContainerServerTransport) dispatchDelete(req *http.Request) (*http.Resp
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -615,9 +615,9 @@ func (c *ContainerServerTransport) dispatchFilterBlobs(req *http.Request) (*http
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -628,9 +628,9 @@ func (c *ContainerServerTransport) dispatchFilterBlobs(req *http.Request) (*http
 	whereParam := getOptional(qp.Get("where"))
 	markerParam := getOptional(qp.Get("marker"))
 	maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -692,9 +692,9 @@ func (c *ContainerServerTransport) dispatchGetAccessPolicy(req *http.Request) (*
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -808,9 +808,9 @@ func (c *ContainerServerTransport) dispatchGetProperties(req *http.Request) (*ht
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -912,9 +912,9 @@ func (c *ContainerServerTransport) dispatchNewListBlobFlatSegmentPager(req *http
 		prefixParam := getOptional(qp.Get("prefix"))
 		markerParam := getOptional(qp.Get("marker"))
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -927,9 +927,9 @@ func (c *ContainerServerTransport) dispatchNewListBlobFlatSegmentPager(req *http
 			includeParam[i] = azblob.ListBlobsIncludeItem(elements[i])
 		}
 		timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -982,9 +982,9 @@ func (c *ContainerServerTransport) dispatchNewListBlobHierarchySegmentPager(req 
 		prefixParam := getOptional(qp.Get("prefix"))
 		markerParam := getOptional(qp.Get("marker"))
 		maxresultsParam, err := parseOptional(qp.Get("maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -997,9 +997,9 @@ func (c *ContainerServerTransport) dispatchNewListBlobHierarchySegmentPager(req 
 			includeParam[i] = azblob.ListBlobsIncludeItem(elements[i])
 		}
 		timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -1049,9 +1049,9 @@ func (c *ContainerServerTransport) dispatchReleaseLease(req *http.Request) (*htt
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1126,9 +1126,9 @@ func (c *ContainerServerTransport) dispatchRename(req *http.Request) (*http.Resp
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1184,9 +1184,9 @@ func (c *ContainerServerTransport) dispatchRenewLease(req *http.Request) (*http.
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1264,9 +1264,9 @@ func (c *ContainerServerTransport) dispatchRestore(req *http.Request) (*http.Res
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1328,9 +1328,9 @@ func (c *ContainerServerTransport) dispatchSetAccessPolicy(req *http.Request) (*
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1415,9 +1415,9 @@ func (c *ContainerServerTransport) dispatchSetMetadata(req *http.Request) (*http
 	}
 	qp := req.URL.Query()
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -1508,9 +1508,9 @@ func (c *ContainerServerTransport) dispatchSubmitBatch(req *http.Request) (*http
 		return nil, err
 	}
 	timeoutParam, err := parseOptional(qp.Get("timeout"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

@@ -251,9 +251,9 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesPager(req *http.Reque
 	if p.newGetMultiplePagesPager == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
 		maxresultsParam, err := parseOptional(getHeaderValue(req.Header, "maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -261,9 +261,9 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesPager(req *http.Reque
 			return nil, err
 		}
 		timeoutParam, err := parseOptional(getHeaderValue(req.Header, "timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -420,9 +420,9 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 	if p.beginGetMultiplePagesLRO == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
 		maxresultsParam, err := parseOptional(getHeaderValue(req.Header, "maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -430,9 +430,9 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 			return nil, err
 		}
 		timeoutParam, err := parseOptional(getHeaderValue(req.Header, "timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -530,9 +530,9 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 		}
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
 		maxresultsParam, err := parseOptional(getHeaderValue(req.Header, "maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -540,9 +540,9 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 			return nil, err
 		}
 		offsetParam, err := parseWithCast(matches[regex.SubexpIndex("offset")], func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -550,9 +550,9 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 			return nil, err
 		}
 		timeoutParam, err := parseOptional(getHeaderValue(req.Header, "timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -636,9 +636,9 @@ func (p *PagingServerTransport) dispatchNewGetODataMultiplePagesPager(req *http.
 	if p.newGetODataMultiplePagesPager == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
 		maxresultsParam, err := parseOptional(getHeaderValue(req.Header, "maxresults"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -646,9 +646,9 @@ func (p *PagingServerTransport) dispatchNewGetODataMultiplePagesPager(req *http.
 			return nil, err
 		}
 		timeoutParam, err := parseOptional(getHeaderValue(req.Header, "timeout"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})
@@ -761,9 +761,9 @@ func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Req
 	if p.newGetWithQueryParamsPager == nil {
 		qp := req.URL.Query()
 		requiredQueryParameterParam, err := parseWithCast(qp.Get("requiredQueryParameter"), func(v string) (int32, error) {
-			p, err := strconv.ParseInt(v, 10, 32)
-			if err != nil {
-				return 0, err
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
 			}
 			return int32(p), nil
 		})

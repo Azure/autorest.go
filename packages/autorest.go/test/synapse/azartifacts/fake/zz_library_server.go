@@ -123,9 +123,9 @@ func (l *LibraryServerTransport) dispatchAppend(req *http.Request) (*http.Respon
 	}
 	qp := req.URL.Query()
 	blobConditionAppendPositionParam, err := parseOptional(getHeaderValue(req.Header, "x-ms-blob-condition-appendpos"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})

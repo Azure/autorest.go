@@ -161,9 +161,9 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *ht
 		return nil, err
 	}
 	idParam, err := parseWithCast(matches[regex.SubexpIndex("id")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -196,9 +196,9 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParame
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	idParam, err := parseWithCast(matches[regex.SubexpIndex("id")], func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})

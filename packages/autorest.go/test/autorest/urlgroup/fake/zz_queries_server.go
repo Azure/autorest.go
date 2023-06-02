@@ -683,9 +683,9 @@ func (q *QueriesServerTransport) dispatchDoubleNull(req *http.Request) (*http.Re
 	}
 	qp := req.URL.Query()
 	doubleQueryParam, err := parseOptional(qp.Get("doubleQuery"), func(v string) (float64, error) {
-		p, err := strconv.ParseFloat(v, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseFloat(v, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
@@ -773,9 +773,9 @@ func (q *QueriesServerTransport) dispatchFloatNull(req *http.Request) (*http.Res
 	}
 	qp := req.URL.Query()
 	floatQueryParam, err := parseOptional(qp.Get("floatQuery"), func(v string) (float32, error) {
-		p, err := strconv.ParseFloat(v, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseFloat(v, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return float32(p), nil
 	})
@@ -934,9 +934,9 @@ func (q *QueriesServerTransport) dispatchGetIntNull(req *http.Request) (*http.Re
 	}
 	qp := req.URL.Query()
 	intQueryParam, err := parseOptional(qp.Get("intQuery"), func(v string) (int32, error) {
-		p, err := strconv.ParseInt(v, 10, 32)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return int32(p), nil
 	})
@@ -989,9 +989,9 @@ func (q *QueriesServerTransport) dispatchGetLongNull(req *http.Request) (*http.R
 	}
 	qp := req.URL.Query()
 	longQueryParam, err := parseOptional(qp.Get("longQuery"), func(v string) (int64, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return 0, parseErr
 		}
 		return p, nil
 	})
