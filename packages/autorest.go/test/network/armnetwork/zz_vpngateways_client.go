@@ -57,7 +57,8 @@ func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[VPNGatewaysClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 		if err != nil {
@@ -132,7 +133,8 @@ func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (*runtime.Poller[VPNGatewaysClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 		if err != nil {
@@ -392,7 +394,8 @@ func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Re
 func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (*runtime.Poller[VPNGatewaysClientResetResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNGatewaysClient.BeginReset", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNGatewaysClient.BeginReset", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.reset(ctx, resourceGroupName, gatewayName, options)
 		if err != nil {
@@ -468,7 +471,8 @@ func (client *VPNGatewaysClient) resetCreateRequest(ctx context.Context, resourc
 func (client *VPNGatewaysClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginStartPacketCaptureOptions) (*runtime.Poller[VPNGatewaysClientStartPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNGatewaysClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNGatewaysClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.startPacketCapture(ctx, resourceGroupName, gatewayName, options)
 		if err != nil {
@@ -547,7 +551,8 @@ func (client *VPNGatewaysClient) startPacketCaptureCreateRequest(ctx context.Con
 func (client *VPNGatewaysClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginStopPacketCaptureOptions) (*runtime.Poller[VPNGatewaysClientStopPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNGatewaysClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNGatewaysClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.stopPacketCapture(ctx, resourceGroupName, gatewayName, options)
 		if err != nil {
@@ -627,7 +632,8 @@ func (client *VPNGatewaysClient) stopPacketCaptureCreateRequest(ctx context.Cont
 func (client *VPNGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysClientBeginUpdateTagsOptions) (*runtime.Poller[VPNGatewaysClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNGatewaysClient.BeginUpdateTags", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNGatewaysClient.BeginUpdateTags", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 		if err != nil {

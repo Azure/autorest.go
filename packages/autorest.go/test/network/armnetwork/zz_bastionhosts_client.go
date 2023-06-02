@@ -57,7 +57,8 @@ func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredent
 func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (*runtime.Poller[BastionHostsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "BastionHostsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "BastionHostsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Contex
 func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (*runtime.Poller[BastionHostsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "BastionHostsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "BastionHostsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
 		if err != nil {
@@ -395,7 +397,8 @@ func (client *BastionHostsClient) listByResourceGroupHandleResponse(resp *http.R
 func (client *BastionHostsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, bastionHostName string, parameters TagsObject, options *BastionHostsClientBeginUpdateTagsOptions) (*runtime.Poller[BastionHostsClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "BastionHostsClient.BeginUpdateTags", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "BastionHostsClient.BeginUpdateTags", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, bastionHostName, parameters, options)
 		if err != nil {

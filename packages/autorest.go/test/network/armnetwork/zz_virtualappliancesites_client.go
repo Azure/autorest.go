@@ -58,7 +58,8 @@ func NewVirtualApplianceSitesClient(subscriptionID string, credential azcore.Tok
 func (client *VirtualApplianceSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, siteName string, parameters VirtualApplianceSite, options *VirtualApplianceSitesClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualApplianceSitesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualApplianceSitesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualApplianceSitesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, siteName, parameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *VirtualApplianceSitesClient) createOrUpdateCreateRequest(ctx conte
 func (client *VirtualApplianceSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, siteName string, options *VirtualApplianceSitesClientBeginDeleteOptions) (*runtime.Poller[VirtualApplianceSitesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualApplianceSitesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualApplianceSitesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, siteName, options)
 		if err != nil {

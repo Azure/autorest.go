@@ -141,7 +141,8 @@ func (client *AdminRulesClient) createOrUpdateHandleResponse(resp *http.Response
 func (client *AdminRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, ruleName string, options *AdminRulesClientBeginDeleteOptions) (*runtime.Poller[AdminRulesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "AdminRulesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "AdminRulesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName, options)
 		if err != nil {

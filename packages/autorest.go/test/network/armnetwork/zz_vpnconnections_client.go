@@ -59,7 +59,8 @@ func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCrede
 func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VPNConnectionsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
 		if err != nil {
@@ -140,7 +141,8 @@ func (client *VPNConnectionsClient) createOrUpdateCreateRequest(ctx context.Cont
 func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (*runtime.Poller[VPNConnectionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
 		if err != nil {
@@ -356,7 +358,8 @@ func (client *VPNConnectionsClient) listByVPNGatewayHandleResponse(resp *http.Re
 func (client *VPNConnectionsClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStartPacketCaptureOptions) (*runtime.Poller[VPNConnectionsClientStartPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNConnectionsClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.startPacketCapture(ctx, resourceGroupName, gatewayName, vpnConnectionName, options)
 		if err != nil {
@@ -440,7 +443,8 @@ func (client *VPNConnectionsClient) startPacketCaptureCreateRequest(ctx context.
 func (client *VPNConnectionsClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, gatewayName string, vpnConnectionName string, options *VPNConnectionsClientBeginStopPacketCaptureOptions) (*runtime.Poller[VPNConnectionsClientStopPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNConnectionsClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNConnectionsClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.stopPacketCapture(ctx, resourceGroupName, gatewayName, vpnConnectionName, options)
 		if err != nil {

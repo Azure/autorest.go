@@ -58,7 +58,8 @@ func NewRouteMapsClient(subscriptionID string, credential azcore.TokenCredential
 func (client *RouteMapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (*runtime.Poller[RouteMapsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "RouteMapsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "RouteMapsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeMapName, routeMapParameters, options)
 		if err != nil {
@@ -138,7 +139,8 @@ func (client *RouteMapsClient) createOrUpdateCreateRequest(ctx context.Context, 
 func (client *RouteMapsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (*runtime.Poller[RouteMapsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "RouteMapsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "RouteMapsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeMapName, options)
 		if err != nil {

@@ -34,7 +34,8 @@ type LROsCustomHeaderClient struct {
 func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, options *LROsCustomHeaderClientBeginPost202Retry200Options) (*runtime.Poller[LROsCustomHeaderClientPost202Retry200Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPost202Retry200", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPost202Retry200", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.post202Retry200(ctx, options)
 		if err != nil {
@@ -98,7 +99,8 @@ func (client *LROsCustomHeaderClient) post202Retry200CreateRequest(ctx context.C
 func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (*runtime.Poller[LROsCustomHeaderClientPostAsyncRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.postAsyncRetrySucceeded(ctx, options)
 		if err != nil {
@@ -163,7 +165,8 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceededCreateRequest(ctx c
 func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*runtime.Poller[LROsCustomHeaderClientPut201CreatingSucceeded200Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPut201CreatingSucceeded200", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPut201CreatingSucceeded200", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.put201CreatingSucceeded200(ctx, product, options)
 		if err != nil {
@@ -225,7 +228,8 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ct
 func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*runtime.Poller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putAsyncRetrySucceeded(ctx, product, options)
 		if err != nil {

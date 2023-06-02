@@ -58,7 +58,8 @@ func NewLoadBalancerBackendAddressPoolsClient(subscriptionID string, credential 
 func (client *LoadBalancerBackendAddressPoolsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, parameters BackendAddressPool, options *LoadBalancerBackendAddressPoolsClientBeginCreateOrUpdateOptions) (*runtime.Poller[LoadBalancerBackendAddressPoolsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancerBackendAddressPoolsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LoadBalancerBackendAddressPoolsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, backendAddressPoolName, parameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *LoadBalancerBackendAddressPoolsClient) createOrUpdateCreateRequest
 func (client *LoadBalancerBackendAddressPoolsClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsClientBeginDeleteOptions) (*runtime.Poller[LoadBalancerBackendAddressPoolsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancerBackendAddressPoolsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LoadBalancerBackendAddressPoolsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, backendAddressPoolName, options)
 		if err != nil {

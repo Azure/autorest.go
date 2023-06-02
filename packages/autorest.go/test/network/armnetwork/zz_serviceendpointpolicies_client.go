@@ -57,7 +57,8 @@ func NewServiceEndpointPoliciesClient(subscriptionID string, credential azcore.T
 func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy, options *ServiceEndpointPoliciesClientBeginCreateOrUpdateOptions) (*runtime.Poller[ServiceEndpointPoliciesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ServiceEndpointPoliciesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ServiceEndpointPoliciesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *ServiceEndpointPoliciesClient) createOrUpdateCreateRequest(ctx con
 func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesClientBeginDeleteOptions) (*runtime.Poller[ServiceEndpointPoliciesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ServiceEndpointPoliciesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ServiceEndpointPoliciesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 		if err != nil {

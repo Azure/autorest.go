@@ -123,7 +123,8 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(re
 func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworksClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworksClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 		if err != nil {
@@ -199,7 +200,8 @@ func (client *VirtualNetworksClient) createOrUpdateCreateRequest(ctx context.Con
 func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworksClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworksClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 		if err != nil {
@@ -483,7 +485,8 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 	})
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.BeginListDdosProtectionStatus", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworksClient.BeginListDdosProtectionStatus", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listDdosProtectionStatus(ctx, resourceGroupName, virtualNetworkName, options)
 		if err != nil {

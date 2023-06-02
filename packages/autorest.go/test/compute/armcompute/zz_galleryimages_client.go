@@ -60,7 +60,8 @@ func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCreden
 func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesClientBeginCreateOrUpdateOptions) (*runtime.Poller[GalleryImagesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "GalleryImagesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "GalleryImagesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Conte
 func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesClientBeginDeleteOptions) (*runtime.Poller[GalleryImagesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "GalleryImagesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "GalleryImagesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, options)
 		if err != nil {
@@ -355,7 +357,8 @@ func (client *GalleryImagesClient) listByGalleryHandleResponse(resp *http.Respon
 func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesClientBeginUpdateOptions) (*runtime.Poller[GalleryImagesClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "GalleryImagesClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "GalleryImagesClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 		if err != nil {

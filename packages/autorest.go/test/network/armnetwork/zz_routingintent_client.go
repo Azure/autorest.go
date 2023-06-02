@@ -58,7 +58,8 @@ func NewRoutingIntentClient(subscriptionID string, credential azcore.TokenCreden
 func (client *RoutingIntentClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routingIntentName string, routingIntentParameters RoutingIntent, options *RoutingIntentClientBeginCreateOrUpdateOptions) (*runtime.Poller[RoutingIntentClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "RoutingIntentClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "RoutingIntentClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routingIntentName, routingIntentParameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *RoutingIntentClient) createOrUpdateCreateRequest(ctx context.Conte
 func (client *RoutingIntentClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routingIntentName string, options *RoutingIntentClientBeginDeleteOptions) (*runtime.Poller[RoutingIntentClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "RoutingIntentClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "RoutingIntentClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routingIntentName, options)
 		if err != nil {

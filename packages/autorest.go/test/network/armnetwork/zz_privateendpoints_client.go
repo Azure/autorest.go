@@ -57,7 +57,8 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*runtime.Poller[PrivateEndpointsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Co
 func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*runtime.Poller[PrivateEndpointsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PrivateEndpointsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
 		if err != nil {

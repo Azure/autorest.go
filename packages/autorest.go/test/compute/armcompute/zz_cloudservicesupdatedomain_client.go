@@ -198,7 +198,8 @@ func (client *CloudServicesUpdateDomainClient) listUpdateDomainsHandleResponse(r
 func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*runtime.Poller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.walkUpdateDomain(ctx, resourceGroupName, cloudServiceName, updateDomain, parameters, options)
 		if err != nil {

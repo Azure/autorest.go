@@ -131,7 +131,8 @@ func (client *DiskRestorePointClient) getHandleResponse(resp *http.Response) (Di
 func (client *DiskRestorePointClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, grantAccessData GrantAccessData, options *DiskRestorePointClientBeginGrantAccessOptions) (*runtime.Poller[DiskRestorePointClientGrantAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DiskRestorePointClient.BeginGrantAccess", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DiskRestorePointClient.BeginGrantAccess", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.grantAccess(ctx, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData, options)
 		if err != nil {
@@ -293,7 +294,8 @@ func (client *DiskRestorePointClient) listByRestorePointHandleResponse(resp *htt
 func (client *DiskRestorePointClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, options *DiskRestorePointClientBeginRevokeAccessOptions) (*runtime.Poller[DiskRestorePointClientRevokeAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DiskRestorePointClient.BeginRevokeAccess", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DiskRestorePointClient.BeginRevokeAccess", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.revokeAccess(ctx, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, options)
 		if err != nil {

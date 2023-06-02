@@ -59,7 +59,8 @@ func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credenti
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 		if err != nil {
@@ -143,7 +144,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateCreateRequ
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (*runtime.Poller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 		if err != nil {
@@ -372,7 +374,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleResponse(resp 
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineScaleSetVMExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (*runtime.Poller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMExtensionsClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 		if err != nil {

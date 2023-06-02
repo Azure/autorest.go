@@ -57,7 +57,8 @@ func NewSecurityGroupsClient(subscriptionID string, credential azcore.TokenCrede
 func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *SecurityGroupsClientBeginCreateOrUpdateOptions) (*runtime.Poller[SecurityGroupsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SecurityGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SecurityGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *SecurityGroupsClient) createOrUpdateCreateRequest(ctx context.Cont
 func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientBeginDeleteOptions) (*runtime.Poller[SecurityGroupsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SecurityGroupsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SecurityGroupsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, options)
 		if err != nil {

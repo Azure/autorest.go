@@ -57,7 +57,8 @@ func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.Token
 func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*runtime.Poller[DdosProtectionPlansClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DdosProtectionPlansClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DdosProtectionPlansClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context
 func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*runtime.Poller[DdosProtectionPlansClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DdosProtectionPlansClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DdosProtectionPlansClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 		if err != nil {

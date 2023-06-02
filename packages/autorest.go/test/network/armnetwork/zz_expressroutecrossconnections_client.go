@@ -57,7 +57,8 @@ func NewExpressRouteCrossConnectionsClient(subscriptionID string, credential azc
 func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection, options *ExpressRouteCrossConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, parameters, options)
 		if err != nil {
@@ -260,7 +261,8 @@ func (client *ExpressRouteCrossConnectionsClient) listHandleResponse(resp *http.
 func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListArpTableOptions) (*runtime.Poller[ExpressRouteCrossConnectionsClientListArpTableResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginListArpTable", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginListArpTable", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listArpTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 		if err != nil {
@@ -411,7 +413,8 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleRespo
 func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableOptions) (*runtime.Poller[ExpressRouteCrossConnectionsClientListRoutesTableResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginListRoutesTable", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginListRoutesTable", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listRoutesTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 		if err != nil {
@@ -496,7 +499,8 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableCreateRequest(c
 func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableSummaryOptions) (*runtime.Poller[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 		if err != nil {

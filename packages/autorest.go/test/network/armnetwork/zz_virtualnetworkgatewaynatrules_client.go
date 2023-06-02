@@ -59,7 +59,8 @@ func NewVirtualNetworkGatewayNatRulesClient(subscriptionID string, credential az
 func (client *VirtualNetworkGatewayNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, natRuleParameters VirtualNetworkGatewayNatRule, options *VirtualNetworkGatewayNatRulesClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworkGatewayNatRulesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayNatRulesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayNatRulesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkGatewayName, natRuleName, natRuleParameters, options)
 		if err != nil {
@@ -141,7 +142,8 @@ func (client *VirtualNetworkGatewayNatRulesClient) createOrUpdateCreateRequest(c
 func (client *VirtualNetworkGatewayNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, options *VirtualNetworkGatewayNatRulesClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworkGatewayNatRulesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayNatRulesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayNatRulesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayName, natRuleName, options)
 		if err != nil {

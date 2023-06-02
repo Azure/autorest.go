@@ -56,7 +56,8 @@ func NewVipSwapClient(subscriptionID string, credential azcore.TokenCredential, 
 func (client *VipSwapClient) BeginCreate(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (*runtime.Poller[VipSwapClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VipSwapClient.BeginCreate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VipSwapClient.BeginCreate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.create(ctx, groupName, resourceName, parameters, options)
 		if err != nil {

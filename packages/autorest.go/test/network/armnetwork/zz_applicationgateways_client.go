@@ -56,7 +56,8 @@ func NewApplicationGatewaysClient(subscriptionID string, credential azcore.Token
 func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (*runtime.Poller[ApplicationGatewaysClientBackendHealthResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginBackendHealth", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginBackendHealth", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.backendHealth(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {
@@ -134,7 +135,8 @@ func (client *ApplicationGatewaysClient) backendHealthCreateRequest(ctx context.
 func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (*runtime.Poller[ApplicationGatewaysClientBackendHealthOnDemandResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginBackendHealthOnDemand", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginBackendHealthOnDemand", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.backendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 		if err != nil {
@@ -215,7 +217,8 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandCreateRequest(ctx 
 func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[ApplicationGatewaysClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 		if err != nil {
@@ -291,7 +294,8 @@ func (client *ApplicationGatewaysClient) createOrUpdateCreateRequest(ctx context
 func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (*runtime.Poller[ApplicationGatewaysClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {
@@ -937,7 +941,8 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(
 func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (*runtime.Poller[ApplicationGatewaysClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginStart", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginStart", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.start(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {
@@ -1010,7 +1015,8 @@ func (client *ApplicationGatewaysClient) startCreateRequest(ctx context.Context,
 func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (*runtime.Poller[ApplicationGatewaysClientStopResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginStop", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewaysClient.BeginStop", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.stop(ctx, resourceGroupName, applicationGatewayName, options)
 		if err != nil {

@@ -57,7 +57,8 @@ func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCr
 func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (*runtime.Poller[PublicIPAddressesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *PublicIPAddressesClient) createOrUpdateCreateRequest(ctx context.C
 func (client *PublicIPAddressesClient) BeginDdosProtectionStatus(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDdosProtectionStatusOptions) (*runtime.Poller[PublicIPAddressesClientDdosProtectionStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginDdosProtectionStatus", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginDdosProtectionStatus", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.ddosProtectionStatus(ctx, resourceGroupName, publicIPAddressName, options)
 		if err != nil {
@@ -206,7 +208,8 @@ func (client *PublicIPAddressesClient) ddosProtectionStatusCreateRequest(ctx con
 func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (*runtime.Poller[PublicIPAddressesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PublicIPAddressesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
 		if err != nil {

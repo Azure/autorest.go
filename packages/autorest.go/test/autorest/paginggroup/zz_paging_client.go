@@ -468,7 +468,8 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 	})
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PagingClient.BeginGetMultiplePagesLRO", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PagingClient.BeginGetMultiplePagesLRO", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getMultiplePagesLRO(ctx, options)
 		if err != nil {

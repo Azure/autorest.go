@@ -57,7 +57,8 @@ func NewManagerCommitsClient(subscriptionID string, credential azcore.TokenCrede
 func (client *ManagerCommitsClient) BeginPost(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ManagerCommit, options *ManagerCommitsClientBeginPostOptions) (*runtime.Poller[ManagerCommitsClientPostResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ManagerCommitsClient.BeginPost", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ManagerCommitsClient.BeginPost", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.post(ctx, resourceGroupName, networkManagerName, parameters, options)
 		if err != nil {

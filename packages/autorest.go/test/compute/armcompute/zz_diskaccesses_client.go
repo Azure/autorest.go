@@ -59,7 +59,8 @@ func NewDiskAccessesClient(subscriptionID string, credential azcore.TokenCredent
 func (client *DiskAccessesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess DiskAccess, options *DiskAccessesClientBeginCreateOrUpdateOptions) (*runtime.Poller[DiskAccessesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DiskAccessesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DiskAccessesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, diskAccessName, diskAccess, options)
 		if err != nil {
@@ -135,7 +136,8 @@ func (client *DiskAccessesClient) createOrUpdateCreateRequest(ctx context.Contex
 func (client *DiskAccessesClient) BeginDelete(ctx context.Context, resourceGroupName string, diskAccessName string, options *DiskAccessesClientBeginDeleteOptions) (*runtime.Poller[DiskAccessesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DiskAccessesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DiskAccessesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, diskAccessName, options)
 		if err != nil {
@@ -209,7 +211,8 @@ func (client *DiskAccessesClient) deleteCreateRequest(ctx context.Context, resou
 func (client *DiskAccessesClient) BeginDeleteAPrivateEndpointConnection(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, options *DiskAccessesClientBeginDeleteAPrivateEndpointConnectionOptions) (*runtime.Poller[DiskAccessesClientDeleteAPrivateEndpointConnectionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DiskAccessesClient.BeginDeleteAPrivateEndpointConnection", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DiskAccessesClient.BeginDeleteAPrivateEndpointConnection", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteAPrivateEndpointConnection(ctx, resourceGroupName, diskAccessName, privateEndpointConnectionName, options)
 		if err != nil {
@@ -685,7 +688,8 @@ func (client *DiskAccessesClient) listPrivateEndpointConnectionsHandleResponse(r
 func (client *DiskAccessesClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess DiskAccessUpdate, options *DiskAccessesClientBeginUpdateOptions) (*runtime.Poller[DiskAccessesClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DiskAccessesClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DiskAccessesClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, diskAccessName, diskAccess, options)
 		if err != nil {
@@ -765,7 +769,8 @@ func (client *DiskAccessesClient) updateCreateRequest(ctx context.Context, resou
 func (client *DiskAccessesClient) BeginUpdateAPrivateEndpointConnection(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, privateEndpointConnection PrivateEndpointConnection, options *DiskAccessesClientBeginUpdateAPrivateEndpointConnectionOptions) (*runtime.Poller[DiskAccessesClientUpdateAPrivateEndpointConnectionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DiskAccessesClient.BeginUpdateAPrivateEndpointConnection", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DiskAccessesClient.BeginUpdateAPrivateEndpointConnection", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.updateAPrivateEndpointConnection(ctx, resourceGroupName, diskAccessName, privateEndpointConnectionName, privateEndpointConnection, options)
 		if err != nil {

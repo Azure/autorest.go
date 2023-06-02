@@ -55,7 +55,8 @@ func NewCloudServiceRoleInstancesClient(subscriptionID string, credential azcore
 func (client *CloudServiceRoleInstancesClient) BeginDelete(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginDeleteOptions) (*runtime.Poller[CloudServiceRoleInstancesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {
@@ -396,7 +397,8 @@ func (client *CloudServiceRoleInstancesClient) listHandleResponse(resp *http.Res
 func (client *CloudServiceRoleInstancesClient) BeginRebuild(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRebuildOptions) (*runtime.Poller[CloudServiceRoleInstancesClientRebuildResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginRebuild", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginRebuild", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.rebuild(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {
@@ -473,7 +475,8 @@ func (client *CloudServiceRoleInstancesClient) rebuildCreateRequest(ctx context.
 func (client *CloudServiceRoleInstancesClient) BeginReimage(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginReimageOptions) (*runtime.Poller[CloudServiceRoleInstancesClientReimageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginReimage", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginReimage", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.reimage(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {
@@ -548,7 +551,8 @@ func (client *CloudServiceRoleInstancesClient) reimageCreateRequest(ctx context.
 func (client *CloudServiceRoleInstancesClient) BeginRestart(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRestartOptions) (*runtime.Poller[CloudServiceRoleInstancesClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginRestart", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CloudServiceRoleInstancesClient.BeginRestart", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.restart(ctx, roleInstanceName, resourceGroupName, cloudServiceName, options)
 		if err != nil {

@@ -122,7 +122,8 @@ func (client *ManagersClient) createOrUpdateHandleResponse(resp *http.Response) 
 func (client *ManagersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientBeginDeleteOptions) (*runtime.Poller[ManagersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ManagersClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ManagersClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, options)
 		if err != nil {

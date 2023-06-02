@@ -57,7 +57,8 @@ func NewVirtualNetworkGatewayConnectionsClient(subscriptionID string, credential
 func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateCreateReques
 func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
@@ -269,7 +271,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) getHandleResponse(resp *ht
 func (client *VirtualNetworkGatewayConnectionsClient) BeginGetIkeSas(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientGetIkeSasResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getIkeSas(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
@@ -473,7 +476,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) listHandleResponse(resp *h
 func (client *VirtualNetworkGatewayConnectionsClient) BeginResetConnection(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientResetConnectionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginResetConnection", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginResetConnection", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.resetConnection(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
@@ -550,7 +554,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetConnectionCreateReque
 func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginResetSharedKeyOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.resetSharedKey(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
@@ -632,7 +637,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKeyCreateReques
 func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.setSharedKey(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
@@ -710,7 +716,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) setSharedKeyCreateRequest(
 func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.startPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 		if err != nil {
@@ -790,7 +797,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureCreateRe
 func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsClientBeginStopPacketCaptureOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.stopPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {
@@ -867,7 +875,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCaptureCreateReq
 func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters TagsObject, options *VirtualNetworkGatewayConnectionsClientBeginUpdateTagsOptions) (*runtime.Poller[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginUpdateTags", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworkGatewayConnectionsClient.BeginUpdateTags", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 		if err != nil {

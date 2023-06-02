@@ -57,7 +57,8 @@ func NewLogAnalyticsClient(subscriptionID string, credential azcore.TokenCredent
 func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (*runtime.Poller[LogAnalyticsClientExportRequestRateByIntervalResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LogAnalyticsClient.BeginExportRequestRateByInterval", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LogAnalyticsClient.BeginExportRequestRateByInterval", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.exportRequestRateByInterval(ctx, location, parameters, options)
 		if err != nil {
@@ -131,7 +132,8 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx c
 func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsClientBeginExportThrottledRequestsOptions) (*runtime.Poller[LogAnalyticsClientExportThrottledRequestsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LogAnalyticsClient.BeginExportThrottledRequests", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LogAnalyticsClient.BeginExportThrottledRequests", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.exportThrottledRequests(ctx, location, parameters, options)
 		if err != nil {

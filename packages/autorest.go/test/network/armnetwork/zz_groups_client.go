@@ -134,7 +134,8 @@ func (client *GroupsClient) createOrUpdateHandleResponse(resp *http.Response) (G
 func (client *GroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, options *GroupsClientBeginDeleteOptions) (*runtime.Poller[GroupsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "GroupsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "GroupsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, networkGroupName, options)
 		if err != nil {

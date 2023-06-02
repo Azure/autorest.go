@@ -58,7 +58,8 @@ func NewSubnetsClient(subscriptionID string, credential azcore.TokenCredential, 
 func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsClientBeginCreateOrUpdateOptions) (*runtime.Poller[SubnetsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SubnetsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SubnetsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
 		if err != nil {
@@ -138,7 +139,8 @@ func (client *SubnetsClient) createOrUpdateCreateRequest(ctx context.Context, re
 func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsClientBeginDeleteOptions) (*runtime.Poller[SubnetsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SubnetsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SubnetsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 		if err != nil {
@@ -357,7 +359,8 @@ func (client *SubnetsClient) listHandleResponse(resp *http.Response) (SubnetsCli
 func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsClientBeginPrepareNetworkPoliciesOptions) (*runtime.Poller[SubnetsClientPrepareNetworkPoliciesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SubnetsClient.BeginPrepareNetworkPolicies", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SubnetsClient.BeginPrepareNetworkPolicies", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.prepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
 		if err != nil {
@@ -439,7 +442,8 @@ func (client *SubnetsClient) prepareNetworkPoliciesCreateRequest(ctx context.Con
 func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsClientBeginUnprepareNetworkPoliciesOptions) (*runtime.Poller[SubnetsClientUnprepareNetworkPoliciesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SubnetsClient.BeginUnprepareNetworkPolicies", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SubnetsClient.BeginUnprepareNetworkPolicies", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.unprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
 		if err != nil {

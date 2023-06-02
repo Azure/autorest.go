@@ -123,7 +123,8 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleResponse
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesClientBeginDeleteOptions) (*runtime.Poller[WebApplicationFirewallPoliciesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "WebApplicationFirewallPoliciesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "WebApplicationFirewallPoliciesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, policyName, options)
 		if err != nil {

@@ -59,7 +59,8 @@ func NewSnapshotsClient(subscriptionID string, credential azcore.TokenCredential
 func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsClientBeginCreateOrUpdateOptions) (*runtime.Poller[SnapshotsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SnapshotsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SnapshotsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, snapshotName, snapshot, options)
 		if err != nil {
@@ -134,7 +135,8 @@ func (client *SnapshotsClient) createOrUpdateCreateRequest(ctx context.Context, 
 func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginDeleteOptions) (*runtime.Poller[SnapshotsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SnapshotsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SnapshotsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, snapshotName, options)
 		if err != nil {
@@ -271,7 +273,8 @@ func (client *SnapshotsClient) getHandleResponse(resp *http.Response) (Snapshots
 func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData, options *SnapshotsClientBeginGrantAccessOptions) (*runtime.Poller[SnapshotsClientGrantAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SnapshotsClient.BeginGrantAccess", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SnapshotsClient.BeginGrantAccess", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.grantAccess(ctx, resourceGroupName, snapshotName, grantAccessData, options)
 		if err != nil {
@@ -475,7 +478,8 @@ func (client *SnapshotsClient) listByResourceGroupHandleResponse(resp *http.Resp
 func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginRevokeAccessOptions) (*runtime.Poller[SnapshotsClientRevokeAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SnapshotsClient.BeginRevokeAccess", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SnapshotsClient.BeginRevokeAccess", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.revokeAccess(ctx, resourceGroupName, snapshotName, options)
 		if err != nil {
@@ -549,7 +553,8 @@ func (client *SnapshotsClient) revokeAccessCreateRequest(ctx context.Context, re
 func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate, options *SnapshotsClientBeginUpdateOptions) (*runtime.Poller[SnapshotsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SnapshotsClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SnapshotsClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, snapshotName, snapshot, options)
 		if err != nil {

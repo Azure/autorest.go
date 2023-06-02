@@ -118,7 +118,8 @@ func (client *ManagementClient) checkDNSNameAvailabilityHandleResponse(resp *htt
 func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*runtime.Poller[ManagementClientDeleteBastionShareableLinkResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginDeleteBastionShareableLink", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ManagementClient.BeginDeleteBastionShareableLink", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 		if err != nil {
@@ -329,7 +330,8 @@ func (client *ManagementClient) expressRouteProviderPortHandleResponse(resp *htt
 func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*runtime.Poller[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 		if err != nil {
@@ -425,7 +427,8 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 	})
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginGetActiveSessions", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ManagementClient.BeginGetActiveSessions", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getActiveSessions(ctx, resourceGroupName, bastionHostName, options)
 		if err != nil {
@@ -885,7 +888,8 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 	})
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ManagementClient.BeginPutBastionShareableLink", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ManagementClient.BeginPutBastionShareableLink", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 		if err != nil {

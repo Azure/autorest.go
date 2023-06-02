@@ -59,7 +59,8 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*runtime.Poller[DisksClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DisksClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, diskName, disk, options)
 		if err != nil {
@@ -134,7 +135,8 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*runtime.Poller[DisksClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DisksClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, diskName, options)
 		if err != nil {
@@ -270,7 +272,8 @@ func (client *DisksClient) getHandleResponse(resp *http.Response) (DisksClientGe
 func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*runtime.Poller[DisksClientGrantAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DisksClient.BeginGrantAccess", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginGrantAccess", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.grantAccess(ctx, resourceGroupName, diskName, grantAccessData, options)
 		if err != nil {
@@ -473,7 +476,8 @@ func (client *DisksClient) listByResourceGroupHandleResponse(resp *http.Response
 func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*runtime.Poller[DisksClientRevokeAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DisksClient.BeginRevokeAccess", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginRevokeAccess", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.revokeAccess(ctx, resourceGroupName, diskName, options)
 		if err != nil {
@@ -547,7 +551,8 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*runtime.Poller[DisksClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DisksClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, diskName, disk, options)
 		if err != nil {

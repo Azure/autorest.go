@@ -1171,7 +1171,8 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
   text += '\tif options == nil || options.ResumeToken == "" {\n';
   text += '\t\tvar err error\n';
   if (injectSpans) {
-    text += `\t\tctx, endSpan := runtime.StartSpan(ctx, "${clientName}.Begin${op.language.go!.name}", client.internal.Tracer(), nil)\n`;
+    text += '\t\tvar endSpan func(error)\n';
+    text += `\t\tctx, endSpan = runtime.StartSpan(ctx, "${clientName}.Begin${op.language.go!.name}", client.internal.Tracer(), nil)\n`;
     text += '\t\tdefer func() { endSpan(err) }()\n';
   }
   // creating the poller from response branch

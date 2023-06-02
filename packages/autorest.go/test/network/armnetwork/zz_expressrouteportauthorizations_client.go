@@ -58,7 +58,8 @@ func NewExpressRoutePortAuthorizationsClient(subscriptionID string, credential a
 func (client *ExpressRoutePortAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, authorizationParameters ExpressRoutePortAuthorization, options *ExpressRoutePortAuthorizationsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ExpressRoutePortAuthorizationsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRoutePortAuthorizationsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRoutePortAuthorizationsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRoutePortName, authorizationName, authorizationParameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *ExpressRoutePortAuthorizationsClient) createOrUpdateCreateRequest(
 func (client *ExpressRoutePortAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, options *ExpressRoutePortAuthorizationsClientBeginDeleteOptions) (*runtime.Poller[ExpressRoutePortAuthorizationsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRoutePortAuthorizationsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRoutePortAuthorizationsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, expressRoutePortName, authorizationName, options)
 		if err != nil {

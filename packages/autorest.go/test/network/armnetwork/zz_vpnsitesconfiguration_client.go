@@ -57,7 +57,8 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*runtime.Poller[VPNSitesConfigurationClientDownloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNSitesConfigurationClient.BeginDownload", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNSitesConfigurationClient.BeginDownload", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 		if err != nil {

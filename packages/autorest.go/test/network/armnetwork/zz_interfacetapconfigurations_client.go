@@ -58,7 +58,8 @@ func NewInterfaceTapConfigurationsClient(subscriptionID string, credential azcor
 func (client *InterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters InterfaceTapConfiguration, options *InterfaceTapConfigurationsClientBeginCreateOrUpdateOptions) (*runtime.Poller[InterfaceTapConfigurationsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "InterfaceTapConfigurationsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "InterfaceTapConfigurationsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *InterfaceTapConfigurationsClient) createOrUpdateCreateRequest(ctx 
 func (client *InterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *InterfaceTapConfigurationsClientBeginDeleteOptions) (*runtime.Poller[InterfaceTapConfigurationsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "InterfaceTapConfigurationsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "InterfaceTapConfigurationsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 		if err != nil {

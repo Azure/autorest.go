@@ -57,7 +57,8 @@ func NewInterfacesClient(subscriptionID string, credential azcore.TokenCredentia
 func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*runtime.Poller[InterfacesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "InterfacesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 		if err != nil {
@@ -132,7 +133,8 @@ func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context,
 func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*runtime.Poller[InterfacesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "InterfacesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
@@ -346,7 +348,8 @@ func (client *InterfacesClient) getCloudServiceNetworkInterfaceHandleResponse(re
 func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*runtime.Poller[InterfacesClientGetEffectiveRouteTableResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginGetEffectiveRouteTable", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "InterfacesClient.BeginGetEffectiveRouteTable", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
@@ -850,7 +853,8 @@ func (client *InterfacesClient) listCloudServiceRoleInstanceNetworkInterfacesHan
 func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*runtime.Poller[InterfacesClientListEffectiveNetworkSecurityGroupsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "InterfacesClient.BeginListEffectiveNetworkSecurityGroups", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "InterfacesClient.BeginListEffectiveNetworkSecurityGroups", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {

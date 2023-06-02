@@ -57,7 +57,8 @@ func NewExpressRouteCircuitsClient(subscriptionID string, credential azcore.Toke
 func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ExpressRouteCircuitsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *ExpressRouteCircuitsClient) createOrUpdateCreateRequest(ctx contex
 func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsClientBeginDeleteOptions) (*runtime.Poller[ExpressRouteCircuitsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, options)
 		if err != nil {
@@ -529,7 +531,8 @@ func (client *ExpressRouteCircuitsClient) listAllHandleResponse(resp *http.Respo
 func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListArpTableOptions) (*runtime.Poller[ExpressRouteCircuitsClientListArpTableResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginListArpTable", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginListArpTable", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listArpTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 		if err != nil {
@@ -613,7 +616,8 @@ func (client *ExpressRouteCircuitsClient) listArpTableCreateRequest(ctx context.
 func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableOptions) (*runtime.Poller[ExpressRouteCircuitsClientListRoutesTableResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginListRoutesTable", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginListRoutesTable", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listRoutesTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 		if err != nil {
@@ -697,7 +701,8 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableCreateRequest(ctx conte
 func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableSummaryOptions) (*runtime.Poller[ExpressRouteCircuitsClientListRoutesTableSummaryResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginListRoutesTableSummary", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCircuitsClient.BeginListRoutesTableSummary", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 		if err != nil {

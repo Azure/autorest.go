@@ -130,7 +130,8 @@ func (client *SecurityAdminConfigurationsClient) createOrUpdateHandleResponse(re
 func (client *SecurityAdminConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *SecurityAdminConfigurationsClientBeginDeleteOptions) (*runtime.Poller[SecurityAdminConfigurationsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SecurityAdminConfigurationsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SecurityAdminConfigurationsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkManagerName, configurationName, options)
 		if err != nil {

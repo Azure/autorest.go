@@ -56,7 +56,8 @@ func NewVirtualMachineScaleSetRollingUpgradesClient(subscriptionID string, crede
 func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginCancelOptions) (*runtime.Poller[VirtualMachineScaleSetRollingUpgradesClientCancelResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetRollingUpgradesClient.BeginCancel", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetRollingUpgradesClient.BeginCancel", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.cancel(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
@@ -192,7 +193,8 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) getLatestHandleRespon
 func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginStartExtensionUpgradeOptions) (*runtime.Poller[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetRollingUpgradesClient.BeginStartExtensionUpgrade", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetRollingUpgradesClient.BeginStartExtensionUpgrade", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.startExtensionUpgrade(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
@@ -267,7 +269,8 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) startExtensionUpgrade
 func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginStartOSUpgradeOptions) (*runtime.Poller[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetRollingUpgradesClient.BeginStartOSUpgrade", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetRollingUpgradesClient.BeginStartOSUpgrade", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.startOSUpgrade(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {

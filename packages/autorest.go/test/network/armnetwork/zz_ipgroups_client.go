@@ -57,7 +57,8 @@ func NewIPGroupsClient(subscriptionID string, credential azcore.TokenCredential,
 func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (*runtime.Poller[IPGroupsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "IPGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "IPGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
 		if err != nil {
@@ -132,7 +133,8 @@ func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, r
 func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (*runtime.Poller[IPGroupsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "IPGroupsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "IPGroupsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
 		if err != nil {

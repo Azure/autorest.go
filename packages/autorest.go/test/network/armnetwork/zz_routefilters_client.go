@@ -57,7 +57,8 @@ func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredent
 func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersClientBeginCreateOrUpdateOptions) (*runtime.Poller[RouteFiltersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "RouteFiltersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "RouteFiltersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *RouteFiltersClient) createOrUpdateCreateRequest(ctx context.Contex
 func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientBeginDeleteOptions) (*runtime.Poller[RouteFiltersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "RouteFiltersClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "RouteFiltersClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, options)
 		if err != nil {

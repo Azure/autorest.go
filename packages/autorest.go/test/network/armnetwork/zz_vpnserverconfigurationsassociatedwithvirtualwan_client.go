@@ -56,7 +56,8 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*runtime.Poller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 		if err != nil {

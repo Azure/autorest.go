@@ -57,7 +57,8 @@ func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCrede
 func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (*runtime.Poller[AzureFirewallsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "AzureFirewallsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *AzureFirewallsClient) createOrUpdateCreateRequest(ctx context.Cont
 func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (*runtime.Poller[AzureFirewallsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "AzureFirewallsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, azureFirewallName, options)
 		if err != nil {
@@ -394,7 +396,8 @@ func (client *AzureFirewallsClient) listAllHandleResponse(resp *http.Response) (
 func (client *AzureFirewallsClient) BeginListLearnedPrefixes(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginListLearnedPrefixesOptions) (*runtime.Poller[AzureFirewallsClientListLearnedPrefixesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "AzureFirewallsClient.BeginListLearnedPrefixes", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginListLearnedPrefixes", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listLearnedPrefixes(ctx, resourceGroupName, azureFirewallName, options)
 		if err != nil {
@@ -468,7 +471,8 @@ func (client *AzureFirewallsClient) listLearnedPrefixesCreateRequest(ctx context
 func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (*runtime.Poller[AzureFirewallsClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "AzureFirewallsClient.BeginUpdateTags", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginUpdateTags", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, azureFirewallName, parameters, options)
 		if err != nil {

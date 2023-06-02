@@ -57,7 +57,8 @@ func NewP2SVPNGatewaysClient(subscriptionID string, credential azcore.TokenCrede
 func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[P2SVPNGatewaysClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Cont
 func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginDeleteOptions) (*runtime.Poller[P2SVPNGatewaysClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 		if err != nil {
@@ -208,7 +210,8 @@ func (client *P2SVPNGatewaysClient) deleteCreateRequest(ctx context.Context, res
 func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysClientBeginDisconnectP2SVPNConnectionsOptions) (*runtime.Poller[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.disconnectP2SVPNConnections(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
 		if err != nil {
@@ -286,7 +289,8 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsCreateRequest(ctx
 func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysClientBeginGenerateVPNProfileOptions) (*runtime.Poller[P2SVPNGatewaysClientGenerateVPNProfileResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginGenerateVPNProfile", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginGenerateVPNProfile", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.generateVPNProfile(ctx, resourceGroupName, gatewayName, parameters, options)
 		if err != nil {
@@ -425,7 +429,8 @@ func (client *P2SVPNGatewaysClient) getHandleResponse(resp *http.Response) (P2SV
 func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions) (*runtime.Poller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getP2SVPNConnectionHealth(ctx, resourceGroupName, gatewayName, options)
 		if err != nil {
@@ -501,7 +506,8 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthCreateRequest(ctx c
 func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthDetailedOptions) (*runtime.Poller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getP2SVPNConnectionHealthDetailed(ctx, resourceGroupName, gatewayName, request, options)
 		if err != nil {
@@ -704,7 +710,8 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *http
 func (client *P2SVPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginResetOptions) (*runtime.Poller[P2SVPNGatewaysClientResetResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginReset", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginReset", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.reset(ctx, resourceGroupName, gatewayName, options)
 		if err != nil {
@@ -778,7 +785,8 @@ func (client *P2SVPNGatewaysClient) resetCreateRequest(ctx context.Context, reso
 func (client *P2SVPNGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters TagsObject, options *P2SVPNGatewaysClientBeginUpdateTagsOptions) (*runtime.Poller[P2SVPNGatewaysClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginUpdateTags", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "P2SVPNGatewaysClient.BeginUpdateTags", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 		if err != nil {

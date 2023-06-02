@@ -60,7 +60,8 @@ func NewVirtualMachineScaleSetVMsClient(subscriptionID string, credential azcore
 func (client *VirtualMachineScaleSetVMsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeallocateOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientDeallocateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginDeallocate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginDeallocate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deallocate(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -138,7 +139,8 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateCreateRequest(ctx conte
 func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeleteOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -436,7 +438,8 @@ func (client *VirtualMachineScaleSetVMsClient) listHandleResponse(resp *http.Res
 func (client *VirtualMachineScaleSetVMsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPerformMaintenanceOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientPerformMaintenanceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginPerformMaintenance", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginPerformMaintenance", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.performMaintenance(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -514,7 +517,8 @@ func (client *VirtualMachineScaleSetVMsClient) performMaintenanceCreateRequest(c
 func (client *VirtualMachineScaleSetVMsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPowerOffOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientPowerOffResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginPowerOff", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginPowerOff", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.powerOff(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -596,7 +600,8 @@ func (client *VirtualMachineScaleSetVMsClient) powerOffCreateRequest(ctx context
 func (client *VirtualMachineScaleSetVMsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRedeployOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientRedeployResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginRedeploy", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginRedeploy", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.redeploy(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -673,7 +678,8 @@ func (client *VirtualMachineScaleSetVMsClient) redeployCreateRequest(ctx context
 func (client *VirtualMachineScaleSetVMsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientReimageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginReimage", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginReimage", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.reimage(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -756,7 +762,8 @@ func (client *VirtualMachineScaleSetVMsClient) reimageCreateRequest(ctx context.
 func (client *VirtualMachineScaleSetVMsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageAllOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientReimageAllResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginReimageAll", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginReimageAll", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.reimageAll(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -833,7 +840,8 @@ func (client *VirtualMachineScaleSetVMsClient) reimageAllCreateRequest(ctx conte
 func (client *VirtualMachineScaleSetVMsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRestartOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginRestart", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginRestart", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.restart(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -982,7 +990,8 @@ func (client *VirtualMachineScaleSetVMsClient) retrieveBootDiagnosticsDataHandle
 func (client *VirtualMachineScaleSetVMsClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters RunCommandInput, options *VirtualMachineScaleSetVMsClientBeginRunCommandOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientRunCommandResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginRunCommand", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginRunCommand", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.runCommand(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 		if err != nil {
@@ -1121,7 +1130,8 @@ func (client *VirtualMachineScaleSetVMsClient) simulateEvictionCreateRequest(ctx
 func (client *VirtualMachineScaleSetVMsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginStartOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginStart", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginStart", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.start(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 		if err != nil {
@@ -1198,7 +1208,8 @@ func (client *VirtualMachineScaleSetVMsClient) startCreateRequest(ctx context.Co
 func (client *VirtualMachineScaleSetVMsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMsClientBeginUpdateOptions) (*runtime.Poller[VirtualMachineScaleSetVMsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachineScaleSetVMsClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 		if err != nil {

@@ -32,7 +32,8 @@ type LROSADsClient struct {
 func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsClientBeginDelete202NonRetry400Options) (*runtime.Poller[LROSADsClientDelete202NonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDelete202NonRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDelete202NonRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.delete202NonRetry400(ctx, options)
 		if err != nil {
@@ -87,7 +88,8 @@ func (client *LROSADsClient) delete202NonRetry400CreateRequest(ctx context.Conte
 func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDelete202RetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientDelete202RetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDelete202RetryInvalidHeader", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDelete202RetryInvalidHeader", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.delete202RetryInvalidHeader(ctx, options)
 		if err != nil {
@@ -142,7 +144,8 @@ func (client *LROSADsClient) delete202RetryInvalidHeaderCreateRequest(ctx contex
 func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsClientBeginDelete204SucceededOptions) (*runtime.Poller[LROSADsClientDelete204SucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDelete204Succeeded", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDelete204Succeeded", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.delete204Succeeded(ctx, options)
 		if err != nil {
@@ -197,7 +200,8 @@ func (client *LROSADsClient) delete204SucceededCreateRequest(ctx context.Context
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteAsyncRelativeRetry400(ctx, options)
 		if err != nil {
@@ -253,7 +257,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400CreateRequest(ctx contex
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteAsyncRelativeRetryInvalidHeader(ctx, options)
 		if err != nil {
@@ -309,7 +314,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderCreateRequest(
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 		if err != nil {
@@ -365,7 +371,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingCreateReq
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteAsyncRelativeRetryNoStatus(ctx, options)
 		if err != nil {
@@ -420,7 +427,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusCreateRequest(ctx c
 func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsClientBeginDeleteNonRetry400Options) (*runtime.Poller[LROSADsClientDeleteNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteNonRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginDeleteNonRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteNonRetry400(ctx, options)
 		if err != nil {
@@ -474,7 +482,8 @@ func (client *LROSADsClient) deleteNonRetry400CreateRequest(ctx context.Context,
 func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsClientBeginPost202NoLocationOptions) (*runtime.Poller[LROSADsClientPost202NoLocationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPost202NoLocation", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPost202NoLocation", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.post202NoLocation(ctx, options)
 		if err != nil {
@@ -534,7 +543,8 @@ func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context,
 func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsClientBeginPost202NonRetry400Options) (*runtime.Poller[LROSADsClientPost202NonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPost202NonRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPost202NonRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.post202NonRetry400(ctx, options)
 		if err != nil {
@@ -595,7 +605,8 @@ func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context
 func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPost202RetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPost202RetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPost202RetryInvalidHeader", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPost202RetryInvalidHeader", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.post202RetryInvalidHeader(ctx, options)
 		if err != nil {
@@ -657,7 +668,8 @@ func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.postAsyncRelativeRetry400(ctx, options)
 		if err != nil {
@@ -720,7 +732,8 @@ func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.postAsyncRelativeRetryInvalidHeader(ctx, options)
 		if err != nil {
@@ -785,7 +798,8 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.postAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 		if err != nil {
@@ -849,7 +863,8 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateReque
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetryNoPayload", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPostAsyncRelativeRetryNoPayload", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.postAsyncRelativeRetryNoPayload(ctx, options)
 		if err != nil {
@@ -911,7 +926,8 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsClientBeginPostNonRetry400Options) (*runtime.Poller[LROSADsClientPostNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPostNonRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPostNonRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.postNonRetry400(ctx, options)
 		if err != nil {
@@ -973,7 +989,8 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPut200InvalidJSONOptions) (*runtime.Poller[LROSADsClientPut200InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPut200InvalidJSON", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPut200InvalidJSON", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.put200InvalidJSON(ctx, product, options)
 		if err != nil {
@@ -1033,7 +1050,8 @@ func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context,
 func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putAsyncRelativeRetry400(ctx, product, options)
 		if err != nil {
@@ -1093,7 +1111,8 @@ func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.C
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putAsyncRelativeRetryInvalidHeader(ctx, product, options)
 		if err != nil {
@@ -1155,7 +1174,8 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putAsyncRelativeRetryInvalidJSONPolling(ctx, product, options)
 		if err != nil {
@@ -1217,7 +1237,8 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateReques
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryNoStatus", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryNoStatus", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putAsyncRelativeRetryNoStatus(ctx, product, options)
 		if err != nil {
@@ -1279,7 +1300,8 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putAsyncRelativeRetryNoStatusPayload(ctx, product, options)
 		if err != nil {
@@ -1340,7 +1362,8 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, product Product, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*runtime.Poller[LROSADsClientPutError201NoProvisioningStatePayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutError201NoProvisioningStatePayload", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutError201NoProvisioningStatePayload", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putError201NoProvisioningStatePayload(ctx, product, options)
 		if err != nil {
@@ -1400,7 +1423,8 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(
 func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutNonRetry201Creating400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutNonRetry201Creating400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putNonRetry201Creating400(ctx, product, options)
 		if err != nil {
@@ -1460,7 +1484,8 @@ func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.
 func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putNonRetry201Creating400InvalidJSON(ctx, product, options)
 		if err != nil {
@@ -1519,7 +1544,8 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(c
 func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry400Options) (*runtime.Poller[LROSADsClientPutNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LROSADsClient.BeginPutNonRetry400", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LROSADsClient.BeginPutNonRetry400", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.putNonRetry400(ctx, product, options)
 		if err != nil {

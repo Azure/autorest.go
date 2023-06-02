@@ -56,7 +56,8 @@ func NewPrivateLinkServicesClient(subscriptionID string, credential azcore.Token
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions) (*runtime.Poller[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.checkPrivateLinkServiceVisibility(ctx, location, parameters, options)
 		if err != nil {
@@ -130,7 +131,8 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityCreate
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*runtime.Poller[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.checkPrivateLinkServiceVisibilityByResourceGroup(ctx, location, resourceGroupName, parameters, options)
 		if err != nil {
@@ -208,7 +210,8 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesClientBeginCreateOrUpdateOptions) (*runtime.Poller[PrivateLinkServicesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceName, parameters, options)
 		if err != nil {
@@ -284,7 +287,8 @@ func (client *PrivateLinkServicesClient) createOrUpdateCreateRequest(ctx context
 func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesClientBeginDeleteOptions) (*runtime.Poller[PrivateLinkServicesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, serviceName, options)
 		if err != nil {
@@ -358,7 +362,8 @@ func (client *PrivateLinkServicesClient) deleteCreateRequest(ctx context.Context
 func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesClientBeginDeletePrivateEndpointConnectionOptions) (*runtime.Poller[PrivateLinkServicesClientDeletePrivateEndpointConnectionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deletePrivateEndpointConnection(ctx, resourceGroupName, serviceName, peConnectionName, options)
 		if err != nil {

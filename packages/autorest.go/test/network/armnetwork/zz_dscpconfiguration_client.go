@@ -57,7 +57,8 @@ func NewDscpConfigurationClient(subscriptionID string, credential azcore.TokenCr
 func (client *DscpConfigurationClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, dscpConfigurationName string, parameters DscpConfiguration, options *DscpConfigurationClientBeginCreateOrUpdateOptions) (*runtime.Poller[DscpConfigurationClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DscpConfigurationClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DscpConfigurationClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, dscpConfigurationName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *DscpConfigurationClient) createOrUpdateCreateRequest(ctx context.C
 func (client *DscpConfigurationClient) BeginDelete(ctx context.Context, resourceGroupName string, dscpConfigurationName string, options *DscpConfigurationClientBeginDeleteOptions) (*runtime.Poller[DscpConfigurationClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "DscpConfigurationClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "DscpConfigurationClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, dscpConfigurationName, options)
 		if err != nil {

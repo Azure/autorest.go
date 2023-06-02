@@ -60,7 +60,8 @@ func NewCapacityReservationsClient(subscriptionID string, credential azcore.Toke
 func (client *CapacityReservationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservation, options *CapacityReservationsClientBeginCreateOrUpdateOptions) (*runtime.Poller[CapacityReservationsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CapacityReservationsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, parameters, options)
 		if err != nil {
@@ -143,7 +144,8 @@ func (client *CapacityReservationsClient) createOrUpdateCreateRequest(ctx contex
 func (client *CapacityReservationsClient) BeginDelete(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, options *CapacityReservationsClientBeginDeleteOptions) (*runtime.Poller[CapacityReservationsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CapacityReservationsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, options)
 		if err != nil {
@@ -365,7 +367,8 @@ func (client *CapacityReservationsClient) listByCapacityReservationGroupHandleRe
 func (client *CapacityReservationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, capacityReservationGroupName string, capacityReservationName string, parameters CapacityReservationUpdate, options *CapacityReservationsClientBeginUpdateOptions) (*runtime.Poller[CapacityReservationsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "CapacityReservationsClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "CapacityReservationsClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, capacityReservationGroupName, capacityReservationName, parameters, options)
 		if err != nil {

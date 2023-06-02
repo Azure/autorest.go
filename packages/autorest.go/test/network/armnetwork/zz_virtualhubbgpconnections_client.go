@@ -128,7 +128,8 @@ func (client *VirtualHubBgpConnectionsClient) listHandleResponse(resp *http.Resp
 func (client *VirtualHubBgpConnectionsClient) BeginListAdvertisedRoutes(ctx context.Context, resourceGroupName string, hubName string, connectionName string, options *VirtualHubBgpConnectionsClientBeginListAdvertisedRoutesOptions) (*runtime.Poller[VirtualHubBgpConnectionsClientListAdvertisedRoutesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubBgpConnectionsClient.BeginListAdvertisedRoutes", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualHubBgpConnectionsClient.BeginListAdvertisedRoutes", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listAdvertisedRoutes(ctx, resourceGroupName, hubName, connectionName, options)
 		if err != nil {
@@ -206,7 +207,8 @@ func (client *VirtualHubBgpConnectionsClient) listAdvertisedRoutesCreateRequest(
 func (client *VirtualHubBgpConnectionsClient) BeginListLearnedRoutes(ctx context.Context, resourceGroupName string, hubName string, connectionName string, options *VirtualHubBgpConnectionsClientBeginListLearnedRoutesOptions) (*runtime.Poller[VirtualHubBgpConnectionsClientListLearnedRoutesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubBgpConnectionsClient.BeginListLearnedRoutes", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "VirtualHubBgpConnectionsClient.BeginListLearnedRoutes", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listLearnedRoutes(ctx, resourceGroupName, hubName, connectionName, options)
 		if err != nil {

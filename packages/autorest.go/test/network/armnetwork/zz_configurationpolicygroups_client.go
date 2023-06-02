@@ -58,7 +58,8 @@ func NewConfigurationPolicyGroupsClient(subscriptionID string, credential azcore
 func (client *ConfigurationPolicyGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, vpnServerConfigurationPolicyGroupParameters VPNServerConfigurationPolicyGroup, options *ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ConfigurationPolicyGroupsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ConfigurationPolicyGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ConfigurationPolicyGroupsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, vpnServerConfigurationPolicyGroupParameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *ConfigurationPolicyGroupsClient) createOrUpdateCreateRequest(ctx c
 func (client *ConfigurationPolicyGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientBeginDeleteOptions) (*runtime.Poller[ConfigurationPolicyGroupsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ConfigurationPolicyGroupsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ConfigurationPolicyGroupsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, options)
 		if err != nil {

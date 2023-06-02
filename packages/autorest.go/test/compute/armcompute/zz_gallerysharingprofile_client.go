@@ -57,7 +57,8 @@ func NewGallerySharingProfileClient(subscriptionID string, credential azcore.Tok
 func (client *GallerySharingProfileClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate SharingUpdate, options *GallerySharingProfileClientBeginUpdateOptions) (*runtime.Poller[GallerySharingProfileClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "GallerySharingProfileClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "GallerySharingProfileClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, galleryName, sharingUpdate, options)
 		if err != nil {

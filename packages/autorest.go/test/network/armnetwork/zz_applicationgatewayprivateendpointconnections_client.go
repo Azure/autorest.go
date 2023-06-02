@@ -57,7 +57,8 @@ func NewApplicationGatewayPrivateEndpointConnectionsClient(subscriptionID string
 func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginDeleteOptions) (*runtime.Poller[ApplicationGatewayPrivateEndpointConnectionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, connectionName, options)
 		if err != nil {
@@ -275,7 +276,8 @@ func (client *ApplicationGatewayPrivateEndpointConnectionsClient) listHandleResp
 func (client *ApplicationGatewayPrivateEndpointConnectionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, connectionName string, parameters ApplicationGatewayPrivateEndpointConnection, options *ApplicationGatewayPrivateEndpointConnectionsClientBeginUpdateOptions) (*runtime.Poller[ApplicationGatewayPrivateEndpointConnectionsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, applicationGatewayName, connectionName, parameters, options)
 		if err != nil {

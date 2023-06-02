@@ -57,7 +57,8 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*runtime.Poller[SecurityPartnerProvidersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SecurityPartnerProvidersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SecurityPartnerProvidersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx co
 func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*runtime.Poller[SecurityPartnerProvidersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "SecurityPartnerProvidersClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "SecurityPartnerProvidersClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
 		if err != nil {

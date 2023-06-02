@@ -60,7 +60,8 @@ func NewExpressRouteCircuitConnectionsClient(subscriptionID string, credential a
 func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ExpressRouteCircuitConnectionsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCircuitConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCircuitConnectionsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, connectionName, expressRouteCircuitConnectionParameters, options)
 		if err != nil {
@@ -146,7 +147,8 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateCreateRequest(
 func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsClientBeginDeleteOptions) (*runtime.Poller[ExpressRouteCircuitConnectionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteCircuitConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteCircuitConnectionsClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 		if err != nil {

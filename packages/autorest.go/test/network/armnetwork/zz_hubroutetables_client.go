@@ -58,7 +58,8 @@ func NewHubRouteTablesClient(subscriptionID string, credential azcore.TokenCrede
 func (client *HubRouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, routeTableParameters HubRouteTable, options *HubRouteTablesClientBeginCreateOrUpdateOptions) (*runtime.Poller[HubRouteTablesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "HubRouteTablesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "HubRouteTablesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeTableName, routeTableParameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *HubRouteTablesClient) createOrUpdateCreateRequest(ctx context.Cont
 func (client *HubRouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *HubRouteTablesClientBeginDeleteOptions) (*runtime.Poller[HubRouteTablesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "HubRouteTablesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "HubRouteTablesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 		if err != nil {

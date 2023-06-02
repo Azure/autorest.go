@@ -121,7 +121,8 @@ func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) 
 func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*runtime.Poller[ProfilesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "ProfilesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "ProfilesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkProfileName, options)
 		if err != nil {

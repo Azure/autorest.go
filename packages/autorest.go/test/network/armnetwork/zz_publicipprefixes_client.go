@@ -57,7 +57,8 @@ func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCre
 func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesClientBeginCreateOrUpdateOptions) (*runtime.Poller[PublicIPPrefixesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPPrefixesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PublicIPPrefixesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Co
 func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesClientBeginDeleteOptions) (*runtime.Poller[PublicIPPrefixesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PublicIPPrefixesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PublicIPPrefixesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPPrefixName, options)
 		if err != nil {

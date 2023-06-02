@@ -57,7 +57,8 @@ func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCreden
 func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (*runtime.Poller[LoadBalancersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LoadBalancersClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters, options)
 		if err != nil {
@@ -133,7 +134,8 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersClientBeginDeleteOptions) (*runtime.Poller[LoadBalancersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancersClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LoadBalancersClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, options)
 		if err != nil {
@@ -399,7 +401,8 @@ func (client *LoadBalancersClient) listAllHandleResponse(resp *http.Response) (L
 func (client *LoadBalancersClient) BeginListInboundNatRulePortMappings(ctx context.Context, groupName string, loadBalancerName string, backendPoolName string, parameters QueryInboundNatRulePortMappingRequest, options *LoadBalancersClientBeginListInboundNatRulePortMappingsOptions) (*runtime.Poller[LoadBalancersClientListInboundNatRulePortMappingsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancersClient.BeginListInboundNatRulePortMappings", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LoadBalancersClient.BeginListInboundNatRulePortMappings", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.listInboundNatRulePortMappings(ctx, groupName, loadBalancerName, backendPoolName, parameters, options)
 		if err != nil {
@@ -479,7 +482,8 @@ func (client *LoadBalancersClient) listInboundNatRulePortMappingsCreateRequest(c
 func (client *LoadBalancersClient) BeginSwapPublicIPAddresses(ctx context.Context, location string, parameters LoadBalancerVipSwapRequest, options *LoadBalancersClientBeginSwapPublicIPAddressesOptions) (*runtime.Poller[LoadBalancersClientSwapPublicIPAddressesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancersClient.BeginSwapPublicIPAddresses", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "LoadBalancersClient.BeginSwapPublicIPAddresses", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.swapPublicIPAddresses(ctx, location, parameters, options)
 		if err != nil {

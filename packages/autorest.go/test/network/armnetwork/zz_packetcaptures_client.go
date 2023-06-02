@@ -58,7 +58,8 @@ func NewPacketCapturesClient(subscriptionID string, credential azcore.TokenCrede
 func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (*runtime.Poller[PacketCapturesClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PacketCapturesClient.BeginCreate", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PacketCapturesClient.BeginCreate", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.create(ctx, resourceGroupName, networkWatcherName, packetCaptureName, parameters, options)
 		if err != nil {
@@ -139,7 +140,8 @@ func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, res
 func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (*runtime.Poller[PacketCapturesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PacketCapturesClient.BeginDelete", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PacketCapturesClient.BeginDelete", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 		if err != nil {
@@ -284,7 +286,8 @@ func (client *PacketCapturesClient) getHandleResponse(resp *http.Response) (Pack
 func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (*runtime.Poller[PacketCapturesClientGetStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PacketCapturesClient.BeginGetStatus", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PacketCapturesClient.BeginGetStatus", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.getStatus(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 		if err != nil {
@@ -426,7 +429,8 @@ func (client *PacketCapturesClient) listHandleResponse(resp *http.Response) (Pac
 func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (*runtime.Poller[PacketCapturesClientStopResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		var err error
-		ctx, endSpan := runtime.StartSpan(ctx, "PacketCapturesClient.BeginStop", client.internal.Tracer(), nil)
+		var endSpan func(error)
+		ctx, endSpan = runtime.StartSpan(ctx, "PacketCapturesClient.BeginStop", client.internal.Tracer(), nil)
 		defer func() { endSpan(err) }()
 		resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 		if err != nil {
