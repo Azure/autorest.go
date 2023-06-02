@@ -54,7 +54,7 @@ const goMappings = {
     'xmlgroup': ['xml-service.json', '--remove-unreferenced-types'],
 };
 
-// any new args must also be added to C:\git\Azure\autorest.go\common\config\rush\command-line.json
+// any new args must also be added to autorest.go\common\config\rush\command-line.json
 const args = process.argv.slice(2);
 var filter = undefined;
 const switches = [];
