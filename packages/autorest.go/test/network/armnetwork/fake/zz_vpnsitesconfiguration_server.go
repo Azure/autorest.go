@@ -83,8 +83,8 @@ func (v *VPNSitesConfigurationServerTransport) dispatchBeginDownload(req *http.R
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginDownload(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualWANName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginDownload = &respr
 	}

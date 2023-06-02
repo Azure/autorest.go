@@ -220,8 +220,8 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete400(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method Delete400 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete400(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -239,8 +239,8 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete407(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method Delete407 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete407(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -258,8 +258,8 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete417(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method Delete417 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete417(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -277,8 +277,8 @@ func (h *HTTPClientFailureServerTransport) dispatchGet400(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Get400 not implemented")}
 	}
 	respr, errRespr := h.srv.Get400(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -296,8 +296,8 @@ func (h *HTTPClientFailureServerTransport) dispatchGet402(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Get402 not implemented")}
 	}
 	respr, errRespr := h.srv.Get402(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -315,8 +315,8 @@ func (h *HTTPClientFailureServerTransport) dispatchGet403(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Get403 not implemented")}
 	}
 	respr, errRespr := h.srv.Get403(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -334,8 +334,8 @@ func (h *HTTPClientFailureServerTransport) dispatchGet411(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Get411 not implemented")}
 	}
 	respr, errRespr := h.srv.Get411(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -353,8 +353,8 @@ func (h *HTTPClientFailureServerTransport) dispatchGet412(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Get412 not implemented")}
 	}
 	respr, errRespr := h.srv.Get412(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -372,8 +372,8 @@ func (h *HTTPClientFailureServerTransport) dispatchGet416(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Get416 not implemented")}
 	}
 	respr, errRespr := h.srv.Get416(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -391,8 +391,8 @@ func (h *HTTPClientFailureServerTransport) dispatchHead400(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Head400 not implemented")}
 	}
 	respr, errRespr := h.srv.Head400(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -410,8 +410,8 @@ func (h *HTTPClientFailureServerTransport) dispatchHead401(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Head401 not implemented")}
 	}
 	respr, errRespr := h.srv.Head401(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -429,8 +429,8 @@ func (h *HTTPClientFailureServerTransport) dispatchHead410(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Head410 not implemented")}
 	}
 	respr, errRespr := h.srv.Head410(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -448,8 +448,8 @@ func (h *HTTPClientFailureServerTransport) dispatchHead429(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Head429 not implemented")}
 	}
 	respr, errRespr := h.srv.Head429(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -467,8 +467,8 @@ func (h *HTTPClientFailureServerTransport) dispatchOptions400(req *http.Request)
 		return nil, &nonRetriableError{errors.New("method Options400 not implemented")}
 	}
 	respr, errRespr := h.srv.Options400(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -486,8 +486,8 @@ func (h *HTTPClientFailureServerTransport) dispatchOptions403(req *http.Request)
 		return nil, &nonRetriableError{errors.New("method Options403 not implemented")}
 	}
 	respr, errRespr := h.srv.Options403(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -505,8 +505,8 @@ func (h *HTTPClientFailureServerTransport) dispatchOptions412(req *http.Request)
 		return nil, &nonRetriableError{errors.New("method Options412 not implemented")}
 	}
 	respr, errRespr := h.srv.Options412(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -524,8 +524,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPatch400(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method Patch400 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch400(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -543,8 +543,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPatch405(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method Patch405 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch405(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -562,8 +562,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPatch414(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method Patch414 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch414(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -581,8 +581,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPost400(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Post400 not implemented")}
 	}
 	respr, errRespr := h.srv.Post400(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -600,8 +600,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPost406(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Post406 not implemented")}
 	}
 	respr, errRespr := h.srv.Post406(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -619,8 +619,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPost415(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Post415 not implemented")}
 	}
 	respr, errRespr := h.srv.Post415(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -638,8 +638,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPut400(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Put400 not implemented")}
 	}
 	respr, errRespr := h.srv.Put400(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -657,8 +657,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPut404(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Put404 not implemented")}
 	}
 	respr, errRespr := h.srv.Put404(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -676,8 +676,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPut409(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Put409 not implemented")}
 	}
 	respr, errRespr := h.srv.Put409(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -695,8 +695,8 @@ func (h *HTTPClientFailureServerTransport) dispatchPut413(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Put413 not implemented")}
 	}
 	respr, errRespr := h.srv.Put413(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {

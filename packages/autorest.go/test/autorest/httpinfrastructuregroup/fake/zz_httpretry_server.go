@@ -118,8 +118,8 @@ func (h *HTTPRetryServerTransport) dispatchDelete503(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Delete503 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete503(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -137,8 +137,8 @@ func (h *HTTPRetryServerTransport) dispatchGet502(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method Get502 not implemented")}
 	}
 	respr, errRespr := h.srv.Get502(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -156,8 +156,8 @@ func (h *HTTPRetryServerTransport) dispatchHead408(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("method Head408 not implemented")}
 	}
 	respr, errRespr := h.srv.Head408(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -175,8 +175,8 @@ func (h *HTTPRetryServerTransport) dispatchOptions502(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Options502 not implemented")}
 	}
 	respr, errRespr := h.srv.Options502(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -194,8 +194,8 @@ func (h *HTTPRetryServerTransport) dispatchPatch500(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method Patch500 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch500(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -213,8 +213,8 @@ func (h *HTTPRetryServerTransport) dispatchPatch504(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method Patch504 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch504(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -232,8 +232,8 @@ func (h *HTTPRetryServerTransport) dispatchPost503(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("method Post503 not implemented")}
 	}
 	respr, errRespr := h.srv.Post503(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -251,8 +251,8 @@ func (h *HTTPRetryServerTransport) dispatchPut500(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method Put500 not implemented")}
 	}
 	respr, errRespr := h.srv.Put500(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -270,8 +270,8 @@ func (h *HTTPRetryServerTransport) dispatchPut504(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method Put504 not implemented")}
 	}
 	respr, errRespr := h.srv.Put504(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

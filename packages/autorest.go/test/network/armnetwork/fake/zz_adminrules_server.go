@@ -107,8 +107,8 @@ func (a *AdminRulesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := a.srv.CreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkManagerName")], matches[regex.SubexpIndex("configurationName")], matches[regex.SubexpIndex("ruleCollectionName")], matches[regex.SubexpIndex("ruleName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -144,8 +144,8 @@ func (a *AdminRulesServerTransport) dispatchBeginDelete(req *http.Request) (*htt
 			}
 		}
 		respr, errRespr := a.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkManagerName")], matches[regex.SubexpIndex("configurationName")], matches[regex.SubexpIndex("ruleCollectionName")], matches[regex.SubexpIndex("ruleName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginDelete = &respr
 	}
@@ -176,8 +176,8 @@ func (a *AdminRulesServerTransport) dispatchGet(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkManagerName")], matches[regex.SubexpIndex("configurationName")], matches[regex.SubexpIndex("ruleCollectionName")], matches[regex.SubexpIndex("ruleName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

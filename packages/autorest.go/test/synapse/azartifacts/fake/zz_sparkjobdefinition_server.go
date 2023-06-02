@@ -132,8 +132,8 @@ func (s *SparkJobDefinitionServerTransport) dispatchBeginCreateOrUpdateSparkJobD
 			}
 		}
 		respr, errRespr := s.srv.BeginCreateOrUpdateSparkJobDefinition(req.Context(), matches[regex.SubexpIndex("sparkJobDefinitionName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginCreateOrUpdateSparkJobDefinition = &respr
 	}
@@ -163,8 +163,8 @@ func (s *SparkJobDefinitionServerTransport) dispatchBeginDebugSparkJobDefinition
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginDebugSparkJobDefinition(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginDebugSparkJobDefinition = &respr
 	}
@@ -196,8 +196,8 @@ func (s *SparkJobDefinitionServerTransport) dispatchBeginDeleteSparkJobDefinitio
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := s.srv.BeginDeleteSparkJobDefinition(req.Context(), matches[regex.SubexpIndex("sparkJobDefinitionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginDeleteSparkJobDefinition = &respr
 	}
@@ -229,8 +229,8 @@ func (s *SparkJobDefinitionServerTransport) dispatchBeginExecuteSparkJobDefiniti
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := s.srv.BeginExecuteSparkJobDefinition(req.Context(), matches[regex.SubexpIndex("sparkJobDefinitionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginExecuteSparkJobDefinition = &respr
 	}
@@ -268,8 +268,8 @@ func (s *SparkJobDefinitionServerTransport) dispatchGetSparkJobDefinition(req *h
 		}
 	}
 	respr, errRespr := s.srv.GetSparkJobDefinition(req.Context(), matches[regex.SubexpIndex("sparkJobDefinitionName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -322,8 +322,8 @@ func (s *SparkJobDefinitionServerTransport) dispatchBeginRenameSparkJobDefinitio
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginRenameSparkJobDefinition(req.Context(), matches[regex.SubexpIndex("sparkJobDefinitionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginRenameSparkJobDefinition = &respr
 	}

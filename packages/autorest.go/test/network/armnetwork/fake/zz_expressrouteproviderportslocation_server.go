@@ -85,8 +85,8 @@ func (e *ExpressRouteProviderPortsLocationServerTransport) dispatchList(req *htt
 		}
 	}
 	respr, errRespr := e.srv.List(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

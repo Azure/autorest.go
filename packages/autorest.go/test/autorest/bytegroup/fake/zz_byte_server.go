@@ -94,8 +94,8 @@ func (b *ByteServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respons
 		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
 	}
 	respr, errRespr := b.srv.GetEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -113,8 +113,8 @@ func (b *ByteServerTransport) dispatchGetInvalid(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
 	}
 	respr, errRespr := b.srv.GetInvalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -132,8 +132,8 @@ func (b *ByteServerTransport) dispatchGetNonASCII(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method GetNonASCII not implemented")}
 	}
 	respr, errRespr := b.srv.GetNonASCII(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -151,8 +151,8 @@ func (b *ByteServerTransport) dispatchGetNull(req *http.Request) (*http.Response
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := b.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -174,8 +174,8 @@ func (b *ByteServerTransport) dispatchPutNonASCII(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	respr, errRespr := b.srv.PutNonASCII(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

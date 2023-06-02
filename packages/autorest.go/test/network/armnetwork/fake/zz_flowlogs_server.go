@@ -110,8 +110,8 @@ func (f *FlowLogsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request)
 			return nil, err
 		}
 		respr, errRespr := f.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], matches[regex.SubexpIndex("flowLogName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		f.beginCreateOrUpdate = &respr
 	}
@@ -143,8 +143,8 @@ func (f *FlowLogsServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := f.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], matches[regex.SubexpIndex("flowLogName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		f.beginDelete = &respr
 	}
@@ -175,8 +175,8 @@ func (f *FlowLogsServerTransport) dispatchGet(req *http.Request) (*http.Response
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := f.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], matches[regex.SubexpIndex("flowLogName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -234,8 +234,8 @@ func (f *FlowLogsServerTransport) dispatchUpdateTags(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := f.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], matches[regex.SubexpIndex("flowLogName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

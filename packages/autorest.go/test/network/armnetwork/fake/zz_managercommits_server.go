@@ -83,8 +83,8 @@ func (m *ManagerCommitsServerTransport) dispatchBeginPost(req *http.Request) (*h
 			return nil, err
 		}
 		respr, errRespr := m.srv.BeginPost(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkManagerName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		m.beginPost = &respr
 	}

@@ -448,8 +448,8 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 			}
 		}
 		respr, errRespr := p.srv.BeginGetMultiplePagesLRO(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginGetMultiplePagesLRO = &respr
 	}

@@ -96,8 +96,8 @@ func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalNull(req *http.Re
 		}
 	}
 	respr, errRespr := a.srv.GetMethodLocalNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -115,8 +115,8 @@ func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalValid(req *http.R
 		return nil, &nonRetriableError{errors.New("method GetMethodLocalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetMethodLocalValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -134,8 +134,8 @@ func (a *APIVersionLocalServerTransport) dispatchGetPathLocalValid(req *http.Req
 		return nil, &nonRetriableError{errors.New("method GetPathLocalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetPathLocalValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -153,8 +153,8 @@ func (a *APIVersionLocalServerTransport) dispatchGetSwaggerLocalValid(req *http.
 		return nil, &nonRetriableError{errors.New("method GetSwaggerLocalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetSwaggerLocalValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

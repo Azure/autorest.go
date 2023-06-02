@@ -104,8 +104,8 @@ func (h *HubRouteTablesServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 			return nil, err
 		}
 		respr, errRespr := h.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualHubName")], matches[regex.SubexpIndex("routeTableName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		h.beginCreateOrUpdate = &respr
 	}
@@ -137,8 +137,8 @@ func (h *HubRouteTablesServerTransport) dispatchBeginDelete(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := h.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualHubName")], matches[regex.SubexpIndex("routeTableName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		h.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (h *HubRouteTablesServerTransport) dispatchGet(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := h.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualHubName")], matches[regex.SubexpIndex("routeTableName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

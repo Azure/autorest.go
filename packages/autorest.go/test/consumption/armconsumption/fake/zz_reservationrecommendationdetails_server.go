@@ -78,8 +78,8 @@ func (r *ReservationRecommendationDetailsServerTransport) dispatchGet(req *http.
 	}
 	qp := req.URL.Query()
 	respr, errRespr := r.srv.Get(req.Context(), matches[regex.SubexpIndex("billingScope")], armconsumption.Scope(qp.Get("scope")), qp.Get("region"), armconsumption.Term(qp.Get("term")), armconsumption.LookBackPeriod(qp.Get("lookBackPeriod")), qp.Get("product"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {

@@ -160,8 +160,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginCreateOrU
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginCreateOrUpdate = &respr
 	}
@@ -193,8 +193,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginDelete(re
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginDelete = &respr
 	}
@@ -225,8 +225,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchGet(req *http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -251,8 +251,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginGetIkeSas
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginGetIkeSas(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginGetIkeSas = &respr
 	}
@@ -283,8 +283,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchGetSharedKey(r
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.GetSharedKey(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -339,8 +339,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginResetConn
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginResetConnection(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginResetConnection = &respr
 	}
@@ -376,8 +376,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginResetShar
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginResetSharedKey(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginResetSharedKey = &respr
 	}
@@ -413,8 +413,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginSetShared
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginSetSharedKey(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginSetSharedKey = &respr
 	}
@@ -456,8 +456,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginStartPack
 			}
 		}
 		respr, errRespr := v.srv.BeginStartPacketCapture(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginStartPacketCapture = &respr
 	}
@@ -493,8 +493,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginStopPacke
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginStopPacketCapture(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginStopPacketCapture = &respr
 	}
@@ -530,8 +530,8 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginUpdateTag
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginUpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginUpdateTags = &respr
 	}

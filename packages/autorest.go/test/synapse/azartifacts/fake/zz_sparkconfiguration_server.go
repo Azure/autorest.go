@@ -118,8 +118,8 @@ func (s *SparkConfigurationServerTransport) dispatchBeginCreateOrUpdateSparkConf
 			}
 		}
 		respr, errRespr := s.srv.BeginCreateOrUpdateSparkConfiguration(req.Context(), matches[regex.SubexpIndex("sparkConfigurationName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginCreateOrUpdateSparkConfiguration = &respr
 	}
@@ -151,8 +151,8 @@ func (s *SparkConfigurationServerTransport) dispatchBeginDeleteSparkConfiguratio
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := s.srv.BeginDeleteSparkConfiguration(req.Context(), matches[regex.SubexpIndex("sparkConfigurationName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginDeleteSparkConfiguration = &respr
 	}
@@ -190,8 +190,8 @@ func (s *SparkConfigurationServerTransport) dispatchGetSparkConfiguration(req *h
 		}
 	}
 	respr, errRespr := s.srv.GetSparkConfiguration(req.Context(), matches[regex.SubexpIndex("sparkConfigurationName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -244,8 +244,8 @@ func (s *SparkConfigurationServerTransport) dispatchBeginRenameSparkConfiguratio
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginRenameSparkConfiguration(req.Context(), matches[regex.SubexpIndex("sparkConfigurationName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginRenameSparkConfiguration = &respr
 	}

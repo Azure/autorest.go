@@ -117,8 +117,8 @@ func (i *IPGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request)
 			return nil, err
 		}
 		respr, errRespr := i.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("ipGroupsName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginCreateOrUpdate = &respr
 	}
@@ -150,8 +150,8 @@ func (i *IPGroupsServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := i.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("ipGroupsName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginDelete = &respr
 	}
@@ -190,8 +190,8 @@ func (i *IPGroupsServerTransport) dispatchGet(req *http.Request) (*http.Response
 		}
 	}
 	respr, errRespr := i.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("ipGroupsName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -279,8 +279,8 @@ func (i *IPGroupsServerTransport) dispatchUpdateGroups(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := i.srv.UpdateGroups(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("ipGroupsName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

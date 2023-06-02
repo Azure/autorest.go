@@ -178,8 +178,8 @@ func (h *HTTPSuccessServerTransport) dispatchDelete200(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Delete200 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -197,8 +197,8 @@ func (h *HTTPSuccessServerTransport) dispatchDelete202(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Delete202 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete202(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -216,8 +216,8 @@ func (h *HTTPSuccessServerTransport) dispatchDelete204(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Delete204 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete204(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -235,8 +235,8 @@ func (h *HTTPSuccessServerTransport) dispatchGet200(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method Get200 not implemented")}
 	}
 	respr, errRespr := h.srv.Get200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -254,8 +254,8 @@ func (h *HTTPSuccessServerTransport) dispatchHead200(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Head200 not implemented")}
 	}
 	respr, errRespr := h.srv.Head200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -273,8 +273,8 @@ func (h *HTTPSuccessServerTransport) dispatchHead204(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Head204 not implemented")}
 	}
 	respr, errRespr := h.srv.Head204(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -292,8 +292,8 @@ func (h *HTTPSuccessServerTransport) dispatchHead404(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Head404 not implemented")}
 	}
 	respr, errRespr := h.srv.Head404(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -311,8 +311,8 @@ func (h *HTTPSuccessServerTransport) dispatchOptions200(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method Options200 not implemented")}
 	}
 	respr, errRespr := h.srv.Options200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -330,8 +330,8 @@ func (h *HTTPSuccessServerTransport) dispatchPatch200(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Patch200 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -349,8 +349,8 @@ func (h *HTTPSuccessServerTransport) dispatchPatch202(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Patch202 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch202(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -368,8 +368,8 @@ func (h *HTTPSuccessServerTransport) dispatchPatch204(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Patch204 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch204(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -387,8 +387,8 @@ func (h *HTTPSuccessServerTransport) dispatchPost200(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Post200 not implemented")}
 	}
 	respr, errRespr := h.srv.Post200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -406,8 +406,8 @@ func (h *HTTPSuccessServerTransport) dispatchPost201(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Post201 not implemented")}
 	}
 	respr, errRespr := h.srv.Post201(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -425,8 +425,8 @@ func (h *HTTPSuccessServerTransport) dispatchPost202(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Post202 not implemented")}
 	}
 	respr, errRespr := h.srv.Post202(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -444,8 +444,8 @@ func (h *HTTPSuccessServerTransport) dispatchPost204(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Post204 not implemented")}
 	}
 	respr, errRespr := h.srv.Post204(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -463,8 +463,8 @@ func (h *HTTPSuccessServerTransport) dispatchPut200(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method Put200 not implemented")}
 	}
 	respr, errRespr := h.srv.Put200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -482,8 +482,8 @@ func (h *HTTPSuccessServerTransport) dispatchPut201(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method Put201 not implemented")}
 	}
 	respr, errRespr := h.srv.Put201(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -501,8 +501,8 @@ func (h *HTTPSuccessServerTransport) dispatchPut202(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method Put202 not implemented")}
 	}
 	respr, errRespr := h.srv.Put202(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -520,8 +520,8 @@ func (h *HTTPSuccessServerTransport) dispatchPut204(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method Put204 not implemented")}
 	}
 	respr, errRespr := h.srv.Put204(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {

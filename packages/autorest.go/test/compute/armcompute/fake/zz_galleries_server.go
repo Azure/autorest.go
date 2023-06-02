@@ -118,8 +118,8 @@ func (g *GalleriesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request
 			return nil, err
 		}
 		respr, errRespr := g.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		g.beginCreateOrUpdate = &respr
 	}
@@ -151,8 +151,8 @@ func (g *GalleriesServerTransport) dispatchBeginDelete(req *http.Request) (*http
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := g.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		g.beginDelete = &respr
 	}
@@ -193,8 +193,8 @@ func (g *GalleriesServerTransport) dispatchGet(req *http.Request) (*http.Respons
 		}
 	}
 	respr, errRespr := g.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -283,8 +283,8 @@ func (g *GalleriesServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 			return nil, err
 		}
 		respr, errRespr := g.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		g.beginUpdate = &respr
 	}

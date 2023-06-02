@@ -82,8 +82,8 @@ func (h *HTTPFailureServerTransport) dispatchGetEmptyError(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetEmptyError not implemented")}
 	}
 	respr, errRespr := h.srv.GetEmptyError(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -101,8 +101,8 @@ func (h *HTTPFailureServerTransport) dispatchGetNoModelEmpty(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method GetNoModelEmpty not implemented")}
 	}
 	respr, errRespr := h.srv.GetNoModelEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -120,8 +120,8 @@ func (h *HTTPFailureServerTransport) dispatchGetNoModelError(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method GetNoModelError not implemented")}
 	}
 	respr, errRespr := h.srv.GetNoModelError(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

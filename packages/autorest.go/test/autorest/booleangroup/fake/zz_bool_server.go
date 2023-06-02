@@ -100,8 +100,8 @@ func (b *BoolServerTransport) dispatchGetFalse(req *http.Request) (*http.Respons
 		return nil, &nonRetriableError{errors.New("method GetFalse not implemented")}
 	}
 	respr, errRespr := b.srv.GetFalse(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -119,8 +119,8 @@ func (b *BoolServerTransport) dispatchGetInvalid(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
 	}
 	respr, errRespr := b.srv.GetInvalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -138,8 +138,8 @@ func (b *BoolServerTransport) dispatchGetNull(req *http.Request) (*http.Response
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := b.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -157,8 +157,8 @@ func (b *BoolServerTransport) dispatchGetTrue(req *http.Request) (*http.Response
 		return nil, &nonRetriableError{errors.New("method GetTrue not implemented")}
 	}
 	respr, errRespr := b.srv.GetTrue(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -176,8 +176,8 @@ func (b *BoolServerTransport) dispatchPutFalse(req *http.Request) (*http.Respons
 		return nil, &nonRetriableError{errors.New("method PutFalse not implemented")}
 	}
 	respr, errRespr := b.srv.PutFalse(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -195,8 +195,8 @@ func (b *BoolServerTransport) dispatchPutTrue(req *http.Request) (*http.Response
 		return nil, &nonRetriableError{errors.New("method PutTrue not implemented")}
 	}
 	respr, errRespr := b.srv.PutTrue(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

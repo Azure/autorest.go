@@ -89,8 +89,8 @@ func (t *TriggerRunServerTransport) dispatchCancelTriggerInstance(req *http.Requ
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := t.srv.CancelTriggerInstance(req.Context(), matches[regex.SubexpIndex("triggerName")], matches[regex.SubexpIndex("runId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -112,8 +112,8 @@ func (t *TriggerRunServerTransport) dispatchQueryTriggerRunsByWorkspace(req *htt
 		return nil, err
 	}
 	respr, errRespr := t.srv.QueryTriggerRunsByWorkspace(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -137,8 +137,8 @@ func (t *TriggerRunServerTransport) dispatchRerunTriggerInstance(req *http.Reque
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := t.srv.RerunTriggerInstance(req.Context(), matches[regex.SubexpIndex("triggerName")], matches[regex.SubexpIndex("runId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

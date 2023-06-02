@@ -167,8 +167,8 @@ func (c *CloudServicesServerTransport) dispatchBeginCreateOrUpdate(req *http.Req
 			return nil, err
 		}
 		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginCreateOrUpdate = &respr
 	}
@@ -200,8 +200,8 @@ func (c *CloudServicesServerTransport) dispatchBeginDelete(req *http.Request) (*
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginDelete = &respr
 	}
@@ -243,8 +243,8 @@ func (c *CloudServicesServerTransport) dispatchBeginDeleteInstances(req *http.Re
 			}
 		}
 		respr, errRespr := c.srv.BeginDeleteInstances(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginDeleteInstances = &respr
 	}
@@ -275,8 +275,8 @@ func (c *CloudServicesServerTransport) dispatchGet(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -300,8 +300,8 @@ func (c *CloudServicesServerTransport) dispatchGetInstanceView(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetInstanceView(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -386,8 +386,8 @@ func (c *CloudServicesServerTransport) dispatchBeginPowerOff(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginPowerOff(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginPowerOff = &respr
 	}
@@ -429,8 +429,8 @@ func (c *CloudServicesServerTransport) dispatchBeginRebuild(req *http.Request) (
 			}
 		}
 		respr, errRespr := c.srv.BeginRebuild(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginRebuild = &respr
 	}
@@ -472,8 +472,8 @@ func (c *CloudServicesServerTransport) dispatchBeginReimage(req *http.Request) (
 			}
 		}
 		respr, errRespr := c.srv.BeginReimage(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginReimage = &respr
 	}
@@ -515,8 +515,8 @@ func (c *CloudServicesServerTransport) dispatchBeginRestart(req *http.Request) (
 			}
 		}
 		respr, errRespr := c.srv.BeginRestart(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginRestart = &respr
 	}
@@ -548,8 +548,8 @@ func (c *CloudServicesServerTransport) dispatchBeginStart(req *http.Request) (*h
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginStart(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginStart = &respr
 	}
@@ -585,8 +585,8 @@ func (c *CloudServicesServerTransport) dispatchBeginUpdate(req *http.Request) (*
 			return nil, err
 		}
 		respr, errRespr := c.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginUpdate = &respr
 	}

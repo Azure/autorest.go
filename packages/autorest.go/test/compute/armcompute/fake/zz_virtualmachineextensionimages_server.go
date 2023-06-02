@@ -90,8 +90,8 @@ func (v *VirtualMachineExtensionImagesServerTransport) dispatchGet(req *http.Req
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.Get(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("publisherName")], matches[regex.SubexpIndex("type")], matches[regex.SubexpIndex("version")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -115,8 +115,8 @@ func (v *VirtualMachineExtensionImagesServerTransport) dispatchListTypes(req *ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.ListTypes(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("publisherName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -161,8 +161,8 @@ func (v *VirtualMachineExtensionImagesServerTransport) dispatchListVersions(req 
 		}
 	}
 	respr, errRespr := v.srv.ListVersions(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("publisherName")], matches[regex.SubexpIndex("type")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

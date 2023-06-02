@@ -237,8 +237,8 @@ func (p *PathsServerTransport) dispatchArrayCSVInPath(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.ArrayCSVInPath(req.Context(), strings.Split(matches[regex.SubexpIndex("arrayPath")], ","), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -266,8 +266,8 @@ func (p *PathsServerTransport) dispatchBase64URL(req *http.Request) (*http.Respo
 		return nil, err
 	}
 	respr, errRespr := p.srv.Base64URL(req.Context(), base64URLPathParam, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -291,8 +291,8 @@ func (p *PathsServerTransport) dispatchByteEmpty(req *http.Request) (*http.Respo
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.ByteEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -320,8 +320,8 @@ func (p *PathsServerTransport) dispatchByteMultiByte(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := p.srv.ByteMultiByte(req.Context(), bytePathParam, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -349,8 +349,8 @@ func (p *PathsServerTransport) dispatchByteNull(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := p.srv.ByteNull(req.Context(), bytePathParam, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusBadRequest}, respContent.HTTPStatus) {
@@ -378,8 +378,8 @@ func (p *PathsServerTransport) dispatchDateNull(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := p.srv.DateNull(req.Context(), datePathParam, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusBadRequest}, respContent.HTTPStatus) {
@@ -407,8 +407,8 @@ func (p *PathsServerTransport) dispatchDateTimeNull(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := p.srv.DateTimeNull(req.Context(), dateTimePathParam, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusBadRequest}, respContent.HTTPStatus) {
@@ -432,8 +432,8 @@ func (p *PathsServerTransport) dispatchDateTimeValid(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.DateTimeValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -457,8 +457,8 @@ func (p *PathsServerTransport) dispatchDateValid(req *http.Request) (*http.Respo
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.DateValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -482,8 +482,8 @@ func (p *PathsServerTransport) dispatchDoubleDecimalNegative(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.DoubleDecimalNegative(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -507,8 +507,8 @@ func (p *PathsServerTransport) dispatchDoubleDecimalPositive(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.DoubleDecimalPositive(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -532,8 +532,8 @@ func (p *PathsServerTransport) dispatchEnumNull(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.EnumNull(req.Context(), urlgroup.URIColor(matches[regex.SubexpIndex("enumPath")]), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusBadRequest}, respContent.HTTPStatus) {
@@ -557,8 +557,8 @@ func (p *PathsServerTransport) dispatchEnumValid(req *http.Request) (*http.Respo
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.EnumValid(req.Context(), urlgroup.URIColor(matches[regex.SubexpIndex("enumPath")]), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -582,8 +582,8 @@ func (p *PathsServerTransport) dispatchFloatScientificNegative(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.FloatScientificNegative(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -607,8 +607,8 @@ func (p *PathsServerTransport) dispatchFloatScientificPositive(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.FloatScientificPositive(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -632,8 +632,8 @@ func (p *PathsServerTransport) dispatchGetBooleanFalse(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetBooleanFalse(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -657,8 +657,8 @@ func (p *PathsServerTransport) dispatchGetBooleanTrue(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetBooleanTrue(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -682,8 +682,8 @@ func (p *PathsServerTransport) dispatchGetIntNegativeOneMillion(req *http.Reques
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetIntNegativeOneMillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -707,8 +707,8 @@ func (p *PathsServerTransport) dispatchGetIntOneMillion(req *http.Request) (*htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetIntOneMillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -732,8 +732,8 @@ func (p *PathsServerTransport) dispatchGetNegativeTenBillion(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetNegativeTenBillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -757,8 +757,8 @@ func (p *PathsServerTransport) dispatchGetTenBillion(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetTenBillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -782,8 +782,8 @@ func (p *PathsServerTransport) dispatchStringEmpty(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.StringEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -807,8 +807,8 @@ func (p *PathsServerTransport) dispatchStringNull(req *http.Request) (*http.Resp
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.StringNull(req.Context(), matches[regex.SubexpIndex("stringPath")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusBadRequest}, respContent.HTTPStatus) {
@@ -832,8 +832,8 @@ func (p *PathsServerTransport) dispatchStringURLEncoded(req *http.Request) (*htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.StringURLEncoded(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -857,8 +857,8 @@ func (p *PathsServerTransport) dispatchStringURLNonEncoded(req *http.Request) (*
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.StringURLNonEncoded(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -882,8 +882,8 @@ func (p *PathsServerTransport) dispatchStringUnicode(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.StringUnicode(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -911,8 +911,8 @@ func (p *PathsServerTransport) dispatchUnixTimeURL(req *http.Request) (*http.Res
 		return nil, err
 	}
 	respr, errRespr := p.srv.UnixTimeURL(req.Context(), time.Unix(unixTimeURLPathParam, 0), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -403,8 +403,8 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
     return content;
   }
   content += `\trespr, errRespr ${apiCall}\n`;
-  content += '\tif err := server.GetError(errRespr, req); err != nil {\n';
-  content += '\t\treturn nil, err\n\t}\n';
+  content += '\tif respErr := server.GetError(errRespr, req); respErr != nil {\n';
+  content += '\t\treturn nil, respErr\n\t}\n';
   return content;
 }
 

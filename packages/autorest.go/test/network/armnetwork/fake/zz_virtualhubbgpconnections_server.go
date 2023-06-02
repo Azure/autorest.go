@@ -124,8 +124,8 @@ func (v *VirtualHubBgpConnectionsServerTransport) dispatchBeginListAdvertisedRou
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginListAdvertisedRoutes(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("hubName")], matches[regex.SubexpIndex("connectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginListAdvertisedRoutes = &respr
 	}
@@ -157,8 +157,8 @@ func (v *VirtualHubBgpConnectionsServerTransport) dispatchBeginListLearnedRoutes
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginListLearnedRoutes(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("hubName")], matches[regex.SubexpIndex("connectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginListLearnedRoutes = &respr
 	}

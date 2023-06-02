@@ -130,8 +130,8 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 		}
 	}
 	respr, errRespr := s.srv.Create(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -156,8 +156,8 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	respr, errRespr := s.srv.GetScript(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -215,8 +215,8 @@ func (s *ServerTransport) dispatchPolicyAssignment(req *http.Request) (*http.Res
 		return nil, err
 	}
 	respr, errRespr := s.srv.PolicyAssignment(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -125,8 +125,8 @@ func (a *AzureFirewallsServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 			return nil, err
 		}
 		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("azureFirewallName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginCreateOrUpdate = &respr
 	}
@@ -158,8 +158,8 @@ func (a *AzureFirewallsServerTransport) dispatchBeginDelete(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := a.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("azureFirewallName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginDelete = &respr
 	}
@@ -190,8 +190,8 @@ func (a *AzureFirewallsServerTransport) dispatchGet(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("azureFirewallName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -276,8 +276,8 @@ func (a *AzureFirewallsServerTransport) dispatchBeginListLearnedPrefixes(req *ht
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := a.srv.BeginListLearnedPrefixes(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("azureFirewallName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginListLearnedPrefixes = &respr
 	}
@@ -313,8 +313,8 @@ func (a *AzureFirewallsServerTransport) dispatchBeginUpdateTags(req *http.Reques
 			return nil, err
 		}
 		respr, errRespr := a.srv.BeginUpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("azureFirewallName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginUpdateTags = &respr
 	}

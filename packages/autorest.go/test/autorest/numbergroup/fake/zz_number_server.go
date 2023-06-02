@@ -208,8 +208,8 @@ func (n *NumberServerTransport) dispatchGetBigDecimal(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetBigDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -227,8 +227,8 @@ func (n *NumberServerTransport) dispatchGetBigDecimalNegativeDecimal(req *http.R
 		return nil, &nonRetriableError{errors.New("method GetBigDecimalNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDecimalNegativeDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -246,8 +246,8 @@ func (n *NumberServerTransport) dispatchGetBigDecimalPositiveDecimal(req *http.R
 		return nil, &nonRetriableError{errors.New("method GetBigDecimalPositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDecimalPositiveDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -265,8 +265,8 @@ func (n *NumberServerTransport) dispatchGetBigDouble(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetBigDouble not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDouble(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -284,8 +284,8 @@ func (n *NumberServerTransport) dispatchGetBigDoubleNegativeDecimal(req *http.Re
 		return nil, &nonRetriableError{errors.New("method GetBigDoubleNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDoubleNegativeDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -303,8 +303,8 @@ func (n *NumberServerTransport) dispatchGetBigDoublePositiveDecimal(req *http.Re
 		return nil, &nonRetriableError{errors.New("method GetBigDoublePositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDoublePositiveDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -322,8 +322,8 @@ func (n *NumberServerTransport) dispatchGetBigFloat(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetBigFloat not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigFloat(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -341,8 +341,8 @@ func (n *NumberServerTransport) dispatchGetInvalidDecimal(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetInvalidDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetInvalidDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -360,8 +360,8 @@ func (n *NumberServerTransport) dispatchGetInvalidDouble(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetInvalidDouble not implemented")}
 	}
 	respr, errRespr := n.srv.GetInvalidDouble(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -379,8 +379,8 @@ func (n *NumberServerTransport) dispatchGetInvalidFloat(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method GetInvalidFloat not implemented")}
 	}
 	respr, errRespr := n.srv.GetInvalidFloat(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -398,8 +398,8 @@ func (n *NumberServerTransport) dispatchGetNull(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := n.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -417,8 +417,8 @@ func (n *NumberServerTransport) dispatchGetSmallDecimal(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method GetSmallDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetSmallDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -436,8 +436,8 @@ func (n *NumberServerTransport) dispatchGetSmallDouble(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetSmallDouble not implemented")}
 	}
 	respr, errRespr := n.srv.GetSmallDouble(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -455,8 +455,8 @@ func (n *NumberServerTransport) dispatchGetSmallFloat(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetSmallFloat not implemented")}
 	}
 	respr, errRespr := n.srv.GetSmallFloat(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -478,8 +478,8 @@ func (n *NumberServerTransport) dispatchPutBigDecimal(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := n.srv.PutBigDecimal(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -497,8 +497,8 @@ func (n *NumberServerTransport) dispatchPutBigDecimalNegativeDecimal(req *http.R
 		return nil, &nonRetriableError{errors.New("method PutBigDecimalNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDecimalNegativeDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -516,8 +516,8 @@ func (n *NumberServerTransport) dispatchPutBigDecimalPositiveDecimal(req *http.R
 		return nil, &nonRetriableError{errors.New("method PutBigDecimalPositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDecimalPositiveDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -539,8 +539,8 @@ func (n *NumberServerTransport) dispatchPutBigDouble(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := n.srv.PutBigDouble(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -558,8 +558,8 @@ func (n *NumberServerTransport) dispatchPutBigDoubleNegativeDecimal(req *http.Re
 		return nil, &nonRetriableError{errors.New("method PutBigDoubleNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDoubleNegativeDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -577,8 +577,8 @@ func (n *NumberServerTransport) dispatchPutBigDoublePositiveDecimal(req *http.Re
 		return nil, &nonRetriableError{errors.New("method PutBigDoublePositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDoublePositiveDecimal(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -600,8 +600,8 @@ func (n *NumberServerTransport) dispatchPutBigFloat(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := n.srv.PutBigFloat(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -623,8 +623,8 @@ func (n *NumberServerTransport) dispatchPutSmallDecimal(req *http.Request) (*htt
 		return nil, err
 	}
 	respr, errRespr := n.srv.PutSmallDecimal(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -646,8 +646,8 @@ func (n *NumberServerTransport) dispatchPutSmallDouble(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := n.srv.PutSmallDouble(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -669,8 +669,8 @@ func (n *NumberServerTransport) dispatchPutSmallFloat(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := n.srv.PutSmallFloat(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

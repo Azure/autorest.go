@@ -162,8 +162,8 @@ func (c *ContainerRegistryServerTransport) dispatchCheckDockerV2Support(req *htt
 		return nil, &nonRetriableError{errors.New("method CheckDockerV2Support not implemented")}
 	}
 	respr, errRespr := c.srv.CheckDockerV2Support(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -191,8 +191,8 @@ func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Requ
 		return nil, err
 	}
 	respr, errRespr := c.srv.CreateManifest(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -228,8 +228,8 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteManifest(req *http.Requ
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.DeleteManifest(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -253,8 +253,8 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteRepository(req *http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.DeleteRepository(req.Context(), matches[regex.SubexpIndex("name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -278,8 +278,8 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteTag(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.DeleteTag(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -310,8 +310,8 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request
 		}
 	}
 	respr, errRespr := c.srv.GetManifest(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -335,8 +335,8 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifestProperties(req *ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetManifestProperties(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -411,8 +411,8 @@ func (c *ContainerRegistryServerTransport) dispatchGetProperties(req *http.Reque
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetProperties(req.Context(), matches[regex.SubexpIndex("name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -479,8 +479,8 @@ func (c *ContainerRegistryServerTransport) dispatchGetTagProperties(req *http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetTagProperties(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -561,8 +561,8 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateManifestProperties(req 
 		return nil, err
 	}
 	respr, errRespr := c.srv.UpdateManifestProperties(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -590,8 +590,8 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateProperties(req *http.Re
 		return nil, err
 	}
 	respr, errRespr := c.srv.UpdateProperties(req.Context(), matches[regex.SubexpIndex("name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -619,8 +619,8 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateTagAttributes(req *http
 		return nil, err
 	}
 	respr, errRespr := c.srv.UpdateTagAttributes(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

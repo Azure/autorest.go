@@ -88,8 +88,8 @@ func (h *HTTPServerFailureServerTransport) dispatchDelete505(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method Delete505 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete505(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -107,8 +107,8 @@ func (h *HTTPServerFailureServerTransport) dispatchGet501(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Get501 not implemented")}
 	}
 	respr, errRespr := h.srv.Get501(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -126,8 +126,8 @@ func (h *HTTPServerFailureServerTransport) dispatchHead501(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Head501 not implemented")}
 	}
 	respr, errRespr := h.srv.Head501(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -145,8 +145,8 @@ func (h *HTTPServerFailureServerTransport) dispatchPost505(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method Post505 not implemented")}
 	}
 	respr, errRespr := h.srv.Post505(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {

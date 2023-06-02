@@ -184,8 +184,8 @@ func (i *InterfacesServerTransport) dispatchBeginCreateOrUpdate(req *http.Reques
 			return nil, err
 		}
 		respr, errRespr := i.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginCreateOrUpdate = &respr
 	}
@@ -217,8 +217,8 @@ func (i *InterfacesServerTransport) dispatchBeginDelete(req *http.Request) (*htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := i.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginDelete = &respr
 	}
@@ -257,8 +257,8 @@ func (i *InterfacesServerTransport) dispatchGet(req *http.Request) (*http.Respon
 		}
 	}
 	respr, errRespr := i.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -290,8 +290,8 @@ func (i *InterfacesServerTransport) dispatchGetCloudServiceNetworkInterface(req 
 		}
 	}
 	respr, errRespr := i.srv.GetCloudServiceNetworkInterface(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("networkInterfaceName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -316,8 +316,8 @@ func (i *InterfacesServerTransport) dispatchBeginGetEffectiveRouteTable(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := i.srv.BeginGetEffectiveRouteTable(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginGetEffectiveRouteTable = &respr
 	}
@@ -356,8 +356,8 @@ func (i *InterfacesServerTransport) dispatchGetVirtualMachineScaleSetIPConfigura
 		}
 	}
 	respr, errRespr := i.srv.GetVirtualMachineScaleSetIPConfiguration(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualMachineScaleSetName")], matches[regex.SubexpIndex("virtualmachineIndex")], matches[regex.SubexpIndex("networkInterfaceName")], matches[regex.SubexpIndex("ipConfigurationName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -389,8 +389,8 @@ func (i *InterfacesServerTransport) dispatchGetVirtualMachineScaleSetNetworkInte
 		}
 	}
 	respr, errRespr := i.srv.GetVirtualMachineScaleSetNetworkInterface(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualMachineScaleSetName")], matches[regex.SubexpIndex("virtualmachineIndex")], matches[regex.SubexpIndex("networkInterfaceName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -535,8 +535,8 @@ func (i *InterfacesServerTransport) dispatchBeginListEffectiveNetworkSecurityGro
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := i.srv.BeginListEffectiveNetworkSecurityGroups(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginListEffectiveNetworkSecurityGroups = &respr
 	}
@@ -669,8 +669,8 @@ func (i *InterfacesServerTransport) dispatchUpdateTags(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := i.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

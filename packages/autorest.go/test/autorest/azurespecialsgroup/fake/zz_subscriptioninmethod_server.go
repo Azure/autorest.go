@@ -95,8 +95,8 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalNull(req *h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostMethodLocalNull(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -120,8 +120,8 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalValid(req *
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostMethodLocalValid(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -145,8 +145,8 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostPathLocalValid(req *ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostPathLocalValid(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -170,8 +170,8 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostSwaggerLocalValid(req 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostSwaggerLocalValid(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -100,8 +100,8 @@ func (e *EnumServerTransport) dispatchGetNotExpandable(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetNotExpandable not implemented")}
 	}
 	respr, errRespr := e.srv.GetNotExpandable(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -119,8 +119,8 @@ func (e *EnumServerTransport) dispatchGetReferenced(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetReferenced not implemented")}
 	}
 	respr, errRespr := e.srv.GetReferenced(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -138,8 +138,8 @@ func (e *EnumServerTransport) dispatchGetReferencedConstant(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method GetReferencedConstant not implemented")}
 	}
 	respr, errRespr := e.srv.GetReferencedConstant(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -161,8 +161,8 @@ func (e *EnumServerTransport) dispatchPutNotExpandable(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := e.srv.PutNotExpandable(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -184,8 +184,8 @@ func (e *EnumServerTransport) dispatchPutReferenced(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := e.srv.PutReferenced(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -207,8 +207,8 @@ func (e *EnumServerTransport) dispatchPutReferencedConstant(req *http.Request) (
 		return nil, err
 	}
 	respr, errRespr := e.srv.PutReferencedConstant(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

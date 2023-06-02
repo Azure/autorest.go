@@ -219,8 +219,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalArrayHeader(req *http.Requ
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalArrayHeader(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -248,8 +248,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalArrayParameter(req *http.R
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalArrayParameter(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -277,8 +277,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalArrayProperty(req *http.Re
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalArrayProperty(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -306,8 +306,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalClassParameter(req *http.R
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalClassParameter(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -335,8 +335,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalClassProperty(req *http.Re
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalClassProperty(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -370,8 +370,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalIntegerHeader(req *http.Re
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalIntegerHeader(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -399,8 +399,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalIntegerParameter(req *http
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalIntegerParameter(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -428,8 +428,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalIntegerProperty(req *http.
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalIntegerProperty(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -454,8 +454,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalStringHeader(req *http.Req
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalStringHeader(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -483,8 +483,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalStringParameter(req *http.
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalStringParameter(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -512,8 +512,8 @@ func (e *ExplicitServerTransport) dispatchPostOptionalStringProperty(req *http.R
 		}
 	}
 	respr, errRespr := e.srv.PostOptionalStringProperty(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -531,8 +531,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredArrayHeader(req *http.Requ
 		return nil, &nonRetriableError{errors.New("method PostRequiredArrayHeader not implemented")}
 	}
 	respr, errRespr := e.srv.PostRequiredArrayHeader(req.Context(), strings.Split(getHeaderValue(req.Header, "headerParameter"), ","), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -554,8 +554,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredArrayParameter(req *http.R
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredArrayParameter(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -577,8 +577,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredArrayProperty(req *http.Re
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredArrayProperty(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -600,8 +600,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredClassParameter(req *http.R
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredClassParameter(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -623,8 +623,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredClassProperty(req *http.Re
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredClassProperty(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -652,8 +652,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerHeader(req *http.Re
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredIntegerHeader(req.Context(), int32(headerParameterParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -675,8 +675,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerParameter(req *http
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredIntegerParameter(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -698,8 +698,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerProperty(req *http.
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredIntegerProperty(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -717,8 +717,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredStringHeader(req *http.Req
 		return nil, &nonRetriableError{errors.New("method PostRequiredStringHeader not implemented")}
 	}
 	respr, errRespr := e.srv.PostRequiredStringHeader(req.Context(), getHeaderValue(req.Header, "headerParameter"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -740,8 +740,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredStringParameter(req *http.
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredStringParameter(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -763,8 +763,8 @@ func (e *ExplicitServerTransport) dispatchPostRequiredStringProperty(req *http.R
 		return nil, err
 	}
 	respr, errRespr := e.srv.PostRequiredStringProperty(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -782,8 +782,8 @@ func (e *ExplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Reques
 		return nil, &nonRetriableError{errors.New("method PutOptionalBinaryBody not implemented")}
 	}
 	respr, errRespr := e.srv.PutOptionalBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -801,8 +801,8 @@ func (e *ExplicitServerTransport) dispatchPutRequiredBinaryBody(req *http.Reques
 		return nil, &nonRetriableError{errors.New("method PutRequiredBinaryBody not implemented")}
 	}
 	respr, errRespr := e.srv.PutRequiredBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

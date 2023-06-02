@@ -102,8 +102,8 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchGet(req *http.Requ
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.Get(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("edgeZone")], matches[regex.SubexpIndex("publisherName")], matches[regex.SubexpIndex("offer")], matches[regex.SubexpIndex("skus")], matches[regex.SubexpIndex("version")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -148,8 +148,8 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchList(req *http.Req
 		}
 	}
 	respr, errRespr := v.srv.List(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("edgeZone")], matches[regex.SubexpIndex("publisherName")], matches[regex.SubexpIndex("offer")], matches[regex.SubexpIndex("skus")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -173,8 +173,8 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchListOffers(req *ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.ListOffers(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("edgeZone")], matches[regex.SubexpIndex("publisherName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -198,8 +198,8 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchListPublishers(req
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.ListPublishers(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("edgeZone")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -223,8 +223,8 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchListSKUs(req *http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.ListSKUs(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("edgeZone")], matches[regex.SubexpIndex("publisherName")], matches[regex.SubexpIndex("offer")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

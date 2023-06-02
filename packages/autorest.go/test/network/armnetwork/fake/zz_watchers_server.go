@@ -198,8 +198,8 @@ func (w *WatchersServerTransport) dispatchBeginCheckConnectivity(req *http.Reque
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginCheckConnectivity(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginCheckConnectivity = &respr
 	}
@@ -234,8 +234,8 @@ func (w *WatchersServerTransport) dispatchCreateOrUpdate(req *http.Request) (*ht
 		return nil, err
 	}
 	respr, errRespr := w.srv.CreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -260,8 +260,8 @@ func (w *WatchersServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := w.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginDelete = &respr
 	}
@@ -292,8 +292,8 @@ func (w *WatchersServerTransport) dispatchGet(req *http.Request) (*http.Response
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := w.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -322,8 +322,8 @@ func (w *WatchersServerTransport) dispatchBeginGetAzureReachabilityReport(req *h
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginGetAzureReachabilityReport(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginGetAzureReachabilityReport = &respr
 	}
@@ -359,8 +359,8 @@ func (w *WatchersServerTransport) dispatchBeginGetFlowLogStatus(req *http.Reques
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginGetFlowLogStatus(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginGetFlowLogStatus = &respr
 	}
@@ -396,8 +396,8 @@ func (w *WatchersServerTransport) dispatchBeginGetNetworkConfigurationDiagnostic
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginGetNetworkConfigurationDiagnostic(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginGetNetworkConfigurationDiagnostic = &respr
 	}
@@ -433,8 +433,8 @@ func (w *WatchersServerTransport) dispatchBeginGetNextHop(req *http.Request) (*h
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginGetNextHop(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginGetNextHop = &respr
 	}
@@ -469,8 +469,8 @@ func (w *WatchersServerTransport) dispatchGetTopology(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := w.srv.GetTopology(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -499,8 +499,8 @@ func (w *WatchersServerTransport) dispatchBeginGetTroubleshooting(req *http.Requ
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginGetTroubleshooting(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginGetTroubleshooting = &respr
 	}
@@ -536,8 +536,8 @@ func (w *WatchersServerTransport) dispatchBeginGetTroubleshootingResult(req *htt
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginGetTroubleshootingResult(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginGetTroubleshootingResult = &respr
 	}
@@ -573,8 +573,8 @@ func (w *WatchersServerTransport) dispatchBeginGetVMSecurityRules(req *http.Requ
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginGetVMSecurityRules(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginGetVMSecurityRules = &respr
 	}
@@ -664,8 +664,8 @@ func (w *WatchersServerTransport) dispatchBeginListAvailableProviders(req *http.
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginListAvailableProviders(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginListAvailableProviders = &respr
 	}
@@ -701,8 +701,8 @@ func (w *WatchersServerTransport) dispatchBeginSetFlowLogConfiguration(req *http
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginSetFlowLogConfiguration(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginSetFlowLogConfiguration = &respr
 	}
@@ -737,8 +737,8 @@ func (w *WatchersServerTransport) dispatchUpdateTags(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := w.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -767,8 +767,8 @@ func (w *WatchersServerTransport) dispatchBeginVerifyIPFlow(req *http.Request) (
 			return nil, err
 		}
 		respr, errRespr := w.srv.BeginVerifyIPFlow(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkWatcherName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		w.beginVerifyIPFlow = &respr
 	}

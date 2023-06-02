@@ -145,8 +145,8 @@ func (t *TriggerServerTransport) dispatchBeginCreateOrUpdateTrigger(req *http.Re
 			}
 		}
 		respr, errRespr := t.srv.BeginCreateOrUpdateTrigger(req.Context(), matches[regex.SubexpIndex("triggerName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		t.beginCreateOrUpdateTrigger = &respr
 	}
@@ -178,8 +178,8 @@ func (t *TriggerServerTransport) dispatchBeginDeleteTrigger(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := t.srv.BeginDeleteTrigger(req.Context(), matches[regex.SubexpIndex("triggerName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		t.beginDeleteTrigger = &respr
 	}
@@ -210,8 +210,8 @@ func (t *TriggerServerTransport) dispatchGetEventSubscriptionStatus(req *http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := t.srv.GetEventSubscriptionStatus(req.Context(), matches[regex.SubexpIndex("triggerName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -242,8 +242,8 @@ func (t *TriggerServerTransport) dispatchGetTrigger(req *http.Request) (*http.Re
 		}
 	}
 	respr, errRespr := t.srv.GetTrigger(req.Context(), matches[regex.SubexpIndex("triggerName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -292,8 +292,8 @@ func (t *TriggerServerTransport) dispatchBeginStartTrigger(req *http.Request) (*
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := t.srv.BeginStartTrigger(req.Context(), matches[regex.SubexpIndex("triggerName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		t.beginStartTrigger = &respr
 	}
@@ -325,8 +325,8 @@ func (t *TriggerServerTransport) dispatchBeginStopTrigger(req *http.Request) (*h
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := t.srv.BeginStopTrigger(req.Context(), matches[regex.SubexpIndex("triggerName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		t.beginStopTrigger = &respr
 	}
@@ -358,8 +358,8 @@ func (t *TriggerServerTransport) dispatchBeginSubscribeTriggerToEvents(req *http
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := t.srv.BeginSubscribeTriggerToEvents(req.Context(), matches[regex.SubexpIndex("triggerName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		t.beginSubscribeTriggerToEvents = &respr
 	}
@@ -391,8 +391,8 @@ func (t *TriggerServerTransport) dispatchBeginUnsubscribeTriggerFromEvents(req *
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := t.srv.BeginUnsubscribeTriggerFromEvents(req.Context(), matches[regex.SubexpIndex("triggerName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		t.beginUnsubscribeTriggerFromEvents = &respr
 	}

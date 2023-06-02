@@ -79,8 +79,8 @@ func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) dispatc
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginList(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualWANName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginList = &respr
 	}

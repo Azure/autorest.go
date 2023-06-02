@@ -101,8 +101,8 @@ func (r *RoleAssignmentsServerTransport) dispatchCreate(req *http.Request) (*htt
 		return nil, err
 	}
 	respr, errRespr := r.srv.Create(req.Context(), req.URL.Host, matches[regex.SubexpIndex("scope")], matches[regex.SubexpIndex("roleAssignmentName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -126,8 +126,8 @@ func (r *RoleAssignmentsServerTransport) dispatchDelete(req *http.Request) (*htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := r.srv.Delete(req.Context(), req.URL.Host, matches[regex.SubexpIndex("scope")], matches[regex.SubexpIndex("roleAssignmentName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -151,8 +151,8 @@ func (r *RoleAssignmentsServerTransport) dispatchGet(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := r.srv.Get(req.Context(), req.URL.Host, matches[regex.SubexpIndex("scope")], matches[regex.SubexpIndex("roleAssignmentName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

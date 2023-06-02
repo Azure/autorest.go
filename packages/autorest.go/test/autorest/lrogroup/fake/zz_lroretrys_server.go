@@ -115,8 +115,8 @@ func (l *LRORetrysServerTransport) dispatchBeginDelete202Retry200(req *http.Requ
 	}
 	if l.beginDelete202Retry200 == nil {
 		respr, errRespr := l.srv.BeginDelete202Retry200(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDelete202Retry200 = &respr
 	}
@@ -142,8 +142,8 @@ func (l *LRORetrysServerTransport) dispatchBeginDeleteAsyncRelativeRetrySucceede
 	}
 	if l.beginDeleteAsyncRelativeRetrySucceeded == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetrySucceeded(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteAsyncRelativeRetrySucceeded = &respr
 	}
@@ -169,8 +169,8 @@ func (l *LRORetrysServerTransport) dispatchBeginDeleteProvisioning202Accepted200
 	}
 	if l.beginDeleteProvisioning202Accepted200Succeeded == nil {
 		respr, errRespr := l.srv.BeginDeleteProvisioning202Accepted200Succeeded(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteProvisioning202Accepted200Succeeded = &respr
 	}
@@ -206,8 +206,8 @@ func (l *LRORetrysServerTransport) dispatchBeginPost202Retry200(req *http.Reques
 			}
 		}
 		respr, errRespr := l.srv.BeginPost202Retry200(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPost202Retry200 = &respr
 	}
@@ -243,8 +243,8 @@ func (l *LRORetrysServerTransport) dispatchBeginPostAsyncRelativeRetrySucceeded(
 			}
 		}
 		respr, errRespr := l.srv.BeginPostAsyncRelativeRetrySucceeded(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPostAsyncRelativeRetrySucceeded = &respr
 	}
@@ -274,8 +274,8 @@ func (l *LRORetrysServerTransport) dispatchBeginPut201CreatingSucceeded200(req *
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPut201CreatingSucceeded200(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPut201CreatingSucceeded200 = &respr
 	}
@@ -305,8 +305,8 @@ func (l *LRORetrysServerTransport) dispatchBeginPutAsyncRelativeRetrySucceeded(r
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutAsyncRelativeRetrySucceeded(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutAsyncRelativeRetrySucceeded = &respr
 	}

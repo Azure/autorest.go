@@ -126,8 +126,8 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginDelete(req *http
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginDelete = &respr
 	}
@@ -166,8 +166,8 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchGet(req *http.Request
 		}
 	}
 	respr, errRespr := c.srv.Get(req.Context(), matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -191,8 +191,8 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchGetInstanceView(req *
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetInstanceView(req.Context(), matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -216,8 +216,8 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchGetRemoteDesktopFile(
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetRemoteDesktopFile(req.Context(), matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -283,8 +283,8 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRebuild(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginRebuild(req.Context(), matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginRebuild = &respr
 	}
@@ -316,8 +316,8 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginReimage(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginReimage(req.Context(), matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginReimage = &respr
 	}
@@ -349,8 +349,8 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRestart(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginRestart(req.Context(), matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginRestart = &respr
 	}

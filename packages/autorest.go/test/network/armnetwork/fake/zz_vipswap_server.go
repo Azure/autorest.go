@@ -95,8 +95,8 @@ func (v *VipSwapServerTransport) dispatchBeginCreate(req *http.Request) (*http.R
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginCreate(req.Context(), matches[regex.SubexpIndex("groupName")], matches[regex.SubexpIndex("resourceName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginCreate = &respr
 	}
@@ -127,8 +127,8 @@ func (v *VipSwapServerTransport) dispatchGet(req *http.Request) (*http.Response,
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.Get(req.Context(), matches[regex.SubexpIndex("groupName")], matches[regex.SubexpIndex("resourceName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -152,8 +152,8 @@ func (v *VipSwapServerTransport) dispatchList(req *http.Request) (*http.Response
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.List(req.Context(), matches[regex.SubexpIndex("groupName")], matches[regex.SubexpIndex("resourceName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -88,8 +88,8 @@ func (p *PetServerTransport) dispatchAddPet(req *http.Request) (*http.Response, 
 		}
 	}
 	respr, errRespr := p.srv.AddPet(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -113,8 +113,8 @@ func (p *PetServerTransport) dispatchGetByPetID(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetByPetID(req.Context(), matches[regex.SubexpIndex("petId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

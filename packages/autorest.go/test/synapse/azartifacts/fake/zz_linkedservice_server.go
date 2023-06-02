@@ -118,8 +118,8 @@ func (l *LinkedServiceServerTransport) dispatchBeginCreateOrUpdateLinkedService(
 			}
 		}
 		respr, errRespr := l.srv.BeginCreateOrUpdateLinkedService(req.Context(), matches[regex.SubexpIndex("linkedServiceName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginCreateOrUpdateLinkedService = &respr
 	}
@@ -151,8 +151,8 @@ func (l *LinkedServiceServerTransport) dispatchBeginDeleteLinkedService(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := l.srv.BeginDeleteLinkedService(req.Context(), matches[regex.SubexpIndex("linkedServiceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteLinkedService = &respr
 	}
@@ -190,8 +190,8 @@ func (l *LinkedServiceServerTransport) dispatchGetLinkedService(req *http.Reques
 		}
 	}
 	respr, errRespr := l.srv.GetLinkedService(req.Context(), matches[regex.SubexpIndex("linkedServiceName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -244,8 +244,8 @@ func (l *LinkedServiceServerTransport) dispatchBeginRenameLinkedService(req *htt
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginRenameLinkedService(req.Context(), matches[regex.SubexpIndex("linkedServiceName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginRenameLinkedService = &respr
 	}

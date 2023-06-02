@@ -118,8 +118,8 @@ func (b *BastionHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Requ
 			return nil, err
 		}
 		respr, errRespr := b.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("bastionHostName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		b.beginCreateOrUpdate = &respr
 	}
@@ -151,8 +151,8 @@ func (b *BastionHostsServerTransport) dispatchBeginDelete(req *http.Request) (*h
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := b.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("bastionHostName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		b.beginDelete = &respr
 	}
@@ -183,8 +183,8 @@ func (b *BastionHostsServerTransport) dispatchGet(req *http.Request) (*http.Resp
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := b.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("bastionHostName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -273,8 +273,8 @@ func (b *BastionHostsServerTransport) dispatchBeginUpdateTags(req *http.Request)
 			return nil, err
 		}
 		respr, errRespr := b.srv.BeginUpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("bastionHostName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		b.beginUpdateTags = &respr
 	}

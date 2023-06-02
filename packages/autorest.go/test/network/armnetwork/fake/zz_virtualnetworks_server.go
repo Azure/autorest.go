@@ -134,8 +134,8 @@ func (v *VirtualNetworksServerTransport) dispatchCheckIPAddressAvailability(req 
 	}
 	qp := req.URL.Query()
 	respr, errRespr := v.srv.CheckIPAddressAvailability(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], qp.Get("ipAddress"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -164,8 +164,8 @@ func (v *VirtualNetworksServerTransport) dispatchBeginCreateOrUpdate(req *http.R
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginCreateOrUpdate = &respr
 	}
@@ -197,8 +197,8 @@ func (v *VirtualNetworksServerTransport) dispatchBeginDelete(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginDelete = &respr
 	}
@@ -237,8 +237,8 @@ func (v *VirtualNetworksServerTransport) dispatchGet(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := v.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -342,8 +342,8 @@ func (v *VirtualNetworksServerTransport) dispatchBeginListDdosProtectionStatus(r
 			}
 		}
 		respr, errRespr := v.srv.BeginListDdosProtectionStatus(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginListDdosProtectionStatus = &respr
 	}
@@ -408,8 +408,8 @@ func (v *VirtualNetworksServerTransport) dispatchUpdateTags(req *http.Request) (
 		return nil, err
 	}
 	respr, errRespr := v.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

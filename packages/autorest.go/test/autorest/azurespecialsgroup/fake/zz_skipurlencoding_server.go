@@ -113,8 +113,8 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodPathValid(req *http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetMethodPathValid(req.Context(), matches[regex.SubexpIndex("unencodedPathParam")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -140,8 +140,8 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryNull(req *http.Re
 		}
 	}
 	respr, errRespr := s.srv.GetMethodQueryNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -160,8 +160,8 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryValid(req *http.R
 	}
 	qp := req.URL.Query()
 	respr, errRespr := s.srv.GetMethodQueryValid(req.Context(), qp.Get("q1"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -180,8 +180,8 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathQueryValid(req *http.Req
 	}
 	qp := req.URL.Query()
 	respr, errRespr := s.srv.GetPathQueryValid(req.Context(), qp.Get("q1"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -205,8 +205,8 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathValid(req *http.Request)
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetPathValid(req.Context(), matches[regex.SubexpIndex("unencodedPathParam")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -230,8 +230,8 @@ func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerPathValid(req *http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetSwaggerPathValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -249,8 +249,8 @@ func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerQueryValid(req *http.
 		return nil, &nonRetriableError{errors.New("method GetSwaggerQueryValid not implemented")}
 	}
 	respr, errRespr := s.srv.GetSwaggerQueryValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -76,8 +76,8 @@ func (x *XMSClientRequestIDServerTransport) dispatchGet(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method Get not implemented")}
 	}
 	respr, errRespr := x.srv.Get(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -95,8 +95,8 @@ func (x *XMSClientRequestIDServerTransport) dispatchParamGet(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method ParamGet not implemented")}
 	}
 	respr, errRespr := x.srv.ParamGet(req.Context(), getHeaderValue(req.Header, "x-ms-client-request-id"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

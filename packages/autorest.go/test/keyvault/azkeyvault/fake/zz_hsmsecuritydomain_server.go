@@ -101,8 +101,8 @@ func (h *HSMSecurityDomainServerTransport) dispatchBeginDownload(req *http.Reque
 			return nil, err
 		}
 		respr, errRespr := h.srv.BeginDownload(req.Context(), req.URL.Host, body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		h.beginDownload = &respr
 	}
@@ -127,8 +127,8 @@ func (h *HSMSecurityDomainServerTransport) dispatchDownloadPending(req *http.Req
 		return nil, &nonRetriableError{errors.New("method DownloadPending not implemented")}
 	}
 	respr, errRespr := h.srv.DownloadPending(req.Context(), req.URL.Host, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -146,8 +146,8 @@ func (h *HSMSecurityDomainServerTransport) dispatchTransferKey(req *http.Request
 		return nil, &nonRetriableError{errors.New("method TransferKey not implemented")}
 	}
 	respr, errRespr := h.srv.TransferKey(req.Context(), req.URL.Host, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -170,8 +170,8 @@ func (h *HSMSecurityDomainServerTransport) dispatchBeginUpload(req *http.Request
 			return nil, err
 		}
 		respr, errRespr := h.srv.BeginUpload(req.Context(), req.URL.Host, body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		h.beginUpload = &respr
 	}
@@ -196,8 +196,8 @@ func (h *HSMSecurityDomainServerTransport) dispatchUploadPending(req *http.Reque
 		return nil, &nonRetriableError{errors.New("method UploadPending not implemented")}
 	}
 	respr, errRespr := h.srv.UploadPending(req.Context(), req.URL.Host, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

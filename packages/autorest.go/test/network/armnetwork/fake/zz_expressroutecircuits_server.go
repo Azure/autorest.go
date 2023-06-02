@@ -150,8 +150,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchBeginCreateOrUpdate(req *h
 			return nil, err
 		}
 		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		e.beginCreateOrUpdate = &respr
 	}
@@ -183,8 +183,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchBeginDelete(req *http.Requ
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := e.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		e.beginDelete = &respr
 	}
@@ -215,8 +215,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchGet(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := e.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -240,8 +240,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchGetPeeringStats(req *http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := e.srv.GetPeeringStats(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], matches[regex.SubexpIndex("peeringName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -265,8 +265,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchGetStats(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := e.srv.GetStats(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -351,8 +351,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchBeginListArpTable(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := e.srv.BeginListArpTable(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], matches[regex.SubexpIndex("peeringName")], matches[regex.SubexpIndex("devicePath")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		e.beginListArpTable = &respr
 	}
@@ -384,8 +384,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchBeginListRoutesTable(req *
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := e.srv.BeginListRoutesTable(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], matches[regex.SubexpIndex("peeringName")], matches[regex.SubexpIndex("devicePath")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		e.beginListRoutesTable = &respr
 	}
@@ -417,8 +417,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchBeginListRoutesTableSummar
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := e.srv.BeginListRoutesTableSummary(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], matches[regex.SubexpIndex("peeringName")], matches[regex.SubexpIndex("devicePath")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		e.beginListRoutesTableSummary = &respr
 	}
@@ -453,8 +453,8 @@ func (e *ExpressRouteCircuitsServerTransport) dispatchUpdateTags(req *http.Reque
 		return nil, err
 	}
 	respr, errRespr := e.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

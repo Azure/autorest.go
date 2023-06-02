@@ -247,8 +247,8 @@ func (s *ServerTransport) dispatchAbortCopyFromURL(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := s.srv.AbortCopyFromURL(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum27(qp.Get("comp")), azblob.Enum28(getHeaderValue(req.Header, "x-ms-copy-action")), qp.Get("copyid"), options, leaseAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -337,8 +337,8 @@ func (s *ServerTransport) dispatchAcquireLease(req *http.Request) (*http.Respons
 		}
 	}
 	respr, errRespr := s.srv.AcquireLease(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum16(qp.Get("comp")), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -434,8 +434,8 @@ func (s *ServerTransport) dispatchBreakLease(req *http.Request) (*http.Response,
 		}
 	}
 	respr, errRespr := s.srv.BreakLease(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum16(qp.Get("comp")), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -520,8 +520,8 @@ func (s *ServerTransport) dispatchChangeLease(req *http.Request) (*http.Response
 		}
 	}
 	respr, errRespr := s.srv.ChangeLease(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum16(qp.Get("comp")), getHeaderValue(req.Header, "x-ms-lease-id"), getHeaderValue(req.Header, "x-ms-proposed-lease-id"), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -674,8 +674,8 @@ func (s *ServerTransport) dispatchCopyFromURL(req *http.Request) (*http.Response
 		}
 	}
 	respr, errRespr := s.srv.CopyFromURL(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum26(getHeaderValue(req.Header, "x-ms-requires-sync")), getHeaderValue(req.Header, "x-ms-copy-source"), options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions, cpkScopeInfo)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -810,8 +810,8 @@ func (s *ServerTransport) dispatchCreateSnapshot(req *http.Request) (*http.Respo
 		}
 	}
 	respr, errRespr := s.srv.CreateSnapshot(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum25(qp.Get("comp")), options, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -917,8 +917,8 @@ func (s *ServerTransport) dispatchDelete(req *http.Request) (*http.Response, err
 		}
 	}
 	respr, errRespr := s.srv.Delete(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], options, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -973,8 +973,8 @@ func (s *ServerTransport) dispatchDeleteImmutabilityPolicy(req *http.Request) (*
 		}
 	}
 	respr, errRespr := s.srv.DeleteImmutabilityPolicy(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum23(qp.Get("comp")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1084,8 +1084,8 @@ func (s *ServerTransport) dispatchDownload(req *http.Request) (*http.Response, e
 		}
 	}
 	respr, errRespr := s.srv.Download(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusPartialContent}, respContent.HTTPStatus) {
@@ -1249,8 +1249,8 @@ func (s *ServerTransport) dispatchGetAccountInfo(req *http.Request) (*http.Respo
 	}
 	qp := req.URL.Query()
 	respr, errRespr := s.srv.GetAccountInfo(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum8(qp.Get("restype")), azblob.Enum1(qp.Get("comp")), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1354,8 +1354,8 @@ func (s *ServerTransport) dispatchGetProperties(req *http.Request) (*http.Respon
 		}
 	}
 	respr, errRespr := s.srv.GetProperties(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1567,8 +1567,8 @@ func (s *ServerTransport) dispatchGetTags(req *http.Request) (*http.Response, er
 		}
 	}
 	respr, errRespr := s.srv.GetTags(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum39(qp.Get("comp")), options, modifiedAccessConditions, leaseAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1669,8 +1669,8 @@ func (s *ServerTransport) dispatchQuery(req *http.Request) (*http.Response, erro
 		}
 	}
 	respr, errRespr := s.srv.Query(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum37(qp.Get("comp")), options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusPartialContent}, respContent.HTTPStatus) {
@@ -1838,8 +1838,8 @@ func (s *ServerTransport) dispatchReleaseLease(req *http.Request) (*http.Respons
 		}
 	}
 	respr, errRespr := s.srv.ReleaseLease(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum16(qp.Get("comp")), getHeaderValue(req.Header, "x-ms-lease-id"), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1921,8 +1921,8 @@ func (s *ServerTransport) dispatchRenewLease(req *http.Request) (*http.Response,
 		}
 	}
 	respr, errRespr := s.srv.RenewLease(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum16(qp.Get("comp")), getHeaderValue(req.Header, "x-ms-lease-id"), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1988,8 +1988,8 @@ func (s *ServerTransport) dispatchSetExpiry(req *http.Request) (*http.Response, 
 		}
 	}
 	respr, errRespr := s.srv.SetExpiry(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum21(qp.Get("comp")), azblob.BlobExpiryOptions(getHeaderValue(req.Header, "x-ms-expiry-option")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2098,8 +2098,8 @@ func (s *ServerTransport) dispatchSetHTTPHeaders(req *http.Request) (*http.Respo
 		}
 	}
 	respr, errRespr := s.srv.SetHTTPHeaders(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum1(qp.Get("comp")), options, blobHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2180,8 +2180,8 @@ func (s *ServerTransport) dispatchSetImmutabilityPolicy(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := s.srv.SetImmutabilityPolicy(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum23(qp.Get("comp")), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2246,8 +2246,8 @@ func (s *ServerTransport) dispatchSetLegalHold(req *http.Request) (*http.Respons
 		}
 	}
 	respr, errRespr := s.srv.SetLegalHold(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum24(qp.Get("comp")), legalHoldParam, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2361,8 +2361,8 @@ func (s *ServerTransport) dispatchSetMetadata(req *http.Request) (*http.Response
 		}
 	}
 	respr, errRespr := s.srv.SetMetadata(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum12(qp.Get("comp")), options, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2466,8 +2466,8 @@ func (s *ServerTransport) dispatchSetTags(req *http.Request) (*http.Response, er
 		}
 	}
 	respr, errRespr := s.srv.SetTags(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum39(qp.Get("comp")), options, modifiedAccessConditions, leaseAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -2542,8 +2542,8 @@ func (s *ServerTransport) dispatchSetTier(req *http.Request) (*http.Response, er
 		}
 	}
 	respr, errRespr := s.srv.SetTier(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum29(qp.Get("comp")), azblob.AccessTier(getHeaderValue(req.Header, "x-ms-access-tier")), options, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, respContent.HTTPStatus) {
@@ -2677,8 +2677,8 @@ func (s *ServerTransport) dispatchStartCopyFromURL(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := s.srv.StartCopyFromURL(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], getHeaderValue(req.Header, "x-ms-copy-source"), options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -2748,8 +2748,8 @@ func (s *ServerTransport) dispatchUndelete(req *http.Request) (*http.Response, e
 		}
 	}
 	respr, errRespr := s.srv.Undelete(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum14(qp.Get("comp")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

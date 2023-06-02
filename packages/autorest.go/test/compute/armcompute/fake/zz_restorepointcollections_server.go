@@ -115,8 +115,8 @@ func (r *RestorePointCollectionsServerTransport) dispatchCreateOrUpdate(req *htt
 		return nil, err
 	}
 	respr, errRespr := r.srv.CreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -141,8 +141,8 @@ func (r *RestorePointCollectionsServerTransport) dispatchBeginDelete(req *http.R
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := r.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		r.beginDelete = &respr
 	}
@@ -181,8 +181,8 @@ func (r *RestorePointCollectionsServerTransport) dispatchGet(req *http.Request) 
 		}
 	}
 	respr, errRespr := r.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -270,8 +270,8 @@ func (r *RestorePointCollectionsServerTransport) dispatchUpdate(req *http.Reques
 		return nil, err
 	}
 	respr, errRespr := r.srv.Update(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

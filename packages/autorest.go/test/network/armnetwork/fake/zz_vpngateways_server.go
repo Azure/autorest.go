@@ -140,8 +140,8 @@ func (v *VPNGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Reque
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginCreateOrUpdate = &respr
 	}
@@ -173,8 +173,8 @@ func (v *VPNGatewaysServerTransport) dispatchBeginDelete(req *http.Request) (*ht
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginDelete = &respr
 	}
@@ -205,8 +205,8 @@ func (v *VPNGatewaysServerTransport) dispatchGet(req *http.Request) (*http.Respo
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -299,8 +299,8 @@ func (v *VPNGatewaysServerTransport) dispatchBeginReset(req *http.Request) (*htt
 			}
 		}
 		respr, errRespr := v.srv.BeginReset(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginReset = &respr
 	}
@@ -342,8 +342,8 @@ func (v *VPNGatewaysServerTransport) dispatchBeginStartPacketCapture(req *http.R
 			}
 		}
 		respr, errRespr := v.srv.BeginStartPacketCapture(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginStartPacketCapture = &respr
 	}
@@ -385,8 +385,8 @@ func (v *VPNGatewaysServerTransport) dispatchBeginStopPacketCapture(req *http.Re
 			}
 		}
 		respr, errRespr := v.srv.BeginStopPacketCapture(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginStopPacketCapture = &respr
 	}
@@ -422,8 +422,8 @@ func (v *VPNGatewaysServerTransport) dispatchBeginUpdateTags(req *http.Request) 
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginUpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginUpdateTags = &respr
 	}

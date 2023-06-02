@@ -124,8 +124,8 @@ func (v *VirtualMachineRunCommandsServerTransport) dispatchBeginCreateOrUpdate(r
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("vmName")], matches[regex.SubexpIndex("runCommandName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginCreateOrUpdate = &respr
 	}
@@ -157,8 +157,8 @@ func (v *VirtualMachineRunCommandsServerTransport) dispatchBeginDelete(req *http
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := v.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("vmName")], matches[regex.SubexpIndex("runCommandName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginDelete = &respr
 	}
@@ -189,8 +189,8 @@ func (v *VirtualMachineRunCommandsServerTransport) dispatchGet(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.Get(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("commandId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -222,8 +222,8 @@ func (v *VirtualMachineRunCommandsServerTransport) dispatchGetByVirtualMachine(r
 		}
 	}
 	respr, errRespr := v.srv.GetByVirtualMachine(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("vmName")], matches[regex.SubexpIndex("runCommandName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -320,8 +320,8 @@ func (v *VirtualMachineRunCommandsServerTransport) dispatchBeginUpdate(req *http
 			return nil, err
 		}
 		respr, errRespr := v.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("vmName")], matches[regex.SubexpIndex("runCommandName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		v.beginUpdate = &respr
 	}

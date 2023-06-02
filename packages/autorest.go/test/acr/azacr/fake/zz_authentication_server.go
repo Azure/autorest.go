@@ -113,8 +113,8 @@ func (a *AuthenticationServerTransport) dispatchExchangeAADAccessTokenForAcrRefr
 		}
 	}
 	respr, errRespr := a.srv.ExchangeAADAccessTokenForAcrRefreshToken(req.Context(), grantType, service, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -157,8 +157,8 @@ func (a *AuthenticationServerTransport) dispatchExchangeAcrRefreshTokenForAcrAcc
 		}
 	}
 	respr, errRespr := a.srv.ExchangeAcrRefreshTokenForAcrAccessToken(req.Context(), service, scope, refreshToken, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -177,8 +177,8 @@ func (a *AuthenticationServerTransport) dispatchGetAcrAccessTokenFromLogin(req *
 	}
 	qp := req.URL.Query()
 	respr, errRespr := a.srv.GetAcrAccessTokenFromLogin(req.Context(), qp.Get("service"), qp.Get("scope"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -94,8 +94,8 @@ func (a *ArrayServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -113,8 +113,8 @@ func (a *ArrayServerTransport) dispatchGetNotProvided(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetNotProvided not implemented")}
 	}
 	respr, errRespr := a.srv.GetNotProvided(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -132,8 +132,8 @@ func (a *ArrayServerTransport) dispatchGetValid(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -155,8 +155,8 @@ func (a *ArrayServerTransport) dispatchPutEmpty(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutEmpty(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -178,8 +178,8 @@ func (a *ArrayServerTransport) dispatchPutValid(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

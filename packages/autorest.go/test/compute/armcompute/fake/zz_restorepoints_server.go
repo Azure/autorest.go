@@ -96,8 +96,8 @@ func (r *RestorePointsServerTransport) dispatchBeginCreate(req *http.Request) (*
 			return nil, err
 		}
 		respr, errRespr := r.srv.BeginCreate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], matches[regex.SubexpIndex("restorePointName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		r.beginCreate = &respr
 	}
@@ -129,8 +129,8 @@ func (r *RestorePointsServerTransport) dispatchBeginDelete(req *http.Request) (*
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := r.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], matches[regex.SubexpIndex("restorePointName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		r.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (r *RestorePointsServerTransport) dispatchGet(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := r.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], matches[regex.SubexpIndex("restorePointName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

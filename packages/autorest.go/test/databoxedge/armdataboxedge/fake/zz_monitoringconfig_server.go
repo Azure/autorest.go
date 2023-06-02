@@ -104,8 +104,8 @@ func (m *MonitoringConfigServerTransport) dispatchBeginCreateOrUpdate(req *http.
 			return nil, err
 		}
 		respr, errRespr := m.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("roleName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		m.beginCreateOrUpdate = &respr
 	}
@@ -137,8 +137,8 @@ func (m *MonitoringConfigServerTransport) dispatchBeginDelete(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := m.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("roleName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		m.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (m *MonitoringConfigServerTransport) dispatchGet(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := m.srv.Get(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("roleName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

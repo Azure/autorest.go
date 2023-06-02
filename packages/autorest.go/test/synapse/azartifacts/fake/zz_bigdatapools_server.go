@@ -83,8 +83,8 @@ func (b *BigDataPoolsServerTransport) dispatchGet(req *http.Request) (*http.Resp
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := b.srv.Get(req.Context(), matches[regex.SubexpIndex("bigDataPoolName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -102,8 +102,8 @@ func (b *BigDataPoolsServerTransport) dispatchList(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("method List not implemented")}
 	}
 	respr, errRespr := b.srv.List(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

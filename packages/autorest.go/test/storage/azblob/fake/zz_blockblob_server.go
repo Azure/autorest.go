@@ -238,8 +238,8 @@ func (b *BlockBlobServerTransport) dispatchCommitBlockList(req *http.Request) (*
 		}
 	}
 	respr, errRespr := b.srv.CommitBlockList(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum31(qp.Get("comp")), body, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -334,8 +334,8 @@ func (b *BlockBlobServerTransport) dispatchGetBlockList(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := b.srv.GetBlockList(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum31(qp.Get("comp")), azblob.BlockListType(qp.Get("blocklisttype")), options, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -526,8 +526,8 @@ func (b *BlockBlobServerTransport) dispatchPutBlobFromURL(req *http.Request) (*h
 		}
 	}
 	respr, errRespr := b.srv.PutBlobFromURL(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], contentLengthParam, getHeaderValue(req.Header, "x-ms-copy-source"), options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -642,8 +642,8 @@ func (b *BlockBlobServerTransport) dispatchStageBlock(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := b.srv.StageBlock(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum30(qp.Get("comp")), qp.Get("blockid"), contentLengthParam, req.Body.(io.ReadSeekCloser), options, leaseAccessConditions, cpkInfo, cpkScopeInfo)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -775,8 +775,8 @@ func (b *BlockBlobServerTransport) dispatchStageBlockFromURL(req *http.Request) 
 		}
 	}
 	respr, errRespr := b.srv.StageBlockFromURL(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum30(qp.Get("comp")), qp.Get("blockid"), contentLengthParam, getHeaderValue(req.Header, "x-ms-copy-source"), options, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -952,8 +952,8 @@ func (b *BlockBlobServerTransport) dispatchUpload(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := b.srv.Upload(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], contentLengthParam, req.Body.(io.ReadSeekCloser), options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {

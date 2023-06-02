@@ -70,8 +70,8 @@ func (f *FlattencomplexServerTransport) dispatchGetValid(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
 	}
 	respr, errRespr := f.srv.GetValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

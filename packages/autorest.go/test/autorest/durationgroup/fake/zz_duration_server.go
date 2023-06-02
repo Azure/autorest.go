@@ -88,8 +88,8 @@ func (d *DurationServerTransport) dispatchGetInvalid(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
 	}
 	respr, errRespr := d.srv.GetInvalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -107,8 +107,8 @@ func (d *DurationServerTransport) dispatchGetNull(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -126,8 +126,8 @@ func (d *DurationServerTransport) dispatchGetPositiveDuration(req *http.Request)
 		return nil, &nonRetriableError{errors.New("method GetPositiveDuration not implemented")}
 	}
 	respr, errRespr := d.srv.GetPositiveDuration(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -149,8 +149,8 @@ func (d *DurationServerTransport) dispatchPutPositiveDuration(req *http.Request)
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutPositiveDuration(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

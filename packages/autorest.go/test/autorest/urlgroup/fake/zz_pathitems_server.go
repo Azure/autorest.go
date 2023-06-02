@@ -105,8 +105,8 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 		}
 	}
 	respr, errRespr := p.srv.GetAllWithValues(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -140,8 +140,8 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 		}
 	}
 	respr, errRespr := p.srv.GetGlobalAndLocalQueryNull(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -175,8 +175,8 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 		}
 	}
 	respr, errRespr := p.srv.GetGlobalQueryNull(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -210,8 +210,8 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 		}
 	}
 	respr, errRespr := p.srv.GetLocalPathItemQueryNull(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

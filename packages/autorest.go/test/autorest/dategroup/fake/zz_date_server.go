@@ -113,8 +113,8 @@ func (d *DateServerTransport) dispatchGetInvalidDate(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetInvalidDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetInvalidDate(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -132,8 +132,8 @@ func (d *DateServerTransport) dispatchGetMaxDate(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method GetMaxDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetMaxDate(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -151,8 +151,8 @@ func (d *DateServerTransport) dispatchGetMinDate(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method GetMinDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetMinDate(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -170,8 +170,8 @@ func (d *DateServerTransport) dispatchGetNull(req *http.Request) (*http.Response
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -189,8 +189,8 @@ func (d *DateServerTransport) dispatchGetOverflowDate(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetOverflowDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetOverflowDate(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -208,8 +208,8 @@ func (d *DateServerTransport) dispatchGetUnderflowDate(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetUnderflowDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetUnderflowDate(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -231,8 +231,8 @@ func (d *DateServerTransport) dispatchPutMaxDate(req *http.Request) (*http.Respo
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutMaxDate(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -254,8 +254,8 @@ func (d *DateServerTransport) dispatchPutMinDate(req *http.Request) (*http.Respo
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutMinDate(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

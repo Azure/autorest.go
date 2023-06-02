@@ -77,8 +77,8 @@ func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchGe
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.Get(req.Context(), matches[regex.SubexpIndex("location")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

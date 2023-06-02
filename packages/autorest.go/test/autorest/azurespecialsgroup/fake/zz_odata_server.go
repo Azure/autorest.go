@@ -92,8 +92,8 @@ func (o *ODataServerTransport) dispatchGetWithFilter(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := o.srv.GetWithFilter(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

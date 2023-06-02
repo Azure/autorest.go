@@ -118,8 +118,8 @@ func (p *PolymorphismServerTransport) dispatchGetComplicated(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method GetComplicated not implemented")}
 	}
 	respr, errRespr := p.srv.GetComplicated(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -137,8 +137,8 @@ func (p *PolymorphismServerTransport) dispatchGetComposedWithDiscriminator(req *
 		return nil, &nonRetriableError{errors.New("method GetComposedWithDiscriminator not implemented")}
 	}
 	respr, errRespr := p.srv.GetComposedWithDiscriminator(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -156,8 +156,8 @@ func (p *PolymorphismServerTransport) dispatchGetComposedWithoutDiscriminator(re
 		return nil, &nonRetriableError{errors.New("method GetComposedWithoutDiscriminator not implemented")}
 	}
 	respr, errRespr := p.srv.GetComposedWithoutDiscriminator(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -175,8 +175,8 @@ func (p *PolymorphismServerTransport) dispatchGetDotSyntax(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetDotSyntax not implemented")}
 	}
 	respr, errRespr := p.srv.GetDotSyntax(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -194,8 +194,8 @@ func (p *PolymorphismServerTransport) dispatchGetValid(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
 	}
 	respr, errRespr := p.srv.GetValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -221,8 +221,8 @@ func (p *PolymorphismServerTransport) dispatchPutComplicated(req *http.Request) 
 		return nil, err
 	}
 	respr, errRespr := p.srv.PutComplicated(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -248,8 +248,8 @@ func (p *PolymorphismServerTransport) dispatchPutMissingDiscriminator(req *http.
 		return nil, err
 	}
 	respr, errRespr := p.srv.PutMissingDiscriminator(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -275,8 +275,8 @@ func (p *PolymorphismServerTransport) dispatchPutValid(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := p.srv.PutValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -302,8 +302,8 @@ func (p *PolymorphismServerTransport) dispatchPutValidMissingRequired(req *http.
 		return nil, err
 	}
 	respr, errRespr := p.srv.PutValidMissingRequired(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

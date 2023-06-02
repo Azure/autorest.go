@@ -103,8 +103,8 @@ func (s *ServiceServerTransport) dispatchGetProperties(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := s.srv.GetProperties(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -150,8 +150,8 @@ func (s *ServiceServerTransport) dispatchGetStatistics(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := s.srv.GetStatistics(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -204,8 +204,8 @@ func (s *ServiceServerTransport) dispatchSetProperties(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := s.srv.SetProperties(req.Context(), body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {

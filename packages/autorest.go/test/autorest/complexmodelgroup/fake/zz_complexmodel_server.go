@@ -93,8 +93,8 @@ func (c *ComplexModelServerTransport) dispatchCreate(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := c.srv.Create(req.Context(), matches[regex.SubexpIndex("subscriptionId")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -118,8 +118,8 @@ func (c *ComplexModelServerTransport) dispatchList(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.List(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -147,8 +147,8 @@ func (c *ComplexModelServerTransport) dispatchUpdate(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := c.srv.Update(req.Context(), matches[regex.SubexpIndex("subscriptionId")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

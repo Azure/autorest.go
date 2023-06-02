@@ -110,8 +110,8 @@ func (o *OrdersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (
 			return nil, err
 		}
 		respr, errRespr := o.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		o.beginCreateOrUpdate = &respr
 	}
@@ -143,8 +143,8 @@ func (o *OrdersServerTransport) dispatchBeginDelete(req *http.Request) (*http.Re
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := o.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		o.beginDelete = &respr
 	}
@@ -175,8 +175,8 @@ func (o *OrdersServerTransport) dispatchGet(req *http.Request) (*http.Response, 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := o.srv.Get(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -230,8 +230,8 @@ func (o *OrdersServerTransport) dispatchListDCAccessCode(req *http.Request) (*ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := o.srv.ListDCAccessCode(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -91,8 +91,8 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringMultiEmpty(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -118,8 +118,8 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request)
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringMultiNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -145,8 +145,8 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringMultiValid(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -118,8 +118,8 @@ func (d *DataFlowServerTransport) dispatchBeginCreateOrUpdateDataFlow(req *http.
 			}
 		}
 		respr, errRespr := d.srv.BeginCreateOrUpdateDataFlow(req.Context(), matches[regex.SubexpIndex("dataFlowName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginCreateOrUpdateDataFlow = &respr
 	}
@@ -151,8 +151,8 @@ func (d *DataFlowServerTransport) dispatchBeginDeleteDataFlow(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDeleteDataFlow(req.Context(), matches[regex.SubexpIndex("dataFlowName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDeleteDataFlow = &respr
 	}
@@ -190,8 +190,8 @@ func (d *DataFlowServerTransport) dispatchGetDataFlow(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := d.srv.GetDataFlow(req.Context(), matches[regex.SubexpIndex("dataFlowName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -244,8 +244,8 @@ func (d *DataFlowServerTransport) dispatchBeginRenameDataFlow(req *http.Request)
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginRenameDataFlow(req.Context(), matches[regex.SubexpIndex("dataFlowName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginRenameDataFlow = &respr
 	}

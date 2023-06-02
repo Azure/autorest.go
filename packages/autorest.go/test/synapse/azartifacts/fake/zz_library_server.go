@@ -139,8 +139,8 @@ func (l *LibraryServerTransport) dispatchAppend(req *http.Request) (*http.Respon
 		}
 	}
 	respr, errRespr := l.srv.Append(req.Context(), azartifacts.Enum9(qp.Get("comp")), matches[regex.SubexpIndex("libraryName")], req.Body.(io.ReadSeekCloser), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -165,8 +165,8 @@ func (l *LibraryServerTransport) dispatchBeginCreate(req *http.Request) (*http.R
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := l.srv.BeginCreate(req.Context(), matches[regex.SubexpIndex("libraryName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginCreate = &respr
 	}
@@ -198,8 +198,8 @@ func (l *LibraryServerTransport) dispatchBeginDelete(req *http.Request) (*http.R
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := l.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("libraryName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDelete = &respr
 	}
@@ -231,8 +231,8 @@ func (l *LibraryServerTransport) dispatchBeginFlush(req *http.Request) (*http.Re
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := l.srv.BeginFlush(req.Context(), matches[regex.SubexpIndex("libraryName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginFlush = &respr
 	}
@@ -263,8 +263,8 @@ func (l *LibraryServerTransport) dispatchGet(req *http.Request) (*http.Response,
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.Get(req.Context(), matches[regex.SubexpIndex("libraryName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -288,8 +288,8 @@ func (l *LibraryServerTransport) dispatchGetOperationResult(req *http.Request) (
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.GetOperationResult(req.Context(), matches[regex.SubexpIndex("operationId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, respContent.HTTPStatus) {

@@ -286,8 +286,8 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVEmpty(req *http.Request) 
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringCSVEmpty(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -313,8 +313,8 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVNull(req *http.Request) (
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringCSVNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -340,8 +340,8 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVValid(req *http.Request) 
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringCSVValid(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -367,8 +367,8 @@ func (q *QueriesServerTransport) dispatchArrayStringNoCollectionFormatEmpty(req 
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringNoCollectionFormatEmpty(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -394,8 +394,8 @@ func (q *QueriesServerTransport) dispatchArrayStringPipesValid(req *http.Request
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringPipesValid(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -421,8 +421,8 @@ func (q *QueriesServerTransport) dispatchArrayStringSsvValid(req *http.Request) 
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringSsvValid(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -448,8 +448,8 @@ func (q *QueriesServerTransport) dispatchArrayStringTsvValid(req *http.Request) 
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringTsvValid(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -467,8 +467,8 @@ func (q *QueriesServerTransport) dispatchByteEmpty(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("method ByteEmpty not implemented")}
 	}
 	respr, errRespr := q.srv.ByteEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -497,8 +497,8 @@ func (q *QueriesServerTransport) dispatchByteMultiByte(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := q.srv.ByteMultiByte(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -527,8 +527,8 @@ func (q *QueriesServerTransport) dispatchByteNull(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := q.srv.ByteNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -557,8 +557,8 @@ func (q *QueriesServerTransport) dispatchDateNull(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := q.srv.DateNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -587,8 +587,8 @@ func (q *QueriesServerTransport) dispatchDateTimeNull(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := q.srv.DateTimeNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -606,8 +606,8 @@ func (q *QueriesServerTransport) dispatchDateTimeValid(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method DateTimeValid not implemented")}
 	}
 	respr, errRespr := q.srv.DateTimeValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -625,8 +625,8 @@ func (q *QueriesServerTransport) dispatchDateValid(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("method DateValid not implemented")}
 	}
 	respr, errRespr := q.srv.DateValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -644,8 +644,8 @@ func (q *QueriesServerTransport) dispatchDoubleDecimalNegative(req *http.Request
 		return nil, &nonRetriableError{errors.New("method DoubleDecimalNegative not implemented")}
 	}
 	respr, errRespr := q.srv.DoubleDecimalNegative(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -663,8 +663,8 @@ func (q *QueriesServerTransport) dispatchDoubleDecimalPositive(req *http.Request
 		return nil, &nonRetriableError{errors.New("method DoubleDecimalPositive not implemented")}
 	}
 	respr, errRespr := q.srv.DoubleDecimalPositive(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -699,8 +699,8 @@ func (q *QueriesServerTransport) dispatchDoubleNull(req *http.Request) (*http.Re
 		}
 	}
 	respr, errRespr := q.srv.DoubleNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -726,8 +726,8 @@ func (q *QueriesServerTransport) dispatchEnumNull(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := q.srv.EnumNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -753,8 +753,8 @@ func (q *QueriesServerTransport) dispatchEnumValid(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := q.srv.EnumValid(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -789,8 +789,8 @@ func (q *QueriesServerTransport) dispatchFloatNull(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := q.srv.FloatNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -808,8 +808,8 @@ func (q *QueriesServerTransport) dispatchFloatScientificNegative(req *http.Reque
 		return nil, &nonRetriableError{errors.New("method FloatScientificNegative not implemented")}
 	}
 	respr, errRespr := q.srv.FloatScientificNegative(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -827,8 +827,8 @@ func (q *QueriesServerTransport) dispatchFloatScientificPositive(req *http.Reque
 		return nil, &nonRetriableError{errors.New("method FloatScientificPositive not implemented")}
 	}
 	respr, errRespr := q.srv.FloatScientificPositive(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -846,8 +846,8 @@ func (q *QueriesServerTransport) dispatchGetBooleanFalse(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetBooleanFalse not implemented")}
 	}
 	respr, errRespr := q.srv.GetBooleanFalse(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -876,8 +876,8 @@ func (q *QueriesServerTransport) dispatchGetBooleanNull(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := q.srv.GetBooleanNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -895,8 +895,8 @@ func (q *QueriesServerTransport) dispatchGetBooleanTrue(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method GetBooleanTrue not implemented")}
 	}
 	respr, errRespr := q.srv.GetBooleanTrue(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -914,8 +914,8 @@ func (q *QueriesServerTransport) dispatchGetIntNegativeOneMillion(req *http.Requ
 		return nil, &nonRetriableError{errors.New("method GetIntNegativeOneMillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetIntNegativeOneMillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -950,8 +950,8 @@ func (q *QueriesServerTransport) dispatchGetIntNull(req *http.Request) (*http.Re
 		}
 	}
 	respr, errRespr := q.srv.GetIntNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -969,8 +969,8 @@ func (q *QueriesServerTransport) dispatchGetIntOneMillion(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetIntOneMillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetIntOneMillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1005,8 +1005,8 @@ func (q *QueriesServerTransport) dispatchGetLongNull(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := q.srv.GetLongNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1024,8 +1024,8 @@ func (q *QueriesServerTransport) dispatchGetNegativeTenBillion(req *http.Request
 		return nil, &nonRetriableError{errors.New("method GetNegativeTenBillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetNegativeTenBillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1043,8 +1043,8 @@ func (q *QueriesServerTransport) dispatchGetTenBillion(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetTenBillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetTenBillion(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1062,8 +1062,8 @@ func (q *QueriesServerTransport) dispatchStringEmpty(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method StringEmpty not implemented")}
 	}
 	respr, errRespr := q.srv.StringEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1089,8 +1089,8 @@ func (q *QueriesServerTransport) dispatchStringNull(req *http.Request) (*http.Re
 		}
 	}
 	respr, errRespr := q.srv.StringNull(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1108,8 +1108,8 @@ func (q *QueriesServerTransport) dispatchStringURLEncoded(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method StringURLEncoded not implemented")}
 	}
 	respr, errRespr := q.srv.StringURLEncoded(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1127,8 +1127,8 @@ func (q *QueriesServerTransport) dispatchStringUnicode(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method StringUnicode not implemented")}
 	}
 	respr, errRespr := q.srv.StringUnicode(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

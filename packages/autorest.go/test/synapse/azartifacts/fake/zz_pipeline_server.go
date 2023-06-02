@@ -126,8 +126,8 @@ func (p *PipelineServerTransport) dispatchBeginCreateOrUpdatePipeline(req *http.
 			}
 		}
 		respr, errRespr := p.srv.BeginCreateOrUpdatePipeline(req.Context(), matches[regex.SubexpIndex("pipelineName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginCreateOrUpdatePipeline = &respr
 	}
@@ -178,8 +178,8 @@ func (p *PipelineServerTransport) dispatchCreatePipelineRun(req *http.Request) (
 		}
 	}
 	respr, errRespr := p.srv.CreatePipelineRun(req.Context(), matches[regex.SubexpIndex("pipelineName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -204,8 +204,8 @@ func (p *PipelineServerTransport) dispatchBeginDeletePipeline(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginDeletePipeline(req.Context(), matches[regex.SubexpIndex("pipelineName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDeletePipeline = &respr
 	}
@@ -243,8 +243,8 @@ func (p *PipelineServerTransport) dispatchGetPipeline(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := p.srv.GetPipeline(req.Context(), matches[regex.SubexpIndex("pipelineName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -297,8 +297,8 @@ func (p *PipelineServerTransport) dispatchBeginRenamePipeline(req *http.Request)
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginRenamePipeline(req.Context(), matches[regex.SubexpIndex("pipelineName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginRenamePipeline = &respr
 	}

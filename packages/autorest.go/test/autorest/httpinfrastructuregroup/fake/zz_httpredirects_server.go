@@ -160,8 +160,8 @@ func (h *HTTPRedirectsServerTransport) dispatchDelete307(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method Delete307 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete307(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -179,8 +179,8 @@ func (h *HTTPRedirectsServerTransport) dispatchGet300(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Get300 not implemented")}
 	}
 	respr, errRespr := h.srv.Get300(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusMultipleChoices}, respContent.HTTPStatus) {
@@ -201,8 +201,8 @@ func (h *HTTPRedirectsServerTransport) dispatchGet301(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Get301 not implemented")}
 	}
 	respr, errRespr := h.srv.Get301(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -220,8 +220,8 @@ func (h *HTTPRedirectsServerTransport) dispatchGet302(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Get302 not implemented")}
 	}
 	respr, errRespr := h.srv.Get302(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -239,8 +239,8 @@ func (h *HTTPRedirectsServerTransport) dispatchGet307(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Get307 not implemented")}
 	}
 	respr, errRespr := h.srv.Get307(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -258,8 +258,8 @@ func (h *HTTPRedirectsServerTransport) dispatchHead300(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Head300 not implemented")}
 	}
 	respr, errRespr := h.srv.Head300(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusMultipleChoices}, respContent.HTTPStatus) {
@@ -280,8 +280,8 @@ func (h *HTTPRedirectsServerTransport) dispatchHead301(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Head301 not implemented")}
 	}
 	respr, errRespr := h.srv.Head301(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -299,8 +299,8 @@ func (h *HTTPRedirectsServerTransport) dispatchHead302(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Head302 not implemented")}
 	}
 	respr, errRespr := h.srv.Head302(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -318,8 +318,8 @@ func (h *HTTPRedirectsServerTransport) dispatchHead307(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Head307 not implemented")}
 	}
 	respr, errRespr := h.srv.Head307(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -337,8 +337,8 @@ func (h *HTTPRedirectsServerTransport) dispatchOptions307(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method Options307 not implemented")}
 	}
 	respr, errRespr := h.srv.Options307(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -356,8 +356,8 @@ func (h *HTTPRedirectsServerTransport) dispatchPatch302(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method Patch302 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch302(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusFound}, respContent.HTTPStatus) {
@@ -378,8 +378,8 @@ func (h *HTTPRedirectsServerTransport) dispatchPatch307(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method Patch307 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch307(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -397,8 +397,8 @@ func (h *HTTPRedirectsServerTransport) dispatchPost303(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Post303 not implemented")}
 	}
 	respr, errRespr := h.srv.Post303(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusSeeOther}, respContent.HTTPStatus) {
@@ -419,8 +419,8 @@ func (h *HTTPRedirectsServerTransport) dispatchPost307(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method Post307 not implemented")}
 	}
 	respr, errRespr := h.srv.Post307(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -438,8 +438,8 @@ func (h *HTTPRedirectsServerTransport) dispatchPut301(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Put301 not implemented")}
 	}
 	respr, errRespr := h.srv.Put301(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusMovedPermanently}, respContent.HTTPStatus) {
@@ -460,8 +460,8 @@ func (h *HTTPRedirectsServerTransport) dispatchPut307(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method Put307 not implemented")}
 	}
 	respr, errRespr := h.srv.Put307(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

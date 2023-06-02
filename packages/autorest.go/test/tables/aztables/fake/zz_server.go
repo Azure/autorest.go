@@ -150,8 +150,8 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 		}
 	}
 	respr, errRespr := s.srv.Create(req.Context(), body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -197,8 +197,8 @@ func (s *ServerTransport) dispatchDelete(req *http.Request) (*http.Response, err
 		}
 	}
 	respr, errRespr := s.srv.Delete(req.Context(), matches[regex.SubexpIndex("table")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -255,8 +255,8 @@ func (s *ServerTransport) dispatchDeleteEntity(req *http.Request) (*http.Respons
 		}
 	}
 	respr, errRespr := s.srv.DeleteEntity(req.Context(), matches[regex.SubexpIndex("table")], matches[regex.SubexpIndex("partitionKey")], matches[regex.SubexpIndex("rowKey")], getHeaderValue(req.Header, "If-Match"), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -311,8 +311,8 @@ func (s *ServerTransport) dispatchGetAccessPolicy(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := s.srv.GetAccessPolicy(req.Context(), matches[regex.SubexpIndex("table")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -376,8 +376,8 @@ func (s *ServerTransport) dispatchInsertEntity(req *http.Request) (*http.Respons
 		}
 	}
 	respr, errRespr := s.srv.InsertEntity(req.Context(), matches[regex.SubexpIndex("table")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -449,8 +449,8 @@ func (s *ServerTransport) dispatchMergeEntity(req *http.Request) (*http.Response
 		}
 	}
 	respr, errRespr := s.srv.MergeEntity(req.Context(), matches[regex.SubexpIndex("table")], matches[regex.SubexpIndex("partitionKey")], matches[regex.SubexpIndex("rowKey")], body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -510,8 +510,8 @@ func (s *ServerTransport) dispatchQuery(req *http.Request) (*http.Response, erro
 		}
 	}
 	respr, errRespr := s.srv.Query(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -590,8 +590,8 @@ func (s *ServerTransport) dispatchQueryEntities(req *http.Request) (*http.Respon
 		}
 	}
 	respr, errRespr := s.srv.QueryEntities(req.Context(), matches[regex.SubexpIndex("table")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -658,8 +658,8 @@ func (s *ServerTransport) dispatchQueryEntityWithPartitionAndRowKey(req *http.Re
 		}
 	}
 	respr, errRespr := s.srv.QueryEntityWithPartitionAndRowKey(req.Context(), matches[regex.SubexpIndex("table")], matches[regex.SubexpIndex("partitionKey")], matches[regex.SubexpIndex("rowKey")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -727,8 +727,8 @@ func (s *ServerTransport) dispatchSetAccessPolicy(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := s.srv.SetAccessPolicy(req.Context(), matches[regex.SubexpIndex("table")], body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -791,8 +791,8 @@ func (s *ServerTransport) dispatchUpdateEntity(req *http.Request) (*http.Respons
 		}
 	}
 	respr, errRespr := s.srv.UpdateEntity(req.Context(), matches[regex.SubexpIndex("table")], matches[regex.SubexpIndex("partitionKey")], matches[regex.SubexpIndex("rowKey")], body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {

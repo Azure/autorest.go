@@ -104,8 +104,8 @@ func (e *ExpressRouteCircuitConnectionsServerTransport) dispatchBeginCreateOrUpd
 			return nil, err
 		}
 		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], matches[regex.SubexpIndex("peeringName")], matches[regex.SubexpIndex("connectionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		e.beginCreateOrUpdate = &respr
 	}
@@ -137,8 +137,8 @@ func (e *ExpressRouteCircuitConnectionsServerTransport) dispatchBeginDelete(req 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := e.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], matches[regex.SubexpIndex("peeringName")], matches[regex.SubexpIndex("connectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		e.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (e *ExpressRouteCircuitConnectionsServerTransport) dispatchGet(req *http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := e.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("circuitName")], matches[regex.SubexpIndex("peeringName")], matches[regex.SubexpIndex("connectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

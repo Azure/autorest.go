@@ -132,8 +132,8 @@ func (s *SnapshotsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("snapshotName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginCreateOrUpdate = &respr
 	}
@@ -165,8 +165,8 @@ func (s *SnapshotsServerTransport) dispatchBeginDelete(req *http.Request) (*http
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := s.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("snapshotName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginDelete = &respr
 	}
@@ -197,8 +197,8 @@ func (s *SnapshotsServerTransport) dispatchGet(req *http.Request) (*http.Respons
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("snapshotName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -227,8 +227,8 @@ func (s *SnapshotsServerTransport) dispatchBeginGrantAccess(req *http.Request) (
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginGrantAccess(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("snapshotName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginGrantAccess = &respr
 	}
@@ -320,8 +320,8 @@ func (s *SnapshotsServerTransport) dispatchBeginRevokeAccess(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := s.srv.BeginRevokeAccess(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("snapshotName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginRevokeAccess = &respr
 	}
@@ -357,8 +357,8 @@ func (s *SnapshotsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("snapshotName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginUpdate = &respr
 	}

@@ -164,8 +164,8 @@ func (p *PublicIPAddressesServerTransport) dispatchBeginCreateOrUpdate(req *http
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("publicIpAddressName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginCreateOrUpdate = &respr
 	}
@@ -197,8 +197,8 @@ func (p *PublicIPAddressesServerTransport) dispatchBeginDdosProtectionStatus(req
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginDdosProtectionStatus(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("publicIpAddressName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDdosProtectionStatus = &respr
 	}
@@ -230,8 +230,8 @@ func (p *PublicIPAddressesServerTransport) dispatchBeginDelete(req *http.Request
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("publicIpAddressName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDelete = &respr
 	}
@@ -270,8 +270,8 @@ func (p *PublicIPAddressesServerTransport) dispatchGet(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := p.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("publicIpAddressName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -303,8 +303,8 @@ func (p *PublicIPAddressesServerTransport) dispatchGetCloudServicePublicIPAddres
 		}
 	}
 	respr, errRespr := p.srv.GetCloudServicePublicIPAddress(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("cloudServiceName")], matches[regex.SubexpIndex("roleInstanceName")], matches[regex.SubexpIndex("networkInterfaceName")], matches[regex.SubexpIndex("ipConfigurationName")], matches[regex.SubexpIndex("publicIpAddressName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -336,8 +336,8 @@ func (p *PublicIPAddressesServerTransport) dispatchGetVirtualMachineScaleSetPubl
 		}
 	}
 	respr, errRespr := p.srv.GetVirtualMachineScaleSetPublicIPAddress(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualMachineScaleSetName")], matches[regex.SubexpIndex("virtualmachineIndex")], matches[regex.SubexpIndex("networkInterfaceName")], matches[regex.SubexpIndex("ipConfigurationName")], matches[regex.SubexpIndex("publicIpAddressName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -545,8 +545,8 @@ func (p *PublicIPAddressesServerTransport) dispatchUpdateTags(req *http.Request)
 		return nil, err
 	}
 	respr, errRespr := p.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("publicIpAddressName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

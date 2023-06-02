@@ -179,8 +179,8 @@ func (d *DevicesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*htt
 		return nil, err
 	}
 	respr, errRespr := d.srv.CreateOrUpdate(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -209,8 +209,8 @@ func (d *DevicesServerTransport) dispatchBeginCreateOrUpdateSecuritySettings(req
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginCreateOrUpdateSecuritySettings(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginCreateOrUpdateSecuritySettings = &respr
 	}
@@ -242,8 +242,8 @@ func (d *DevicesServerTransport) dispatchBeginDelete(req *http.Request) (*http.R
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDelete = &respr
 	}
@@ -275,8 +275,8 @@ func (d *DevicesServerTransport) dispatchBeginDownloadUpdates(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDownloadUpdates(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDownloadUpdates = &respr
 	}
@@ -307,8 +307,8 @@ func (d *DevicesServerTransport) dispatchGenerateCertificate(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GenerateCertificate(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -332,8 +332,8 @@ func (d *DevicesServerTransport) dispatchGet(req *http.Request) (*http.Response,
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.Get(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -357,8 +357,8 @@ func (d *DevicesServerTransport) dispatchGetExtendedInformation(req *http.Reques
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GetExtendedInformation(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -382,8 +382,8 @@ func (d *DevicesServerTransport) dispatchGetNetworkSettings(req *http.Request) (
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GetNetworkSettings(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -407,8 +407,8 @@ func (d *DevicesServerTransport) dispatchGetUpdateSummary(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GetUpdateSummary(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -433,8 +433,8 @@ func (d *DevicesServerTransport) dispatchBeginInstallUpdates(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginInstallUpdates(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginInstallUpdates = &respr
 	}
@@ -542,8 +542,8 @@ func (d *DevicesServerTransport) dispatchBeginScanForUpdates(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginScanForUpdates(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginScanForUpdates = &respr
 	}
@@ -578,8 +578,8 @@ func (d *DevicesServerTransport) dispatchUpdate(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := d.srv.Update(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -607,8 +607,8 @@ func (d *DevicesServerTransport) dispatchUpdateExtendedInformation(req *http.Req
 		return nil, err
 	}
 	respr, errRespr := d.srv.UpdateExtendedInformation(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -636,8 +636,8 @@ func (d *DevicesServerTransport) dispatchUploadCertificate(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := d.srv.UploadCertificate(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -104,8 +104,8 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPost202Retry200(req *http
 			}
 		}
 		respr, errRespr := l.srv.BeginPost202Retry200(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPost202Retry200 = &respr
 	}
@@ -141,8 +141,8 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPostAsyncRetrySucceeded(r
 			}
 		}
 		respr, errRespr := l.srv.BeginPostAsyncRetrySucceeded(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPostAsyncRetrySucceeded = &respr
 	}
@@ -172,8 +172,8 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPut201CreatingSucceeded20
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPut201CreatingSucceeded200(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPut201CreatingSucceeded200 = &respr
 	}
@@ -203,8 +203,8 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPutAsyncRetrySucceeded(re
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutAsyncRetrySucceeded(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutAsyncRetrySucceeded = &respr
 	}

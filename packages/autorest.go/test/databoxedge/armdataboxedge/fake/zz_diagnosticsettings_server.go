@@ -97,8 +97,8 @@ func (d *DiagnosticSettingsServerTransport) dispatchGetDiagnosticProactiveLogCol
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GetDiagnosticProactiveLogCollectionSettings(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -122,8 +122,8 @@ func (d *DiagnosticSettingsServerTransport) dispatchGetDiagnosticRemoteSupportSe
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GetDiagnosticRemoteSupportSettings(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -152,8 +152,8 @@ func (d *DiagnosticSettingsServerTransport) dispatchBeginUpdateDiagnosticProacti
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginUpdateDiagnosticProactiveLogCollectionSettings(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginUpdateDiagnosticProactiveLogCollectionSettings = &respr
 	}
@@ -189,8 +189,8 @@ func (d *DiagnosticSettingsServerTransport) dispatchBeginUpdateDiagnosticRemoteS
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginUpdateDiagnosticRemoteSupportSettings(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginUpdateDiagnosticRemoteSupportSettings = &respr
 	}

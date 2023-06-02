@@ -88,8 +88,8 @@ func (a *APIVersionDefaultServerTransport) dispatchGetMethodGlobalNotProvidedVal
 		return nil, &nonRetriableError{errors.New("method GetMethodGlobalNotProvidedValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetMethodGlobalNotProvidedValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -107,8 +107,8 @@ func (a *APIVersionDefaultServerTransport) dispatchGetMethodGlobalValid(req *htt
 		return nil, &nonRetriableError{errors.New("method GetMethodGlobalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetMethodGlobalValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -126,8 +126,8 @@ func (a *APIVersionDefaultServerTransport) dispatchGetPathGlobalValid(req *http.
 		return nil, &nonRetriableError{errors.New("method GetPathGlobalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetPathGlobalValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -145,8 +145,8 @@ func (a *APIVersionDefaultServerTransport) dispatchGetSwaggerGlobalValid(req *ht
 		return nil, &nonRetriableError{errors.New("method GetSwaggerGlobalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetSwaggerGlobalValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

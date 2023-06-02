@@ -268,8 +268,8 @@ func (x *XMLServerTransport) dispatchGetACLs(req *http.Request) (*http.Response,
 		return nil, &nonRetriableError{errors.New("method GetACLs not implemented")}
 	}
 	respr, errRespr := x.srv.GetACLs(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -287,8 +287,8 @@ func (x *XMLServerTransport) dispatchGetBytes(req *http.Request) (*http.Response
 		return nil, &nonRetriableError{errors.New("method GetBytes not implemented")}
 	}
 	respr, errRespr := x.srv.GetBytes(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -306,8 +306,8 @@ func (x *XMLServerTransport) dispatchGetComplexTypeRefNoMeta(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method GetComplexTypeRefNoMeta not implemented")}
 	}
 	respr, errRespr := x.srv.GetComplexTypeRefNoMeta(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -325,8 +325,8 @@ func (x *XMLServerTransport) dispatchGetComplexTypeRefWithMeta(req *http.Request
 		return nil, &nonRetriableError{errors.New("method GetComplexTypeRefWithMeta not implemented")}
 	}
 	respr, errRespr := x.srv.GetComplexTypeRefWithMeta(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -344,8 +344,8 @@ func (x *XMLServerTransport) dispatchGetEmptyChildElement(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetEmptyChildElement not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyChildElement(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -363,8 +363,8 @@ func (x *XMLServerTransport) dispatchGetEmptyList(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method GetEmptyList not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyList(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -382,8 +382,8 @@ func (x *XMLServerTransport) dispatchGetEmptyRootList(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetEmptyRootList not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyRootList(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -401,8 +401,8 @@ func (x *XMLServerTransport) dispatchGetEmptyWrappedLists(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetEmptyWrappedLists not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyWrappedLists(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -420,8 +420,8 @@ func (x *XMLServerTransport) dispatchGetHeaders(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetHeaders not implemented")}
 	}
 	respr, errRespr := x.srv.GetHeaders(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -442,8 +442,8 @@ func (x *XMLServerTransport) dispatchGetRootList(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method GetRootList not implemented")}
 	}
 	respr, errRespr := x.srv.GetRootList(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -461,8 +461,8 @@ func (x *XMLServerTransport) dispatchGetRootListSingleItem(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetRootListSingleItem not implemented")}
 	}
 	respr, errRespr := x.srv.GetRootListSingleItem(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -480,8 +480,8 @@ func (x *XMLServerTransport) dispatchGetServiceProperties(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetServiceProperties not implemented")}
 	}
 	respr, errRespr := x.srv.GetServiceProperties(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -499,8 +499,8 @@ func (x *XMLServerTransport) dispatchGetSimple(req *http.Request) (*http.Respons
 		return nil, &nonRetriableError{errors.New("method GetSimple not implemented")}
 	}
 	respr, errRespr := x.srv.GetSimple(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -518,8 +518,8 @@ func (x *XMLServerTransport) dispatchGetURI(req *http.Request) (*http.Response, 
 		return nil, &nonRetriableError{errors.New("method GetURI not implemented")}
 	}
 	respr, errRespr := x.srv.GetURI(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -537,8 +537,8 @@ func (x *XMLServerTransport) dispatchGetWrappedLists(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetWrappedLists not implemented")}
 	}
 	respr, errRespr := x.srv.GetWrappedLists(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -556,8 +556,8 @@ func (x *XMLServerTransport) dispatchGetXMsText(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetXMsText not implemented")}
 	}
 	respr, errRespr := x.srv.GetXMsText(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -579,8 +579,8 @@ func (x *XMLServerTransport) dispatchJSONInput(req *http.Request) (*http.Respons
 		return nil, err
 	}
 	respr, errRespr := x.srv.JSONInput(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -598,8 +598,8 @@ func (x *XMLServerTransport) dispatchJSONOutput(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method JSONOutput not implemented")}
 	}
 	respr, errRespr := x.srv.JSONOutput(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -617,8 +617,8 @@ func (x *XMLServerTransport) dispatchListBlobs(req *http.Request) (*http.Respons
 		return nil, &nonRetriableError{errors.New("method ListBlobs not implemented")}
 	}
 	respr, errRespr := x.srv.ListBlobs(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -636,8 +636,8 @@ func (x *XMLServerTransport) dispatchListContainers(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method ListContainers not implemented")}
 	}
 	respr, errRespr := x.srv.ListContainers(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -659,8 +659,8 @@ func (x *XMLServerTransport) dispatchPutACLs(req *http.Request) (*http.Response,
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutACLs(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -682,8 +682,8 @@ func (x *XMLServerTransport) dispatchPutBinary(req *http.Request) (*http.Respons
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutBinary(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -705,8 +705,8 @@ func (x *XMLServerTransport) dispatchPutComplexTypeRefNoMeta(req *http.Request) 
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutComplexTypeRefNoMeta(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -728,8 +728,8 @@ func (x *XMLServerTransport) dispatchPutComplexTypeRefWithMeta(req *http.Request
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutComplexTypeRefWithMeta(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -751,8 +751,8 @@ func (x *XMLServerTransport) dispatchPutEmptyChildElement(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutEmptyChildElement(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -774,8 +774,8 @@ func (x *XMLServerTransport) dispatchPutEmptyList(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutEmptyList(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -797,8 +797,8 @@ func (x *XMLServerTransport) dispatchPutEmptyRootList(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutEmptyRootList(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -820,8 +820,8 @@ func (x *XMLServerTransport) dispatchPutEmptyWrappedLists(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutEmptyWrappedLists(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -843,8 +843,8 @@ func (x *XMLServerTransport) dispatchPutRootList(req *http.Request) (*http.Respo
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutRootList(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -866,8 +866,8 @@ func (x *XMLServerTransport) dispatchPutRootListSingleItem(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutRootListSingleItem(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -889,8 +889,8 @@ func (x *XMLServerTransport) dispatchPutServiceProperties(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutServiceProperties(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -912,8 +912,8 @@ func (x *XMLServerTransport) dispatchPutSimple(req *http.Request) (*http.Respons
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutSimple(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -935,8 +935,8 @@ func (x *XMLServerTransport) dispatchPutURI(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutURI(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -958,8 +958,8 @@ func (x *XMLServerTransport) dispatchPutWrappedLists(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := x.srv.PutWrappedLists(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {

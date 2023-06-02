@@ -89,8 +89,8 @@ func (p *PetServerTransport) dispatchDoSomething(req *http.Request) (*http.Respo
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.DoSomething(req.Context(), matches[regex.SubexpIndex("whatAction")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -114,8 +114,8 @@ func (p *PetServerTransport) dispatchGetPetByID(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetPetByID(req.Context(), matches[regex.SubexpIndex("petId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, respContent.HTTPStatus) {
@@ -141,8 +141,8 @@ func (p *PetServerTransport) dispatchHasModelsParam(req *http.Request) (*http.Re
 		}
 	}
 	respr, errRespr := p.srv.HasModelsParam(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

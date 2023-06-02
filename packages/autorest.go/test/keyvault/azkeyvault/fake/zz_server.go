@@ -589,8 +589,8 @@ func (s *ServerTransport) dispatchBackupCertificate(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.BackupCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -614,8 +614,8 @@ func (s *ServerTransport) dispatchBackupKey(req *http.Request) (*http.Response, 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.BackupKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -639,8 +639,8 @@ func (s *ServerTransport) dispatchBackupSecret(req *http.Request) (*http.Respons
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.BackupSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -664,8 +664,8 @@ func (s *ServerTransport) dispatchBackupStorageAccount(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.BackupStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -693,8 +693,8 @@ func (s *ServerTransport) dispatchCreateCertificate(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := s.srv.CreateCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -722,8 +722,8 @@ func (s *ServerTransport) dispatchCreateKey(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	respr, errRespr := s.srv.CreateKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -751,8 +751,8 @@ func (s *ServerTransport) dispatchDecrypt(req *http.Request) (*http.Response, er
 		return nil, err
 	}
 	respr, errRespr := s.srv.Decrypt(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -776,8 +776,8 @@ func (s *ServerTransport) dispatchDeleteCertificate(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.DeleteCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -795,8 +795,8 @@ func (s *ServerTransport) dispatchDeleteCertificateContacts(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method DeleteCertificateContacts not implemented")}
 	}
 	respr, errRespr := s.srv.DeleteCertificateContacts(req.Context(), req.URL.Host, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -820,8 +820,8 @@ func (s *ServerTransport) dispatchDeleteCertificateIssuer(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.DeleteCertificateIssuer(req.Context(), req.URL.Host, matches[regex.SubexpIndex("issuer_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -845,8 +845,8 @@ func (s *ServerTransport) dispatchDeleteCertificateOperation(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.DeleteCertificateOperation(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -870,8 +870,8 @@ func (s *ServerTransport) dispatchDeleteKey(req *http.Request) (*http.Response, 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.DeleteKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -895,8 +895,8 @@ func (s *ServerTransport) dispatchDeleteSasDefinition(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.DeleteSasDefinition(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], matches[regex.SubexpIndex("sas_definition-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -920,8 +920,8 @@ func (s *ServerTransport) dispatchDeleteSecret(req *http.Request) (*http.Respons
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.DeleteSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -945,8 +945,8 @@ func (s *ServerTransport) dispatchDeleteStorageAccount(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.DeleteStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -974,8 +974,8 @@ func (s *ServerTransport) dispatchEncrypt(req *http.Request) (*http.Response, er
 		return nil, err
 	}
 	respr, errRespr := s.srv.Encrypt(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1004,8 +1004,8 @@ func (s *ServerTransport) dispatchBeginFullBackup(req *http.Request) (*http.Resp
 			}
 		}
 		respr, errRespr := s.srv.BeginFullBackup(req.Context(), req.URL.Host, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginFullBackup = &respr
 	}
@@ -1036,8 +1036,8 @@ func (s *ServerTransport) dispatchFullBackupStatus(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.FullBackupStatus(req.Context(), req.URL.Host, matches[regex.SubexpIndex("jobId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1060,8 +1060,8 @@ func (s *ServerTransport) dispatchBeginFullRestoreOperation(req *http.Request) (
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginFullRestoreOperation(req.Context(), req.URL.Host, body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginFullRestoreOperation = &respr
 	}
@@ -1092,8 +1092,8 @@ func (s *ServerTransport) dispatchGetCertificate(req *http.Request) (*http.Respo
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], matches[regex.SubexpIndex("certificate_version")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1111,8 +1111,8 @@ func (s *ServerTransport) dispatchGetCertificateContacts(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetCertificateContacts not implemented")}
 	}
 	respr, errRespr := s.srv.GetCertificateContacts(req.Context(), req.URL.Host, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1136,8 +1136,8 @@ func (s *ServerTransport) dispatchGetCertificateIssuer(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetCertificateIssuer(req.Context(), req.URL.Host, matches[regex.SubexpIndex("issuer_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1202,8 +1202,8 @@ func (s *ServerTransport) dispatchGetCertificateOperation(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetCertificateOperation(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1227,8 +1227,8 @@ func (s *ServerTransport) dispatchGetCertificatePolicy(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetCertificatePolicy(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1345,8 +1345,8 @@ func (s *ServerTransport) dispatchGetDeletedCertificate(req *http.Request) (*htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetDeletedCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1416,8 +1416,8 @@ func (s *ServerTransport) dispatchGetDeletedKey(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetDeletedKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1482,8 +1482,8 @@ func (s *ServerTransport) dispatchGetDeletedSasDefinition(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetDeletedSasDefinition(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], matches[regex.SubexpIndex("sas_definition-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1554,8 +1554,8 @@ func (s *ServerTransport) dispatchGetDeletedSecret(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetDeletedSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1620,8 +1620,8 @@ func (s *ServerTransport) dispatchGetDeletedStorageAccount(req *http.Request) (*
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetDeletedStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1686,8 +1686,8 @@ func (s *ServerTransport) dispatchGetKey(req *http.Request) (*http.Response, err
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1799,8 +1799,8 @@ func (s *ServerTransport) dispatchGetSasDefinition(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetSasDefinition(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], matches[regex.SubexpIndex("sas_definition-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1871,8 +1871,8 @@ func (s *ServerTransport) dispatchGetSecret(req *http.Request) (*http.Response, 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], matches[regex.SubexpIndex("secret_version")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1984,8 +1984,8 @@ func (s *ServerTransport) dispatchGetStorageAccount(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.GetStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2054,8 +2054,8 @@ func (s *ServerTransport) dispatchImportCertificate(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := s.srv.ImportCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2083,8 +2083,8 @@ func (s *ServerTransport) dispatchImportKey(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	respr, errRespr := s.srv.ImportKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2112,8 +2112,8 @@ func (s *ServerTransport) dispatchMergeCertificate(req *http.Request) (*http.Res
 		return nil, err
 	}
 	respr, errRespr := s.srv.MergeCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -2137,8 +2137,8 @@ func (s *ServerTransport) dispatchPurgeDeletedCertificate(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PurgeDeletedCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -2162,8 +2162,8 @@ func (s *ServerTransport) dispatchPurgeDeletedKey(req *http.Request) (*http.Resp
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PurgeDeletedKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -2187,8 +2187,8 @@ func (s *ServerTransport) dispatchPurgeDeletedSecret(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PurgeDeletedSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -2212,8 +2212,8 @@ func (s *ServerTransport) dispatchPurgeDeletedStorageAccount(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PurgeDeletedStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -2237,8 +2237,8 @@ func (s *ServerTransport) dispatchRecoverDeletedCertificate(req *http.Request) (
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.RecoverDeletedCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2262,8 +2262,8 @@ func (s *ServerTransport) dispatchRecoverDeletedKey(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.RecoverDeletedKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2287,8 +2287,8 @@ func (s *ServerTransport) dispatchRecoverDeletedSasDefinition(req *http.Request)
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.RecoverDeletedSasDefinition(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], matches[regex.SubexpIndex("sas_definition-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2312,8 +2312,8 @@ func (s *ServerTransport) dispatchRecoverDeletedSecret(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.RecoverDeletedSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2337,8 +2337,8 @@ func (s *ServerTransport) dispatchRecoverDeletedStorageAccount(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.RecoverDeletedStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2366,8 +2366,8 @@ func (s *ServerTransport) dispatchRegenerateStorageAccountKey(req *http.Request)
 		return nil, err
 	}
 	respr, errRespr := s.srv.RegenerateStorageAccountKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2389,8 +2389,8 @@ func (s *ServerTransport) dispatchRestoreCertificate(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := s.srv.RestoreCertificate(req.Context(), req.URL.Host, body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2412,8 +2412,8 @@ func (s *ServerTransport) dispatchRestoreKey(req *http.Request) (*http.Response,
 		return nil, err
 	}
 	respr, errRespr := s.srv.RestoreKey(req.Context(), req.URL.Host, body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2435,8 +2435,8 @@ func (s *ServerTransport) dispatchRestoreSecret(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := s.srv.RestoreSecret(req.Context(), req.URL.Host, body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2460,8 +2460,8 @@ func (s *ServerTransport) dispatchRestoreStatus(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.RestoreStatus(req.Context(), req.URL.Host, matches[regex.SubexpIndex("jobId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2483,8 +2483,8 @@ func (s *ServerTransport) dispatchRestoreStorageAccount(req *http.Request) (*htt
 		return nil, err
 	}
 	respr, errRespr := s.srv.RestoreStorageAccount(req.Context(), req.URL.Host, body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2513,8 +2513,8 @@ func (s *ServerTransport) dispatchBeginSelectiveKeyRestoreOperation(req *http.Re
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginSelectiveKeyRestoreOperation(req.Context(), req.URL.Host, matches[regex.SubexpIndex("keyName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginSelectiveKeyRestoreOperation = &respr
 	}
@@ -2543,8 +2543,8 @@ func (s *ServerTransport) dispatchSetCertificateContacts(req *http.Request) (*ht
 		return nil, err
 	}
 	respr, errRespr := s.srv.SetCertificateContacts(req.Context(), req.URL.Host, body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2572,8 +2572,8 @@ func (s *ServerTransport) dispatchSetCertificateIssuer(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := s.srv.SetCertificateIssuer(req.Context(), req.URL.Host, matches[regex.SubexpIndex("issuer_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2601,8 +2601,8 @@ func (s *ServerTransport) dispatchSetSasDefinition(req *http.Request) (*http.Res
 		return nil, err
 	}
 	respr, errRespr := s.srv.SetSasDefinition(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], matches[regex.SubexpIndex("sas_definition-name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2630,8 +2630,8 @@ func (s *ServerTransport) dispatchSetSecret(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	respr, errRespr := s.srv.SetSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2659,8 +2659,8 @@ func (s *ServerTransport) dispatchSetStorageAccount(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := s.srv.SetStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2688,8 +2688,8 @@ func (s *ServerTransport) dispatchSign(req *http.Request) (*http.Response, error
 		return nil, err
 	}
 	respr, errRespr := s.srv.Sign(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2717,8 +2717,8 @@ func (s *ServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	respr, errRespr := s.srv.UnwrapKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2746,8 +2746,8 @@ func (s *ServerTransport) dispatchUpdateCertificate(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateCertificate(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], matches[regex.SubexpIndex("certificate_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2775,8 +2775,8 @@ func (s *ServerTransport) dispatchUpdateCertificateIssuer(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateCertificateIssuer(req.Context(), req.URL.Host, matches[regex.SubexpIndex("issuer_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2804,8 +2804,8 @@ func (s *ServerTransport) dispatchUpdateCertificateOperation(req *http.Request) 
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateCertificateOperation(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2833,8 +2833,8 @@ func (s *ServerTransport) dispatchUpdateCertificatePolicy(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateCertificatePolicy(req.Context(), req.URL.Host, matches[regex.SubexpIndex("certificate_name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2862,8 +2862,8 @@ func (s *ServerTransport) dispatchUpdateKey(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2891,8 +2891,8 @@ func (s *ServerTransport) dispatchUpdateSasDefinition(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateSasDefinition(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], matches[regex.SubexpIndex("sas_definition-name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2920,8 +2920,8 @@ func (s *ServerTransport) dispatchUpdateSecret(req *http.Request) (*http.Respons
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateSecret(req.Context(), req.URL.Host, matches[regex.SubexpIndex("secret_name")], matches[regex.SubexpIndex("secret_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2949,8 +2949,8 @@ func (s *ServerTransport) dispatchUpdateStorageAccount(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := s.srv.UpdateStorageAccount(req.Context(), req.URL.Host, matches[regex.SubexpIndex("storage_account-name")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -2978,8 +2978,8 @@ func (s *ServerTransport) dispatchVerify(req *http.Request) (*http.Response, err
 		return nil, err
 	}
 	respr, errRespr := s.srv.Verify(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -3007,8 +3007,8 @@ func (s *ServerTransport) dispatchWrapKey(req *http.Request) (*http.Response, er
 		return nil, err
 	}
 	respr, errRespr := s.srv.WrapKey(req.Context(), req.URL.Host, matches[regex.SubexpIndex("key_name")], matches[regex.SubexpIndex("key_version")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

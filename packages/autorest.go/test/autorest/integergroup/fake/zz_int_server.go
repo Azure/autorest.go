@@ -149,8 +149,8 @@ func (i *IntServerTransport) dispatchGetInvalid(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
 	}
 	respr, errRespr := i.srv.GetInvalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -168,8 +168,8 @@ func (i *IntServerTransport) dispatchGetInvalidUnixTime(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method GetInvalidUnixTime not implemented")}
 	}
 	respr, errRespr := i.srv.GetInvalidUnixTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -187,8 +187,8 @@ func (i *IntServerTransport) dispatchGetNull(req *http.Request) (*http.Response,
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := i.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -206,8 +206,8 @@ func (i *IntServerTransport) dispatchGetNullUnixTime(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetNullUnixTime not implemented")}
 	}
 	respr, errRespr := i.srv.GetNullUnixTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -225,8 +225,8 @@ func (i *IntServerTransport) dispatchGetOverflowInt32(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetOverflowInt32 not implemented")}
 	}
 	respr, errRespr := i.srv.GetOverflowInt32(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -244,8 +244,8 @@ func (i *IntServerTransport) dispatchGetOverflowInt64(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetOverflowInt64 not implemented")}
 	}
 	respr, errRespr := i.srv.GetOverflowInt64(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -263,8 +263,8 @@ func (i *IntServerTransport) dispatchGetUnderflowInt32(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetUnderflowInt32 not implemented")}
 	}
 	respr, errRespr := i.srv.GetUnderflowInt32(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -282,8 +282,8 @@ func (i *IntServerTransport) dispatchGetUnderflowInt64(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetUnderflowInt64 not implemented")}
 	}
 	respr, errRespr := i.srv.GetUnderflowInt64(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -301,8 +301,8 @@ func (i *IntServerTransport) dispatchGetUnixTime(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method GetUnixTime not implemented")}
 	}
 	respr, errRespr := i.srv.GetUnixTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -324,8 +324,8 @@ func (i *IntServerTransport) dispatchPutMax32(req *http.Request) (*http.Response
 		return nil, err
 	}
 	respr, errRespr := i.srv.PutMax32(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -347,8 +347,8 @@ func (i *IntServerTransport) dispatchPutMax64(req *http.Request) (*http.Response
 		return nil, err
 	}
 	respr, errRespr := i.srv.PutMax64(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -370,8 +370,8 @@ func (i *IntServerTransport) dispatchPutMin32(req *http.Request) (*http.Response
 		return nil, err
 	}
 	respr, errRespr := i.srv.PutMin32(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -393,8 +393,8 @@ func (i *IntServerTransport) dispatchPutMin64(req *http.Request) (*http.Response
 		return nil, err
 	}
 	respr, errRespr := i.srv.PutMin64(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -416,8 +416,8 @@ func (i *IntServerTransport) dispatchPutUnixTimeDate(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := i.srv.PutUnixTimeDate(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -104,8 +104,8 @@ func (b *BandwidthSchedulesServerTransport) dispatchBeginCreateOrUpdate(req *htt
 			return nil, err
 		}
 		respr, errRespr := b.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		b.beginCreateOrUpdate = &respr
 	}
@@ -137,8 +137,8 @@ func (b *BandwidthSchedulesServerTransport) dispatchBeginDelete(req *http.Reques
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := b.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		b.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (b *BandwidthSchedulesServerTransport) dispatchGet(req *http.Request) (*htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := b.srv.Get(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

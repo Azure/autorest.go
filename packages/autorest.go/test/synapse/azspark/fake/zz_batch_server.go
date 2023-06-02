@@ -106,8 +106,8 @@ func (b *BatchServerTransport) dispatchCancelSparkBatchJob(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := b.srv.CancelSparkBatchJob(req.Context(), int32(batchIDParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -146,8 +146,8 @@ func (b *BatchServerTransport) dispatchCreateSparkBatchJob(req *http.Request) (*
 		}
 	}
 	respr, errRespr := b.srv.CreateSparkBatchJob(req.Context(), body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -192,8 +192,8 @@ func (b *BatchServerTransport) dispatchGetSparkBatchJob(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := b.srv.GetSparkBatchJob(req.Context(), int32(batchIDParam), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -250,8 +250,8 @@ func (b *BatchServerTransport) dispatchGetSparkBatchJobs(req *http.Request) (*ht
 		}
 	}
 	respr, errRespr := b.srv.GetSparkBatchJobs(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

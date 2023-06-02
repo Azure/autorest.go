@@ -101,8 +101,8 @@ func (b *BudgetsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*htt
 		return nil, err
 	}
 	respr, errRespr := b.srv.CreateOrUpdate(req.Context(), matches[regex.SubexpIndex("scope")], matches[regex.SubexpIndex("budgetName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -126,8 +126,8 @@ func (b *BudgetsServerTransport) dispatchDelete(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := b.srv.Delete(req.Context(), matches[regex.SubexpIndex("scope")], matches[regex.SubexpIndex("budgetName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -151,8 +151,8 @@ func (b *BudgetsServerTransport) dispatchGet(req *http.Request) (*http.Response,
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := b.srv.Get(req.Context(), matches[regex.SubexpIndex("scope")], matches[regex.SubexpIndex("budgetName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

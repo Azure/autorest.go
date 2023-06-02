@@ -158,8 +158,8 @@ func (s *ServiceServerTransport) dispatchFilterBlobs(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := s.srv.FilterBlobs(req.Context(), azblob.Enum10(qp.Get("comp")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -190,8 +190,8 @@ func (s *ServiceServerTransport) dispatchGetAccountInfo(req *http.Request) (*htt
 	}
 	qp := req.URL.Query()
 	respr, errRespr := s.srv.GetAccountInfo(req.Context(), azblob.Enum8(qp.Get("restype")), azblob.Enum1(qp.Get("comp")), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -249,8 +249,8 @@ func (s *ServiceServerTransport) dispatchGetProperties(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := s.srv.GetProperties(req.Context(), azblob.Enum0(qp.Get("restype")), azblob.Enum1(qp.Get("comp")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -296,8 +296,8 @@ func (s *ServiceServerTransport) dispatchGetStatistics(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := s.srv.GetStatistics(req.Context(), azblob.Enum0(qp.Get("restype")), azblob.Enum3(qp.Get("comp")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -350,8 +350,8 @@ func (s *ServiceServerTransport) dispatchGetUserDelegationKey(req *http.Request)
 		}
 	}
 	respr, errRespr := s.srv.GetUserDelegationKey(req.Context(), azblob.Enum0(qp.Get("restype")), azblob.Enum7(qp.Get("comp")), body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -468,8 +468,8 @@ func (s *ServiceServerTransport) dispatchSetProperties(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := s.srv.SetProperties(req.Context(), azblob.Enum0(qp.Get("restype")), azblob.Enum1(qp.Get("comp")), body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -519,8 +519,8 @@ func (s *ServiceServerTransport) dispatchSubmitBatch(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := s.srv.SubmitBatch(req.Context(), azblob.Enum9(qp.Get("comp")), contentLengthParam, getHeaderValue(req.Header, "Content-Type"), req.Body.(io.ReadSeekCloser), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

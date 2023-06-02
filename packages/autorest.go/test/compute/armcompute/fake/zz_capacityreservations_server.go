@@ -111,8 +111,8 @@ func (c *CapacityReservationsServerTransport) dispatchBeginCreateOrUpdate(req *h
 			return nil, err
 		}
 		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("capacityReservationGroupName")], matches[regex.SubexpIndex("capacityReservationName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginCreateOrUpdate = &respr
 	}
@@ -144,8 +144,8 @@ func (c *CapacityReservationsServerTransport) dispatchBeginDelete(req *http.Requ
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("capacityReservationGroupName")], matches[regex.SubexpIndex("capacityReservationName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginDelete = &respr
 	}
@@ -184,8 +184,8 @@ func (c *CapacityReservationsServerTransport) dispatchGet(req *http.Request) (*h
 		}
 	}
 	respr, errRespr := c.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("capacityReservationGroupName")], matches[regex.SubexpIndex("capacityReservationName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -244,8 +244,8 @@ func (c *CapacityReservationsServerTransport) dispatchBeginUpdate(req *http.Requ
 			return nil, err
 		}
 		respr, errRespr := c.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("capacityReservationGroupName")], matches[regex.SubexpIndex("capacityReservationName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginUpdate = &respr
 	}

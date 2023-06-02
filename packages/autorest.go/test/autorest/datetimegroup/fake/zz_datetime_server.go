@@ -197,8 +197,8 @@ func (d *DatetimeServerTransport) dispatchGetInvalid(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
 	}
 	respr, errRespr := d.srv.GetInvalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -216,8 +216,8 @@ func (d *DatetimeServerTransport) dispatchGetLocalNegativeOffsetLowercaseMaxDate
 		return nil, &nonRetriableError{errors.New("method GetLocalNegativeOffsetLowercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetLocalNegativeOffsetLowercaseMaxDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -235,8 +235,8 @@ func (d *DatetimeServerTransport) dispatchGetLocalNegativeOffsetMinDateTime(req 
 		return nil, &nonRetriableError{errors.New("method GetLocalNegativeOffsetMinDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetLocalNegativeOffsetMinDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -254,8 +254,8 @@ func (d *DatetimeServerTransport) dispatchGetLocalNegativeOffsetUppercaseMaxDate
 		return nil, &nonRetriableError{errors.New("method GetLocalNegativeOffsetUppercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetLocalNegativeOffsetUppercaseMaxDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -273,8 +273,8 @@ func (d *DatetimeServerTransport) dispatchGetLocalNoOffsetMinDateTime(req *http.
 		return nil, &nonRetriableError{errors.New("method GetLocalNoOffsetMinDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetLocalNoOffsetMinDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -292,8 +292,8 @@ func (d *DatetimeServerTransport) dispatchGetLocalPositiveOffsetLowercaseMaxDate
 		return nil, &nonRetriableError{errors.New("method GetLocalPositiveOffsetLowercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetLocalPositiveOffsetLowercaseMaxDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -311,8 +311,8 @@ func (d *DatetimeServerTransport) dispatchGetLocalPositiveOffsetMinDateTime(req 
 		return nil, &nonRetriableError{errors.New("method GetLocalPositiveOffsetMinDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetLocalPositiveOffsetMinDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -330,8 +330,8 @@ func (d *DatetimeServerTransport) dispatchGetLocalPositiveOffsetUppercaseMaxDate
 		return nil, &nonRetriableError{errors.New("method GetLocalPositiveOffsetUppercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetLocalPositiveOffsetUppercaseMaxDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -349,8 +349,8 @@ func (d *DatetimeServerTransport) dispatchGetNull(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -368,8 +368,8 @@ func (d *DatetimeServerTransport) dispatchGetOverflow(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetOverflow not implemented")}
 	}
 	respr, errRespr := d.srv.GetOverflow(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -387,8 +387,8 @@ func (d *DatetimeServerTransport) dispatchGetUTCLowercaseMaxDateTime(req *http.R
 		return nil, &nonRetriableError{errors.New("method GetUTCLowercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetUTCLowercaseMaxDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -406,8 +406,8 @@ func (d *DatetimeServerTransport) dispatchGetUTCMinDateTime(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method GetUTCMinDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetUTCMinDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -425,8 +425,8 @@ func (d *DatetimeServerTransport) dispatchGetUTCUppercaseMaxDateTime(req *http.R
 		return nil, &nonRetriableError{errors.New("method GetUTCUppercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetUTCUppercaseMaxDateTime(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -444,8 +444,8 @@ func (d *DatetimeServerTransport) dispatchGetUTCUppercaseMaxDateTime7Digits(req 
 		return nil, &nonRetriableError{errors.New("method GetUTCUppercaseMaxDateTime7Digits not implemented")}
 	}
 	respr, errRespr := d.srv.GetUTCUppercaseMaxDateTime7Digits(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -463,8 +463,8 @@ func (d *DatetimeServerTransport) dispatchGetUnderflow(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetUnderflow not implemented")}
 	}
 	respr, errRespr := d.srv.GetUnderflow(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -486,8 +486,8 @@ func (d *DatetimeServerTransport) dispatchPutLocalNegativeOffsetMaxDateTime(req 
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutLocalNegativeOffsetMaxDateTime(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -509,8 +509,8 @@ func (d *DatetimeServerTransport) dispatchPutLocalNegativeOffsetMinDateTime(req 
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutLocalNegativeOffsetMinDateTime(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -532,8 +532,8 @@ func (d *DatetimeServerTransport) dispatchPutLocalPositiveOffsetMaxDateTime(req 
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutLocalPositiveOffsetMaxDateTime(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -555,8 +555,8 @@ func (d *DatetimeServerTransport) dispatchPutLocalPositiveOffsetMinDateTime(req 
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutLocalPositiveOffsetMinDateTime(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -578,8 +578,8 @@ func (d *DatetimeServerTransport) dispatchPutUTCMaxDateTime(req *http.Request) (
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutUTCMaxDateTime(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -601,8 +601,8 @@ func (d *DatetimeServerTransport) dispatchPutUTCMaxDateTime7Digits(req *http.Req
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutUTCMaxDateTime7Digits(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -624,8 +624,8 @@ func (d *DatetimeServerTransport) dispatchPutUTCMinDateTime(req *http.Request) (
 		return nil, err
 	}
 	respr, errRespr := d.srv.PutUTCMinDateTime(req.Context(), time.Time(body), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

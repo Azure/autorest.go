@@ -124,8 +124,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetCat(req *http.Req
 		return nil, &nonRetriableError{errors.New("method GetCat not implemented")}
 	}
 	respr, errRespr := m.srv.GetCat(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -143,8 +143,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetFeline(req *http.
 		return nil, &nonRetriableError{errors.New("method GetFeline not implemented")}
 	}
 	respr, errRespr := m.srv.GetFeline(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -162,8 +162,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetHorse(req *http.R
 		return nil, &nonRetriableError{errors.New("method GetHorse not implemented")}
 	}
 	respr, errRespr := m.srv.GetHorse(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -181,8 +181,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetKitten(req *http.
 		return nil, &nonRetriableError{errors.New("method GetKitten not implemented")}
 	}
 	respr, errRespr := m.srv.GetKitten(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -200,8 +200,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetPet(req *http.Req
 		return nil, &nonRetriableError{errors.New("method GetPet not implemented")}
 	}
 	respr, errRespr := m.srv.GetPet(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -223,8 +223,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutCat(req *http.Req
 		return nil, err
 	}
 	respr, errRespr := m.srv.PutCat(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -246,8 +246,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutFeline(req *http.
 		return nil, err
 	}
 	respr, errRespr := m.srv.PutFeline(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -269,8 +269,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutHorse(req *http.R
 		return nil, err
 	}
 	respr, errRespr := m.srv.PutHorse(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -292,8 +292,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutKitten(req *http.
 		return nil, err
 	}
 	respr, errRespr := m.srv.PutKitten(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -315,8 +315,8 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutPet(req *http.Req
 		return nil, err
 	}
 	respr, errRespr := m.srv.PutPet(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

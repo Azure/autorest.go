@@ -286,8 +286,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model201ModelDefaultErr
 		return nil, &nonRetriableError{errors.New("method Get200Model201ModelDefaultError200Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model201ModelDefaultError200Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -305,8 +305,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model201ModelDefaultErr
 		return nil, &nonRetriableError{errors.New("method Get200Model201ModelDefaultError201Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model201ModelDefaultError201Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -324,8 +324,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model201ModelDefaultErr
 		return nil, &nonRetriableError{errors.New("method Get200Model201ModelDefaultError400Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model201ModelDefaultError400Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -343,8 +343,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model204NoModelDefaultE
 		return nil, &nonRetriableError{errors.New("method Get200Model204NoModelDefaultError200Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model204NoModelDefaultError200Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -362,8 +362,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model204NoModelDefaultE
 		return nil, &nonRetriableError{errors.New("method Get200Model204NoModelDefaultError201Invalid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model204NoModelDefaultError201Invalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -381,8 +381,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model204NoModelDefaultE
 		return nil, &nonRetriableError{errors.New("method Get200Model204NoModelDefaultError202None not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model204NoModelDefaultError202None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -400,8 +400,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model204NoModelDefaultE
 		return nil, &nonRetriableError{errors.New("method Get200Model204NoModelDefaultError204Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model204NoModelDefaultError204Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -419,8 +419,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200Model204NoModelDefaultE
 		return nil, &nonRetriableError{errors.New("method Get200Model204NoModelDefaultError400Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200Model204NoModelDefaultError400Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -438,8 +438,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA200Invalid(req *h
 		return nil, &nonRetriableError{errors.New("method Get200ModelA200Invalid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA200Invalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -457,8 +457,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA200None(req *http
 		return nil, &nonRetriableError{errors.New("method Get200ModelA200None not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA200None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -476,8 +476,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA200Valid(req *htt
 		return nil, &nonRetriableError{errors.New("method Get200ModelA200Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA200Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -495,8 +495,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA201ModelC404Model
 		return nil, &nonRetriableError{errors.New("method Get200ModelA201ModelC404ModelDDefaultError200Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA201ModelC404ModelDDefaultError200Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -514,8 +514,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA201ModelC404Model
 		return nil, &nonRetriableError{errors.New("method Get200ModelA201ModelC404ModelDDefaultError201Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA201ModelC404ModelDDefaultError201Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -533,8 +533,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA201ModelC404Model
 		return nil, &nonRetriableError{errors.New("method Get200ModelA201ModelC404ModelDDefaultError400Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA201ModelC404ModelDDefaultError400Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -552,8 +552,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA201ModelC404Model
 		return nil, &nonRetriableError{errors.New("method Get200ModelA201ModelC404ModelDDefaultError404Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA201ModelC404ModelDDefaultError404Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -571,8 +571,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA202Valid(req *htt
 		return nil, &nonRetriableError{errors.New("method Get200ModelA202Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA202Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -590,8 +590,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA400Invalid(req *h
 		return nil, &nonRetriableError{errors.New("method Get200ModelA400Invalid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA400Invalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -609,8 +609,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA400None(req *http
 		return nil, &nonRetriableError{errors.New("method Get200ModelA400None not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA400None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -628,8 +628,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet200ModelA400Valid(req *htt
 		return nil, &nonRetriableError{errors.New("method Get200ModelA400Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get200ModelA400Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -647,8 +647,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet202None204NoneDefaultError
 		return nil, &nonRetriableError{errors.New("method Get202None204NoneDefaultError202None not implemented")}
 	}
 	respr, errRespr := m.srv.Get202None204NoneDefaultError202None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -666,8 +666,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet202None204NoneDefaultError
 		return nil, &nonRetriableError{errors.New("method Get202None204NoneDefaultError204None not implemented")}
 	}
 	respr, errRespr := m.srv.Get202None204NoneDefaultError204None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -685,8 +685,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet202None204NoneDefaultError
 		return nil, &nonRetriableError{errors.New("method Get202None204NoneDefaultError400Valid not implemented")}
 	}
 	respr, errRespr := m.srv.Get202None204NoneDefaultError400Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -704,8 +704,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet202None204NoneDefaultNone2
 		return nil, &nonRetriableError{errors.New("method Get202None204NoneDefaultNone202Invalid not implemented")}
 	}
 	respr, errRespr := m.srv.Get202None204NoneDefaultNone202Invalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -723,8 +723,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet202None204NoneDefaultNone2
 		return nil, &nonRetriableError{errors.New("method Get202None204NoneDefaultNone204None not implemented")}
 	}
 	respr, errRespr := m.srv.Get202None204NoneDefaultNone204None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -742,8 +742,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet202None204NoneDefaultNone4
 		return nil, &nonRetriableError{errors.New("method Get202None204NoneDefaultNone400Invalid not implemented")}
 	}
 	respr, errRespr := m.srv.Get202None204NoneDefaultNone400Invalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -761,8 +761,8 @@ func (m *MultipleResponsesServerTransport) dispatchGet202None204NoneDefaultNone4
 		return nil, &nonRetriableError{errors.New("method Get202None204NoneDefaultNone400None not implemented")}
 	}
 	respr, errRespr := m.srv.Get202None204NoneDefaultNone400None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -780,8 +780,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultModelA200None(req *
 		return nil, &nonRetriableError{errors.New("method GetDefaultModelA200None not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultModelA200None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -799,8 +799,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultModelA200Valid(req 
 		return nil, &nonRetriableError{errors.New("method GetDefaultModelA200Valid not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultModelA200Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -818,8 +818,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultModelA400None(req *
 		return nil, &nonRetriableError{errors.New("method GetDefaultModelA400None not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultModelA400None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -837,8 +837,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultModelA400Valid(req 
 		return nil, &nonRetriableError{errors.New("method GetDefaultModelA400Valid not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultModelA400Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -856,8 +856,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultNone200Invalid(req 
 		return nil, &nonRetriableError{errors.New("method GetDefaultNone200Invalid not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultNone200Invalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -875,8 +875,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultNone200None(req *ht
 		return nil, &nonRetriableError{errors.New("method GetDefaultNone200None not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultNone200None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -894,8 +894,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultNone400Invalid(req 
 		return nil, &nonRetriableError{errors.New("method GetDefaultNone400Invalid not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultNone400Invalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -913,8 +913,8 @@ func (m *MultipleResponsesServerTransport) dispatchGetDefaultNone400None(req *ht
 		return nil, &nonRetriableError{errors.New("method GetDefaultNone400None not implemented")}
 	}
 	respr, errRespr := m.srv.GetDefaultNone400None(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

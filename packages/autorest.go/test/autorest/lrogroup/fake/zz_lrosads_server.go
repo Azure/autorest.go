@@ -248,8 +248,8 @@ func (l *LROSADsServerTransport) dispatchBeginDelete202NonRetry400(req *http.Req
 	}
 	if l.beginDelete202NonRetry400 == nil {
 		respr, errRespr := l.srv.BeginDelete202NonRetry400(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDelete202NonRetry400 = &respr
 	}
@@ -275,8 +275,8 @@ func (l *LROSADsServerTransport) dispatchBeginDelete202RetryInvalidHeader(req *h
 	}
 	if l.beginDelete202RetryInvalidHeader == nil {
 		respr, errRespr := l.srv.BeginDelete202RetryInvalidHeader(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDelete202RetryInvalidHeader = &respr
 	}
@@ -302,8 +302,8 @@ func (l *LROSADsServerTransport) dispatchBeginDelete204Succeeded(req *http.Reque
 	}
 	if l.beginDelete204Succeeded == nil {
 		respr, errRespr := l.srv.BeginDelete204Succeeded(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDelete204Succeeded = &respr
 	}
@@ -329,8 +329,8 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetry400(req *h
 	}
 	if l.beginDeleteAsyncRelativeRetry400 == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetry400(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteAsyncRelativeRetry400 = &respr
 	}
@@ -356,8 +356,8 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryInvalidHea
 	}
 	if l.beginDeleteAsyncRelativeRetryInvalidHeader == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetryInvalidHeader(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteAsyncRelativeRetryInvalidHeader = &respr
 	}
@@ -383,8 +383,8 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryInvalidJSO
 	}
 	if l.beginDeleteAsyncRelativeRetryInvalidJSONPolling == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetryInvalidJSONPolling(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteAsyncRelativeRetryInvalidJSONPolling = &respr
 	}
@@ -410,8 +410,8 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryNoStatus(r
 	}
 	if l.beginDeleteAsyncRelativeRetryNoStatus == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetryNoStatus(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteAsyncRelativeRetryNoStatus = &respr
 	}
@@ -437,8 +437,8 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteNonRetry400(req *http.Reques
 	}
 	if l.beginDeleteNonRetry400 == nil {
 		respr, errRespr := l.srv.BeginDeleteNonRetry400(req.Context(), nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDeleteNonRetry400 = &respr
 	}
@@ -474,8 +474,8 @@ func (l *LROSADsServerTransport) dispatchBeginPost202NoLocation(req *http.Reques
 			}
 		}
 		respr, errRespr := l.srv.BeginPost202NoLocation(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPost202NoLocation = &respr
 	}
@@ -511,8 +511,8 @@ func (l *LROSADsServerTransport) dispatchBeginPost202NonRetry400(req *http.Reque
 			}
 		}
 		respr, errRespr := l.srv.BeginPost202NonRetry400(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPost202NonRetry400 = &respr
 	}
@@ -548,8 +548,8 @@ func (l *LROSADsServerTransport) dispatchBeginPost202RetryInvalidHeader(req *htt
 			}
 		}
 		respr, errRespr := l.srv.BeginPost202RetryInvalidHeader(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPost202RetryInvalidHeader = &respr
 	}
@@ -585,8 +585,8 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetry400(req *htt
 			}
 		}
 		respr, errRespr := l.srv.BeginPostAsyncRelativeRetry400(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPostAsyncRelativeRetry400 = &respr
 	}
@@ -622,8 +622,8 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryInvalidHeade
 			}
 		}
 		respr, errRespr := l.srv.BeginPostAsyncRelativeRetryInvalidHeader(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPostAsyncRelativeRetryInvalidHeader = &respr
 	}
@@ -659,8 +659,8 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryInvalidJSONP
 			}
 		}
 		respr, errRespr := l.srv.BeginPostAsyncRelativeRetryInvalidJSONPolling(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPostAsyncRelativeRetryInvalidJSONPolling = &respr
 	}
@@ -696,8 +696,8 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryNoPayload(re
 			}
 		}
 		respr, errRespr := l.srv.BeginPostAsyncRelativeRetryNoPayload(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPostAsyncRelativeRetryNoPayload = &respr
 	}
@@ -733,8 +733,8 @@ func (l *LROSADsServerTransport) dispatchBeginPostNonRetry400(req *http.Request)
 			}
 		}
 		respr, errRespr := l.srv.BeginPostNonRetry400(req.Context(), options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPostNonRetry400 = &respr
 	}
@@ -764,8 +764,8 @@ func (l *LROSADsServerTransport) dispatchBeginPut200InvalidJSON(req *http.Reques
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPut200InvalidJSON(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPut200InvalidJSON = &respr
 	}
@@ -795,8 +795,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetry400(req *http
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutAsyncRelativeRetry400(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutAsyncRelativeRetry400 = &respr
 	}
@@ -826,8 +826,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryInvalidHeader
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutAsyncRelativeRetryInvalidHeader(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutAsyncRelativeRetryInvalidHeader = &respr
 	}
@@ -857,8 +857,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryInvalidJSONPo
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutAsyncRelativeRetryInvalidJSONPolling(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutAsyncRelativeRetryInvalidJSONPolling = &respr
 	}
@@ -888,8 +888,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryNoStatus(req 
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutAsyncRelativeRetryNoStatus(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutAsyncRelativeRetryNoStatus = &respr
 	}
@@ -919,8 +919,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryNoStatusPaylo
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutAsyncRelativeRetryNoStatusPayload(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutAsyncRelativeRetryNoStatusPayload = &respr
 	}
@@ -950,8 +950,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutError201NoProvisioningStatePayl
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutError201NoProvisioningStatePayload(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutError201NoProvisioningStatePayload = &respr
 	}
@@ -981,8 +981,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutNonRetry201Creating400(req *htt
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutNonRetry201Creating400(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutNonRetry201Creating400 = &respr
 	}
@@ -1012,8 +1012,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutNonRetry201Creating400InvalidJS
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutNonRetry201Creating400InvalidJSON(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutNonRetry201Creating400InvalidJSON = &respr
 	}
@@ -1043,8 +1043,8 @@ func (l *LROSADsServerTransport) dispatchBeginPutNonRetry400(req *http.Request) 
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginPutNonRetry400(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginPutNonRetry400 = &respr
 	}

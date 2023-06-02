@@ -111,8 +111,8 @@ func (c *ContainersServerTransport) dispatchBeginCreateOrUpdate(req *http.Reques
 			return nil, err
 		}
 		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("storageAccountName")], matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginCreateOrUpdate = &respr
 	}
@@ -144,8 +144,8 @@ func (c *ContainersServerTransport) dispatchBeginDelete(req *http.Request) (*htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("storageAccountName")], matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginDelete = &respr
 	}
@@ -176,8 +176,8 @@ func (c *ContainersServerTransport) dispatchGet(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.Get(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("storageAccountName")], matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -232,8 +232,8 @@ func (c *ContainersServerTransport) dispatchBeginRefresh(req *http.Request) (*ht
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginRefresh(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("storageAccountName")], matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("resourceGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginRefresh = &respr
 	}

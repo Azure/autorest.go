@@ -82,8 +82,8 @@ func (h *HTTPSuccessServerTransport) dispatchHead200(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Head200 not implemented")}
 	}
 	respr, errRespr := h.srv.Head200(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -101,8 +101,8 @@ func (h *HTTPSuccessServerTransport) dispatchHead204(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Head204 not implemented")}
 	}
 	respr, errRespr := h.srv.Head204(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -120,8 +120,8 @@ func (h *HTTPSuccessServerTransport) dispatchHead404(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method Head404 not implemented")}
 	}
 	respr, errRespr := h.srv.Head404(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent, http.StatusNotFound}, respContent.HTTPStatus) {

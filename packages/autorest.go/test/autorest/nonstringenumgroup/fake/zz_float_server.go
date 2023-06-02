@@ -76,8 +76,8 @@ func (f *FloatServerTransport) dispatchGet(req *http.Request) (*http.Response, e
 		return nil, &nonRetriableError{errors.New("method Get not implemented")}
 	}
 	respr, errRespr := f.srv.Get(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -99,8 +99,8 @@ func (f *FloatServerTransport) dispatchPut(req *http.Request) (*http.Response, e
 		return nil, err
 	}
 	respr, errRespr := f.srv.Put(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

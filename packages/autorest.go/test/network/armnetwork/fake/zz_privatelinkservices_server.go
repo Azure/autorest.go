@@ -165,8 +165,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchBeginCheckPrivateLinkServic
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginCheckPrivateLinkServiceVisibility(req.Context(), matches[regex.SubexpIndex("location")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginCheckPrivateLinkServiceVisibility = &respr
 	}
@@ -202,8 +202,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchBeginCheckPrivateLinkServic
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginCheckPrivateLinkServiceVisibilityByResourceGroup(req.Context(), matches[regex.SubexpIndex("location")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginCheckPrivateLinkServiceVisibilityByResourceGroup = &respr
 	}
@@ -239,8 +239,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchBeginCreateOrUpdate(req *ht
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("serviceName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginCreateOrUpdate = &respr
 	}
@@ -272,8 +272,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchBeginDelete(req *http.Reque
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("serviceName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDelete = &respr
 	}
@@ -305,8 +305,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchBeginDeletePrivateEndpointC
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginDeletePrivateEndpointConnection(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("serviceName")], matches[regex.SubexpIndex("peConnectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDeletePrivateEndpointConnection = &respr
 	}
@@ -345,8 +345,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchGet(req *http.Request) (*ht
 		}
 	}
 	respr, errRespr := p.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("serviceName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -378,8 +378,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchGetPrivateEndpointConnectio
 		}
 	}
 	respr, errRespr := p.srv.GetPrivateEndpointConnection(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("serviceName")], matches[regex.SubexpIndex("peConnectionName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -557,8 +557,8 @@ func (p *PrivateLinkServicesServerTransport) dispatchUpdatePrivateEndpointConnec
 		return nil, err
 	}
 	respr, errRespr := p.srv.UpdatePrivateEndpointConnection(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("serviceName")], matches[regex.SubexpIndex("peConnectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

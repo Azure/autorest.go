@@ -133,8 +133,8 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 		}
 	}
 	respr, errRespr := p.srv.PostMultiParamGroups(req.Context(), firstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -171,8 +171,8 @@ func (p *ParameterGroupingServerTransport) dispatchPostOptional(req *http.Reques
 		}
 	}
 	respr, errRespr := p.srv.PostOptional(req.Context(), parameterGroupingClientPostOptionalParameters, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -219,8 +219,8 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 		Body:         body,
 	}
 	respr, errRespr := p.srv.PostRequired(req.Context(), parameterGroupingClientPostRequiredParameters, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -248,8 +248,8 @@ func (p *ParameterGroupingServerTransport) dispatchPostReservedWords(req *http.R
 		}
 	}
 	respr, errRespr := p.srv.PostReservedWords(req.Context(), parameterGroupingClientPostReservedWordsParameters, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -286,8 +286,8 @@ func (p *ParameterGroupingServerTransport) dispatchPostSharedParameterGroupObjec
 		}
 	}
 	respr, errRespr := p.srv.PostSharedParameterGroupObject(req.Context(), firstParameterGroup, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

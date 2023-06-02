@@ -125,8 +125,8 @@ func (n *NotebookServerTransport) dispatchBeginCreateOrUpdateNotebook(req *http.
 			}
 		}
 		respr, errRespr := n.srv.BeginCreateOrUpdateNotebook(req.Context(), matches[regex.SubexpIndex("notebookName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		n.beginCreateOrUpdateNotebook = &respr
 	}
@@ -158,8 +158,8 @@ func (n *NotebookServerTransport) dispatchBeginDeleteNotebook(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := n.srv.BeginDeleteNotebook(req.Context(), matches[regex.SubexpIndex("notebookName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		n.beginDeleteNotebook = &respr
 	}
@@ -197,8 +197,8 @@ func (n *NotebookServerTransport) dispatchGetNotebook(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := n.srv.GetNotebook(req.Context(), matches[regex.SubexpIndex("notebookName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -275,8 +275,8 @@ func (n *NotebookServerTransport) dispatchBeginRenameNotebook(req *http.Request)
 			return nil, err
 		}
 		respr, errRespr := n.srv.BeginRenameNotebook(req.Context(), matches[regex.SubexpIndex("notebookName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		n.beginRenameNotebook = &respr
 	}

@@ -242,8 +242,8 @@ func (p *PageBlobServerTransport) dispatchClearPages(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := p.srv.ClearPages(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum32(qp.Get("comp")), contentLengthParam, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -334,8 +334,8 @@ func (p *PageBlobServerTransport) dispatchCopyIncremental(req *http.Request) (*h
 		}
 	}
 	respr, errRespr := p.srv.CopyIncremental(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum34(qp.Get("comp")), getHeaderValue(req.Header, "x-ms-copy-source"), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -513,8 +513,8 @@ func (p *PageBlobServerTransport) dispatchCreate(req *http.Request) (*http.Respo
 		}
 	}
 	respr, errRespr := p.srv.Create(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], contentLengthParam, blobContentLengthParam, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -832,8 +832,8 @@ func (p *PageBlobServerTransport) dispatchResize(req *http.Request) (*http.Respo
 		}
 	}
 	respr, errRespr := p.srv.Resize(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum1(qp.Get("comp")), blobContentLengthParam, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -936,8 +936,8 @@ func (p *PageBlobServerTransport) dispatchUpdateSequenceNumber(req *http.Request
 		}
 	}
 	respr, errRespr := p.srv.UpdateSequenceNumber(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum1(qp.Get("comp")), azblob.SequenceNumberActionType(getHeaderValue(req.Header, "x-ms-sequence-number-action")), options, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1101,8 +1101,8 @@ func (p *PageBlobServerTransport) dispatchUploadPages(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := p.srv.UploadPages(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum32(qp.Get("comp")), contentLengthParam, req.Body.(io.ReadSeekCloser), options, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -1300,8 +1300,8 @@ func (p *PageBlobServerTransport) dispatchUploadPagesFromURL(req *http.Request) 
 		}
 	}
 	respr, errRespr := p.srv.UploadPagesFromURL(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum32(qp.Get("comp")), getHeaderValue(req.Header, "x-ms-copy-source"), getHeaderValue(req.Header, "x-ms-source-range"), contentLengthParam, getHeaderValue(req.Header, "x-ms-range"), options, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {

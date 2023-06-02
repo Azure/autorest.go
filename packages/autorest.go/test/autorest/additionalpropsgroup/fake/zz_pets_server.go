@@ -104,8 +104,8 @@ func (p *PetsServerTransport) dispatchCreateAPInProperties(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := p.srv.CreateAPInProperties(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -127,8 +127,8 @@ func (p *PetsServerTransport) dispatchCreateAPInPropertiesWithAPString(req *http
 		return nil, err
 	}
 	respr, errRespr := p.srv.CreateAPInPropertiesWithAPString(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -150,8 +150,8 @@ func (p *PetsServerTransport) dispatchCreateAPObject(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := p.srv.CreateAPObject(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -173,8 +173,8 @@ func (p *PetsServerTransport) dispatchCreateAPString(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := p.srv.CreateAPString(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -196,8 +196,8 @@ func (p *PetsServerTransport) dispatchCreateAPTrue(req *http.Request) (*http.Res
 		return nil, err
 	}
 	respr, errRespr := p.srv.CreateAPTrue(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -219,8 +219,8 @@ func (p *PetsServerTransport) dispatchCreateCatAPTrue(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := p.srv.CreateCatAPTrue(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

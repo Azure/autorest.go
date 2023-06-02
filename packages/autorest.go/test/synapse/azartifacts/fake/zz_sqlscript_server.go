@@ -118,8 +118,8 @@ func (s *SQLScriptServerTransport) dispatchBeginCreateOrUpdateSQLScript(req *htt
 			}
 		}
 		respr, errRespr := s.srv.BeginCreateOrUpdateSQLScript(req.Context(), matches[regex.SubexpIndex("sqlScriptName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginCreateOrUpdateSQLScript = &respr
 	}
@@ -151,8 +151,8 @@ func (s *SQLScriptServerTransport) dispatchBeginDeleteSQLScript(req *http.Reques
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := s.srv.BeginDeleteSQLScript(req.Context(), matches[regex.SubexpIndex("sqlScriptName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginDeleteSQLScript = &respr
 	}
@@ -190,8 +190,8 @@ func (s *SQLScriptServerTransport) dispatchGetSQLScript(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := s.srv.GetSQLScript(req.Context(), matches[regex.SubexpIndex("sqlScriptName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -244,8 +244,8 @@ func (s *SQLScriptServerTransport) dispatchBeginRenameSQLScript(req *http.Reques
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginRenameSQLScript(req.Context(), matches[regex.SubexpIndex("sqlScriptName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginRenameSQLScript = &respr
 	}

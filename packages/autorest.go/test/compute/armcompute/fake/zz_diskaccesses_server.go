@@ -151,8 +151,8 @@ func (d *DiskAccessesServerTransport) dispatchBeginCreateOrUpdate(req *http.Requ
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginCreateOrUpdate = &respr
 	}
@@ -184,8 +184,8 @@ func (d *DiskAccessesServerTransport) dispatchBeginDelete(req *http.Request) (*h
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDelete = &respr
 	}
@@ -217,8 +217,8 @@ func (d *DiskAccessesServerTransport) dispatchBeginDeleteAPrivateEndpointConnect
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDeleteAPrivateEndpointConnection(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], matches[regex.SubexpIndex("privateEndpointConnectionName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDeleteAPrivateEndpointConnection = &respr
 	}
@@ -249,8 +249,8 @@ func (d *DiskAccessesServerTransport) dispatchGet(req *http.Request) (*http.Resp
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -274,8 +274,8 @@ func (d *DiskAccessesServerTransport) dispatchGetAPrivateEndpointConnection(req 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GetAPrivateEndpointConnection(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], matches[regex.SubexpIndex("privateEndpointConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -299,8 +299,8 @@ func (d *DiskAccessesServerTransport) dispatchGetPrivateLinkResources(req *http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.GetPrivateLinkResources(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -419,8 +419,8 @@ func (d *DiskAccessesServerTransport) dispatchBeginUpdate(req *http.Request) (*h
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginUpdate = &respr
 	}
@@ -456,8 +456,8 @@ func (d *DiskAccessesServerTransport) dispatchBeginUpdateAPrivateEndpointConnect
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginUpdateAPrivateEndpointConnection(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskAccessName")], matches[regex.SubexpIndex("privateEndpointConnectionName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginUpdateAPrivateEndpointConnection = &respr
 	}

@@ -158,8 +158,8 @@ func (m *ManagementServerTransport) dispatchCheckDNSNameAvailability(req *http.R
 	}
 	qp := req.URL.Query()
 	respr, errRespr := m.srv.CheckDNSNameAvailability(req.Context(), matches[regex.SubexpIndex("location")], qp.Get("domainNameLabel"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -188,8 +188,8 @@ func (m *ManagementServerTransport) dispatchBeginDeleteBastionShareableLink(req 
 			return nil, err
 		}
 		respr, errRespr := m.srv.BeginDeleteBastionShareableLink(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("bastionHostName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		m.beginDeleteBastionShareableLink = &respr
 	}
@@ -254,8 +254,8 @@ func (m *ManagementServerTransport) dispatchExpressRouteProviderPort(req *http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := m.srv.ExpressRouteProviderPort(req.Context(), matches[regex.SubexpIndex("providerport")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -284,8 +284,8 @@ func (m *ManagementServerTransport) dispatchBeginGeneratevirtualwanvpnserverconf
 			return nil, err
 		}
 		respr, errRespr := m.srv.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualWANName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		m.beginGeneratevirtualwanvpnserverconfigurationvpnprofile = &respr
 	}
@@ -317,8 +317,8 @@ func (m *ManagementServerTransport) dispatchBeginGetActiveSessions(req *http.Req
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := m.srv.BeginGetActiveSessions(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("bastionHostName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		m.beginGetActiveSessions = &respr
 	}
@@ -404,8 +404,8 @@ func (m *ManagementServerTransport) dispatchListActiveConnectivityConfigurations
 		}
 	}
 	respr, errRespr := m.srv.ListActiveConnectivityConfigurations(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkManagerName")], body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -450,8 +450,8 @@ func (m *ManagementServerTransport) dispatchListActiveSecurityAdminRules(req *ht
 		}
 	}
 	respr, errRespr := m.srv.ListActiveSecurityAdminRules(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkManagerName")], body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -496,8 +496,8 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveConnectiv
 		}
 	}
 	respr, errRespr := m.srv.ListNetworkManagerEffectiveConnectivityConfigurations(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -542,8 +542,8 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveSecurityA
 		}
 	}
 	respr, errRespr := m.srv.ListNetworkManagerEffectiveSecurityAdminRules(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualNetworkName")], body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -572,8 +572,8 @@ func (m *ManagementServerTransport) dispatchBeginPutBastionShareableLink(req *ht
 			return nil, err
 		}
 		respr, errRespr := m.srv.BeginPutBastionShareableLink(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("bastionHostName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		m.beginPutBastionShareableLink = &respr
 	}
@@ -604,8 +604,8 @@ func (m *ManagementServerTransport) dispatchSupportedSecurityProviders(req *http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := m.srv.SupportedSecurityProviders(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("virtualWANName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

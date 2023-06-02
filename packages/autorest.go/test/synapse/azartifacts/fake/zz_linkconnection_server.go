@@ -155,8 +155,8 @@ func (l *LinkConnectionServerTransport) dispatchCreateOrUpdate(req *http.Request
 		return nil, err
 	}
 	respr, errRespr := l.srv.CreateOrUpdate(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -180,8 +180,8 @@ func (l *LinkConnectionServerTransport) dispatchDelete(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.Delete(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -209,8 +209,8 @@ func (l *LinkConnectionServerTransport) dispatchEditTables(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := l.srv.EditTables(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -234,8 +234,8 @@ func (l *LinkConnectionServerTransport) dispatchGet(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.Get(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -259,8 +259,8 @@ func (l *LinkConnectionServerTransport) dispatchGetDetailedStatus(req *http.Requ
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.GetDetailedStatus(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -308,8 +308,8 @@ func (l *LinkConnectionServerTransport) dispatchListLinkTables(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.ListLinkTables(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -333,8 +333,8 @@ func (l *LinkConnectionServerTransport) dispatchPause(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.Pause(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -362,8 +362,8 @@ func (l *LinkConnectionServerTransport) dispatchQueryTableStatus(req *http.Reque
 		return nil, err
 	}
 	respr, errRespr := l.srv.QueryTableStatus(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -387,8 +387,8 @@ func (l *LinkConnectionServerTransport) dispatchResume(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.Resume(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -412,8 +412,8 @@ func (l *LinkConnectionServerTransport) dispatchStart(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.Start(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -437,8 +437,8 @@ func (l *LinkConnectionServerTransport) dispatchStop(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := l.srv.Stop(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -466,8 +466,8 @@ func (l *LinkConnectionServerTransport) dispatchUpdateLandingZoneCredential(req 
 		return nil, err
 	}
 	respr, errRespr := l.srv.UpdateLandingZoneCredential(req.Context(), matches[regex.SubexpIndex("linkConnectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

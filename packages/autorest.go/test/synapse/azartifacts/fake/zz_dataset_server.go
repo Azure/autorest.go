@@ -118,8 +118,8 @@ func (d *DatasetServerTransport) dispatchBeginCreateOrUpdateDataset(req *http.Re
 			}
 		}
 		respr, errRespr := d.srv.BeginCreateOrUpdateDataset(req.Context(), matches[regex.SubexpIndex("datasetName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginCreateOrUpdateDataset = &respr
 	}
@@ -151,8 +151,8 @@ func (d *DatasetServerTransport) dispatchBeginDeleteDataset(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDeleteDataset(req.Context(), matches[regex.SubexpIndex("datasetName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDeleteDataset = &respr
 	}
@@ -190,8 +190,8 @@ func (d *DatasetServerTransport) dispatchGetDataset(req *http.Request) (*http.Re
 		}
 	}
 	respr, errRespr := d.srv.GetDataset(req.Context(), matches[regex.SubexpIndex("datasetName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotModified}, respContent.HTTPStatus) {
@@ -244,8 +244,8 @@ func (d *DatasetServerTransport) dispatchBeginRenameDataset(req *http.Request) (
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginRenameDataset(req.Context(), matches[regex.SubexpIndex("datasetName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginRenameDataset = &respr
 	}

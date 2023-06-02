@@ -479,8 +479,8 @@ func (a *ArrayServerTransport) dispatchGetArrayEmpty(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetArrayEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetArrayEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -498,8 +498,8 @@ func (a *ArrayServerTransport) dispatchGetArrayItemEmpty(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetArrayItemEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetArrayItemEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -517,8 +517,8 @@ func (a *ArrayServerTransport) dispatchGetArrayItemNull(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method GetArrayItemNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetArrayItemNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -536,8 +536,8 @@ func (a *ArrayServerTransport) dispatchGetArrayNull(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetArrayNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetArrayNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -555,8 +555,8 @@ func (a *ArrayServerTransport) dispatchGetArrayValid(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetArrayValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetArrayValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -574,8 +574,8 @@ func (a *ArrayServerTransport) dispatchGetBase64URL(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetBase64URL not implemented")}
 	}
 	respr, errRespr := a.srv.GetBase64URL(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -593,8 +593,8 @@ func (a *ArrayServerTransport) dispatchGetBooleanInvalidNull(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method GetBooleanInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetBooleanInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -612,8 +612,8 @@ func (a *ArrayServerTransport) dispatchGetBooleanInvalidString(req *http.Request
 		return nil, &nonRetriableError{errors.New("method GetBooleanInvalidString not implemented")}
 	}
 	respr, errRespr := a.srv.GetBooleanInvalidString(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -631,8 +631,8 @@ func (a *ArrayServerTransport) dispatchGetBooleanTfft(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetBooleanTfft not implemented")}
 	}
 	respr, errRespr := a.srv.GetBooleanTfft(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -650,8 +650,8 @@ func (a *ArrayServerTransport) dispatchGetByteInvalidNull(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetByteInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetByteInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -669,8 +669,8 @@ func (a *ArrayServerTransport) dispatchGetByteValid(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetByteValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetByteValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -688,8 +688,8 @@ func (a *ArrayServerTransport) dispatchGetComplexEmpty(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetComplexEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetComplexEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -707,8 +707,8 @@ func (a *ArrayServerTransport) dispatchGetComplexItemEmpty(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetComplexItemEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetComplexItemEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -726,8 +726,8 @@ func (a *ArrayServerTransport) dispatchGetComplexItemNull(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetComplexItemNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetComplexItemNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -745,8 +745,8 @@ func (a *ArrayServerTransport) dispatchGetComplexNull(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetComplexNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetComplexNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -764,8 +764,8 @@ func (a *ArrayServerTransport) dispatchGetComplexValid(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetComplexValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetComplexValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -783,8 +783,8 @@ func (a *ArrayServerTransport) dispatchGetDateInvalidChars(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetDateInvalidChars not implemented")}
 	}
 	respr, errRespr := a.srv.GetDateInvalidChars(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -802,8 +802,8 @@ func (a *ArrayServerTransport) dispatchGetDateInvalidNull(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetDateInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetDateInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -821,8 +821,8 @@ func (a *ArrayServerTransport) dispatchGetDateTimeInvalidChars(req *http.Request
 		return nil, &nonRetriableError{errors.New("method GetDateTimeInvalidChars not implemented")}
 	}
 	respr, errRespr := a.srv.GetDateTimeInvalidChars(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -840,8 +840,8 @@ func (a *ArrayServerTransport) dispatchGetDateTimeInvalidNull(req *http.Request)
 		return nil, &nonRetriableError{errors.New("method GetDateTimeInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetDateTimeInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -859,8 +859,8 @@ func (a *ArrayServerTransport) dispatchGetDateTimeRFC1123Valid(req *http.Request
 		return nil, &nonRetriableError{errors.New("method GetDateTimeRFC1123Valid not implemented")}
 	}
 	respr, errRespr := a.srv.GetDateTimeRFC1123Valid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -878,8 +878,8 @@ func (a *ArrayServerTransport) dispatchGetDateTimeValid(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method GetDateTimeValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetDateTimeValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -897,8 +897,8 @@ func (a *ArrayServerTransport) dispatchGetDateValid(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetDateValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetDateValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -916,8 +916,8 @@ func (a *ArrayServerTransport) dispatchGetDictionaryEmpty(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetDictionaryEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetDictionaryEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -935,8 +935,8 @@ func (a *ArrayServerTransport) dispatchGetDictionaryItemEmpty(req *http.Request)
 		return nil, &nonRetriableError{errors.New("method GetDictionaryItemEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetDictionaryItemEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -954,8 +954,8 @@ func (a *ArrayServerTransport) dispatchGetDictionaryItemNull(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method GetDictionaryItemNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetDictionaryItemNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -973,8 +973,8 @@ func (a *ArrayServerTransport) dispatchGetDictionaryNull(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetDictionaryNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetDictionaryNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -992,8 +992,8 @@ func (a *ArrayServerTransport) dispatchGetDictionaryValid(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetDictionaryValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetDictionaryValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1011,8 +1011,8 @@ func (a *ArrayServerTransport) dispatchGetDoubleInvalidNull(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method GetDoubleInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetDoubleInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1030,8 +1030,8 @@ func (a *ArrayServerTransport) dispatchGetDoubleInvalidString(req *http.Request)
 		return nil, &nonRetriableError{errors.New("method GetDoubleInvalidString not implemented")}
 	}
 	respr, errRespr := a.srv.GetDoubleInvalidString(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1049,8 +1049,8 @@ func (a *ArrayServerTransport) dispatchGetDoubleValid(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetDoubleValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetDoubleValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1068,8 +1068,8 @@ func (a *ArrayServerTransport) dispatchGetDurationValid(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("method GetDurationValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetDurationValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1087,8 +1087,8 @@ func (a *ArrayServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1106,8 +1106,8 @@ func (a *ArrayServerTransport) dispatchGetEnumValid(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetEnumValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetEnumValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1125,8 +1125,8 @@ func (a *ArrayServerTransport) dispatchGetFloatInvalidNull(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetFloatInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetFloatInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1144,8 +1144,8 @@ func (a *ArrayServerTransport) dispatchGetFloatInvalidString(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method GetFloatInvalidString not implemented")}
 	}
 	respr, errRespr := a.srv.GetFloatInvalidString(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1163,8 +1163,8 @@ func (a *ArrayServerTransport) dispatchGetFloatValid(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("method GetFloatValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetFloatValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1182,8 +1182,8 @@ func (a *ArrayServerTransport) dispatchGetIntInvalidNull(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetIntInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetIntInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1201,8 +1201,8 @@ func (a *ArrayServerTransport) dispatchGetIntInvalidString(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetIntInvalidString not implemented")}
 	}
 	respr, errRespr := a.srv.GetIntInvalidString(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1220,8 +1220,8 @@ func (a *ArrayServerTransport) dispatchGetIntegerValid(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetIntegerValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetIntegerValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1239,8 +1239,8 @@ func (a *ArrayServerTransport) dispatchGetInvalid(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
 	}
 	respr, errRespr := a.srv.GetInvalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1258,8 +1258,8 @@ func (a *ArrayServerTransport) dispatchGetLongInvalidNull(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetLongInvalidNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetLongInvalidNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1277,8 +1277,8 @@ func (a *ArrayServerTransport) dispatchGetLongInvalidString(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method GetLongInvalidString not implemented")}
 	}
 	respr, errRespr := a.srv.GetLongInvalidString(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1296,8 +1296,8 @@ func (a *ArrayServerTransport) dispatchGetLongValid(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetLongValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetLongValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1315,8 +1315,8 @@ func (a *ArrayServerTransport) dispatchGetNull(req *http.Request) (*http.Respons
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1334,8 +1334,8 @@ func (a *ArrayServerTransport) dispatchGetStringEnumValid(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method GetStringEnumValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetStringEnumValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1353,8 +1353,8 @@ func (a *ArrayServerTransport) dispatchGetStringValid(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetStringValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetStringValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1372,8 +1372,8 @@ func (a *ArrayServerTransport) dispatchGetStringWithInvalid(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method GetStringWithInvalid not implemented")}
 	}
 	respr, errRespr := a.srv.GetStringWithInvalid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1391,8 +1391,8 @@ func (a *ArrayServerTransport) dispatchGetStringWithNull(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetStringWithNull not implemented")}
 	}
 	respr, errRespr := a.srv.GetStringWithNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1410,8 +1410,8 @@ func (a *ArrayServerTransport) dispatchGetUUIDInvalidChars(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("method GetUUIDInvalidChars not implemented")}
 	}
 	respr, errRespr := a.srv.GetUUIDInvalidChars(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1429,8 +1429,8 @@ func (a *ArrayServerTransport) dispatchGetUUIDValid(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("method GetUUIDValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetUUIDValid(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1452,8 +1452,8 @@ func (a *ArrayServerTransport) dispatchPutArrayValid(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutArrayValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1475,8 +1475,8 @@ func (a *ArrayServerTransport) dispatchPutBooleanTfft(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutBooleanTfft(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1498,8 +1498,8 @@ func (a *ArrayServerTransport) dispatchPutByteValid(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutByteValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1521,8 +1521,8 @@ func (a *ArrayServerTransport) dispatchPutComplexValid(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutComplexValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1544,8 +1544,8 @@ func (a *ArrayServerTransport) dispatchPutDateTimeRFC1123Valid(req *http.Request
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutDateTimeRFC1123Valid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1567,8 +1567,8 @@ func (a *ArrayServerTransport) dispatchPutDateTimeValid(req *http.Request) (*htt
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutDateTimeValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1590,8 +1590,8 @@ func (a *ArrayServerTransport) dispatchPutDateValid(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutDateValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1613,8 +1613,8 @@ func (a *ArrayServerTransport) dispatchPutDictionaryValid(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutDictionaryValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1636,8 +1636,8 @@ func (a *ArrayServerTransport) dispatchPutDoubleValid(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutDoubleValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1659,8 +1659,8 @@ func (a *ArrayServerTransport) dispatchPutDurationValid(req *http.Request) (*htt
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutDurationValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1682,8 +1682,8 @@ func (a *ArrayServerTransport) dispatchPutEmpty(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutEmpty(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1705,8 +1705,8 @@ func (a *ArrayServerTransport) dispatchPutEnumValid(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutEnumValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1728,8 +1728,8 @@ func (a *ArrayServerTransport) dispatchPutFloatValid(req *http.Request) (*http.R
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutFloatValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1751,8 +1751,8 @@ func (a *ArrayServerTransport) dispatchPutIntegerValid(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutIntegerValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1774,8 +1774,8 @@ func (a *ArrayServerTransport) dispatchPutLongValid(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutLongValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1797,8 +1797,8 @@ func (a *ArrayServerTransport) dispatchPutStringEnumValid(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutStringEnumValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1820,8 +1820,8 @@ func (a *ArrayServerTransport) dispatchPutStringValid(req *http.Request) (*http.
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutStringValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1843,8 +1843,8 @@ func (a *ArrayServerTransport) dispatchPutUUIDValid(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := a.srv.PutUUIDValid(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

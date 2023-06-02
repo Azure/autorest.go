@@ -118,8 +118,8 @@ func (f *FormdataServerTransport) dispatchUploadFile(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := f.srv.UploadFile(req.Context(), fileContent, fileName, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -140,8 +140,8 @@ func (f *FormdataServerTransport) dispatchUploadFileViaBody(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method UploadFileViaBody not implemented")}
 	}
 	respr, errRespr := f.srv.UploadFileViaBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -186,8 +186,8 @@ func (f *FormdataServerTransport) dispatchUploadFiles(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := f.srv.UploadFiles(req.Context(), fileContent, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

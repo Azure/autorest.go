@@ -107,8 +107,8 @@ func (p *PipelineRunServerTransport) dispatchCancelPipelineRun(req *http.Request
 		}
 	}
 	respr, errRespr := p.srv.CancelPipelineRun(req.Context(), matches[regex.SubexpIndex("runId")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -132,8 +132,8 @@ func (p *PipelineRunServerTransport) dispatchGetPipelineRun(req *http.Request) (
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.GetPipelineRun(req.Context(), matches[regex.SubexpIndex("runId")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -161,8 +161,8 @@ func (p *PipelineRunServerTransport) dispatchQueryActivityRuns(req *http.Request
 		return nil, err
 	}
 	respr, errRespr := p.srv.QueryActivityRuns(req.Context(), matches[regex.SubexpIndex("pipelineName")], matches[regex.SubexpIndex("runId")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -184,8 +184,8 @@ func (p *PipelineRunServerTransport) dispatchQueryPipelineRunsByWorkspace(req *h
 		return nil, err
 	}
 	respr, errRespr := p.srv.QueryPipelineRunsByWorkspace(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

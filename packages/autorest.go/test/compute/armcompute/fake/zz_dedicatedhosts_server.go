@@ -118,8 +118,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("hostGroupName")], matches[regex.SubexpIndex("hostName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginCreateOrUpdate = &respr
 	}
@@ -151,8 +151,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginDelete(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("hostGroupName")], matches[regex.SubexpIndex("hostName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDelete = &respr
 	}
@@ -191,8 +191,8 @@ func (d *DedicatedHostsServerTransport) dispatchGet(req *http.Request) (*http.Re
 		}
 	}
 	respr, errRespr := d.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("hostGroupName")], matches[regex.SubexpIndex("hostName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -247,8 +247,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginRestart(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginRestart(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("hostGroupName")], matches[regex.SubexpIndex("hostName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginRestart = &respr
 	}
@@ -284,8 +284,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginUpdate(req *http.Request) (
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("hostGroupName")], matches[regex.SubexpIndex("hostName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginUpdate = &respr
 	}

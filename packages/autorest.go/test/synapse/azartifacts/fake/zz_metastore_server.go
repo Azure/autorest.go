@@ -95,8 +95,8 @@ func (m *MetastoreServerTransport) dispatchDelete(req *http.Request) (*http.Resp
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := m.srv.Delete(req.Context(), matches[regex.SubexpIndex("id")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -120,8 +120,8 @@ func (m *MetastoreServerTransport) dispatchGetDatabaseOperations(req *http.Reque
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := m.srv.GetDatabaseOperations(req.Context(), matches[regex.SubexpIndex("id")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -149,8 +149,8 @@ func (m *MetastoreServerTransport) dispatchRegister(req *http.Request) (*http.Re
 		return nil, err
 	}
 	respr, errRespr := m.srv.Register(req.Context(), matches[regex.SubexpIndex("id")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -178,8 +178,8 @@ func (m *MetastoreServerTransport) dispatchUpdate(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	respr, errRespr := m.srv.Update(req.Context(), matches[regex.SubexpIndex("id")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {

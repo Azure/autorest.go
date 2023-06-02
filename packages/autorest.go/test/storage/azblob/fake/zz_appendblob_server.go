@@ -207,8 +207,8 @@ func (a *AppendBlobServerTransport) dispatchAppendBlock(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := a.srv.AppendBlock(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum35(qp.Get("comp")), contentLengthParam, req.Body.(io.ReadSeekCloser), options, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -405,8 +405,8 @@ func (a *AppendBlobServerTransport) dispatchAppendBlockFromURL(req *http.Request
 		}
 	}
 	respr, errRespr := a.srv.AppendBlockFromURL(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum35(qp.Get("comp")), getHeaderValue(req.Header, "x-ms-copy-source"), contentLengthParam, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -579,8 +579,8 @@ func (a *AppendBlobServerTransport) dispatchCreate(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := a.srv.Create(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], contentLengthParam, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -698,8 +698,8 @@ func (a *AppendBlobServerTransport) dispatchSeal(req *http.Request) (*http.Respo
 		}
 	}
 	respr, errRespr := a.srv.Seal(req.Context(), matches[regex.SubexpIndex("containerName")], matches[regex.SubexpIndex("blob")], azblob.Enum36(qp.Get("comp")), options, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

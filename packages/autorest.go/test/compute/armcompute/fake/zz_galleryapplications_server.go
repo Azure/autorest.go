@@ -111,8 +111,8 @@ func (g *GalleryApplicationsServerTransport) dispatchBeginCreateOrUpdate(req *ht
 			return nil, err
 		}
 		respr, errRespr := g.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], matches[regex.SubexpIndex("galleryApplicationName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		g.beginCreateOrUpdate = &respr
 	}
@@ -144,8 +144,8 @@ func (g *GalleryApplicationsServerTransport) dispatchBeginDelete(req *http.Reque
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := g.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], matches[regex.SubexpIndex("galleryApplicationName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		g.beginDelete = &respr
 	}
@@ -176,8 +176,8 @@ func (g *GalleryApplicationsServerTransport) dispatchGet(req *http.Request) (*ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := g.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], matches[regex.SubexpIndex("galleryApplicationName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -236,8 +236,8 @@ func (g *GalleryApplicationsServerTransport) dispatchBeginUpdate(req *http.Reque
 			return nil, err
 		}
 		respr, errRespr := g.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], matches[regex.SubexpIndex("galleryApplicationName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		g.beginUpdate = &respr
 	}

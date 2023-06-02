@@ -82,8 +82,8 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestID(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("method CustomNamedRequestID not implemented")}
 	}
 	respr, errRespr := h.srv.CustomNamedRequestID(req.Context(), getHeaderValue(req.Header, "foo-client-request-id"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -104,8 +104,8 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestIDHead(req *http.Reque
 		return nil, &nonRetriableError{errors.New("method CustomNamedRequestIDHead not implemented")}
 	}
 	respr, errRespr := h.srv.CustomNamedRequestIDHead(req.Context(), getHeaderValue(req.Header, "foo-client-request-id"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
@@ -130,8 +130,8 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestIDParamGrouping(req *h
 		FooClientRequestID: fooClientRequestIDParam,
 	}
 	respr, errRespr := h.srv.CustomNamedRequestIDParamGrouping(req.Context(), headerClientCustomNamedRequestIDParamGroupingParameters, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -104,8 +104,8 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchBeginCreateOrUpdate(req *h
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("privateEndpointName")], matches[regex.SubexpIndex("privateDnsZoneGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginCreateOrUpdate = &respr
 	}
@@ -137,8 +137,8 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchBeginDelete(req *http.Requ
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("privateEndpointName")], matches[regex.SubexpIndex("privateDnsZoneGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchGet(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("privateEndpointName")], matches[regex.SubexpIndex("privateDnsZoneGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -132,8 +132,8 @@ func (d *DisksServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginCreateOrUpdate = &respr
 	}
@@ -165,8 +165,8 @@ func (d *DisksServerTransport) dispatchBeginDelete(req *http.Request) (*http.Res
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginDelete = &respr
 	}
@@ -197,8 +197,8 @@ func (d *DisksServerTransport) dispatchGet(req *http.Request) (*http.Response, e
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -227,8 +227,8 @@ func (d *DisksServerTransport) dispatchBeginGrantAccess(req *http.Request) (*htt
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginGrantAccess(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginGrantAccess = &respr
 	}
@@ -320,8 +320,8 @@ func (d *DisksServerTransport) dispatchBeginRevokeAccess(req *http.Request) (*ht
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginRevokeAccess(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginRevokeAccess = &respr
 	}
@@ -357,8 +357,8 @@ func (d *DisksServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Res
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("diskName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginUpdate = &respr
 	}

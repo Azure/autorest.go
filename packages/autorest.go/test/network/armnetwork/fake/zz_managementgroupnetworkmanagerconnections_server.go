@@ -102,8 +102,8 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchCreate
 		return nil, err
 	}
 	respr, errRespr := m.srv.CreateOrUpdate(req.Context(), matches[regex.SubexpIndex("managementGroupId")], matches[regex.SubexpIndex("networkManagerConnectionName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
@@ -127,8 +127,8 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchDelete
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := m.srv.Delete(req.Context(), matches[regex.SubexpIndex("managementGroupId")], matches[regex.SubexpIndex("networkManagerConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
@@ -152,8 +152,8 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchGet(re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := m.srv.Get(req.Context(), matches[regex.SubexpIndex("managementGroupId")], matches[regex.SubexpIndex("networkManagerConnectionName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

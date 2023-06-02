@@ -114,8 +114,8 @@ func (i *ImplicitServerTransport) dispatchGetOptionalGlobalQuery(req *http.Reque
 		return nil, &nonRetriableError{errors.New("method GetOptionalGlobalQuery not implemented")}
 	}
 	respr, errRespr := i.srv.GetOptionalGlobalQuery(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -139,8 +139,8 @@ func (i *ImplicitServerTransport) dispatchGetRequiredGlobalPath(req *http.Reques
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := i.srv.GetRequiredGlobalPath(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -158,8 +158,8 @@ func (i *ImplicitServerTransport) dispatchGetRequiredGlobalQuery(req *http.Reque
 		return nil, &nonRetriableError{errors.New("method GetRequiredGlobalQuery not implemented")}
 	}
 	respr, errRespr := i.srv.GetRequiredGlobalQuery(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -183,8 +183,8 @@ func (i *ImplicitServerTransport) dispatchGetRequiredPath(req *http.Request) (*h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := i.srv.GetRequiredPath(req.Context(), matches[regex.SubexpIndex("pathParameter")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -202,8 +202,8 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Reques
 		return nil, &nonRetriableError{errors.New("method PutOptionalBinaryBody not implemented")}
 	}
 	respr, errRespr := i.srv.PutOptionalBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -225,8 +225,8 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBody(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := i.srv.PutOptionalBody(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -251,8 +251,8 @@ func (i *ImplicitServerTransport) dispatchPutOptionalHeader(req *http.Request) (
 		}
 	}
 	respr, errRespr := i.srv.PutOptionalHeader(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -278,8 +278,8 @@ func (i *ImplicitServerTransport) dispatchPutOptionalQuery(req *http.Request) (*
 		}
 	}
 	respr, errRespr := i.srv.PutOptionalQuery(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -233,8 +233,8 @@ func (c *ContainerServerTransport) dispatchAcquireLease(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := c.srv.AcquireLease(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum16(qp.Get("comp")), azblob.Enum11(qp.Get("restype")), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -324,8 +324,8 @@ func (c *ContainerServerTransport) dispatchBreakLease(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := c.srv.BreakLease(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum16(qp.Get("comp")), azblob.Enum11(qp.Get("restype")), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -404,8 +404,8 @@ func (c *ContainerServerTransport) dispatchChangeLease(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := c.srv.ChangeLease(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum16(qp.Get("comp")), azblob.Enum11(qp.Get("restype")), getHeaderValue(req.Header, "x-ms-lease-id"), getHeaderValue(req.Header, "x-ms-proposed-lease-id"), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -493,8 +493,8 @@ func (c *ContainerServerTransport) dispatchCreate(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := c.srv.Create(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), options, containerCpkScopeInfo)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -577,8 +577,8 @@ func (c *ContainerServerTransport) dispatchDelete(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := c.srv.Delete(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), options, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -654,8 +654,8 @@ func (c *ContainerServerTransport) dispatchFilterBlobs(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := c.srv.FilterBlobs(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), azblob.Enum10(qp.Get("comp")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -717,8 +717,8 @@ func (c *ContainerServerTransport) dispatchGetAccessPolicy(req *http.Request) (*
 		}
 	}
 	respr, errRespr := c.srv.GetAccessPolicy(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), azblob.Enum13(qp.Get("comp")), options, leaseAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -764,8 +764,8 @@ func (c *ContainerServerTransport) dispatchGetAccountInfo(req *http.Request) (*h
 	}
 	qp := req.URL.Query()
 	respr, errRespr := c.srv.GetAccountInfo(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum8(qp.Get("restype")), azblob.Enum1(qp.Get("comp")), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -833,8 +833,8 @@ func (c *ContainerServerTransport) dispatchGetProperties(req *http.Request) (*ht
 		}
 	}
 	respr, errRespr := c.srv.GetProperties(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), options, leaseAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1082,8 +1082,8 @@ func (c *ContainerServerTransport) dispatchReleaseLease(req *http.Request) (*htt
 		}
 	}
 	respr, errRespr := c.srv.ReleaseLease(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum16(qp.Get("comp")), azblob.Enum11(qp.Get("restype")), getHeaderValue(req.Header, "x-ms-lease-id"), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1146,8 +1146,8 @@ func (c *ContainerServerTransport) dispatchRename(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := c.srv.Rename(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), azblob.Enum15(qp.Get("comp")), getHeaderValue(req.Header, "x-ms-source-container-name"), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1217,8 +1217,8 @@ func (c *ContainerServerTransport) dispatchRenewLease(req *http.Request) (*http.
 		}
 	}
 	respr, errRespr := c.srv.RenewLease(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum16(qp.Get("comp")), azblob.Enum11(qp.Get("restype")), getHeaderValue(req.Header, "x-ms-lease-id"), options, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1286,8 +1286,8 @@ func (c *ContainerServerTransport) dispatchRestore(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := c.srv.Restore(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), azblob.Enum14(qp.Get("comp")), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -1371,8 +1371,8 @@ func (c *ContainerServerTransport) dispatchSetAccessPolicy(req *http.Request) (*
 		}
 	}
 	respr, errRespr := c.srv.SetAccessPolicy(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), azblob.Enum13(qp.Get("comp")), options, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1460,8 +1460,8 @@ func (c *ContainerServerTransport) dispatchSetMetadata(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := c.srv.SetMetadata(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), azblob.Enum12(qp.Get("comp")), options, leaseAccessConditions, modifiedAccessConditions)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -1526,8 +1526,8 @@ func (c *ContainerServerTransport) dispatchSubmitBatch(req *http.Request) (*http
 		}
 	}
 	respr, errRespr := c.srv.SubmitBatch(req.Context(), matches[regex.SubexpIndex("containerName")], azblob.Enum11(qp.Get("restype")), azblob.Enum9(qp.Get("comp")), contentLengthParam, getHeaderValue(req.Header, "Content-Type"), req.Body.(io.ReadSeekCloser), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {

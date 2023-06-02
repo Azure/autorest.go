@@ -99,8 +99,8 @@ func (d *DiskRestorePointServerTransport) dispatchGet(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := d.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], matches[regex.SubexpIndex("vmRestorePointName")], matches[regex.SubexpIndex("diskRestorePointName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -129,8 +129,8 @@ func (d *DiskRestorePointServerTransport) dispatchBeginGrantAccess(req *http.Req
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginGrantAccess(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], matches[regex.SubexpIndex("vmRestorePointName")], matches[regex.SubexpIndex("diskRestorePointName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginGrantAccess = &respr
 	}
@@ -192,8 +192,8 @@ func (d *DiskRestorePointServerTransport) dispatchBeginRevokeAccess(req *http.Re
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := d.srv.BeginRevokeAccess(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("restorePointCollectionName")], matches[regex.SubexpIndex("vmRestorePointName")], matches[regex.SubexpIndex("diskRestorePointName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginRevokeAccess = &respr
 	}

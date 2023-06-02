@@ -83,8 +83,8 @@ func (s *SupportPackagesServerTransport) dispatchBeginTriggerSupportPackage(req 
 			return nil, err
 		}
 		respr, errRespr := s.srv.BeginTriggerSupportPackage(req.Context(), matches[regex.SubexpIndex("deviceName")], matches[regex.SubexpIndex("resourceGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		s.beginTriggerSupportPackage = &respr
 	}

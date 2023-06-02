@@ -153,8 +153,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginCreateOrUpdate = &respr
 	}
@@ -186,8 +186,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginDelete(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDelete = &respr
 	}
@@ -223,8 +223,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginDisconnectP2SVPNConnections
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginDisconnectP2SVPNConnections(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("p2sVpnGatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginDisconnectP2SVPNConnections = &respr
 	}
@@ -260,8 +260,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginGenerateVPNProfile(req *htt
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginGenerateVPNProfile(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginGenerateVPNProfile = &respr
 	}
@@ -292,8 +292,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchGet(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := p.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -318,8 +318,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginGetP2SVPNConnectionHealth(r
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginGetP2SVPNConnectionHealth(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginGetP2SVPNConnectionHealth = &respr
 	}
@@ -355,8 +355,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginGetP2SVPNConnectionHealthDe
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginGetP2SVPNConnectionHealthDetailed(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginGetP2SVPNConnectionHealthDetailed = &respr
 	}
@@ -448,8 +448,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginReset(req *http.Request) (*
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := p.srv.BeginReset(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginReset = &respr
 	}
@@ -485,8 +485,8 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginUpdateTags(req *http.Reques
 			return nil, err
 		}
 		respr, errRespr := p.srv.BeginUpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("gatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		p.beginUpdateTags = &respr
 	}

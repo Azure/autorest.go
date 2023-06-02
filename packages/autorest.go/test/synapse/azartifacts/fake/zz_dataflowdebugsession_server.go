@@ -102,8 +102,8 @@ func (d *DataFlowDebugSessionServerTransport) dispatchAddDataFlow(req *http.Requ
 		return nil, err
 	}
 	respr, errRespr := d.srv.AddDataFlow(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -126,8 +126,8 @@ func (d *DataFlowDebugSessionServerTransport) dispatchBeginCreateDataFlowDebugSe
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginCreateDataFlowDebugSession(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginCreateDataFlowDebugSession = &respr
 	}
@@ -156,8 +156,8 @@ func (d *DataFlowDebugSessionServerTransport) dispatchDeleteDataFlowDebugSession
 		return nil, err
 	}
 	respr, errRespr := d.srv.DeleteDataFlowDebugSession(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -180,8 +180,8 @@ func (d *DataFlowDebugSessionServerTransport) dispatchBeginExecuteCommand(req *h
 			return nil, err
 		}
 		respr, errRespr := d.srv.BeginExecuteCommand(req.Context(), body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		d.beginExecuteCommand = &respr
 	}

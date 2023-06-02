@@ -90,8 +90,8 @@ func (l *LogAnalyticsServerTransport) dispatchBeginExportRequestRateByInterval(r
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginExportRequestRateByInterval(req.Context(), matches[regex.SubexpIndex("location")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginExportRequestRateByInterval = &respr
 	}
@@ -127,8 +127,8 @@ func (l *LogAnalyticsServerTransport) dispatchBeginExportThrottledRequests(req *
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginExportThrottledRequests(req.Context(), matches[regex.SubexpIndex("location")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginExportThrottledRequests = &respr
 	}

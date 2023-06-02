@@ -83,8 +83,8 @@ func (i *IntegrationRuntimesServerTransport) dispatchGet(req *http.Request) (*ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := i.srv.Get(req.Context(), matches[regex.SubexpIndex("integrationRuntimeName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -102,8 +102,8 @@ func (i *IntegrationRuntimesServerTransport) dispatchList(req *http.Request) (*h
 		return nil, &nonRetriableError{errors.New("method List not implemented")}
 	}
 	respr, errRespr := i.srv.List(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

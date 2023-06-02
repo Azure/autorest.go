@@ -142,8 +142,8 @@ func (s *StringServerTransport) dispatchGetBase64Encoded(req *http.Request) (*ht
 		return nil, &nonRetriableError{errors.New("method GetBase64Encoded not implemented")}
 	}
 	respr, errRespr := s.srv.GetBase64Encoded(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -161,8 +161,8 @@ func (s *StringServerTransport) dispatchGetBase64URLEncoded(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("method GetBase64URLEncoded not implemented")}
 	}
 	respr, errRespr := s.srv.GetBase64URLEncoded(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -180,8 +180,8 @@ func (s *StringServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
 	}
 	respr, errRespr := s.srv.GetEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -199,8 +199,8 @@ func (s *StringServerTransport) dispatchGetMBCS(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetMBCS not implemented")}
 	}
 	respr, errRespr := s.srv.GetMBCS(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -218,8 +218,8 @@ func (s *StringServerTransport) dispatchGetNotProvided(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("method GetNotProvided not implemented")}
 	}
 	respr, errRespr := s.srv.GetNotProvided(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -237,8 +237,8 @@ func (s *StringServerTransport) dispatchGetNull(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
 	}
 	respr, errRespr := s.srv.GetNull(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -256,8 +256,8 @@ func (s *StringServerTransport) dispatchGetNullBase64URLEncoded(req *http.Reques
 		return nil, &nonRetriableError{errors.New("method GetNullBase64URLEncoded not implemented")}
 	}
 	respr, errRespr := s.srv.GetNullBase64URLEncoded(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -275,8 +275,8 @@ func (s *StringServerTransport) dispatchGetWhitespace(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method GetWhitespace not implemented")}
 	}
 	respr, errRespr := s.srv.GetWhitespace(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -298,8 +298,8 @@ func (s *StringServerTransport) dispatchPutBase64URLEncoded(req *http.Request) (
 		return nil, err
 	}
 	respr, errRespr := s.srv.PutBase64URLEncoded(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -317,8 +317,8 @@ func (s *StringServerTransport) dispatchPutEmpty(req *http.Request) (*http.Respo
 		return nil, &nonRetriableError{errors.New("method PutEmpty not implemented")}
 	}
 	respr, errRespr := s.srv.PutEmpty(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -336,8 +336,8 @@ func (s *StringServerTransport) dispatchPutMBCS(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method PutMBCS not implemented")}
 	}
 	respr, errRespr := s.srv.PutMBCS(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -359,8 +359,8 @@ func (s *StringServerTransport) dispatchPutNull(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	respr, errRespr := s.srv.PutNull(req.Context(), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -378,8 +378,8 @@ func (s *StringServerTransport) dispatchPutWhitespace(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("method PutWhitespace not implemented")}
 	}
 	respr, errRespr := s.srv.PutWhitespace(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -139,8 +139,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCancelUpload(req *http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.CancelUpload(req.Context(), matches[regex.SubexpIndex("nextBlobUuidLink")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -164,8 +164,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckBlobExists(req *http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.CheckBlobExists(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -195,8 +195,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckChunkExists(req *htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.CheckChunkExists(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], getHeaderValue(req.Header, "Range"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -227,8 +227,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 	}
 	qp := req.URL.Query()
 	respr, errRespr := c.srv.CompleteUpload(req.Context(), qp.Get("digest"), matches[regex.SubexpIndex("nextBlobUuidLink")], req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -261,8 +261,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchDeleteBlob(req *http.Requ
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.DeleteBlob(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -292,8 +292,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetBlob(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetBlob(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -326,8 +326,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetChunk(req *http.Reques
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetChunk(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], getHeaderValue(req.Header, "Range"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusPartialContent}, respContent.HTTPStatus) {
@@ -360,8 +360,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetUploadStatus(req *http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.GetUploadStatus(req.Context(), matches[regex.SubexpIndex("nextBlobUuidLink")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
@@ -392,8 +392,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchMountBlob(req *http.Reque
 	}
 	qp := req.URL.Query()
 	respr, errRespr := c.srv.MountBlob(req.Context(), matches[regex.SubexpIndex("name")], qp.Get("from"), qp.Get("mount"), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
@@ -426,8 +426,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchStartUpload(req *http.Req
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.StartUpload(req.Context(), matches[regex.SubexpIndex("name")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
@@ -460,8 +460,8 @@ func (c *ContainerRegistryBlobServerTransport) dispatchUploadChunk(req *http.Req
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.UploadChunk(req.Context(), matches[regex.SubexpIndex("nextBlobUuidLink")], req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {

@@ -105,8 +105,8 @@ func (p *PriceSheetServerTransport) dispatchGet(req *http.Request) (*http.Respon
 		}
 	}
 	respr, errRespr := p.srv.Get(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -151,8 +151,8 @@ func (p *PriceSheetServerTransport) dispatchGetByBillingPeriod(req *http.Request
 		}
 	}
 	respr, errRespr := p.srv.GetByBillingPeriod(req.Context(), matches[regex.SubexpIndex("billingPeriodName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

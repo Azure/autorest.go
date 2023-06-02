@@ -70,8 +70,8 @@ func (p *PathsServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
 	}
 	respr, errRespr := p.srv.GetEmpty(req.Context(), req.URL.Host, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

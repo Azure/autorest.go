@@ -97,8 +97,8 @@ func (a *AutoRestValidationTestServerTransport) dispatchGetWithConstantInPath(re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.GetWithConstantInPath(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -132,8 +132,8 @@ func (a *AutoRestValidationTestServerTransport) dispatchPostWithConstantInBody(r
 		}
 	}
 	respr, errRespr := a.srv.PostWithConstantInBody(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -171,8 +171,8 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *ht
 		return nil, err
 	}
 	respr, errRespr := a.srv.ValidationOfBody(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], int32(idParam), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -206,8 +206,8 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParame
 		return nil, err
 	}
 	respr, errRespr := a.srv.ValidationOfMethodParameters(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], int32(idParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -83,8 +83,8 @@ func (g *GallerySharingProfileServerTransport) dispatchBeginUpdate(req *http.Req
 			return nil, err
 		}
 		respr, errRespr := g.srv.BeginUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("galleryName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		g.beginUpdate = &respr
 	}

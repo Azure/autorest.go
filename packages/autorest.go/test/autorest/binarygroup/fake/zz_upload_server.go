@@ -77,8 +77,8 @@ func (u *UploadServerTransport) dispatchBinary(req *http.Request) (*http.Respons
 		return nil, &nonRetriableError{errors.New("method Binary not implemented")}
 	}
 	respr, errRespr := u.srv.Binary(req.Context(), req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -96,8 +96,8 @@ func (u *UploadServerTransport) dispatchFile(req *http.Request) (*http.Response,
 		return nil, &nonRetriableError{errors.New("method File not implemented")}
 	}
 	respr, errRespr := u.srv.File(req.Context(), req.Body.(io.ReadSeekCloser), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -131,8 +131,8 @@ func (l *LoadBalancersServerTransport) dispatchBeginCreateOrUpdate(req *http.Req
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("loadBalancerName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginCreateOrUpdate = &respr
 	}
@@ -164,8 +164,8 @@ func (l *LoadBalancersServerTransport) dispatchBeginDelete(req *http.Request) (*
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := l.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("loadBalancerName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginDelete = &respr
 	}
@@ -204,8 +204,8 @@ func (l *LoadBalancersServerTransport) dispatchGet(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := l.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("loadBalancerName")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -294,8 +294,8 @@ func (l *LoadBalancersServerTransport) dispatchBeginListInboundNatRulePortMappin
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginListInboundNatRulePortMappings(req.Context(), matches[regex.SubexpIndex("groupName")], matches[regex.SubexpIndex("loadBalancerName")], matches[regex.SubexpIndex("backendPoolName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginListInboundNatRulePortMappings = &respr
 	}
@@ -331,8 +331,8 @@ func (l *LoadBalancersServerTransport) dispatchBeginSwapPublicIPAddresses(req *h
 			return nil, err
 		}
 		respr, errRespr := l.srv.BeginSwapPublicIPAddresses(req.Context(), matches[regex.SubexpIndex("location")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		l.beginSwapPublicIPAddresses = &respr
 	}
@@ -367,8 +367,8 @@ func (l *LoadBalancersServerTransport) dispatchUpdateTags(req *http.Request) (*h
 		return nil, err
 	}
 	respr, errRespr := l.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("loadBalancerName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

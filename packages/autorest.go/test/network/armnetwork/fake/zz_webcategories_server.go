@@ -93,8 +93,8 @@ func (w *WebCategoriesServerTransport) dispatchGet(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := w.srv.Get(req.Context(), matches[regex.SubexpIndex("name")], options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

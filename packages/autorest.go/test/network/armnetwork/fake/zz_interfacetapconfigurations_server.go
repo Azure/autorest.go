@@ -104,8 +104,8 @@ func (i *InterfaceTapConfigurationsServerTransport) dispatchBeginCreateOrUpdate(
 			return nil, err
 		}
 		respr, errRespr := i.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], matches[regex.SubexpIndex("tapConfigurationName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginCreateOrUpdate = &respr
 	}
@@ -137,8 +137,8 @@ func (i *InterfaceTapConfigurationsServerTransport) dispatchBeginDelete(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := i.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], matches[regex.SubexpIndex("tapConfigurationName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		i.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (i *InterfaceTapConfigurationsServerTransport) dispatchGet(req *http.Reques
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := i.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("networkInterfaceName")], matches[regex.SubexpIndex("tapConfigurationName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

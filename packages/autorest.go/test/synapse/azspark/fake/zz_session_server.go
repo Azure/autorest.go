@@ -136,8 +136,8 @@ func (s *SessionServerTransport) dispatchCancelSparkSession(req *http.Request) (
 		return nil, err
 	}
 	respr, errRespr := s.srv.CancelSparkSession(req.Context(), int32(sessionIDParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -181,8 +181,8 @@ func (s *SessionServerTransport) dispatchCancelSparkStatement(req *http.Request)
 		return nil, err
 	}
 	respr, errRespr := s.srv.CancelSparkStatement(req.Context(), int32(sessionIDParam), int32(statementIDParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -221,8 +221,8 @@ func (s *SessionServerTransport) dispatchCreateSparkSession(req *http.Request) (
 		}
 	}
 	respr, errRespr := s.srv.CreateSparkSession(req.Context(), body, options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -260,8 +260,8 @@ func (s *SessionServerTransport) dispatchCreateSparkStatement(req *http.Request)
 		return nil, err
 	}
 	respr, errRespr := s.srv.CreateSparkStatement(req.Context(), int32(sessionIDParam), body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -306,8 +306,8 @@ func (s *SessionServerTransport) dispatchGetSparkSession(req *http.Request) (*ht
 		}
 	}
 	respr, errRespr := s.srv.GetSparkSession(req.Context(), int32(sessionIDParam), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -364,8 +364,8 @@ func (s *SessionServerTransport) dispatchGetSparkSessions(req *http.Request) (*h
 		}
 	}
 	respr, errRespr := s.srv.GetSparkSessions(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -409,8 +409,8 @@ func (s *SessionServerTransport) dispatchGetSparkStatement(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := s.srv.GetSparkStatement(req.Context(), int32(sessionIDParam), int32(statementIDParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -444,8 +444,8 @@ func (s *SessionServerTransport) dispatchGetSparkStatements(req *http.Request) (
 		return nil, err
 	}
 	respr, errRespr := s.srv.GetSparkStatements(req.Context(), int32(sessionIDParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -479,8 +479,8 @@ func (s *SessionServerTransport) dispatchResetSparkSessionTimeout(req *http.Requ
 		return nil, err
 	}
 	respr, errRespr := s.srv.ResetSparkSessionTimeout(req.Context(), int32(sessionIDParam), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

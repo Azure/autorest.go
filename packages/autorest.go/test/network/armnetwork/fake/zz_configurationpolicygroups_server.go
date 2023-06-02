@@ -104,8 +104,8 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginCreateOrUpdate(r
 			return nil, err
 		}
 		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("vpnServerConfigurationName")], matches[regex.SubexpIndex("configurationPolicyGroupName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginCreateOrUpdate = &respr
 	}
@@ -137,8 +137,8 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginDelete(req *http
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := c.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("vpnServerConfigurationName")], matches[regex.SubexpIndex("configurationPolicyGroupName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		c.beginDelete = &respr
 	}
@@ -169,8 +169,8 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchGet(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := c.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("vpnServerConfigurationName")], matches[regex.SubexpIndex("configurationPolicyGroupName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

@@ -78,8 +78,8 @@ func (a *AutoRestReportServiceForAzureServerTransport) dispatchGetReport(req *ht
 		}
 	}
 	respr, errRespr := a.srv.GetReport(req.Context(), options)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

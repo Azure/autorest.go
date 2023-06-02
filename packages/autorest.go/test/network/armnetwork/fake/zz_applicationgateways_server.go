@@ -192,8 +192,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginBackendHealth(req *htt
 			}
 		}
 		respr, errRespr := a.srv.BeginBackendHealth(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginBackendHealth = &respr
 	}
@@ -237,8 +237,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginBackendHealthOnDemand(
 			}
 		}
 		respr, errRespr := a.srv.BeginBackendHealthOnDemand(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], body, options)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginBackendHealthOnDemand = &respr
 	}
@@ -274,8 +274,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *ht
 			return nil, err
 		}
 		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginCreateOrUpdate = &respr
 	}
@@ -307,8 +307,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginDelete(req *http.Reque
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := a.srv.BeginDelete(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginDelete = &respr
 	}
@@ -339,8 +339,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchGet(req *http.Request) (*ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.Get(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -364,8 +364,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchGetSSLPredefinedPolicy(req 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.GetSSLPredefinedPolicy(req.Context(), matches[regex.SubexpIndex("predefinedPolicyName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -449,8 +449,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchListAvailableRequestHeaders
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.ListAvailableRequestHeaders(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -474,8 +474,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchListAvailableResponseHeader
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.ListAvailableResponseHeaders(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -499,8 +499,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchListAvailableSSLOptions(req
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.ListAvailableSSLOptions(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -554,8 +554,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchListAvailableServerVariable
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.ListAvailableServerVariables(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -579,8 +579,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchListAvailableWafRuleSets(re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := a.srv.ListAvailableWafRuleSets(req.Context(), nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -605,8 +605,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginStart(req *http.Reques
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := a.srv.BeginStart(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginStart = &respr
 	}
@@ -638,8 +638,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginStop(req *http.Request
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := a.srv.BeginStop(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		a.beginStop = &respr
 	}
@@ -674,8 +674,8 @@ func (a *ApplicationGatewaysServerTransport) dispatchUpdateTags(req *http.Reques
 		return nil, err
 	}
 	respr, errRespr := a.srv.UpdateTags(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], matches[regex.SubexpIndex("applicationGatewayName")], body, nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {

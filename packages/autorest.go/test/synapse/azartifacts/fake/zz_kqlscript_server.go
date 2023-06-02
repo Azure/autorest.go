@@ -103,8 +103,8 @@ func (k *KqlScriptServerTransport) dispatchBeginCreateOrUpdate(req *http.Request
 			return nil, err
 		}
 		respr, errRespr := k.srv.BeginCreateOrUpdate(req.Context(), matches[regex.SubexpIndex("kqlScriptName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		k.beginCreateOrUpdate = &respr
 	}
@@ -136,8 +136,8 @@ func (k *KqlScriptServerTransport) dispatchBeginDeleteByName(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		respr, errRespr := k.srv.BeginDeleteByName(req.Context(), matches[regex.SubexpIndex("kqlScriptName")], nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		k.beginDeleteByName = &respr
 	}
@@ -168,8 +168,8 @@ func (k *KqlScriptServerTransport) dispatchGetByName(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := k.srv.GetByName(req.Context(), matches[regex.SubexpIndex("kqlScriptName")], nil)
-	if err := server.GetError(errRespr, req); err != nil {
-		return nil, err
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
@@ -198,8 +198,8 @@ func (k *KqlScriptServerTransport) dispatchBeginRename(req *http.Request) (*http
 			return nil, err
 		}
 		respr, errRespr := k.srv.BeginRename(req.Context(), matches[regex.SubexpIndex("kqlScriptName")], body, nil)
-		if err := server.GetError(errRespr, req); err != nil {
-			return nil, err
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
 		}
 		k.beginRename = &respr
 	}
