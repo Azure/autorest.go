@@ -56,7 +56,9 @@ func NewInterfaceIPConfigurationsClient(subscriptionID string, credential azcore
 //     method.
 func (client *InterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *InterfaceIPConfigurationsClientGetOptions) (InterfaceIPConfigurationsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "InterfaceIPConfigurationsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "InterfaceIPConfigurationsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *InterfaceIPConfigurationsClient) NewListPager(resourceGroupName st
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *InterfaceIPConfigurationsClientListResponse) (InterfaceIPConfigurationsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfaceIPConfigurationsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

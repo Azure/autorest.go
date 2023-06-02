@@ -59,6 +59,7 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 //   - options - ChargesClientListOptions contains the optional parameters for the ChargesClient.List method.
 func (client *ChargesClient) List(ctx context.Context, scope string, options *ChargesClientListOptions) (ChargesClientListResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ChargesClient.List")
 	req, err := client.listCreateRequest(ctx, scope, options)
 	if err != nil {
 		return ChargesClientListResponse{}, err

@@ -58,10 +58,6 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 //     method.
 func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*runtime.Poller[DisksClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, diskName, disk, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 // Generated from API version 2021-12-01
 func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DisksClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {
 		return nil, err
@@ -134,10 +134,6 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 //   - options - DisksClientBeginDeleteOptions contains the optional parameters for the DisksClient.BeginDelete method.
 func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*runtime.Poller[DisksClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, diskName, options)
 		if err != nil {
 			return nil, err
@@ -155,6 +151,10 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 // Generated from API version 2021-12-01
 func (client *DisksClient) deleteOperation(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DisksClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
 		return nil, err
@@ -206,7 +206,9 @@ func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGrou
 //   - options - DisksClientGetOptions contains the optional parameters for the DisksClient.Get method.
 func (client *DisksClient) Get(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientGetOptions) (DisksClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DisksClient.Get", client.internal.Tracer(), nil)
+	const operationName = "DisksClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -271,10 +273,6 @@ func (client *DisksClient) getHandleResponse(resp *http.Response) (DisksClientGe
 //   - options - DisksClientBeginGrantAccessOptions contains the optional parameters for the DisksClient.BeginGrantAccess method.
 func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*runtime.Poller[DisksClientGrantAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginGrantAccess", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.grantAccess(ctx, resourceGroupName, diskName, grantAccessData, options)
 		if err != nil {
 			return nil, err
@@ -294,6 +292,10 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 // Generated from API version 2021-12-01
 func (client *DisksClient) grantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DisksClient.BeginGrantAccess"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.grantAccessCreateRequest(ctx, resourceGroupName, diskName, grantAccessData, options)
 	if err != nil {
 		return nil, err
@@ -348,6 +350,7 @@ func (client *DisksClient) NewListPager(options *DisksClientListOptions) *runtim
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DisksClientListResponse) (DisksClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DisksClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -410,6 +413,7 @@ func (client *DisksClient) NewListByResourceGroupPager(resourceGroupName string,
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DisksClientListByResourceGroupResponse) (DisksClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DisksClient.NewListByResourceGroupPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -475,10 +479,6 @@ func (client *DisksClient) listByResourceGroupHandleResponse(resp *http.Response
 //   - options - DisksClientBeginRevokeAccessOptions contains the optional parameters for the DisksClient.BeginRevokeAccess method.
 func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*runtime.Poller[DisksClientRevokeAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginRevokeAccess", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.revokeAccess(ctx, resourceGroupName, diskName, options)
 		if err != nil {
 			return nil, err
@@ -498,6 +498,10 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 // Generated from API version 2021-12-01
 func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DisksClient.BeginRevokeAccess"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.revokeAccessCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
 		return nil, err
@@ -550,10 +554,6 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 //   - options - DisksClientBeginUpdateOptions contains the optional parameters for the DisksClient.BeginUpdate method.
 func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*runtime.Poller[DisksClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DisksClient.BeginUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, diskName, disk, options)
 		if err != nil {
 			return nil, err
@@ -571,6 +571,10 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 // Generated from API version 2021-12-01
 func (client *DisksClient) update(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DisksClient.BeginUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {
 		return nil, err

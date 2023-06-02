@@ -31,7 +31,9 @@ type AutoRestReportServiceForAzureClient struct {
 //     method.
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestReportServiceForAzureClient.GetReport", client.internal.Tracer(), nil)
+	const operationName = "AutoRestReportServiceForAzureClient.GetReport"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

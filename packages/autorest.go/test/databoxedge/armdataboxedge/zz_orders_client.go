@@ -55,7 +55,6 @@ func NewOrdersClient(subscriptionID string, credential azcore.TokenCredential, o
 //     method.
 func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (*runtime.Poller[OrdersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdate(ctx, deviceName, resourceGroupName, order, options)
 		if err != nil {
 			return nil, err
@@ -73,6 +72,7 @@ func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 // Generated from API version 2021-02-01
 func (client *OrdersClient) createOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OrdersClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, resourceGroupName, order, options)
 	if err != nil {
 		return nil, err
@@ -123,7 +123,6 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 //   - options - OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
 func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (*runtime.Poller[OrdersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
@@ -141,6 +140,7 @@ func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, 
 // Generated from API version 2021-02-01
 func (client *OrdersClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OrdersClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -188,6 +188,7 @@ func (client *OrdersClient) deleteCreateRequest(ctx context.Context, deviceName 
 //   - options - OrdersClientGetOptions contains the optional parameters for the OrdersClient.Get method.
 func (client *OrdersClient) Get(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientGetOptions) (OrdersClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OrdersClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return OrdersClientGetResponse{}, err
@@ -249,6 +250,7 @@ func (client *OrdersClient) NewListByDataBoxEdgeDevicePager(deviceName string, r
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *OrdersClientListByDataBoxEdgeDeviceResponse) (OrdersClientListByDataBoxEdgeDeviceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OrdersClient.NewListByDataBoxEdgeDevicePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -312,6 +314,7 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Res
 //   - options - OrdersClientListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
 func (client *OrdersClient) ListDCAccessCode(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientListDCAccessCodeOptions) (OrdersClientListDCAccessCodeResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OrdersClient.ListDCAccessCode")
 	req, err := client.listDCAccessCodeCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return OrdersClientListDCAccessCodeResponse{}, err

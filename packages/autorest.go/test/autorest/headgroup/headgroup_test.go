@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
@@ -19,14 +18,6 @@ func newHTTPSuccessClient(t *testing.T) *HTTPSuccessClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewHTTPSuccessClient(options *azcore.ClientOptions) (*HTTPSuccessClient, error) {
-	client, err := azcore.NewClient("headgroup.HTTPSuccessClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &HTTPSuccessClient{internal: client}, nil
 }
 
 // Head200 - Return 200 status code if successful

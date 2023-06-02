@@ -36,7 +36,9 @@ type ComplexModelClient struct {
 //   - options - ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.
 func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (ComplexModelClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ComplexModelClient.Create", client.internal.Tracer(), nil)
+	const operationName = "ComplexModelClient.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
@@ -98,7 +100,9 @@ func (client *ComplexModelClient) createHandleResponse(resp *http.Response) (Com
 //   - options - ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (ComplexModelClientListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ComplexModelClient.List", client.internal.Tracer(), nil)
+	const operationName = "ComplexModelClient.List"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
@@ -154,7 +158,9 @@ func (client *ComplexModelClient) listHandleResponse(resp *http.Response) (Compl
 //   - options - ComplexModelClientUpdateOptions contains the optional parameters for the ComplexModelClient.Update method.
 func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (ComplexModelClientUpdateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ComplexModelClient.Update", client.internal.Tracer(), nil)
+	const operationName = "ComplexModelClient.Update"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {

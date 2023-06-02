@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
@@ -19,14 +18,6 @@ func newExplicitClient(t *testing.T) *ExplicitClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewExplicitClient(options *azcore.ClientOptions) (*ExplicitClient, error) {
-	client, err := azcore.NewClient("optionalgroup.ExplicitClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &ExplicitClient{internal: client}, nil
 }
 
 func TestExplicitPostOptionalArrayHeader(t *testing.T) {

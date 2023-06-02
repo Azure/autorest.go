@@ -48,6 +48,7 @@ func (client *OperationsClient) NewListPager(options *OperationsClientListOption
 			return false
 		},
 		Fetcher: func(ctx context.Context, page *OperationsClientListResponse) (OperationsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsClient.NewListPager")
 			req, err := client.listCreateRequest(ctx, options)
 			if err != nil {
 				return OperationsClientListResponse{}, err

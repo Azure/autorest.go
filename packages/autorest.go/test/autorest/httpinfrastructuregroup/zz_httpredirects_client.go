@@ -30,7 +30,9 @@ type HTTPRedirectsClient struct {
 //   - options - HTTPRedirectsClientDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
 func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsClientDelete307Options) (HTTPRedirectsClientDelete307Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Delete307", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Delete307"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.delete307CreateRequest(ctx, options)
 	if err != nil {
@@ -68,7 +70,9 @@ func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, o
 //   - options - HTTPRedirectsClientGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
 func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsClientGet300Options) (HTTPRedirectsClientGet300Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get300", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Get300"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get300CreateRequest(ctx, options)
 	if err != nil {
@@ -116,7 +120,9 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HT
 //   - options - HTTPRedirectsClientGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
 func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsClientGet301Options) (HTTPRedirectsClientGet301Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get301", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Get301"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get301CreateRequest(ctx, options)
 	if err != nil {
@@ -151,7 +157,9 @@ func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, opti
 //   - options - HTTPRedirectsClientGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
 func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsClientGet302Options) (HTTPRedirectsClientGet302Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get302", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Get302"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get302CreateRequest(ctx, options)
 	if err != nil {
@@ -186,7 +194,9 @@ func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, opti
 //   - options - HTTPRedirectsClientGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
 func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsClientGet307Options) (HTTPRedirectsClientGet307Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Get307", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Get307"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get307CreateRequest(ctx, options)
 	if err != nil {
@@ -220,7 +230,9 @@ func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, opti
 //   - options - HTTPRedirectsClientHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
 func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsClientHead300Options) (HTTPRedirectsClientHead300Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head300", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Head300"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head300CreateRequest(ctx, options)
 	if err != nil {
@@ -265,7 +277,9 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (H
 //   - options - HTTPRedirectsClientHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
 func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsClientHead301Options) (HTTPRedirectsClientHead301Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head301", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Head301"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head301CreateRequest(ctx, options)
 	if err != nil {
@@ -299,7 +313,9 @@ func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, opt
 //   - options - HTTPRedirectsClientHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
 func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsClientHead302Options) (HTTPRedirectsClientHead302Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head302", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Head302"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head302CreateRequest(ctx, options)
 	if err != nil {
@@ -333,7 +349,9 @@ func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, opt
 //   - options - HTTPRedirectsClientHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
 func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsClientHead307Options) (HTTPRedirectsClientHead307Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Head307", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Head307"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head307CreateRequest(ctx, options)
 	if err != nil {
@@ -369,7 +387,9 @@ func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, opt
 //     method.
 func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPRedirectsClientOptions307Options) (HTTPRedirectsClientOptions307Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Options307", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Options307"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.options307CreateRequest(ctx, options)
 	if err != nil {
@@ -405,7 +425,9 @@ func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, 
 //   - options - HTTPRedirectsClientPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
 func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsClientPatch302Options) (HTTPRedirectsClientPatch302Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Patch302", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Patch302"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.patch302CreateRequest(ctx, options)
 	if err != nil {
@@ -453,7 +475,9 @@ func (client *HTTPRedirectsClient) patch302HandleResponse(resp *http.Response) (
 //   - options - HTTPRedirectsClientPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
 func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsClientPatch307Options) (HTTPRedirectsClientPatch307Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Patch307", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Patch307"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.patch307CreateRequest(ctx, options)
 	if err != nil {
@@ -492,7 +516,9 @@ func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, op
 //   - options - HTTPRedirectsClientPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
 func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsClientPost303Options) (HTTPRedirectsClientPost303Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Post303", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Post303"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.post303CreateRequest(ctx, options)
 	if err != nil {
@@ -540,7 +566,9 @@ func (client *HTTPRedirectsClient) post303HandleResponse(resp *http.Response) (H
 //   - options - HTTPRedirectsClientPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
 func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsClientPost307Options) (HTTPRedirectsClientPost307Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Post307", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Post307"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.post307CreateRequest(ctx, options)
 	if err != nil {
@@ -579,7 +607,9 @@ func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, opt
 //   - options - HTTPRedirectsClientPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
 func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsClientPut301Options) (HTTPRedirectsClientPut301Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Put301", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Put301"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.put301CreateRequest(ctx, options)
 	if err != nil {
@@ -627,7 +657,9 @@ func (client *HTTPRedirectsClient) put301HandleResponse(resp *http.Response) (HT
 //   - options - HTTPRedirectsClientPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
 func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsClientPut307Options) (HTTPRedirectsClientPut307Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPRedirectsClient.Put307", client.internal.Tracer(), nil)
+	const operationName = "HTTPRedirectsClient.Put307"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.put307CreateRequest(ctx, options)
 	if err != nil {

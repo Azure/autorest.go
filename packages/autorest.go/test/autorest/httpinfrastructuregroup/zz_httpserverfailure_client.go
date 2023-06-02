@@ -31,7 +31,9 @@ type HTTPServerFailureClient struct {
 //     method.
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (HTTPServerFailureClientDelete505Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Delete505", client.internal.Tracer(), nil)
+	const operationName = "HTTPServerFailureClient.Delete505"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.delete505CreateRequest(ctx, options)
 	if err != nil {
@@ -70,7 +72,9 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 //     method.
 func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureClientGet501Options) (HTTPServerFailureClientGet501Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Get501", client.internal.Tracer(), nil)
+	const operationName = "HTTPServerFailureClient.Get501"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get501CreateRequest(ctx, options)
 	if err != nil {
@@ -105,7 +109,9 @@ func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, 
 //     method.
 func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureClientHead501Options) (HTTPServerFailureClientHead501Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Head501", client.internal.Tracer(), nil)
+	const operationName = "HTTPServerFailureClient.Head501"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head501CreateRequest(ctx, options)
 	if err != nil {
@@ -141,7 +147,9 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 //     method.
 func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailureClientPost505Options) (HTTPServerFailureClientPost505Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPServerFailureClient.Post505", client.internal.Tracer(), nil)
+	const operationName = "HTTPServerFailureClient.Post505"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.post505CreateRequest(ctx, options)
 	if err != nil {

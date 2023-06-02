@@ -30,7 +30,9 @@ type NumberClient struct {
 //   - options - NumberClientGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
 func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberClientGetBigDecimalOptions) (NumberClientGetBigDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetBigDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *NumberClient) getBigDecimalHandleResponse(resp *http.Response) (Nu
 //     method.
 func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientGetBigDecimalNegativeDecimalOptions) (NumberClientGetBigDecimalNegativeDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDecimalNegativeDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetBigDecimalNegativeDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -122,7 +126,9 @@ func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *htt
 //     method.
 func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientGetBigDecimalPositiveDecimalOptions) (NumberClientGetBigDecimalPositiveDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDecimalPositiveDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetBigDecimalPositiveDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -167,7 +173,9 @@ func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *htt
 //   - options - NumberClientGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
 func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberClientGetBigDoubleOptions) (NumberClientGetBigDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDouble", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetBigDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -213,7 +221,9 @@ func (client *NumberClient) getBigDoubleHandleResponse(resp *http.Response) (Num
 //     method.
 func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientGetBigDoubleNegativeDecimalOptions) (NumberClientGetBigDoubleNegativeDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDoubleNegativeDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetBigDoubleNegativeDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -259,7 +269,9 @@ func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *http
 //     method.
 func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberClientGetBigDoublePositiveDecimalOptions) (NumberClientGetBigDoublePositiveDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigDoublePositiveDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetBigDoublePositiveDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -304,7 +316,9 @@ func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *http
 //   - options - NumberClientGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
 func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClientGetBigFloatOptions) (NumberClientGetBigFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetBigFloat", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetBigFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBigFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -350,7 +364,9 @@ func (client *NumberClient) getBigFloatHandleResponse(resp *http.Response) (Numb
 //     method.
 func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberClientGetInvalidDecimalOptions) (NumberClientGetInvalidDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetInvalidDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetInvalidDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -395,7 +411,9 @@ func (client *NumberClient) getInvalidDecimalHandleResponse(resp *http.Response)
 //   - options - NumberClientGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
 func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (NumberClientGetInvalidDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetInvalidDouble", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetInvalidDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -440,7 +458,9 @@ func (client *NumberClient) getInvalidDoubleHandleResponse(resp *http.Response) 
 //   - options - NumberClientGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
 func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (NumberClientGetInvalidFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetInvalidFloat", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetInvalidFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -485,7 +505,9 @@ func (client *NumberClient) getInvalidFloatHandleResponse(resp *http.Response) (
 //   - options - NumberClientGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
 func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGetNullOptions) (NumberClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -530,7 +552,9 @@ func (client *NumberClient) getNullHandleResponse(resp *http.Response) (NumberCl
 //   - options - NumberClientGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
 func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (NumberClientGetSmallDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetSmallDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetSmallDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSmallDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -575,7 +599,9 @@ func (client *NumberClient) getSmallDecimalHandleResponse(resp *http.Response) (
 //   - options - NumberClientGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
 func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (NumberClientGetSmallDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetSmallDouble", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetSmallDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSmallDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -620,7 +646,9 @@ func (client *NumberClient) getSmallDoubleHandleResponse(resp *http.Response) (N
 //   - options - NumberClientGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
 func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberClientGetSmallFloatOptions) (NumberClientGetSmallFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.GetSmallFloat", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.GetSmallFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getSmallFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -666,7 +694,9 @@ func (client *NumberClient) getSmallFloatHandleResponse(resp *http.Response) (Nu
 //   - options - NumberClientPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
 func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberClientPutBigDecimalOptions) (NumberClientPutBigDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutBigDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -705,7 +735,9 @@ func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numb
 //     method.
 func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientPutBigDecimalNegativeDecimalOptions) (NumberClientPutBigDecimalNegativeDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDecimalNegativeDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutBigDecimalNegativeDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -744,7 +776,9 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 //     method.
 func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientPutBigDecimalPositiveDecimalOptions) (NumberClientPutBigDecimalPositiveDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDecimalPositiveDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutBigDecimalPositiveDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -783,7 +817,9 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 //   - options - NumberClientPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
 func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberClientPutBigDoubleOptions) (NumberClientPutBigDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDouble", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutBigDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -822,7 +858,9 @@ func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numbe
 //     method.
 func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientPutBigDoubleNegativeDecimalOptions) (NumberClientPutBigDoubleNegativeDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDoubleNegativeDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutBigDoubleNegativeDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -861,7 +899,9 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 //     method.
 func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberClientPutBigDoublePositiveDecimalOptions) (NumberClientPutBigDoublePositiveDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigDoublePositiveDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutBigDoublePositiveDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -900,7 +940,9 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 //   - options - NumberClientPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
 func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberClientPutBigFloatOptions) (NumberClientPutBigFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutBigFloat", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutBigFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBigFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -939,7 +981,9 @@ func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, number
 //   - options - NumberClientPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
 func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberClientPutSmallDecimalOptions) (NumberClientPutSmallDecimalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutSmallDecimal", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutSmallDecimal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putSmallDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -978,7 +1022,9 @@ func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, nu
 //   - options - NumberClientPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
 func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberClientPutSmallDoubleOptions) (NumberClientPutSmallDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutSmallDouble", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutSmallDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putSmallDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -1017,7 +1063,9 @@ func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, num
 //   - options - NumberClientPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.
 func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberClientPutSmallFloatOptions) (NumberClientPutSmallFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "NumberClient.PutSmallFloat", client.internal.Tracer(), nil)
+	const operationName = "NumberClient.PutSmallFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putSmallFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {

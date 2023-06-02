@@ -30,7 +30,9 @@ type PrimitiveClient struct {
 //   - options - PrimitiveClientGetBoolOptions contains the optional parameters for the PrimitiveClient.GetBool method.
 func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveClientGetBoolOptions) (PrimitiveClientGetBoolResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetBool", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetBool"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBoolCreateRequest(ctx, options)
 	if err != nil {
@@ -75,7 +77,9 @@ func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (Primi
 //   - options - PrimitiveClientGetByteOptions contains the optional parameters for the PrimitiveClient.GetByte method.
 func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveClientGetByteOptions) (PrimitiveClientGetByteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetByte", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetByte"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getByteCreateRequest(ctx, options)
 	if err != nil {
@@ -120,7 +124,9 @@ func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (Primi
 //   - options - PrimitiveClientGetDateOptions contains the optional parameters for the PrimitiveClient.GetDate method.
 func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveClientGetDateOptions) (PrimitiveClientGetDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDate", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateCreateRequest(ctx, options)
 	if err != nil {
@@ -165,7 +171,9 @@ func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (Primi
 //   - options - PrimitiveClientGetDateTimeOptions contains the optional parameters for the PrimitiveClient.GetDateTime method.
 func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveClientGetDateTimeOptions) (PrimitiveClientGetDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDateTime", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -211,7 +219,9 @@ func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (P
 //     method.
 func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveClientGetDateTimeRFC1123Options) (PrimitiveClientGetDateTimeRFC1123Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDateTimeRFC1123", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetDateTimeRFC1123"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeRFC1123CreateRequest(ctx, options)
 	if err != nil {
@@ -256,7 +266,9 @@ func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Respo
 //   - options - PrimitiveClientGetDoubleOptions contains the optional parameters for the PrimitiveClient.GetDouble method.
 func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveClientGetDoubleOptions) (PrimitiveClientGetDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDouble", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -301,7 +313,9 @@ func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (Pri
 //   - options - PrimitiveClientGetDurationOptions contains the optional parameters for the PrimitiveClient.GetDuration method.
 func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveClientGetDurationOptions) (PrimitiveClientGetDurationResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetDuration", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetDuration"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDurationCreateRequest(ctx, options)
 	if err != nil {
@@ -346,7 +360,9 @@ func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (P
 //   - options - PrimitiveClientGetFloatOptions contains the optional parameters for the PrimitiveClient.GetFloat method.
 func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveClientGetFloatOptions) (PrimitiveClientGetFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetFloat", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -391,7 +407,9 @@ func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (Prim
 //   - options - PrimitiveClientGetIntOptions contains the optional parameters for the PrimitiveClient.GetInt method.
 func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveClientGetIntOptions) (PrimitiveClientGetIntResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetInt", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetInt"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntCreateRequest(ctx, options)
 	if err != nil {
@@ -436,7 +454,9 @@ func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (Primit
 //   - options - PrimitiveClientGetLongOptions contains the optional parameters for the PrimitiveClient.GetLong method.
 func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveClientGetLongOptions) (PrimitiveClientGetLongResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetLong", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetLong"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongCreateRequest(ctx, options)
 	if err != nil {
@@ -481,7 +501,9 @@ func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (Primi
 //   - options - PrimitiveClientGetStringOptions contains the optional parameters for the PrimitiveClient.GetString method.
 func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveClientGetStringOptions) (PrimitiveClientGetStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.GetString", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.GetString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringCreateRequest(ctx, options)
 	if err != nil {
@@ -527,7 +549,9 @@ func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (Pri
 //   - options - PrimitiveClientPutBoolOptions contains the optional parameters for the PrimitiveClient.PutBool method.
 func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitiveClientPutBoolOptions) (PrimitiveClientPutBoolResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutBool", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutBool"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBoolCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -566,7 +590,9 @@ func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complex
 //   - options - PrimitiveClientPutByteOptions contains the optional parameters for the PrimitiveClient.PutByte method.
 func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitiveClientPutByteOptions) (PrimitiveClientPutByteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutByte", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutByte"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putByteCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -605,7 +631,9 @@ func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complex
 //   - options - PrimitiveClientPutDateOptions contains the optional parameters for the PrimitiveClient.PutDate method.
 func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitiveClientPutDateOptions) (PrimitiveClientPutDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDate", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -644,7 +672,9 @@ func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complex
 //   - options - PrimitiveClientPutDateTimeOptions contains the optional parameters for the PrimitiveClient.PutDateTime method.
 func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitiveClientPutDateTimeOptions) (PrimitiveClientPutDateTimeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDateTime", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutDateTime"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -684,7 +714,9 @@ func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, com
 //     method.
 func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitiveClientPutDateTimeRFC1123Options) (PrimitiveClientPutDateTimeRFC1123Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDateTimeRFC1123", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutDateTimeRFC1123"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeRFC1123CreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -723,7 +755,9 @@ func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Conte
 //   - options - PrimitiveClientPutDoubleOptions contains the optional parameters for the PrimitiveClient.PutDouble method.
 func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitiveClientPutDoubleOptions) (PrimitiveClientPutDoubleResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDouble", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutDouble"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDoubleCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -762,7 +796,9 @@ func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, compl
 //   - options - PrimitiveClientPutDurationOptions contains the optional parameters for the PrimitiveClient.PutDuration method.
 func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitiveClientPutDurationOptions) (PrimitiveClientPutDurationResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutDuration", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutDuration"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDurationCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -801,7 +837,9 @@ func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, com
 //   - options - PrimitiveClientPutFloatOptions contains the optional parameters for the PrimitiveClient.PutFloat method.
 func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitiveClientPutFloatOptions) (PrimitiveClientPutFloatResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutFloat", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putFloatCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -840,7 +878,9 @@ func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, comple
 //   - options - PrimitiveClientPutIntOptions contains the optional parameters for the PrimitiveClient.PutInt method.
 func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitiveClientPutIntOptions) (PrimitiveClientPutIntResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutInt", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutInt"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putIntCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -879,7 +919,9 @@ func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexB
 //   - options - PrimitiveClientPutLongOptions contains the optional parameters for the PrimitiveClient.PutLong method.
 func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitiveClientPutLongOptions) (PrimitiveClientPutLongResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutLong", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutLong"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLongCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -918,7 +960,9 @@ func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complex
 //   - options - PrimitiveClientPutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
 func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitiveClientPutStringOptions) (PrimitiveClientPutStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PrimitiveClient.PutString", client.internal.Tracer(), nil)
+	const operationName = "PrimitiveClient.PutString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putStringCreateRequest(ctx, complexBody, options)
 	if err != nil {

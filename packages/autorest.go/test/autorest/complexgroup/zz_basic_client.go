@@ -30,7 +30,9 @@ type BasicClient struct {
 //   - options - BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
 func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicClientGetEmptyOptions) (BasicClientGetEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BasicClient.GetEmpty", client.internal.Tracer(), nil)
+	const operationName = "BasicClient.GetEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -75,7 +77,9 @@ func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicCli
 //   - options - BasicClientGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
 func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicClientGetInvalidOptions) (BasicClientGetInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BasicClient.GetInvalid", client.internal.Tracer(), nil)
+	const operationName = "BasicClient.GetInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -120,7 +124,9 @@ func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicC
 //   - options - BasicClientGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
 func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicClientGetNotProvidedOptions) (BasicClientGetNotProvidedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BasicClient.GetNotProvided", client.internal.Tracer(), nil)
+	const operationName = "BasicClient.GetNotProvided"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -165,7 +171,9 @@ func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (Ba
 //   - options - BasicClientGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
 func (client *BasicClient) GetNull(ctx context.Context, options *BasicClientGetNullOptions) (BasicClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BasicClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "BasicClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -210,7 +218,9 @@ func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicClie
 //   - options - BasicClientGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
 func (client *BasicClient) GetValid(ctx context.Context, options *BasicClientGetValidOptions) (BasicClientGetValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BasicClient.GetValid", client.internal.Tracer(), nil)
+	const operationName = "BasicClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -256,7 +266,9 @@ func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicCli
 //   - options - BasicClientPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
 func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicClientPutValidOptions) (BasicClientPutValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BasicClient.PutValid", client.internal.Tracer(), nil)
+	const operationName = "BasicClient.PutValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

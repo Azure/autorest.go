@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
@@ -22,14 +21,6 @@ func newIntClient(t *testing.T) *IntClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewIntClient(options *azcore.ClientOptions) (*IntClient, error) {
-	client, err := azcore.NewClient("integergroup.IntClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &IntClient{internal: client}, nil
 }
 
 func TestIntGetInvalid(t *testing.T) {
@@ -97,9 +88,8 @@ func TestIntGetUnixTime(t *testing.T) {
 	result, err := client.GetUnixTime(context.Background(), nil)
 	require.NoError(t, err)
 	t1 := time.Unix(1460505600, 0)
-	if r := cmp.Diff(result.Value, &t1); r != "" {
-		t.Fatal(r)
-	}
+	require.NotNil(t, result.Value)
+	require.EqualValues(t, t1, *result.Value)
 }
 
 func TestIntPutMax32(t *testing.T) {

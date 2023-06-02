@@ -56,10 +56,6 @@ func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCred
 //     method.
 func (client *VirtualMachinesClient) BeginAssessPatches(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginAssessPatchesOptions) (*runtime.Poller[VirtualMachinesClientAssessPatchesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginAssessPatches", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.assessPatches(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *VirtualMachinesClient) BeginAssessPatches(ctx context.Context, res
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) assessPatches(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginAssessPatchesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginAssessPatches"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.assessPatchesCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -132,10 +132,6 @@ func (client *VirtualMachinesClient) assessPatchesCreateRequest(ctx context.Cont
 //     method.
 func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesClientBeginCaptureOptions) (*runtime.Poller[VirtualMachinesClientCaptureResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginCapture", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.capture(ctx, resourceGroupName, vmName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -156,6 +152,10 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesClientBeginCaptureOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginCapture"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.captureCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -211,10 +211,6 @@ func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, r
 //     method.
 func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginConvertToManagedDisksOptions) (*runtime.Poller[VirtualMachinesClientConvertToManagedDisksResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginConvertToManagedDisks", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.convertToManagedDisks(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -233,6 +229,10 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginConvertToManagedDisksOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginConvertToManagedDisks"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.convertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -286,10 +286,6 @@ func (client *VirtualMachinesClient) convertToManagedDisksCreateRequest(ctx cont
 //     method.
 func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualMachinesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -308,6 +304,10 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -363,10 +363,6 @@ func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Con
 //     method.
 func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeallocateOptions) (*runtime.Poller[VirtualMachinesClientDeallocateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginDeallocate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deallocate(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -385,6 +381,10 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeallocateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginDeallocate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deallocateCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -439,10 +439,6 @@ func (client *VirtualMachinesClient) deallocateCreateRequest(ctx context.Context
 //     method.
 func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeleteOptions) (*runtime.Poller[VirtualMachinesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -460,6 +456,10 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -518,7 +518,9 @@ func (client *VirtualMachinesClient) deleteCreateRequest(ctx context.Context, re
 //     method.
 func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientGeneralizeOptions) (VirtualMachinesClientGeneralizeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachinesClient.Generalize", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachinesClient.Generalize"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.generalizeCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -570,7 +572,9 @@ func (client *VirtualMachinesClient) generalizeCreateRequest(ctx context.Context
 //   - options - VirtualMachinesClientGetOptions contains the optional parameters for the VirtualMachinesClient.Get method.
 func (client *VirtualMachinesClient) Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientGetOptions) (VirtualMachinesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachinesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachinesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -637,10 +641,6 @@ func (client *VirtualMachinesClient) getHandleResponse(resp *http.Response) (Vir
 //     method.
 func (client *VirtualMachinesClient) BeginInstallPatches(ctx context.Context, resourceGroupName string, vmName string, installPatchesInput VirtualMachineInstallPatchesParameters, options *VirtualMachinesClientBeginInstallPatchesOptions) (*runtime.Poller[VirtualMachinesClientInstallPatchesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginInstallPatches", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.installPatches(ctx, resourceGroupName, vmName, installPatchesInput, options)
 		if err != nil {
 			return nil, err
@@ -660,6 +660,10 @@ func (client *VirtualMachinesClient) BeginInstallPatches(ctx context.Context, re
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) installPatches(ctx context.Context, resourceGroupName string, vmName string, installPatchesInput VirtualMachineInstallPatchesParameters, options *VirtualMachinesClientBeginInstallPatchesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginInstallPatches"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.installPatchesCreateRequest(ctx, resourceGroupName, vmName, installPatchesInput, options)
 	if err != nil {
 		return nil, err
@@ -714,7 +718,9 @@ func (client *VirtualMachinesClient) installPatchesCreateRequest(ctx context.Con
 //     method.
 func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientInstanceViewOptions) (VirtualMachinesClientInstanceViewResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachinesClient.InstanceView", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachinesClient.InstanceView"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.instanceViewCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -780,6 +786,7 @@ func (client *VirtualMachinesClient) NewListPager(resourceGroupName string, opti
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualMachinesClientListResponse) (VirtualMachinesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachinesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -849,6 +856,7 @@ func (client *VirtualMachinesClient) NewListAllPager(options *VirtualMachinesCli
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualMachinesClientListAllResponse) (VirtualMachinesClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachinesClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -918,6 +926,7 @@ func (client *VirtualMachinesClient) NewListAvailableSizesPager(resourceGroupNam
 			return false
 		},
 		Fetcher: func(ctx context.Context, page *VirtualMachinesClientListAvailableSizesResponse) (VirtualMachinesClientListAvailableSizesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachinesClient.NewListAvailableSizesPager")
 			req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, vmName, options)
 			if err != nil {
 				return VirtualMachinesClientListAvailableSizesResponse{}, err
@@ -982,6 +991,7 @@ func (client *VirtualMachinesClient) NewListByLocationPager(location string, opt
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualMachinesClientListByLocationResponse) (VirtualMachinesClientListByLocationResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachinesClient.NewListByLocationPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1046,10 +1056,6 @@ func (client *VirtualMachinesClient) listByLocationHandleResponse(resp *http.Res
 //     method.
 func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPerformMaintenanceOptions) (*runtime.Poller[VirtualMachinesClientPerformMaintenanceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginPerformMaintenance", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.performMaintenance(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -1067,6 +1073,10 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPerformMaintenanceOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginPerformMaintenance"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.performMaintenanceCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1119,10 +1129,6 @@ func (client *VirtualMachinesClient) performMaintenanceCreateRequest(ctx context
 //     method.
 func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPowerOffOptions) (*runtime.Poller[VirtualMachinesClientPowerOffResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginPowerOff", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.powerOff(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -1141,6 +1147,10 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) powerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPowerOffOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginPowerOff"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1195,10 +1205,6 @@ func (client *VirtualMachinesClient) powerOffCreateRequest(ctx context.Context, 
 //     method.
 func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReapplyOptions) (*runtime.Poller[VirtualMachinesClientReapplyResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginReapply", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.reapply(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -1216,6 +1222,10 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReapplyOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginReapply"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.reapplyCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1267,10 +1277,6 @@ func (client *VirtualMachinesClient) reapplyCreateRequest(ctx context.Context, r
 //     method.
 func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRedeployOptions) (*runtime.Poller[VirtualMachinesClientRedeployResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginRedeploy", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.redeploy(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -1288,6 +1294,10 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRedeployOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginRedeploy"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.redeployCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1339,10 +1349,6 @@ func (client *VirtualMachinesClient) redeployCreateRequest(ctx context.Context, 
 //     method.
 func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReimageOptions) (*runtime.Poller[VirtualMachinesClientReimageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginReimage", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.reimage(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -1360,6 +1366,10 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) reimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReimageOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginReimage"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.reimageCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1417,10 +1427,6 @@ func (client *VirtualMachinesClient) reimageCreateRequest(ctx context.Context, r
 //     method.
 func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRestartOptions) (*runtime.Poller[VirtualMachinesClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginRestart", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.restart(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -1438,6 +1444,10 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRestartOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginRestart"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1489,7 +1499,9 @@ func (client *VirtualMachinesClient) restartCreateRequest(ctx context.Context, r
 //     method.
 func (client *VirtualMachinesClient) RetrieveBootDiagnosticsData(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientRetrieveBootDiagnosticsDataOptions) (VirtualMachinesClientRetrieveBootDiagnosticsDataResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachinesClient.RetrieveBootDiagnosticsData", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachinesClient.RetrieveBootDiagnosticsData"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.retrieveBootDiagnosticsDataCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1556,10 +1568,6 @@ func (client *VirtualMachinesClient) retrieveBootDiagnosticsDataHandleResponse(r
 //     method.
 func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesClientBeginRunCommandOptions) (*runtime.Poller[VirtualMachinesClientRunCommandResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginRunCommand", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.runCommand(ctx, resourceGroupName, vmName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -1579,6 +1587,10 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) runCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesClientBeginRunCommandOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginRunCommand"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.runCommandCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1633,7 +1645,9 @@ func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context
 //     method.
 func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientSimulateEvictionOptions) (VirtualMachinesClientSimulateEvictionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualMachinesClient.SimulateEviction", client.internal.Tracer(), nil)
+	const operationName = "VirtualMachinesClient.SimulateEviction"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.simulateEvictionCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1686,10 +1700,6 @@ func (client *VirtualMachinesClient) simulateEvictionCreateRequest(ctx context.C
 //     method.
 func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginStartOptions) (*runtime.Poller[VirtualMachinesClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginStart", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.start(ctx, resourceGroupName, vmName, options)
 		if err != nil {
 			return nil, err
@@ -1707,6 +1717,10 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginStartOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginStart"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.startCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1759,10 +1773,6 @@ func (client *VirtualMachinesClient) startCreateRequest(ctx context.Context, res
 //     method.
 func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesClientBeginUpdateOptions) (*runtime.Poller[VirtualMachinesClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualMachinesClient.BeginUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, vmName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -1780,6 +1790,10 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 // Generated from API version 2021-11-01
 func (client *VirtualMachinesClient) update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualMachinesClient.BeginUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err

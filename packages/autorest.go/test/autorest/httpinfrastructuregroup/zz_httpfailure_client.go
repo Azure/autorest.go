@@ -31,7 +31,9 @@ type HTTPFailureClient struct {
 //     method.
 func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureClientGetEmptyErrorOptions) (HTTPFailureClientGetEmptyErrorResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPFailureClient.GetEmptyError", client.internal.Tracer(), nil)
+	const operationName = "HTTPFailureClient.GetEmptyError"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyErrorCreateRequest(ctx, options)
 	if err != nil {
@@ -77,7 +79,9 @@ func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *http.Response
 //     method.
 func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureClientGetNoModelEmptyOptions) (HTTPFailureClientGetNoModelEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPFailureClient.GetNoModelEmpty", client.internal.Tracer(), nil)
+	const operationName = "HTTPFailureClient.GetNoModelEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNoModelEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -123,7 +127,9 @@ func (client *HTTPFailureClient) getNoModelEmptyHandleResponse(resp *http.Respon
 //     method.
 func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureClientGetNoModelErrorOptions) (HTTPFailureClientGetNoModelErrorResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPFailureClient.GetNoModelError", client.internal.Tracer(), nil)
+	const operationName = "HTTPFailureClient.GetNoModelError"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNoModelErrorCreateRequest(ctx, options)
 	if err != nil {

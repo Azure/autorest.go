@@ -37,6 +37,7 @@ type PipelineRunClient struct {
 //     method.
 func (client *PipelineRunClient) CancelPipelineRun(ctx context.Context, runID string, options *PipelineRunClientCancelPipelineRunOptions) (PipelineRunClientCancelPipelineRunResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineRunClient.CancelPipelineRun")
 	req, err := client.cancelPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
 		return PipelineRunClientCancelPipelineRunResponse{}, err
@@ -82,6 +83,7 @@ func (client *PipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 //     method.
 func (client *PipelineRunClient) GetPipelineRun(ctx context.Context, runID string, options *PipelineRunClientGetPipelineRunOptions) (PipelineRunClientGetPipelineRunResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineRunClient.GetPipelineRun")
 	req, err := client.getPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
 		return PipelineRunClientGetPipelineRunResponse{}, err
@@ -136,6 +138,7 @@ func (client *PipelineRunClient) getPipelineRunHandleResponse(resp *http.Respons
 //     method.
 func (client *PipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunClientQueryActivityRunsOptions) (PipelineRunClientQueryActivityRunsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineRunClient.QueryActivityRuns")
 	req, err := client.queryActivityRunsCreateRequest(ctx, pipelineName, runID, filterParameters, options)
 	if err != nil {
 		return PipelineRunClientQueryActivityRunsResponse{}, err
@@ -195,6 +198,7 @@ func (client *PipelineRunClient) queryActivityRunsHandleResponse(resp *http.Resp
 //     method.
 func (client *PipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunClientQueryPipelineRunsByWorkspaceOptions) (PipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineRunClient.QueryPipelineRunsByWorkspace")
 	req, err := client.queryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err

@@ -56,6 +56,7 @@ func (client *ReservationsDetailsClient) NewListPager(scope string, options *Res
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsDetailsClientListResponse) (ReservationsDetailsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationsDetailsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -131,6 +132,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderPager(reservat
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsDetailsClientListByReservationOrderResponse) (ReservationsDetailsClientListByReservationOrderResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationsDetailsClient.NewListByReservationOrderPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -196,6 +198,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderAndReservation
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsDetailsClientListByReservationOrderAndReservationResponse) (ReservationsDetailsClientListByReservationOrderAndReservationResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationsDetailsClient.NewListByReservationOrderAndReservationPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

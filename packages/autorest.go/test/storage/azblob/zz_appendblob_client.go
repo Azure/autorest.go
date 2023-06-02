@@ -52,7 +52,9 @@ type AppendBlobClient struct {
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *AppendBlobClient) AppendBlock(ctx context.Context, containerName string, blob string, comp Enum35, contentLength int64, body io.ReadSeekCloser, options *AppendBlobClientAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientAppendBlockResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.AppendBlock", client.internal.Tracer(), nil)
+	const operationName = "AppendBlobClient.AppendBlock"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.appendBlockCreateRequest(ctx, containerName, blob, comp, contentLength, body, options, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -238,7 +240,9 @@ func (client *AppendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 //     method.
 func (client *AppendBlobClient) AppendBlockFromURL(ctx context.Context, containerName string, blob string, comp Enum35, sourceURL string, contentLength int64, options *AppendBlobClientAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobClientAppendBlockFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.AppendBlockFromURL", client.internal.Tracer(), nil)
+	const operationName = "AppendBlobClient.AppendBlockFromURL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.appendBlockFromURLCreateRequest(ctx, containerName, blob, comp, sourceURL, contentLength, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -432,7 +436,9 @@ func (client *AppendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *AppendBlobClient) Create(ctx context.Context, containerName string, blob string, contentLength int64, options *AppendBlobClientCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.Create", client.internal.Tracer(), nil)
+	const operationName = "AppendBlobClient.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, containerName, blob, contentLength, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -617,7 +623,9 @@ func (client *AppendBlobClient) createHandleResponse(resp *http.Response) (Appen
 //     method.
 func (client *AppendBlobClient) Seal(ctx context.Context, containerName string, blob string, comp Enum36, options *AppendBlobClientSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobClientSealResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.Seal", client.internal.Tracer(), nil)
+	const operationName = "AppendBlobClient.Seal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.sealCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
 	if err != nil {

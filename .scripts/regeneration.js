@@ -54,6 +54,7 @@ const goMappings = {
     'xmlgroup': ['xml-service.json', '--remove-unreferenced-types'],
 };
 
+// any new args must also be added to autorest.go\common\config\rush\command-line.json
 const args = process.argv.slice(2);
 var filter = undefined;
 const switches = [];
@@ -72,6 +73,10 @@ for (var i = 0 ; i < args.length; i += 1) {
         case '-d':
             switches.push('--go.debugger');
             break;
+        case '--dump-code-model':
+        case '-c':
+            switches.push('--output-artifact:code-model-v4');
+            break;
         default:
             break;
     }
@@ -86,7 +91,7 @@ for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     const entry = goMappings[namespace];
     const inputFile = swaggerDir + entry[0];
-    let extraParams = ['--export-clients'];
+    let extraParams = ['--export-clients --containing-module=generatortests'];
     if (entry.length > 1) {
         extraParams = extraParams.concat(entry.slice());
     }
@@ -150,7 +155,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
         console.log('generating ' + inputFile);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --inject-spans --azcore-version=1.7.0-beta.1 --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
+        exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --generate-fakes --inject-spans --azcore-version=1.7.0-beta.1 --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
     });
 }
 
@@ -165,7 +170,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
         console.log('generating ' + readme);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
+        exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --generate-fakes --azcore-version=1.7.0-beta.1 --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
 }
 
@@ -184,6 +189,7 @@ function cleanGeneratedFiles(outputDir) {
         }
     }
     dir.close();
+    cleanGeneratedFiles(outputDir + '/fake');
 }
 
 // use a function factory to create the closure so that the values of namespace and inputFile are captured on each iteration

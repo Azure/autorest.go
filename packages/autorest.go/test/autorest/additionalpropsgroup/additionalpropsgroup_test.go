@@ -10,7 +10,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -22,18 +21,6 @@ func newPetsClient(t *testing.T) *PetsClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-// NewPetsClient creates a new instance of PetsClient with the specified values.
-func NewPetsClient(options *azcore.ClientOptions) (*PetsClient, error) {
-	cl, err := azcore.NewClient("additionalpropsgroup.PetsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	client := &PetsClient{
-		internal: cl,
-	}
-	return client, nil
 }
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.

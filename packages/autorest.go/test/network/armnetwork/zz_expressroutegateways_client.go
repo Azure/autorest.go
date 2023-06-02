@@ -56,10 +56,6 @@ func NewExpressRouteGatewaysClient(subscriptionID string, credential azcore.Toke
 //     method.
 func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysClientBeginCreateOrUpdateOptions) (*runtime.Poller[ExpressRouteGatewaysClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteGatewaysClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 // Generated from API version 2022-09-01
 func (client *ExpressRouteGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ExpressRouteGatewaysClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, options)
 	if err != nil {
 		return nil, err
@@ -134,10 +134,6 @@ func (client *ExpressRouteGatewaysClient) createOrUpdateCreateRequest(ctx contex
 //     method.
 func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysClientBeginDeleteOptions) (*runtime.Poller[ExpressRouteGatewaysClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteGatewaysClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, options)
 		if err != nil {
 			return nil, err
@@ -158,6 +154,10 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 // Generated from API version 2022-09-01
 func (client *ExpressRouteGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ExpressRouteGatewaysClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -209,7 +209,9 @@ func (client *ExpressRouteGatewaysClient) deleteCreateRequest(ctx context.Contex
 //     method.
 func (client *ExpressRouteGatewaysClient) Get(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysClientGetOptions) (ExpressRouteGatewaysClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteGatewaysClient.Get", client.internal.Tracer(), nil)
+	const operationName = "ExpressRouteGatewaysClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {
@@ -271,7 +273,9 @@ func (client *ExpressRouteGatewaysClient) getHandleResponse(resp *http.Response)
 //     method.
 func (client *ExpressRouteGatewaysClient) ListByResourceGroup(ctx context.Context, resourceGroupName string, options *ExpressRouteGatewaysClientListByResourceGroupOptions) (ExpressRouteGatewaysClientListByResourceGroupResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteGatewaysClient.ListByResourceGroup", client.internal.Tracer(), nil)
+	const operationName = "ExpressRouteGatewaysClient.ListByResourceGroup"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
@@ -328,7 +332,9 @@ func (client *ExpressRouteGatewaysClient) listByResourceGroupHandleResponse(resp
 //     method.
 func (client *ExpressRouteGatewaysClient) ListBySubscription(ctx context.Context, options *ExpressRouteGatewaysClientListBySubscriptionOptions) (ExpressRouteGatewaysClientListBySubscriptionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ExpressRouteGatewaysClient.ListBySubscription", client.internal.Tracer(), nil)
+	const operationName = "ExpressRouteGatewaysClient.ListBySubscription"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listBySubscriptionCreateRequest(ctx, options)
 	if err != nil {
@@ -384,10 +390,6 @@ func (client *ExpressRouteGatewaysClient) listBySubscriptionHandleResponse(resp 
 //     method.
 func (client *ExpressRouteGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, expressRouteGatewayParameters TagsObject, options *ExpressRouteGatewaysClientBeginUpdateTagsOptions) (*runtime.Poller[ExpressRouteGatewaysClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "ExpressRouteGatewaysClient.BeginUpdateTags", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters, options)
 		if err != nil {
 			return nil, err
@@ -407,6 +409,10 @@ func (client *ExpressRouteGatewaysClient) BeginUpdateTags(ctx context.Context, r
 // Generated from API version 2022-09-01
 func (client *ExpressRouteGatewaysClient) updateTags(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, expressRouteGatewayParameters TagsObject, options *ExpressRouteGatewaysClientBeginUpdateTagsOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ExpressRouteGatewaysClient.BeginUpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters, options)
 	if err != nil {
 		return nil, err

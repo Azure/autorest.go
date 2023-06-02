@@ -38,7 +38,9 @@ type AuthenticationClient struct {
 //     AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken method.
 func (client *AuthenticationClient) ExchangeAADAccessTokenForAcrRefreshToken(ctx context.Context, grantType PostContentSchemaGrantType, service string, options *AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions) (AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken", client.internal.Tracer(), nil)
+	const operationName = "AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.exchangeAADAccessTokenForAcrRefreshTokenCreateRequest(ctx, grantType, service, options)
 	if err != nil {
@@ -109,7 +111,9 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenHand
 //     AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken method.
 func (client *AuthenticationClient) ExchangeAcrRefreshTokenForAcrAccessToken(ctx context.Context, service string, scope string, refreshToken string, options *AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenOptions) (AuthenticationClientExchangeAcrRefreshTokenForAcrAccessTokenResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken", client.internal.Tracer(), nil)
+	const operationName = "AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.exchangeAcrRefreshTokenForAcrAccessTokenCreateRequest(ctx, service, scope, refreshToken, options)
 	if err != nil {
@@ -174,7 +178,9 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenHand
 //     method.
 func (client *AuthenticationClient) GetAcrAccessTokenFromLogin(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (AuthenticationClientGetAcrAccessTokenFromLoginResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AuthenticationClient.GetAcrAccessTokenFromLogin", client.internal.Tracer(), nil)
+	const operationName = "AuthenticationClient.GetAcrAccessTokenFromLogin"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getAcrAccessTokenFromLoginCreateRequest(ctx, service, scope, options)
 	if err != nil {

@@ -31,7 +31,9 @@ type ODataClient struct {
 //   - options - ODataClientGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
 func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClientGetWithFilterOptions) (ODataClientGetWithFilterResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ODataClient.GetWithFilter", client.internal.Tracer(), nil)
+	const operationName = "ODataClient.GetWithFilter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {

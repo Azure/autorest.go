@@ -38,6 +38,7 @@ type RoleDefinitionsClient struct {
 //     method.
 func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsClientCreateOrUpdateOptions) (RoleDefinitionsClientCreateOrUpdateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleDefinitionsClient.CreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, parameters, options)
 	if err != nil {
 		return RoleDefinitionsClientCreateOrUpdateResponse{}, err
@@ -97,6 +98,7 @@ func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Res
 //   - options - RoleDefinitionsClientDeleteOptions contains the optional parameters for the RoleDefinitionsClient.Delete method.
 func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsClientDeleteOptions) (RoleDefinitionsClientDeleteResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleDefinitionsClient.Delete")
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
 		return RoleDefinitionsClientDeleteResponse{}, err
@@ -153,6 +155,7 @@ func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (
 //   - options - RoleDefinitionsClientGetOptions contains the optional parameters for the RoleDefinitionsClient.Get method.
 func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsClientGetOptions) (RoleDefinitionsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleDefinitionsClient.Get")
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
 		return RoleDefinitionsClientGetResponse{}, err
@@ -212,6 +215,7 @@ func (client *RoleDefinitionsClient) NewListPager(vaultBaseURL string, scope str
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RoleDefinitionsClientListResponse) (RoleDefinitionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleDefinitionsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

@@ -56,10 +56,6 @@ func NewVirtualHubsClient(subscriptionID string, credential azcore.TokenCredenti
 //     method.
 func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualHubsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualHubsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resour
 // Generated from API version 2022-09-01
 func (client *VirtualHubsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualHubsClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {
 		return nil, err
@@ -132,10 +132,6 @@ func (client *VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context
 //   - options - VirtualHubsClientBeginDeleteOptions contains the optional parameters for the VirtualHubsClient.BeginDelete method.
 func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginDeleteOptions) (*runtime.Poller[VirtualHubsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualHubsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
 		if err != nil {
 			return nil, err
@@ -155,6 +151,10 @@ func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupN
 // Generated from API version 2022-09-01
 func (client *VirtualHubsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualHubsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
 		return nil, err
@@ -205,7 +205,9 @@ func (client *VirtualHubsClient) deleteCreateRequest(ctx context.Context, resour
 //   - options - VirtualHubsClientGetOptions contains the optional parameters for the VirtualHubsClient.Get method.
 func (client *VirtualHubsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientGetOptions) (VirtualHubsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "VirtualHubsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
@@ -269,10 +271,6 @@ func (client *VirtualHubsClient) getHandleResponse(resp *http.Response) (Virtual
 //     method.
 func (client *VirtualHubsClient) BeginGetEffectiveVirtualHubRoutes(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginGetEffectiveVirtualHubRoutesOptions) (*runtime.Poller[VirtualHubsClientGetEffectiveVirtualHubRoutesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getEffectiveVirtualHubRoutes(ctx, resourceGroupName, virtualHubName, options)
 		if err != nil {
 			return nil, err
@@ -293,6 +291,10 @@ func (client *VirtualHubsClient) BeginGetEffectiveVirtualHubRoutes(ctx context.C
 // Generated from API version 2022-09-01
 func (client *VirtualHubsClient) getEffectiveVirtualHubRoutes(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginGetEffectiveVirtualHubRoutesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEffectiveVirtualHubRoutesCreateRequest(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
 		return nil, err
@@ -351,10 +353,6 @@ func (client *VirtualHubsClient) getEffectiveVirtualHubRoutesCreateRequest(ctx c
 //     method.
 func (client *VirtualHubsClient) BeginGetInboundRoutes(ctx context.Context, resourceGroupName string, virtualHubName string, getInboundRoutesParameters GetInboundRoutesParameters, options *VirtualHubsClientBeginGetInboundRoutesOptions) (*runtime.Poller[VirtualHubsClientGetInboundRoutesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualHubsClient.BeginGetInboundRoutes", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getInboundRoutes(ctx, resourceGroupName, virtualHubName, getInboundRoutesParameters, options)
 		if err != nil {
 			return nil, err
@@ -374,6 +372,10 @@ func (client *VirtualHubsClient) BeginGetInboundRoutes(ctx context.Context, reso
 // Generated from API version 2022-09-01
 func (client *VirtualHubsClient) getInboundRoutes(ctx context.Context, resourceGroupName string, virtualHubName string, getInboundRoutesParameters GetInboundRoutesParameters, options *VirtualHubsClientBeginGetInboundRoutesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualHubsClient.BeginGetInboundRoutes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getInboundRoutesCreateRequest(ctx, resourceGroupName, virtualHubName, getInboundRoutesParameters, options)
 	if err != nil {
 		return nil, err
@@ -429,10 +431,6 @@ func (client *VirtualHubsClient) getInboundRoutesCreateRequest(ctx context.Conte
 //     method.
 func (client *VirtualHubsClient) BeginGetOutboundRoutes(ctx context.Context, resourceGroupName string, virtualHubName string, getOutboundRoutesParameters GetOutboundRoutesParameters, options *VirtualHubsClientBeginGetOutboundRoutesOptions) (*runtime.Poller[VirtualHubsClientGetOutboundRoutesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualHubsClient.BeginGetOutboundRoutes", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.getOutboundRoutes(ctx, resourceGroupName, virtualHubName, getOutboundRoutesParameters, options)
 		if err != nil {
 			return nil, err
@@ -452,6 +450,10 @@ func (client *VirtualHubsClient) BeginGetOutboundRoutes(ctx context.Context, res
 // Generated from API version 2022-09-01
 func (client *VirtualHubsClient) getOutboundRoutes(ctx context.Context, resourceGroupName string, virtualHubName string, getOutboundRoutesParameters GetOutboundRoutesParameters, options *VirtualHubsClientBeginGetOutboundRoutesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualHubsClient.BeginGetOutboundRoutes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getOutboundRoutesCreateRequest(ctx, resourceGroupName, virtualHubName, getOutboundRoutesParameters, options)
 	if err != nil {
 		return nil, err
@@ -506,6 +508,7 @@ func (client *VirtualHubsClient) NewListPager(options *VirtualHubsClientListOpti
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualHubsClientListResponse) (VirtualHubsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualHubsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -568,6 +571,7 @@ func (client *VirtualHubsClient) NewListByResourceGroupPager(resourceGroupName s
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualHubsClientListByResourceGroupResponse) (VirtualHubsClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualHubsClient.NewListByResourceGroupPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -632,7 +636,9 @@ func (client *VirtualHubsClient) listByResourceGroupHandleResponse(resp *http.Re
 //   - options - VirtualHubsClientUpdateTagsOptions contains the optional parameters for the VirtualHubsClient.UpdateTags method.
 func (client *VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters TagsObject, options *VirtualHubsClientUpdateTagsOptions) (VirtualHubsClientUpdateTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualHubsClient.UpdateTags", client.internal.Tracer(), nil)
+	const operationName = "VirtualHubsClient.UpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {

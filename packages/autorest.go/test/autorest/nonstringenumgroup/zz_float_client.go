@@ -30,7 +30,9 @@ type FloatClient struct {
 //   - options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
 func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (FloatClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FloatClient.Get", client.internal.Tracer(), nil)
+	const operationName = "FloatClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGe
 //   - options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
 func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FloatClient.Put", client.internal.Tracer(), nil)
+	const operationName = "FloatClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {

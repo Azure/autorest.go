@@ -35,6 +35,7 @@ type SQLPoolsClient struct {
 //   - options - SQLPoolsClientGetOptions contains the optional parameters for the SQLPoolsClient.Get method.
 func (client *SQLPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsClientGetOptions) (SQLPoolsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SQLPoolsClient.Get")
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
 		return SQLPoolsClientGetResponse{}, err
@@ -85,6 +86,7 @@ func (client *SQLPoolsClient) getHandleResponse(resp *http.Response) (SQLPoolsCl
 //   - options - SQLPoolsClientListOptions contains the optional parameters for the SQLPoolsClient.List method.
 func (client *SQLPoolsClient) List(ctx context.Context, options *SQLPoolsClientListOptions) (SQLPoolsClientListResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SQLPoolsClient.List")
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return SQLPoolsClientListResponse{}, err

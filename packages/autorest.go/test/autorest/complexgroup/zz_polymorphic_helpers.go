@@ -26,7 +26,10 @@ func unmarshalDotFishClassification(rawMsg json.RawMessage) (DotFishClassificati
 	default:
 		b = &DotFish{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalDotFishClassificationArray(rawMsg json.RawMessage) ([]DotFishClassification, error) {
@@ -73,7 +76,10 @@ func unmarshalFishClassification(rawMsg json.RawMessage) (FishClassification, er
 	default:
 		b = &Fish{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalFishClassificationArray(rawMsg json.RawMessage) ([]FishClassification, error) {
@@ -110,7 +116,10 @@ func unmarshalMyBaseTypeClassification(rawMsg json.RawMessage) (MyBaseTypeClassi
 	default:
 		b = &MyBaseType{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalSalmonClassification(rawMsg json.RawMessage) (SalmonClassification, error) {
@@ -128,5 +137,8 @@ func unmarshalSalmonClassification(rawMsg json.RawMessage) (SalmonClassification
 	default:
 		b = &Salmon{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }

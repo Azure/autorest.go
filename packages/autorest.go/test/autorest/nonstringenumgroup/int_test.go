@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -21,14 +20,6 @@ func newIntClient(t *testing.T) *IntClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewIntClient(options *azcore.ClientOptions) (*IntClient, error) {
-	client, err := azcore.NewClient("nonstringenumgroup.IntClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &IntClient{internal: client}, nil
 }
 
 // Get - Get an int enum

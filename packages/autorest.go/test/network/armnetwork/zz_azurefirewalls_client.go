@@ -56,10 +56,6 @@ func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCrede
 //     method.
 func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (*runtime.Poller[AzureFirewallsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -79,6 +75,10 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 // Generated from API version 2022-09-01
 func (client *AzureFirewallsClient) createOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "AzureFirewallsClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -133,10 +133,6 @@ func (client *AzureFirewallsClient) createOrUpdateCreateRequest(ctx context.Cont
 //     method.
 func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (*runtime.Poller[AzureFirewallsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, azureFirewallName, options)
 		if err != nil {
 			return nil, err
@@ -156,6 +152,10 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 // Generated from API version 2022-09-01
 func (client *AzureFirewallsClient) deleteOperation(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "AzureFirewallsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
 		return nil, err
@@ -206,7 +206,9 @@ func (client *AzureFirewallsClient) deleteCreateRequest(ctx context.Context, res
 //   - options - AzureFirewallsClientGetOptions contains the optional parameters for the AzureFirewallsClient.Get method.
 func (client *AzureFirewallsClient) Get(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientGetOptions) (AzureFirewallsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AzureFirewallsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "AzureFirewallsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
@@ -270,6 +272,7 @@ func (client *AzureFirewallsClient) NewListPager(resourceGroupName string, optio
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AzureFirewallsClientListResponse) (AzureFirewallsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureFirewallsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -335,6 +338,7 @@ func (client *AzureFirewallsClient) NewListAllPager(options *AzureFirewallsClien
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AzureFirewallsClientListAllResponse) (AzureFirewallsClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureFirewallsClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -395,10 +399,6 @@ func (client *AzureFirewallsClient) listAllHandleResponse(resp *http.Response) (
 //     method.
 func (client *AzureFirewallsClient) BeginListLearnedPrefixes(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginListLearnedPrefixesOptions) (*runtime.Poller[AzureFirewallsClientListLearnedPrefixesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginListLearnedPrefixes", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.listLearnedPrefixes(ctx, resourceGroupName, azureFirewallName, options)
 		if err != nil {
 			return nil, err
@@ -418,6 +418,10 @@ func (client *AzureFirewallsClient) BeginListLearnedPrefixes(ctx context.Context
 // Generated from API version 2022-09-01
 func (client *AzureFirewallsClient) listLearnedPrefixes(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginListLearnedPrefixesOptions) (*http.Response, error) {
 	var err error
+	const operationName = "AzureFirewallsClient.BeginListLearnedPrefixes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listLearnedPrefixesCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
 		return nil, err
@@ -470,10 +474,6 @@ func (client *AzureFirewallsClient) listLearnedPrefixesCreateRequest(ctx context
 //     method.
 func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (*runtime.Poller[AzureFirewallsClientUpdateTagsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "AzureFirewallsClient.BeginUpdateTags", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.updateTags(ctx, resourceGroupName, azureFirewallName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -493,6 +493,10 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 // Generated from API version 2022-09-01
 func (client *AzureFirewallsClient) updateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (*http.Response, error) {
 	var err error
+	const operationName = "AzureFirewallsClient.BeginUpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
 		return nil, err

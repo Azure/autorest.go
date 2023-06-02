@@ -30,7 +30,9 @@ type FlattencomplexClient struct {
 //   - options - FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
 func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexClientGetValidOptions) (FlattencomplexClientGetValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "FlattencomplexClient.GetValid", client.internal.Tracer(), nil)
+	const operationName = "FlattencomplexClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {

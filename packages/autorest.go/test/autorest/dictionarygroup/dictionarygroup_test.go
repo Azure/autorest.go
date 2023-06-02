@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -22,14 +21,6 @@ func newDictionaryClient(t *testing.T) *DictionaryClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewDictionaryClient(options *azcore.ClientOptions) (*DictionaryClient, error) {
-	client, err := azcore.NewClient("dictionarygroup.DictionaryClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &DictionaryClient{internal: client}, nil
 }
 
 // GetArrayEmpty - Get an empty dictionary {}
@@ -431,7 +422,7 @@ func TestGetDoubleInvalidNull(t *testing.T) {
 	if r := cmp.Diff(resp.Value, map[string]*float64{
 		"0": to.Ptr[float64](0),
 		"1": nil,
-		"2": to.Ptr[float64](-1.2e20),
+		"2": to.Ptr(-1.2e20),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -452,8 +443,8 @@ func TestGetDoubleValid(t *testing.T) {
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*float64{
 		"0": to.Ptr[float64](0),
-		"1": to.Ptr[float64](-0.01),
-		"2": to.Ptr[float64](-1.2e20),
+		"1": to.Ptr(-0.01),
+		"2": to.Ptr(-1.2e20),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -799,8 +790,8 @@ func TestPutDoubleValid(t *testing.T) {
 	client := newDictionaryClient(t)
 	resp, err := client.PutDoubleValid(context.Background(), map[string]*float64{
 		"0": to.Ptr[float64](0),
-		"1": to.Ptr[float64](-0.01),
-		"2": to.Ptr[float64](-1.2e20),
+		"1": to.Ptr(-0.01),
+		"2": to.Ptr(-1.2e20),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

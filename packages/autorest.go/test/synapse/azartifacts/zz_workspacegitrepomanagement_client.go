@@ -32,6 +32,7 @@ type WorkspaceGitRepoManagementClient struct {
 //     method.
 func (client *WorkspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WorkspaceGitRepoManagementClient.GetGitHubAccessToken")
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
 		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err

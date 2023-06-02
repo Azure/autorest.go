@@ -33,6 +33,7 @@ type DataFlowDebugSessionClient struct {
 //     method.
 func (client *DataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionClientAddDataFlowOptions) (DataFlowDebugSessionClientAddDataFlowResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowDebugSessionClient.AddDataFlow")
 	req, err := client.addDataFlowCreateRequest(ctx, request, options)
 	if err != nil {
 		return DataFlowDebugSessionClientAddDataFlowResponse{}, err
@@ -84,7 +85,6 @@ func (client *DataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.R
 //     method.
 func (client *DataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*runtime.Poller[DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createDataFlowDebugSession(ctx, request, options)
 		if err != nil {
 			return nil, err
@@ -102,6 +102,7 @@ func (client *DataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 // Generated from API version 2020-12-01
 func (client *DataFlowDebugSessionClient) createDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession")
 	req, err := client.createDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
 		return nil, err
@@ -143,6 +144,7 @@ func (client *DataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 //     method.
 func (client *DataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions) (DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowDebugSessionClient.DeleteDataFlowDebugSession")
 	req, err := client.deleteDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
 		return DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, err
@@ -184,7 +186,6 @@ func (client *DataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 //     method.
 func (client *DataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (*runtime.Poller[DataFlowDebugSessionClientExecuteCommandResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.executeCommand(ctx, request, options)
 		if err != nil {
 			return nil, err
@@ -202,6 +203,7 @@ func (client *DataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 // Generated from API version 2020-12-01
 func (client *DataFlowDebugSessionClient) executeCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowDebugSessionClient.BeginExecuteCommand")
 	req, err := client.executeCommandCreateRequest(ctx, request, options)
 	if err != nil {
 		return nil, err
@@ -245,6 +247,7 @@ func (client *DataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspa
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse) (DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DataFlowDebugSessionClient.NewQueryDataFlowDebugSessionsByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

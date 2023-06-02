@@ -31,7 +31,9 @@ type QueriesClient struct {
 //     method.
 func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesClientArrayStringMultiEmptyOptions) (QueriesClientArrayStringMultiEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringMultiEmpty", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringMultiEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringMultiEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -74,7 +76,9 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 //     method.
 func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesClientArrayStringMultiNullOptions) (QueriesClientArrayStringMultiNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringMultiNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringMultiNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringMultiNullCreateRequest(ctx, options)
 	if err != nil {
@@ -118,7 +122,9 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 //     method.
 func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesClientArrayStringMultiValidOptions) (QueriesClientArrayStringMultiValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringMultiValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringMultiValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringMultiValidCreateRequest(ctx, options)
 	if err != nil {

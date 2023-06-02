@@ -56,7 +56,9 @@ func NewCloudServiceOperatingSystemsClient(subscriptionID string, credential azc
 //     method.
 func (client *CloudServiceOperatingSystemsClient) GetOSFamily(ctx context.Context, location string, osFamilyName string, options *CloudServiceOperatingSystemsClientGetOSFamilyOptions) (CloudServiceOperatingSystemsClientGetOSFamilyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceOperatingSystemsClient.GetOSFamily", client.internal.Tracer(), nil)
+	const operationName = "CloudServiceOperatingSystemsClient.GetOSFamily"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOSFamilyCreateRequest(ctx, location, osFamilyName, options)
 	if err != nil {
@@ -120,7 +122,9 @@ func (client *CloudServiceOperatingSystemsClient) getOSFamilyHandleResponse(resp
 //     method.
 func (client *CloudServiceOperatingSystemsClient) GetOSVersion(ctx context.Context, location string, osVersionName string, options *CloudServiceOperatingSystemsClientGetOSVersionOptions) (CloudServiceOperatingSystemsClientGetOSVersionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "CloudServiceOperatingSystemsClient.GetOSVersion", client.internal.Tracer(), nil)
+	const operationName = "CloudServiceOperatingSystemsClient.GetOSVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOSVersionCreateRequest(ctx, location, osVersionName, options)
 	if err != nil {
@@ -187,6 +191,7 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSFamiliesPager(locatio
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *CloudServiceOperatingSystemsClientListOSFamiliesResponse) (CloudServiceOperatingSystemsClientListOSFamiliesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CloudServiceOperatingSystemsClient.NewListOSFamiliesPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -255,6 +260,7 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSVersionsPager(locatio
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *CloudServiceOperatingSystemsClientListOSVersionsResponse) (CloudServiceOperatingSystemsClientListOSVersionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CloudServiceOperatingSystemsClient.NewListOSVersionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

@@ -96,6 +96,13 @@
       "shortName": "-d",
       "description": "Starts the build and waits for the debugger to attach",
       "associatedCommands": ["regenerate"]
+    },
+    {
+      "parameterKind": "flag",
+      "longName": "--dump-code-model",
+      "shortName": "-c",
+      "description": "Dumps the M4 code model yaml file",
+      "associatedCommands": ["regenerate"]
     }
   ]
 }

@@ -39,7 +39,9 @@ type ContainerRegistryBlobClient struct {
 //     method.
 func (client *ContainerRegistryBlobClient) CancelUpload(ctx context.Context, location string, options *ContainerRegistryBlobClientCancelUploadOptions) (ContainerRegistryBlobClientCancelUploadResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CancelUpload", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.CancelUpload"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.cancelUploadCreateRequest(ctx, location, options)
 	if err != nil {
@@ -78,7 +80,9 @@ func (client *ContainerRegistryBlobClient) cancelUploadCreateRequest(ctx context
 //     method.
 func (client *ContainerRegistryBlobClient) CheckBlobExists(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientCheckBlobExistsOptions) (ContainerRegistryBlobClientCheckBlobExistsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CheckBlobExists", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.CheckBlobExists"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.checkBlobExistsCreateRequest(ctx, name, digest, options)
 	if err != nil {
@@ -142,7 +146,9 @@ func (client *ContainerRegistryBlobClient) checkBlobExistsHandleResponse(resp *h
 //     method.
 func (client *ContainerRegistryBlobClient) CheckChunkExists(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientCheckChunkExistsOptions) (ContainerRegistryBlobClientCheckChunkExistsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CheckChunkExists", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.CheckChunkExists"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.checkChunkExistsCreateRequest(ctx, name, digest, rangeParam, options)
 	if err != nil {
@@ -208,7 +214,9 @@ func (client *ContainerRegistryBlobClient) checkChunkExistsHandleResponse(resp *
 //     method.
 func (client *ContainerRegistryBlobClient) CompleteUpload(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.CompleteUpload", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.CompleteUpload"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.completeUploadCreateRequest(ctx, digest, location, value, options)
 	if err != nil {
@@ -269,7 +277,9 @@ func (client *ContainerRegistryBlobClient) completeUploadHandleResponse(resp *ht
 //     method.
 func (client *ContainerRegistryBlobClient) DeleteBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientDeleteBlobOptions) (ContainerRegistryBlobClientDeleteBlobResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.DeleteBlob", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.DeleteBlob"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteBlobCreateRequest(ctx, name, digest, options)
 	if err != nil {
@@ -326,7 +336,9 @@ func (client *ContainerRegistryBlobClient) deleteBlobHandleResponse(resp *http.R
 //     method.
 func (client *ContainerRegistryBlobClient) GetBlob(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientGetBlobOptions) (ContainerRegistryBlobClientGetBlobResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.GetBlob", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.GetBlob"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBlobCreateRequest(ctx, name, digest, options)
 	if err != nil {
@@ -393,7 +405,9 @@ func (client *ContainerRegistryBlobClient) getBlobHandleResponse(resp *http.Resp
 //     method.
 func (client *ContainerRegistryBlobClient) GetChunk(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientGetChunkOptions) (ContainerRegistryBlobClientGetChunkResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.GetChunk", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.GetChunk"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getChunkCreateRequest(ctx, name, digest, rangeParam, options)
 	if err != nil {
@@ -458,7 +472,9 @@ func (client *ContainerRegistryBlobClient) getChunkHandleResponse(resp *http.Res
 //     method.
 func (client *ContainerRegistryBlobClient) GetUploadStatus(ctx context.Context, location string, options *ContainerRegistryBlobClientGetUploadStatusOptions) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.GetUploadStatus", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.GetUploadStatus"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUploadStatusCreateRequest(ctx, location, options)
 	if err != nil {
@@ -511,7 +527,9 @@ func (client *ContainerRegistryBlobClient) getUploadStatusHandleResponse(resp *h
 //     method.
 func (client *ContainerRegistryBlobClient) MountBlob(ctx context.Context, name string, from string, mount string, options *ContainerRegistryBlobClientMountBlobOptions) (ContainerRegistryBlobClientMountBlobResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.MountBlob", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.MountBlob"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.mountBlobCreateRequest(ctx, name, from, mount, options)
 	if err != nil {
@@ -572,7 +590,9 @@ func (client *ContainerRegistryBlobClient) mountBlobHandleResponse(resp *http.Re
 //     method.
 func (client *ContainerRegistryBlobClient) StartUpload(ctx context.Context, name string, options *ContainerRegistryBlobClientStartUploadOptions) (ContainerRegistryBlobClientStartUploadResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.StartUpload", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.StartUpload"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.startUploadCreateRequest(ctx, name, options)
 	if err != nil {
@@ -630,7 +650,9 @@ func (client *ContainerRegistryBlobClient) startUploadHandleResponse(resp *http.
 //     method.
 func (client *ContainerRegistryBlobClient) UploadChunk(ctx context.Context, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientUploadChunkOptions) (ContainerRegistryBlobClientUploadChunkResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerRegistryBlobClient.UploadChunk", client.internal.Tracer(), nil)
+	const operationName = "ContainerRegistryBlobClient.UploadChunk"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.uploadChunkCreateRequest(ctx, location, value, options)
 	if err != nil {

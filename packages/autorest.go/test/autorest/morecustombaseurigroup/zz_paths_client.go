@@ -38,7 +38,9 @@ type PathsClient struct {
 //   - options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsClientGetEmptyOptions) (PathsClientGetEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PathsClient.GetEmpty", client.internal.Tracer(), nil)
+	const operationName = "PathsClient.GetEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {

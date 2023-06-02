@@ -31,6 +31,7 @@ type WorkspaceClient struct {
 //   - options - WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
 func (client *WorkspaceClient) Get(ctx context.Context, options *WorkspaceClientGetOptions) (WorkspaceClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WorkspaceClient.Get")
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return WorkspaceClientGetResponse{}, err

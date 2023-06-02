@@ -57,10 +57,6 @@ func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCrede
 //     method.
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (*runtime.Poller[DedicatedHostsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DedicatedHostsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -78,6 +74,10 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 // Generated from API version 2021-11-01
 func (client *DedicatedHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DedicatedHostsClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -137,10 +137,6 @@ func (client *DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Cont
 //     method.
 func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (*runtime.Poller[DedicatedHostsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DedicatedHostsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
 		if err != nil {
 			return nil, err
@@ -158,6 +154,10 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 // Generated from API version 2021-11-01
 func (client *DedicatedHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DedicatedHostsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
 		return nil, err
@@ -213,7 +213,9 @@ func (client *DedicatedHostsClient) deleteCreateRequest(ctx context.Context, res
 //   - options - DedicatedHostsClientGetOptions contains the optional parameters for the DedicatedHostsClient.Get method.
 func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientGetOptions) (DedicatedHostsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DedicatedHostsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "DedicatedHostsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -287,6 +289,7 @@ func (client *DedicatedHostsClient) NewListByHostGroupPager(resourceGroupName st
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DedicatedHostsClientListByHostGroupResponse) (DedicatedHostsClientListByHostGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DedicatedHostsClient.NewListByHostGroupPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -359,10 +362,6 @@ func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *http.Res
 //     method.
 func (client *DedicatedHostsClient) BeginRestart(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginRestartOptions) (*runtime.Poller[DedicatedHostsClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DedicatedHostsClient.BeginRestart", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.restart(ctx, resourceGroupName, hostGroupName, hostName, options)
 		if err != nil {
 			return nil, err
@@ -383,6 +382,10 @@ func (client *DedicatedHostsClient) BeginRestart(ctx context.Context, resourceGr
 // Generated from API version 2021-11-01
 func (client *DedicatedHostsClient) restart(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginRestartOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DedicatedHostsClient.BeginRestart"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
 		return nil, err
@@ -440,10 +443,6 @@ func (client *DedicatedHostsClient) restartCreateRequest(ctx context.Context, re
 //     method.
 func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (*runtime.Poller[DedicatedHostsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "DedicatedHostsClient.BeginUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -461,6 +460,10 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 // Generated from API version 2021-11-01
 func (client *DedicatedHostsClient) update(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "DedicatedHostsClient.BeginUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
 		return nil, err

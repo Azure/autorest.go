@@ -53,6 +53,7 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 //   - options - TagsClientGetOptions contains the optional parameters for the TagsClient.Get method.
 func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsClientGetOptions) (TagsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TagsClient.Get")
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {
 		return TagsClientGetResponse{}, err

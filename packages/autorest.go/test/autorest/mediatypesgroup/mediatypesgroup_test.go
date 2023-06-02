@@ -10,7 +10,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
@@ -22,14 +21,6 @@ func newMediaTypesClient(t *testing.T) *MediaTypesClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewMediaTypesClient(options *azcore.ClientOptions) (*MediaTypesClient, error) {
-	client, err := azcore.NewClient("mediatypesgroup.MediaTypesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &MediaTypesClient{internal: client}, nil
 }
 
 func TestAnalyzeBody(t *testing.T) {

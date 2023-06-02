@@ -57,10 +57,6 @@ func NewRestorePointsClient(subscriptionID string, credential azcore.TokenCreden
 //     method.
 func (client *RestorePointsClient) BeginCreate(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, parameters RestorePoint, options *RestorePointsClientBeginCreateOptions) (*runtime.Poller[RestorePointsClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RestorePointsClient.BeginCreate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.create(ctx, resourceGroupName, restorePointCollectionName, restorePointName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -78,6 +74,10 @@ func (client *RestorePointsClient) BeginCreate(ctx context.Context, resourceGrou
 // Generated from API version 2021-11-01
 func (client *RestorePointsClient) create(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, parameters RestorePoint, options *RestorePointsClientBeginCreateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RestorePointsClient.BeginCreate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, resourceGroupName, restorePointCollectionName, restorePointName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -137,10 +137,6 @@ func (client *RestorePointsClient) createCreateRequest(ctx context.Context, reso
 //     method.
 func (client *RestorePointsClient) BeginDelete(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, options *RestorePointsClientBeginDeleteOptions) (*runtime.Poller[RestorePointsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RestorePointsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, restorePointCollectionName, restorePointName, options)
 		if err != nil {
 			return nil, err
@@ -158,6 +154,10 @@ func (client *RestorePointsClient) BeginDelete(ctx context.Context, resourceGrou
 // Generated from API version 2021-11-01
 func (client *RestorePointsClient) deleteOperation(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, options *RestorePointsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RestorePointsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, restorePointCollectionName, restorePointName, options)
 	if err != nil {
 		return nil, err
@@ -213,7 +213,9 @@ func (client *RestorePointsClient) deleteCreateRequest(ctx context.Context, reso
 //   - options - RestorePointsClientGetOptions contains the optional parameters for the RestorePointsClient.Get method.
 func (client *RestorePointsClient) Get(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, options *RestorePointsClientGetOptions) (RestorePointsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "RestorePointsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "RestorePointsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, restorePointCollectionName, restorePointName, options)
 	if err != nil {

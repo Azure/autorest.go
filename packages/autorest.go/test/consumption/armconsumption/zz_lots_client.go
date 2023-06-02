@@ -52,6 +52,7 @@ func (client *LotsClient) NewListPager(scope string, options *LotsClientListOpti
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *LotsClientListResponse) (LotsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LotsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

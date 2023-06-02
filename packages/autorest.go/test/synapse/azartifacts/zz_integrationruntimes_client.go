@@ -35,6 +35,7 @@ type IntegrationRuntimesClient struct {
 //   - options - IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
 func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesClientGetOptions) (IntegrationRuntimesClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "IntegrationRuntimesClient.Get")
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
 		return IntegrationRuntimesClientGetResponse{}, err
@@ -86,6 +87,7 @@ func (client *IntegrationRuntimesClient) getHandleResponse(resp *http.Response) 
 //     method.
 func (client *IntegrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesClientListOptions) (IntegrationRuntimesClientListResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "IntegrationRuntimesClient.List")
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return IntegrationRuntimesClientListResponse{}, err

@@ -57,10 +57,6 @@ func NewRouteMapsClient(subscriptionID string, credential azcore.TokenCredential
 //     method.
 func (client *RouteMapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (*runtime.Poller[RouteMapsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RouteMapsClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeMapName, routeMapParameters, options)
 		if err != nil {
 			return nil, err
@@ -80,6 +76,10 @@ func (client *RouteMapsClient) BeginCreateOrUpdate(ctx context.Context, resource
 // Generated from API version 2022-09-01
 func (client *RouteMapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RouteMapsClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, routeMapName, routeMapParameters, options)
 	if err != nil {
 		return nil, err
@@ -138,10 +138,6 @@ func (client *RouteMapsClient) createOrUpdateCreateRequest(ctx context.Context, 
 //   - options - RouteMapsClientBeginDeleteOptions contains the optional parameters for the RouteMapsClient.BeginDelete method.
 func (client *RouteMapsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (*runtime.Poller[RouteMapsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RouteMapsClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeMapName, options)
 		if err != nil {
 			return nil, err
@@ -161,6 +157,10 @@ func (client *RouteMapsClient) BeginDelete(ctx context.Context, resourceGroupNam
 // Generated from API version 2022-09-01
 func (client *RouteMapsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RouteMapsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, routeMapName, options)
 	if err != nil {
 		return nil, err
@@ -216,7 +216,9 @@ func (client *RouteMapsClient) deleteCreateRequest(ctx context.Context, resource
 //   - options - RouteMapsClientGetOptions contains the optional parameters for the RouteMapsClient.Get method.
 func (client *RouteMapsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientGetOptions) (RouteMapsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "RouteMapsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "RouteMapsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, routeMapName, options)
 	if err != nil {
@@ -285,6 +287,7 @@ func (client *RouteMapsClient) NewListPager(resourceGroupName string, virtualHub
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RouteMapsClientListResponse) (RouteMapsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RouteMapsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

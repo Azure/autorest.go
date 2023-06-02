@@ -57,7 +57,9 @@ func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCred
 //     method.
 func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksClientCheckIPAddressAvailabilityOptions) (VirtualNetworksClientCheckIPAddressAvailabilityResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.CheckIPAddressAvailability", client.internal.Tracer(), nil)
+	const operationName = "VirtualNetworksClient.CheckIPAddressAvailability"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.checkIPAddressAvailabilityCreateRequest(ctx, resourceGroupName, virtualNetworkName, ipAddress, options)
 	if err != nil {
@@ -122,10 +124,6 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(re
 //     method.
 func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualNetworksClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworksClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -145,6 +143,10 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 // Generated from API version 2022-09-01
 func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworksClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -199,10 +201,6 @@ func (client *VirtualNetworksClient) createOrUpdateCreateRequest(ctx context.Con
 //     method.
 func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*runtime.Poller[VirtualNetworksClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworksClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 		if err != nil {
 			return nil, err
@@ -222,6 +220,10 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 // Generated from API version 2022-09-01
 func (client *VirtualNetworksClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworksClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
 		return nil, err
@@ -272,7 +274,9 @@ func (client *VirtualNetworksClient) deleteCreateRequest(ctx context.Context, re
 //   - options - VirtualNetworksClientGetOptions contains the optional parameters for the VirtualNetworksClient.Get method.
 func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientGetOptions) (VirtualNetworksClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.Get", client.internal.Tracer(), nil)
+	const operationName = "VirtualNetworksClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -340,6 +344,7 @@ func (client *VirtualNetworksClient) NewListPager(resourceGroupName string, opti
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListResponse) (VirtualNetworksClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -405,6 +410,7 @@ func (client *VirtualNetworksClient) NewListAllPager(options *VirtualNetworksCli
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListAllResponse) (VirtualNetworksClientListAllResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.NewListAllPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -468,6 +474,7 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListDdosProtectionStatusResponse) (VirtualNetworksClientListDdosProtectionStatusResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.BeginListDdosProtectionStatus")
 			req, err := runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
 			if err != nil {
 				return VirtualNetworksClientListDdosProtectionStatusResponse{}, err
@@ -484,10 +491,6 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 		Tracer: client.internal.Tracer(),
 	})
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VirtualNetworksClient.BeginListDdosProtectionStatus", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.listDdosProtectionStatus(ctx, resourceGroupName, virtualNetworkName, options)
 		if err != nil {
 			return nil, err
@@ -509,6 +512,10 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 // Generated from API version 2022-09-01
 func (client *VirtualNetworksClient) listDdosProtectionStatus(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginListDdosProtectionStatusOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VirtualNetworksClient.BeginListDdosProtectionStatus"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listDdosProtectionStatusCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
 		return nil, err
@@ -578,6 +585,7 @@ func (client *VirtualNetworksClient) NewListUsagePager(resourceGroupName string,
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListUsageResponse) (VirtualNetworksClientListUsageResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.NewListUsagePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -647,7 +655,9 @@ func (client *VirtualNetworksClient) listUsageHandleResponse(resp *http.Response
 //     method.
 func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters TagsObject, options *VirtualNetworksClientUpdateTagsOptions) (VirtualNetworksClientUpdateTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VirtualNetworksClient.UpdateTags", client.internal.Tracer(), nil)
+	const operationName = "VirtualNetworksClient.UpdateTags"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {

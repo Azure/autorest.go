@@ -31,7 +31,9 @@ type PolymorphismClient struct {
 //     method.
 func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *PolymorphismClientGetComplicatedOptions) (PolymorphismClientGetComplicatedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetComplicated", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.GetComplicated"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplicatedCreateRequest(ctx, options)
 	if err != nil {
@@ -79,7 +81,9 @@ func (client *PolymorphismClient) getComplicatedHandleResponse(resp *http.Respon
 //     method.
 func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithDiscriminatorOptions) (PolymorphismClientGetComposedWithDiscriminatorResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetComposedWithDiscriminator", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.GetComposedWithDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComposedWithDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
@@ -127,7 +131,9 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(res
 //     method.
 func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithoutDiscriminatorOptions) (PolymorphismClientGetComposedWithoutDiscriminatorResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetComposedWithoutDiscriminator", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.GetComposedWithoutDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComposedWithoutDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
@@ -173,7 +179,9 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(
 //     method.
 func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *PolymorphismClientGetDotSyntaxOptions) (PolymorphismClientGetDotSyntaxResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetDotSyntax", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.GetDotSyntax"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDotSyntaxCreateRequest(ctx, options)
 	if err != nil {
@@ -218,7 +226,9 @@ func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *http.Response
 //   - options - PolymorphismClientGetValidOptions contains the optional parameters for the PolymorphismClient.GetValid method.
 func (client *PolymorphismClient) GetValid(ctx context.Context, options *PolymorphismClientGetValidOptions) (PolymorphismClientGetValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.GetValid", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -264,7 +274,9 @@ func (client *PolymorphismClient) getValidHandleResponse(resp *http.Response) (P
 //     method.
 func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutComplicatedOptions) (PolymorphismClientPutComplicatedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutComplicated", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.PutComplicated"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putComplicatedCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -303,7 +315,9 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 //     method.
 func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutMissingDiscriminatorOptions) (PolymorphismClientPutMissingDiscriminatorResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutMissingDiscriminator", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.PutMissingDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMissingDiscriminatorCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -357,7 +371,9 @@ func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *ht
 //   - options - PolymorphismClientPutValidOptions contains the optional parameters for the PolymorphismClient.PutValid method.
 func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidOptions) (PolymorphismClientPutValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutValid", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.PutValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -402,7 +418,9 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 //     method.
 func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidMissingRequiredOptions) (PolymorphismClientPutValidMissingRequiredResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PolymorphismClient.PutValidMissingRequired", client.internal.Tracer(), nil)
+	const operationName = "PolymorphismClient.PutValidMissingRequired"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putValidMissingRequiredCreateRequest(ctx, complexBody, options)
 	if err != nil {

@@ -56,7 +56,9 @@ func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, creden
 //     method.
 func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsClientGetOptions) (LoadBalancerFrontendIPConfigurationsClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "LoadBalancerFrontendIPConfigurationsClient.Get", client.internal.Tracer(), nil)
+	const operationName = "LoadBalancerFrontendIPConfigurationsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) NewListPager(resourceG
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *LoadBalancerFrontendIPConfigurationsClientListResponse) (LoadBalancerFrontendIPConfigurationsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LoadBalancerFrontendIPConfigurationsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

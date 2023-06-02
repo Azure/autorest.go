@@ -37,6 +37,7 @@ type Client struct {
 //   - options - ClientBackupCertificateOptions contains the optional parameters for the Client.BackupCertificate method.
 func (client *Client) BackupCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientBackupCertificateOptions) (ClientBackupCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BackupCertificate")
 	req, err := client.backupCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientBackupCertificateResponse{}, err
@@ -100,6 +101,7 @@ func (client *Client) backupCertificateHandleResponse(resp *http.Response) (Clie
 //   - options - ClientBackupKeyOptions contains the optional parameters for the Client.BackupKey method.
 func (client *Client) BackupKey(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBackupKeyOptions) (ClientBackupKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BackupKey")
 	req, err := client.backupKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return ClientBackupKeyResponse{}, err
@@ -155,6 +157,7 @@ func (client *Client) backupKeyHandleResponse(resp *http.Response) (ClientBackup
 //   - options - ClientBackupSecretOptions contains the optional parameters for the Client.BackupSecret method.
 func (client *Client) BackupSecret(ctx context.Context, vaultBaseURL string, secretName string, options *ClientBackupSecretOptions) (ClientBackupSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BackupSecret")
 	req, err := client.backupSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return ClientBackupSecretResponse{}, err
@@ -210,6 +213,7 @@ func (client *Client) backupSecretHandleResponse(resp *http.Response) (ClientBac
 //   - options - ClientBackupStorageAccountOptions contains the optional parameters for the Client.BackupStorageAccount method.
 func (client *Client) BackupStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientBackupStorageAccountOptions) (ClientBackupStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BackupStorageAccount")
 	req, err := client.backupStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return ClientBackupStorageAccountResponse{}, err
@@ -266,6 +270,7 @@ func (client *Client) backupStorageAccountHandleResponse(resp *http.Response) (C
 //   - options - ClientCreateCertificateOptions contains the optional parameters for the Client.CreateCertificate method.
 func (client *Client) CreateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *ClientCreateCertificateOptions) (ClientCreateCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.CreateCertificate")
 	req, err := client.createCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
 		return ClientCreateCertificateResponse{}, err
@@ -326,6 +331,7 @@ func (client *Client) createCertificateHandleResponse(resp *http.Response) (Clie
 //   - options - ClientCreateKeyOptions contains the optional parameters for the Client.CreateKey method.
 func (client *Client) CreateKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *ClientCreateKeyOptions) (ClientCreateKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.CreateKey")
 	req, err := client.createKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
 		return ClientCreateKeyResponse{}, err
@@ -389,6 +395,7 @@ func (client *Client) createKeyHandleResponse(resp *http.Response) (ClientCreate
 //   - options - ClientDecryptOptions contains the optional parameters for the Client.Decrypt method.
 func (client *Client) Decrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientDecryptOptions) (ClientDecryptResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.Decrypt")
 	req, err := client.decryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return ClientDecryptResponse{}, err
@@ -452,6 +459,7 @@ func (client *Client) decryptHandleResponse(resp *http.Response) (ClientDecryptR
 //   - options - ClientDeleteCertificateOptions contains the optional parameters for the Client.DeleteCertificate method.
 func (client *Client) DeleteCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientDeleteCertificateOptions) (ClientDeleteCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteCertificate")
 	req, err := client.deleteCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientDeleteCertificateResponse{}, err
@@ -507,6 +515,7 @@ func (client *Client) deleteCertificateHandleResponse(resp *http.Response) (Clie
 //     method.
 func (client *Client) DeleteCertificateContacts(ctx context.Context, vaultBaseURL string, options *ClientDeleteCertificateContactsOptions) (ClientDeleteCertificateContactsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteCertificateContacts")
 	req, err := client.deleteCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return ClientDeleteCertificateContactsResponse{}, err
@@ -559,6 +568,7 @@ func (client *Client) deleteCertificateContactsHandleResponse(resp *http.Respons
 //     method.
 func (client *Client) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *ClientDeleteCertificateIssuerOptions) (ClientDeleteCertificateIssuerResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteCertificateIssuer")
 	req, err := client.deleteCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
 		return ClientDeleteCertificateIssuerResponse{}, err
@@ -615,6 +625,7 @@ func (client *Client) deleteCertificateIssuerHandleResponse(resp *http.Response)
 //     method.
 func (client *Client) DeleteCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientDeleteCertificateOperationOptions) (ClientDeleteCertificateOperationResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteCertificateOperation")
 	req, err := client.deleteCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientDeleteCertificateOperationResponse{}, err
@@ -671,6 +682,7 @@ func (client *Client) deleteCertificateOperationHandleResponse(resp *http.Respon
 //   - options - ClientDeleteKeyOptions contains the optional parameters for the Client.DeleteKey method.
 func (client *Client) DeleteKey(ctx context.Context, vaultBaseURL string, keyName string, options *ClientDeleteKeyOptions) (ClientDeleteKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteKey")
 	req, err := client.deleteKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return ClientDeleteKeyResponse{}, err
@@ -727,6 +739,7 @@ func (client *Client) deleteKeyHandleResponse(resp *http.Response) (ClientDelete
 //   - options - ClientDeleteSasDefinitionOptions contains the optional parameters for the Client.DeleteSasDefinition method.
 func (client *Client) DeleteSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientDeleteSasDefinitionOptions) (ClientDeleteSasDefinitionResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteSasDefinition")
 	req, err := client.deleteSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return ClientDeleteSasDefinitionResponse{}, err
@@ -786,6 +799,7 @@ func (client *Client) deleteSasDefinitionHandleResponse(resp *http.Response) (Cl
 //   - options - ClientDeleteSecretOptions contains the optional parameters for the Client.DeleteSecret method.
 func (client *Client) DeleteSecret(ctx context.Context, vaultBaseURL string, secretName string, options *ClientDeleteSecretOptions) (ClientDeleteSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteSecret")
 	req, err := client.deleteSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return ClientDeleteSecretResponse{}, err
@@ -840,6 +854,7 @@ func (client *Client) deleteSecretHandleResponse(resp *http.Response) (ClientDel
 //   - options - ClientDeleteStorageAccountOptions contains the optional parameters for the Client.DeleteStorageAccount method.
 func (client *Client) DeleteStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientDeleteStorageAccountOptions) (ClientDeleteStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteStorageAccount")
 	req, err := client.deleteStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return ClientDeleteStorageAccountResponse{}, err
@@ -902,6 +917,7 @@ func (client *Client) deleteStorageAccountHandleResponse(resp *http.Response) (C
 //   - options - ClientEncryptOptions contains the optional parameters for the Client.Encrypt method.
 func (client *Client) Encrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientEncryptOptions) (ClientEncryptResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.Encrypt")
 	req, err := client.encryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return ClientEncryptResponse{}, err
@@ -963,7 +979,6 @@ func (client *Client) encryptHandleResponse(resp *http.Response) (ClientEncryptR
 //   - options - ClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
 func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (*runtime.Poller[ClientFullBackupResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.fullBackup(ctx, vaultBaseURL, options)
 		if err != nil {
 			return nil, err
@@ -984,6 +999,7 @@ func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, 
 // Generated from API version 7.2
 func (client *Client) fullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BeginFullBackup")
 	req, err := client.fullBackupCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return nil, err
@@ -1030,6 +1046,7 @@ func (client *Client) fullBackupCreateRequest(ctx context.Context, vaultBaseURL 
 //   - options - ClientFullBackupStatusOptions contains the optional parameters for the Client.FullBackupStatus method.
 func (client *Client) FullBackupStatus(ctx context.Context, vaultBaseURL string, jobID string, options *ClientFullBackupStatusOptions) (ClientFullBackupStatusResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.FullBackupStatus")
 	req, err := client.fullBackupStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
 		return ClientFullBackupStatusResponse{}, err
@@ -1086,7 +1103,6 @@ func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (Clien
 //     method.
 func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, options *ClientBeginFullRestoreOperationOptions) (*runtime.Poller[ClientFullRestoreOperationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, restoreBlobDetails, options)
 		if err != nil {
 			return nil, err
@@ -1107,6 +1123,7 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 // Generated from API version 7.2
 func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, options *ClientBeginFullRestoreOperationOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BeginFullRestoreOperation")
 	req, err := client.fullRestoreOperationCreateRequest(ctx, vaultBaseURL, restoreBlobDetails, options)
 	if err != nil {
 		return nil, err
@@ -1152,6 +1169,7 @@ func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vau
 //   - options - ClientGetCertificateOptions contains the optional parameters for the Client.GetCertificate method.
 func (client *Client) GetCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *ClientGetCertificateOptions) (ClientGetCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetCertificate")
 	req, err := client.getCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, options)
 	if err != nil {
 		return ClientGetCertificateResponse{}, err
@@ -1210,6 +1228,7 @@ func (client *Client) getCertificateHandleResponse(resp *http.Response) (ClientG
 //   - options - ClientGetCertificateContactsOptions contains the optional parameters for the Client.GetCertificateContacts method.
 func (client *Client) GetCertificateContacts(ctx context.Context, vaultBaseURL string, options *ClientGetCertificateContactsOptions) (ClientGetCertificateContactsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetCertificateContacts")
 	req, err := client.getCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return ClientGetCertificateContactsResponse{}, err
@@ -1261,6 +1280,7 @@ func (client *Client) getCertificateContactsHandleResponse(resp *http.Response) 
 //   - options - ClientGetCertificateIssuerOptions contains the optional parameters for the Client.GetCertificateIssuer method.
 func (client *Client) GetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *ClientGetCertificateIssuerOptions) (ClientGetCertificateIssuerResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetCertificateIssuer")
 	req, err := client.getCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
 		return ClientGetCertificateIssuerResponse{}, err
@@ -1319,6 +1339,7 @@ func (client *Client) NewGetCertificateIssuersPager(vaultBaseURL string, options
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificateIssuersResponse) (ClientGetCertificateIssuersResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetCertificateIssuersPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1380,6 +1401,7 @@ func (client *Client) getCertificateIssuersHandleResponse(resp *http.Response) (
 //     method.
 func (client *Client) GetCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientGetCertificateOperationOptions) (ClientGetCertificateOperationResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetCertificateOperation")
 	req, err := client.getCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientGetCertificateOperationResponse{}, err
@@ -1435,6 +1457,7 @@ func (client *Client) getCertificateOperationHandleResponse(resp *http.Response)
 //   - options - ClientGetCertificatePolicyOptions contains the optional parameters for the Client.GetCertificatePolicy method.
 func (client *Client) GetCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientGetCertificatePolicyOptions) (ClientGetCertificatePolicyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetCertificatePolicy")
 	req, err := client.getCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientGetCertificatePolicyResponse{}, err
@@ -1494,6 +1517,7 @@ func (client *Client) NewGetCertificateVersionsPager(vaultBaseURL string, certif
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificateVersionsResponse) (ClientGetCertificateVersionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetCertificateVersionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1560,6 +1584,7 @@ func (client *Client) NewGetCertificatesPager(vaultBaseURL string, options *Clie
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificatesResponse) (ClientGetCertificatesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetCertificatesPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1624,6 +1649,7 @@ func (client *Client) getCertificatesHandleResponse(resp *http.Response) (Client
 //   - options - ClientGetDeletedCertificateOptions contains the optional parameters for the Client.GetDeletedCertificate method.
 func (client *Client) GetDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientGetDeletedCertificateOptions) (ClientGetDeletedCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetDeletedCertificate")
 	req, err := client.getDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientGetDeletedCertificateResponse{}, err
@@ -1684,6 +1710,7 @@ func (client *Client) NewGetDeletedCertificatesPager(vaultBaseURL string, option
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedCertificatesResponse) (ClientGetDeletedCertificatesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetDeletedCertificatesPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1748,6 +1775,7 @@ func (client *Client) getDeletedCertificatesHandleResponse(resp *http.Response) 
 //   - options - ClientGetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
 func (client *Client) GetDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *ClientGetDeletedKeyOptions) (ClientGetDeletedKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetDeletedKey")
 	req, err := client.getDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return ClientGetDeletedKeyResponse{}, err
@@ -1808,6 +1836,7 @@ func (client *Client) NewGetDeletedKeysPager(vaultBaseURL string, options *Clien
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedKeysResponse) (ClientGetDeletedKeysResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetDeletedKeysPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1870,6 +1899,7 @@ func (client *Client) getDeletedKeysHandleResponse(resp *http.Response) (ClientG
 //     method.
 func (client *Client) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientGetDeletedSasDefinitionOptions) (ClientGetDeletedSasDefinitionResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetDeletedSasDefinition")
 	req, err := client.getDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return ClientGetDeletedSasDefinitionResponse{}, err
@@ -1933,6 +1963,7 @@ func (client *Client) NewGetDeletedSasDefinitionsPager(vaultBaseURL string, stor
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedSasDefinitionsResponse) (ClientGetDeletedSasDefinitionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetDeletedSasDefinitionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -1997,6 +2028,7 @@ func (client *Client) getDeletedSasDefinitionsHandleResponse(resp *http.Response
 //   - options - ClientGetDeletedSecretOptions contains the optional parameters for the Client.GetDeletedSecret method.
 func (client *Client) GetDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *ClientGetDeletedSecretOptions) (ClientGetDeletedSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetDeletedSecret")
 	req, err := client.getDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return ClientGetDeletedSecretResponse{}, err
@@ -2054,6 +2086,7 @@ func (client *Client) NewGetDeletedSecretsPager(vaultBaseURL string, options *Cl
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedSecretsResponse) (ClientGetDeletedSecretsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetDeletedSecretsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2115,6 +2148,7 @@ func (client *Client) getDeletedSecretsHandleResponse(resp *http.Response) (Clie
 //     method.
 func (client *Client) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientGetDeletedStorageAccountOptions) (ClientGetDeletedStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetDeletedStorageAccount")
 	req, err := client.getDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return ClientGetDeletedStorageAccountResponse{}, err
@@ -2173,6 +2207,7 @@ func (client *Client) NewGetDeletedStorageAccountsPager(vaultBaseURL string, opt
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedStorageAccountsResponse) (ClientGetDeletedStorageAccountsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetDeletedStorageAccountsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2235,6 +2270,7 @@ func (client *Client) getDeletedStorageAccountsHandleResponse(resp *http.Respons
 //   - options - ClientGetKeyOptions contains the optional parameters for the Client.GetKey method.
 func (client *Client) GetKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *ClientGetKeyOptions) (ClientGetKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetKey")
 	req, err := client.getKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, options)
 	if err != nil {
 		return ClientGetKeyResponse{}, err
@@ -2297,6 +2333,7 @@ func (client *Client) NewGetKeyVersionsPager(vaultBaseURL string, keyName string
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetKeyVersionsResponse) (ClientGetKeyVersionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetKeyVersionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2365,6 +2402,7 @@ func (client *Client) NewGetKeysPager(vaultBaseURL string, options *ClientGetKey
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetKeysResponse) (ClientGetKeysResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetKeysPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2426,6 +2464,7 @@ func (client *Client) getKeysHandleResponse(resp *http.Response) (ClientGetKeysR
 //   - options - ClientGetSasDefinitionOptions contains the optional parameters for the Client.GetSasDefinition method.
 func (client *Client) GetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientGetSasDefinitionOptions) (ClientGetSasDefinitionResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetSasDefinition")
 	req, err := client.getSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return ClientGetSasDefinitionResponse{}, err
@@ -2488,6 +2527,7 @@ func (client *Client) NewGetSasDefinitionsPager(vaultBaseURL string, storageAcco
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSasDefinitionsResponse) (ClientGetSasDefinitionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetSasDefinitionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2554,6 +2594,7 @@ func (client *Client) getSasDefinitionsHandleResponse(resp *http.Response) (Clie
 //   - options - ClientGetSecretOptions contains the optional parameters for the Client.GetSecret method.
 func (client *Client) GetSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *ClientGetSecretOptions) (ClientGetSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetSecret")
 	req, err := client.getSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, options)
 	if err != nil {
 		return ClientGetSecretResponse{}, err
@@ -2616,6 +2657,7 @@ func (client *Client) NewGetSecretVersionsPager(vaultBaseURL string, secretName 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSecretVersionsResponse) (ClientGetSecretVersionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetSecretVersionsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2683,6 +2725,7 @@ func (client *Client) NewGetSecretsPager(vaultBaseURL string, options *ClientGet
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSecretsResponse) (ClientGetSecretsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetSecretsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2742,6 +2785,7 @@ func (client *Client) getSecretsHandleResponse(resp *http.Response) (ClientGetSe
 //   - options - ClientGetStorageAccountOptions contains the optional parameters for the Client.GetStorageAccount method.
 func (client *Client) GetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientGetStorageAccountOptions) (ClientGetStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetStorageAccount")
 	req, err := client.getStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return ClientGetStorageAccountResponse{}, err
@@ -2799,6 +2843,7 @@ func (client *Client) NewGetStorageAccountsPager(vaultBaseURL string, options *C
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetStorageAccountsResponse) (ClientGetStorageAccountsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewGetStorageAccountsPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -2861,6 +2906,7 @@ func (client *Client) getStorageAccountsHandleResponse(resp *http.Response) (Cli
 //   - options - ClientImportCertificateOptions contains the optional parameters for the Client.ImportCertificate method.
 func (client *Client) ImportCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *ClientImportCertificateOptions) (ClientImportCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.ImportCertificate")
 	req, err := client.importCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
 		return ClientImportCertificateResponse{}, err
@@ -2921,6 +2967,7 @@ func (client *Client) importCertificateHandleResponse(resp *http.Response) (Clie
 //   - options - ClientImportKeyOptions contains the optional parameters for the Client.ImportKey method.
 func (client *Client) ImportKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *ClientImportKeyOptions) (ClientImportKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.ImportKey")
 	req, err := client.importKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
 		return ClientImportKeyResponse{}, err
@@ -2981,6 +3028,7 @@ func (client *Client) importKeyHandleResponse(resp *http.Response) (ClientImport
 //   - options - ClientMergeCertificateOptions contains the optional parameters for the Client.MergeCertificate method.
 func (client *Client) MergeCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *ClientMergeCertificateOptions) (ClientMergeCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.MergeCertificate")
 	req, err := client.mergeCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
 		return ClientMergeCertificateResponse{}, err
@@ -3041,6 +3089,7 @@ func (client *Client) mergeCertificateHandleResponse(resp *http.Response) (Clien
 //     method.
 func (client *Client) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientPurgeDeletedCertificateOptions) (ClientPurgeDeletedCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.PurgeDeletedCertificate")
 	req, err := client.purgeDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientPurgeDeletedCertificateResponse{}, err
@@ -3087,6 +3136,7 @@ func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, 
 //   - options - ClientPurgeDeletedKeyOptions contains the optional parameters for the Client.PurgeDeletedKey method.
 func (client *Client) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *ClientPurgeDeletedKeyOptions) (ClientPurgeDeletedKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.PurgeDeletedKey")
 	req, err := client.purgeDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return ClientPurgeDeletedKeyResponse{}, err
@@ -3133,6 +3183,7 @@ func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBas
 //   - options - ClientPurgeDeletedSecretOptions contains the optional parameters for the Client.PurgeDeletedSecret method.
 func (client *Client) PurgeDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *ClientPurgeDeletedSecretOptions) (ClientPurgeDeletedSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.PurgeDeletedSecret")
 	req, err := client.purgeDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return ClientPurgeDeletedSecretResponse{}, err
@@ -3180,6 +3231,7 @@ func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vault
 //     method.
 func (client *Client) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientPurgeDeletedStorageAccountOptions) (ClientPurgeDeletedStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.PurgeDeletedStorageAccount")
 	req, err := client.purgeDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return ClientPurgeDeletedStorageAccountResponse{}, err
@@ -3227,6 +3279,7 @@ func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Contex
 //     method.
 func (client *Client) RecoverDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientRecoverDeletedCertificateOptions) (ClientRecoverDeletedCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RecoverDeletedCertificate")
 	req, err := client.recoverDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return ClientRecoverDeletedCertificateResponse{}, err
@@ -3284,6 +3337,7 @@ func (client *Client) recoverDeletedCertificateHandleResponse(resp *http.Respons
 //   - options - ClientRecoverDeletedKeyOptions contains the optional parameters for the Client.RecoverDeletedKey method.
 func (client *Client) RecoverDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *ClientRecoverDeletedKeyOptions) (ClientRecoverDeletedKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RecoverDeletedKey")
 	req, err := client.recoverDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return ClientRecoverDeletedKeyResponse{}, err
@@ -3341,6 +3395,7 @@ func (client *Client) recoverDeletedKeyHandleResponse(resp *http.Response) (Clie
 //     method.
 func (client *Client) RecoverDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientRecoverDeletedSasDefinitionOptions) (ClientRecoverDeletedSasDefinitionResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RecoverDeletedSasDefinition")
 	req, err := client.recoverDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return ClientRecoverDeletedSasDefinitionResponse{}, err
@@ -3400,6 +3455,7 @@ func (client *Client) recoverDeletedSasDefinitionHandleResponse(resp *http.Respo
 //   - options - ClientRecoverDeletedSecretOptions contains the optional parameters for the Client.RecoverDeletedSecret method.
 func (client *Client) RecoverDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *ClientRecoverDeletedSecretOptions) (ClientRecoverDeletedSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RecoverDeletedSecret")
 	req, err := client.recoverDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return ClientRecoverDeletedSecretResponse{}, err
@@ -3456,6 +3512,7 @@ func (client *Client) recoverDeletedSecretHandleResponse(resp *http.Response) (C
 //     method.
 func (client *Client) RecoverDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientRecoverDeletedStorageAccountOptions) (ClientRecoverDeletedStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RecoverDeletedStorageAccount")
 	req, err := client.recoverDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return ClientRecoverDeletedStorageAccountResponse{}, err
@@ -3513,6 +3570,7 @@ func (client *Client) recoverDeletedStorageAccountHandleResponse(resp *http.Resp
 //     method.
 func (client *Client) RegenerateStorageAccountKey(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *ClientRegenerateStorageAccountKeyOptions) (ClientRegenerateStorageAccountKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RegenerateStorageAccountKey")
 	req, err := client.regenerateStorageAccountKeyCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
 		return ClientRegenerateStorageAccountKeyResponse{}, err
@@ -3571,6 +3629,7 @@ func (client *Client) regenerateStorageAccountKeyHandleResponse(resp *http.Respo
 //   - options - ClientRestoreCertificateOptions contains the optional parameters for the Client.RestoreCertificate method.
 func (client *Client) RestoreCertificate(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *ClientRestoreCertificateOptions) (ClientRestoreCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RestoreCertificate")
 	req, err := client.restoreCertificateCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return ClientRestoreCertificateResponse{}, err
@@ -3632,6 +3691,7 @@ func (client *Client) restoreCertificateHandleResponse(resp *http.Response) (Cli
 //   - options - ClientRestoreKeyOptions contains the optional parameters for the Client.RestoreKey method.
 func (client *Client) RestoreKey(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *ClientRestoreKeyOptions) (ClientRestoreKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RestoreKey")
 	req, err := client.restoreKeyCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return ClientRestoreKeyResponse{}, err
@@ -3686,6 +3746,7 @@ func (client *Client) restoreKeyHandleResponse(resp *http.Response) (ClientResto
 //   - options - ClientRestoreSecretOptions contains the optional parameters for the Client.RestoreSecret method.
 func (client *Client) RestoreSecret(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *ClientRestoreSecretOptions) (ClientRestoreSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RestoreSecret")
 	req, err := client.restoreSecretCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return ClientRestoreSecretResponse{}, err
@@ -3739,6 +3800,7 @@ func (client *Client) restoreSecretHandleResponse(resp *http.Response) (ClientRe
 //   - options - ClientRestoreStatusOptions contains the optional parameters for the Client.RestoreStatus method.
 func (client *Client) RestoreStatus(ctx context.Context, vaultBaseURL string, jobID string, options *ClientRestoreStatusOptions) (ClientRestoreStatusResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RestoreStatus")
 	req, err := client.restoreStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
 		return ClientRestoreStatusResponse{}, err
@@ -3793,6 +3855,7 @@ func (client *Client) restoreStatusHandleResponse(resp *http.Response) (ClientRe
 //   - options - ClientRestoreStorageAccountOptions contains the optional parameters for the Client.RestoreStorageAccount method.
 func (client *Client) RestoreStorageAccount(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *ClientRestoreStorageAccountOptions) (ClientRestoreStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.RestoreStorageAccount")
 	req, err := client.restoreStorageAccountCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return ClientRestoreStorageAccountResponse{}, err
@@ -3849,7 +3912,6 @@ func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (
 //     method.
 func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*runtime.Poller[ClientSelectiveKeyRestoreOperationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, restoreBlobDetails, options)
 		if err != nil {
 			return nil, err
@@ -3870,6 +3932,7 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 // Generated from API version 7.2
 func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BeginSelectiveKeyRestoreOperation")
 	req, err := client.selectiveKeyRestoreOperationCreateRequest(ctx, vaultBaseURL, keyName, restoreBlobDetails, options)
 	if err != nil {
 		return nil, err
@@ -3918,6 +3981,7 @@ func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Cont
 //   - options - ClientSetCertificateContactsOptions contains the optional parameters for the Client.SetCertificateContacts method.
 func (client *Client) SetCertificateContacts(ctx context.Context, vaultBaseURL string, contacts Contacts, options *ClientSetCertificateContactsOptions) (ClientSetCertificateContactsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.SetCertificateContacts")
 	req, err := client.setCertificateContactsCreateRequest(ctx, vaultBaseURL, contacts, options)
 	if err != nil {
 		return ClientSetCertificateContactsResponse{}, err
@@ -3973,6 +4037,7 @@ func (client *Client) setCertificateContactsHandleResponse(resp *http.Response) 
 //   - options - ClientSetCertificateIssuerOptions contains the optional parameters for the Client.SetCertificateIssuer method.
 func (client *Client) SetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *ClientSetCertificateIssuerOptions) (ClientSetCertificateIssuerResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.SetCertificateIssuer")
 	req, err := client.setCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
 		return ClientSetCertificateIssuerResponse{}, err
@@ -4033,6 +4098,7 @@ func (client *Client) setCertificateIssuerHandleResponse(resp *http.Response) (C
 //   - options - ClientSetSasDefinitionOptions contains the optional parameters for the Client.SetSasDefinition method.
 func (client *Client) SetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *ClientSetSasDefinitionOptions) (ClientSetSasDefinitionResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.SetSasDefinition")
 	req, err := client.setSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
 		return ClientSetSasDefinitionResponse{}, err
@@ -4096,6 +4162,7 @@ func (client *Client) setSasDefinitionHandleResponse(resp *http.Response) (Clien
 //   - options - ClientSetSecretOptions contains the optional parameters for the Client.SetSecret method.
 func (client *Client) SetSecret(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *ClientSetSecretOptions) (ClientSetSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.SetSecret")
 	req, err := client.setSecretCreateRequest(ctx, vaultBaseURL, secretName, parameters, options)
 	if err != nil {
 		return ClientSetSecretResponse{}, err
@@ -4154,6 +4221,7 @@ func (client *Client) setSecretHandleResponse(resp *http.Response) (ClientSetSec
 //   - options - ClientSetStorageAccountOptions contains the optional parameters for the Client.SetStorageAccount method.
 func (client *Client) SetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *ClientSetStorageAccountOptions) (ClientSetStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.SetStorageAccount")
 	req, err := client.setStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
 		return ClientSetStorageAccountResponse{}, err
@@ -4214,6 +4282,7 @@ func (client *Client) setStorageAccountHandleResponse(resp *http.Response) (Clie
 //   - options - ClientSignOptions contains the optional parameters for the Client.Sign method.
 func (client *Client) Sign(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *ClientSignOptions) (ClientSignResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.Sign")
 	req, err := client.signCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return ClientSignResponse{}, err
@@ -4280,6 +4349,7 @@ func (client *Client) signHandleResponse(resp *http.Response) (ClientSignRespons
 //   - options - ClientUnwrapKeyOptions contains the optional parameters for the Client.UnwrapKey method.
 func (client *Client) UnwrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientUnwrapKeyOptions) (ClientUnwrapKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UnwrapKey")
 	req, err := client.unwrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return ClientUnwrapKeyResponse{}, err
@@ -4345,6 +4415,7 @@ func (client *Client) unwrapKeyHandleResponse(resp *http.Response) (ClientUnwrap
 //   - options - ClientUpdateCertificateOptions contains the optional parameters for the Client.UpdateCertificate method.
 func (client *Client) UpdateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *ClientUpdateCertificateOptions) (ClientUpdateCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateCertificate")
 	req, err := client.updateCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, parameters, options)
 	if err != nil {
 		return ClientUpdateCertificateResponse{}, err
@@ -4409,6 +4480,7 @@ func (client *Client) updateCertificateHandleResponse(resp *http.Response) (Clie
 //     method.
 func (client *Client) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *ClientUpdateCertificateIssuerOptions) (ClientUpdateCertificateIssuerResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateCertificateIssuer")
 	req, err := client.updateCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
 		return ClientUpdateCertificateIssuerResponse{}, err
@@ -4469,6 +4541,7 @@ func (client *Client) updateCertificateIssuerHandleResponse(resp *http.Response)
 //     method.
 func (client *Client) UpdateCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *ClientUpdateCertificateOperationOptions) (ClientUpdateCertificateOperationResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateCertificateOperation")
 	req, err := client.updateCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, certificateOperation, options)
 	if err != nil {
 		return ClientUpdateCertificateOperationResponse{}, err
@@ -4529,6 +4602,7 @@ func (client *Client) updateCertificateOperationHandleResponse(resp *http.Respon
 //     method.
 func (client *Client) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *ClientUpdateCertificatePolicyOptions) (ClientUpdateCertificatePolicyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateCertificatePolicy")
 	req, err := client.updateCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, certificatePolicy, options)
 	if err != nil {
 		return ClientUpdateCertificatePolicyResponse{}, err
@@ -4589,6 +4663,7 @@ func (client *Client) updateCertificatePolicyHandleResponse(resp *http.Response)
 //   - options - ClientUpdateKeyOptions contains the optional parameters for the Client.UpdateKey method.
 func (client *Client) UpdateKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *ClientUpdateKeyOptions) (ClientUpdateKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateKey")
 	req, err := client.updateKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return ClientUpdateKeyResponse{}, err
@@ -4653,6 +4728,7 @@ func (client *Client) updateKeyHandleResponse(resp *http.Response) (ClientUpdate
 //   - options - ClientUpdateSasDefinitionOptions contains the optional parameters for the Client.UpdateSasDefinition method.
 func (client *Client) UpdateSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *ClientUpdateSasDefinitionOptions) (ClientUpdateSasDefinitionResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateSasDefinition")
 	req, err := client.updateSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
 		return ClientUpdateSasDefinitionResponse{}, err
@@ -4718,6 +4794,7 @@ func (client *Client) updateSasDefinitionHandleResponse(resp *http.Response) (Cl
 //   - options - ClientUpdateSecretOptions contains the optional parameters for the Client.UpdateSecret method.
 func (client *Client) UpdateSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *ClientUpdateSecretOptions) (ClientUpdateSecretResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateSecret")
 	req, err := client.updateSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, parameters, options)
 	if err != nil {
 		return ClientUpdateSecretResponse{}, err
@@ -4781,6 +4858,7 @@ func (client *Client) updateSecretHandleResponse(resp *http.Response) (ClientUpd
 //   - options - ClientUpdateStorageAccountOptions contains the optional parameters for the Client.UpdateStorageAccount method.
 func (client *Client) UpdateStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *ClientUpdateStorageAccountOptions) (ClientUpdateStorageAccountResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateStorageAccount")
 	req, err := client.updateStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
 		return ClientUpdateStorageAccountResponse{}, err
@@ -4844,6 +4922,7 @@ func (client *Client) updateStorageAccountHandleResponse(resp *http.Response) (C
 //   - options - ClientVerifyOptions contains the optional parameters for the Client.Verify method.
 func (client *Client) Verify(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *ClientVerifyOptions) (ClientVerifyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.Verify")
 	req, err := client.verifyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return ClientVerifyResponse{}, err
@@ -4912,6 +4991,7 @@ func (client *Client) verifyHandleResponse(resp *http.Response) (ClientVerifyRes
 //   - options - ClientWrapKeyOptions contains the optional parameters for the Client.WrapKey method.
 func (client *Client) WrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientWrapKeyOptions) (ClientWrapKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.WrapKey")
 	req, err := client.wrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return ClientWrapKeyResponse{}, err

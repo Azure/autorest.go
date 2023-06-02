@@ -31,7 +31,9 @@ type DateClient struct {
 //   - options - DateClientGetInvalidDateOptions contains the optional parameters for the DateClient.GetInvalidDate method.
 func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateClientGetInvalidDateOptions) (DateClientGetInvalidDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetInvalidDate", client.internal.Tracer(), nil)
+	const operationName = "DateClient.GetInvalidDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidDateCreateRequest(ctx, options)
 	if err != nil {
@@ -78,7 +80,9 @@ func (client *DateClient) getInvalidDateHandleResponse(resp *http.Response) (Dat
 //   - options - DateClientGetMaxDateOptions contains the optional parameters for the DateClient.GetMaxDate method.
 func (client *DateClient) GetMaxDate(ctx context.Context, options *DateClientGetMaxDateOptions) (DateClientGetMaxDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetMaxDate", client.internal.Tracer(), nil)
+	const operationName = "DateClient.GetMaxDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getMaxDateCreateRequest(ctx, options)
 	if err != nil {
@@ -125,7 +129,9 @@ func (client *DateClient) getMaxDateHandleResponse(resp *http.Response) (DateCli
 //   - options - DateClientGetMinDateOptions contains the optional parameters for the DateClient.GetMinDate method.
 func (client *DateClient) GetMinDate(ctx context.Context, options *DateClientGetMinDateOptions) (DateClientGetMinDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetMinDate", client.internal.Tracer(), nil)
+	const operationName = "DateClient.GetMinDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getMinDateCreateRequest(ctx, options)
 	if err != nil {
@@ -172,7 +178,9 @@ func (client *DateClient) getMinDateHandleResponse(resp *http.Response) (DateCli
 //   - options - DateClientGetNullOptions contains the optional parameters for the DateClient.GetNull method.
 func (client *DateClient) GetNull(ctx context.Context, options *DateClientGetNullOptions) (DateClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "DateClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -219,7 +227,9 @@ func (client *DateClient) getNullHandleResponse(resp *http.Response) (DateClient
 //   - options - DateClientGetOverflowDateOptions contains the optional parameters for the DateClient.GetOverflowDate method.
 func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateClientGetOverflowDateOptions) (DateClientGetOverflowDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetOverflowDate", client.internal.Tracer(), nil)
+	const operationName = "DateClient.GetOverflowDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOverflowDateCreateRequest(ctx, options)
 	if err != nil {
@@ -266,7 +276,9 @@ func (client *DateClient) getOverflowDateHandleResponse(resp *http.Response) (Da
 //   - options - DateClientGetUnderflowDateOptions contains the optional parameters for the DateClient.GetUnderflowDate method.
 func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateClientGetUnderflowDateOptions) (DateClientGetUnderflowDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.GetUnderflowDate", client.internal.Tracer(), nil)
+	const operationName = "DateClient.GetUnderflowDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUnderflowDateCreateRequest(ctx, options)
 	if err != nil {
@@ -314,7 +326,9 @@ func (client *DateClient) getUnderflowDateHandleResponse(resp *http.Response) (D
 //   - options - DateClientPutMaxDateOptions contains the optional parameters for the DateClient.PutMaxDate method.
 func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, options *DateClientPutMaxDateOptions) (DateClientPutMaxDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.PutMaxDate", client.internal.Tracer(), nil)
+	const operationName = "DateClient.PutMaxDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMaxDateCreateRequest(ctx, dateBody, options)
 	if err != nil {
@@ -353,7 +367,9 @@ func (client *DateClient) putMaxDateCreateRequest(ctx context.Context, dateBody 
 //   - options - DateClientPutMinDateOptions contains the optional parameters for the DateClient.PutMinDate method.
 func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, options *DateClientPutMinDateOptions) (DateClientPutMinDateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DateClient.PutMinDate", client.internal.Tracer(), nil)
+	const operationName = "DateClient.PutMinDate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putMinDateCreateRequest(ctx, dateBody, options)
 	if err != nil {

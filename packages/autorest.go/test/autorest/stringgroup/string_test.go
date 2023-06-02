@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -21,14 +20,6 @@ func newStringClient(t *testing.T) *StringClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewStringClient(options *azcore.ClientOptions) (*StringClient, error) {
-	client, err := azcore.NewClient("stringgroup.StringClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &StringClient{internal: client}, nil
 }
 
 func TestStringGetMBCS(t *testing.T) {

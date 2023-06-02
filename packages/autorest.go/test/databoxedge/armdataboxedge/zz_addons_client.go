@@ -57,7 +57,6 @@ func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, o
 //     method.
 func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*runtime.Poller[AddonsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 		if err != nil {
 			return nil, err
@@ -75,6 +74,7 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 // Generated from API version 2021-02-01
 func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 	if err != nil {
 		return nil, err
@@ -135,7 +135,6 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 //   - options - AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
 func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*runtime.Poller[AddonsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
@@ -153,6 +152,7 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 // Generated from API version 2021-02-01
 func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -210,6 +210,7 @@ func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName 
 //   - options - AddonsClientGetOptions contains the optional parameters for the AddonsClient.Get method.
 func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientGetOptions) (AddonsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
 		return AddonsClientGetResponse{}, err
@@ -279,6 +280,7 @@ func (client *AddonsClient) NewListByRolePager(deviceName string, roleName strin
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AddonsClientListByRoleResponse) (AddonsClientListByRoleResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.NewListByRolePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

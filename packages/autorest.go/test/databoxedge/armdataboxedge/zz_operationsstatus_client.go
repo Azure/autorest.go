@@ -54,6 +54,7 @@ func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCre
 //   - options - OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
 func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusClientGetOptions) (OperationsStatusClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsStatusClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return OperationsStatusClientGetResponse{}, err

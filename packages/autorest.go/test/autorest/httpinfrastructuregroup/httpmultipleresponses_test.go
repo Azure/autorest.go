@@ -11,7 +11,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -24,14 +23,6 @@ func newMultipleResponsesClient(t *testing.T) *MultipleResponsesClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewMultipleResponsesClient(options *azcore.ClientOptions) (*MultipleResponsesClient, error) {
-	client, err := azcore.NewClient("httpinfrastructuregroup.MultipleResponsesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &MultipleResponsesClient{internal: client}, nil
 }
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}

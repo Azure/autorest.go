@@ -38,14 +38,6 @@ func httpClientWithCookieJar() policy.Transporter {
 	return http.DefaultClient
 }
 
-func NewPagingClient(options *azcore.ClientOptions) (*PagingClient, error) {
-	client, err := azcore.NewClient("paginggroup.PagingClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &PagingClient{internal: client}, nil
-}
-
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePages(t *testing.T) {
 	client := newPagingClient(t)

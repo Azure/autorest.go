@@ -37,6 +37,7 @@ type RoleAssignmentsClient struct {
 //   - options - RoleAssignmentsClientCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
 func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsClientCreateOptions) (RoleAssignmentsClientCreateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleAssignmentsClient.Create")
 	req, err := client.createCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, parameters, options)
 	if err != nil {
 		return RoleAssignmentsClientCreateResponse{}, err
@@ -96,6 +97,7 @@ func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (
 //   - options - RoleAssignmentsClientDeleteOptions contains the optional parameters for the RoleAssignmentsClient.Delete method.
 func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientDeleteOptions) (RoleAssignmentsClientDeleteResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleAssignmentsClient.Delete")
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
 		return RoleAssignmentsClientDeleteResponse{}, err
@@ -152,6 +154,7 @@ func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (
 //   - options - RoleAssignmentsClientGetOptions contains the optional parameters for the RoleAssignmentsClient.Get method.
 func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientGetOptions) (RoleAssignmentsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleAssignmentsClient.Get")
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
 		return RoleAssignmentsClientGetResponse{}, err
@@ -211,6 +214,7 @@ func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, s
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RoleAssignmentsClientListForScopeResponse) (RoleAssignmentsClientListForScopeResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoleAssignmentsClient.NewListForScopePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

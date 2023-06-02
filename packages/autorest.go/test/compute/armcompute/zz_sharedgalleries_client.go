@@ -54,7 +54,9 @@ func NewSharedGalleriesClient(subscriptionID string, credential azcore.TokenCred
 //   - options - SharedGalleriesClientGetOptions contains the optional parameters for the SharedGalleriesClient.Get method.
 func (client *SharedGalleriesClient) Get(ctx context.Context, location string, galleryUniqueName string, options *SharedGalleriesClientGetOptions) (SharedGalleriesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SharedGalleriesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "SharedGalleriesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, location, galleryUniqueName, options)
 	if err != nil {
@@ -119,6 +121,7 @@ func (client *SharedGalleriesClient) NewListPager(location string, options *Shar
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SharedGalleriesClientListResponse) (SharedGalleriesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharedGalleriesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

@@ -55,10 +55,6 @@ func NewVipSwapClient(subscriptionID string, credential azcore.TokenCredential, 
 //   - options - VipSwapClientBeginCreateOptions contains the optional parameters for the VipSwapClient.BeginCreate method.
 func (client *VipSwapClient) BeginCreate(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (*runtime.Poller[VipSwapClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VipSwapClient.BeginCreate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.create(ctx, groupName, resourceName, parameters, options)
 		if err != nil {
 			return nil, err
@@ -76,6 +72,10 @@ func (client *VipSwapClient) BeginCreate(ctx context.Context, groupName string, 
 // Generated from API version 2022-09-01
 func (client *VipSwapClient) create(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VipSwapClient.BeginCreate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, groupName, resourceName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -131,7 +131,9 @@ func (client *VipSwapClient) createCreateRequest(ctx context.Context, groupName 
 //   - options - VipSwapClientGetOptions contains the optional parameters for the VipSwapClient.Get method.
 func (client *VipSwapClient) Get(ctx context.Context, groupName string, resourceName string, options *VipSwapClientGetOptions) (VipSwapClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VipSwapClient.Get", client.internal.Tracer(), nil)
+	const operationName = "VipSwapClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, groupName, resourceName, options)
 	if err != nil {
@@ -195,7 +197,9 @@ func (client *VipSwapClient) getHandleResponse(resp *http.Response) (VipSwapClie
 //   - options - VipSwapClientListOptions contains the optional parameters for the VipSwapClient.List method.
 func (client *VipSwapClient) List(ctx context.Context, groupName string, resourceName string, options *VipSwapClientListOptions) (VipSwapClientListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "VipSwapClient.List", client.internal.Tracer(), nil)
+	const operationName = "VipSwapClient.List"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, groupName, resourceName, options)
 	if err != nil {

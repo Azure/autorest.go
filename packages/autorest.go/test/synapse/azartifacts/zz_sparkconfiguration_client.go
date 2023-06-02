@@ -37,7 +37,6 @@ type SparkConfigurationClient struct {
 //     SparkConfigurationClient.BeginCreateOrUpdateSparkConfiguration method.
 func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdateSparkConfiguration(ctx, sparkConfigurationName, sparkConfiguration, options)
 		if err != nil {
 			return nil, err
@@ -55,6 +54,7 @@ func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ct
 // Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) createOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SparkConfigurationClient.BeginCreateOrUpdateSparkConfiguration")
 	req, err := client.createOrUpdateSparkConfigurationCreateRequest(ctx, sparkConfigurationName, sparkConfiguration, options)
 	if err != nil {
 		return nil, err
@@ -103,7 +103,6 @@ func (client *SparkConfigurationClient) createOrUpdateSparkConfigurationCreateRe
 //     method.
 func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientDeleteSparkConfigurationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteSparkConfiguration(ctx, sparkConfigurationName, options)
 		if err != nil {
 			return nil, err
@@ -121,6 +120,7 @@ func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx contex
 // Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) deleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SparkConfigurationClient.BeginDeleteSparkConfiguration")
 	req, err := client.deleteSparkConfigurationCreateRequest(ctx, sparkConfigurationName, options)
 	if err != nil {
 		return nil, err
@@ -163,6 +163,7 @@ func (client *SparkConfigurationClient) deleteSparkConfigurationCreateRequest(ct
 //     method.
 func (client *SparkConfigurationClient) GetSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientGetSparkConfigurationOptions) (SparkConfigurationClientGetSparkConfigurationResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SparkConfigurationClient.GetSparkConfiguration")
 	req, err := client.getSparkConfigurationCreateRequest(ctx, sparkConfigurationName, options)
 	if err != nil {
 		return SparkConfigurationClientGetSparkConfigurationResponse{}, err
@@ -220,6 +221,7 @@ func (client *SparkConfigurationClient) NewGetSparkConfigurationsByWorkspacePage
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SparkConfigurationClientGetSparkConfigurationsByWorkspaceResponse) (SparkConfigurationClientGetSparkConfigurationsByWorkspaceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SparkConfigurationClient.NewGetSparkConfigurationsByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -275,7 +277,6 @@ func (client *SparkConfigurationClient) getSparkConfigurationsByWorkspaceHandleR
 //     method.
 func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*runtime.Poller[SparkConfigurationClientRenameSparkConfigurationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.renameSparkConfiguration(ctx, sparkConfigurationName, request, options)
 		if err != nil {
 			return nil, err
@@ -293,6 +294,7 @@ func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx contex
 // Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) renameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SparkConfigurationClient.BeginRenameSparkConfiguration")
 	req, err := client.renameSparkConfigurationCreateRequest(ctx, sparkConfigurationName, request, options)
 	if err != nil {
 		return nil, err

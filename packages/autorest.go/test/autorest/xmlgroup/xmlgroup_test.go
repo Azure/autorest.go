@@ -11,7 +11,6 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -35,14 +34,6 @@ func newXMLClient(t *testing.T) *XMLClient {
 	client, err := NewXMLClient(&options)
 	require.NoError(t, err)
 	return client
-}
-
-func NewXMLClient(options *azcore.ClientOptions) (*XMLClient, error) {
-	client, err := azcore.NewClient("xmlgroup.XMLClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &XMLClient{internal: client}, nil
 }
 
 func TestGetACLs(t *testing.T) {

@@ -55,10 +55,6 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 //     VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList method.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*runtime.Poller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 		if err != nil {
 			return nil, err
@@ -78,6 +74,10 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 // Generated from API version 2022-09-01
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*http.Response, error) {
 	var err error
+	const operationName = "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return nil, err

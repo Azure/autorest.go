@@ -31,7 +31,9 @@ type ArrayClient struct {
 //   - options - ArrayClientGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
 func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayClientGetArrayEmptyOptions) (ArrayClientGetArrayEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetArrayEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *ArrayClient) getArrayEmptyHandleResponse(resp *http.Response) (Arr
 //   - options - ArrayClientGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
 func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayClientGetArrayItemEmptyOptions) (ArrayClientGetArrayItemEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayItemEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetArrayItemEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -121,7 +125,9 @@ func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *http.Response) 
 //   - options - ArrayClientGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
 func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayClientGetArrayItemNullOptions) (ArrayClientGetArrayItemNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayItemNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetArrayItemNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -166,7 +172,9 @@ func (client *ArrayClient) getArrayItemNullHandleResponse(resp *http.Response) (
 //   - options - ArrayClientGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
 func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayClientGetArrayNullOptions) (ArrayClientGetArrayNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetArrayNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
@@ -211,7 +219,9 @@ func (client *ArrayClient) getArrayNullHandleResponse(resp *http.Response) (Arra
 //   - options - ArrayClientGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
 func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayClientGetArrayValidOptions) (ArrayClientGetArrayValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetArrayValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetArrayValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
@@ -257,7 +267,9 @@ func (client *ArrayClient) getArrayValidHandleResponse(resp *http.Response) (Arr
 //   - options - ArrayClientGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayClientGetBase64URLOptions) (ArrayClientGetBase64URLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBase64URL", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetBase64URL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
@@ -303,7 +315,9 @@ func (client *ArrayClient) getBase64URLHandleResponse(resp *http.Response) (Arra
 //     method.
 func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *ArrayClientGetBooleanInvalidNullOptions) (ArrayClientGetBooleanInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBooleanInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetBooleanInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -349,7 +363,9 @@ func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *http.Respon
 //     method.
 func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options *ArrayClientGetBooleanInvalidStringOptions) (ArrayClientGetBooleanInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBooleanInvalidString", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetBooleanInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -394,7 +410,9 @@ func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *http.Resp
 //   - options - ArrayClientGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
 func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayClientGetBooleanTfftOptions) (ArrayClientGetBooleanTfftResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetBooleanTfft", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetBooleanTfft"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
@@ -440,7 +458,9 @@ func (client *ArrayClient) getBooleanTfftHandleResponse(resp *http.Response) (Ar
 //     method.
 func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *ArrayClientGetByteInvalidNullOptions) (ArrayClientGetByteInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetByteInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetByteInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -485,7 +505,9 @@ func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *http.Response)
 //   - options - ArrayClientGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
 func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayClientGetByteValidOptions) (ArrayClientGetByteValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetByteValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetByteValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
@@ -530,7 +552,9 @@ func (client *ArrayClient) getByteValidHandleResponse(resp *http.Response) (Arra
 //   - options - ArrayClientGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
 func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayClientGetComplexEmptyOptions) (ArrayClientGetComplexEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetComplexEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -577,7 +601,9 @@ func (client *ArrayClient) getComplexEmptyHandleResponse(resp *http.Response) (A
 //     method.
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayClientGetComplexItemEmptyOptions) (ArrayClientGetComplexItemEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexItemEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetComplexItemEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -624,7 +650,9 @@ func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *http.Response
 //     method.
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayClientGetComplexItemNullOptions) (ArrayClientGetComplexItemNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexItemNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetComplexItemNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -669,7 +697,9 @@ func (client *ArrayClient) getComplexItemNullHandleResponse(resp *http.Response)
 //   - options - ArrayClientGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
 func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayClientGetComplexNullOptions) (ArrayClientGetComplexNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetComplexNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
@@ -715,7 +745,9 @@ func (client *ArrayClient) getComplexNullHandleResponse(resp *http.Response) (Ar
 //   - options - ArrayClientGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
 func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayClientGetComplexValidOptions) (ArrayClientGetComplexValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetComplexValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetComplexValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
@@ -761,7 +793,9 @@ func (client *ArrayClient) getComplexValidHandleResponse(resp *http.Response) (A
 //     method.
 func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *ArrayClientGetDateInvalidCharsOptions) (ArrayClientGetDateInvalidCharsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateInvalidChars", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDateInvalidChars"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -813,7 +847,9 @@ func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response
 //     method.
 func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *ArrayClientGetDateInvalidNullOptions) (ArrayClientGetDateInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDateInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -865,7 +901,9 @@ func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response)
 //     method.
 func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *ArrayClientGetDateTimeInvalidCharsOptions) (ArrayClientGetDateTimeInvalidCharsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeInvalidChars", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDateTimeInvalidChars"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -917,7 +955,9 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Resp
 //     method.
 func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *ArrayClientGetDateTimeInvalidNullOptions) (ArrayClientGetDateTimeInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDateTimeInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -970,7 +1010,9 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Respo
 //     method.
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayClientGetDateTimeRFC1123ValidOptions) (ArrayClientGetDateTimeRFC1123ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeRFC1123Valid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDateTimeRFC1123Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1021,7 +1063,9 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Resp
 //   - options - ArrayClientGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
 func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayClientGetDateTimeValidOptions) (ArrayClientGetDateTimeValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateTimeValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDateTimeValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1072,7 +1116,9 @@ func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (
 //   - options - ArrayClientGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
 func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayClientGetDateValidOptions) (ArrayClientGetDateValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDateValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDateValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1124,7 +1170,9 @@ func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (Arra
 //     method.
 func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayClientGetDictionaryEmptyOptions) (ArrayClientGetDictionaryEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDictionaryEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1171,7 +1219,9 @@ func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *http.Response)
 //     method.
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayClientGetDictionaryItemEmptyOptions) (ArrayClientGetDictionaryItemEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryItemEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDictionaryItemEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1218,7 +1268,9 @@ func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *http.Respo
 //     method.
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayClientGetDictionaryItemNullOptions) (ArrayClientGetDictionaryItemNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryItemNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDictionaryItemNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1263,7 +1315,9 @@ func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *http.Respon
 //   - options - ArrayClientGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
 func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayClientGetDictionaryNullOptions) (ArrayClientGetDictionaryNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDictionaryNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1310,7 +1364,9 @@ func (client *ArrayClient) getDictionaryNullHandleResponse(resp *http.Response) 
 //     method.
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayClientGetDictionaryValidOptions) (ArrayClientGetDictionaryValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDictionaryValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDictionaryValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1356,7 +1412,9 @@ func (client *ArrayClient) getDictionaryValidHandleResponse(resp *http.Response)
 //     method.
 func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *ArrayClientGetDoubleInvalidNullOptions) (ArrayClientGetDoubleInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDoubleInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDoubleInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1402,7 +1460,9 @@ func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *http.Respons
 //     method.
 func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *ArrayClientGetDoubleInvalidStringOptions) (ArrayClientGetDoubleInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDoubleInvalidString", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDoubleInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1447,7 +1507,9 @@ func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *http.Respo
 //   - options - ArrayClientGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
 func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayClientGetDoubleValidOptions) (ArrayClientGetDoubleValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDoubleValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDoubleValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1492,7 +1554,9 @@ func (client *ArrayClient) getDoubleValidHandleResponse(resp *http.Response) (Ar
 //   - options - ArrayClientGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
 func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayClientGetDurationValidOptions) (ArrayClientGetDurationValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetDurationValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetDurationValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1537,7 +1601,9 @@ func (client *ArrayClient) getDurationValidHandleResponse(resp *http.Response) (
 //   - options - ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGetEmptyOptions) (ArrayClientGetEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1582,7 +1648,9 @@ func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayCli
 //   - options - ArrayClientGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
 func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayClientGetEnumValidOptions) (ArrayClientGetEnumValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetEnumValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetEnumValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEnumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1628,7 +1696,9 @@ func (client *ArrayClient) getEnumValidHandleResponse(resp *http.Response) (Arra
 //     method.
 func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *ArrayClientGetFloatInvalidNullOptions) (ArrayClientGetFloatInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetFloatInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetFloatInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1674,7 +1744,9 @@ func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *http.Response
 //     method.
 func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *ArrayClientGetFloatInvalidStringOptions) (ArrayClientGetFloatInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetFloatInvalidString", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetFloatInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1719,7 +1791,9 @@ func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *http.Respon
 //   - options - ArrayClientGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
 func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayClientGetFloatValidOptions) (ArrayClientGetFloatValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetFloatValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetFloatValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1764,7 +1838,9 @@ func (client *ArrayClient) getFloatValidHandleResponse(resp *http.Response) (Arr
 //   - options - ArrayClientGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
 func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayClientGetIntInvalidNullOptions) (ArrayClientGetIntInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetIntInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetIntInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1810,7 +1886,9 @@ func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *http.Response) 
 //     method.
 func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *ArrayClientGetIntInvalidStringOptions) (ArrayClientGetIntInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetIntInvalidString", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetIntInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1855,7 +1933,9 @@ func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *http.Response
 //   - options - ArrayClientGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
 func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayClientGetIntegerValidOptions) (ArrayClientGetIntegerValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetIntegerValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetIntegerValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1900,7 +1980,9 @@ func (client *ArrayClient) getIntegerValidHandleResponse(resp *http.Response) (A
 //   - options - ArrayClientGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
 func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayClientGetInvalidOptions) (ArrayClientGetInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetInvalid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1946,7 +2028,9 @@ func (client *ArrayClient) getInvalidHandleResponse(resp *http.Response) (ArrayC
 //     method.
 func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *ArrayClientGetLongInvalidNullOptions) (ArrayClientGetLongInvalidNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetLongInvalidNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetLongInvalidNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1992,7 +2076,9 @@ func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *http.Response)
 //     method.
 func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *ArrayClientGetLongInvalidStringOptions) (ArrayClientGetLongInvalidStringResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetLongInvalidString", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetLongInvalidString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2037,7 +2123,9 @@ func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *http.Respons
 //   - options - ArrayClientGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
 func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayClientGetLongValidOptions) (ArrayClientGetLongValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetLongValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetLongValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2082,7 +2170,9 @@ func (client *ArrayClient) getLongValidHandleResponse(resp *http.Response) (Arra
 //   - options - ArrayClientGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
 func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayClientGetNullOptions) (ArrayClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2128,7 +2218,9 @@ func (client *ArrayClient) getNullHandleResponse(resp *http.Response) (ArrayClie
 //     method.
 func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *ArrayClientGetStringEnumValidOptions) (ArrayClientGetStringEnumValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringEnumValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetStringEnumValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringEnumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2173,7 +2265,9 @@ func (client *ArrayClient) getStringEnumValidHandleResponse(resp *http.Response)
 //   - options - ArrayClientGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
 func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayClientGetStringValidOptions) (ArrayClientGetStringValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetStringValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2219,7 +2313,9 @@ func (client *ArrayClient) getStringValidHandleResponse(resp *http.Response) (Ar
 //     method.
 func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *ArrayClientGetStringWithInvalidOptions) (ArrayClientGetStringWithInvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringWithInvalid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetStringWithInvalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2264,7 +2360,9 @@ func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *http.Respons
 //   - options - ArrayClientGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
 func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayClientGetStringWithNullOptions) (ArrayClientGetStringWithNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetStringWithNull", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetStringWithNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2310,7 +2408,9 @@ func (client *ArrayClient) getStringWithNullHandleResponse(resp *http.Response) 
 //     method.
 func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayClientGetUUIDInvalidCharsOptions) (ArrayClientGetUUIDInvalidCharsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetUUIDInvalidChars", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetUUIDInvalidChars"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUUIDInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -2355,7 +2455,9 @@ func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *http.Response
 //   - options - ArrayClientGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
 func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayClientGetUUIDValidOptions) (ArrayClientGetUUIDValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.GetUUIDValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.GetUUIDValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUUIDValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2400,7 +2502,9 @@ func (client *ArrayClient) getUUIDValidHandleResponse(resp *http.Response) (Arra
 //   - options - ArrayClientPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
 func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*string, options *ArrayClientPutArrayValidOptions) (ArrayClientPutArrayValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutArrayValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutArrayValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2438,7 +2542,9 @@ func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, array
 //   - options - ArrayClientPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
 func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool, options *ArrayClientPutBooleanTfftOptions) (ArrayClientPutBooleanTfftResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutBooleanTfft", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutBooleanTfft"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2477,7 +2583,9 @@ func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arra
 //   - options - ArrayClientPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayClientPutByteValidOptions) (ArrayClientPutByteValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutByteValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutByteValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2516,7 +2624,9 @@ func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayB
 //   - options - ArrayClientPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayClientPutComplexValidOptions) (ArrayClientPutComplexValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutComplexValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutComplexValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2556,7 +2666,9 @@ func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arr
 //     method.
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeRFC1123ValidOptions) (ArrayClientPutDateTimeRFC1123ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDateTimeRFC1123Valid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutDateTimeRFC1123Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2598,7 +2710,9 @@ func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 //   - options - ArrayClientPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
 func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeValidOptions) (ArrayClientPutDateTimeValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDateTimeValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutDateTimeValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2636,7 +2750,9 @@ func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, ar
 //   - options - ArrayClientPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
 func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateValidOptions) (ArrayClientPutDateValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDateValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutDateValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2680,7 +2796,9 @@ func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayB
 //     method.
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayClientPutDictionaryValidOptions) (ArrayClientPutDictionaryValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDictionaryValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutDictionaryValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2718,7 +2836,9 @@ func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, 
 //   - options - ArrayClientPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
 func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*float64, options *ArrayClientPutDoubleValidOptions) (ArrayClientPutDoubleValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDoubleValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutDoubleValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2756,7 +2876,9 @@ func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arra
 //   - options - ArrayClientPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
 func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutDurationValidOptions) (ArrayClientPutDurationValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutDurationValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutDurationValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2794,7 +2916,9 @@ func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, ar
 //   - options - ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
 func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, options *ArrayClientPutEmptyOptions) (ArrayClientPutEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutEmpty", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2832,7 +2956,9 @@ func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody 
 //   - options - ArrayClientPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
 func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnum, options *ArrayClientPutEnumValidOptions) (ArrayClientPutEnumValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutEnumValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutEnumValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2870,7 +2996,9 @@ func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayB
 //   - options - ArrayClientPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
 func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float32, options *ArrayClientPutFloatValidOptions) (ArrayClientPutFloatValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutFloatValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutFloatValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2908,7 +3036,9 @@ func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, array
 //   - options - ArrayClientPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
 func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int32, options *ArrayClientPutIntegerValidOptions) (ArrayClientPutIntegerValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutIntegerValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutIntegerValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2946,7 +3076,9 @@ func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arr
 //   - options - ArrayClientPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
 func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64, options *ArrayClientPutLongValidOptions) (ArrayClientPutLongValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutLongValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutLongValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2985,7 +3117,9 @@ func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayB
 //     method.
 func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*Enum1, options *ArrayClientPutStringEnumValidOptions) (ArrayClientPutStringEnumValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutStringEnumValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutStringEnumValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putStringEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3023,7 +3157,9 @@ func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, 
 //   - options - ArrayClientPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
 func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutStringValidOptions) (ArrayClientPutStringValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutStringValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutStringValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3061,7 +3197,9 @@ func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arra
 //   - options - ArrayClientPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutUUIDValidOptions) (ArrayClientPutUUIDValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ArrayClient.PutUUIDValid", client.internal.Tracer(), nil)
+	const operationName = "ArrayClient.PutUUIDValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putUUIDValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {

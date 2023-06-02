@@ -57,7 +57,6 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 //     method.
 func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*runtime.Poller[ContainersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 		if err != nil {
 			return nil, err
@@ -75,6 +74,7 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 // Generated from API version 2021-02-01
 func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainersClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
 		return nil, err
@@ -135,7 +135,6 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 //   - options - ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
 func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*runtime.Poller[ContainersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
@@ -153,6 +152,7 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 // Generated from API version 2021-02-01
 func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainersClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -210,6 +210,7 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 //   - options - ContainersClientGetOptions contains the optional parameters for the ContainersClient.Get method.
 func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientGetOptions) (ContainersClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainersClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
 		return ContainersClientGetResponse{}, err
@@ -280,6 +281,7 @@ func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainersClientListByStorageAccountResponse) (ContainersClientListByStorageAccountResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainersClient.NewListByStorageAccountPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -349,7 +351,6 @@ func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Re
 //   - options - ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
 func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*runtime.Poller[ContainersClientRefreshResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
@@ -367,6 +368,7 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 // Generated from API version 2021-02-01
 func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainersClient.BeginRefresh")
 	req, err := client.refreshCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
 		return nil, err

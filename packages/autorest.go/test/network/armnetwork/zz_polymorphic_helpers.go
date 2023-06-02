@@ -28,7 +28,10 @@ func unmarshalActiveBaseSecurityAdminRuleClassification(rawMsg json.RawMessage) 
 	default:
 		b = &ActiveBaseSecurityAdminRule{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalActiveBaseSecurityAdminRuleClassificationArray(rawMsg json.RawMessage) ([]ActiveBaseSecurityAdminRuleClassification, error) {
@@ -67,7 +70,10 @@ func unmarshalBaseAdminRuleClassification(rawMsg json.RawMessage) (BaseAdminRule
 	default:
 		b = &BaseAdminRule{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalBaseAdminRuleClassificationArray(rawMsg json.RawMessage) ([]BaseAdminRuleClassification, error) {
@@ -106,7 +112,10 @@ func unmarshalEffectiveBaseSecurityAdminRuleClassification(rawMsg json.RawMessag
 	default:
 		b = &EffectiveBaseSecurityAdminRule{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalEffectiveBaseSecurityAdminRuleClassificationArray(rawMsg json.RawMessage) ([]EffectiveBaseSecurityAdminRuleClassification, error) {
@@ -147,7 +156,10 @@ func unmarshalFirewallPolicyRuleClassification(rawMsg json.RawMessage) (Firewall
 	default:
 		b = &FirewallPolicyRule{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalFirewallPolicyRuleClassificationArray(rawMsg json.RawMessage) ([]FirewallPolicyRuleClassification, error) {
@@ -186,7 +198,10 @@ func unmarshalFirewallPolicyRuleCollectionClassification(rawMsg json.RawMessage)
 	default:
 		b = &FirewallPolicyRuleCollection{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalFirewallPolicyRuleCollectionClassificationArray(rawMsg json.RawMessage) ([]FirewallPolicyRuleCollectionClassification, error) {

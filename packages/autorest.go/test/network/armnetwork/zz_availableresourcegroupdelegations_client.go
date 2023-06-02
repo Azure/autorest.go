@@ -58,6 +58,7 @@ func (client *AvailableResourceGroupDelegationsClient) NewListPager(location str
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AvailableResourceGroupDelegationsClientListResponse) (AvailableResourceGroupDelegationsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AvailableResourceGroupDelegationsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

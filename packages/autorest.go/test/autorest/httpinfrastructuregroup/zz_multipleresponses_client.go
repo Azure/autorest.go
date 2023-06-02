@@ -32,7 +32,9 @@ type MultipleResponsesClient struct {
 //     MultipleResponsesClient.Get200Model201ModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model201ModelDefaultError200Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model201ModelDefaultError200Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model201ModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -92,7 +94,9 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 //     MultipleResponsesClient.Get200Model201ModelDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model201ModelDefaultError201Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model201ModelDefaultError201Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model201ModelDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -151,7 +155,9 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 //     MultipleResponsesClient.Get200Model201ModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model201ModelDefaultError400Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model201ModelDefaultError400Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model201ModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -210,7 +216,9 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -256,7 +264,9 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError201InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -302,7 +312,9 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 //     MultipleResponsesClient.Get200Model204NoModelDefaultError202None method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError202None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model204NoModelDefaultError202None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -348,7 +360,9 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneH
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError204ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -395,7 +409,9 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 //     the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200Model204NoModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -441,7 +457,9 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 //     method.
 func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200InvalidOptions) (MultipleResponsesClientGet200ModelA200InvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA200Invalid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA200Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA200InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -488,7 +506,9 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidHandleResponse(resp
 //     method.
 func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, options *MultipleResponsesClientGet200ModelA200NoneOptions) (MultipleResponsesClientGet200ModelA200NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA200None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA200None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -534,7 +554,9 @@ func (client *MultipleResponsesClient) get200ModelA200NoneHandleResponse(resp *h
 //     method.
 func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200ValidOptions) (MultipleResponsesClientGet200ModelA200ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA200Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA200Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -580,7 +602,9 @@ func (client *MultipleResponsesClient) get200ModelA200ValidHandleResponse(resp *
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -645,7 +669,9 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -711,7 +737,9 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -776,7 +804,9 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 //     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError404ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -841,7 +871,9 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 //     method.
 func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA202ValidOptions) (MultipleResponsesClientGet200ModelA202ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA202Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA202Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA202ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -887,7 +919,9 @@ func (client *MultipleResponsesClient) get200ModelA202ValidHandleResponse(resp *
 //     method.
 func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400InvalidOptions) (MultipleResponsesClientGet200ModelA400InvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA400Invalid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA400Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -933,7 +967,9 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidHandleResponse(resp
 //     method.
 func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, options *MultipleResponsesClientGet200ModelA400NoneOptions) (MultipleResponsesClientGet200ModelA400NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA400None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA400None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -979,7 +1015,9 @@ func (client *MultipleResponsesClient) get200ModelA400NoneHandleResponse(resp *h
 //     method.
 func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400ValidOptions) (MultipleResponsesClientGet200ModelA400ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get200ModelA400Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get200ModelA400Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get200ModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1025,7 +1063,9 @@ func (client *MultipleResponsesClient) get200ModelA400ValidHandleResponse(resp *
 //     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultError202None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get202None204NoneDefaultError202None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1061,7 +1101,9 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneCreat
 //     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultError204None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get202None204NoneDefaultError204None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultError204NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1097,7 +1139,9 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneCreat
 //     MultipleResponsesClient.Get202None204NoneDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions) (MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultError400Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get202None204NoneDefaultError400Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1133,7 +1177,9 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidCrea
 //     MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone202InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1168,7 +1214,9 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone202InvalidCre
 //     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone204None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get202None204NoneDefaultNone204None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone204NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1203,7 +1251,9 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone204NoneCreate
 //     MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1238,7 +1288,9 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400InvalidCre
 //     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.Get202None204NoneDefaultNone400None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.Get202None204NoneDefaultNone400None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.get202None204NoneDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1273,7 +1325,9 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400NoneCreate
 //     method.
 func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200NoneOptions) (MultipleResponsesClientGetDefaultModelA200NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA200None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultModelA200None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1319,7 +1373,9 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleResponse(res
 //     method.
 func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200ValidOptions) (MultipleResponsesClientGetDefaultModelA200ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA200Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultModelA200Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1365,7 +1421,9 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleResponse(re
 //     method.
 func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400NoneOptions) (MultipleResponsesClientGetDefaultModelA400NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA400None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultModelA400None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1401,7 +1459,9 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneCreateRequest(ctx 
 //     method.
 func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400ValidOptions) (MultipleResponsesClientGetDefaultModelA400ValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultModelA400Valid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultModelA400Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1437,7 +1497,9 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidCreateRequest(ctx
 //     method.
 func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200InvalidOptions) (MultipleResponsesClientGetDefaultNone200InvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone200Invalid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultNone200Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone200InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1472,7 +1534,9 @@ func (client *MultipleResponsesClient) getDefaultNone200InvalidCreateRequest(ctx
 //     method.
 func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200NoneOptions) (MultipleResponsesClientGetDefaultNone200NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone200None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultNone200None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1507,7 +1571,9 @@ func (client *MultipleResponsesClient) getDefaultNone200NoneCreateRequest(ctx co
 //     method.
 func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400InvalidOptions) (MultipleResponsesClientGetDefaultNone400InvalidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone400Invalid", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultNone400Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1542,7 +1608,9 @@ func (client *MultipleResponsesClient) getDefaultNone400InvalidCreateRequest(ctx
 //     method.
 func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400NoneOptions) (MultipleResponsesClientGetDefaultNone400NoneResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "MultipleResponsesClient.GetDefaultNone400None", client.internal.Tracer(), nil)
+	const operationName = "MultipleResponsesClient.GetDefaultNone400None"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {

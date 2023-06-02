@@ -38,6 +38,7 @@ type Client struct {
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
 func (client *Client) Create(ctx context.Context, tableProperties Properties, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.Create")
 	req, err := client.createCreateRequest(ctx, tableProperties, options)
 	if err != nil {
 		return ClientCreateResponse{}, err
@@ -117,6 +118,7 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 func (client *Client) Delete(ctx context.Context, table string, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.Delete")
 	req, err := client.deleteCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientDeleteResponse{}, err
@@ -186,6 +188,7 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 //   - options - ClientDeleteEntityOptions contains the optional parameters for the Client.DeleteEntity method.
 func (client *Client) DeleteEntity(ctx context.Context, table string, partitionKey string, rowKey string, ifMatch string, options *ClientDeleteEntityOptions) (ClientDeleteEntityResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.DeleteEntity")
 	req, err := client.deleteEntityCreateRequest(ctx, table, partitionKey, rowKey, ifMatch, options)
 	if err != nil {
 		return ClientDeleteEntityResponse{}, err
@@ -270,6 +273,7 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 //   - options - ClientGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
 func (client *Client) GetAccessPolicy(ctx context.Context, table string, options *ClientGetAccessPolicyOptions) (ClientGetAccessPolicyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.GetAccessPolicy")
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientGetAccessPolicyResponse{}, err
@@ -344,6 +348,7 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 //   - options - ClientInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
 func (client *Client) InsertEntity(ctx context.Context, table string, options *ClientInsertEntityOptions) (ClientInsertEntityResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.InsertEntity")
 	req, err := client.insertEntityCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientInsertEntityResponse{}, err
@@ -442,6 +447,7 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 //   - options - ClientMergeEntityOptions contains the optional parameters for the Client.MergeEntity method.
 func (client *Client) MergeEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientMergeEntityOptions) (ClientMergeEntityResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.MergeEntity")
 	req, err := client.mergeEntityCreateRequest(ctx, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
 		return ClientMergeEntityResponse{}, err
@@ -532,6 +538,7 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 //   - options - ClientQueryOptions contains the optional parameters for the Client.Query method.
 func (client *Client) Query(ctx context.Context, options *ClientQueryOptions) (ClientQueryResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.Query")
 	req, err := client.queryCreateRequest(ctx, options)
 	if err != nil {
 		return ClientQueryResponse{}, err
@@ -617,6 +624,7 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 //   - options - ClientQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
 func (client *Client) QueryEntities(ctx context.Context, table string, options *ClientQueryEntitiesOptions) (ClientQueryEntitiesResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.QueryEntities")
 	req, err := client.queryEntitiesCreateRequest(ctx, table, options)
 	if err != nil {
 		return ClientQueryEntitiesResponse{}, err
@@ -718,6 +726,7 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 //     method.
 func (client *Client) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, options *ClientQueryEntityWithPartitionAndRowKeyOptions) (ClientQueryEntityWithPartitionAndRowKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.QueryEntityWithPartitionAndRowKey")
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, table, partitionKey, rowKey, options)
 	if err != nil {
 		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
@@ -819,6 +828,7 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 //   - options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
 func (client *Client) SetAccessPolicy(ctx context.Context, table string, tableACL []*SignedIdentifier, options *ClientSetAccessPolicyOptions) (ClientSetAccessPolicyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.SetAccessPolicy")
 	req, err := client.setAccessPolicyCreateRequest(ctx, table, tableACL, options)
 	if err != nil {
 		return ClientSetAccessPolicyResponse{}, err
@@ -900,6 +910,7 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 //   - options - ClientUpdateEntityOptions contains the optional parameters for the Client.UpdateEntity method.
 func (client *Client) UpdateEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientUpdateEntityOptions) (ClientUpdateEntityResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.UpdateEntity")
 	req, err := client.updateEntityCreateRequest(ctx, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
 		return ClientUpdateEntityResponse{}, err

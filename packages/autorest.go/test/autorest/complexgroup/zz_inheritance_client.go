@@ -30,7 +30,9 @@ type InheritanceClient struct {
 //   - options - InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
 func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceClientGetValidOptions) (InheritanceClientGetValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "InheritanceClient.GetValid", client.internal.Tracer(), nil)
+	const operationName = "InheritanceClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -78,7 +80,9 @@ func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (In
 //   - options - InheritanceClientPutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
 func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritanceClientPutValidOptions) (InheritanceClientPutValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "InheritanceClient.PutValid", client.internal.Tracer(), nil)
+	const operationName = "InheritanceClient.PutValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

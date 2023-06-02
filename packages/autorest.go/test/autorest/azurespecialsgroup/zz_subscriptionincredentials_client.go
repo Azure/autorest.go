@@ -36,7 +36,9 @@ type SubscriptionInCredentialsClient struct {
 //     SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
@@ -80,7 +82,9 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 //     method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNullOptions) (SubscriptionInCredentialsClientPostMethodGlobalNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInCredentialsClient.PostMethodGlobalNull", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInCredentialsClient.PostMethodGlobalNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postMethodGlobalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -121,7 +125,9 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest
 //     method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInCredentialsClient.PostMethodGlobalValid", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInCredentialsClient.PostMethodGlobalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -162,7 +168,9 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateReques
 //     method.
 func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostPathGlobalValidOptions) (SubscriptionInCredentialsClientPostPathGlobalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInCredentialsClient.PostPathGlobalValid", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInCredentialsClient.PostPathGlobalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -203,7 +211,9 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(
 //     method.
 func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions) (SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "SubscriptionInCredentialsClient.PostSwaggerGlobalValid", client.internal.Tracer(), nil)
+	const operationName = "SubscriptionInCredentialsClient.PostSwaggerGlobalValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.postSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {

@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
@@ -20,14 +19,6 @@ func newObjectTypeClient(t *testing.T) *ObjectTypeClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewObjectTypeClient(options *azcore.ClientOptions) (*ObjectTypeClient, error) {
-	client, err := azcore.NewClient("objectgroup.ObjectTypeClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &ObjectTypeClient{internal: client}, nil
 }
 
 func TestGet(t *testing.T) {

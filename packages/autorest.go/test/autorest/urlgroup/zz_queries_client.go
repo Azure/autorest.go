@@ -35,7 +35,9 @@ type QueriesClient struct {
 //     method.
 func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesClientArrayStringCSVEmptyOptions) (QueriesClientArrayStringCSVEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringCSVEmpty", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringCSVEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringCSVEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 //     method.
 func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesClientArrayStringCSVNullOptions) (QueriesClientArrayStringCSVNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringCSVNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringCSVNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringCSVNullCreateRequest(ctx, options)
 	if err != nil {
@@ -118,7 +122,9 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 //     method.
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesClientArrayStringCSVValidOptions) (QueriesClientArrayStringCSVValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringCSVValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringCSVValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
@@ -160,7 +166,9 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 //     method.
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesClientArrayStringNoCollectionFormatEmptyOptions) (QueriesClientArrayStringNoCollectionFormatEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringNoCollectionFormatEmpty", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringNoCollectionFormatEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -202,7 +210,9 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 //     method.
 func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesClientArrayStringPipesValidOptions) (QueriesClientArrayStringPipesValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringPipesValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringPipesValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringPipesValidCreateRequest(ctx, options)
 	if err != nil {
@@ -244,7 +254,9 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 //     method.
 func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesClientArrayStringSsvValidOptions) (QueriesClientArrayStringSsvValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringSsvValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringSsvValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringSsvValidCreateRequest(ctx, options)
 	if err != nil {
@@ -286,7 +298,9 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 //     method.
 func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesClientArrayStringTsvValidOptions) (QueriesClientArrayStringTsvValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ArrayStringTsvValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ArrayStringTsvValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.arrayStringTsvValidCreateRequest(ctx, options)
 	if err != nil {
@@ -326,7 +340,9 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 //   - options - QueriesClientByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
 func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClientByteEmptyOptions) (QueriesClientByteEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ByteEmpty", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ByteEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -364,7 +380,9 @@ func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options
 //   - options - QueriesClientByteMultiByteOptions contains the optional parameters for the QueriesClient.ByteMultiByte method.
 func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesClientByteMultiByteOptions) (QueriesClientByteMultiByteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ByteMultiByte", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ByteMultiByte"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.byteMultiByteCreateRequest(ctx, options)
 	if err != nil {
@@ -404,7 +422,9 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 //   - options - QueriesClientByteNullOptions contains the optional parameters for the QueriesClient.ByteNull method.
 func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClientByteNullOptions) (QueriesClientByteNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.ByteNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.ByteNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.byteNullCreateRequest(ctx, options)
 	if err != nil {
@@ -444,7 +464,9 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 //   - options - QueriesClientDateNullOptions contains the optional parameters for the QueriesClient.DateNull method.
 func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClientDateNullOptions) (QueriesClientDateNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.DateNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateNullCreateRequest(ctx, options)
 	if err != nil {
@@ -484,7 +506,9 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 //   - options - QueriesClientDateTimeNullOptions contains the optional parameters for the QueriesClient.DateTimeNull method.
 func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesClientDateTimeNullOptions) (QueriesClientDateTimeNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateTimeNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.DateTimeNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateTimeNullCreateRequest(ctx, options)
 	if err != nil {
@@ -524,7 +548,9 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 //   - options - QueriesClientDateTimeValidOptions contains the optional parameters for the QueriesClient.DateTimeValid method.
 func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesClientDateTimeValidOptions) (QueriesClientDateTimeValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateTimeValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.DateTimeValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -562,7 +588,9 @@ func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, opt
 //   - options - QueriesClientDateValidOptions contains the optional parameters for the QueriesClient.DateValid method.
 func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClientDateValidOptions) (QueriesClientDateValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DateValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.DateValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -601,7 +629,9 @@ func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options
 //     method.
 func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesClientDoubleDecimalNegativeOptions) (QueriesClientDoubleDecimalNegativeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DoubleDecimalNegative", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.DoubleDecimalNegative"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -640,7 +670,9 @@ func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Cont
 //     method.
 func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesClientDoubleDecimalPositiveOptions) (QueriesClientDoubleDecimalPositiveResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DoubleDecimalPositive", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.DoubleDecimalPositive"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -678,7 +710,9 @@ func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Cont
 //   - options - QueriesClientDoubleNullOptions contains the optional parameters for the QueriesClient.DoubleNull method.
 func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesClientDoubleNullOptions) (QueriesClientDoubleNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.DoubleNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.DoubleNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.doubleNullCreateRequest(ctx, options)
 	if err != nil {
@@ -718,7 +752,9 @@ func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, option
 //   - options - QueriesClientEnumNullOptions contains the optional parameters for the QueriesClient.EnumNull method.
 func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClientEnumNullOptions) (QueriesClientEnumNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.EnumNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.EnumNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.enumNullCreateRequest(ctx, options)
 	if err != nil {
@@ -758,7 +794,9 @@ func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options 
 //   - options - QueriesClientEnumValidOptions contains the optional parameters for the QueriesClient.EnumValid method.
 func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClientEnumValidOptions) (QueriesClientEnumValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.EnumValid", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.EnumValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.enumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -798,7 +836,9 @@ func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options
 //   - options - QueriesClientFloatNullOptions contains the optional parameters for the QueriesClient.FloatNull method.
 func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClientFloatNullOptions) (QueriesClientFloatNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.FloatNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.FloatNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.floatNullCreateRequest(ctx, options)
 	if err != nil {
@@ -839,7 +879,9 @@ func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options
 //     method.
 func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesClientFloatScientificNegativeOptions) (QueriesClientFloatScientificNegativeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.FloatScientificNegative", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.FloatScientificNegative"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -878,7 +920,9 @@ func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Co
 //     method.
 func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesClientFloatScientificPositiveOptions) (QueriesClientFloatScientificPositiveResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.FloatScientificPositive", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.FloatScientificPositive"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -916,7 +960,9 @@ func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Co
 //   - options - QueriesClientGetBooleanFalseOptions contains the optional parameters for the QueriesClient.GetBooleanFalse method.
 func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesClientGetBooleanFalseOptions) (QueriesClientGetBooleanFalseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetBooleanFalse", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetBooleanFalse"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -954,7 +1000,9 @@ func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, o
 //   - options - QueriesClientGetBooleanNullOptions contains the optional parameters for the QueriesClient.GetBooleanNull method.
 func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesClientGetBooleanNullOptions) (QueriesClientGetBooleanNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetBooleanNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetBooleanNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanNullCreateRequest(ctx, options)
 	if err != nil {
@@ -994,7 +1042,9 @@ func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, op
 //   - options - QueriesClientGetBooleanTrueOptions contains the optional parameters for the QueriesClient.GetBooleanTrue method.
 func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesClientGetBooleanTrueOptions) (QueriesClientGetBooleanTrueResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetBooleanTrue", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetBooleanTrue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -1033,7 +1083,9 @@ func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, op
 //     method.
 func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesClientGetIntNegativeOneMillionOptions) (QueriesClientGetIntNegativeOneMillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetIntNegativeOneMillion", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetIntNegativeOneMillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1071,7 +1123,9 @@ func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.C
 //   - options - QueriesClientGetIntNullOptions contains the optional parameters for the QueriesClient.GetIntNull method.
 func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesClientGetIntNullOptions) (QueriesClientGetIntNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetIntNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetIntNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1112,7 +1166,9 @@ func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, option
 //     method.
 func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesClientGetIntOneMillionOptions) (QueriesClientGetIntOneMillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetIntOneMillion", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetIntOneMillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1150,7 +1206,9 @@ func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, 
 //   - options - QueriesClientGetLongNullOptions contains the optional parameters for the QueriesClient.GetLongNull method.
 func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesClientGetLongNullOptions) (QueriesClientGetLongNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetLongNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetLongNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getLongNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1191,7 +1249,9 @@ func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, optio
 //     method.
 func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesClientGetNegativeTenBillionOptions) (QueriesClientGetNegativeTenBillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetNegativeTenBillion", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetNegativeTenBillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1229,7 +1289,9 @@ func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Cont
 //   - options - QueriesClientGetTenBillionOptions contains the optional parameters for the QueriesClient.GetTenBillion method.
 func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesClientGetTenBillionOptions) (QueriesClientGetTenBillionResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.GetTenBillion", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.GetTenBillion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1267,7 +1329,9 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 //   - options - QueriesClientStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
 func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesClientStringEmptyOptions) (QueriesClientStringEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringEmpty", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.StringEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1305,7 +1369,9 @@ func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, optio
 //   - options - QueriesClientStringNullOptions contains the optional parameters for the QueriesClient.StringNull method.
 func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesClientStringNullOptions) (QueriesClientStringNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringNull", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.StringNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1346,7 +1412,9 @@ func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, option
 //     method.
 func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesClientStringURLEncodedOptions) (QueriesClientStringURLEncodedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringURLEncoded", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.StringURLEncoded"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -1384,7 +1452,9 @@ func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, 
 //   - options - QueriesClientStringUnicodeOptions contains the optional parameters for the QueriesClient.StringUnicode method.
 func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesClientStringUnicodeOptions) (QueriesClientStringUnicodeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "QueriesClient.StringUnicode", client.internal.Tracer(), nil)
+	const operationName = "QueriesClient.StringUnicode"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {

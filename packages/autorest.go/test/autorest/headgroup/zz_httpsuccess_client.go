@@ -29,7 +29,9 @@ type HTTPSuccessClient struct {
 //   - options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (HTTPSuccessClientHead200Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head200", client.internal.Tracer(), nil)
+	const operationName = "HTTPSuccessClient.Head200"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
@@ -62,7 +64,9 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 //   - options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (HTTPSuccessClientHead204Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head204", client.internal.Tracer(), nil)
+	const operationName = "HTTPSuccessClient.Head204"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
@@ -95,7 +99,9 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 //   - options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (HTTPSuccessClientHead404Response, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "HTTPSuccessClient.Head404", client.internal.Tracer(), nil)
+	const operationName = "HTTPSuccessClient.Head404"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {

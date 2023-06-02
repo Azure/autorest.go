@@ -55,7 +55,6 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 //     method.
 func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*runtime.Poller[SupportPackagesClientTriggerSupportPackageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 		if err != nil {
 			return nil, err
@@ -73,6 +72,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 // Generated from API version 2021-02-01
 func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SupportPackagesClient.BeginTriggerSupportPackage")
 	req, err := client.triggerSupportPackageCreateRequest(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {
 		return nil, err

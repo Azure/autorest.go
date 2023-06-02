@@ -55,6 +55,7 @@ func NewDiagnosticSettingsClient(subscriptionID string, credential azcore.TokenC
 //     the DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings method.
 func (client *DiagnosticSettingsClient) GetDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings")
 	req, err := client.getDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
@@ -114,6 +115,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 //     method.
 func (client *DiagnosticSettingsClient) GetDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings")
 	req, err := client.getDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, err
@@ -174,7 +176,6 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandle
 //     for the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
 func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*runtime.Poller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.updateDiagnosticProactiveLogCollectionSettings(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 		if err != nil {
 			return nil, err
@@ -193,6 +194,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollect
 // Generated from API version 2021-02-01
 func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings")
 	req, err := client.updateDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 	if err != nil {
 		return nil, err
@@ -246,7 +248,6 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 //     the DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings method.
 func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*runtime.Poller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.updateDiagnosticRemoteSupportSettings(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 		if err != nil {
 			return nil, err
@@ -265,6 +266,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettin
 // Generated from API version 2021-02-01
 func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings")
 	req, err := client.updateDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 	if err != nil {
 		return nil, err

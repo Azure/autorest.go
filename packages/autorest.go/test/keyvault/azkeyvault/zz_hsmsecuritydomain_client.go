@@ -36,7 +36,6 @@ type HSMSecurityDomainClient struct {
 //     method.
 func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*runtime.Poller[HSMSecurityDomainClientDownloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.download(ctx, vaultBaseURL, certificateInfoObject, options)
 		if err != nil {
 			return nil, err
@@ -57,6 +56,7 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 // Generated from API version 7.2
 func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "HSMSecurityDomainClient.BeginDownload")
 	req, err := client.downloadCreateRequest(ctx, vaultBaseURL, certificateInfoObject, options)
 	if err != nil {
 		return nil, err
@@ -100,6 +100,7 @@ func (client *HSMSecurityDomainClient) downloadCreateRequest(ctx context.Context
 //     method.
 func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientDownloadPendingOptions) (HSMSecurityDomainClientDownloadPendingResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "HSMSecurityDomainClient.DownloadPending")
 	req, err := client.downloadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return HSMSecurityDomainClientDownloadPendingResponse{}, err
@@ -147,6 +148,7 @@ func (client *HSMSecurityDomainClient) downloadPendingHandleResponse(resp *http.
 //     method.
 func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientTransferKeyOptions) (HSMSecurityDomainClientTransferKeyResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "HSMSecurityDomainClient.TransferKey")
 	req, err := client.transferKeyCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return HSMSecurityDomainClientTransferKeyResponse{}, err
@@ -198,7 +200,6 @@ func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *http.Resp
 //     method.
 func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*runtime.Poller[HSMSecurityDomainClientUploadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
 		resp, err := client.upload(ctx, vaultBaseURL, securityDomain, options)
 		if err != nil {
 			return nil, err
@@ -218,6 +219,7 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 // Generated from API version 7.2
 func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "HSMSecurityDomainClient.BeginUpload")
 	req, err := client.uploadCreateRequest(ctx, vaultBaseURL, securityDomain, options)
 	if err != nil {
 		return nil, err
@@ -258,6 +260,7 @@ func (client *HSMSecurityDomainClient) uploadCreateRequest(ctx context.Context, 
 //     method.
 func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientUploadPendingOptions) (HSMSecurityDomainClientUploadPendingResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "HSMSecurityDomainClient.UploadPending")
 	req, err := client.uploadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return HSMSecurityDomainClientUploadPendingResponse{}, err

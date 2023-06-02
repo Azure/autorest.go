@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -22,18 +21,6 @@ func newArrayClient(t *testing.T) *ArrayClient {
 	})
 	require.NoError(t, err)
 	return client
-}
-
-// NewArrayClient creates a new instance of ArrayClient with the specified values.
-func NewArrayClient(options *azcore.ClientOptions) (*ArrayClient, error) {
-	cl, err := azcore.NewClient("arraygroup.ArrayClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	client := &ArrayClient{
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetArrayEmpty - Get an empty array []

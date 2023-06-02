@@ -28,7 +28,10 @@ func unmarshalAddonClassification(rawMsg json.RawMessage) (AddonClassification, 
 	default:
 		b = &Addon{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalAddonClassificationArray(rawMsg json.RawMessage) ([]AddonClassification, error) {
@@ -71,7 +74,10 @@ func unmarshalRoleClassification(rawMsg json.RawMessage) (RoleClassification, er
 	default:
 		b = &Role{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalRoleClassificationArray(rawMsg json.RawMessage) ([]RoleClassification, error) {
@@ -110,7 +116,10 @@ func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassificati
 	default:
 		b = &Trigger{}
 	}
-	return b, json.Unmarshal(rawMsg, b)
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func unmarshalTriggerClassificationArray(rawMsg json.RawMessage) ([]TriggerClassification, error) {

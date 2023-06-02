@@ -30,7 +30,9 @@ type DictionaryClient struct {
 //   - options - DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryClientGetEmptyOptions) (DictionaryClientGetEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -76,7 +78,9 @@ func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (Dic
 //     method.
 func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *DictionaryClientGetNotProvidedOptions) (DictionaryClientGetNotProvidedResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetNotProvided", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetNotProvided"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -121,7 +125,9 @@ func (client *DictionaryClient) getNotProvidedHandleResponse(resp *http.Response
 //   - options - DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
 func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryClientGetNullOptions) (DictionaryClientGetNullResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetNull", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -166,7 +172,9 @@ func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (Dict
 //   - options - DictionaryClientGetValidOptions contains the optional parameters for the DictionaryClient.GetValid method.
 func (client *DictionaryClient) GetValid(ctx context.Context, options *DictionaryClientGetValidOptions) (DictionaryClientGetValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.GetValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -212,7 +220,9 @@ func (client *DictionaryClient) getValidHandleResponse(resp *http.Response) (Dic
 //   - options - DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
 func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryClientPutEmptyOptions) (DictionaryClientPutEmptyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutEmpty", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putEmptyCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -252,7 +262,9 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, compl
 //   - options - DictionaryClientPutValidOptions contains the optional parameters for the DictionaryClient.PutValid method.
 func (client *DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryClientPutValidOptions) (DictionaryClientPutValidResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "DictionaryClient.PutValid", client.internal.Tracer(), nil)
+	const operationName = "DictionaryClient.PutValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

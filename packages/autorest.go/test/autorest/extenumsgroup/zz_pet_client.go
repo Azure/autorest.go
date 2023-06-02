@@ -33,7 +33,9 @@ type PetClient struct {
 //   - options - PetClientAddPetOptions contains the optional parameters for the PetClient.AddPet method.
 func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOptions) (PetClientAddPetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PetClient.AddPet", client.internal.Tracer(), nil)
+	const operationName = "PetClient.AddPet"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.addPetCreateRequest(ctx, options)
 	if err != nil {
@@ -85,7 +87,9 @@ func (client *PetClient) addPetHandleResponse(resp *http.Response) (PetClientAdd
 //   - options - PetClientGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
 func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetClientGetByPetIDOptions) (PetClientGetByPetIDResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PetClient.GetByPetID", client.internal.Tracer(), nil)
+	const operationName = "PetClient.GetByPetID"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getByPetIDCreateRequest(ctx, petID, options)
 	if err != nil {

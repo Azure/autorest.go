@@ -57,10 +57,6 @@ func NewRouteFilterRulesClient(subscriptionID string, credential azcore.TokenCre
 //     method.
 func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesClientBeginCreateOrUpdateOptions) (*runtime.Poller[RouteFilterRulesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RouteFilterRulesClient.BeginCreateOrUpdate", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, options)
 		if err != nil {
 			return nil, err
@@ -80,6 +76,10 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 // Generated from API version 2022-09-01
 func (client *RouteFilterRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RouteFilterRulesClient.BeginCreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, options)
 	if err != nil {
 		return nil, err
@@ -139,10 +139,6 @@ func (client *RouteFilterRulesClient) createOrUpdateCreateRequest(ctx context.Co
 //     method.
 func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientBeginDeleteOptions) (*runtime.Poller[RouteFilterRulesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		var err error
-		var endSpan func(error)
-		ctx, endSpan = runtime.StartSpan(ctx, "RouteFilterRulesClient.BeginDelete", client.internal.Tracer(), nil)
-		defer func() { endSpan(err) }()
 		resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, ruleName, options)
 		if err != nil {
 			return nil, err
@@ -162,6 +158,10 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 // Generated from API version 2022-09-01
 func (client *RouteFilterRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RouteFilterRulesClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
 		return nil, err
@@ -217,7 +217,9 @@ func (client *RouteFilterRulesClient) deleteCreateRequest(ctx context.Context, r
 //   - options - RouteFilterRulesClientGetOptions contains the optional parameters for the RouteFilterRulesClient.Get method.
 func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientGetOptions) (RouteFilterRulesClientGetResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "RouteFilterRulesClient.Get", client.internal.Tracer(), nil)
+	const operationName = "RouteFilterRulesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
@@ -287,6 +289,7 @@ func (client *RouteFilterRulesClient) NewListByRouteFilterPager(resourceGroupNam
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RouteFilterRulesClientListByRouteFilterResponse) (RouteFilterRulesClientListByRouteFilterResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RouteFilterRulesClient.NewListByRouteFilterPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

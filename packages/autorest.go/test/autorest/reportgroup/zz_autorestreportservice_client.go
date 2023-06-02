@@ -31,7 +31,9 @@ type AutoRestReportServiceClient struct {
 //     method.
 func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceClientGetOptionalReportOptions) (AutoRestReportServiceClientGetOptionalReportResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestReportServiceClient.GetOptionalReport", client.internal.Tracer(), nil)
+	const operationName = "AutoRestReportServiceClient.GetOptionalReport"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
@@ -82,7 +84,9 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp 
 //     method.
 func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceClientGetReportOptions) (AutoRestReportServiceClientGetReportResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AutoRestReportServiceClient.GetReport", client.internal.Tracer(), nil)
+	const operationName = "AutoRestReportServiceClient.GetReport"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

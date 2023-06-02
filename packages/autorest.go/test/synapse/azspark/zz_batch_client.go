@@ -38,6 +38,7 @@ type BatchClient struct {
 //     method.
 func (client *BatchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *BatchClientCancelSparkBatchJobOptions) (BatchClientCancelSparkBatchJobResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BatchClient.CancelSparkBatchJob")
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
 		return BatchClientCancelSparkBatchJobResponse{}, err
@@ -75,6 +76,7 @@ func (client *BatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context,
 //     method.
 func (client *BatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions BatchJobOptions, options *BatchClientCreateSparkBatchJobOptions) (BatchClientCreateSparkBatchJobResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BatchClient.CreateSparkBatchJob")
 	req, err := client.createSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {
 		return BatchClientCreateSparkBatchJobResponse{}, err
@@ -129,6 +131,7 @@ func (client *BatchClient) createSparkBatchJobHandleResponse(resp *http.Response
 //   - options - BatchClientGetSparkBatchJobOptions contains the optional parameters for the BatchClient.GetSparkBatchJob method.
 func (client *BatchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *BatchClientGetSparkBatchJobOptions) (BatchClientGetSparkBatchJobResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BatchClient.GetSparkBatchJob")
 	req, err := client.getSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
 		return BatchClientGetSparkBatchJobResponse{}, err
@@ -180,6 +183,7 @@ func (client *BatchClient) getSparkBatchJobHandleResponse(resp *http.Response) (
 //   - options - BatchClientGetSparkBatchJobsOptions contains the optional parameters for the BatchClient.GetSparkBatchJobs method.
 func (client *BatchClient) GetSparkBatchJobs(ctx context.Context, options *BatchClientGetSparkBatchJobsOptions) (BatchClientGetSparkBatchJobsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BatchClient.GetSparkBatchJobs")
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)
 	if err != nil {
 		return BatchClientGetSparkBatchJobsResponse{}, err

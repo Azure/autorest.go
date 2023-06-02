@@ -37,6 +37,7 @@ type LinkConnectionClient struct {
 //     method.
 func (client *LinkConnectionClient) CreateOrUpdate(ctx context.Context, linkConnectionName string, linkConnection LinkConnectionResource, options *LinkConnectionClientCreateOrUpdateOptions) (LinkConnectionClientCreateOrUpdateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.CreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, linkConnectionName, linkConnection, options)
 	if err != nil {
 		return LinkConnectionClientCreateOrUpdateResponse{}, err
@@ -91,6 +92,7 @@ func (client *LinkConnectionClient) createOrUpdateHandleResponse(resp *http.Resp
 //   - options - LinkConnectionClientDeleteOptions contains the optional parameters for the LinkConnectionClient.Delete method.
 func (client *LinkConnectionClient) Delete(ctx context.Context, linkConnectionName string, options *LinkConnectionClientDeleteOptions) (LinkConnectionClientDeleteResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.Delete")
 	req, err := client.deleteCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientDeleteResponse{}, err
@@ -134,6 +136,7 @@ func (client *LinkConnectionClient) deleteCreateRequest(ctx context.Context, lin
 //     method.
 func (client *LinkConnectionClient) EditTables(ctx context.Context, linkConnectionName string, editTablesRequest EditTablesRequest, options *LinkConnectionClientEditTablesOptions) (LinkConnectionClientEditTablesResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.EditTables")
 	req, err := client.editTablesCreateRequest(ctx, linkConnectionName, editTablesRequest, options)
 	if err != nil {
 		return LinkConnectionClientEditTablesResponse{}, err
@@ -178,6 +181,7 @@ func (client *LinkConnectionClient) editTablesCreateRequest(ctx context.Context,
 //   - options - LinkConnectionClientGetOptions contains the optional parameters for the LinkConnectionClient.Get method.
 func (client *LinkConnectionClient) Get(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetOptions) (LinkConnectionClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.Get")
 	req, err := client.getCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientGetResponse{}, err
@@ -230,6 +234,7 @@ func (client *LinkConnectionClient) getHandleResponse(resp *http.Response) (Link
 //     method.
 func (client *LinkConnectionClient) GetDetailedStatus(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetDetailedStatusOptions) (LinkConnectionClientGetDetailedStatusResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.GetDetailedStatus")
 	req, err := client.getDetailedStatusCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientGetDetailedStatusResponse{}, err
@@ -284,6 +289,7 @@ func (client *LinkConnectionClient) NewListByWorkspacePager(options *LinkConnect
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *LinkConnectionClientListByWorkspaceResponse) (LinkConnectionClientListByWorkspaceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.NewListByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -338,6 +344,7 @@ func (client *LinkConnectionClient) listByWorkspaceHandleResponse(resp *http.Res
 //     method.
 func (client *LinkConnectionClient) ListLinkTables(ctx context.Context, linkConnectionName string, options *LinkConnectionClientListLinkTablesOptions) (LinkConnectionClientListLinkTablesResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.ListLinkTables")
 	req, err := client.listLinkTablesCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientListLinkTablesResponse{}, err
@@ -389,6 +396,7 @@ func (client *LinkConnectionClient) listLinkTablesHandleResponse(resp *http.Resp
 //   - options - LinkConnectionClientPauseOptions contains the optional parameters for the LinkConnectionClient.Pause method.
 func (client *LinkConnectionClient) Pause(ctx context.Context, linkConnectionName string, options *LinkConnectionClientPauseOptions) (LinkConnectionClientPauseResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.Pause")
 	req, err := client.pauseCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientPauseResponse{}, err
@@ -432,6 +440,7 @@ func (client *LinkConnectionClient) pauseCreateRequest(ctx context.Context, link
 //     method.
 func (client *LinkConnectionClient) QueryTableStatus(ctx context.Context, linkConnectionName string, queryTableStatusRequest QueryTableStatusRequest, options *LinkConnectionClientQueryTableStatusOptions) (LinkConnectionClientQueryTableStatusResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.QueryTableStatus")
 	req, err := client.queryTableStatusCreateRequest(ctx, linkConnectionName, queryTableStatusRequest, options)
 	if err != nil {
 		return LinkConnectionClientQueryTableStatusResponse{}, err
@@ -486,6 +495,7 @@ func (client *LinkConnectionClient) queryTableStatusHandleResponse(resp *http.Re
 //   - options - LinkConnectionClientResumeOptions contains the optional parameters for the LinkConnectionClient.Resume method.
 func (client *LinkConnectionClient) Resume(ctx context.Context, linkConnectionName string, options *LinkConnectionClientResumeOptions) (LinkConnectionClientResumeResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.Resume")
 	req, err := client.resumeCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientResumeResponse{}, err
@@ -527,6 +537,7 @@ func (client *LinkConnectionClient) resumeCreateRequest(ctx context.Context, lin
 //   - options - LinkConnectionClientStartOptions contains the optional parameters for the LinkConnectionClient.Start method.
 func (client *LinkConnectionClient) Start(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStartOptions) (LinkConnectionClientStartResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.Start")
 	req, err := client.startCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientStartResponse{}, err
@@ -568,6 +579,7 @@ func (client *LinkConnectionClient) startCreateRequest(ctx context.Context, link
 //   - options - LinkConnectionClientStopOptions contains the optional parameters for the LinkConnectionClient.Stop method.
 func (client *LinkConnectionClient) Stop(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStopOptions) (LinkConnectionClientStopResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.Stop")
 	req, err := client.stopCreateRequest(ctx, linkConnectionName, options)
 	if err != nil {
 		return LinkConnectionClientStopResponse{}, err
@@ -611,6 +623,7 @@ func (client *LinkConnectionClient) stopCreateRequest(ctx context.Context, linkC
 //     method.
 func (client *LinkConnectionClient) UpdateLandingZoneCredential(ctx context.Context, linkConnectionName string, updateLandingZoneCredentialRequest UpdateLandingZoneCredential, options *LinkConnectionClientUpdateLandingZoneCredentialOptions) (LinkConnectionClientUpdateLandingZoneCredentialResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LinkConnectionClient.UpdateLandingZoneCredential")
 	req, err := client.updateLandingZoneCredentialCreateRequest(ctx, linkConnectionName, updateLandingZoneCredentialRequest, options)
 	if err != nil {
 		return LinkConnectionClientUpdateLandingZoneCredentialResponse{}, err

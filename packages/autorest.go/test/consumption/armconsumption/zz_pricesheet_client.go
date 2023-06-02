@@ -53,6 +53,7 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 //   - options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
 func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClientGetOptions) (PriceSheetClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PriceSheetClient.Get")
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return PriceSheetClientGetResponse{}, err
@@ -115,6 +116,7 @@ func (client *PriceSheetClient) getHandleResponse(resp *http.Response) (PriceShe
 //     method.
 func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingPeriodName string, options *PriceSheetClientGetByBillingPeriodOptions) (PriceSheetClientGetByBillingPeriodResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PriceSheetClient.GetByBillingPeriod")
 	req, err := client.getByBillingPeriodCreateRequest(ctx, billingPeriodName, options)
 	if err != nil {
 		return PriceSheetClientGetByBillingPeriodResponse{}, err
