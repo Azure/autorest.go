@@ -74,13 +74,13 @@ steps:
 
   - pwsh: |
       curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.51.1
-      golangci-lint --version
+      ~/go/bin/golangci-lint --version
       $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       $exit = 0
       foreach ($md in $modDirs) {
         pushd $md
         Write-Host "##[command]Executing golangci-lint run in $md"
-        golangci-lint run
+        ~/go/bin/golangci-lint run ./...
         if (!$?) {
           $exit = 1
         }
