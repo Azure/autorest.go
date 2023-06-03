@@ -206,9 +206,7 @@ type Session struct {
 	// Dictionary of
 	AppInfo    map[string]*string
 	ArtifactID *string
-
-	// The error information.
-	Errors []*ServiceError
+	Errors     []*ServiceError
 
 	// The job type.
 	JobType       *SparkJobType
