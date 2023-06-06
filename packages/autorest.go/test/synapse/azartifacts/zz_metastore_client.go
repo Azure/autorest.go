@@ -33,7 +33,6 @@ type MetastoreClient struct {
 //   - options - MetastoreClientDeleteOptions contains the optional parameters for the MetastoreClient.Delete method.
 func (client *MetastoreClient) Delete(ctx context.Context, id string, options *MetastoreClientDeleteOptions) (MetastoreClientDeleteResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MetastoreClient.Delete")
 	req, err := client.deleteCreateRequest(ctx, id, options)
 	if err != nil {
 		return MetastoreClientDeleteResponse{}, err
@@ -75,7 +74,6 @@ func (client *MetastoreClient) deleteCreateRequest(ctx context.Context, id strin
 //     method.
 func (client *MetastoreClient) GetDatabaseOperations(ctx context.Context, id string, options *MetastoreClientGetDatabaseOperationsOptions) (MetastoreClientGetDatabaseOperationsResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MetastoreClient.GetDatabaseOperations")
 	req, err := client.getDatabaseOperationsCreateRequest(ctx, id, options)
 	if err != nil {
 		return MetastoreClientGetDatabaseOperationsResponse{}, err
@@ -129,7 +127,6 @@ func (client *MetastoreClient) getDatabaseOperationsHandleResponse(resp *http.Re
 //   - options - MetastoreClientRegisterOptions contains the optional parameters for the MetastoreClient.Register method.
 func (client *MetastoreClient) Register(ctx context.Context, id string, registerBody MetastoreRegisterObject, options *MetastoreClientRegisterOptions) (MetastoreClientRegisterResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MetastoreClient.Register")
 	req, err := client.registerCreateRequest(ctx, id, registerBody, options)
 	if err != nil {
 		return MetastoreClientRegisterResponse{}, err
@@ -185,7 +182,6 @@ func (client *MetastoreClient) registerHandleResponse(resp *http.Response) (Meta
 //   - options - MetastoreClientUpdateOptions contains the optional parameters for the MetastoreClient.Update method.
 func (client *MetastoreClient) Update(ctx context.Context, id string, updateBody MetastoreUpdateObject, options *MetastoreClientUpdateOptions) (MetastoreClientUpdateResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MetastoreClient.Update")
 	req, err := client.updateCreateRequest(ctx, id, updateBody, options)
 	if err != nil {
 		return MetastoreClientUpdateResponse{}, err

@@ -53,7 +53,6 @@ func (client *NotebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 // Generated from API version 2020-12-01
 func (client *NotebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NotebookClient.BeginCreateOrUpdateNotebook")
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
@@ -119,7 +118,6 @@ func (client *NotebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 // Generated from API version 2020-12-01
 func (client *NotebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NotebookClient.BeginDeleteNotebook")
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
@@ -161,7 +159,6 @@ func (client *NotebookClient) deleteNotebookCreateRequest(ctx context.Context, n
 //   - options - NotebookClientGetNotebookOptions contains the optional parameters for the NotebookClient.GetNotebook method.
 func (client *NotebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookClientGetNotebookOptions) (NotebookClientGetNotebookResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NotebookClient.GetNotebook")
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return NotebookClientGetNotebookResponse{}, err
@@ -219,7 +216,6 @@ func (client *NotebookClient) NewGetNotebookSummaryByWorkSpacePager(options *Not
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *NotebookClientGetNotebookSummaryByWorkSpaceResponse) (NotebookClientGetNotebookSummaryByWorkSpaceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NotebookClient.NewGetNotebookSummaryByWorkSpacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -276,7 +272,6 @@ func (client *NotebookClient) NewGetNotebooksByWorkspacePager(options *NotebookC
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *NotebookClientGetNotebooksByWorkspaceResponse) (NotebookClientGetNotebooksByWorkspaceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NotebookClient.NewGetNotebooksByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -349,7 +344,6 @@ func (client *NotebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 // Generated from API version 2020-12-01
 func (client *NotebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NotebookClient.BeginRenameNotebook")
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {
 		return nil, err

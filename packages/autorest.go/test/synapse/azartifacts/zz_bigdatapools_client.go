@@ -34,7 +34,6 @@ type BigDataPoolsClient struct {
 //   - options - BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
 func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (BigDataPoolsClientGetResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BigDataPoolsClient.Get")
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
 		return BigDataPoolsClientGetResponse{}, err
@@ -85,7 +84,6 @@ func (client *BigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDat
 //   - options - BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
 func (client *BigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsClientListOptions) (BigDataPoolsClientListResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BigDataPoolsClient.List")
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return BigDataPoolsClientListResponse{}, err

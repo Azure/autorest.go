@@ -53,7 +53,6 @@ func (client *SQLScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 // Generated from API version 2020-12-01
 func (client *SQLScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptClientBeginCreateOrUpdateSQLScriptOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SQLScriptClient.BeginCreateOrUpdateSQLScript")
 	req, err := client.createOrUpdateSQLScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
 		return nil, err
@@ -119,7 +118,6 @@ func (client *SQLScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 // Generated from API version 2020-12-01
 func (client *SQLScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptClientBeginDeleteSQLScriptOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SQLScriptClient.BeginDeleteSQLScript")
 	req, err := client.deleteSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
 		return nil, err
@@ -161,7 +159,6 @@ func (client *SQLScriptClient) deleteSQLScriptCreateRequest(ctx context.Context,
 //   - options - SQLScriptClientGetSQLScriptOptions contains the optional parameters for the SQLScriptClient.GetSQLScript method.
 func (client *SQLScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptClientGetSQLScriptOptions) (SQLScriptClientGetSQLScriptResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SQLScriptClient.GetSQLScript")
 	req, err := client.getSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
 		return SQLScriptClientGetSQLScriptResponse{}, err
@@ -219,7 +216,6 @@ func (client *SQLScriptClient) NewGetSQLScriptsByWorkspacePager(options *SQLScri
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SQLScriptClientGetSQLScriptsByWorkspaceResponse) (SQLScriptClientGetSQLScriptsByWorkspaceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SQLScriptClient.NewGetSQLScriptsByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -292,7 +288,6 @@ func (client *SQLScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 // Generated from API version 2020-12-01
 func (client *SQLScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptClientBeginRenameSQLScriptOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SQLScriptClient.BeginRenameSQLScript")
 	req, err := client.renameSQLScriptCreateRequest(ctx, sqlScriptName, request, options)
 	if err != nil {
 		return nil, err

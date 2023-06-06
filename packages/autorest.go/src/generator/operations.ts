@@ -167,7 +167,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // it must be done before the imports are written out
       if (isLROOperation(op)) {
         // generate Begin method
-        opText += generateLROBeginMethod(op, injectSpans, imports);
+        opText += generateLROBeginMethod(op, injectSpans, generateFakes, imports);
       }
       opText += generateOperation(op, injectSpans, generateFakes, imports);
       opText += createProtocolRequest(group, op, imports);
@@ -302,7 +302,7 @@ function responseHasHeaders(op: Operation): boolean {
   return false;
 }
 
-function emitPagerDefinition(op: Operation, injectSpans: boolean, imports: ImportManager): string {
+function emitPagerDefinition(op: Operation, injectSpans: boolean, generateFakes: boolean, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const nextLink = op.language.go!.paging.nextLinkName;
   imports.add('context');
@@ -318,7 +318,9 @@ function emitPagerDefinition(op: Operation, injectSpans: boolean, imports: Impor
   }
   text += `\t\tFetcher: func(ctx context.Context, page *${getResponseEnvelopeName(op)}) (${getResponseEnvelopeName(op)}, error) {\n`;
   const reqParams = getCreateRequestParameters(op);
-  text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${op.language.go!.clientName}.${fixUpOperationName(op)}")\n`;
+  if (generateFakes) {
+    text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${op.language.go!.clientName}.${fixUpOperationName(op)}")\n`;
+  }
   if (op.language.go!.paging.nextLinkName) {
     const isLRO = isLROOperation(op);
     const defineOrAssign = isLRO ? ':=' : '=';
@@ -416,7 +418,7 @@ function generateOperation(op: Operation, injectSpans: boolean, generateFakes: b
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     text += '\treturn ';
-    text += emitPagerDefinition(op, injectSpans, imports);
+    text += emitPagerDefinition(op, injectSpans, generateFakes, imports);
     text += '}\n\n';
     return text;
   }
@@ -1149,7 +1151,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: ImportManager): string {
+function generateLROBeginMethod(op: Operation, injectSpans: boolean, generateFakes: boolean, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
   const returns = generateReturnsInfo(op, 'api');
@@ -1175,7 +1177,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, imports: Im
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
-    text += emitPagerDefinition(op, injectSpans, imports);
+    text += emitPagerDefinition(op, injectSpans, generateFakes, imports);
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';

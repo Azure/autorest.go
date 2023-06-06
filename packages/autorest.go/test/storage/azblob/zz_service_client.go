@@ -39,9 +39,7 @@ type ServiceClient struct {
 //   - options - ServiceClientFilterBlobsOptions contains the optional parameters for the ServiceClient.FilterBlobs method.
 func (client *ServiceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
 	var err error
-	const operationName = "ServiceClient.FilterBlobs"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.FilterBlobs", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
@@ -125,9 +123,7 @@ func (client *ServiceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 //   - options - ServiceClientGetAccountInfoOptions contains the optional parameters for the ServiceClient.GetAccountInfo method.
 func (client *ServiceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ServiceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
 	var err error
-	const operationName = "ServiceClient.GetAccountInfo"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetAccountInfo", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -205,9 +201,7 @@ func (client *ServiceClient) getAccountInfoHandleResponse(resp *http.Response) (
 //   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
 func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
 	var err error
-	const operationName = "ServiceClient.GetProperties"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetProperties", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -274,9 +268,7 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 //   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
 func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
 	var err error
-	const operationName = "ServiceClient.GetStatistics"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetStatistics", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -352,9 +344,7 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 //     method.
 func (client *ServiceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceClientGetUserDelegationKeyOptions) (ServiceClientGetUserDelegationKeyResponse, error) {
 	var err error
-	const operationName = "ServiceClient.GetUserDelegationKey"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetUserDelegationKey", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
 	if err != nil {
@@ -434,7 +424,6 @@ func (client *ServiceClient) NewListContainersSegmentPager(comp Enum5, options *
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ServiceClientListContainersSegmentResponse) (ServiceClientListContainersSegmentResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ServiceClient.NewListContainersSegmentPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -519,9 +508,7 @@ func (client *ServiceClient) listContainersSegmentHandleResponse(resp *http.Resp
 //   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
 	var err error
-	const operationName = "ServiceClient.SetProperties"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.SetProperties", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
@@ -590,9 +577,7 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (S
 //   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the ServiceClient.SubmitBatch method.
 func (client *ServiceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
 	var err error
-	const operationName = "ServiceClient.SubmitBatch"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.SubmitBatch", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {

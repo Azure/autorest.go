@@ -54,7 +54,6 @@ func (client *PipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 // Generated from API version 2020-12-01
 func (client *PipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineClient.BeginCreateOrUpdatePipeline")
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
 		return nil, err
@@ -103,7 +102,6 @@ func (client *PipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 //     method.
 func (client *PipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineClientCreatePipelineRunOptions) (PipelineClientCreatePipelineRunResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineClient.CreatePipelineRun")
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return PipelineClientCreatePipelineRunResponse{}, err
@@ -188,7 +186,6 @@ func (client *PipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 // Generated from API version 2020-12-01
 func (client *PipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineClient.BeginDeletePipeline")
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
@@ -230,7 +227,6 @@ func (client *PipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 //   - options - PipelineClientGetPipelineOptions contains the optional parameters for the PipelineClient.GetPipeline method.
 func (client *PipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineClientGetPipelineOptions) (PipelineClientGetPipelineResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineClient.GetPipeline")
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return PipelineClientGetPipelineResponse{}, err
@@ -288,7 +284,6 @@ func (client *PipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineC
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PipelineClientGetPipelinesByWorkspaceResponse) (PipelineClientGetPipelinesByWorkspaceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineClient.NewGetPipelinesByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -361,7 +356,6 @@ func (client *PipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 // Generated from API version 2020-12-01
 func (client *PipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PipelineClient.BeginRenamePipeline")
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)
 	if err != nil {
 		return nil, err

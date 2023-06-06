@@ -56,7 +56,6 @@ func (client *ReservationsSummariesClient) NewListPager(scope string, grain Data
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListResponse) (ReservationsSummariesClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationsSummariesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -132,7 +131,6 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderPager(reserv
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListByReservationOrderResponse) (ReservationsSummariesClientListByReservationOrderResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationsSummariesClient.NewListByReservationOrderPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -200,7 +198,6 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderAndReservati
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListByReservationOrderAndReservationResponse) (ReservationsSummariesClientListByReservationOrderAndReservationResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationsSummariesClient.NewListByReservationOrderAndReservationPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

@@ -55,7 +55,6 @@ func (client *ForecastsClient) NewListPager(options *ForecastsClientListOptions)
 			return false
 		},
 		Fetcher: func(ctx context.Context, page *ForecastsClientListResponse) (ForecastsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ForecastsClient.NewListPager")
 			req, err := client.listCreateRequest(ctx, options)
 			if err != nil {
 				return ForecastsClientListResponse{}, err

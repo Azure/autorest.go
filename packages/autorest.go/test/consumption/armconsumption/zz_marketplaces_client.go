@@ -59,7 +59,6 @@ func (client *MarketplacesClient) NewListPager(scope string, options *Marketplac
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *MarketplacesClientListResponse) (MarketplacesClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MarketplacesClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

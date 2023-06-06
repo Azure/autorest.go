@@ -36,7 +36,6 @@ type TriggerRunClient struct {
 //     method.
 func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (TriggerRunClientCancelTriggerInstanceResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerRunClient.CancelTriggerInstance")
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
 		return TriggerRunClientCancelTriggerInstanceResponse{}, err
@@ -83,7 +82,6 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 //     method.
 func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerRunClient.QueryTriggerRunsByWorkspace")
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return TriggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
@@ -136,7 +134,6 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 //     method.
 func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (TriggerRunClientRerunTriggerInstanceResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerRunClient.RerunTriggerInstance")
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
 		return TriggerRunClientRerunTriggerInstanceResponse{}, err

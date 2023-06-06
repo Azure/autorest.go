@@ -37,7 +37,6 @@ type SessionClient struct {
 //     method.
 func (client *SessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SessionClientCancelSparkSessionOptions) (SessionClientCancelSparkSessionResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.CancelSparkSession")
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SessionClientCancelSparkSessionResponse{}, err
@@ -76,7 +75,6 @@ func (client *SessionClient) cancelSparkSessionCreateRequest(ctx context.Context
 //     method.
 func (client *SessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SessionClientCancelSparkStatementOptions) (SessionClientCancelSparkStatementResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.CancelSparkStatement")
 	req, err := client.cancelSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
 		return SessionClientCancelSparkStatementResponse{}, err
@@ -126,7 +124,6 @@ func (client *SessionClient) cancelSparkStatementHandleResponse(resp *http.Respo
 //     method.
 func (client *SessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SessionOptions, options *SessionClientCreateSparkSessionOptions) (SessionClientCreateSparkSessionResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.CreateSparkSession")
 	req, err := client.createSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
 		return SessionClientCreateSparkSessionResponse{}, err
@@ -183,7 +180,6 @@ func (client *SessionClient) createSparkSessionHandleResponse(resp *http.Respons
 //     method.
 func (client *SessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions StatementOptions, options *SessionClientCreateSparkStatementOptions) (SessionClientCreateSparkStatementResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.CreateSparkStatement")
 	req, err := client.createSparkStatementCreateRequest(ctx, sessionID, sparkStatementOptions, options)
 	if err != nil {
 		return SessionClientCreateSparkStatementResponse{}, err
@@ -234,7 +230,6 @@ func (client *SessionClient) createSparkStatementHandleResponse(resp *http.Respo
 //   - options - SessionClientGetSparkSessionOptions contains the optional parameters for the SessionClient.GetSparkSession method.
 func (client *SessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SessionClientGetSparkSessionOptions) (SessionClientGetSparkSessionResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.GetSparkSession")
 	req, err := client.getSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SessionClientGetSparkSessionResponse{}, err
@@ -287,7 +282,6 @@ func (client *SessionClient) getSparkSessionHandleResponse(resp *http.Response) 
 //     method.
 func (client *SessionClient) GetSparkSessions(ctx context.Context, options *SessionClientGetSparkSessionsOptions) (SessionClientGetSparkSessionsResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.GetSparkSessions")
 	req, err := client.getSparkSessionsCreateRequest(ctx, options)
 	if err != nil {
 		return SessionClientGetSparkSessionsResponse{}, err
@@ -347,7 +341,6 @@ func (client *SessionClient) getSparkSessionsHandleResponse(resp *http.Response)
 //     method.
 func (client *SessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SessionClientGetSparkStatementOptions) (SessionClientGetSparkStatementResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.GetSparkStatement")
 	req, err := client.getSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
 		return SessionClientGetSparkStatementResponse{}, err
@@ -397,7 +390,6 @@ func (client *SessionClient) getSparkStatementHandleResponse(resp *http.Response
 //     method.
 func (client *SessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SessionClientGetSparkStatementsOptions) (SessionClientGetSparkStatementsResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.GetSparkStatements")
 	req, err := client.getSparkStatementsCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SessionClientGetSparkStatementsResponse{}, err
@@ -446,7 +438,6 @@ func (client *SessionClient) getSparkStatementsHandleResponse(resp *http.Respons
 //     method.
 func (client *SessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SessionClientResetSparkSessionTimeoutOptions) (SessionClientResetSparkSessionTimeoutResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SessionClient.ResetSparkSessionTimeout")
 	req, err := client.resetSparkSessionTimeoutCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SessionClientResetSparkSessionTimeoutResponse{}, err

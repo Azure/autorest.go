@@ -35,7 +35,6 @@ type NotebookOperationResultClient struct {
 //     method.
 func (client *NotebookOperationResultClient) Get(ctx context.Context, operationID string, options *NotebookOperationResultClientGetOptions) (NotebookOperationResultClientGetResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NotebookOperationResultClient.Get")
 	req, err := client.getCreateRequest(ctx, operationID, options)
 	if err != nil {
 		return NotebookOperationResultClientGetResponse{}, err

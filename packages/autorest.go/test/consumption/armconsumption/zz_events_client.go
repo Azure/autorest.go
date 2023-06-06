@@ -53,7 +53,6 @@ func (client *EventsClient) NewListPager(startDate string, endDate string, scope
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *EventsClientListResponse) (EventsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "EventsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

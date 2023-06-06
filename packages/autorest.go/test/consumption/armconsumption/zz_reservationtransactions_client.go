@@ -52,7 +52,6 @@ func (client *ReservationTransactionsClient) NewListPager(billingAccountID strin
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationTransactionsClientListResponse) (ReservationTransactionsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationTransactionsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -118,7 +117,6 @@ func (client *ReservationTransactionsClient) NewListByBillingProfilePager(billin
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationTransactionsClientListByBillingProfileResponse) (ReservationTransactionsClientListByBillingProfileResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationTransactionsClient.NewListByBillingProfilePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
