@@ -53,7 +53,6 @@ func (client *AvailableSKUsClient) NewListPager(options *AvailableSKUsClientList
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AvailableSKUsClientListResponse) (AvailableSKUsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AvailableSKUsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

@@ -60,7 +60,6 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 //   - options - BudgetsClientCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
 func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsClientCreateOrUpdateOptions) (BudgetsClientCreateOrUpdateResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BudgetsClient.CreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, scope, budgetName, parameters, options)
 	if err != nil {
 		return BudgetsClientCreateOrUpdateResponse{}, err
@@ -125,7 +124,6 @@ func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (
 //   - options - BudgetsClientDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
 func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetName string, options *BudgetsClientDeleteOptions) (BudgetsClientDeleteResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BudgetsClient.Delete")
 	req, err := client.deleteCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
 		return BudgetsClientDeleteResponse{}, err
@@ -177,7 +175,6 @@ func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope stri
 //   - options - BudgetsClientGetOptions contains the optional parameters for the BudgetsClient.Get method.
 func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName string, options *BudgetsClientGetOptions) (BudgetsClientGetResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BudgetsClient.Get")
 	req, err := client.getCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
 		return BudgetsClientGetResponse{}, err
@@ -241,7 +238,6 @@ func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientLi
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BudgetsClientListResponse) (BudgetsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BudgetsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

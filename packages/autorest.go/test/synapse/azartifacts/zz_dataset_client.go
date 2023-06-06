@@ -53,7 +53,6 @@ func (client *DatasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 // Generated from API version 2020-12-01
 func (client *DatasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetClientBeginCreateOrUpdateDatasetOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DatasetClient.BeginCreateOrUpdateDataset")
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
 		return nil, err
@@ -119,7 +118,6 @@ func (client *DatasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 // Generated from API version 2020-12-01
 func (client *DatasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetClientBeginDeleteDatasetOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DatasetClient.BeginDeleteDataset")
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return nil, err
@@ -161,7 +159,6 @@ func (client *DatasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 //   - options - DatasetClientGetDatasetOptions contains the optional parameters for the DatasetClient.GetDataset method.
 func (client *DatasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetClientGetDatasetOptions) (DatasetClientGetDatasetResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DatasetClient.GetDataset")
 	req, err := client.getDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return DatasetClientGetDatasetResponse{}, err
@@ -219,7 +216,6 @@ func (client *DatasetClient) NewGetDatasetsByWorkspacePager(options *DatasetClie
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DatasetClientGetDatasetsByWorkspaceResponse) (DatasetClientGetDatasetsByWorkspaceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DatasetClient.NewGetDatasetsByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -292,7 +288,6 @@ func (client *DatasetClient) BeginRenameDataset(ctx context.Context, datasetName
 // Generated from API version 2020-12-01
 func (client *DatasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetClientBeginRenameDatasetOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DatasetClient.BeginRenameDataset")
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {
 		return nil, err

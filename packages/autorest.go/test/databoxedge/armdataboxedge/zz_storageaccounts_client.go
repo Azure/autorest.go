@@ -72,7 +72,6 @@ func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, de
 // Generated from API version 2021-02-01
 func (client *StorageAccountsClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountsClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, storageAccount, options)
 	if err != nil {
 		return nil, err
@@ -146,7 +145,6 @@ func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName
 // Generated from API version 2021-02-01
 func (client *StorageAccountsClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountsClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -199,7 +197,6 @@ func (client *StorageAccountsClient) deleteCreateRequest(ctx context.Context, de
 //   - options - StorageAccountsClientGetOptions contains the optional parameters for the StorageAccountsClient.Get method.
 func (client *StorageAccountsClient) Get(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientGetOptions) (StorageAccountsClientGetResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountsClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
 		return StorageAccountsClientGetResponse{}, err
@@ -265,7 +262,6 @@ func (client *StorageAccountsClient) NewListByDataBoxEdgeDevicePager(deviceName 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *StorageAccountsClientListByDataBoxEdgeDeviceResponse) (StorageAccountsClientListByDataBoxEdgeDeviceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountsClient.NewListByDataBoxEdgeDevicePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

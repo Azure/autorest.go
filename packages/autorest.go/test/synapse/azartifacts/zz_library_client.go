@@ -39,7 +39,6 @@ type LibraryClient struct {
 //   - options - LibraryClientAppendOptions contains the optional parameters for the LibraryClient.Append method.
 func (client *LibraryClient) Append(ctx context.Context, comp Enum9, libraryName string, content io.ReadSeekCloser, options *LibraryClientAppendOptions) (LibraryClientAppendResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LibraryClient.Append")
 	req, err := client.appendCreateRequest(ctx, comp, libraryName, content, options)
 	if err != nil {
 		return LibraryClientAppendResponse{}, err
@@ -105,7 +104,6 @@ func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string
 // Generated from API version 2020-12-01
 func (client *LibraryClient) create(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LibraryClient.BeginCreate")
 	req, err := client.createCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return nil, err
@@ -164,7 +162,6 @@ func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string
 // Generated from API version 2020-12-01
 func (client *LibraryClient) deleteOperation(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LibraryClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return nil, err
@@ -223,7 +220,6 @@ func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string,
 // Generated from API version 2020-12-01
 func (client *LibraryClient) flush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LibraryClient.BeginFlush")
 	req, err := client.flushCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return nil, err
@@ -265,7 +261,6 @@ func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName
 //   - options - LibraryClientGetOptions contains the optional parameters for the LibraryClient.Get method.
 func (client *LibraryClient) Get(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (LibraryClientGetResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LibraryClient.Get")
 	req, err := client.getCreateRequest(ctx, libraryName, options)
 	if err != nil {
 		return LibraryClientGetResponse{}, err
@@ -318,7 +313,6 @@ func (client *LibraryClient) getHandleResponse(resp *http.Response) (LibraryClie
 //     method.
 func (client *LibraryClient) GetOperationResult(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (LibraryClientGetOperationResultResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LibraryClient.GetOperationResult")
 	req, err := client.getOperationResultCreateRequest(ctx, operationID, options)
 	if err != nil {
 		return LibraryClientGetOperationResultResponse{}, err
@@ -385,7 +379,6 @@ func (client *LibraryClient) NewListPager(options *LibraryClientListOptions) *ru
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *LibraryClientListResponse) (LibraryClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LibraryClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

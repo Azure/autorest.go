@@ -53,7 +53,6 @@ func (client *TriggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 // Generated from API version 2020-12-01
 func (client *TriggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerClientBeginCreateOrUpdateTriggerOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.BeginCreateOrUpdateTrigger")
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
 		return nil, err
@@ -119,7 +118,6 @@ func (client *TriggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 // Generated from API version 2020-12-01
 func (client *TriggerClient) deleteTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.BeginDeleteTrigger")
 	req, err := client.deleteTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -162,7 +160,6 @@ func (client *TriggerClient) deleteTriggerCreateRequest(ctx context.Context, tri
 //     method.
 func (client *TriggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerClientGetEventSubscriptionStatusOptions) (TriggerClientGetEventSubscriptionStatusResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.GetEventSubscriptionStatus")
 	req, err := client.getEventSubscriptionStatusCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return TriggerClientGetEventSubscriptionStatusResponse{}, err
@@ -214,7 +211,6 @@ func (client *TriggerClient) getEventSubscriptionStatusHandleResponse(resp *http
 //   - options - TriggerClientGetTriggerOptions contains the optional parameters for the TriggerClient.GetTrigger method.
 func (client *TriggerClient) GetTrigger(ctx context.Context, triggerName string, options *TriggerClientGetTriggerOptions) (TriggerClientGetTriggerResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.GetTrigger")
 	req, err := client.getTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return TriggerClientGetTriggerResponse{}, err
@@ -272,7 +268,6 @@ func (client *TriggerClient) NewGetTriggersByWorkspacePager(options *TriggerClie
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *TriggerClientGetTriggersByWorkspaceResponse) (TriggerClientGetTriggersByWorkspaceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.NewGetTriggersByWorkspacePager")
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -344,7 +339,6 @@ func (client *TriggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 // Generated from API version 2020-12-01
 func (client *TriggerClient) startTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.BeginStartTrigger")
 	req, err := client.startTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -404,7 +398,6 @@ func (client *TriggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 // Generated from API version 2020-12-01
 func (client *TriggerClient) stopTrigger(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.BeginStopTrigger")
 	req, err := client.stopTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -464,7 +457,6 @@ func (client *TriggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 // Generated from API version 2020-12-01
 func (client *TriggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.BeginSubscribeTriggerToEvents")
 	req, err := client.subscribeTriggerToEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -524,7 +516,6 @@ func (client *TriggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 // Generated from API version 2020-12-01
 func (client *TriggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*http.Response, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggerClient.BeginUnsubscribeTriggerFromEvents")
 	req, err := client.unsubscribeTriggerFromEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err

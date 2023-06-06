@@ -50,7 +50,6 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 //     method.
 func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesClientGetByBillingAccountOptions) (BalancesClientGetByBillingAccountResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BalancesClient.GetByBillingAccount")
 	req, err := client.getByBillingAccountCreateRequest(ctx, billingAccountID, options)
 	if err != nil {
 		return BalancesClientGetByBillingAccountResponse{}, err
@@ -105,7 +104,6 @@ func (client *BalancesClient) getByBillingAccountHandleResponse(resp *http.Respo
 //     method.
 func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesClientGetForBillingPeriodByBillingAccountOptions) (BalancesClientGetForBillingPeriodByBillingAccountResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BalancesClient.GetForBillingPeriodByBillingAccount")
 	req, err := client.getForBillingPeriodByBillingAccountCreateRequest(ctx, billingAccountID, billingPeriodName, options)
 	if err != nil {
 		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, err

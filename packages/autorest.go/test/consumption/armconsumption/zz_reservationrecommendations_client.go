@@ -55,7 +55,6 @@ func (client *ReservationRecommendationsClient) NewListPager(scope string, optio
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationRecommendationsClientListResponse) (ReservationRecommendationsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ReservationRecommendationsClient.NewListPager")
 			var req *policy.Request
 			var err error
 			if page == nil {

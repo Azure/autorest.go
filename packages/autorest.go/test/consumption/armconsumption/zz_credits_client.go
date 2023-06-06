@@ -48,7 +48,6 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 //   - options - CreditsClientGetOptions contains the optional parameters for the CreditsClient.Get method.
 func (client *CreditsClient) Get(ctx context.Context, scope string, options *CreditsClientGetOptions) (CreditsClientGetResponse, error) {
 	var err error
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CreditsClient.Get")
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {
 		return CreditsClientGetResponse{}, err
