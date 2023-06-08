@@ -30,7 +30,7 @@ jobs:
     steps:
       - template: ../steps/set-env.yaml
         parameters:
-          NodeVersion: "16.x"
+          NodeVersion: "18.x"
           GoVersion: "$(go.version)"
 
       - template: ../steps/build-test-gotest.yaml
