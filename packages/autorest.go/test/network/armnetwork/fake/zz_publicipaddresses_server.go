@@ -78,8 +78,8 @@ type PublicIPAddressesServer struct {
 }
 
 // NewPublicIPAddressesServerTransport creates a new instance of PublicIPAddressesServerTransport with the provided implementation.
-// The returned PublicIPAddressesServerTransport instance is connected to an instance of armnetwork.PublicIPAddressesClient by way of the
-// undefined.Transporter field.
+// The returned PublicIPAddressesServerTransport instance is connected to an instance of armnetwork.PublicIPAddressesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPublicIPAddressesServerTransport(srv *PublicIPAddressesServer) *PublicIPAddressesServerTransport {
 	return &PublicIPAddressesServerTransport{srv: srv}
 }

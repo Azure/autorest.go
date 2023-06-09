@@ -58,8 +58,8 @@ type SnapshotsServer struct {
 }
 
 // NewSnapshotsServerTransport creates a new instance of SnapshotsServerTransport with the provided implementation.
-// The returned SnapshotsServerTransport instance is connected to an instance of armcompute.SnapshotsClient by way of the
-// undefined.Transporter field.
+// The returned SnapshotsServerTransport instance is connected to an instance of armcompute.SnapshotsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSnapshotsServerTransport(srv *SnapshotsServer) *SnapshotsServerTransport {
 	return &SnapshotsServerTransport{srv: srv}
 }

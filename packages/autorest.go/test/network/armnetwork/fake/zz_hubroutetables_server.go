@@ -42,8 +42,8 @@ type HubRouteTablesServer struct {
 }
 
 // NewHubRouteTablesServerTransport creates a new instance of HubRouteTablesServerTransport with the provided implementation.
-// The returned HubRouteTablesServerTransport instance is connected to an instance of armnetwork.HubRouteTablesClient by way of the
-// undefined.Transporter field.
+// The returned HubRouteTablesServerTransport instance is connected to an instance of armnetwork.HubRouteTablesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewHubRouteTablesServerTransport(srv *HubRouteTablesServer) *HubRouteTablesServerTransport {
 	return &HubRouteTablesServerTransport{srv: srv}
 }

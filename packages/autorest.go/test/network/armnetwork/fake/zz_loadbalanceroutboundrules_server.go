@@ -34,8 +34,8 @@ type LoadBalancerOutboundRulesServer struct {
 }
 
 // NewLoadBalancerOutboundRulesServerTransport creates a new instance of LoadBalancerOutboundRulesServerTransport with the provided implementation.
-// The returned LoadBalancerOutboundRulesServerTransport instance is connected to an instance of armnetwork.LoadBalancerOutboundRulesClient by way of the
-// undefined.Transporter field.
+// The returned LoadBalancerOutboundRulesServerTransport instance is connected to an instance of armnetwork.LoadBalancerOutboundRulesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLoadBalancerOutboundRulesServerTransport(srv *LoadBalancerOutboundRulesServer) *LoadBalancerOutboundRulesServerTransport {
 	return &LoadBalancerOutboundRulesServerTransport{srv: srv}
 }

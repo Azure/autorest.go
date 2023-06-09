@@ -42,8 +42,8 @@ type LoadBalancerBackendAddressPoolsServer struct {
 }
 
 // NewLoadBalancerBackendAddressPoolsServerTransport creates a new instance of LoadBalancerBackendAddressPoolsServerTransport with the provided implementation.
-// The returned LoadBalancerBackendAddressPoolsServerTransport instance is connected to an instance of armnetwork.LoadBalancerBackendAddressPoolsClient by way of the
-// undefined.Transporter field.
+// The returned LoadBalancerBackendAddressPoolsServerTransport instance is connected to an instance of armnetwork.LoadBalancerBackendAddressPoolsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLoadBalancerBackendAddressPoolsServerTransport(srv *LoadBalancerBackendAddressPoolsServer) *LoadBalancerBackendAddressPoolsServerTransport {
 	return &LoadBalancerBackendAddressPoolsServerTransport{srv: srv}
 }

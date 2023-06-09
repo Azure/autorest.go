@@ -46,8 +46,8 @@ type FlowLogsServer struct {
 }
 
 // NewFlowLogsServerTransport creates a new instance of FlowLogsServerTransport with the provided implementation.
-// The returned FlowLogsServerTransport instance is connected to an instance of armnetwork.FlowLogsClient by way of the
-// undefined.Transporter field.
+// The returned FlowLogsServerTransport instance is connected to an instance of armnetwork.FlowLogsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewFlowLogsServerTransport(srv *FlowLogsServer) *FlowLogsServerTransport {
 	return &FlowLogsServerTransport{srv: srv}
 }

@@ -99,8 +99,8 @@ type HTTPSuccessServer struct {
 }
 
 // NewHTTPSuccessServerTransport creates a new instance of HTTPSuccessServerTransport with the provided implementation.
-// The returned HTTPSuccessServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPSuccessClient by way of the
-// undefined.Transporter field.
+// The returned HTTPSuccessServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPSuccessClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewHTTPSuccessServerTransport(srv *HTTPSuccessServer) *HTTPSuccessServerTransport {
 	return &HTTPSuccessServerTransport{srv: srv}
 }

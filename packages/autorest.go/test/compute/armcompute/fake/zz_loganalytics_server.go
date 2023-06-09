@@ -33,8 +33,8 @@ type LogAnalyticsServer struct {
 }
 
 // NewLogAnalyticsServerTransport creates a new instance of LogAnalyticsServerTransport with the provided implementation.
-// The returned LogAnalyticsServerTransport instance is connected to an instance of armcompute.LogAnalyticsClient by way of the
-// undefined.Transporter field.
+// The returned LogAnalyticsServerTransport instance is connected to an instance of armcompute.LogAnalyticsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLogAnalyticsServerTransport(srv *LogAnalyticsServer) *LogAnalyticsServerTransport {
 	return &LogAnalyticsServerTransport{srv: srv}
 }

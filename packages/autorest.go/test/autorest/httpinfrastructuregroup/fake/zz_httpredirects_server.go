@@ -87,8 +87,8 @@ type HTTPRedirectsServer struct {
 }
 
 // NewHTTPRedirectsServerTransport creates a new instance of HTTPRedirectsServerTransport with the provided implementation.
-// The returned HTTPRedirectsServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPRedirectsClient by way of the
-// undefined.Transporter field.
+// The returned HTTPRedirectsServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPRedirectsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewHTTPRedirectsServerTransport(srv *HTTPRedirectsServer) *HTTPRedirectsServerTransport {
 	return &HTTPRedirectsServerTransport{srv: srv}
 }

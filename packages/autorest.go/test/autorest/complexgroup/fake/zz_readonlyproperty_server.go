@@ -31,8 +31,8 @@ type ReadonlypropertyServer struct {
 }
 
 // NewReadonlypropertyServerTransport creates a new instance of ReadonlypropertyServerTransport with the provided implementation.
-// The returned ReadonlypropertyServerTransport instance is connected to an instance of complexgroup.ReadonlypropertyClient by way of the
-// undefined.Transporter field.
+// The returned ReadonlypropertyServerTransport instance is connected to an instance of complexgroup.ReadonlypropertyClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewReadonlypropertyServerTransport(srv *ReadonlypropertyServer) *ReadonlypropertyServerTransport {
 	return &ReadonlypropertyServerTransport{srv: srv}
 }

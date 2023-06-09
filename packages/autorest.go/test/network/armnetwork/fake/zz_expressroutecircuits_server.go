@@ -70,8 +70,8 @@ type ExpressRouteCircuitsServer struct {
 }
 
 // NewExpressRouteCircuitsServerTransport creates a new instance of ExpressRouteCircuitsServerTransport with the provided implementation.
-// The returned ExpressRouteCircuitsServerTransport instance is connected to an instance of armnetwork.ExpressRouteCircuitsClient by way of the
-// undefined.Transporter field.
+// The returned ExpressRouteCircuitsServerTransport instance is connected to an instance of armnetwork.ExpressRouteCircuitsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewExpressRouteCircuitsServerTransport(srv *ExpressRouteCircuitsServer) *ExpressRouteCircuitsServerTransport {
 	return &ExpressRouteCircuitsServerTransport{srv: srv}
 }

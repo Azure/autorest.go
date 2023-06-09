@@ -50,8 +50,8 @@ type CustomIPPrefixesServer struct {
 }
 
 // NewCustomIPPrefixesServerTransport creates a new instance of CustomIPPrefixesServerTransport with the provided implementation.
-// The returned CustomIPPrefixesServerTransport instance is connected to an instance of armnetwork.CustomIPPrefixesClient by way of the
-// undefined.Transporter field.
+// The returned CustomIPPrefixesServerTransport instance is connected to an instance of armnetwork.CustomIPPrefixesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewCustomIPPrefixesServerTransport(srv *CustomIPPrefixesServer) *CustomIPPrefixesServerTransport {
 	return &CustomIPPrefixesServerTransport{srv: srv}
 }

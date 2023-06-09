@@ -57,8 +57,8 @@ type ConnectionMonitorsServer struct {
 }
 
 // NewConnectionMonitorsServerTransport creates a new instance of ConnectionMonitorsServerTransport with the provided implementation.
-// The returned ConnectionMonitorsServerTransport instance is connected to an instance of armnetwork.ConnectionMonitorsClient by way of the
-// undefined.Transporter field.
+// The returned ConnectionMonitorsServerTransport instance is connected to an instance of armnetwork.ConnectionMonitorsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewConnectionMonitorsServerTransport(srv *ConnectionMonitorsServer) *ConnectionMonitorsServerTransport {
 	return &ConnectionMonitorsServerTransport{srv: srv}
 }

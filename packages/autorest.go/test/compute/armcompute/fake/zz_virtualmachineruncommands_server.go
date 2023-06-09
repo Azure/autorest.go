@@ -54,8 +54,8 @@ type VirtualMachineRunCommandsServer struct {
 }
 
 // NewVirtualMachineRunCommandsServerTransport creates a new instance of VirtualMachineRunCommandsServerTransport with the provided implementation.
-// The returned VirtualMachineRunCommandsServerTransport instance is connected to an instance of armcompute.VirtualMachineRunCommandsClient by way of the
-// undefined.Transporter field.
+// The returned VirtualMachineRunCommandsServerTransport instance is connected to an instance of armcompute.VirtualMachineRunCommandsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualMachineRunCommandsServerTransport(srv *VirtualMachineRunCommandsServer) *VirtualMachineRunCommandsServerTransport {
 	return &VirtualMachineRunCommandsServerTransport{srv: srv}
 }

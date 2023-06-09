@@ -31,8 +31,8 @@ type XMSClientRequestIDServer struct {
 }
 
 // NewXMSClientRequestIDServerTransport creates a new instance of XMSClientRequestIDServerTransport with the provided implementation.
-// The returned XMSClientRequestIDServerTransport instance is connected to an instance of azurespecialsgroup.XMSClientRequestIDClient by way of the
-// undefined.Transporter field.
+// The returned XMSClientRequestIDServerTransport instance is connected to an instance of azurespecialsgroup.XMSClientRequestIDClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewXMSClientRequestIDServerTransport(srv *XMSClientRequestIDServer) *XMSClientRequestIDServerTransport {
 	return &XMSClientRequestIDServerTransport{srv: srv}
 }

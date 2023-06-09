@@ -34,8 +34,8 @@ type DefaultSecurityRulesServer struct {
 }
 
 // NewDefaultSecurityRulesServerTransport creates a new instance of DefaultSecurityRulesServerTransport with the provided implementation.
-// The returned DefaultSecurityRulesServerTransport instance is connected to an instance of armnetwork.DefaultSecurityRulesClient by way of the
-// undefined.Transporter field.
+// The returned DefaultSecurityRulesServerTransport instance is connected to an instance of armnetwork.DefaultSecurityRulesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDefaultSecurityRulesServerTransport(srv *DefaultSecurityRulesServer) *DefaultSecurityRulesServerTransport {
 	return &DefaultSecurityRulesServerTransport{srv: srv}
 }

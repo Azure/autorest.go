@@ -35,8 +35,8 @@ type HeaderServer struct {
 }
 
 // NewHeaderServerTransport creates a new instance of HeaderServerTransport with the provided implementation.
-// The returned HeaderServerTransport instance is connected to an instance of azurespecialsgroup.HeaderClient by way of the
-// undefined.Transporter field.
+// The returned HeaderServerTransport instance is connected to an instance of azurespecialsgroup.HeaderClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewHeaderServerTransport(srv *HeaderServer) *HeaderServerTransport {
 	return &HeaderServerTransport{srv: srv}
 }

@@ -43,8 +43,8 @@ type AdminRuleCollectionsServer struct {
 }
 
 // NewAdminRuleCollectionsServerTransport creates a new instance of AdminRuleCollectionsServerTransport with the provided implementation.
-// The returned AdminRuleCollectionsServerTransport instance is connected to an instance of armnetwork.AdminRuleCollectionsClient by way of the
-// undefined.Transporter field.
+// The returned AdminRuleCollectionsServerTransport instance is connected to an instance of armnetwork.AdminRuleCollectionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAdminRuleCollectionsServerTransport(srv *AdminRuleCollectionsServer) *AdminRuleCollectionsServerTransport {
 	return &AdminRuleCollectionsServerTransport{srv: srv}
 }

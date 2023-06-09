@@ -54,8 +54,8 @@ type AvailabilitySetsServer struct {
 }
 
 // NewAvailabilitySetsServerTransport creates a new instance of AvailabilitySetsServerTransport with the provided implementation.
-// The returned AvailabilitySetsServerTransport instance is connected to an instance of armcompute.AvailabilitySetsClient by way of the
-// undefined.Transporter field.
+// The returned AvailabilitySetsServerTransport instance is connected to an instance of armcompute.AvailabilitySetsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAvailabilitySetsServerTransport(srv *AvailabilitySetsServer) *AvailabilitySetsServerTransport {
 	return &AvailabilitySetsServerTransport{srv: srv}
 }

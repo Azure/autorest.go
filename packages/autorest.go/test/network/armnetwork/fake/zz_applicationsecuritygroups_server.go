@@ -50,8 +50,8 @@ type ApplicationSecurityGroupsServer struct {
 }
 
 // NewApplicationSecurityGroupsServerTransport creates a new instance of ApplicationSecurityGroupsServerTransport with the provided implementation.
-// The returned ApplicationSecurityGroupsServerTransport instance is connected to an instance of armnetwork.ApplicationSecurityGroupsClient by way of the
-// undefined.Transporter field.
+// The returned ApplicationSecurityGroupsServerTransport instance is connected to an instance of armnetwork.ApplicationSecurityGroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewApplicationSecurityGroupsServerTransport(srv *ApplicationSecurityGroupsServer) *ApplicationSecurityGroupsServerTransport {
 	return &ApplicationSecurityGroupsServerTransport{srv: srv}
 }

@@ -33,8 +33,8 @@ type ObjectTypeServer struct {
 }
 
 // NewObjectTypeServerTransport creates a new instance of ObjectTypeServerTransport with the provided implementation.
-// The returned ObjectTypeServerTransport instance is connected to an instance of objectgroup.ObjectTypeClient by way of the
-// undefined.Transporter field.
+// The returned ObjectTypeServerTransport instance is connected to an instance of objectgroup.ObjectTypeClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewObjectTypeServerTransport(srv *ObjectTypeServer) *ObjectTypeServerTransport {
 	return &ObjectTypeServerTransport{srv: srv}
 }

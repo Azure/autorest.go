@@ -31,8 +31,8 @@ type IntServer struct {
 }
 
 // NewIntServerTransport creates a new instance of IntServerTransport with the provided implementation.
-// The returned IntServerTransport instance is connected to an instance of nonstringenumgroup.IntClient by way of the
-// undefined.Transporter field.
+// The returned IntServerTransport instance is connected to an instance of nonstringenumgroup.IntClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewIntServerTransport(srv *IntServer) *IntServerTransport {
 	return &IntServerTransport{srv: srv}
 }

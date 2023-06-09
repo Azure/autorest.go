@@ -50,8 +50,8 @@ type IPAllocationsServer struct {
 }
 
 // NewIPAllocationsServerTransport creates a new instance of IPAllocationsServerTransport with the provided implementation.
-// The returned IPAllocationsServerTransport instance is connected to an instance of armnetwork.IPAllocationsClient by way of the
-// undefined.Transporter field.
+// The returned IPAllocationsServerTransport instance is connected to an instance of armnetwork.IPAllocationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewIPAllocationsServerTransport(srv *IPAllocationsServer) *IPAllocationsServerTransport {
 	return &IPAllocationsServerTransport{srv: srv}
 }

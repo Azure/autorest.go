@@ -46,8 +46,8 @@ type DscpConfigurationServer struct {
 }
 
 // NewDscpConfigurationServerTransport creates a new instance of DscpConfigurationServerTransport with the provided implementation.
-// The returned DscpConfigurationServerTransport instance is connected to an instance of armnetwork.DscpConfigurationClient by way of the
-// undefined.Transporter field.
+// The returned DscpConfigurationServerTransport instance is connected to an instance of armnetwork.DscpConfigurationClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDscpConfigurationServerTransport(srv *DscpConfigurationServer) *DscpConfigurationServerTransport {
 	return &DscpConfigurationServerTransport{srv: srv}
 }

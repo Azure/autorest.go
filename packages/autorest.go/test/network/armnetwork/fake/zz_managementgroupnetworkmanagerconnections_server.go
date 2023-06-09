@@ -43,8 +43,8 @@ type ManagementGroupNetworkManagerConnectionsServer struct {
 }
 
 // NewManagementGroupNetworkManagerConnectionsServerTransport creates a new instance of ManagementGroupNetworkManagerConnectionsServerTransport with the provided implementation.
-// The returned ManagementGroupNetworkManagerConnectionsServerTransport instance is connected to an instance of armnetwork.ManagementGroupNetworkManagerConnectionsClient by way of the
-// undefined.Transporter field.
+// The returned ManagementGroupNetworkManagerConnectionsServerTransport instance is connected to an instance of armnetwork.ManagementGroupNetworkManagerConnectionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewManagementGroupNetworkManagerConnectionsServerTransport(srv *ManagementGroupNetworkManagerConnectionsServer) *ManagementGroupNetworkManagerConnectionsServerTransport {
 	return &ManagementGroupNetworkManagerConnectionsServerTransport{srv: srv}
 }

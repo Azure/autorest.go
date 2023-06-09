@@ -42,8 +42,8 @@ type ServiceEndpointPolicyDefinitionsServer struct {
 }
 
 // NewServiceEndpointPolicyDefinitionsServerTransport creates a new instance of ServiceEndpointPolicyDefinitionsServerTransport with the provided implementation.
-// The returned ServiceEndpointPolicyDefinitionsServerTransport instance is connected to an instance of armnetwork.ServiceEndpointPolicyDefinitionsClient by way of the
-// undefined.Transporter field.
+// The returned ServiceEndpointPolicyDefinitionsServerTransport instance is connected to an instance of armnetwork.ServiceEndpointPolicyDefinitionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServiceEndpointPolicyDefinitionsServerTransport(srv *ServiceEndpointPolicyDefinitionsServer) *ServiceEndpointPolicyDefinitionsServerTransport {
 	return &ServiceEndpointPolicyDefinitionsServerTransport{srv: srv}
 }

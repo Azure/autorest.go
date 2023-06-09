@@ -41,8 +41,8 @@ type DdosCustomPoliciesServer struct {
 }
 
 // NewDdosCustomPoliciesServerTransport creates a new instance of DdosCustomPoliciesServerTransport with the provided implementation.
-// The returned DdosCustomPoliciesServerTransport instance is connected to an instance of armnetwork.DdosCustomPoliciesClient by way of the
-// undefined.Transporter field.
+// The returned DdosCustomPoliciesServerTransport instance is connected to an instance of armnetwork.DdosCustomPoliciesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDdosCustomPoliciesServerTransport(srv *DdosCustomPoliciesServer) *DdosCustomPoliciesServerTransport {
 	return &DdosCustomPoliciesServerTransport{srv: srv}
 }

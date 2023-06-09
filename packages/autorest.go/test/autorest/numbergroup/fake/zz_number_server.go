@@ -119,8 +119,8 @@ type NumberServer struct {
 }
 
 // NewNumberServerTransport creates a new instance of NumberServerTransport with the provided implementation.
-// The returned NumberServerTransport instance is connected to an instance of numbergroup.NumberClient by way of the
-// undefined.Transporter field.
+// The returned NumberServerTransport instance is connected to an instance of numbergroup.NumberClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewNumberServerTransport(srv *NumberServer) *NumberServerTransport {
 	return &NumberServerTransport{srv: srv}
 }

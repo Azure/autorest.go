@@ -39,8 +39,8 @@ type HTTPServerFailureServer struct {
 }
 
 // NewHTTPServerFailureServerTransport creates a new instance of HTTPServerFailureServerTransport with the provided implementation.
-// The returned HTTPServerFailureServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPServerFailureClient by way of the
-// undefined.Transporter field.
+// The returned HTTPServerFailureServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPServerFailureClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewHTTPServerFailureServerTransport(srv *HTTPServerFailureServer) *HTTPServerFailureServerTransport {
 	return &HTTPServerFailureServerTransport{srv: srv}
 }

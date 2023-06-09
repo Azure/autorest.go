@@ -46,8 +46,8 @@ type VirtualRoutersServer struct {
 }
 
 // NewVirtualRoutersServerTransport creates a new instance of VirtualRoutersServerTransport with the provided implementation.
-// The returned VirtualRoutersServerTransport instance is connected to an instance of armnetwork.VirtualRoutersClient by way of the
-// undefined.Transporter field.
+// The returned VirtualRoutersServerTransport instance is connected to an instance of armnetwork.VirtualRoutersClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualRoutersServerTransport(srv *VirtualRoutersServer) *VirtualRoutersServerTransport {
 	return &VirtualRoutersServerTransport{srv: srv}
 }

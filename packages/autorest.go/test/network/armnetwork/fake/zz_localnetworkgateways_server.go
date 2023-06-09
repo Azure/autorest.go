@@ -46,8 +46,8 @@ type LocalNetworkGatewaysServer struct {
 }
 
 // NewLocalNetworkGatewaysServerTransport creates a new instance of LocalNetworkGatewaysServerTransport with the provided implementation.
-// The returned LocalNetworkGatewaysServerTransport instance is connected to an instance of armnetwork.LocalNetworkGatewaysClient by way of the
-// undefined.Transporter field.
+// The returned LocalNetworkGatewaysServerTransport instance is connected to an instance of armnetwork.LocalNetworkGatewaysClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLocalNetworkGatewaysServerTransport(srv *LocalNetworkGatewaysServer) *LocalNetworkGatewaysServerTransport {
 	return &LocalNetworkGatewaysServerTransport{srv: srv}
 }

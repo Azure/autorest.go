@@ -54,8 +54,8 @@ type AzureFirewallsServer struct {
 }
 
 // NewAzureFirewallsServerTransport creates a new instance of AzureFirewallsServerTransport with the provided implementation.
-// The returned AzureFirewallsServerTransport instance is connected to an instance of armnetwork.AzureFirewallsClient by way of the
-// undefined.Transporter field.
+// The returned AzureFirewallsServerTransport instance is connected to an instance of armnetwork.AzureFirewallsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAzureFirewallsServerTransport(srv *AzureFirewallsServer) *AzureFirewallsServerTransport {
 	return &AzureFirewallsServerTransport{srv: srv}
 }

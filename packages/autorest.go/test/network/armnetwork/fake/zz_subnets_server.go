@@ -50,8 +50,8 @@ type SubnetsServer struct {
 }
 
 // NewSubnetsServerTransport creates a new instance of SubnetsServerTransport with the provided implementation.
-// The returned SubnetsServerTransport instance is connected to an instance of armnetwork.SubnetsClient by way of the
-// undefined.Transporter field.
+// The returned SubnetsServerTransport instance is connected to an instance of armnetwork.SubnetsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSubnetsServerTransport(srv *SubnetsServer) *SubnetsServerTransport {
 	return &SubnetsServerTransport{srv: srv}
 }

@@ -42,8 +42,8 @@ type VirtualRouterPeeringsServer struct {
 }
 
 // NewVirtualRouterPeeringsServerTransport creates a new instance of VirtualRouterPeeringsServerTransport with the provided implementation.
-// The returned VirtualRouterPeeringsServerTransport instance is connected to an instance of armnetwork.VirtualRouterPeeringsClient by way of the
-// undefined.Transporter field.
+// The returned VirtualRouterPeeringsServerTransport instance is connected to an instance of armnetwork.VirtualRouterPeeringsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualRouterPeeringsServerTransport(srv *VirtualRouterPeeringsServer) *VirtualRouterPeeringsServerTransport {
 	return &VirtualRouterPeeringsServerTransport{srv: srv}
 }

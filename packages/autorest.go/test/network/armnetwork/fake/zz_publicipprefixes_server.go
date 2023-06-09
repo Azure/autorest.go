@@ -50,8 +50,8 @@ type PublicIPPrefixesServer struct {
 }
 
 // NewPublicIPPrefixesServerTransport creates a new instance of PublicIPPrefixesServerTransport with the provided implementation.
-// The returned PublicIPPrefixesServerTransport instance is connected to an instance of armnetwork.PublicIPPrefixesClient by way of the
-// undefined.Transporter field.
+// The returned PublicIPPrefixesServerTransport instance is connected to an instance of armnetwork.PublicIPPrefixesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPublicIPPrefixesServerTransport(srv *PublicIPPrefixesServer) *PublicIPPrefixesServerTransport {
 	return &PublicIPPrefixesServerTransport{srv: srv}
 }

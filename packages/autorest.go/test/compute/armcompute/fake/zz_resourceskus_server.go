@@ -29,8 +29,8 @@ type ResourceSKUsServer struct {
 }
 
 // NewResourceSKUsServerTransport creates a new instance of ResourceSKUsServerTransport with the provided implementation.
-// The returned ResourceSKUsServerTransport instance is connected to an instance of armcompute.ResourceSKUsClient by way of the
-// undefined.Transporter field.
+// The returned ResourceSKUsServerTransport instance is connected to an instance of armcompute.ResourceSKUsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewResourceSKUsServerTransport(srv *ResourceSKUsServer) *ResourceSKUsServerTransport {
 	return &ResourceSKUsServerTransport{srv: srv}
 }

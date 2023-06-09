@@ -47,8 +47,8 @@ type EnumServer struct {
 }
 
 // NewEnumServerTransport creates a new instance of EnumServerTransport with the provided implementation.
-// The returned EnumServerTransport instance is connected to an instance of stringgroup.EnumClient by way of the
-// undefined.Transporter field.
+// The returned EnumServerTransport instance is connected to an instance of stringgroup.EnumClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewEnumServerTransport(srv *EnumServer) *EnumServerTransport {
 	return &EnumServerTransport{srv: srv}
 }

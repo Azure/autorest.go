@@ -63,8 +63,8 @@ type VirtualHubsServer struct {
 }
 
 // NewVirtualHubsServerTransport creates a new instance of VirtualHubsServerTransport with the provided implementation.
-// The returned VirtualHubsServerTransport instance is connected to an instance of armnetwork.VirtualHubsClient by way of the
-// undefined.Transporter field.
+// The returned VirtualHubsServerTransport instance is connected to an instance of armnetwork.VirtualHubsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualHubsServerTransport(srv *VirtualHubsServer) *VirtualHubsServerTransport {
 	return &VirtualHubsServerTransport{srv: srv}
 }

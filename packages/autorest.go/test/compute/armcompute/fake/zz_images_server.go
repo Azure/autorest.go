@@ -50,8 +50,8 @@ type ImagesServer struct {
 }
 
 // NewImagesServerTransport creates a new instance of ImagesServerTransport with the provided implementation.
-// The returned ImagesServerTransport instance is connected to an instance of armcompute.ImagesClient by way of the
-// undefined.Transporter field.
+// The returned ImagesServerTransport instance is connected to an instance of armcompute.ImagesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewImagesServerTransport(srv *ImagesServer) *ImagesServerTransport {
 	return &ImagesServerTransport{srv: srv}
 }

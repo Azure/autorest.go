@@ -29,8 +29,8 @@ type ManagerCommitsServer struct {
 }
 
 // NewManagerCommitsServerTransport creates a new instance of ManagerCommitsServerTransport with the provided implementation.
-// The returned ManagerCommitsServerTransport instance is connected to an instance of armnetwork.ManagerCommitsClient by way of the
-// undefined.Transporter field.
+// The returned ManagerCommitsServerTransport instance is connected to an instance of armnetwork.ManagerCommitsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewManagerCommitsServerTransport(srv *ManagerCommitsServer) *ManagerCommitsServerTransport {
 	return &ManagerCommitsServerTransport{srv: srv}
 }

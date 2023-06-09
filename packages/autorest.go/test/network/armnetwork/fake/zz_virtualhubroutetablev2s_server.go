@@ -42,8 +42,8 @@ type VirtualHubRouteTableV2SServer struct {
 }
 
 // NewVirtualHubRouteTableV2SServerTransport creates a new instance of VirtualHubRouteTableV2SServerTransport with the provided implementation.
-// The returned VirtualHubRouteTableV2SServerTransport instance is connected to an instance of armnetwork.VirtualHubRouteTableV2SClient by way of the
-// undefined.Transporter field.
+// The returned VirtualHubRouteTableV2SServerTransport instance is connected to an instance of armnetwork.VirtualHubRouteTableV2SClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualHubRouteTableV2SServerTransport(srv *VirtualHubRouteTableV2SServer) *VirtualHubRouteTableV2SServerTransport {
 	return &VirtualHubRouteTableV2SServerTransport{srv: srv}
 }

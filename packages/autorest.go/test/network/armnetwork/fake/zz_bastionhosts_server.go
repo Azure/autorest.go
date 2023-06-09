@@ -50,8 +50,8 @@ type BastionHostsServer struct {
 }
 
 // NewBastionHostsServerTransport creates a new instance of BastionHostsServerTransport with the provided implementation.
-// The returned BastionHostsServerTransport instance is connected to an instance of armnetwork.BastionHostsClient by way of the
-// undefined.Transporter field.
+// The returned BastionHostsServerTransport instance is connected to an instance of armnetwork.BastionHostsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewBastionHostsServerTransport(srv *BastionHostsServer) *BastionHostsServerTransport {
 	return &BastionHostsServerTransport{srv: srv}
 }

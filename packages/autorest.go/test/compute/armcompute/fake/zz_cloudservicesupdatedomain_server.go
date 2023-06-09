@@ -39,8 +39,8 @@ type CloudServicesUpdateDomainServer struct {
 }
 
 // NewCloudServicesUpdateDomainServerTransport creates a new instance of CloudServicesUpdateDomainServerTransport with the provided implementation.
-// The returned CloudServicesUpdateDomainServerTransport instance is connected to an instance of armcompute.CloudServicesUpdateDomainClient by way of the
-// undefined.Transporter field.
+// The returned CloudServicesUpdateDomainServerTransport instance is connected to an instance of armcompute.CloudServicesUpdateDomainClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewCloudServicesUpdateDomainServerTransport(srv *CloudServicesUpdateDomainServer) *CloudServicesUpdateDomainServerTransport {
 	return &CloudServicesUpdateDomainServerTransport{srv: srv}
 }

@@ -50,8 +50,8 @@ type ProfilesServer struct {
 }
 
 // NewProfilesServerTransport creates a new instance of ProfilesServerTransport with the provided implementation.
-// The returned ProfilesServerTransport instance is connected to an instance of armnetwork.ProfilesClient by way of the
-// undefined.Transporter field.
+// The returned ProfilesServerTransport instance is connected to an instance of armnetwork.ProfilesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewProfilesServerTransport(srv *ProfilesServer) *ProfilesServerTransport {
 	return &ProfilesServerTransport{srv: srv}
 }

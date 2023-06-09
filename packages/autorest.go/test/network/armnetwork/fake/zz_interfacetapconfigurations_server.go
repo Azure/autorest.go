@@ -42,8 +42,8 @@ type InterfaceTapConfigurationsServer struct {
 }
 
 // NewInterfaceTapConfigurationsServerTransport creates a new instance of InterfaceTapConfigurationsServerTransport with the provided implementation.
-// The returned InterfaceTapConfigurationsServerTransport instance is connected to an instance of armnetwork.InterfaceTapConfigurationsClient by way of the
-// undefined.Transporter field.
+// The returned InterfaceTapConfigurationsServerTransport instance is connected to an instance of armnetwork.InterfaceTapConfigurationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewInterfaceTapConfigurationsServerTransport(srv *InterfaceTapConfigurationsServer) *InterfaceTapConfigurationsServerTransport {
 	return &InterfaceTapConfigurationsServerTransport{srv: srv}
 }

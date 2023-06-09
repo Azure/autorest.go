@@ -42,8 +42,8 @@ type FirewallPolicyRuleCollectionGroupsServer struct {
 }
 
 // NewFirewallPolicyRuleCollectionGroupsServerTransport creates a new instance of FirewallPolicyRuleCollectionGroupsServerTransport with the provided implementation.
-// The returned FirewallPolicyRuleCollectionGroupsServerTransport instance is connected to an instance of armnetwork.FirewallPolicyRuleCollectionGroupsClient by way of the
-// undefined.Transporter field.
+// The returned FirewallPolicyRuleCollectionGroupsServerTransport instance is connected to an instance of armnetwork.FirewallPolicyRuleCollectionGroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewFirewallPolicyRuleCollectionGroupsServerTransport(srv *FirewallPolicyRuleCollectionGroupsServer) *FirewallPolicyRuleCollectionGroupsServerTransport {
 	return &FirewallPolicyRuleCollectionGroupsServerTransport{srv: srv}
 }

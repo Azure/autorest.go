@@ -47,8 +47,8 @@ type BasicServer struct {
 }
 
 // NewBasicServerTransport creates a new instance of BasicServerTransport with the provided implementation.
-// The returned BasicServerTransport instance is connected to an instance of complexgroup.BasicClient by way of the
-// undefined.Transporter field.
+// The returned BasicServerTransport instance is connected to an instance of complexgroup.BasicClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewBasicServerTransport(srv *BasicServer) *BasicServerTransport {
 	return &BasicServerTransport{srv: srv}
 }

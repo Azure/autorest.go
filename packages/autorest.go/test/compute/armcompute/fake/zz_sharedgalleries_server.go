@@ -34,8 +34,8 @@ type SharedGalleriesServer struct {
 }
 
 // NewSharedGalleriesServerTransport creates a new instance of SharedGalleriesServerTransport with the provided implementation.
-// The returned SharedGalleriesServerTransport instance is connected to an instance of armcompute.SharedGalleriesClient by way of the
-// undefined.Transporter field.
+// The returned SharedGalleriesServerTransport instance is connected to an instance of armcompute.SharedGalleriesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSharedGalleriesServerTransport(srv *SharedGalleriesServer) *SharedGalleriesServerTransport {
 	return &SharedGalleriesServerTransport{srv: srv}
 }

@@ -123,8 +123,8 @@ type ExplicitServer struct {
 }
 
 // NewExplicitServerTransport creates a new instance of ExplicitServerTransport with the provided implementation.
-// The returned ExplicitServerTransport instance is connected to an instance of optionalgroup.ExplicitClient by way of the
-// undefined.Transporter field.
+// The returned ExplicitServerTransport instance is connected to an instance of optionalgroup.ExplicitClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewExplicitServerTransport(srv *ExplicitServer) *ExplicitServerTransport {
 	return &ExplicitServerTransport{srv: srv}
 }

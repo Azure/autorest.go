@@ -40,8 +40,8 @@ type FormdataServer struct {
 }
 
 // NewFormdataServerTransport creates a new instance of FormdataServerTransport with the provided implementation.
-// The returned FormdataServerTransport instance is connected to an instance of formdatagroup.FormdataClient by way of the
-// undefined.Transporter field.
+// The returned FormdataServerTransport instance is connected to an instance of formdatagroup.FormdataClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewFormdataServerTransport(srv *FormdataServer) *FormdataServerTransport {
 	return &FormdataServerTransport{srv: srv}
 }

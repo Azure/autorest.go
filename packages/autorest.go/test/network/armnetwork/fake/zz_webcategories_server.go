@@ -34,8 +34,8 @@ type WebCategoriesServer struct {
 }
 
 // NewWebCategoriesServerTransport creates a new instance of WebCategoriesServerTransport with the provided implementation.
-// The returned WebCategoriesServerTransport instance is connected to an instance of armnetwork.WebCategoriesClient by way of the
-// undefined.Transporter field.
+// The returned WebCategoriesServerTransport instance is connected to an instance of armnetwork.WebCategoriesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewWebCategoriesServerTransport(srv *WebCategoriesServer) *WebCategoriesServerTransport {
 	return &WebCategoriesServerTransport{srv: srv}
 }

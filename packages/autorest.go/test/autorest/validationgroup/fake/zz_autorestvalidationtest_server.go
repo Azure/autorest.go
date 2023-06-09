@@ -43,8 +43,8 @@ type AutoRestValidationTestServer struct {
 }
 
 // NewAutoRestValidationTestServerTransport creates a new instance of AutoRestValidationTestServerTransport with the provided implementation.
-// The returned AutoRestValidationTestServerTransport instance is connected to an instance of validationgroup.AutoRestValidationTestClient by way of the
-// undefined.Transporter field.
+// The returned AutoRestValidationTestServerTransport instance is connected to an instance of validationgroup.AutoRestValidationTestClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAutoRestValidationTestServerTransport(srv *AutoRestValidationTestServer) *AutoRestValidationTestServerTransport {
 	return &AutoRestValidationTestServerTransport{srv: srv}
 }

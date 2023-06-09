@@ -32,8 +32,8 @@ type AutoRestReportServiceServer struct {
 }
 
 // NewAutoRestReportServiceServerTransport creates a new instance of AutoRestReportServiceServerTransport with the provided implementation.
-// The returned AutoRestReportServiceServerTransport instance is connected to an instance of reportgroup.AutoRestReportServiceClient by way of the
-// undefined.Transporter field.
+// The returned AutoRestReportServiceServerTransport instance is connected to an instance of reportgroup.AutoRestReportServiceClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAutoRestReportServiceServerTransport(srv *AutoRestReportServiceServer) *AutoRestReportServiceServerTransport {
 	return &AutoRestReportServiceServerTransport{srv: srv}
 }

@@ -177,8 +177,8 @@ type MultipleResponsesServer struct {
 }
 
 // NewMultipleResponsesServerTransport creates a new instance of MultipleResponsesServerTransport with the provided implementation.
-// The returned MultipleResponsesServerTransport instance is connected to an instance of httpinfrastructuregroup.MultipleResponsesClient by way of the
-// undefined.Transporter field.
+// The returned MultipleResponsesServerTransport instance is connected to an instance of httpinfrastructuregroup.MultipleResponsesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewMultipleResponsesServerTransport(srv *MultipleResponsesServer) *MultipleResponsesServerTransport {
 	return &MultipleResponsesServerTransport{srv: srv}
 }

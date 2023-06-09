@@ -46,8 +46,8 @@ type PrivateEndpointsServer struct {
 }
 
 // NewPrivateEndpointsServerTransport creates a new instance of PrivateEndpointsServerTransport with the provided implementation.
-// The returned PrivateEndpointsServerTransport instance is connected to an instance of armnetwork.PrivateEndpointsClient by way of the
-// undefined.Transporter field.
+// The returned PrivateEndpointsServerTransport instance is connected to an instance of armnetwork.PrivateEndpointsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPrivateEndpointsServerTransport(srv *PrivateEndpointsServer) *PrivateEndpointsServerTransport {
 	return &PrivateEndpointsServerTransport{srv: srv}
 }

@@ -37,8 +37,8 @@ type VipSwapServer struct {
 }
 
 // NewVipSwapServerTransport creates a new instance of VipSwapServerTransport with the provided implementation.
-// The returned VipSwapServerTransport instance is connected to an instance of armnetwork.VipSwapClient by way of the
-// undefined.Transporter field.
+// The returned VipSwapServerTransport instance is connected to an instance of armnetwork.VipSwapClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVipSwapServerTransport(srv *VipSwapServer) *VipSwapServerTransport {
 	return &VipSwapServerTransport{srv: srv}
 }

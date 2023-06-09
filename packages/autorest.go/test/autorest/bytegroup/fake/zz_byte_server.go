@@ -43,8 +43,8 @@ type ByteServer struct {
 }
 
 // NewByteServerTransport creates a new instance of ByteServerTransport with the provided implementation.
-// The returned ByteServerTransport instance is connected to an instance of bytegroup.ByteClient by way of the
-// undefined.Transporter field.
+// The returned ByteServerTransport instance is connected to an instance of bytegroup.ByteClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewByteServerTransport(srv *ByteServer) *ByteServerTransport {
 	return &ByteServerTransport{srv: srv}
 }

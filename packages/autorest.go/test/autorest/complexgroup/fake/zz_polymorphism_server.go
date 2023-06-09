@@ -59,8 +59,8 @@ type PolymorphismServer struct {
 }
 
 // NewPolymorphismServerTransport creates a new instance of PolymorphismServerTransport with the provided implementation.
-// The returned PolymorphismServerTransport instance is connected to an instance of complexgroup.PolymorphismClient by way of the
-// undefined.Transporter field.
+// The returned PolymorphismServerTransport instance is connected to an instance of complexgroup.PolymorphismClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPolymorphismServerTransport(srv *PolymorphismServer) *PolymorphismServerTransport {
 	return &PolymorphismServerTransport{srv: srv}
 }

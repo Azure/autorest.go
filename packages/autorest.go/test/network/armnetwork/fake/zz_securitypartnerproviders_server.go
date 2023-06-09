@@ -50,8 +50,8 @@ type SecurityPartnerProvidersServer struct {
 }
 
 // NewSecurityPartnerProvidersServerTransport creates a new instance of SecurityPartnerProvidersServerTransport with the provided implementation.
-// The returned SecurityPartnerProvidersServerTransport instance is connected to an instance of armnetwork.SecurityPartnerProvidersClient by way of the
-// undefined.Transporter field.
+// The returned SecurityPartnerProvidersServerTransport instance is connected to an instance of armnetwork.SecurityPartnerProvidersClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSecurityPartnerProvidersServerTransport(srv *SecurityPartnerProvidersServer) *SecurityPartnerProvidersServerTransport {
 	return &SecurityPartnerProvidersServerTransport{srv: srv}
 }

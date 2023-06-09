@@ -50,8 +50,8 @@ type CapacityReservationGroupsServer struct {
 }
 
 // NewCapacityReservationGroupsServerTransport creates a new instance of CapacityReservationGroupsServerTransport with the provided implementation.
-// The returned CapacityReservationGroupsServerTransport instance is connected to an instance of armcompute.CapacityReservationGroupsClient by way of the
-// undefined.Transporter field.
+// The returned CapacityReservationGroupsServerTransport instance is connected to an instance of armcompute.CapacityReservationGroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewCapacityReservationGroupsServerTransport(srv *CapacityReservationGroupsServer) *CapacityReservationGroupsServerTransport {
 	return &CapacityReservationGroupsServerTransport{srv: srv}
 }

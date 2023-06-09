@@ -79,8 +79,8 @@ type CloudServicesServer struct {
 }
 
 // NewCloudServicesServerTransport creates a new instance of CloudServicesServerTransport with the provided implementation.
-// The returned CloudServicesServerTransport instance is connected to an instance of armcompute.CloudServicesClient by way of the
-// undefined.Transporter field.
+// The returned CloudServicesServerTransport instance is connected to an instance of armcompute.CloudServicesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewCloudServicesServerTransport(srv *CloudServicesServer) *CloudServicesServerTransport {
 	return &CloudServicesServerTransport{srv: srv}
 }

@@ -42,8 +42,8 @@ type DiskRestorePointServer struct {
 }
 
 // NewDiskRestorePointServerTransport creates a new instance of DiskRestorePointServerTransport with the provided implementation.
-// The returned DiskRestorePointServerTransport instance is connected to an instance of armcompute.DiskRestorePointClient by way of the
-// undefined.Transporter field.
+// The returned DiskRestorePointServerTransport instance is connected to an instance of armcompute.DiskRestorePointClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDiskRestorePointServerTransport(srv *DiskRestorePointServer) *DiskRestorePointServerTransport {
 	return &DiskRestorePointServerTransport{srv: srv}
 }

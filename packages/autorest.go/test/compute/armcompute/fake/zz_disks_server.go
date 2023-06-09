@@ -58,8 +58,8 @@ type DisksServer struct {
 }
 
 // NewDisksServerTransport creates a new instance of DisksServerTransport with the provided implementation.
-// The returned DisksServerTransport instance is connected to an instance of armcompute.DisksClient by way of the
-// undefined.Transporter field.
+// The returned DisksServerTransport instance is connected to an instance of armcompute.DisksClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDisksServerTransport(srv *DisksServer) *DisksServerTransport {
 	return &DisksServerTransport{srv: srv}
 }

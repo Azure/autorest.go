@@ -97,8 +97,8 @@ type WatchersServer struct {
 }
 
 // NewWatchersServerTransport creates a new instance of WatchersServerTransport with the provided implementation.
-// The returned WatchersServerTransport instance is connected to an instance of armnetwork.WatchersClient by way of the
-// undefined.Transporter field.
+// The returned WatchersServerTransport instance is connected to an instance of armnetwork.WatchersClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewWatchersServerTransport(srv *WatchersServer) *WatchersServerTransport {
 	return &WatchersServerTransport{srv: srv}
 }

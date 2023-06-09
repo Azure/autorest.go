@@ -42,8 +42,8 @@ type ApplicationGatewayPrivateEndpointConnectionsServer struct {
 }
 
 // NewApplicationGatewayPrivateEndpointConnectionsServerTransport creates a new instance of ApplicationGatewayPrivateEndpointConnectionsServerTransport with the provided implementation.
-// The returned ApplicationGatewayPrivateEndpointConnectionsServerTransport instance is connected to an instance of armnetwork.ApplicationGatewayPrivateEndpointConnectionsClient by way of the
-// undefined.Transporter field.
+// The returned ApplicationGatewayPrivateEndpointConnectionsServerTransport instance is connected to an instance of armnetwork.ApplicationGatewayPrivateEndpointConnectionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewApplicationGatewayPrivateEndpointConnectionsServerTransport(srv *ApplicationGatewayPrivateEndpointConnectionsServer) *ApplicationGatewayPrivateEndpointConnectionsServerTransport {
 	return &ApplicationGatewayPrivateEndpointConnectionsServerTransport{srv: srv}
 }

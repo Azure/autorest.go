@@ -33,8 +33,8 @@ type AvailableServiceAliasesServer struct {
 }
 
 // NewAvailableServiceAliasesServerTransport creates a new instance of AvailableServiceAliasesServerTransport with the provided implementation.
-// The returned AvailableServiceAliasesServerTransport instance is connected to an instance of armnetwork.AvailableServiceAliasesClient by way of the
-// undefined.Transporter field.
+// The returned AvailableServiceAliasesServerTransport instance is connected to an instance of armnetwork.AvailableServiceAliasesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAvailableServiceAliasesServerTransport(srv *AvailableServiceAliasesServer) *AvailableServiceAliasesServerTransport {
 	return &AvailableServiceAliasesServerTransport{srv: srv}
 }

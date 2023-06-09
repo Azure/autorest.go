@@ -35,8 +35,8 @@ type FilesServer struct {
 }
 
 // NewFilesServerTransport creates a new instance of FilesServerTransport with the provided implementation.
-// The returned FilesServerTransport instance is connected to an instance of filegroup.FilesClient by way of the
-// undefined.Transporter field.
+// The returned FilesServerTransport instance is connected to an instance of filegroup.FilesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewFilesServerTransport(srv *FilesServer) *FilesServerTransport {
 	return &FilesServerTransport{srv: srv}
 }

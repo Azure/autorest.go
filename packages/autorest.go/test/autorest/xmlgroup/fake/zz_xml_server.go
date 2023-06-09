@@ -159,8 +159,8 @@ type XMLServer struct {
 }
 
 // NewXMLServerTransport creates a new instance of XMLServerTransport with the provided implementation.
-// The returned XMLServerTransport instance is connected to an instance of xmlgroup.XMLClient by way of the
-// undefined.Transporter field.
+// The returned XMLServerTransport instance is connected to an instance of xmlgroup.XMLClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewXMLServerTransport(srv *XMLServer) *XMLServerTransport {
 	return &XMLServerTransport{srv: srv}
 }

@@ -59,8 +59,8 @@ type HTTPRetryServer struct {
 }
 
 // NewHTTPRetryServerTransport creates a new instance of HTTPRetryServerTransport with the provided implementation.
-// The returned HTTPRetryServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPRetryClient by way of the
-// undefined.Transporter field.
+// The returned HTTPRetryServerTransport instance is connected to an instance of httpinfrastructuregroup.HTTPRetryClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewHTTPRetryServerTransport(srv *HTTPRetryServer) *HTTPRetryServerTransport {
 	return &HTTPRetryServerTransport{srv: srv}
 }

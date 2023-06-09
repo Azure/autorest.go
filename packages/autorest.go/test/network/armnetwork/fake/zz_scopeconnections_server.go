@@ -43,8 +43,8 @@ type ScopeConnectionsServer struct {
 }
 
 // NewScopeConnectionsServerTransport creates a new instance of ScopeConnectionsServerTransport with the provided implementation.
-// The returned ScopeConnectionsServerTransport instance is connected to an instance of armnetwork.ScopeConnectionsClient by way of the
-// undefined.Transporter field.
+// The returned ScopeConnectionsServerTransport instance is connected to an instance of armnetwork.ScopeConnectionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewScopeConnectionsServerTransport(srv *ScopeConnectionsServer) *ScopeConnectionsServerTransport {
 	return &ScopeConnectionsServerTransport{srv: srv}
 }

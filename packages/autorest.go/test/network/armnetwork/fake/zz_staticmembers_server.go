@@ -43,8 +43,8 @@ type StaticMembersServer struct {
 }
 
 // NewStaticMembersServerTransport creates a new instance of StaticMembersServerTransport with the provided implementation.
-// The returned StaticMembersServerTransport instance is connected to an instance of armnetwork.StaticMembersClient by way of the
-// undefined.Transporter field.
+// The returned StaticMembersServerTransport instance is connected to an instance of armnetwork.StaticMembersClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewStaticMembersServerTransport(srv *StaticMembersServer) *StaticMembersServerTransport {
 	return &StaticMembersServerTransport{srv: srv}
 }

@@ -29,8 +29,8 @@ type UsageServer struct {
 }
 
 // NewUsageServerTransport creates a new instance of UsageServerTransport with the provided implementation.
-// The returned UsageServerTransport instance is connected to an instance of armcompute.UsageClient by way of the
-// undefined.Transporter field.
+// The returned UsageServerTransport instance is connected to an instance of armcompute.UsageClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewUsageServerTransport(srv *UsageServer) *UsageServerTransport {
 	return &UsageServerTransport{srv: srv}
 }

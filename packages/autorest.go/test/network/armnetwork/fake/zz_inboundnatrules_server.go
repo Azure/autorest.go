@@ -42,8 +42,8 @@ type InboundNatRulesServer struct {
 }
 
 // NewInboundNatRulesServerTransport creates a new instance of InboundNatRulesServerTransport with the provided implementation.
-// The returned InboundNatRulesServerTransport instance is connected to an instance of armnetwork.InboundNatRulesClient by way of the
-// undefined.Transporter field.
+// The returned InboundNatRulesServerTransport instance is connected to an instance of armnetwork.InboundNatRulesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewInboundNatRulesServerTransport(srv *InboundNatRulesServer) *InboundNatRulesServerTransport {
 	return &InboundNatRulesServerTransport{srv: srv}
 }

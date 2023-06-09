@@ -99,8 +99,8 @@ export async function generateServers(session: Session<CodeModel>): Promise<Oper
     const serverTransport = `${serverName}Transport`;
 
     content += `// New${serverTransport} creates a new instance of ${serverTransport} with the provided implementation.\n`;
-    content += `// The returned ${serverTransport} instance is connected to an instance of ${clientPkg}.${group.language.go!.clientName} by way of the\n`;
-    content += `// ${group.language.go!.clientOptionsType}.Transporter field.\n`;
+    content += `// The returned ${serverTransport} instance is connected to an instance of ${clientPkg}.${group.language.go!.clientName} via the\n`;
+    content += `// azcore.ClientOptions.Transporter field in the client's constructor parameters.\n`;
     content += `func New${serverTransport}(srv *${serverName}) *${serverTransport} {\n`;
     content += `\treturn &${serverTransport}{srv: srv}\n}\n\n`;
 

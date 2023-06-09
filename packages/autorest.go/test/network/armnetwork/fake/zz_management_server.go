@@ -79,8 +79,8 @@ type ManagementServer struct {
 }
 
 // NewManagementServerTransport creates a new instance of ManagementServerTransport with the provided implementation.
-// The returned ManagementServerTransport instance is connected to an instance of armnetwork.ManagementClient by way of the
-// undefined.Transporter field.
+// The returned ManagementServerTransport instance is connected to an instance of armnetwork.ManagementClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewManagementServerTransport(srv *ManagementServer) *ManagementServerTransport {
 	return &ManagementServerTransport{srv: srv}
 }

@@ -41,8 +41,8 @@ type VirtualMachineScaleSetRollingUpgradesServer struct {
 }
 
 // NewVirtualMachineScaleSetRollingUpgradesServerTransport creates a new instance of VirtualMachineScaleSetRollingUpgradesServerTransport with the provided implementation.
-// The returned VirtualMachineScaleSetRollingUpgradesServerTransport instance is connected to an instance of armcompute.VirtualMachineScaleSetRollingUpgradesClient by way of the
-// undefined.Transporter field.
+// The returned VirtualMachineScaleSetRollingUpgradesServerTransport instance is connected to an instance of armcompute.VirtualMachineScaleSetRollingUpgradesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualMachineScaleSetRollingUpgradesServerTransport(srv *VirtualMachineScaleSetRollingUpgradesServer) *VirtualMachineScaleSetRollingUpgradesServerTransport {
 	return &VirtualMachineScaleSetRollingUpgradesServerTransport{srv: srv}
 }

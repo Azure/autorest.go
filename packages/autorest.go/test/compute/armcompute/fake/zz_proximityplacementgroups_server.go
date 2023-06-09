@@ -50,8 +50,8 @@ type ProximityPlacementGroupsServer struct {
 }
 
 // NewProximityPlacementGroupsServerTransport creates a new instance of ProximityPlacementGroupsServerTransport with the provided implementation.
-// The returned ProximityPlacementGroupsServerTransport instance is connected to an instance of armcompute.ProximityPlacementGroupsClient by way of the
-// undefined.Transporter field.
+// The returned ProximityPlacementGroupsServerTransport instance is connected to an instance of armcompute.ProximityPlacementGroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewProximityPlacementGroupsServerTransport(srv *ProximityPlacementGroupsServer) *ProximityPlacementGroupsServerTransport {
 	return &ProximityPlacementGroupsServerTransport{srv: srv}
 }

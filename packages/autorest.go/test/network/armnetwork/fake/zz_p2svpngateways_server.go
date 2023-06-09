@@ -70,8 +70,8 @@ type P2SVPNGatewaysServer struct {
 }
 
 // NewP2SVPNGatewaysServerTransport creates a new instance of P2SVPNGatewaysServerTransport with the provided implementation.
-// The returned P2SVPNGatewaysServerTransport instance is connected to an instance of armnetwork.P2SVPNGatewaysClient by way of the
-// undefined.Transporter field.
+// The returned P2SVPNGatewaysServerTransport instance is connected to an instance of armnetwork.P2SVPNGatewaysClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewP2SVPNGatewaysServerTransport(srv *P2SVPNGatewaysServer) *P2SVPNGatewaysServerTransport {
 	return &P2SVPNGatewaysServerTransport{srv: srv}
 }

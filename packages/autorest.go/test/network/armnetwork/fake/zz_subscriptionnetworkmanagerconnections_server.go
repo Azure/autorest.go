@@ -43,8 +43,8 @@ type SubscriptionNetworkManagerConnectionsServer struct {
 }
 
 // NewSubscriptionNetworkManagerConnectionsServerTransport creates a new instance of SubscriptionNetworkManagerConnectionsServerTransport with the provided implementation.
-// The returned SubscriptionNetworkManagerConnectionsServerTransport instance is connected to an instance of armnetwork.SubscriptionNetworkManagerConnectionsClient by way of the
-// undefined.Transporter field.
+// The returned SubscriptionNetworkManagerConnectionsServerTransport instance is connected to an instance of armnetwork.SubscriptionNetworkManagerConnectionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSubscriptionNetworkManagerConnectionsServerTransport(srv *SubscriptionNetworkManagerConnectionsServer) *SubscriptionNetworkManagerConnectionsServerTransport {
 	return &SubscriptionNetworkManagerConnectionsServerTransport{srv: srv}
 }

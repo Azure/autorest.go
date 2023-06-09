@@ -112,8 +112,8 @@ type DatetimeServer struct {
 }
 
 // NewDatetimeServerTransport creates a new instance of DatetimeServerTransport with the provided implementation.
-// The returned DatetimeServerTransport instance is connected to an instance of datetimegroup.DatetimeClient by way of the
-// undefined.Transporter field.
+// The returned DatetimeServerTransport instance is connected to an instance of datetimegroup.DatetimeClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDatetimeServerTransport(srv *DatetimeServer) *DatetimeServerTransport {
 	return &DatetimeServerTransport{srv: srv}
 }

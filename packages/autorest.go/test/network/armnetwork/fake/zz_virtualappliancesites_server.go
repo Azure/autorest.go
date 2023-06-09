@@ -42,8 +42,8 @@ type VirtualApplianceSitesServer struct {
 }
 
 // NewVirtualApplianceSitesServerTransport creates a new instance of VirtualApplianceSitesServerTransport with the provided implementation.
-// The returned VirtualApplianceSitesServerTransport instance is connected to an instance of armnetwork.VirtualApplianceSitesClient by way of the
-// undefined.Transporter field.
+// The returned VirtualApplianceSitesServerTransport instance is connected to an instance of armnetwork.VirtualApplianceSitesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualApplianceSitesServerTransport(srv *VirtualApplianceSitesServer) *VirtualApplianceSitesServerTransport {
 	return &VirtualApplianceSitesServerTransport{srv: srv}
 }
