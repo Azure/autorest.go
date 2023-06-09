@@ -192,7 +192,7 @@ func (p *PrimitiveServerTransport) Do(req *http.Request) (*http.Response, error)
 
 func (p *PrimitiveServerTransport) dispatchGetBool(req *http.Request) (*http.Response, error) {
 	if p.srv.GetBool == nil {
-		return nil, &nonRetriableError{errors.New("method GetBool not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBool not implemented")}
 	}
 	respr, errRespr := p.srv.GetBool(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -211,7 +211,7 @@ func (p *PrimitiveServerTransport) dispatchGetBool(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchGetByte(req *http.Request) (*http.Response, error) {
 	if p.srv.GetByte == nil {
-		return nil, &nonRetriableError{errors.New("method GetByte not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetByte not implemented")}
 	}
 	respr, errRespr := p.srv.GetByte(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -230,7 +230,7 @@ func (p *PrimitiveServerTransport) dispatchGetByte(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchGetDate(req *http.Request) (*http.Response, error) {
 	if p.srv.GetDate == nil {
-		return nil, &nonRetriableError{errors.New("method GetDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDate not implemented")}
 	}
 	respr, errRespr := p.srv.GetDate(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -249,7 +249,7 @@ func (p *PrimitiveServerTransport) dispatchGetDate(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchGetDateTime(req *http.Request) (*http.Response, error) {
 	if p.srv.GetDateTime == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateTime not implemented")}
 	}
 	respr, errRespr := p.srv.GetDateTime(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -268,7 +268,7 @@ func (p *PrimitiveServerTransport) dispatchGetDateTime(req *http.Request) (*http
 
 func (p *PrimitiveServerTransport) dispatchGetDateTimeRFC1123(req *http.Request) (*http.Response, error) {
 	if p.srv.GetDateTimeRFC1123 == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateTimeRFC1123 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateTimeRFC1123 not implemented")}
 	}
 	respr, errRespr := p.srv.GetDateTimeRFC1123(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -287,7 +287,7 @@ func (p *PrimitiveServerTransport) dispatchGetDateTimeRFC1123(req *http.Request)
 
 func (p *PrimitiveServerTransport) dispatchGetDouble(req *http.Request) (*http.Response, error) {
 	if p.srv.GetDouble == nil {
-		return nil, &nonRetriableError{errors.New("method GetDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDouble not implemented")}
 	}
 	respr, errRespr := p.srv.GetDouble(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -306,7 +306,7 @@ func (p *PrimitiveServerTransport) dispatchGetDouble(req *http.Request) (*http.R
 
 func (p *PrimitiveServerTransport) dispatchGetDuration(req *http.Request) (*http.Response, error) {
 	if p.srv.GetDuration == nil {
-		return nil, &nonRetriableError{errors.New("method GetDuration not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDuration not implemented")}
 	}
 	respr, errRespr := p.srv.GetDuration(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -325,7 +325,7 @@ func (p *PrimitiveServerTransport) dispatchGetDuration(req *http.Request) (*http
 
 func (p *PrimitiveServerTransport) dispatchGetFloat(req *http.Request) (*http.Response, error) {
 	if p.srv.GetFloat == nil {
-		return nil, &nonRetriableError{errors.New("method GetFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFloat not implemented")}
 	}
 	respr, errRespr := p.srv.GetFloat(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -344,7 +344,7 @@ func (p *PrimitiveServerTransport) dispatchGetFloat(req *http.Request) (*http.Re
 
 func (p *PrimitiveServerTransport) dispatchGetInt(req *http.Request) (*http.Response, error) {
 	if p.srv.GetInt == nil {
-		return nil, &nonRetriableError{errors.New("method GetInt not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInt not implemented")}
 	}
 	respr, errRespr := p.srv.GetInt(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -363,7 +363,7 @@ func (p *PrimitiveServerTransport) dispatchGetInt(req *http.Request) (*http.Resp
 
 func (p *PrimitiveServerTransport) dispatchGetLong(req *http.Request) (*http.Response, error) {
 	if p.srv.GetLong == nil {
-		return nil, &nonRetriableError{errors.New("method GetLong not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetLong not implemented")}
 	}
 	respr, errRespr := p.srv.GetLong(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -382,7 +382,7 @@ func (p *PrimitiveServerTransport) dispatchGetLong(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchGetString(req *http.Request) (*http.Response, error) {
 	if p.srv.GetString == nil {
-		return nil, &nonRetriableError{errors.New("method GetString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetString not implemented")}
 	}
 	respr, errRespr := p.srv.GetString(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -401,7 +401,7 @@ func (p *PrimitiveServerTransport) dispatchGetString(req *http.Request) (*http.R
 
 func (p *PrimitiveServerTransport) dispatchPutBool(req *http.Request) (*http.Response, error) {
 	if p.srv.PutBool == nil {
-		return nil, &nonRetriableError{errors.New("method PutBool not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBool not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.BooleanWrapper](req)
 	if err != nil {
@@ -424,7 +424,7 @@ func (p *PrimitiveServerTransport) dispatchPutBool(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchPutByte(req *http.Request) (*http.Response, error) {
 	if p.srv.PutByte == nil {
-		return nil, &nonRetriableError{errors.New("method PutByte not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutByte not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.ByteWrapper](req)
 	if err != nil {
@@ -447,7 +447,7 @@ func (p *PrimitiveServerTransport) dispatchPutByte(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchPutDate(req *http.Request) (*http.Response, error) {
 	if p.srv.PutDate == nil {
-		return nil, &nonRetriableError{errors.New("method PutDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDate not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.DateWrapper](req)
 	if err != nil {
@@ -470,7 +470,7 @@ func (p *PrimitiveServerTransport) dispatchPutDate(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchPutDateTime(req *http.Request) (*http.Response, error) {
 	if p.srv.PutDateTime == nil {
-		return nil, &nonRetriableError{errors.New("method PutDateTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDateTime not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.DatetimeWrapper](req)
 	if err != nil {
@@ -493,7 +493,7 @@ func (p *PrimitiveServerTransport) dispatchPutDateTime(req *http.Request) (*http
 
 func (p *PrimitiveServerTransport) dispatchPutDateTimeRFC1123(req *http.Request) (*http.Response, error) {
 	if p.srv.PutDateTimeRFC1123 == nil {
-		return nil, &nonRetriableError{errors.New("method PutDateTimeRFC1123 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDateTimeRFC1123 not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.Datetimerfc1123Wrapper](req)
 	if err != nil {
@@ -516,7 +516,7 @@ func (p *PrimitiveServerTransport) dispatchPutDateTimeRFC1123(req *http.Request)
 
 func (p *PrimitiveServerTransport) dispatchPutDouble(req *http.Request) (*http.Response, error) {
 	if p.srv.PutDouble == nil {
-		return nil, &nonRetriableError{errors.New("method PutDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDouble not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.DoubleWrapper](req)
 	if err != nil {
@@ -539,7 +539,7 @@ func (p *PrimitiveServerTransport) dispatchPutDouble(req *http.Request) (*http.R
 
 func (p *PrimitiveServerTransport) dispatchPutDuration(req *http.Request) (*http.Response, error) {
 	if p.srv.PutDuration == nil {
-		return nil, &nonRetriableError{errors.New("method PutDuration not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDuration not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.DurationWrapper](req)
 	if err != nil {
@@ -562,7 +562,7 @@ func (p *PrimitiveServerTransport) dispatchPutDuration(req *http.Request) (*http
 
 func (p *PrimitiveServerTransport) dispatchPutFloat(req *http.Request) (*http.Response, error) {
 	if p.srv.PutFloat == nil {
-		return nil, &nonRetriableError{errors.New("method PutFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutFloat not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.FloatWrapper](req)
 	if err != nil {
@@ -585,7 +585,7 @@ func (p *PrimitiveServerTransport) dispatchPutFloat(req *http.Request) (*http.Re
 
 func (p *PrimitiveServerTransport) dispatchPutInt(req *http.Request) (*http.Response, error) {
 	if p.srv.PutInt == nil {
-		return nil, &nonRetriableError{errors.New("method PutInt not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutInt not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.IntWrapper](req)
 	if err != nil {
@@ -608,7 +608,7 @@ func (p *PrimitiveServerTransport) dispatchPutInt(req *http.Request) (*http.Resp
 
 func (p *PrimitiveServerTransport) dispatchPutLong(req *http.Request) (*http.Response, error) {
 	if p.srv.PutLong == nil {
-		return nil, &nonRetriableError{errors.New("method PutLong not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutLong not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.LongWrapper](req)
 	if err != nil {
@@ -631,7 +631,7 @@ func (p *PrimitiveServerTransport) dispatchPutLong(req *http.Request) (*http.Res
 
 func (p *PrimitiveServerTransport) dispatchPutString(req *http.Request) (*http.Response, error) {
 	if p.srv.PutString == nil {
-		return nil, &nonRetriableError{errors.New("method PutString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutString not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.StringWrapper](req)
 	if err != nil {

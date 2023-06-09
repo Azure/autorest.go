@@ -78,7 +78,7 @@ func (f *FilesServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (f *FilesServerTransport) dispatchGetEmptyFile(req *http.Request) (*http.Response, error) {
 	if f.srv.GetEmptyFile == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmptyFile not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmptyFile not implemented")}
 	}
 	respr, errRespr := f.srv.GetEmptyFile(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -100,7 +100,7 @@ func (f *FilesServerTransport) dispatchGetEmptyFile(req *http.Request) (*http.Re
 
 func (f *FilesServerTransport) dispatchGetFile(req *http.Request) (*http.Response, error) {
 	if f.srv.GetFile == nil {
-		return nil, &nonRetriableError{errors.New("method GetFile not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFile not implemented")}
 	}
 	respr, errRespr := f.srv.GetFile(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -122,7 +122,7 @@ func (f *FilesServerTransport) dispatchGetFile(req *http.Request) (*http.Respons
 
 func (f *FilesServerTransport) dispatchGetFileLarge(req *http.Request) (*http.Response, error) {
 	if f.srv.GetFileLarge == nil {
-		return nil, &nonRetriableError{errors.New("method GetFileLarge not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFileLarge not implemented")}
 	}
 	respr, errRespr := f.srv.GetFileLarge(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

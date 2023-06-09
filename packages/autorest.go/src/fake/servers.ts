@@ -162,7 +162,7 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
   for (const op of values(finalOperations)) {
     content += `func (${receiverName} *${serverTransport}) dispatch${fixUpOperationName(op)}(req *http.Request) (*http.Response, error) {\n`;
     content += `\tif ${receiverName}.srv.${fixUpOperationName(op)} == nil {\n`;
-    content += `\t\treturn nil, &nonRetriableError{errors.New("method ${fixUpOperationName(op)} not implemented")}\n\t}\n`;
+    content += `\t\treturn nil, &nonRetriableError{errors.New("fake for method ${fixUpOperationName(op)} not implemented")}\n\t}\n`;
 
     if (isLROOperation(op)) {
       // must check LRO before pager as you can have paged LROs
@@ -261,9 +261,9 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
   let content = '';
   if (numPathParams > 0) {
     imports.add('regexp');
-    content += `\tconst regexStr = "${createPathParamsRegex(op)}"\n`;
+    content += `\tconst regexStr = \`${createPathParamsRegex(op)}\`\n`;
     content += '\tregex := regexp.MustCompile(regexStr)\n';
-    content += '\tmatches := regex.FindStringSubmatch(req.URL.Path)\n';
+    content += '\tmatches := regex.FindStringSubmatch(req.URL.EscapedPath())\n';
     content += `\tif matches == nil || len(matches) < ${numPathParams} {\n`;
     content += `\t\treturn nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n\t}\n`;
   }
@@ -472,7 +472,7 @@ function createPathParamsRegex(op: Operation): string {
       continue;
     }
     const toReplace = `{${param.language.go!.serializedName}}`;
-    let replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.language.go!.serializedName)}>[a-zA-Z0-9-_]+)`;
+    let replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.language.go!.serializedName)}>[!#&$-;=?-\\[\\]_a-zA-Z0-9~%@]+)`;
     if (param.required === false) {
       replaceWith += '?';
     }
@@ -502,13 +502,23 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       // body params will be unmarshalled, no need for parsing.
       continue;
     }
+    
+    let paramValue = getParamValue(param);
+    if (param.protocol.http?.in === 'path' || param.protocol.http?.in === 'query') {
+      // path/query params might be escaped, so we need to unescape them first
+      imports.add('net/url');
+      const paramVar = createLocalVariableName(param, 'Unescaped');
+      content += `\t${paramVar}, err := url.${capitalize(param.protocol.http.in)}Unescape(${paramValue})\n`;
+      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+      paramValue = paramVar;
+    }
 
     // parse params as required
     if (param.schema.type === SchemaType.Array) {
       if ((<ArraySchema>param.schema).elementType.type !== SchemaType.String) {
         const asArray = <ArraySchema>param.schema;
         imports.add('strings');
-        content += `\telements := strings.Split(${getParamValue(param)}, "${getArraySeparator(param)}")\n`;
+        content += `\telements := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
         const localVar = createLocalVariableName(param, 'Param');
         const toType = `${clientPkg}.${asArray.elementType.language.go!.name}`;
         content += `\t${localVar} := make([]${toType}, len(elements))\n`;
@@ -547,21 +557,21 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
         content += `\t\t${localVar}[i] = ${toType}(${fromVar})\n\t}\n`;
       } else if (param.language.go!.paramGroup) {
         imports.add('strings');
-        content += `\t${createLocalVariableName(param, 'Param')} := strings.Split(${getParamValue(param)}, "${getArraySeparator(param)}")\n`;
+        content += `\t${createLocalVariableName(param, 'Param')} := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
       }
     } else if (param.schema.type === SchemaType.Boolean) {
       imports.add('strconv');
-      let from = `strconv.ParseBool(${getParamValue(param)})`;
+      let from = `strconv.ParseBool(${paramValue})`;
       if (!param.required) {
-        from = `parseOptional(${getParamValue(param)}, strconv.ParseBool)`;
+        from = `parseOptional(${paramValue}, strconv.ParseBool)`;
       }
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     }  else if (param.schema.type === SchemaType.ByteArray) {
       imports.add('encoding/base64');
-      content += `\t${createLocalVariableName(param, 'Param')}, err := base64.StdEncoding.DecodeString(${getParamValue(param)})\n`;
+      content += `\t${createLocalVariableName(param, 'Param')}, err := base64.StdEncoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    } else if (param.language.go!.paramGroup && (param.schema.type === SchemaType.Choice || param.schema.type === SchemaType.Constant || param.schema.type === SchemaType.SealedChoice || param.schema.type === SchemaType.String)) {
+    } else if (param.language.go!.paramGroup && (param.schema.type === SchemaType.Choice || param.schema.type === SchemaType.Constant || param.schema.type === SchemaType.Duration || param.schema.type === SchemaType.SealedChoice || param.schema.type === SchemaType.String)) {
       content += `\t${createLocalVariableName(param, 'Param')} := `;
       let paramValue = getParamValueWithCast(clientPkg, param, imports);
       if (!param.required) {
@@ -570,9 +580,9 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       content += `${paramValue}\n`;
     } else if (param.schema.type === SchemaType.Date) {
       imports.add('time');
-      let from = `time.Parse("2006-01-02", ${getParamValue(param)})`;
+      let from = `time.Parse("2006-01-02", ${paramValue})`;
       if (!param.required) {
-        from = `parseOptional(${getParamValue(param)}, func(v string) (time.Time, error) { return time.Parse("2006-01-02", v) })`;
+        from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse("2006-01-02", v) })`;
       }
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
@@ -583,9 +593,9 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       if (dateTime.format === 'date-time-rfc1123') {
         format = 'time.RFC1123'
       }
-      let from = `time.Parse(${format}, ${getParamValue(param)})`;
+      let from = `time.Parse(${format}, ${paramValue})`;
       if (!param.required) {
-        from = `parseOptional(${getParamValue(param)}, func(v string) (time.Time, error) { return time.Parse(${format}, v) })`;
+        from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse(${format}, v) })`;
       }
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
@@ -607,7 +617,7 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
         parser = 'parseOptional';
       }
       if (numSchema.precision === 32 || !param.required) {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${getParamValue(param)}, func(v string) (${parseType.toLowerCase()}${precision}, error) {\n`;
+        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${parseType.toLowerCase()}${precision}, error) {\n`;
         content += `\t\tp, parseErr := strconv.Parse${parseType}(v, ${base}${precision})\n`;
         content += '\t\tif parseErr != nil {\n\t\t\treturn 0, parseErr\n\t\t}\n';
         let result = 'p';
@@ -616,14 +626,14 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
         }
         content += `\t\treturn ${result}, nil\n\t})\n`;
       } else {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := strconv.Parse${parseType}(${getParamValue(param)}, ${base}64)\n`;
+        content += `\t${createLocalVariableName(param, 'Param')}, err := strconv.Parse${parseType}(${paramValue}, ${base}64)\n`;
       }
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (param.schema.type === SchemaType.UnixTime) {
       imports.add('strconv');
-      let from = `strconv.ParseInt(${getParamValue(param)}, 10, 64)`;
+      let from = `strconv.ParseInt(${paramValue}, 10, 64)`;
       if (!param.required) {
-        from = `parseOptional(${getParamValue(param)}, func(v string) (int64, error) { return strconv.ParseInt(v, 10, 64) })`;
+        from = `parseOptional(${paramValue}, func(v string) (int64, error) { return strconv.ParseInt(v, 10, 64) })`;
       }
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
@@ -755,14 +765,18 @@ function getParamValue(param: Parameter): string {
 }
 
 function getParamValueWithCast(clientPkg: string, param: Parameter, imports: ImportManager): string {
-  const value = getParamValue(param);
+  let value = getParamValue(param);
   if (param.protocol.http?.in === 'body') {
     // if the param is in the body, it's already in the correct format
     if (param.schema.language.go!.internalTimeType) {
       return `time.Time(${value})`;
     }
     return value;
+  } else if (param.protocol.http?.in === 'path' || param.protocol.http?.in === 'query') {
+    // path/query params were unescaped earlier
+    value = createLocalVariableName(param, 'Unescaped');
   }
+
   switch (param.schema.type) {
     case SchemaType.Array:
       const asArray = <ArraySchema>param.schema;

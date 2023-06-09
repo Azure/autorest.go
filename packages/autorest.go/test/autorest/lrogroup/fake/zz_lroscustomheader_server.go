@@ -89,7 +89,7 @@ func (l *LROsCustomHeaderServerTransport) Do(req *http.Request) (*http.Response,
 
 func (l *LROsCustomHeaderServerTransport) dispatchBeginPost202Retry200(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPost202Retry200 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPost202Retry200 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPost202Retry200 not implemented")}
 	}
 	if l.beginPost202Retry200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -126,7 +126,7 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPost202Retry200(req *http
 
 func (l *LROsCustomHeaderServerTransport) dispatchBeginPostAsyncRetrySucceeded(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPostAsyncRetrySucceeded == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPostAsyncRetrySucceeded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRetrySucceeded not implemented")}
 	}
 	if l.beginPostAsyncRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -163,7 +163,7 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPostAsyncRetrySucceeded(r
 
 func (l *LROsCustomHeaderServerTransport) dispatchBeginPut201CreatingSucceeded200(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPut201CreatingSucceeded200 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPut201CreatingSucceeded200 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPut201CreatingSucceeded200 not implemented")}
 	}
 	if l.beginPut201CreatingSucceeded200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -194,7 +194,7 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPut201CreatingSucceeded20
 
 func (l *LROsCustomHeaderServerTransport) dispatchBeginPutAsyncRetrySucceeded(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutAsyncRetrySucceeded == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutAsyncRetrySucceeded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRetrySucceeded not implemented")}
 	}
 	if l.beginPutAsyncRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)

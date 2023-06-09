@@ -114,7 +114,7 @@ func (p *PolymorphismServerTransport) Do(req *http.Request) (*http.Response, err
 
 func (p *PolymorphismServerTransport) dispatchGetComplicated(req *http.Request) (*http.Response, error) {
 	if p.srv.GetComplicated == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplicated not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplicated not implemented")}
 	}
 	respr, errRespr := p.srv.GetComplicated(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -133,7 +133,7 @@ func (p *PolymorphismServerTransport) dispatchGetComplicated(req *http.Request) 
 
 func (p *PolymorphismServerTransport) dispatchGetComposedWithDiscriminator(req *http.Request) (*http.Response, error) {
 	if p.srv.GetComposedWithDiscriminator == nil {
-		return nil, &nonRetriableError{errors.New("method GetComposedWithDiscriminator not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComposedWithDiscriminator not implemented")}
 	}
 	respr, errRespr := p.srv.GetComposedWithDiscriminator(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -152,7 +152,7 @@ func (p *PolymorphismServerTransport) dispatchGetComposedWithDiscriminator(req *
 
 func (p *PolymorphismServerTransport) dispatchGetComposedWithoutDiscriminator(req *http.Request) (*http.Response, error) {
 	if p.srv.GetComposedWithoutDiscriminator == nil {
-		return nil, &nonRetriableError{errors.New("method GetComposedWithoutDiscriminator not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComposedWithoutDiscriminator not implemented")}
 	}
 	respr, errRespr := p.srv.GetComposedWithoutDiscriminator(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -171,7 +171,7 @@ func (p *PolymorphismServerTransport) dispatchGetComposedWithoutDiscriminator(re
 
 func (p *PolymorphismServerTransport) dispatchGetDotSyntax(req *http.Request) (*http.Response, error) {
 	if p.srv.GetDotSyntax == nil {
-		return nil, &nonRetriableError{errors.New("method GetDotSyntax not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDotSyntax not implemented")}
 	}
 	respr, errRespr := p.srv.GetDotSyntax(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -190,7 +190,7 @@ func (p *PolymorphismServerTransport) dispatchGetDotSyntax(req *http.Request) (*
 
 func (p *PolymorphismServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {
 	if p.srv.GetValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetValid not implemented")}
 	}
 	respr, errRespr := p.srv.GetValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -209,7 +209,7 @@ func (p *PolymorphismServerTransport) dispatchGetValid(req *http.Request) (*http
 
 func (p *PolymorphismServerTransport) dispatchPutComplicated(req *http.Request) (*http.Response, error) {
 	if p.srv.PutComplicated == nil {
-		return nil, &nonRetriableError{errors.New("method PutComplicated not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutComplicated not implemented")}
 	}
 	raw, err := readRequestBody(req)
 	if err != nil {
@@ -236,7 +236,7 @@ func (p *PolymorphismServerTransport) dispatchPutComplicated(req *http.Request) 
 
 func (p *PolymorphismServerTransport) dispatchPutMissingDiscriminator(req *http.Request) (*http.Response, error) {
 	if p.srv.PutMissingDiscriminator == nil {
-		return nil, &nonRetriableError{errors.New("method PutMissingDiscriminator not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMissingDiscriminator not implemented")}
 	}
 	raw, err := readRequestBody(req)
 	if err != nil {
@@ -263,7 +263,7 @@ func (p *PolymorphismServerTransport) dispatchPutMissingDiscriminator(req *http.
 
 func (p *PolymorphismServerTransport) dispatchPutValid(req *http.Request) (*http.Response, error) {
 	if p.srv.PutValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutValid not implemented")}
 	}
 	raw, err := readRequestBody(req)
 	if err != nil {
@@ -290,7 +290,7 @@ func (p *PolymorphismServerTransport) dispatchPutValid(req *http.Request) (*http
 
 func (p *PolymorphismServerTransport) dispatchPutValidMissingRequired(req *http.Request) (*http.Response, error) {
 	if p.srv.PutValidMissingRequired == nil {
-		return nil, &nonRetriableError{errors.New("method PutValidMissingRequired not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutValidMissingRequired not implemented")}
 	}
 	raw, err := readRequestBody(req)
 	if err != nil {

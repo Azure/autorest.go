@@ -96,7 +96,7 @@ func (e *EnumServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (e *EnumServerTransport) dispatchGetNotExpandable(req *http.Request) (*http.Response, error) {
 	if e.srv.GetNotExpandable == nil {
-		return nil, &nonRetriableError{errors.New("method GetNotExpandable not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNotExpandable not implemented")}
 	}
 	respr, errRespr := e.srv.GetNotExpandable(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -115,7 +115,7 @@ func (e *EnumServerTransport) dispatchGetNotExpandable(req *http.Request) (*http
 
 func (e *EnumServerTransport) dispatchGetReferenced(req *http.Request) (*http.Response, error) {
 	if e.srv.GetReferenced == nil {
-		return nil, &nonRetriableError{errors.New("method GetReferenced not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetReferenced not implemented")}
 	}
 	respr, errRespr := e.srv.GetReferenced(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -134,7 +134,7 @@ func (e *EnumServerTransport) dispatchGetReferenced(req *http.Request) (*http.Re
 
 func (e *EnumServerTransport) dispatchGetReferencedConstant(req *http.Request) (*http.Response, error) {
 	if e.srv.GetReferencedConstant == nil {
-		return nil, &nonRetriableError{errors.New("method GetReferencedConstant not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetReferencedConstant not implemented")}
 	}
 	respr, errRespr := e.srv.GetReferencedConstant(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -153,7 +153,7 @@ func (e *EnumServerTransport) dispatchGetReferencedConstant(req *http.Request) (
 
 func (e *EnumServerTransport) dispatchPutNotExpandable(req *http.Request) (*http.Response, error) {
 	if e.srv.PutNotExpandable == nil {
-		return nil, &nonRetriableError{errors.New("method PutNotExpandable not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutNotExpandable not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[stringgroup.Colors](req)
 	if err != nil {
@@ -176,7 +176,7 @@ func (e *EnumServerTransport) dispatchPutNotExpandable(req *http.Request) (*http
 
 func (e *EnumServerTransport) dispatchPutReferenced(req *http.Request) (*http.Response, error) {
 	if e.srv.PutReferenced == nil {
-		return nil, &nonRetriableError{errors.New("method PutReferenced not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutReferenced not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[stringgroup.Colors](req)
 	if err != nil {
@@ -199,7 +199,7 @@ func (e *EnumServerTransport) dispatchPutReferenced(req *http.Request) (*http.Re
 
 func (e *EnumServerTransport) dispatchPutReferencedConstant(req *http.Request) (*http.Response, error) {
 	if e.srv.PutReferencedConstant == nil {
-		return nil, &nonRetriableError{errors.New("method PutReferencedConstant not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutReferencedConstant not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[stringgroup.RefColorConstant](req)
 	if err != nil {

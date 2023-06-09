@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"reflect"
 	"regexp"
 	"strconv"
@@ -87,11 +88,11 @@ func (a *AutoRestValidationTestServerTransport) Do(req *http.Request) (*http.Res
 
 func (a *AutoRestValidationTestServerTransport) dispatchGetWithConstantInPath(req *http.Request) (*http.Response, error) {
 	if a.srv.GetWithConstantInPath == nil {
-		return nil, &nonRetriableError{errors.New("method GetWithConstantInPath not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetWithConstantInPath not implemented")}
 	}
-	const regexStr = "/validation/constantsInPath/(?P<constantParam>[a-zA-Z0-9-_]+)/value"
+	const regexStr = `/validation/constantsInPath/(?P<constantParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/value`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -112,11 +113,11 @@ func (a *AutoRestValidationTestServerTransport) dispatchGetWithConstantInPath(re
 
 func (a *AutoRestValidationTestServerTransport) dispatchPostWithConstantInBody(req *http.Request) (*http.Response, error) {
 	if a.srv.PostWithConstantInBody == nil {
-		return nil, &nonRetriableError{errors.New("method PostWithConstantInBody not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostWithConstantInBody not implemented")}
 	}
-	const regexStr = "/validation/constantsInPath/(?P<constantParam>[a-zA-Z0-9-_]+)/value"
+	const regexStr = `/validation/constantsInPath/(?P<constantParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/value`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -147,11 +148,11 @@ func (a *AutoRestValidationTestServerTransport) dispatchPostWithConstantInBody(r
 
 func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *http.Request) (*http.Response, error) {
 	if a.srv.ValidationOfBody == nil {
-		return nil, &nonRetriableError{errors.New("method ValidationOfBody not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ValidationOfBody not implemented")}
 	}
-	const regexStr = "/fakepath/(?P<subscriptionId>[a-zA-Z0-9-_]+)/(?P<resourceGroupName>[a-zA-Z0-9-_]+)/(?P<id>[a-zA-Z0-9-_]+)"
+	const regexStr = `/fakepath/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -159,7 +160,15 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *ht
 	if err != nil {
 		return nil, err
 	}
-	idParam, err := parseWithCast(matches[regex.SubexpIndex("id")], func(v string) (int32, error) {
+	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	idUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	idParam, err := parseWithCast(idUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -169,7 +178,7 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *ht
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.ValidationOfBody(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], int32(idParam), body, nil)
+	respr, errRespr := a.srv.ValidationOfBody(req.Context(), resourceGroupNameUnescaped, int32(idParam), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -186,15 +195,23 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *ht
 
 func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParameters(req *http.Request) (*http.Response, error) {
 	if a.srv.ValidationOfMethodParameters == nil {
-		return nil, &nonRetriableError{errors.New("method ValidationOfMethodParameters not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ValidationOfMethodParameters not implemented")}
 	}
-	const regexStr = "/fakepath/(?P<subscriptionId>[a-zA-Z0-9-_]+)/(?P<resourceGroupName>[a-zA-Z0-9-_]+)/(?P<id>[a-zA-Z0-9-_]+)"
+	const regexStr = `/fakepath/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	idParam, err := parseWithCast(matches[regex.SubexpIndex("id")], func(v string) (int32, error) {
+	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	idUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	idParam, err := parseWithCast(idUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -204,7 +221,7 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParame
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.ValidationOfMethodParameters(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], int32(idParam), nil)
+	respr, errRespr := a.srv.ValidationOfMethodParameters(req.Context(), resourceGroupNameUnescaped, int32(idParam), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

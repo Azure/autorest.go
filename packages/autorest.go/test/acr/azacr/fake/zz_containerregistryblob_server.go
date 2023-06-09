@@ -18,6 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 )
@@ -129,15 +130,19 @@ func (c *ContainerRegistryBlobServerTransport) Do(req *http.Request) (*http.Resp
 
 func (c *ContainerRegistryBlobServerTransport) dispatchCancelUpload(req *http.Request) (*http.Response, error) {
 	if c.srv.CancelUpload == nil {
-		return nil, &nonRetriableError{errors.New("method CancelUpload not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CancelUpload not implemented")}
 	}
-	const regexStr = "/(?P<nextBlobUuidLink>[a-zA-Z0-9-_]+)"
+	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.CancelUpload(req.Context(), matches[regex.SubexpIndex("nextBlobUuidLink")], nil)
+	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.CancelUpload(req.Context(), locationUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -154,15 +159,23 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCancelUpload(req *http.Re
 
 func (c *ContainerRegistryBlobServerTransport) dispatchCheckBlobExists(req *http.Request) (*http.Response, error) {
 	if c.srv.CheckBlobExists == nil {
-		return nil, &nonRetriableError{errors.New("method CheckBlobExists not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CheckBlobExists not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/blobs/(?P<digest>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.CheckBlobExists(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.CheckBlobExists(req.Context(), nameUnescaped, digestUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -185,15 +198,23 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckBlobExists(req *http
 
 func (c *ContainerRegistryBlobServerTransport) dispatchCheckChunkExists(req *http.Request) (*http.Response, error) {
 	if c.srv.CheckChunkExists == nil {
-		return nil, &nonRetriableError{errors.New("method CheckChunkExists not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CheckChunkExists not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/blobs/(?P<digest>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.CheckChunkExists(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], getHeaderValue(req.Header, "Range"), nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.CheckChunkExists(req.Context(), nameUnescaped, digestUnescaped, getHeaderValue(req.Header, "Range"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -216,16 +237,24 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckChunkExists(req *htt
 
 func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.Request) (*http.Response, error) {
 	if c.srv.CompleteUpload == nil {
-		return nil, &nonRetriableError{errors.New("method CompleteUpload not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CompleteUpload not implemented")}
 	}
-	const regexStr = "/(?P<nextBlobUuidLink>[a-zA-Z0-9-_]+)"
+	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	respr, errRespr := c.srv.CompleteUpload(req.Context(), qp.Get("digest"), matches[regex.SubexpIndex("nextBlobUuidLink")], req.Body.(io.ReadSeekCloser), nil)
+	digestUnescaped, err := url.QueryUnescape(qp.Get("digest"))
+	if err != nil {
+		return nil, err
+	}
+	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.CompleteUpload(req.Context(), digestUnescaped, locationUnescaped, req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -251,15 +280,23 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 
 func (c *ContainerRegistryBlobServerTransport) dispatchDeleteBlob(req *http.Request) (*http.Response, error) {
 	if c.srv.DeleteBlob == nil {
-		return nil, &nonRetriableError{errors.New("method DeleteBlob not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DeleteBlob not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/blobs/(?P<digest>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.DeleteBlob(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.DeleteBlob(req.Context(), nameUnescaped, digestUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -282,15 +319,23 @@ func (c *ContainerRegistryBlobServerTransport) dispatchDeleteBlob(req *http.Requ
 
 func (c *ContainerRegistryBlobServerTransport) dispatchGetBlob(req *http.Request) (*http.Response, error) {
 	if c.srv.GetBlob == nil {
-		return nil, &nonRetriableError{errors.New("method GetBlob not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBlob not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/blobs/(?P<digest>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.GetBlob(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.GetBlob(req.Context(), nameUnescaped, digestUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -316,15 +361,23 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetBlob(req *http.Request
 
 func (c *ContainerRegistryBlobServerTransport) dispatchGetChunk(req *http.Request) (*http.Response, error) {
 	if c.srv.GetChunk == nil {
-		return nil, &nonRetriableError{errors.New("method GetChunk not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetChunk not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/blobs/(?P<digest>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.GetChunk(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], getHeaderValue(req.Header, "Range"), nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.GetChunk(req.Context(), nameUnescaped, digestUnescaped, getHeaderValue(req.Header, "Range"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -350,15 +403,19 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetChunk(req *http.Reques
 
 func (c *ContainerRegistryBlobServerTransport) dispatchGetUploadStatus(req *http.Request) (*http.Response, error) {
 	if c.srv.GetUploadStatus == nil {
-		return nil, &nonRetriableError{errors.New("method GetUploadStatus not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUploadStatus not implemented")}
 	}
-	const regexStr = "/(?P<nextBlobUuidLink>[a-zA-Z0-9-_]+)"
+	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.GetUploadStatus(req.Context(), matches[regex.SubexpIndex("nextBlobUuidLink")], nil)
+	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.GetUploadStatus(req.Context(), locationUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -381,16 +438,28 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetUploadStatus(req *http
 
 func (c *ContainerRegistryBlobServerTransport) dispatchMountBlob(req *http.Request) (*http.Response, error) {
 	if c.srv.MountBlob == nil {
-		return nil, &nonRetriableError{errors.New("method MountBlob not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method MountBlob not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/blobs/uploads/"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/uploads/`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	respr, errRespr := c.srv.MountBlob(req.Context(), matches[regex.SubexpIndex("name")], qp.Get("from"), qp.Get("mount"), nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	fromUnescaped, err := url.QueryUnescape(qp.Get("from"))
+	if err != nil {
+		return nil, err
+	}
+	mountUnescaped, err := url.QueryUnescape(qp.Get("mount"))
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.MountBlob(req.Context(), nameUnescaped, fromUnescaped, mountUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -416,15 +485,19 @@ func (c *ContainerRegistryBlobServerTransport) dispatchMountBlob(req *http.Reque
 
 func (c *ContainerRegistryBlobServerTransport) dispatchStartUpload(req *http.Request) (*http.Response, error) {
 	if c.srv.StartUpload == nil {
-		return nil, &nonRetriableError{errors.New("method StartUpload not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StartUpload not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/blobs/uploads/"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/uploads/`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.StartUpload(req.Context(), matches[regex.SubexpIndex("name")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.StartUpload(req.Context(), nameUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -450,15 +523,19 @@ func (c *ContainerRegistryBlobServerTransport) dispatchStartUpload(req *http.Req
 
 func (c *ContainerRegistryBlobServerTransport) dispatchUploadChunk(req *http.Request) (*http.Response, error) {
 	if c.srv.UploadChunk == nil {
-		return nil, &nonRetriableError{errors.New("method UploadChunk not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UploadChunk not implemented")}
 	}
-	const regexStr = "/(?P<nextBlobUuidLink>[a-zA-Z0-9-_]+)"
+	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.UploadChunk(req.Context(), matches[regex.SubexpIndex("nextBlobUuidLink")], req.Body.(io.ReadSeekCloser), nil)
+	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.UploadChunk(req.Context(), locationUnescaped, req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

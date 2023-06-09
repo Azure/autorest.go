@@ -73,7 +73,7 @@ func (u *UploadServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (u *UploadServerTransport) dispatchBinary(req *http.Request) (*http.Response, error) {
 	if u.srv.Binary == nil {
-		return nil, &nonRetriableError{errors.New("method Binary not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Binary not implemented")}
 	}
 	respr, errRespr := u.srv.Binary(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -92,7 +92,7 @@ func (u *UploadServerTransport) dispatchBinary(req *http.Request) (*http.Respons
 
 func (u *UploadServerTransport) dispatchFile(req *http.Request) (*http.Response, error) {
 	if u.srv.File == nil {
-		return nil, &nonRetriableError{errors.New("method File not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method File not implemented")}
 	}
 	respr, errRespr := u.srv.File(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

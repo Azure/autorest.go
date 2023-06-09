@@ -288,6 +288,13 @@
         "parameters": [
           {
             "$ref": "#/parameters/ScheduleCreateOrUpdateProperties"
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "format": "duration"
           }
         ],
         "responses": {

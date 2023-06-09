@@ -66,7 +66,7 @@ func (p *PathsServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (p *PathsServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
 	if p.srv.GetEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmpty not implemented")}
 	}
 	respr, errRespr := p.srv.GetEmpty(req.Context(), req.URL.Host, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

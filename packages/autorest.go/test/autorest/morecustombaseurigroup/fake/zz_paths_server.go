@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 )
 
@@ -67,23 +68,31 @@ func (p *PathsServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (p *PathsServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
 	if p.srv.GetEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmpty not implemented")}
 	}
-	const regexStr = "/customuri/(?P<subscriptionId>[a-zA-Z0-9-_]+)/(?P<keyName>[a-zA-Z0-9-_]+)"
+	const regexStr = `/customuri/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<keyName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	keyVersionParam := getOptional(qp.Get("keyVersion"))
+	keyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("keyName")])
+	if err != nil {
+		return nil, err
+	}
+	keyVersionUnescaped, err := url.QueryUnescape(qp.Get("keyVersion"))
+	if err != nil {
+		return nil, err
+	}
+	keyVersionParam := getOptional(keyVersionUnescaped)
 	var options *morecustombaseurigroup.PathsClientGetEmptyOptions
 	if keyVersionParam != nil {
 		options = &morecustombaseurigroup.PathsClientGetEmptyOptions{
 			KeyVersion: keyVersionParam,
 		}
 	}
-	respr, errRespr := p.srv.GetEmpty(req.Context(), req.URL.Host, matches[regex.SubexpIndex("keyName")], options)
+	respr, errRespr := p.srv.GetEmpty(req.Context(), req.URL.Host, keyNameUnescaped, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

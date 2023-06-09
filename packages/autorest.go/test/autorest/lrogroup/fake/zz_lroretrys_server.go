@@ -110,7 +110,7 @@ func (l *LRORetrysServerTransport) Do(req *http.Request) (*http.Response, error)
 
 func (l *LRORetrysServerTransport) dispatchBeginDelete202Retry200(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDelete202Retry200 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDelete202Retry200 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDelete202Retry200 not implemented")}
 	}
 	if l.beginDelete202Retry200 == nil {
 		respr, errRespr := l.srv.BeginDelete202Retry200(req.Context(), nil)
@@ -137,7 +137,7 @@ func (l *LRORetrysServerTransport) dispatchBeginDelete202Retry200(req *http.Requ
 
 func (l *LRORetrysServerTransport) dispatchBeginDeleteAsyncRelativeRetrySucceeded(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDeleteAsyncRelativeRetrySucceeded == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDeleteAsyncRelativeRetrySucceeded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRelativeRetrySucceeded not implemented")}
 	}
 	if l.beginDeleteAsyncRelativeRetrySucceeded == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetrySucceeded(req.Context(), nil)
@@ -164,7 +164,7 @@ func (l *LRORetrysServerTransport) dispatchBeginDeleteAsyncRelativeRetrySucceede
 
 func (l *LRORetrysServerTransport) dispatchBeginDeleteProvisioning202Accepted200Succeeded(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDeleteProvisioning202Accepted200Succeeded == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDeleteProvisioning202Accepted200Succeeded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteProvisioning202Accepted200Succeeded not implemented")}
 	}
 	if l.beginDeleteProvisioning202Accepted200Succeeded == nil {
 		respr, errRespr := l.srv.BeginDeleteProvisioning202Accepted200Succeeded(req.Context(), nil)
@@ -191,7 +191,7 @@ func (l *LRORetrysServerTransport) dispatchBeginDeleteProvisioning202Accepted200
 
 func (l *LRORetrysServerTransport) dispatchBeginPost202Retry200(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPost202Retry200 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPost202Retry200 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPost202Retry200 not implemented")}
 	}
 	if l.beginPost202Retry200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -228,7 +228,7 @@ func (l *LRORetrysServerTransport) dispatchBeginPost202Retry200(req *http.Reques
 
 func (l *LRORetrysServerTransport) dispatchBeginPostAsyncRelativeRetrySucceeded(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPostAsyncRelativeRetrySucceeded == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPostAsyncRelativeRetrySucceeded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRelativeRetrySucceeded not implemented")}
 	}
 	if l.beginPostAsyncRelativeRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -265,7 +265,7 @@ func (l *LRORetrysServerTransport) dispatchBeginPostAsyncRelativeRetrySucceeded(
 
 func (l *LRORetrysServerTransport) dispatchBeginPut201CreatingSucceeded200(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPut201CreatingSucceeded200 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPut201CreatingSucceeded200 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPut201CreatingSucceeded200 not implemented")}
 	}
 	if l.beginPut201CreatingSucceeded200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -296,7 +296,7 @@ func (l *LRORetrysServerTransport) dispatchBeginPut201CreatingSucceeded200(req *
 
 func (l *LRORetrysServerTransport) dispatchBeginPutAsyncRelativeRetrySucceeded(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutAsyncRelativeRetrySucceeded == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutAsyncRelativeRetrySucceeded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRelativeRetrySucceeded not implemented")}
 	}
 	if l.beginPutAsyncRelativeRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)

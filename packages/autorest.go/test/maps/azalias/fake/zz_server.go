@@ -18,6 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 )
@@ -88,10 +89,14 @@ func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {
 	if s.srv.Create == nil {
-		return nil, &nonRetriableError{errors.New("method Create not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Create not implemented")}
 	}
 	qp := req.URL.Query()
-	creatorIDParam, err := parseOptional(qp.Get("creator-id"), func(v string) (int32, error) {
+	creatorIDUnescaped, err := url.QueryUnescape(qp.Get("creator-id"))
+	if err != nil {
+		return nil, err
+	}
+	creatorIDParam, err := parseOptional(creatorIDUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -111,7 +116,11 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	elements := strings.Split(qp.Get("groupBy"), ",")
+	groupByUnescaped, err := url.QueryUnescape(qp.Get("groupBy"))
+	if err != nil {
+		return nil, err
+	}
+	elements := strings.Split(groupByUnescaped, ",")
 	groupByParam := make([]azalias.SomethingCount, len(elements))
 	for i := 0; i < len(elements); i++ {
 		var parsedInt int64
@@ -149,7 +158,7 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 
 func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, error) {
 	if s.srv.GetScript == nil {
-		return nil, &nonRetriableError{errors.New("method GetScript not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetScript not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[azalias.GeoJSONObjectNamedCollection](req)
 	if err != nil {
@@ -172,11 +181,15 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 
 func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {
 	if s.srv.NewListPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewListPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewListPager not implemented")}
 	}
 	if s.newListPager == nil {
 		qp := req.URL.Query()
-		elements := strings.Split(qp.Get("groupBy"), ",")
+		groupByUnescaped, err := url.QueryUnescape(qp.Get("groupBy"))
+		if err != nil {
+			return nil, err
+		}
+		elements := strings.Split(groupByUnescaped, ",")
 		groupByParam := make([]azalias.LogMetricsGroupBy, len(elements))
 		for i := 0; i < len(elements); i++ {
 			groupByParam[i] = azalias.LogMetricsGroupBy(elements[i])
@@ -208,13 +221,25 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 
 func (s *ServerTransport) dispatchPolicyAssignment(req *http.Request) (*http.Response, error) {
 	if s.srv.PolicyAssignment == nil {
-		return nil, &nonRetriableError{errors.New("method PolicyAssignment not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PolicyAssignment not implemented")}
 	}
+	qp := req.URL.Query()
 	body, err := server.UnmarshalRequestAsJSON[azalias.ScheduleCreateOrUpdateProperties](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.PolicyAssignment(req.Context(), body, nil)
+	intervalUnescaped, err := url.QueryUnescape(qp.Get("interval"))
+	if err != nil {
+		return nil, err
+	}
+	intervalParam := getOptional(intervalUnescaped)
+	var options *azalias.ClientPolicyAssignmentOptions
+	if intervalParam != nil {
+		options = &azalias.ClientPolicyAssignmentOptions{
+			Interval: intervalParam,
+		}
+	}
+	respr, errRespr := s.srv.PolicyAssignment(req.Context(), body, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

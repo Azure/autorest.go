@@ -66,7 +66,7 @@ func (f *FlattencomplexServerTransport) Do(req *http.Request) (*http.Response, e
 
 func (f *FlattencomplexServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {
 	if f.srv.GetValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetValid not implemented")}
 	}
 	respr, errRespr := f.srv.GetValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

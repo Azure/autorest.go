@@ -91,11 +91,11 @@ func (s *SubscriptionInCredentialsServerTransport) Do(req *http.Request) (*http.
 
 func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalNotProvidedValid(req *http.Request) (*http.Response, error) {
 	if s.srv.PostMethodGlobalNotProvidedValid == nil {
-		return nil, &nonRetriableError{errors.New("method PostMethodGlobalNotProvidedValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostMethodGlobalNotProvidedValid not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/method/string/none/path/globalNotProvided/1234-5678-9012-3456/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/globalNotProvided/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -116,11 +116,11 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalNotPr
 
 func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalNull(req *http.Request) (*http.Response, error) {
 	if s.srv.PostMethodGlobalNull == nil {
-		return nil, &nonRetriableError{errors.New("method PostMethodGlobalNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostMethodGlobalNull not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/method/string/none/path/global/null/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/global/null/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -141,11 +141,11 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalNull(
 
 func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalValid(req *http.Request) (*http.Response, error) {
 	if s.srv.PostMethodGlobalValid == nil {
-		return nil, &nonRetriableError{errors.New("method PostMethodGlobalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostMethodGlobalValid not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -166,11 +166,11 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalValid
 
 func (s *SubscriptionInCredentialsServerTransport) dispatchPostPathGlobalValid(req *http.Request) (*http.Response, error) {
 	if s.srv.PostPathGlobalValid == nil {
-		return nil, &nonRetriableError{errors.New("method PostPathGlobalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostPathGlobalValid not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -191,11 +191,11 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostPathGlobalValid(r
 
 func (s *SubscriptionInCredentialsServerTransport) dispatchPostSwaggerGlobalValid(req *http.Request) (*http.Response, error) {
 	if s.srv.PostSwaggerGlobalValid == nil {
-		return nil, &nonRetriableError{errors.New("method PostSwaggerGlobalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostSwaggerGlobalValid not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}

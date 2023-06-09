@@ -84,7 +84,7 @@ func (d *DurationServerTransport) Do(req *http.Request) (*http.Response, error) 
 
 func (d *DurationServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalid not implemented")}
 	}
 	respr, errRespr := d.srv.GetInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -103,7 +103,7 @@ func (d *DurationServerTransport) dispatchGetInvalid(req *http.Request) (*http.R
 
 func (d *DurationServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -122,7 +122,7 @@ func (d *DurationServerTransport) dispatchGetNull(req *http.Request) (*http.Resp
 
 func (d *DurationServerTransport) dispatchGetPositiveDuration(req *http.Request) (*http.Response, error) {
 	if d.srv.GetPositiveDuration == nil {
-		return nil, &nonRetriableError{errors.New("method GetPositiveDuration not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetPositiveDuration not implemented")}
 	}
 	respr, errRespr := d.srv.GetPositiveDuration(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -141,7 +141,7 @@ func (d *DurationServerTransport) dispatchGetPositiveDuration(req *http.Request)
 
 func (d *DurationServerTransport) dispatchPutPositiveDuration(req *http.Request) (*http.Response, error) {
 	if d.srv.PutPositiveDuration == nil {
-		return nil, &nonRetriableError{errors.New("method PutPositiveDuration not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutPositiveDuration not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[string](req)
 	if err != nil {

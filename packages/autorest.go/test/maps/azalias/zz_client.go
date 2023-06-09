@@ -275,6 +275,11 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props S
 	if err != nil {
 		return nil, err
 	}
+	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Interval != nil {
+		reqQP.Set("interval", *options.Interval)
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err

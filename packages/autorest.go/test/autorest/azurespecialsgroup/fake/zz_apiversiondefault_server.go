@@ -84,7 +84,7 @@ func (a *APIVersionDefaultServerTransport) Do(req *http.Request) (*http.Response
 
 func (a *APIVersionDefaultServerTransport) dispatchGetMethodGlobalNotProvidedValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetMethodGlobalNotProvidedValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetMethodGlobalNotProvidedValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMethodGlobalNotProvidedValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetMethodGlobalNotProvidedValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -103,7 +103,7 @@ func (a *APIVersionDefaultServerTransport) dispatchGetMethodGlobalNotProvidedVal
 
 func (a *APIVersionDefaultServerTransport) dispatchGetMethodGlobalValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetMethodGlobalValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetMethodGlobalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMethodGlobalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetMethodGlobalValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -122,7 +122,7 @@ func (a *APIVersionDefaultServerTransport) dispatchGetMethodGlobalValid(req *htt
 
 func (a *APIVersionDefaultServerTransport) dispatchGetPathGlobalValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetPathGlobalValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetPathGlobalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetPathGlobalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetPathGlobalValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -141,7 +141,7 @@ func (a *APIVersionDefaultServerTransport) dispatchGetPathGlobalValid(req *http.
 
 func (a *APIVersionDefaultServerTransport) dispatchGetSwaggerGlobalValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetSwaggerGlobalValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetSwaggerGlobalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSwaggerGlobalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetSwaggerGlobalValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

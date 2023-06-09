@@ -156,7 +156,7 @@ func (h *HTTPRedirectsServerTransport) Do(req *http.Request) (*http.Response, er
 
 func (h *HTTPRedirectsServerTransport) dispatchDelete307(req *http.Request) (*http.Response, error) {
 	if h.srv.Delete307 == nil {
-		return nil, &nonRetriableError{errors.New("method Delete307 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Delete307 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete307(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -175,7 +175,7 @@ func (h *HTTPRedirectsServerTransport) dispatchDelete307(req *http.Request) (*ht
 
 func (h *HTTPRedirectsServerTransport) dispatchGet300(req *http.Request) (*http.Response, error) {
 	if h.srv.Get300 == nil {
-		return nil, &nonRetriableError{errors.New("method Get300 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get300 not implemented")}
 	}
 	respr, errRespr := h.srv.Get300(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -197,7 +197,7 @@ func (h *HTTPRedirectsServerTransport) dispatchGet300(req *http.Request) (*http.
 
 func (h *HTTPRedirectsServerTransport) dispatchGet301(req *http.Request) (*http.Response, error) {
 	if h.srv.Get301 == nil {
-		return nil, &nonRetriableError{errors.New("method Get301 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get301 not implemented")}
 	}
 	respr, errRespr := h.srv.Get301(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -216,7 +216,7 @@ func (h *HTTPRedirectsServerTransport) dispatchGet301(req *http.Request) (*http.
 
 func (h *HTTPRedirectsServerTransport) dispatchGet302(req *http.Request) (*http.Response, error) {
 	if h.srv.Get302 == nil {
-		return nil, &nonRetriableError{errors.New("method Get302 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get302 not implemented")}
 	}
 	respr, errRespr := h.srv.Get302(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -235,7 +235,7 @@ func (h *HTTPRedirectsServerTransport) dispatchGet302(req *http.Request) (*http.
 
 func (h *HTTPRedirectsServerTransport) dispatchGet307(req *http.Request) (*http.Response, error) {
 	if h.srv.Get307 == nil {
-		return nil, &nonRetriableError{errors.New("method Get307 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get307 not implemented")}
 	}
 	respr, errRespr := h.srv.Get307(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -254,7 +254,7 @@ func (h *HTTPRedirectsServerTransport) dispatchGet307(req *http.Request) (*http.
 
 func (h *HTTPRedirectsServerTransport) dispatchHead300(req *http.Request) (*http.Response, error) {
 	if h.srv.Head300 == nil {
-		return nil, &nonRetriableError{errors.New("method Head300 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head300 not implemented")}
 	}
 	respr, errRespr := h.srv.Head300(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -276,7 +276,7 @@ func (h *HTTPRedirectsServerTransport) dispatchHead300(req *http.Request) (*http
 
 func (h *HTTPRedirectsServerTransport) dispatchHead301(req *http.Request) (*http.Response, error) {
 	if h.srv.Head301 == nil {
-		return nil, &nonRetriableError{errors.New("method Head301 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head301 not implemented")}
 	}
 	respr, errRespr := h.srv.Head301(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -295,7 +295,7 @@ func (h *HTTPRedirectsServerTransport) dispatchHead301(req *http.Request) (*http
 
 func (h *HTTPRedirectsServerTransport) dispatchHead302(req *http.Request) (*http.Response, error) {
 	if h.srv.Head302 == nil {
-		return nil, &nonRetriableError{errors.New("method Head302 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head302 not implemented")}
 	}
 	respr, errRespr := h.srv.Head302(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -314,7 +314,7 @@ func (h *HTTPRedirectsServerTransport) dispatchHead302(req *http.Request) (*http
 
 func (h *HTTPRedirectsServerTransport) dispatchHead307(req *http.Request) (*http.Response, error) {
 	if h.srv.Head307 == nil {
-		return nil, &nonRetriableError{errors.New("method Head307 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head307 not implemented")}
 	}
 	respr, errRespr := h.srv.Head307(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -333,7 +333,7 @@ func (h *HTTPRedirectsServerTransport) dispatchHead307(req *http.Request) (*http
 
 func (h *HTTPRedirectsServerTransport) dispatchOptions307(req *http.Request) (*http.Response, error) {
 	if h.srv.Options307 == nil {
-		return nil, &nonRetriableError{errors.New("method Options307 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Options307 not implemented")}
 	}
 	respr, errRespr := h.srv.Options307(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -352,7 +352,7 @@ func (h *HTTPRedirectsServerTransport) dispatchOptions307(req *http.Request) (*h
 
 func (h *HTTPRedirectsServerTransport) dispatchPatch302(req *http.Request) (*http.Response, error) {
 	if h.srv.Patch302 == nil {
-		return nil, &nonRetriableError{errors.New("method Patch302 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Patch302 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch302(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -374,7 +374,7 @@ func (h *HTTPRedirectsServerTransport) dispatchPatch302(req *http.Request) (*htt
 
 func (h *HTTPRedirectsServerTransport) dispatchPatch307(req *http.Request) (*http.Response, error) {
 	if h.srv.Patch307 == nil {
-		return nil, &nonRetriableError{errors.New("method Patch307 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Patch307 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch307(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -393,7 +393,7 @@ func (h *HTTPRedirectsServerTransport) dispatchPatch307(req *http.Request) (*htt
 
 func (h *HTTPRedirectsServerTransport) dispatchPost303(req *http.Request) (*http.Response, error) {
 	if h.srv.Post303 == nil {
-		return nil, &nonRetriableError{errors.New("method Post303 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Post303 not implemented")}
 	}
 	respr, errRespr := h.srv.Post303(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -415,7 +415,7 @@ func (h *HTTPRedirectsServerTransport) dispatchPost303(req *http.Request) (*http
 
 func (h *HTTPRedirectsServerTransport) dispatchPost307(req *http.Request) (*http.Response, error) {
 	if h.srv.Post307 == nil {
-		return nil, &nonRetriableError{errors.New("method Post307 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Post307 not implemented")}
 	}
 	respr, errRespr := h.srv.Post307(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -434,7 +434,7 @@ func (h *HTTPRedirectsServerTransport) dispatchPost307(req *http.Request) (*http
 
 func (h *HTTPRedirectsServerTransport) dispatchPut301(req *http.Request) (*http.Response, error) {
 	if h.srv.Put301 == nil {
-		return nil, &nonRetriableError{errors.New("method Put301 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put301 not implemented")}
 	}
 	respr, errRespr := h.srv.Put301(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -456,7 +456,7 @@ func (h *HTTPRedirectsServerTransport) dispatchPut301(req *http.Request) (*http.
 
 func (h *HTTPRedirectsServerTransport) dispatchPut307(req *http.Request) (*http.Response, error) {
 	if h.srv.Put307 == nil {
-		return nil, &nonRetriableError{errors.New("method Put307 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put307 not implemented")}
 	}
 	respr, errRespr := h.srv.Put307(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

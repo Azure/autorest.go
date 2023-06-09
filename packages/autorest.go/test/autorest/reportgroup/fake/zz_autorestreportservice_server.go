@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 )
 
 // AutoRestReportServiceServer is a fake server for instances of the reportgroup.AutoRestReportServiceClient type.
@@ -72,10 +73,14 @@ func (a *AutoRestReportServiceServerTransport) Do(req *http.Request) (*http.Resp
 
 func (a *AutoRestReportServiceServerTransport) dispatchGetOptionalReport(req *http.Request) (*http.Response, error) {
 	if a.srv.GetOptionalReport == nil {
-		return nil, &nonRetriableError{errors.New("method GetOptionalReport not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetOptionalReport not implemented")}
 	}
 	qp := req.URL.Query()
-	qualifierParam := getOptional(qp.Get("qualifier"))
+	qualifierUnescaped, err := url.QueryUnescape(qp.Get("qualifier"))
+	if err != nil {
+		return nil, err
+	}
+	qualifierParam := getOptional(qualifierUnescaped)
 	var options *reportgroup.AutoRestReportServiceClientGetOptionalReportOptions
 	if qualifierParam != nil {
 		options = &reportgroup.AutoRestReportServiceClientGetOptionalReportOptions{
@@ -99,10 +104,14 @@ func (a *AutoRestReportServiceServerTransport) dispatchGetOptionalReport(req *ht
 
 func (a *AutoRestReportServiceServerTransport) dispatchGetReport(req *http.Request) (*http.Response, error) {
 	if a.srv.GetReport == nil {
-		return nil, &nonRetriableError{errors.New("method GetReport not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetReport not implemented")}
 	}
 	qp := req.URL.Query()
-	qualifierParam := getOptional(qp.Get("qualifier"))
+	qualifierUnescaped, err := url.QueryUnescape(qp.Get("qualifier"))
+	if err != nil {
+		return nil, err
+	}
+	qualifierParam := getOptional(qualifierUnescaped)
 	var options *reportgroup.AutoRestReportServiceClientGetReportOptions
 	if qualifierParam != nil {
 		options = &reportgroup.AutoRestReportServiceClientGetReportOptions{

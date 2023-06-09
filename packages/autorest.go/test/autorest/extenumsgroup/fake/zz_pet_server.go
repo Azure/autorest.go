@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"reflect"
 	"regexp"
 )
@@ -74,7 +75,7 @@ func (p *PetServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (p *PetServerTransport) dispatchAddPet(req *http.Request) (*http.Response, error) {
 	if p.srv.AddPet == nil {
-		return nil, &nonRetriableError{errors.New("method AddPet not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method AddPet not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[extenumsgroup.Pet](req)
 	if err != nil {
@@ -103,15 +104,19 @@ func (p *PetServerTransport) dispatchAddPet(req *http.Request) (*http.Response, 
 
 func (p *PetServerTransport) dispatchGetByPetID(req *http.Request) (*http.Response, error) {
 	if p.srv.GetByPetID == nil {
-		return nil, &nonRetriableError{errors.New("method GetByPetID not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetByPetID not implemented")}
 	}
-	const regexStr = "/extensibleenums/pet/(?P<petId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/extensibleenums/pet/(?P<petId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := p.srv.GetByPetID(req.Context(), matches[regex.SubexpIndex("petId")], nil)
+	petIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("petId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := p.srv.GetByPetID(req.Context(), petIDUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

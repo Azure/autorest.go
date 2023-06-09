@@ -115,7 +115,7 @@ func (d *Datetimerfc1123ServerTransport) Do(req *http.Request) (*http.Response, 
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalid not implemented")}
 	}
 	respr, errRespr := d.srv.GetInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -134,7 +134,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetInvalid(req *http.Request) (
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -153,7 +153,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetNull(req *http.Request) (*ht
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetOverflow(req *http.Request) (*http.Response, error) {
 	if d.srv.GetOverflow == nil {
-		return nil, &nonRetriableError{errors.New("method GetOverflow not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetOverflow not implemented")}
 	}
 	respr, errRespr := d.srv.GetOverflow(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -172,7 +172,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetOverflow(req *http.Request) 
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetUTCLowercaseMaxDateTime(req *http.Request) (*http.Response, error) {
 	if d.srv.GetUTCLowercaseMaxDateTime == nil {
-		return nil, &nonRetriableError{errors.New("method GetUTCLowercaseMaxDateTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUTCLowercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetUTCLowercaseMaxDateTime(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -191,7 +191,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUTCLowercaseMaxDateTime(req 
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetUTCMinDateTime(req *http.Request) (*http.Response, error) {
 	if d.srv.GetUTCMinDateTime == nil {
-		return nil, &nonRetriableError{errors.New("method GetUTCMinDateTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUTCMinDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetUTCMinDateTime(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -210,7 +210,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUTCMinDateTime(req *http.Req
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetUTCUppercaseMaxDateTime(req *http.Request) (*http.Response, error) {
 	if d.srv.GetUTCUppercaseMaxDateTime == nil {
-		return nil, &nonRetriableError{errors.New("method GetUTCUppercaseMaxDateTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUTCUppercaseMaxDateTime not implemented")}
 	}
 	respr, errRespr := d.srv.GetUTCUppercaseMaxDateTime(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -229,7 +229,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUTCUppercaseMaxDateTime(req 
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetUnderflow(req *http.Request) (*http.Response, error) {
 	if d.srv.GetUnderflow == nil {
-		return nil, &nonRetriableError{errors.New("method GetUnderflow not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUnderflow not implemented")}
 	}
 	respr, errRespr := d.srv.GetUnderflow(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -248,7 +248,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUnderflow(req *http.Request)
 
 func (d *Datetimerfc1123ServerTransport) dispatchPutUTCMaxDateTime(req *http.Request) (*http.Response, error) {
 	if d.srv.PutUTCMaxDateTime == nil {
-		return nil, &nonRetriableError{errors.New("method PutUTCMaxDateTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutUTCMaxDateTime not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[timeRFC1123](req)
 	if err != nil {
@@ -271,7 +271,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchPutUTCMaxDateTime(req *http.Req
 
 func (d *Datetimerfc1123ServerTransport) dispatchPutUTCMinDateTime(req *http.Request) (*http.Response, error) {
 	if d.srv.PutUTCMinDateTime == nil {
-		return nil, &nonRetriableError{errors.New("method PutUTCMinDateTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutUTCMinDateTime not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[timeRFC1123](req)
 	if err != nil {

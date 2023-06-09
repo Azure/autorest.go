@@ -109,7 +109,7 @@ func (d *DateServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (d *DateServerTransport) dispatchGetInvalidDate(req *http.Request) (*http.Response, error) {
 	if d.srv.GetInvalidDate == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalidDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalidDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetInvalidDate(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -128,7 +128,7 @@ func (d *DateServerTransport) dispatchGetInvalidDate(req *http.Request) (*http.R
 
 func (d *DateServerTransport) dispatchGetMaxDate(req *http.Request) (*http.Response, error) {
 	if d.srv.GetMaxDate == nil {
-		return nil, &nonRetriableError{errors.New("method GetMaxDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMaxDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetMaxDate(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -147,7 +147,7 @@ func (d *DateServerTransport) dispatchGetMaxDate(req *http.Request) (*http.Respo
 
 func (d *DateServerTransport) dispatchGetMinDate(req *http.Request) (*http.Response, error) {
 	if d.srv.GetMinDate == nil {
-		return nil, &nonRetriableError{errors.New("method GetMinDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMinDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetMinDate(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -166,7 +166,7 @@ func (d *DateServerTransport) dispatchGetMinDate(req *http.Request) (*http.Respo
 
 func (d *DateServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -185,7 +185,7 @@ func (d *DateServerTransport) dispatchGetNull(req *http.Request) (*http.Response
 
 func (d *DateServerTransport) dispatchGetOverflowDate(req *http.Request) (*http.Response, error) {
 	if d.srv.GetOverflowDate == nil {
-		return nil, &nonRetriableError{errors.New("method GetOverflowDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetOverflowDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetOverflowDate(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -204,7 +204,7 @@ func (d *DateServerTransport) dispatchGetOverflowDate(req *http.Request) (*http.
 
 func (d *DateServerTransport) dispatchGetUnderflowDate(req *http.Request) (*http.Response, error) {
 	if d.srv.GetUnderflowDate == nil {
-		return nil, &nonRetriableError{errors.New("method GetUnderflowDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUnderflowDate not implemented")}
 	}
 	respr, errRespr := d.srv.GetUnderflowDate(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -223,7 +223,7 @@ func (d *DateServerTransport) dispatchGetUnderflowDate(req *http.Request) (*http
 
 func (d *DateServerTransport) dispatchPutMaxDate(req *http.Request) (*http.Response, error) {
 	if d.srv.PutMaxDate == nil {
-		return nil, &nonRetriableError{errors.New("method PutMaxDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMaxDate not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[dateType](req)
 	if err != nil {
@@ -246,7 +246,7 @@ func (d *DateServerTransport) dispatchPutMaxDate(req *http.Request) (*http.Respo
 
 func (d *DateServerTransport) dispatchPutMinDate(req *http.Request) (*http.Response, error) {
 	if d.srv.PutMinDate == nil {
-		return nil, &nonRetriableError{errors.New("method PutMinDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMinDate not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[dateType](req)
 	if err != nil {

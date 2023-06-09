@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 )
 
 // AutoRestReportServiceForAzureServer is a fake server for instances of the azurereportgroup.AutoRestReportServiceForAzureClient type.
@@ -66,10 +67,14 @@ func (a *AutoRestReportServiceForAzureServerTransport) Do(req *http.Request) (*h
 
 func (a *AutoRestReportServiceForAzureServerTransport) dispatchGetReport(req *http.Request) (*http.Response, error) {
 	if a.srv.GetReport == nil {
-		return nil, &nonRetriableError{errors.New("method GetReport not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetReport not implemented")}
 	}
 	qp := req.URL.Query()
-	qualifierParam := getOptional(qp.Get("qualifier"))
+	qualifierUnescaped, err := url.QueryUnescape(qp.Get("qualifier"))
+	if err != nil {
+		return nil, err
+	}
+	qualifierParam := getOptional(qualifierUnescaped)
 	var options *azurereportgroup.AutoRestReportServiceForAzureClientGetReportOptions
 	if qualifierParam != nil {
 		options = &azurereportgroup.AutoRestReportServiceForAzureClientGetReportOptions{

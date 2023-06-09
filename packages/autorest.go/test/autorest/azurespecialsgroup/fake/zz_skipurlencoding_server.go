@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 )
 
@@ -103,15 +104,19 @@ func (s *SkipURLEncodingServerTransport) Do(req *http.Request) (*http.Response, 
 
 func (s *SkipURLEncodingServerTransport) dispatchGetMethodPathValid(req *http.Request) (*http.Response, error) {
 	if s.srv.GetMethodPathValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetMethodPathValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMethodPathValid not implemented")}
 	}
-	const regexStr = "/azurespecials/skipUrlEncoding/method/path/valid/(?P<unencodedPathParam>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/skipUrlEncoding/method/path/valid/(?P<unencodedPathParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := s.srv.GetMethodPathValid(req.Context(), matches[regex.SubexpIndex("unencodedPathParam")], nil)
+	unencodedPathParamUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.GetMethodPathValid(req.Context(), unencodedPathParamUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -128,10 +133,14 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodPathValid(req *http.Re
 
 func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryNull(req *http.Request) (*http.Response, error) {
 	if s.srv.GetMethodQueryNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetMethodQueryNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMethodQueryNull not implemented")}
 	}
 	qp := req.URL.Query()
-	q1Param := getOptional(qp.Get("q1"))
+	q1Unescaped, err := url.QueryUnescape(qp.Get("q1"))
+	if err != nil {
+		return nil, err
+	}
+	q1Param := getOptional(q1Unescaped)
 	var options *azurespecialsgroup.SkipURLEncodingClientGetMethodQueryNullOptions
 	if q1Param != nil {
 		options = &azurespecialsgroup.SkipURLEncodingClientGetMethodQueryNullOptions{
@@ -155,10 +164,14 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryNull(req *http.Re
 
 func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryValid(req *http.Request) (*http.Response, error) {
 	if s.srv.GetMethodQueryValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetMethodQueryValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMethodQueryValid not implemented")}
 	}
 	qp := req.URL.Query()
-	respr, errRespr := s.srv.GetMethodQueryValid(req.Context(), qp.Get("q1"), nil)
+	q1Unescaped, err := url.QueryUnescape(qp.Get("q1"))
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.GetMethodQueryValid(req.Context(), q1Unescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -175,10 +188,14 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryValid(req *http.R
 
 func (s *SkipURLEncodingServerTransport) dispatchGetPathQueryValid(req *http.Request) (*http.Response, error) {
 	if s.srv.GetPathQueryValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetPathQueryValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetPathQueryValid not implemented")}
 	}
 	qp := req.URL.Query()
-	respr, errRespr := s.srv.GetPathQueryValid(req.Context(), qp.Get("q1"), nil)
+	q1Unescaped, err := url.QueryUnescape(qp.Get("q1"))
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.GetPathQueryValid(req.Context(), q1Unescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -195,15 +212,19 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathQueryValid(req *http.Req
 
 func (s *SkipURLEncodingServerTransport) dispatchGetPathValid(req *http.Request) (*http.Response, error) {
 	if s.srv.GetPathValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetPathValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetPathValid not implemented")}
 	}
-	const regexStr = "/azurespecials/skipUrlEncoding/path/path/valid/(?P<unencodedPathParam>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/skipUrlEncoding/path/path/valid/(?P<unencodedPathParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := s.srv.GetPathValid(req.Context(), matches[regex.SubexpIndex("unencodedPathParam")], nil)
+	unencodedPathParamUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.GetPathValid(req.Context(), unencodedPathParamUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -220,11 +241,11 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathValid(req *http.Request)
 
 func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerPathValid(req *http.Request) (*http.Response, error) {
 	if s.srv.GetSwaggerPathValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetSwaggerPathValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSwaggerPathValid not implemented")}
 	}
-	const regexStr = "/azurespecials/skipUrlEncoding/swagger/path/valid/(?P<unencodedPathParam>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/skipUrlEncoding/swagger/path/valid/(?P<unencodedPathParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -245,7 +266,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerPathValid(req *http.R
 
 func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerQueryValid(req *http.Request) (*http.Response, error) {
 	if s.srv.GetSwaggerQueryValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetSwaggerQueryValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSwaggerQueryValid not implemented")}
 	}
 	respr, errRespr := s.srv.GetSwaggerQueryValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

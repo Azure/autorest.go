@@ -83,7 +83,7 @@ func (f *FormdataServerTransport) Do(req *http.Request) (*http.Response, error) 
 
 func (f *FormdataServerTransport) dispatchUploadFile(req *http.Request) (*http.Response, error) {
 	if f.srv.UploadFile == nil {
-		return nil, &nonRetriableError{errors.New("method UploadFile not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UploadFile not implemented")}
 	}
 	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
 	if err != nil {
@@ -138,7 +138,7 @@ func (f *FormdataServerTransport) dispatchUploadFile(req *http.Request) (*http.R
 
 func (f *FormdataServerTransport) dispatchUploadFileViaBody(req *http.Request) (*http.Response, error) {
 	if f.srv.UploadFileViaBody == nil {
-		return nil, &nonRetriableError{errors.New("method UploadFileViaBody not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UploadFileViaBody not implemented")}
 	}
 	respr, errRespr := f.srv.UploadFileViaBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -160,7 +160,7 @@ func (f *FormdataServerTransport) dispatchUploadFileViaBody(req *http.Request) (
 
 func (f *FormdataServerTransport) dispatchUploadFiles(req *http.Request) (*http.Response, error) {
 	if f.srv.UploadFiles == nil {
-		return nil, &nonRetriableError{errors.New("method UploadFiles not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UploadFiles not implemented")}
 	}
 	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
 	if err != nil {

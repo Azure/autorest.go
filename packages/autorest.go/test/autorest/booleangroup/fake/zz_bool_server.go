@@ -96,7 +96,7 @@ func (b *BoolServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (b *BoolServerTransport) dispatchGetFalse(req *http.Request) (*http.Response, error) {
 	if b.srv.GetFalse == nil {
-		return nil, &nonRetriableError{errors.New("method GetFalse not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFalse not implemented")}
 	}
 	respr, errRespr := b.srv.GetFalse(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -115,7 +115,7 @@ func (b *BoolServerTransport) dispatchGetFalse(req *http.Request) (*http.Respons
 
 func (b *BoolServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
 	if b.srv.GetInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalid not implemented")}
 	}
 	respr, errRespr := b.srv.GetInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -134,7 +134,7 @@ func (b *BoolServerTransport) dispatchGetInvalid(req *http.Request) (*http.Respo
 
 func (b *BoolServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if b.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := b.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -153,7 +153,7 @@ func (b *BoolServerTransport) dispatchGetNull(req *http.Request) (*http.Response
 
 func (b *BoolServerTransport) dispatchGetTrue(req *http.Request) (*http.Response, error) {
 	if b.srv.GetTrue == nil {
-		return nil, &nonRetriableError{errors.New("method GetTrue not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetTrue not implemented")}
 	}
 	respr, errRespr := b.srv.GetTrue(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -172,7 +172,7 @@ func (b *BoolServerTransport) dispatchGetTrue(req *http.Request) (*http.Response
 
 func (b *BoolServerTransport) dispatchPutFalse(req *http.Request) (*http.Response, error) {
 	if b.srv.PutFalse == nil {
-		return nil, &nonRetriableError{errors.New("method PutFalse not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutFalse not implemented")}
 	}
 	respr, errRespr := b.srv.PutFalse(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -191,7 +191,7 @@ func (b *BoolServerTransport) dispatchPutFalse(req *http.Request) (*http.Respons
 
 func (b *BoolServerTransport) dispatchPutTrue(req *http.Request) (*http.Response, error) {
 	if b.srv.PutTrue == nil {
-		return nil, &nonRetriableError{errors.New("method PutTrue not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutTrue not implemented")}
 	}
 	respr, errRespr := b.srv.PutTrue(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

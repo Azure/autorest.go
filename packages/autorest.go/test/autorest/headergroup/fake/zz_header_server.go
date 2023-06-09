@@ -237,7 +237,7 @@ func (h *HeaderServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (h *HeaderServerTransport) dispatchCustomRequestID(req *http.Request) (*http.Response, error) {
 	if h.srv.CustomRequestID == nil {
-		return nil, &nonRetriableError{errors.New("method CustomRequestID not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CustomRequestID not implemented")}
 	}
 	respr, errRespr := h.srv.CustomRequestID(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -256,7 +256,7 @@ func (h *HeaderServerTransport) dispatchCustomRequestID(req *http.Request) (*htt
 
 func (h *HeaderServerTransport) dispatchParamBool(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamBool == nil {
-		return nil, &nonRetriableError{errors.New("method ParamBool not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamBool not implemented")}
 	}
 	valueParam, err := strconv.ParseBool(getHeaderValue(req.Header, "value"))
 	if err != nil {
@@ -279,7 +279,7 @@ func (h *HeaderServerTransport) dispatchParamBool(req *http.Request) (*http.Resp
 
 func (h *HeaderServerTransport) dispatchParamByte(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamByte == nil {
-		return nil, &nonRetriableError{errors.New("method ParamByte not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamByte not implemented")}
 	}
 	valueParam, err := base64.StdEncoding.DecodeString(getHeaderValue(req.Header, "value"))
 	if err != nil {
@@ -302,7 +302,7 @@ func (h *HeaderServerTransport) dispatchParamByte(req *http.Request) (*http.Resp
 
 func (h *HeaderServerTransport) dispatchParamDate(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamDate == nil {
-		return nil, &nonRetriableError{errors.New("method ParamDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamDate not implemented")}
 	}
 	valueParam, err := time.Parse("2006-01-02", getHeaderValue(req.Header, "value"))
 	if err != nil {
@@ -325,7 +325,7 @@ func (h *HeaderServerTransport) dispatchParamDate(req *http.Request) (*http.Resp
 
 func (h *HeaderServerTransport) dispatchParamDatetime(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamDatetime == nil {
-		return nil, &nonRetriableError{errors.New("method ParamDatetime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamDatetime not implemented")}
 	}
 	valueParam, err := time.Parse(time.RFC3339Nano, getHeaderValue(req.Header, "value"))
 	if err != nil {
@@ -348,7 +348,7 @@ func (h *HeaderServerTransport) dispatchParamDatetime(req *http.Request) (*http.
 
 func (h *HeaderServerTransport) dispatchParamDatetimeRFC1123(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamDatetimeRFC1123 == nil {
-		return nil, &nonRetriableError{errors.New("method ParamDatetimeRFC1123 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamDatetimeRFC1123 not implemented")}
 	}
 	valueParam, err := parseOptional(getHeaderValue(req.Header, "value"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
 	if err != nil {
@@ -377,7 +377,7 @@ func (h *HeaderServerTransport) dispatchParamDatetimeRFC1123(req *http.Request) 
 
 func (h *HeaderServerTransport) dispatchParamDouble(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamDouble == nil {
-		return nil, &nonRetriableError{errors.New("method ParamDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamDouble not implemented")}
 	}
 	valueParam, err := strconv.ParseFloat(getHeaderValue(req.Header, "value"), 64)
 	if err != nil {
@@ -400,7 +400,7 @@ func (h *HeaderServerTransport) dispatchParamDouble(req *http.Request) (*http.Re
 
 func (h *HeaderServerTransport) dispatchParamDuration(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamDuration == nil {
-		return nil, &nonRetriableError{errors.New("method ParamDuration not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamDuration not implemented")}
 	}
 	respr, errRespr := h.srv.ParamDuration(req.Context(), getHeaderValue(req.Header, "scenario"), getHeaderValue(req.Header, "value"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -419,7 +419,7 @@ func (h *HeaderServerTransport) dispatchParamDuration(req *http.Request) (*http.
 
 func (h *HeaderServerTransport) dispatchParamEnum(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamEnum == nil {
-		return nil, &nonRetriableError{errors.New("method ParamEnum not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamEnum not implemented")}
 	}
 	valueParam := getOptional(headergroup.GreyscaleColors(getHeaderValue(req.Header, "value")))
 	var options *headergroup.HeaderClientParamEnumOptions
@@ -445,7 +445,7 @@ func (h *HeaderServerTransport) dispatchParamEnum(req *http.Request) (*http.Resp
 
 func (h *HeaderServerTransport) dispatchParamExistingKey(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamExistingKey == nil {
-		return nil, &nonRetriableError{errors.New("method ParamExistingKey not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamExistingKey not implemented")}
 	}
 	respr, errRespr := h.srv.ParamExistingKey(req.Context(), getHeaderValue(req.Header, "User-Agent"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -464,7 +464,7 @@ func (h *HeaderServerTransport) dispatchParamExistingKey(req *http.Request) (*ht
 
 func (h *HeaderServerTransport) dispatchParamFloat(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamFloat == nil {
-		return nil, &nonRetriableError{errors.New("method ParamFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamFloat not implemented")}
 	}
 	valueParam, err := parseWithCast(getHeaderValue(req.Header, "value"), func(v string) (float32, error) {
 		p, parseErr := strconv.ParseFloat(v, 32)
@@ -493,7 +493,7 @@ func (h *HeaderServerTransport) dispatchParamFloat(req *http.Request) (*http.Res
 
 func (h *HeaderServerTransport) dispatchParamInteger(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamInteger == nil {
-		return nil, &nonRetriableError{errors.New("method ParamInteger not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamInteger not implemented")}
 	}
 	valueParam, err := parseWithCast(getHeaderValue(req.Header, "value"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
@@ -522,7 +522,7 @@ func (h *HeaderServerTransport) dispatchParamInteger(req *http.Request) (*http.R
 
 func (h *HeaderServerTransport) dispatchParamLong(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamLong == nil {
-		return nil, &nonRetriableError{errors.New("method ParamLong not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamLong not implemented")}
 	}
 	valueParam, err := strconv.ParseInt(getHeaderValue(req.Header, "value"), 10, 64)
 	if err != nil {
@@ -545,7 +545,7 @@ func (h *HeaderServerTransport) dispatchParamLong(req *http.Request) (*http.Resp
 
 func (h *HeaderServerTransport) dispatchParamProtectedKey(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamProtectedKey == nil {
-		return nil, &nonRetriableError{errors.New("method ParamProtectedKey not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamProtectedKey not implemented")}
 	}
 	respr, errRespr := h.srv.ParamProtectedKey(req.Context(), getHeaderValue(req.Header, "Content-Type"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -564,7 +564,7 @@ func (h *HeaderServerTransport) dispatchParamProtectedKey(req *http.Request) (*h
 
 func (h *HeaderServerTransport) dispatchParamString(req *http.Request) (*http.Response, error) {
 	if h.srv.ParamString == nil {
-		return nil, &nonRetriableError{errors.New("method ParamString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamString not implemented")}
 	}
 	valueParam := getOptional(getHeaderValue(req.Header, "value"))
 	var options *headergroup.HeaderClientParamStringOptions
@@ -590,7 +590,7 @@ func (h *HeaderServerTransport) dispatchParamString(req *http.Request) (*http.Re
 
 func (h *HeaderServerTransport) dispatchResponseBool(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseBool == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseBool not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseBool not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseBool(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -612,7 +612,7 @@ func (h *HeaderServerTransport) dispatchResponseBool(req *http.Request) (*http.R
 
 func (h *HeaderServerTransport) dispatchResponseByte(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseByte == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseByte not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseByte not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseByte(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -634,7 +634,7 @@ func (h *HeaderServerTransport) dispatchResponseByte(req *http.Request) (*http.R
 
 func (h *HeaderServerTransport) dispatchResponseDate(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseDate == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseDate not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseDate(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -656,7 +656,7 @@ func (h *HeaderServerTransport) dispatchResponseDate(req *http.Request) (*http.R
 
 func (h *HeaderServerTransport) dispatchResponseDatetime(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseDatetime == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseDatetime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseDatetime not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseDatetime(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -678,7 +678,7 @@ func (h *HeaderServerTransport) dispatchResponseDatetime(req *http.Request) (*ht
 
 func (h *HeaderServerTransport) dispatchResponseDatetimeRFC1123(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseDatetimeRFC1123 == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseDatetimeRFC1123 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseDatetimeRFC1123 not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseDatetimeRFC1123(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -700,7 +700,7 @@ func (h *HeaderServerTransport) dispatchResponseDatetimeRFC1123(req *http.Reques
 
 func (h *HeaderServerTransport) dispatchResponseDouble(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseDouble == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseDouble not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseDouble(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -722,7 +722,7 @@ func (h *HeaderServerTransport) dispatchResponseDouble(req *http.Request) (*http
 
 func (h *HeaderServerTransport) dispatchResponseDuration(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseDuration == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseDuration not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseDuration not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseDuration(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -744,7 +744,7 @@ func (h *HeaderServerTransport) dispatchResponseDuration(req *http.Request) (*ht
 
 func (h *HeaderServerTransport) dispatchResponseEnum(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseEnum == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseEnum not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseEnum not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseEnum(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -766,7 +766,7 @@ func (h *HeaderServerTransport) dispatchResponseEnum(req *http.Request) (*http.R
 
 func (h *HeaderServerTransport) dispatchResponseExistingKey(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseExistingKey == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseExistingKey not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseExistingKey not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseExistingKey(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -788,7 +788,7 @@ func (h *HeaderServerTransport) dispatchResponseExistingKey(req *http.Request) (
 
 func (h *HeaderServerTransport) dispatchResponseFloat(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseFloat == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseFloat not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseFloat(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -810,7 +810,7 @@ func (h *HeaderServerTransport) dispatchResponseFloat(req *http.Request) (*http.
 
 func (h *HeaderServerTransport) dispatchResponseInteger(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseInteger == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseInteger not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseInteger not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseInteger(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -832,7 +832,7 @@ func (h *HeaderServerTransport) dispatchResponseInteger(req *http.Request) (*htt
 
 func (h *HeaderServerTransport) dispatchResponseLong(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseLong == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseLong not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseLong not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseLong(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -854,7 +854,7 @@ func (h *HeaderServerTransport) dispatchResponseLong(req *http.Request) (*http.R
 
 func (h *HeaderServerTransport) dispatchResponseProtectedKey(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseProtectedKey == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseProtectedKey not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseProtectedKey not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseProtectedKey(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -876,7 +876,7 @@ func (h *HeaderServerTransport) dispatchResponseProtectedKey(req *http.Request) 
 
 func (h *HeaderServerTransport) dispatchResponseString(req *http.Request) (*http.Response, error) {
 	if h.srv.ResponseString == nil {
-		return nil, &nonRetriableError{errors.New("method ResponseString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ResponseString not implemented")}
 	}
 	respr, errRespr := h.srv.ResponseString(req.Context(), getHeaderValue(req.Header, "scenario"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

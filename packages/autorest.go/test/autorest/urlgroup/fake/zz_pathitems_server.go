@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 )
 
@@ -85,17 +86,33 @@ func (p *PathItemsServerTransport) Do(req *http.Request) (*http.Response, error)
 
 func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (*http.Response, error) {
 	if p.srv.GetAllWithValues == nil {
-		return nil, &nonRetriableError{errors.New("method GetAllWithValues not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetAllWithValues not implemented")}
 	}
-	const regexStr = "/pathitem/nullable/globalStringPath/(?P<globalStringPath>[a-zA-Z0-9-_]+)/pathItemStringPath/(?P<pathItemStringPath>[a-zA-Z0-9-_]+)/localStringPath/(?P<localStringPath>[a-zA-Z0-9-_]+)/globalStringQuery/pathItemStringQuery/localStringQuery"
+	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/globalStringQuery/pathItemStringQuery/localStringQuery`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
-	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
+	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryParam := getOptional(localStringQueryUnescaped)
 	var options *urlgroup.PathItemsClientGetAllWithValuesOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetAllWithValuesOptions{
@@ -103,7 +120,7 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetAllWithValues(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
+	respr, errRespr := p.srv.GetAllWithValues(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -120,17 +137,33 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 
 func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.Request) (*http.Response, error) {
 	if p.srv.GetGlobalAndLocalQueryNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetGlobalAndLocalQueryNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetGlobalAndLocalQueryNull not implemented")}
 	}
-	const regexStr = "/pathitem/nullable/globalStringPath/(?P<globalStringPath>[a-zA-Z0-9-_]+)/pathItemStringPath/(?P<pathItemStringPath>[a-zA-Z0-9-_]+)/localStringPath/(?P<localStringPath>[a-zA-Z0-9-_]+)/null/pathItemStringQuery/null"
+	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/null/pathItemStringQuery/null`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
-	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
+	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryParam := getOptional(localStringQueryUnescaped)
 	var options *urlgroup.PathItemsClientGetGlobalAndLocalQueryNullOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetGlobalAndLocalQueryNullOptions{
@@ -138,7 +171,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetGlobalAndLocalQueryNull(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
+	respr, errRespr := p.srv.GetGlobalAndLocalQueryNull(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -155,17 +188,33 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 
 func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request) (*http.Response, error) {
 	if p.srv.GetGlobalQueryNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetGlobalQueryNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetGlobalQueryNull not implemented")}
 	}
-	const regexStr = "/pathitem/nullable/globalStringPath/(?P<globalStringPath>[a-zA-Z0-9-_]+)/pathItemStringPath/(?P<pathItemStringPath>[a-zA-Z0-9-_]+)/localStringPath/(?P<localStringPath>[a-zA-Z0-9-_]+)/null/pathItemStringQuery/localStringQuery"
+	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/null/pathItemStringQuery/localStringQuery`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
-	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
+	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryParam := getOptional(localStringQueryUnescaped)
 	var options *urlgroup.PathItemsClientGetGlobalQueryNullOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetGlobalQueryNullOptions{
@@ -173,7 +222,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetGlobalQueryNull(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
+	respr, errRespr := p.srv.GetGlobalQueryNull(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -190,17 +239,33 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 
 func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.Request) (*http.Response, error) {
 	if p.srv.GetLocalPathItemQueryNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetLocalPathItemQueryNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetLocalPathItemQueryNull not implemented")}
 	}
-	const regexStr = "/pathitem/nullable/globalStringPath/(?P<globalStringPath>[a-zA-Z0-9-_]+)/pathItemStringPath/(?P<pathItemStringPath>[a-zA-Z0-9-_]+)/localStringPath/(?P<localStringPath>[a-zA-Z0-9-_]+)/globalStringQuery/null/null"
+	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/globalStringQuery/null/null`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
-	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
+	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	localStringQueryParam := getOptional(localStringQueryUnescaped)
 	var options *urlgroup.PathItemsClientGetLocalPathItemQueryNullOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetLocalPathItemQueryNullOptions{
@@ -208,7 +273,7 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetLocalPathItemQueryNull(req.Context(), matches[regex.SubexpIndex("pathItemStringPath")], matches[regex.SubexpIndex("localStringPath")], options)
+	respr, errRespr := p.srv.GetLocalPathItemQueryNull(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -138,7 +138,7 @@ func (s *StringServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (s *StringServerTransport) dispatchGetBase64Encoded(req *http.Request) (*http.Response, error) {
 	if s.srv.GetBase64Encoded == nil {
-		return nil, &nonRetriableError{errors.New("method GetBase64Encoded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBase64Encoded not implemented")}
 	}
 	respr, errRespr := s.srv.GetBase64Encoded(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -157,7 +157,7 @@ func (s *StringServerTransport) dispatchGetBase64Encoded(req *http.Request) (*ht
 
 func (s *StringServerTransport) dispatchGetBase64URLEncoded(req *http.Request) (*http.Response, error) {
 	if s.srv.GetBase64URLEncoded == nil {
-		return nil, &nonRetriableError{errors.New("method GetBase64URLEncoded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBase64URLEncoded not implemented")}
 	}
 	respr, errRespr := s.srv.GetBase64URLEncoded(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -176,7 +176,7 @@ func (s *StringServerTransport) dispatchGetBase64URLEncoded(req *http.Request) (
 
 func (s *StringServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
 	if s.srv.GetEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmpty not implemented")}
 	}
 	respr, errRespr := s.srv.GetEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -195,7 +195,7 @@ func (s *StringServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respo
 
 func (s *StringServerTransport) dispatchGetMBCS(req *http.Request) (*http.Response, error) {
 	if s.srv.GetMBCS == nil {
-		return nil, &nonRetriableError{errors.New("method GetMBCS not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMBCS not implemented")}
 	}
 	respr, errRespr := s.srv.GetMBCS(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -214,7 +214,7 @@ func (s *StringServerTransport) dispatchGetMBCS(req *http.Request) (*http.Respon
 
 func (s *StringServerTransport) dispatchGetNotProvided(req *http.Request) (*http.Response, error) {
 	if s.srv.GetNotProvided == nil {
-		return nil, &nonRetriableError{errors.New("method GetNotProvided not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNotProvided not implemented")}
 	}
 	respr, errRespr := s.srv.GetNotProvided(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -233,7 +233,7 @@ func (s *StringServerTransport) dispatchGetNotProvided(req *http.Request) (*http
 
 func (s *StringServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if s.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := s.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -252,7 +252,7 @@ func (s *StringServerTransport) dispatchGetNull(req *http.Request) (*http.Respon
 
 func (s *StringServerTransport) dispatchGetNullBase64URLEncoded(req *http.Request) (*http.Response, error) {
 	if s.srv.GetNullBase64URLEncoded == nil {
-		return nil, &nonRetriableError{errors.New("method GetNullBase64URLEncoded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNullBase64URLEncoded not implemented")}
 	}
 	respr, errRespr := s.srv.GetNullBase64URLEncoded(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -271,7 +271,7 @@ func (s *StringServerTransport) dispatchGetNullBase64URLEncoded(req *http.Reques
 
 func (s *StringServerTransport) dispatchGetWhitespace(req *http.Request) (*http.Response, error) {
 	if s.srv.GetWhitespace == nil {
-		return nil, &nonRetriableError{errors.New("method GetWhitespace not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetWhitespace not implemented")}
 	}
 	respr, errRespr := s.srv.GetWhitespace(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -290,7 +290,7 @@ func (s *StringServerTransport) dispatchGetWhitespace(req *http.Request) (*http.
 
 func (s *StringServerTransport) dispatchPutBase64URLEncoded(req *http.Request) (*http.Response, error) {
 	if s.srv.PutBase64URLEncoded == nil {
-		return nil, &nonRetriableError{errors.New("method PutBase64URLEncoded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBase64URLEncoded not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64URLFormat)
 	if err != nil {
@@ -313,7 +313,7 @@ func (s *StringServerTransport) dispatchPutBase64URLEncoded(req *http.Request) (
 
 func (s *StringServerTransport) dispatchPutEmpty(req *http.Request) (*http.Response, error) {
 	if s.srv.PutEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method PutEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutEmpty not implemented")}
 	}
 	respr, errRespr := s.srv.PutEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -332,7 +332,7 @@ func (s *StringServerTransport) dispatchPutEmpty(req *http.Request) (*http.Respo
 
 func (s *StringServerTransport) dispatchPutMBCS(req *http.Request) (*http.Response, error) {
 	if s.srv.PutMBCS == nil {
-		return nil, &nonRetriableError{errors.New("method PutMBCS not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMBCS not implemented")}
 	}
 	respr, errRespr := s.srv.PutMBCS(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -351,7 +351,7 @@ func (s *StringServerTransport) dispatchPutMBCS(req *http.Request) (*http.Respon
 
 func (s *StringServerTransport) dispatchPutNull(req *http.Request) (*http.Response, error) {
 	if s.srv.PutNull == nil {
-		return nil, &nonRetriableError{errors.New("method PutNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutNull not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
@@ -374,7 +374,7 @@ func (s *StringServerTransport) dispatchPutNull(req *http.Request) (*http.Respon
 
 func (s *StringServerTransport) dispatchPutWhitespace(req *http.Request) (*http.Response, error) {
 	if s.srv.PutWhitespace == nil {
-		return nil, &nonRetriableError{errors.New("method PutWhitespace not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutWhitespace not implemented")}
 	}
 	respr, errRespr := s.srv.PutWhitespace(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

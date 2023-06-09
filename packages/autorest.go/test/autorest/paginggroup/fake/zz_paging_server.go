@@ -18,6 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 )
@@ -189,11 +190,15 @@ func (p *PagingServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (p *PagingServerTransport) dispatchNewDuplicateParamsPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewDuplicateParamsPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewDuplicateParamsPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewDuplicateParamsPager not implemented")}
 	}
 	if p.newDuplicateParamsPager == nil {
 		qp := req.URL.Query()
-		filterParam := getOptional(qp.Get("$filter"))
+		filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
+		if err != nil {
+			return nil, err
+		}
+		filterParam := getOptional(filterUnescaped)
 		var options *paginggroup.PagingClientDuplicateParamsOptions
 		if filterParam != nil {
 			options = &paginggroup.PagingClientDuplicateParamsOptions{
@@ -221,7 +226,7 @@ func (p *PagingServerTransport) dispatchNewDuplicateParamsPager(req *http.Reques
 
 func (p *PagingServerTransport) dispatchNewFirstResponseEmptyPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewFirstResponseEmptyPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewFirstResponseEmptyPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewFirstResponseEmptyPager not implemented")}
 	}
 	if p.newFirstResponseEmptyPager == nil {
 		resp := p.srv.NewFirstResponseEmptyPager(nil)
@@ -245,7 +250,7 @@ func (p *PagingServerTransport) dispatchNewFirstResponseEmptyPager(req *http.Req
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesPager not implemented")}
 	}
 	if p.newGetMultiplePagesPager == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
@@ -298,7 +303,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesPager(req *http.Reque
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailurePager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesFailurePager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesFailurePager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFailurePager not implemented")}
 	}
 	if p.newGetMultiplePagesFailurePager == nil {
 		resp := p.srv.NewGetMultiplePagesFailurePager(nil)
@@ -322,7 +327,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailurePager(req *htt
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailureURIPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesFailureURIPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesFailureURIPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFailureURIPager not implemented")}
 	}
 	if p.newGetMultiplePagesFailureURIPager == nil {
 		resp := p.srv.NewGetMultiplePagesFailureURIPager(nil)
@@ -346,17 +351,25 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailureURIPager(req *
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesFragmentNextLinkPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesFragmentNextLinkPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFragmentNextLinkPager not implemented")}
 	}
 	if p.newGetMultiplePagesFragmentNextLinkPager == nil {
-		const regexStr = "/paging/multiple/fragment/(?P<tenant>[a-zA-Z0-9-_]+)"
+		const regexStr = `/paging/multiple/fragment/(?P<tenant>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.Path)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resp := p.srv.NewGetMultiplePagesFragmentNextLinkPager(qp.Get("api_version"), matches[regex.SubexpIndex("tenant")], nil)
+		apiVersionUnescaped, err := url.QueryUnescape(qp.Get("api_version"))
+		if err != nil {
+			return nil, err
+		}
+		tenantUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
+		if err != nil {
+			return nil, err
+		}
+		resp := p.srv.NewGetMultiplePagesFragmentNextLinkPager(apiVersionUnescaped, tenantUnescaped, nil)
 		p.newGetMultiplePagesFragmentNextLinkPager = &resp
 		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesFragmentNextLinkPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse, createLink func() string) {
 			page.ODataNextLink = to.Ptr(createLink())
@@ -377,18 +390,26 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingNextLinkPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesFragmentWithGroupingNextLinkPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesFragmentWithGroupingNextLinkPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFragmentWithGroupingNextLinkPager not implemented")}
 	}
 	if p.newGetMultiplePagesFragmentWithGroupingNextLinkPager == nil {
-		const regexStr = "/paging/multiple/fragmentwithgrouping/(?P<tenant>[a-zA-Z0-9-_]+)"
+		const regexStr = `/paging/multiple/fragmentwithgrouping/(?P<tenant>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.Path)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		aPIVersionParam := qp.Get("api_version")
-		tenantParam := matches[regex.SubexpIndex("tenant")]
+		aPIVersionUnescaped, err := url.QueryUnescape(qp.Get("api_version"))
+		if err != nil {
+			return nil, err
+		}
+		aPIVersionParam := aPIVersionUnescaped
+		tenantUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
+		if err != nil {
+			return nil, err
+		}
+		tenantParam := tenantUnescaped
 		customParameterGroup := paginggroup.CustomParameterGroup{
 			APIVersion: aPIVersionParam,
 			Tenant:     tenantParam,
@@ -414,7 +435,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingN
 
 func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Request) (*http.Response, error) {
 	if p.srv.BeginGetMultiplePagesLRO == nil {
-		return nil, &nonRetriableError{errors.New("method BeginGetMultiplePagesLRO not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginGetMultiplePagesLRO not implemented")}
 	}
 	if p.beginGetMultiplePagesLRO == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
@@ -470,7 +491,7 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetryFirstPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesRetryFirstPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesRetryFirstPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesRetryFirstPager not implemented")}
 	}
 	if p.newGetMultiplePagesRetryFirstPager == nil {
 		resp := p.srv.NewGetMultiplePagesRetryFirstPager(nil)
@@ -494,7 +515,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetryFirstPager(req *
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetrySecondPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesRetrySecondPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesRetrySecondPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesRetrySecondPager not implemented")}
 	}
 	if p.newGetMultiplePagesRetrySecondPager == nil {
 		resp := p.srv.NewGetMultiplePagesRetrySecondPager(nil)
@@ -518,12 +539,12 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetrySecondPager(req 
 
 func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetMultiplePagesWithOffsetPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetMultiplePagesWithOffsetPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesWithOffsetPager not implemented")}
 	}
 	if p.newGetMultiplePagesWithOffsetPager == nil {
-		const regexStr = "/paging/multiple/withpath/(?P<offset>[a-zA-Z0-9-_]+)"
+		const regexStr = `/paging/multiple/withpath/(?P<offset>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.Path)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
@@ -538,7 +559,11 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 		if err != nil {
 			return nil, err
 		}
-		offsetParam, err := parseWithCast(matches[regex.SubexpIndex("offset")], func(v string) (int32, error) {
+		offsetUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("offset")])
+		if err != nil {
+			return nil, err
+		}
+		offsetParam, err := parseWithCast(offsetUnescaped, func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -585,7 +610,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 
 func (p *PagingServerTransport) dispatchNewGetNoItemNamePagesPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetNoItemNamePagesPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetNoItemNamePagesPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetNoItemNamePagesPager not implemented")}
 	}
 	if p.newGetNoItemNamePagesPager == nil {
 		resp := p.srv.NewGetNoItemNamePagesPager(nil)
@@ -609,7 +634,7 @@ func (p *PagingServerTransport) dispatchNewGetNoItemNamePagesPager(req *http.Req
 
 func (p *PagingServerTransport) dispatchNewGetNullNextLinkNamePagesPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetNullNextLinkNamePagesPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetNullNextLinkNamePagesPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetNullNextLinkNamePagesPager not implemented")}
 	}
 	if p.newGetNullNextLinkNamePagesPager == nil {
 		resp := p.srv.NewGetNullNextLinkNamePagesPager(nil)
@@ -630,7 +655,7 @@ func (p *PagingServerTransport) dispatchNewGetNullNextLinkNamePagesPager(req *ht
 
 func (p *PagingServerTransport) dispatchNewGetODataMultiplePagesPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetODataMultiplePagesPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetODataMultiplePagesPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetODataMultiplePagesPager not implemented")}
 	}
 	if p.newGetODataMultiplePagesPager == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
@@ -683,7 +708,7 @@ func (p *PagingServerTransport) dispatchNewGetODataMultiplePagesPager(req *http.
 
 func (p *PagingServerTransport) dispatchNewGetPagingModelWithItemNameWithXMSClientNamePager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetPagingModelWithItemNameWithXMSClientNamePager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetPagingModelWithItemNameWithXMSClientNamePager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetPagingModelWithItemNameWithXMSClientNamePager not implemented")}
 	}
 	if p.newGetPagingModelWithItemNameWithXMSClientNamePager == nil {
 		resp := p.srv.NewGetPagingModelWithItemNameWithXMSClientNamePager(nil)
@@ -707,7 +732,7 @@ func (p *PagingServerTransport) dispatchNewGetPagingModelWithItemNameWithXMSClie
 
 func (p *PagingServerTransport) dispatchNewGetSinglePagesPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetSinglePagesPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetSinglePagesPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetSinglePagesPager not implemented")}
 	}
 	if p.newGetSinglePagesPager == nil {
 		resp := p.srv.NewGetSinglePagesPager(nil)
@@ -731,7 +756,7 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesPager(req *http.Request
 
 func (p *PagingServerTransport) dispatchNewGetSinglePagesFailurePager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetSinglePagesFailurePager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetSinglePagesFailurePager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetSinglePagesFailurePager not implemented")}
 	}
 	if p.newGetSinglePagesFailurePager == nil {
 		resp := p.srv.NewGetSinglePagesFailurePager(nil)
@@ -755,11 +780,15 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesFailurePager(req *http.
 
 func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetWithQueryParamsPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetWithQueryParamsPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetWithQueryParamsPager not implemented")}
 	}
 	if p.newGetWithQueryParamsPager == nil {
 		qp := req.URL.Query()
-		requiredQueryParameterParam, err := parseWithCast(qp.Get("requiredQueryParameter"), func(v string) (int32, error) {
+		requiredQueryParameterUnescaped, err := url.QueryUnescape(qp.Get("requiredQueryParameter"))
+		if err != nil {
+			return nil, err
+		}
+		requiredQueryParameterParam, err := parseWithCast(requiredQueryParameterUnescaped, func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr

@@ -96,7 +96,7 @@ func (p *PetsServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (p *PetsServerTransport) dispatchCreateAPInProperties(req *http.Request) (*http.Response, error) {
 	if p.srv.CreateAPInProperties == nil {
-		return nil, &nonRetriableError{errors.New("method CreateAPInProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CreateAPInProperties not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[additionalpropsgroup.PetAPInProperties](req)
 	if err != nil {
@@ -119,7 +119,7 @@ func (p *PetsServerTransport) dispatchCreateAPInProperties(req *http.Request) (*
 
 func (p *PetsServerTransport) dispatchCreateAPInPropertiesWithAPString(req *http.Request) (*http.Response, error) {
 	if p.srv.CreateAPInPropertiesWithAPString == nil {
-		return nil, &nonRetriableError{errors.New("method CreateAPInPropertiesWithAPString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CreateAPInPropertiesWithAPString not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[additionalpropsgroup.PetAPInPropertiesWithAPString](req)
 	if err != nil {
@@ -142,7 +142,7 @@ func (p *PetsServerTransport) dispatchCreateAPInPropertiesWithAPString(req *http
 
 func (p *PetsServerTransport) dispatchCreateAPObject(req *http.Request) (*http.Response, error) {
 	if p.srv.CreateAPObject == nil {
-		return nil, &nonRetriableError{errors.New("method CreateAPObject not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CreateAPObject not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[additionalpropsgroup.PetAPObject](req)
 	if err != nil {
@@ -165,7 +165,7 @@ func (p *PetsServerTransport) dispatchCreateAPObject(req *http.Request) (*http.R
 
 func (p *PetsServerTransport) dispatchCreateAPString(req *http.Request) (*http.Response, error) {
 	if p.srv.CreateAPString == nil {
-		return nil, &nonRetriableError{errors.New("method CreateAPString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CreateAPString not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[additionalpropsgroup.PetAPString](req)
 	if err != nil {
@@ -188,7 +188,7 @@ func (p *PetsServerTransport) dispatchCreateAPString(req *http.Request) (*http.R
 
 func (p *PetsServerTransport) dispatchCreateAPTrue(req *http.Request) (*http.Response, error) {
 	if p.srv.CreateAPTrue == nil {
-		return nil, &nonRetriableError{errors.New("method CreateAPTrue not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CreateAPTrue not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[additionalpropsgroup.PetAPTrue](req)
 	if err != nil {
@@ -211,7 +211,7 @@ func (p *PetsServerTransport) dispatchCreateAPTrue(req *http.Request) (*http.Res
 
 func (p *PetsServerTransport) dispatchCreateCatAPTrue(req *http.Request) (*http.Response, error) {
 	if p.srv.CreateCatAPTrue == nil {
-		return nil, &nonRetriableError{errors.New("method CreateCatAPTrue not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CreateCatAPTrue not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[additionalpropsgroup.CatAPTrue](req)
 	if err != nil {

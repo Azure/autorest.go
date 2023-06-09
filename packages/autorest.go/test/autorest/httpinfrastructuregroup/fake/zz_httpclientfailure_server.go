@@ -216,7 +216,7 @@ func (h *HTTPClientFailureServerTransport) Do(req *http.Request) (*http.Response
 
 func (h *HTTPClientFailureServerTransport) dispatchDelete400(req *http.Request) (*http.Response, error) {
 	if h.srv.Delete400 == nil {
-		return nil, &nonRetriableError{errors.New("method Delete400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Delete400 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete400(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -235,7 +235,7 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete400(req *http.Request) 
 
 func (h *HTTPClientFailureServerTransport) dispatchDelete407(req *http.Request) (*http.Response, error) {
 	if h.srv.Delete407 == nil {
-		return nil, &nonRetriableError{errors.New("method Delete407 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Delete407 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete407(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -254,7 +254,7 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete407(req *http.Request) 
 
 func (h *HTTPClientFailureServerTransport) dispatchDelete417(req *http.Request) (*http.Response, error) {
 	if h.srv.Delete417 == nil {
-		return nil, &nonRetriableError{errors.New("method Delete417 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Delete417 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete417(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -273,7 +273,7 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete417(req *http.Request) 
 
 func (h *HTTPClientFailureServerTransport) dispatchGet400(req *http.Request) (*http.Response, error) {
 	if h.srv.Get400 == nil {
-		return nil, &nonRetriableError{errors.New("method Get400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get400 not implemented")}
 	}
 	respr, errRespr := h.srv.Get400(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -292,7 +292,7 @@ func (h *HTTPClientFailureServerTransport) dispatchGet400(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchGet402(req *http.Request) (*http.Response, error) {
 	if h.srv.Get402 == nil {
-		return nil, &nonRetriableError{errors.New("method Get402 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get402 not implemented")}
 	}
 	respr, errRespr := h.srv.Get402(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -311,7 +311,7 @@ func (h *HTTPClientFailureServerTransport) dispatchGet402(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchGet403(req *http.Request) (*http.Response, error) {
 	if h.srv.Get403 == nil {
-		return nil, &nonRetriableError{errors.New("method Get403 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get403 not implemented")}
 	}
 	respr, errRespr := h.srv.Get403(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -330,7 +330,7 @@ func (h *HTTPClientFailureServerTransport) dispatchGet403(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchGet411(req *http.Request) (*http.Response, error) {
 	if h.srv.Get411 == nil {
-		return nil, &nonRetriableError{errors.New("method Get411 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get411 not implemented")}
 	}
 	respr, errRespr := h.srv.Get411(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -349,7 +349,7 @@ func (h *HTTPClientFailureServerTransport) dispatchGet411(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchGet412(req *http.Request) (*http.Response, error) {
 	if h.srv.Get412 == nil {
-		return nil, &nonRetriableError{errors.New("method Get412 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get412 not implemented")}
 	}
 	respr, errRespr := h.srv.Get412(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -368,7 +368,7 @@ func (h *HTTPClientFailureServerTransport) dispatchGet412(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchGet416(req *http.Request) (*http.Response, error) {
 	if h.srv.Get416 == nil {
-		return nil, &nonRetriableError{errors.New("method Get416 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get416 not implemented")}
 	}
 	respr, errRespr := h.srv.Get416(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -387,7 +387,7 @@ func (h *HTTPClientFailureServerTransport) dispatchGet416(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchHead400(req *http.Request) (*http.Response, error) {
 	if h.srv.Head400 == nil {
-		return nil, &nonRetriableError{errors.New("method Head400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head400 not implemented")}
 	}
 	respr, errRespr := h.srv.Head400(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -406,7 +406,7 @@ func (h *HTTPClientFailureServerTransport) dispatchHead400(req *http.Request) (*
 
 func (h *HTTPClientFailureServerTransport) dispatchHead401(req *http.Request) (*http.Response, error) {
 	if h.srv.Head401 == nil {
-		return nil, &nonRetriableError{errors.New("method Head401 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head401 not implemented")}
 	}
 	respr, errRespr := h.srv.Head401(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -425,7 +425,7 @@ func (h *HTTPClientFailureServerTransport) dispatchHead401(req *http.Request) (*
 
 func (h *HTTPClientFailureServerTransport) dispatchHead410(req *http.Request) (*http.Response, error) {
 	if h.srv.Head410 == nil {
-		return nil, &nonRetriableError{errors.New("method Head410 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head410 not implemented")}
 	}
 	respr, errRespr := h.srv.Head410(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -444,7 +444,7 @@ func (h *HTTPClientFailureServerTransport) dispatchHead410(req *http.Request) (*
 
 func (h *HTTPClientFailureServerTransport) dispatchHead429(req *http.Request) (*http.Response, error) {
 	if h.srv.Head429 == nil {
-		return nil, &nonRetriableError{errors.New("method Head429 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head429 not implemented")}
 	}
 	respr, errRespr := h.srv.Head429(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -463,7 +463,7 @@ func (h *HTTPClientFailureServerTransport) dispatchHead429(req *http.Request) (*
 
 func (h *HTTPClientFailureServerTransport) dispatchOptions400(req *http.Request) (*http.Response, error) {
 	if h.srv.Options400 == nil {
-		return nil, &nonRetriableError{errors.New("method Options400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Options400 not implemented")}
 	}
 	respr, errRespr := h.srv.Options400(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -482,7 +482,7 @@ func (h *HTTPClientFailureServerTransport) dispatchOptions400(req *http.Request)
 
 func (h *HTTPClientFailureServerTransport) dispatchOptions403(req *http.Request) (*http.Response, error) {
 	if h.srv.Options403 == nil {
-		return nil, &nonRetriableError{errors.New("method Options403 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Options403 not implemented")}
 	}
 	respr, errRespr := h.srv.Options403(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -501,7 +501,7 @@ func (h *HTTPClientFailureServerTransport) dispatchOptions403(req *http.Request)
 
 func (h *HTTPClientFailureServerTransport) dispatchOptions412(req *http.Request) (*http.Response, error) {
 	if h.srv.Options412 == nil {
-		return nil, &nonRetriableError{errors.New("method Options412 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Options412 not implemented")}
 	}
 	respr, errRespr := h.srv.Options412(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -520,7 +520,7 @@ func (h *HTTPClientFailureServerTransport) dispatchOptions412(req *http.Request)
 
 func (h *HTTPClientFailureServerTransport) dispatchPatch400(req *http.Request) (*http.Response, error) {
 	if h.srv.Patch400 == nil {
-		return nil, &nonRetriableError{errors.New("method Patch400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Patch400 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch400(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -539,7 +539,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPatch400(req *http.Request) (
 
 func (h *HTTPClientFailureServerTransport) dispatchPatch405(req *http.Request) (*http.Response, error) {
 	if h.srv.Patch405 == nil {
-		return nil, &nonRetriableError{errors.New("method Patch405 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Patch405 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch405(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -558,7 +558,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPatch405(req *http.Request) (
 
 func (h *HTTPClientFailureServerTransport) dispatchPatch414(req *http.Request) (*http.Response, error) {
 	if h.srv.Patch414 == nil {
-		return nil, &nonRetriableError{errors.New("method Patch414 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Patch414 not implemented")}
 	}
 	respr, errRespr := h.srv.Patch414(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -577,7 +577,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPatch414(req *http.Request) (
 
 func (h *HTTPClientFailureServerTransport) dispatchPost400(req *http.Request) (*http.Response, error) {
 	if h.srv.Post400 == nil {
-		return nil, &nonRetriableError{errors.New("method Post400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Post400 not implemented")}
 	}
 	respr, errRespr := h.srv.Post400(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -596,7 +596,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPost400(req *http.Request) (*
 
 func (h *HTTPClientFailureServerTransport) dispatchPost406(req *http.Request) (*http.Response, error) {
 	if h.srv.Post406 == nil {
-		return nil, &nonRetriableError{errors.New("method Post406 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Post406 not implemented")}
 	}
 	respr, errRespr := h.srv.Post406(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -615,7 +615,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPost406(req *http.Request) (*
 
 func (h *HTTPClientFailureServerTransport) dispatchPost415(req *http.Request) (*http.Response, error) {
 	if h.srv.Post415 == nil {
-		return nil, &nonRetriableError{errors.New("method Post415 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Post415 not implemented")}
 	}
 	respr, errRespr := h.srv.Post415(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -634,7 +634,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPost415(req *http.Request) (*
 
 func (h *HTTPClientFailureServerTransport) dispatchPut400(req *http.Request) (*http.Response, error) {
 	if h.srv.Put400 == nil {
-		return nil, &nonRetriableError{errors.New("method Put400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put400 not implemented")}
 	}
 	respr, errRespr := h.srv.Put400(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -653,7 +653,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPut400(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchPut404(req *http.Request) (*http.Response, error) {
 	if h.srv.Put404 == nil {
-		return nil, &nonRetriableError{errors.New("method Put404 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put404 not implemented")}
 	}
 	respr, errRespr := h.srv.Put404(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -672,7 +672,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPut404(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchPut409(req *http.Request) (*http.Response, error) {
 	if h.srv.Put409 == nil {
-		return nil, &nonRetriableError{errors.New("method Put409 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put409 not implemented")}
 	}
 	respr, errRespr := h.srv.Put409(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -691,7 +691,7 @@ func (h *HTTPClientFailureServerTransport) dispatchPut409(req *http.Request) (*h
 
 func (h *HTTPClientFailureServerTransport) dispatchPut413(req *http.Request) (*http.Response, error) {
 	if h.srv.Put413 == nil {
-		return nil, &nonRetriableError{errors.New("method Put413 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put413 not implemented")}
 	}
 	respr, errRespr := h.srv.Put413(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
