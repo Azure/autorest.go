@@ -96,7 +96,7 @@ func (b *BasicServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (b *BasicServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
 	if b.srv.GetEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmpty not implemented")}
 	}
 	respr, errRespr := b.srv.GetEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -115,7 +115,7 @@ func (b *BasicServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 
 func (b *BasicServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
 	if b.srv.GetInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalid not implemented")}
 	}
 	respr, errRespr := b.srv.GetInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -134,7 +134,7 @@ func (b *BasicServerTransport) dispatchGetInvalid(req *http.Request) (*http.Resp
 
 func (b *BasicServerTransport) dispatchGetNotProvided(req *http.Request) (*http.Response, error) {
 	if b.srv.GetNotProvided == nil {
-		return nil, &nonRetriableError{errors.New("method GetNotProvided not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNotProvided not implemented")}
 	}
 	respr, errRespr := b.srv.GetNotProvided(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -153,7 +153,7 @@ func (b *BasicServerTransport) dispatchGetNotProvided(req *http.Request) (*http.
 
 func (b *BasicServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if b.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := b.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -172,7 +172,7 @@ func (b *BasicServerTransport) dispatchGetNull(req *http.Request) (*http.Respons
 
 func (b *BasicServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {
 	if b.srv.GetValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetValid not implemented")}
 	}
 	respr, errRespr := b.srv.GetValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -191,7 +191,7 @@ func (b *BasicServerTransport) dispatchGetValid(req *http.Request) (*http.Respon
 
 func (b *BasicServerTransport) dispatchPutValid(req *http.Request) (*http.Response, error) {
 	if b.srv.PutValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.Basic](req)
 	if err != nil {

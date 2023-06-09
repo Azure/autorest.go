@@ -243,7 +243,7 @@ func (l *LROSADsServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (l *LROSADsServerTransport) dispatchBeginDelete202NonRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDelete202NonRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDelete202NonRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDelete202NonRetry400 not implemented")}
 	}
 	if l.beginDelete202NonRetry400 == nil {
 		respr, errRespr := l.srv.BeginDelete202NonRetry400(req.Context(), nil)
@@ -270,7 +270,7 @@ func (l *LROSADsServerTransport) dispatchBeginDelete202NonRetry400(req *http.Req
 
 func (l *LROSADsServerTransport) dispatchBeginDelete202RetryInvalidHeader(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDelete202RetryInvalidHeader == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDelete202RetryInvalidHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDelete202RetryInvalidHeader not implemented")}
 	}
 	if l.beginDelete202RetryInvalidHeader == nil {
 		respr, errRespr := l.srv.BeginDelete202RetryInvalidHeader(req.Context(), nil)
@@ -297,7 +297,7 @@ func (l *LROSADsServerTransport) dispatchBeginDelete202RetryInvalidHeader(req *h
 
 func (l *LROSADsServerTransport) dispatchBeginDelete204Succeeded(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDelete204Succeeded == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDelete204Succeeded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDelete204Succeeded not implemented")}
 	}
 	if l.beginDelete204Succeeded == nil {
 		respr, errRespr := l.srv.BeginDelete204Succeeded(req.Context(), nil)
@@ -324,7 +324,7 @@ func (l *LROSADsServerTransport) dispatchBeginDelete204Succeeded(req *http.Reque
 
 func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDeleteAsyncRelativeRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDeleteAsyncRelativeRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRelativeRetry400 not implemented")}
 	}
 	if l.beginDeleteAsyncRelativeRetry400 == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetry400(req.Context(), nil)
@@ -351,7 +351,7 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetry400(req *h
 
 func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryInvalidHeader(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDeleteAsyncRelativeRetryInvalidHeader == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDeleteAsyncRelativeRetryInvalidHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRelativeRetryInvalidHeader not implemented")}
 	}
 	if l.beginDeleteAsyncRelativeRetryInvalidHeader == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetryInvalidHeader(req.Context(), nil)
@@ -378,7 +378,7 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryInvalidHea
 
 func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryInvalidJSONPolling(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDeleteAsyncRelativeRetryInvalidJSONPolling == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDeleteAsyncRelativeRetryInvalidJSONPolling not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRelativeRetryInvalidJSONPolling not implemented")}
 	}
 	if l.beginDeleteAsyncRelativeRetryInvalidJSONPolling == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetryInvalidJSONPolling(req.Context(), nil)
@@ -405,7 +405,7 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryInvalidJSO
 
 func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryNoStatus(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDeleteAsyncRelativeRetryNoStatus == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDeleteAsyncRelativeRetryNoStatus not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRelativeRetryNoStatus not implemented")}
 	}
 	if l.beginDeleteAsyncRelativeRetryNoStatus == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRelativeRetryNoStatus(req.Context(), nil)
@@ -432,7 +432,7 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteAsyncRelativeRetryNoStatus(r
 
 func (l *LROSADsServerTransport) dispatchBeginDeleteNonRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginDeleteNonRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginDeleteNonRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteNonRetry400 not implemented")}
 	}
 	if l.beginDeleteNonRetry400 == nil {
 		respr, errRespr := l.srv.BeginDeleteNonRetry400(req.Context(), nil)
@@ -459,7 +459,7 @@ func (l *LROSADsServerTransport) dispatchBeginDeleteNonRetry400(req *http.Reques
 
 func (l *LROSADsServerTransport) dispatchBeginPost202NoLocation(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPost202NoLocation == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPost202NoLocation not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPost202NoLocation not implemented")}
 	}
 	if l.beginPost202NoLocation == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -496,7 +496,7 @@ func (l *LROSADsServerTransport) dispatchBeginPost202NoLocation(req *http.Reques
 
 func (l *LROSADsServerTransport) dispatchBeginPost202NonRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPost202NonRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPost202NonRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPost202NonRetry400 not implemented")}
 	}
 	if l.beginPost202NonRetry400 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -533,7 +533,7 @@ func (l *LROSADsServerTransport) dispatchBeginPost202NonRetry400(req *http.Reque
 
 func (l *LROSADsServerTransport) dispatchBeginPost202RetryInvalidHeader(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPost202RetryInvalidHeader == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPost202RetryInvalidHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPost202RetryInvalidHeader not implemented")}
 	}
 	if l.beginPost202RetryInvalidHeader == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -570,7 +570,7 @@ func (l *LROSADsServerTransport) dispatchBeginPost202RetryInvalidHeader(req *htt
 
 func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPostAsyncRelativeRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPostAsyncRelativeRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRelativeRetry400 not implemented")}
 	}
 	if l.beginPostAsyncRelativeRetry400 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -607,7 +607,7 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetry400(req *htt
 
 func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryInvalidHeader(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPostAsyncRelativeRetryInvalidHeader == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPostAsyncRelativeRetryInvalidHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRelativeRetryInvalidHeader not implemented")}
 	}
 	if l.beginPostAsyncRelativeRetryInvalidHeader == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -644,7 +644,7 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryInvalidHeade
 
 func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryInvalidJSONPolling(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPostAsyncRelativeRetryInvalidJSONPolling == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPostAsyncRelativeRetryInvalidJSONPolling not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRelativeRetryInvalidJSONPolling not implemented")}
 	}
 	if l.beginPostAsyncRelativeRetryInvalidJSONPolling == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -681,7 +681,7 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryInvalidJSONP
 
 func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryNoPayload(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPostAsyncRelativeRetryNoPayload == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPostAsyncRelativeRetryNoPayload not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRelativeRetryNoPayload not implemented")}
 	}
 	if l.beginPostAsyncRelativeRetryNoPayload == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -718,7 +718,7 @@ func (l *LROSADsServerTransport) dispatchBeginPostAsyncRelativeRetryNoPayload(re
 
 func (l *LROSADsServerTransport) dispatchBeginPostNonRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPostNonRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPostNonRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPostNonRetry400 not implemented")}
 	}
 	if l.beginPostNonRetry400 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -755,7 +755,7 @@ func (l *LROSADsServerTransport) dispatchBeginPostNonRetry400(req *http.Request)
 
 func (l *LROSADsServerTransport) dispatchBeginPut200InvalidJSON(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPut200InvalidJSON == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPut200InvalidJSON not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPut200InvalidJSON not implemented")}
 	}
 	if l.beginPut200InvalidJSON == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -786,7 +786,7 @@ func (l *LROSADsServerTransport) dispatchBeginPut200InvalidJSON(req *http.Reques
 
 func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutAsyncRelativeRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutAsyncRelativeRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRelativeRetry400 not implemented")}
 	}
 	if l.beginPutAsyncRelativeRetry400 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -817,7 +817,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetry400(req *http
 
 func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryInvalidHeader(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutAsyncRelativeRetryInvalidHeader == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutAsyncRelativeRetryInvalidHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRelativeRetryInvalidHeader not implemented")}
 	}
 	if l.beginPutAsyncRelativeRetryInvalidHeader == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -848,7 +848,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryInvalidHeader
 
 func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryInvalidJSONPolling(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutAsyncRelativeRetryInvalidJSONPolling == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutAsyncRelativeRetryInvalidJSONPolling not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRelativeRetryInvalidJSONPolling not implemented")}
 	}
 	if l.beginPutAsyncRelativeRetryInvalidJSONPolling == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -879,7 +879,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryInvalidJSONPo
 
 func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryNoStatus(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutAsyncRelativeRetryNoStatus == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutAsyncRelativeRetryNoStatus not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRelativeRetryNoStatus not implemented")}
 	}
 	if l.beginPutAsyncRelativeRetryNoStatus == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -910,7 +910,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryNoStatus(req 
 
 func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryNoStatusPayload(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutAsyncRelativeRetryNoStatusPayload == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutAsyncRelativeRetryNoStatusPayload not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRelativeRetryNoStatusPayload not implemented")}
 	}
 	if l.beginPutAsyncRelativeRetryNoStatusPayload == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -941,7 +941,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutAsyncRelativeRetryNoStatusPaylo
 
 func (l *LROSADsServerTransport) dispatchBeginPutError201NoProvisioningStatePayload(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutError201NoProvisioningStatePayload == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutError201NoProvisioningStatePayload not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutError201NoProvisioningStatePayload not implemented")}
 	}
 	if l.beginPutError201NoProvisioningStatePayload == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -972,7 +972,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutError201NoProvisioningStatePayl
 
 func (l *LROSADsServerTransport) dispatchBeginPutNonRetry201Creating400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutNonRetry201Creating400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutNonRetry201Creating400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutNonRetry201Creating400 not implemented")}
 	}
 	if l.beginPutNonRetry201Creating400 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -1003,7 +1003,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutNonRetry201Creating400(req *htt
 
 func (l *LROSADsServerTransport) dispatchBeginPutNonRetry201Creating400InvalidJSON(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutNonRetry201Creating400InvalidJSON == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutNonRetry201Creating400InvalidJSON not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutNonRetry201Creating400InvalidJSON not implemented")}
 	}
 	if l.beginPutNonRetry201Creating400InvalidJSON == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
@@ -1034,7 +1034,7 @@ func (l *LROSADsServerTransport) dispatchBeginPutNonRetry201Creating400InvalidJS
 
 func (l *LROSADsServerTransport) dispatchBeginPutNonRetry400(req *http.Request) (*http.Response, error) {
 	if l.srv.BeginPutNonRetry400 == nil {
-		return nil, &nonRetriableError{errors.New("method BeginPutNonRetry400 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method BeginPutNonRetry400 not implemented")}
 	}
 	if l.beginPutNonRetry400 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)

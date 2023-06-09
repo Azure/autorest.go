@@ -40,10 +40,8 @@ var authSvr = fake.AuthenticationServer{
 type ctxKeyTestingT struct{}
 
 func TestFakeExchangeAADAccessTokenForAcrRefreshToken(t *testing.T) {
-	client, err := azacr.NewAuthenticationClient("https://contoso.com/fake/thing", &azacr.AuthenticationClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAuthenticationServerTransport(&authSvr),
-		},
+	client, err := azacr.NewAuthenticationClient("https://contoso.com/fake/thing", &azcore.ClientOptions{
+		Transport: fake.NewAuthenticationServerTransport(&authSvr),
 	})
 	require.NoError(t, err)
 
@@ -56,4 +54,31 @@ func TestFakeExchangeAADAccessTokenForAcrRefreshToken(t *testing.T) {
 
 	require.NoError(t, err)
 	require.Equal(t, "boom", *resp.RefreshToken.RefreshToken)
+}
+
+func TestFakeUpdateTagAttributes(t *testing.T) {
+	const (
+		theName      = "theName"
+		theReference = ";encoded$#reference/"
+	)
+	props := azacr.TagWriteableProperties{
+		CanList:  to.Ptr(false),
+		CanWrite: to.Ptr(true),
+	}
+	server := fake.ContainerRegistryServer{
+		UpdateTagAttributes: func(ctx context.Context, name, reference string, value azacr.TagWriteableProperties, options *azacr.ContainerRegistryClientUpdateTagAttributesOptions) (resp azfake.Responder[azacr.ContainerRegistryClientUpdateTagAttributesResponse], errResp azfake.ErrorResponder) {
+			require.EqualValues(t, theName, name)
+			require.EqualValues(t, theReference, reference)
+			require.EqualValues(t, props, value)
+			resp.SetResponse(http.StatusOK, azacr.ContainerRegistryClientUpdateTagAttributesResponse{}, nil)
+			return
+		},
+	}
+	client, err := azacr.NewContainerRegistryClient("https://contoso.com/fake/thing", &azcore.ClientOptions{
+		Transport: fake.NewContainerRegistryServerTransport(&server),
+	})
+	require.NoError(t, err)
+	resp, err := client.UpdateTagAttributes(context.Background(), theName, theReference, props, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
 }

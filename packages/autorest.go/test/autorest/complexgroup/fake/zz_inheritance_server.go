@@ -72,7 +72,7 @@ func (i *InheritanceServerTransport) Do(req *http.Request) (*http.Response, erro
 
 func (i *InheritanceServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {
 	if i.srv.GetValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetValid not implemented")}
 	}
 	respr, errRespr := i.srv.GetValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -91,7 +91,7 @@ func (i *InheritanceServerTransport) dispatchGetValid(req *http.Request) (*http.
 
 func (i *InheritanceServerTransport) dispatchPutValid(req *http.Request) (*http.Response, error) {
 	if i.srv.PutValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.Siamese](req)
 	if err != nil {

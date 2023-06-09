@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 )
 
@@ -85,15 +86,19 @@ func (s *SubscriptionInMethodServerTransport) Do(req *http.Request) (*http.Respo
 
 func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalNull(req *http.Request) (*http.Response, error) {
 	if s.srv.PostMethodLocalNull == nil {
-		return nil, &nonRetriableError{errors.New("method PostMethodLocalNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostMethodLocalNull not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/method/string/none/path/local/null/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/local/null/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := s.srv.PostMethodLocalNull(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
+	subscriptionIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.PostMethodLocalNull(req.Context(), subscriptionIDUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -110,15 +115,19 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalNull(req *h
 
 func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalValid(req *http.Request) (*http.Response, error) {
 	if s.srv.PostMethodLocalValid == nil {
-		return nil, &nonRetriableError{errors.New("method PostMethodLocalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostMethodLocalValid not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := s.srv.PostMethodLocalValid(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
+	subscriptionIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.PostMethodLocalValid(req.Context(), subscriptionIDUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -135,15 +144,19 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalValid(req *
 
 func (s *SubscriptionInMethodServerTransport) dispatchPostPathLocalValid(req *http.Request) (*http.Response, error) {
 	if s.srv.PostPathLocalValid == nil {
-		return nil, &nonRetriableError{errors.New("method PostPathLocalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostPathLocalValid not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := s.srv.PostPathLocalValid(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
+	subscriptionIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.PostPathLocalValid(req.Context(), subscriptionIDUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -160,15 +173,19 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostPathLocalValid(req *ht
 
 func (s *SubscriptionInMethodServerTransport) dispatchPostSwaggerLocalValid(req *http.Request) (*http.Response, error) {
 	if s.srv.PostSwaggerLocalValid == nil {
-		return nil, &nonRetriableError{errors.New("method PostSwaggerLocalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostSwaggerLocalValid not implemented")}
 	}
-	const regexStr = "/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[a-zA-Z0-9-_]+)"
+	const regexStr = `/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := s.srv.PostSwaggerLocalValid(req.Context(), matches[regex.SubexpIndex("subscriptionId")], nil)
+	subscriptionIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.PostSwaggerLocalValid(req.Context(), subscriptionIDUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

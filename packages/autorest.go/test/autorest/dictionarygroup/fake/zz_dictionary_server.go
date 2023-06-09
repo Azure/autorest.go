@@ -451,7 +451,7 @@ func (d *DictionaryServerTransport) Do(req *http.Request) (*http.Response, error
 
 func (d *DictionaryServerTransport) dispatchGetArrayEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.GetArrayEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetArrayEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetArrayEmpty not implemented")}
 	}
 	respr, errRespr := d.srv.GetArrayEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -470,7 +470,7 @@ func (d *DictionaryServerTransport) dispatchGetArrayEmpty(req *http.Request) (*h
 
 func (d *DictionaryServerTransport) dispatchGetArrayItemEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.GetArrayItemEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetArrayItemEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetArrayItemEmpty not implemented")}
 	}
 	respr, errRespr := d.srv.GetArrayItemEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -489,7 +489,7 @@ func (d *DictionaryServerTransport) dispatchGetArrayItemEmpty(req *http.Request)
 
 func (d *DictionaryServerTransport) dispatchGetArrayItemNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetArrayItemNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetArrayItemNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetArrayItemNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetArrayItemNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -508,7 +508,7 @@ func (d *DictionaryServerTransport) dispatchGetArrayItemNull(req *http.Request) 
 
 func (d *DictionaryServerTransport) dispatchGetArrayNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetArrayNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetArrayNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetArrayNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetArrayNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -527,7 +527,7 @@ func (d *DictionaryServerTransport) dispatchGetArrayNull(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchGetArrayValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetArrayValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetArrayValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetArrayValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetArrayValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -546,7 +546,7 @@ func (d *DictionaryServerTransport) dispatchGetArrayValid(req *http.Request) (*h
 
 func (d *DictionaryServerTransport) dispatchGetBase64URL(req *http.Request) (*http.Response, error) {
 	if d.srv.GetBase64URL == nil {
-		return nil, &nonRetriableError{errors.New("method GetBase64URL not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBase64URL not implemented")}
 	}
 	respr, errRespr := d.srv.GetBase64URL(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -565,7 +565,7 @@ func (d *DictionaryServerTransport) dispatchGetBase64URL(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchGetBooleanInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetBooleanInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetBooleanInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -584,7 +584,7 @@ func (d *DictionaryServerTransport) dispatchGetBooleanInvalidNull(req *http.Requ
 
 func (d *DictionaryServerTransport) dispatchGetBooleanInvalidString(req *http.Request) (*http.Response, error) {
 	if d.srv.GetBooleanInvalidString == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanInvalidString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanInvalidString not implemented")}
 	}
 	respr, errRespr := d.srv.GetBooleanInvalidString(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -603,7 +603,7 @@ func (d *DictionaryServerTransport) dispatchGetBooleanInvalidString(req *http.Re
 
 func (d *DictionaryServerTransport) dispatchGetBooleanTfft(req *http.Request) (*http.Response, error) {
 	if d.srv.GetBooleanTfft == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanTfft not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanTfft not implemented")}
 	}
 	respr, errRespr := d.srv.GetBooleanTfft(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -622,7 +622,7 @@ func (d *DictionaryServerTransport) dispatchGetBooleanTfft(req *http.Request) (*
 
 func (d *DictionaryServerTransport) dispatchGetByteInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetByteInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetByteInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetByteInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetByteInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -641,7 +641,7 @@ func (d *DictionaryServerTransport) dispatchGetByteInvalidNull(req *http.Request
 
 func (d *DictionaryServerTransport) dispatchGetByteValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetByteValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetByteValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetByteValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetByteValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -660,7 +660,7 @@ func (d *DictionaryServerTransport) dispatchGetByteValid(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchGetComplexEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.GetComplexEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplexEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplexEmpty not implemented")}
 	}
 	respr, errRespr := d.srv.GetComplexEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -679,7 +679,7 @@ func (d *DictionaryServerTransport) dispatchGetComplexEmpty(req *http.Request) (
 
 func (d *DictionaryServerTransport) dispatchGetComplexItemEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.GetComplexItemEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplexItemEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplexItemEmpty not implemented")}
 	}
 	respr, errRespr := d.srv.GetComplexItemEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -698,7 +698,7 @@ func (d *DictionaryServerTransport) dispatchGetComplexItemEmpty(req *http.Reques
 
 func (d *DictionaryServerTransport) dispatchGetComplexItemNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetComplexItemNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplexItemNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplexItemNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetComplexItemNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -717,7 +717,7 @@ func (d *DictionaryServerTransport) dispatchGetComplexItemNull(req *http.Request
 
 func (d *DictionaryServerTransport) dispatchGetComplexNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetComplexNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplexNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplexNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetComplexNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -736,7 +736,7 @@ func (d *DictionaryServerTransport) dispatchGetComplexNull(req *http.Request) (*
 
 func (d *DictionaryServerTransport) dispatchGetComplexValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetComplexValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplexValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplexValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetComplexValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -755,7 +755,7 @@ func (d *DictionaryServerTransport) dispatchGetComplexValid(req *http.Request) (
 
 func (d *DictionaryServerTransport) dispatchGetDateInvalidChars(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDateInvalidChars == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateInvalidChars not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateInvalidChars not implemented")}
 	}
 	respr, errRespr := d.srv.GetDateInvalidChars(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -774,7 +774,7 @@ func (d *DictionaryServerTransport) dispatchGetDateInvalidChars(req *http.Reques
 
 func (d *DictionaryServerTransport) dispatchGetDateInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDateInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetDateInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -793,7 +793,7 @@ func (d *DictionaryServerTransport) dispatchGetDateInvalidNull(req *http.Request
 
 func (d *DictionaryServerTransport) dispatchGetDateTimeInvalidChars(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDateTimeInvalidChars == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateTimeInvalidChars not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateTimeInvalidChars not implemented")}
 	}
 	respr, errRespr := d.srv.GetDateTimeInvalidChars(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -812,7 +812,7 @@ func (d *DictionaryServerTransport) dispatchGetDateTimeInvalidChars(req *http.Re
 
 func (d *DictionaryServerTransport) dispatchGetDateTimeInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDateTimeInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateTimeInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateTimeInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetDateTimeInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -831,7 +831,7 @@ func (d *DictionaryServerTransport) dispatchGetDateTimeInvalidNull(req *http.Req
 
 func (d *DictionaryServerTransport) dispatchGetDateTimeRFC1123Valid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDateTimeRFC1123Valid == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateTimeRFC1123Valid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateTimeRFC1123Valid not implemented")}
 	}
 	respr, errRespr := d.srv.GetDateTimeRFC1123Valid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -850,7 +850,7 @@ func (d *DictionaryServerTransport) dispatchGetDateTimeRFC1123Valid(req *http.Re
 
 func (d *DictionaryServerTransport) dispatchGetDateTimeValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDateTimeValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateTimeValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateTimeValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetDateTimeValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -869,7 +869,7 @@ func (d *DictionaryServerTransport) dispatchGetDateTimeValid(req *http.Request) 
 
 func (d *DictionaryServerTransport) dispatchGetDateValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDateValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetDateValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDateValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetDateValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -888,7 +888,7 @@ func (d *DictionaryServerTransport) dispatchGetDateValid(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchGetDictionaryEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDictionaryEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetDictionaryEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDictionaryEmpty not implemented")}
 	}
 	respr, errRespr := d.srv.GetDictionaryEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -907,7 +907,7 @@ func (d *DictionaryServerTransport) dispatchGetDictionaryEmpty(req *http.Request
 
 func (d *DictionaryServerTransport) dispatchGetDictionaryItemEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDictionaryItemEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetDictionaryItemEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDictionaryItemEmpty not implemented")}
 	}
 	respr, errRespr := d.srv.GetDictionaryItemEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -926,7 +926,7 @@ func (d *DictionaryServerTransport) dispatchGetDictionaryItemEmpty(req *http.Req
 
 func (d *DictionaryServerTransport) dispatchGetDictionaryItemNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDictionaryItemNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetDictionaryItemNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDictionaryItemNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetDictionaryItemNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -945,7 +945,7 @@ func (d *DictionaryServerTransport) dispatchGetDictionaryItemNull(req *http.Requ
 
 func (d *DictionaryServerTransport) dispatchGetDictionaryNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDictionaryNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetDictionaryNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDictionaryNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetDictionaryNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -964,7 +964,7 @@ func (d *DictionaryServerTransport) dispatchGetDictionaryNull(req *http.Request)
 
 func (d *DictionaryServerTransport) dispatchGetDictionaryValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDictionaryValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetDictionaryValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDictionaryValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetDictionaryValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -983,7 +983,7 @@ func (d *DictionaryServerTransport) dispatchGetDictionaryValid(req *http.Request
 
 func (d *DictionaryServerTransport) dispatchGetDoubleInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDoubleInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetDoubleInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDoubleInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetDoubleInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1002,7 +1002,7 @@ func (d *DictionaryServerTransport) dispatchGetDoubleInvalidNull(req *http.Reque
 
 func (d *DictionaryServerTransport) dispatchGetDoubleInvalidString(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDoubleInvalidString == nil {
-		return nil, &nonRetriableError{errors.New("method GetDoubleInvalidString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDoubleInvalidString not implemented")}
 	}
 	respr, errRespr := d.srv.GetDoubleInvalidString(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1021,7 +1021,7 @@ func (d *DictionaryServerTransport) dispatchGetDoubleInvalidString(req *http.Req
 
 func (d *DictionaryServerTransport) dispatchGetDoubleValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDoubleValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetDoubleValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDoubleValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetDoubleValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1040,7 +1040,7 @@ func (d *DictionaryServerTransport) dispatchGetDoubleValid(req *http.Request) (*
 
 func (d *DictionaryServerTransport) dispatchGetDurationValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetDurationValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetDurationValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetDurationValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetDurationValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1059,7 +1059,7 @@ func (d *DictionaryServerTransport) dispatchGetDurationValid(req *http.Request) 
 
 func (d *DictionaryServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.GetEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmpty not implemented")}
 	}
 	respr, errRespr := d.srv.GetEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1078,7 +1078,7 @@ func (d *DictionaryServerTransport) dispatchGetEmpty(req *http.Request) (*http.R
 
 func (d *DictionaryServerTransport) dispatchGetEmptyStringKey(req *http.Request) (*http.Response, error) {
 	if d.srv.GetEmptyStringKey == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmptyStringKey not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmptyStringKey not implemented")}
 	}
 	respr, errRespr := d.srv.GetEmptyStringKey(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1097,7 +1097,7 @@ func (d *DictionaryServerTransport) dispatchGetEmptyStringKey(req *http.Request)
 
 func (d *DictionaryServerTransport) dispatchGetFloatInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetFloatInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetFloatInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFloatInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetFloatInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1116,7 +1116,7 @@ func (d *DictionaryServerTransport) dispatchGetFloatInvalidNull(req *http.Reques
 
 func (d *DictionaryServerTransport) dispatchGetFloatInvalidString(req *http.Request) (*http.Response, error) {
 	if d.srv.GetFloatInvalidString == nil {
-		return nil, &nonRetriableError{errors.New("method GetFloatInvalidString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFloatInvalidString not implemented")}
 	}
 	respr, errRespr := d.srv.GetFloatInvalidString(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1135,7 +1135,7 @@ func (d *DictionaryServerTransport) dispatchGetFloatInvalidString(req *http.Requ
 
 func (d *DictionaryServerTransport) dispatchGetFloatValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetFloatValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetFloatValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFloatValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetFloatValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1154,7 +1154,7 @@ func (d *DictionaryServerTransport) dispatchGetFloatValid(req *http.Request) (*h
 
 func (d *DictionaryServerTransport) dispatchGetIntInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetIntInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetIntInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1173,7 +1173,7 @@ func (d *DictionaryServerTransport) dispatchGetIntInvalidNull(req *http.Request)
 
 func (d *DictionaryServerTransport) dispatchGetIntInvalidString(req *http.Request) (*http.Response, error) {
 	if d.srv.GetIntInvalidString == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntInvalidString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntInvalidString not implemented")}
 	}
 	respr, errRespr := d.srv.GetIntInvalidString(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1192,7 +1192,7 @@ func (d *DictionaryServerTransport) dispatchGetIntInvalidString(req *http.Reques
 
 func (d *DictionaryServerTransport) dispatchGetIntegerValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetIntegerValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntegerValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntegerValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetIntegerValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1211,7 +1211,7 @@ func (d *DictionaryServerTransport) dispatchGetIntegerValid(req *http.Request) (
 
 func (d *DictionaryServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalid not implemented")}
 	}
 	respr, errRespr := d.srv.GetInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1230,7 +1230,7 @@ func (d *DictionaryServerTransport) dispatchGetInvalid(req *http.Request) (*http
 
 func (d *DictionaryServerTransport) dispatchGetLongInvalidNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetLongInvalidNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetLongInvalidNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetLongInvalidNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetLongInvalidNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1249,7 +1249,7 @@ func (d *DictionaryServerTransport) dispatchGetLongInvalidNull(req *http.Request
 
 func (d *DictionaryServerTransport) dispatchGetLongInvalidString(req *http.Request) (*http.Response, error) {
 	if d.srv.GetLongInvalidString == nil {
-		return nil, &nonRetriableError{errors.New("method GetLongInvalidString not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetLongInvalidString not implemented")}
 	}
 	respr, errRespr := d.srv.GetLongInvalidString(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1268,7 +1268,7 @@ func (d *DictionaryServerTransport) dispatchGetLongInvalidString(req *http.Reque
 
 func (d *DictionaryServerTransport) dispatchGetLongValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetLongValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetLongValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetLongValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetLongValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1287,7 +1287,7 @@ func (d *DictionaryServerTransport) dispatchGetLongValid(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1306,7 +1306,7 @@ func (d *DictionaryServerTransport) dispatchGetNull(req *http.Request) (*http.Re
 
 func (d *DictionaryServerTransport) dispatchGetNullKey(req *http.Request) (*http.Response, error) {
 	if d.srv.GetNullKey == nil {
-		return nil, &nonRetriableError{errors.New("method GetNullKey not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNullKey not implemented")}
 	}
 	respr, errRespr := d.srv.GetNullKey(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1325,7 +1325,7 @@ func (d *DictionaryServerTransport) dispatchGetNullKey(req *http.Request) (*http
 
 func (d *DictionaryServerTransport) dispatchGetNullValue(req *http.Request) (*http.Response, error) {
 	if d.srv.GetNullValue == nil {
-		return nil, &nonRetriableError{errors.New("method GetNullValue not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNullValue not implemented")}
 	}
 	respr, errRespr := d.srv.GetNullValue(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1344,7 +1344,7 @@ func (d *DictionaryServerTransport) dispatchGetNullValue(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchGetStringValid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetStringValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetStringValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetStringValid not implemented")}
 	}
 	respr, errRespr := d.srv.GetStringValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1363,7 +1363,7 @@ func (d *DictionaryServerTransport) dispatchGetStringValid(req *http.Request) (*
 
 func (d *DictionaryServerTransport) dispatchGetStringWithInvalid(req *http.Request) (*http.Response, error) {
 	if d.srv.GetStringWithInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetStringWithInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetStringWithInvalid not implemented")}
 	}
 	respr, errRespr := d.srv.GetStringWithInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1382,7 +1382,7 @@ func (d *DictionaryServerTransport) dispatchGetStringWithInvalid(req *http.Reque
 
 func (d *DictionaryServerTransport) dispatchGetStringWithNull(req *http.Request) (*http.Response, error) {
 	if d.srv.GetStringWithNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetStringWithNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetStringWithNull not implemented")}
 	}
 	respr, errRespr := d.srv.GetStringWithNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1401,7 +1401,7 @@ func (d *DictionaryServerTransport) dispatchGetStringWithNull(req *http.Request)
 
 func (d *DictionaryServerTransport) dispatchPutArrayValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutArrayValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutArrayValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutArrayValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string][]*string](req)
 	if err != nil {
@@ -1424,7 +1424,7 @@ func (d *DictionaryServerTransport) dispatchPutArrayValid(req *http.Request) (*h
 
 func (d *DictionaryServerTransport) dispatchPutBooleanTfft(req *http.Request) (*http.Response, error) {
 	if d.srv.PutBooleanTfft == nil {
-		return nil, &nonRetriableError{errors.New("method PutBooleanTfft not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBooleanTfft not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*bool](req)
 	if err != nil {
@@ -1447,7 +1447,7 @@ func (d *DictionaryServerTransport) dispatchPutBooleanTfft(req *http.Request) (*
 
 func (d *DictionaryServerTransport) dispatchPutByteValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutByteValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutByteValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutByteValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string][]byte](req)
 	if err != nil {
@@ -1470,7 +1470,7 @@ func (d *DictionaryServerTransport) dispatchPutByteValid(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchPutComplexValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutComplexValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutComplexValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutComplexValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*dictionarygroup.Widget](req)
 	if err != nil {
@@ -1493,7 +1493,7 @@ func (d *DictionaryServerTransport) dispatchPutComplexValid(req *http.Request) (
 
 func (d *DictionaryServerTransport) dispatchPutDateTimeRFC1123Valid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutDateTimeRFC1123Valid == nil {
-		return nil, &nonRetriableError{errors.New("method PutDateTimeRFC1123Valid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDateTimeRFC1123Valid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*time.Time](req)
 	if err != nil {
@@ -1516,7 +1516,7 @@ func (d *DictionaryServerTransport) dispatchPutDateTimeRFC1123Valid(req *http.Re
 
 func (d *DictionaryServerTransport) dispatchPutDateTimeValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutDateTimeValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutDateTimeValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDateTimeValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*time.Time](req)
 	if err != nil {
@@ -1539,7 +1539,7 @@ func (d *DictionaryServerTransport) dispatchPutDateTimeValid(req *http.Request) 
 
 func (d *DictionaryServerTransport) dispatchPutDateValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutDateValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutDateValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDateValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*time.Time](req)
 	if err != nil {
@@ -1562,7 +1562,7 @@ func (d *DictionaryServerTransport) dispatchPutDateValid(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchPutDictionaryValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutDictionaryValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutDictionaryValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDictionaryValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]map[string]*string](req)
 	if err != nil {
@@ -1585,7 +1585,7 @@ func (d *DictionaryServerTransport) dispatchPutDictionaryValid(req *http.Request
 
 func (d *DictionaryServerTransport) dispatchPutDoubleValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutDoubleValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutDoubleValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDoubleValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*float64](req)
 	if err != nil {
@@ -1608,7 +1608,7 @@ func (d *DictionaryServerTransport) dispatchPutDoubleValid(req *http.Request) (*
 
 func (d *DictionaryServerTransport) dispatchPutDurationValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutDurationValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutDurationValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutDurationValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*string](req)
 	if err != nil {
@@ -1631,7 +1631,7 @@ func (d *DictionaryServerTransport) dispatchPutDurationValid(req *http.Request) 
 
 func (d *DictionaryServerTransport) dispatchPutEmpty(req *http.Request) (*http.Response, error) {
 	if d.srv.PutEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method PutEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutEmpty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*string](req)
 	if err != nil {
@@ -1654,7 +1654,7 @@ func (d *DictionaryServerTransport) dispatchPutEmpty(req *http.Request) (*http.R
 
 func (d *DictionaryServerTransport) dispatchPutFloatValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutFloatValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutFloatValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutFloatValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*float32](req)
 	if err != nil {
@@ -1677,7 +1677,7 @@ func (d *DictionaryServerTransport) dispatchPutFloatValid(req *http.Request) (*h
 
 func (d *DictionaryServerTransport) dispatchPutIntegerValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutIntegerValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutIntegerValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutIntegerValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*int32](req)
 	if err != nil {
@@ -1700,7 +1700,7 @@ func (d *DictionaryServerTransport) dispatchPutIntegerValid(req *http.Request) (
 
 func (d *DictionaryServerTransport) dispatchPutLongValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutLongValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutLongValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutLongValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*int64](req)
 	if err != nil {
@@ -1723,7 +1723,7 @@ func (d *DictionaryServerTransport) dispatchPutLongValid(req *http.Request) (*ht
 
 func (d *DictionaryServerTransport) dispatchPutStringValid(req *http.Request) (*http.Response, error) {
 	if d.srv.PutStringValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutStringValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutStringValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[map[string]*string](req)
 	if err != nil {

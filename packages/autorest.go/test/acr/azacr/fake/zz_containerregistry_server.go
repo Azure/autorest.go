@@ -20,6 +20,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"io"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 )
@@ -158,7 +159,7 @@ func (c *ContainerRegistryServerTransport) Do(req *http.Request) (*http.Response
 
 func (c *ContainerRegistryServerTransport) dispatchCheckDockerV2Support(req *http.Request) (*http.Response, error) {
 	if c.srv.CheckDockerV2Support == nil {
-		return nil, &nonRetriableError{errors.New("method CheckDockerV2Support not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CheckDockerV2Support not implemented")}
 	}
 	respr, errRespr := c.srv.CheckDockerV2Support(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -177,11 +178,11 @@ func (c *ContainerRegistryServerTransport) dispatchCheckDockerV2Support(req *htt
 
 func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Request) (*http.Response, error) {
 	if c.srv.CreateManifest == nil {
-		return nil, &nonRetriableError{errors.New("method CreateManifest not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CreateManifest not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/manifests/(?P<reference>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/manifests/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -189,7 +190,15 @@ func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CreateManifest(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], body, nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.CreateManifest(req.Context(), nameUnescaped, referenceUnescaped, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -218,15 +227,23 @@ func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Requ
 
 func (c *ContainerRegistryServerTransport) dispatchDeleteManifest(req *http.Request) (*http.Response, error) {
 	if c.srv.DeleteManifest == nil {
-		return nil, &nonRetriableError{errors.New("method DeleteManifest not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DeleteManifest not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/manifests/(?P<reference>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/manifests/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.DeleteManifest(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.DeleteManifest(req.Context(), nameUnescaped, referenceUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -243,15 +260,19 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteManifest(req *http.Requ
 
 func (c *ContainerRegistryServerTransport) dispatchDeleteRepository(req *http.Request) (*http.Response, error) {
 	if c.srv.DeleteRepository == nil {
-		return nil, &nonRetriableError{errors.New("method DeleteRepository not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DeleteRepository not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.DeleteRepository(req.Context(), matches[regex.SubexpIndex("name")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.DeleteRepository(req.Context(), nameUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -268,15 +289,23 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteRepository(req *http.Re
 
 func (c *ContainerRegistryServerTransport) dispatchDeleteTag(req *http.Request) (*http.Response, error) {
 	if c.srv.DeleteTag == nil {
-		return nil, &nonRetriableError{errors.New("method DeleteTag not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DeleteTag not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)/_tags/(?P<reference>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.DeleteTag(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.DeleteTag(req.Context(), nameUnescaped, referenceUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -293,13 +322,21 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteTag(req *http.Request) 
 
 func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request) (*http.Response, error) {
 	if c.srv.GetManifest == nil {
-		return nil, &nonRetriableError{errors.New("method GetManifest not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetManifest not implemented")}
 	}
-	const regexStr = "/v2/(?P<name>[a-zA-Z0-9-_]+)/manifests/(?P<reference>[a-zA-Z0-9-_]+)"
+	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/manifests/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	if err != nil {
+		return nil, err
 	}
 	acceptParam := getOptional(getHeaderValue(req.Header, "accept"))
 	var options *azacr.ContainerRegistryClientGetManifestOptions
@@ -308,7 +345,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request
 			Accept: acceptParam,
 		}
 	}
-	respr, errRespr := c.srv.GetManifest(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], options)
+	respr, errRespr := c.srv.GetManifest(req.Context(), nameUnescaped, referenceUnescaped, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -325,15 +362,23 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request
 
 func (c *ContainerRegistryServerTransport) dispatchGetManifestProperties(req *http.Request) (*http.Response, error) {
 	if c.srv.GetManifestProperties == nil {
-		return nil, &nonRetriableError{errors.New("method GetManifestProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetManifestProperties not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)/_manifests/(?P<digest>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_manifests/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.GetManifestProperties(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.GetManifestProperties(req.Context(), nameUnescaped, digestUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -350,18 +395,30 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifestProperties(req *ht
 
 func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *http.Request) (*http.Response, error) {
 	if c.srv.NewGetManifestsPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetManifestsPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetManifestsPager not implemented")}
 	}
 	if c.newGetManifestsPager == nil {
-		const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)/_manifests"
+		const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_manifests`
 		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.Path)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		lastParam := getOptional(qp.Get("last"))
-		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
+		nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+		if err != nil {
+			return nil, err
+		}
+		lastUnescaped, err := url.QueryUnescape(qp.Get("last"))
+		if err != nil {
+			return nil, err
+		}
+		lastParam := getOptional(lastUnescaped)
+		nUnescaped, err := url.QueryUnescape(qp.Get("n"))
+		if err != nil {
+			return nil, err
+		}
+		nParam, err := parseOptional(nUnescaped, func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -371,7 +428,11 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 		if err != nil {
 			return nil, err
 		}
-		orderbyParam := getOptional(qp.Get("orderby"))
+		orderbyUnescaped, err := url.QueryUnescape(qp.Get("orderby"))
+		if err != nil {
+			return nil, err
+		}
+		orderbyParam := getOptional(orderbyUnescaped)
 		var options *azacr.ContainerRegistryClientGetManifestsOptions
 		if lastParam != nil || nParam != nil || orderbyParam != nil {
 			options = &azacr.ContainerRegistryClientGetManifestsOptions{
@@ -380,7 +441,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 				Orderby: orderbyParam,
 			}
 		}
-		resp := c.srv.NewGetManifestsPager(matches[regex.SubexpIndex("name")], options)
+		resp := c.srv.NewGetManifestsPager(nameUnescaped, options)
 		c.newGetManifestsPager = &resp
 		server.PagerResponderInjectNextLinks(c.newGetManifestsPager, req, func(page *azacr.ContainerRegistryClientGetManifestsResponse, createLink func() string) {
 			page.Link = to.Ptr(createLink())
@@ -401,15 +462,19 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 
 func (c *ContainerRegistryServerTransport) dispatchGetProperties(req *http.Request) (*http.Response, error) {
 	if c.srv.GetProperties == nil {
-		return nil, &nonRetriableError{errors.New("method GetProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetProperties not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.GetProperties(req.Context(), matches[regex.SubexpIndex("name")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.GetProperties(req.Context(), nameUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -426,12 +491,20 @@ func (c *ContainerRegistryServerTransport) dispatchGetProperties(req *http.Reque
 
 func (c *ContainerRegistryServerTransport) dispatchNewGetRepositoriesPager(req *http.Request) (*http.Response, error) {
 	if c.srv.NewGetRepositoriesPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetRepositoriesPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetRepositoriesPager not implemented")}
 	}
 	if c.newGetRepositoriesPager == nil {
 		qp := req.URL.Query()
-		lastParam := getOptional(qp.Get("last"))
-		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
+		lastUnescaped, err := url.QueryUnescape(qp.Get("last"))
+		if err != nil {
+			return nil, err
+		}
+		lastParam := getOptional(lastUnescaped)
+		nUnescaped, err := url.QueryUnescape(qp.Get("n"))
+		if err != nil {
+			return nil, err
+		}
+		nParam, err := parseOptional(nUnescaped, func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -469,15 +542,23 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetRepositoriesPager(req *
 
 func (c *ContainerRegistryServerTransport) dispatchGetTagProperties(req *http.Request) (*http.Response, error) {
 	if c.srv.GetTagProperties == nil {
-		return nil, &nonRetriableError{errors.New("method GetTagProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetTagProperties not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)/_tags/(?P<reference>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := c.srv.GetTagProperties(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.GetTagProperties(req.Context(), nameUnescaped, referenceUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -494,18 +575,30 @@ func (c *ContainerRegistryServerTransport) dispatchGetTagProperties(req *http.Re
 
 func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Request) (*http.Response, error) {
 	if c.srv.NewGetTagsPager == nil {
-		return nil, &nonRetriableError{errors.New("method NewGetTagsPager not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method NewGetTagsPager not implemented")}
 	}
 	if c.newGetTagsPager == nil {
-		const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)/_tags"
+		const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags`
 		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.Path)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		lastParam := getOptional(qp.Get("last"))
-		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
+		nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+		if err != nil {
+			return nil, err
+		}
+		lastUnescaped, err := url.QueryUnescape(qp.Get("last"))
+		if err != nil {
+			return nil, err
+		}
+		lastParam := getOptional(lastUnescaped)
+		nUnescaped, err := url.QueryUnescape(qp.Get("n"))
+		if err != nil {
+			return nil, err
+		}
+		nParam, err := parseOptional(nUnescaped, func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -515,8 +608,16 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 		if err != nil {
 			return nil, err
 		}
-		orderbyParam := getOptional(qp.Get("orderby"))
-		digestParam := getOptional(qp.Get("digest"))
+		orderbyUnescaped, err := url.QueryUnescape(qp.Get("orderby"))
+		if err != nil {
+			return nil, err
+		}
+		orderbyParam := getOptional(orderbyUnescaped)
+		digestUnescaped, err := url.QueryUnescape(qp.Get("digest"))
+		if err != nil {
+			return nil, err
+		}
+		digestParam := getOptional(digestUnescaped)
 		var options *azacr.ContainerRegistryClientGetTagsOptions
 		if lastParam != nil || nParam != nil || orderbyParam != nil || digestParam != nil {
 			options = &azacr.ContainerRegistryClientGetTagsOptions{
@@ -526,7 +627,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 				Digest:  digestParam,
 			}
 		}
-		resp := c.srv.NewGetTagsPager(matches[regex.SubexpIndex("name")], options)
+		resp := c.srv.NewGetTagsPager(nameUnescaped, options)
 		c.newGetTagsPager = &resp
 		server.PagerResponderInjectNextLinks(c.newGetTagsPager, req, func(page *azacr.ContainerRegistryClientGetTagsResponse, createLink func() string) {
 			page.Link = to.Ptr(createLink())
@@ -547,11 +648,11 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 
 func (c *ContainerRegistryServerTransport) dispatchUpdateManifestProperties(req *http.Request) (*http.Response, error) {
 	if c.srv.UpdateManifestProperties == nil {
-		return nil, &nonRetriableError{errors.New("method UpdateManifestProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UpdateManifestProperties not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)/_manifests/(?P<digest>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_manifests/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -559,7 +660,15 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateManifestProperties(req 
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UpdateManifestProperties(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("digest")], body, nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.UpdateManifestProperties(req.Context(), nameUnescaped, digestUnescaped, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -576,11 +685,11 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateManifestProperties(req 
 
 func (c *ContainerRegistryServerTransport) dispatchUpdateProperties(req *http.Request) (*http.Response, error) {
 	if c.srv.UpdateProperties == nil {
-		return nil, &nonRetriableError{errors.New("method UpdateProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UpdateProperties not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -588,7 +697,11 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateProperties(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UpdateProperties(req.Context(), matches[regex.SubexpIndex("name")], body, nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.UpdateProperties(req.Context(), nameUnescaped, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -605,11 +718,11 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateProperties(req *http.Re
 
 func (c *ContainerRegistryServerTransport) dispatchUpdateTagAttributes(req *http.Request) (*http.Response, error) {
 	if c.srv.UpdateTagAttributes == nil {
-		return nil, &nonRetriableError{errors.New("method UpdateTagAttributes not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UpdateTagAttributes not implemented")}
 	}
-	const regexStr = "/acr/v1/(?P<name>[a-zA-Z0-9-_]+)/_tags/(?P<reference>[a-zA-Z0-9-_]+)"
+	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -617,7 +730,15 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateTagAttributes(req *http
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UpdateTagAttributes(req.Context(), matches[regex.SubexpIndex("name")], matches[regex.SubexpIndex("reference")], body, nil)
+	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.UpdateTagAttributes(req.Context(), nameUnescaped, referenceUnescaped, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

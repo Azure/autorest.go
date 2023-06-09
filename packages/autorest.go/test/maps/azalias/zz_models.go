@@ -46,7 +46,7 @@ type ClientListOptions struct {
 
 // ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
 type ClientPolicyAssignmentOptions struct {
-	// placeholder for future optional parameters
+	Interval *string
 }
 
 // ErrorResponse - An error happened.

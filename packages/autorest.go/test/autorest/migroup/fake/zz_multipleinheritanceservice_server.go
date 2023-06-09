@@ -120,7 +120,7 @@ func (m *MultipleInheritanceServiceServerTransport) Do(req *http.Request) (*http
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchGetCat(req *http.Request) (*http.Response, error) {
 	if m.srv.GetCat == nil {
-		return nil, &nonRetriableError{errors.New("method GetCat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetCat not implemented")}
 	}
 	respr, errRespr := m.srv.GetCat(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -139,7 +139,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetCat(req *http.Req
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchGetFeline(req *http.Request) (*http.Response, error) {
 	if m.srv.GetFeline == nil {
-		return nil, &nonRetriableError{errors.New("method GetFeline not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetFeline not implemented")}
 	}
 	respr, errRespr := m.srv.GetFeline(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -158,7 +158,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetFeline(req *http.
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchGetHorse(req *http.Request) (*http.Response, error) {
 	if m.srv.GetHorse == nil {
-		return nil, &nonRetriableError{errors.New("method GetHorse not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetHorse not implemented")}
 	}
 	respr, errRespr := m.srv.GetHorse(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -177,7 +177,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetHorse(req *http.R
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchGetKitten(req *http.Request) (*http.Response, error) {
 	if m.srv.GetKitten == nil {
-		return nil, &nonRetriableError{errors.New("method GetKitten not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetKitten not implemented")}
 	}
 	respr, errRespr := m.srv.GetKitten(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -196,7 +196,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetKitten(req *http.
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchGetPet(req *http.Request) (*http.Response, error) {
 	if m.srv.GetPet == nil {
-		return nil, &nonRetriableError{errors.New("method GetPet not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetPet not implemented")}
 	}
 	respr, errRespr := m.srv.GetPet(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -215,7 +215,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchGetPet(req *http.Req
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchPutCat(req *http.Request) (*http.Response, error) {
 	if m.srv.PutCat == nil {
-		return nil, &nonRetriableError{errors.New("method PutCat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutCat not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[migroup.Cat](req)
 	if err != nil {
@@ -238,7 +238,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutCat(req *http.Req
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchPutFeline(req *http.Request) (*http.Response, error) {
 	if m.srv.PutFeline == nil {
-		return nil, &nonRetriableError{errors.New("method PutFeline not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutFeline not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[migroup.Feline](req)
 	if err != nil {
@@ -261,7 +261,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutFeline(req *http.
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchPutHorse(req *http.Request) (*http.Response, error) {
 	if m.srv.PutHorse == nil {
-		return nil, &nonRetriableError{errors.New("method PutHorse not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutHorse not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[migroup.Horse](req)
 	if err != nil {
@@ -284,7 +284,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutHorse(req *http.R
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchPutKitten(req *http.Request) (*http.Response, error) {
 	if m.srv.PutKitten == nil {
-		return nil, &nonRetriableError{errors.New("method PutKitten not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutKitten not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[migroup.Kitten](req)
 	if err != nil {
@@ -307,7 +307,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutKitten(req *http.
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchPutPet(req *http.Request) (*http.Response, error) {
 	if m.srv.PutPet == nil {
-		return nil, &nonRetriableError{errors.New("method PutPet not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutPet not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[migroup.Pet](req)
 	if err != nil {

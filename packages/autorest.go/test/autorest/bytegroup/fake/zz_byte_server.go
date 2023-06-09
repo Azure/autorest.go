@@ -90,7 +90,7 @@ func (b *ByteServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (b *ByteServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
 	if b.srv.GetEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmpty not implemented")}
 	}
 	respr, errRespr := b.srv.GetEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -109,7 +109,7 @@ func (b *ByteServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respons
 
 func (b *ByteServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
 	if b.srv.GetInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalid not implemented")}
 	}
 	respr, errRespr := b.srv.GetInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -128,7 +128,7 @@ func (b *ByteServerTransport) dispatchGetInvalid(req *http.Request) (*http.Respo
 
 func (b *ByteServerTransport) dispatchGetNonASCII(req *http.Request) (*http.Response, error) {
 	if b.srv.GetNonASCII == nil {
-		return nil, &nonRetriableError{errors.New("method GetNonASCII not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNonASCII not implemented")}
 	}
 	respr, errRespr := b.srv.GetNonASCII(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -147,7 +147,7 @@ func (b *ByteServerTransport) dispatchGetNonASCII(req *http.Request) (*http.Resp
 
 func (b *ByteServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if b.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := b.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -166,7 +166,7 @@ func (b *ByteServerTransport) dispatchGetNull(req *http.Request) (*http.Response
 
 func (b *ByteServerTransport) dispatchPutNonASCII(req *http.Request) (*http.Response, error) {
 	if b.srv.PutNonASCII == nil {
-		return nil, &nonRetriableError{errors.New("method PutNonASCII not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutNonASCII not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64StdFormat)
 	if err != nil {

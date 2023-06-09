@@ -145,7 +145,7 @@ func (i *IntServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (i *IntServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
 	if i.srv.GetInvalid == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalid not implemented")}
 	}
 	respr, errRespr := i.srv.GetInvalid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -164,7 +164,7 @@ func (i *IntServerTransport) dispatchGetInvalid(req *http.Request) (*http.Respon
 
 func (i *IntServerTransport) dispatchGetInvalidUnixTime(req *http.Request) (*http.Response, error) {
 	if i.srv.GetInvalidUnixTime == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalidUnixTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalidUnixTime not implemented")}
 	}
 	respr, errRespr := i.srv.GetInvalidUnixTime(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -183,7 +183,7 @@ func (i *IntServerTransport) dispatchGetInvalidUnixTime(req *http.Request) (*htt
 
 func (i *IntServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if i.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := i.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -202,7 +202,7 @@ func (i *IntServerTransport) dispatchGetNull(req *http.Request) (*http.Response,
 
 func (i *IntServerTransport) dispatchGetNullUnixTime(req *http.Request) (*http.Response, error) {
 	if i.srv.GetNullUnixTime == nil {
-		return nil, &nonRetriableError{errors.New("method GetNullUnixTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNullUnixTime not implemented")}
 	}
 	respr, errRespr := i.srv.GetNullUnixTime(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -221,7 +221,7 @@ func (i *IntServerTransport) dispatchGetNullUnixTime(req *http.Request) (*http.R
 
 func (i *IntServerTransport) dispatchGetOverflowInt32(req *http.Request) (*http.Response, error) {
 	if i.srv.GetOverflowInt32 == nil {
-		return nil, &nonRetriableError{errors.New("method GetOverflowInt32 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetOverflowInt32 not implemented")}
 	}
 	respr, errRespr := i.srv.GetOverflowInt32(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -240,7 +240,7 @@ func (i *IntServerTransport) dispatchGetOverflowInt32(req *http.Request) (*http.
 
 func (i *IntServerTransport) dispatchGetOverflowInt64(req *http.Request) (*http.Response, error) {
 	if i.srv.GetOverflowInt64 == nil {
-		return nil, &nonRetriableError{errors.New("method GetOverflowInt64 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetOverflowInt64 not implemented")}
 	}
 	respr, errRespr := i.srv.GetOverflowInt64(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -259,7 +259,7 @@ func (i *IntServerTransport) dispatchGetOverflowInt64(req *http.Request) (*http.
 
 func (i *IntServerTransport) dispatchGetUnderflowInt32(req *http.Request) (*http.Response, error) {
 	if i.srv.GetUnderflowInt32 == nil {
-		return nil, &nonRetriableError{errors.New("method GetUnderflowInt32 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUnderflowInt32 not implemented")}
 	}
 	respr, errRespr := i.srv.GetUnderflowInt32(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -278,7 +278,7 @@ func (i *IntServerTransport) dispatchGetUnderflowInt32(req *http.Request) (*http
 
 func (i *IntServerTransport) dispatchGetUnderflowInt64(req *http.Request) (*http.Response, error) {
 	if i.srv.GetUnderflowInt64 == nil {
-		return nil, &nonRetriableError{errors.New("method GetUnderflowInt64 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUnderflowInt64 not implemented")}
 	}
 	respr, errRespr := i.srv.GetUnderflowInt64(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -297,7 +297,7 @@ func (i *IntServerTransport) dispatchGetUnderflowInt64(req *http.Request) (*http
 
 func (i *IntServerTransport) dispatchGetUnixTime(req *http.Request) (*http.Response, error) {
 	if i.srv.GetUnixTime == nil {
-		return nil, &nonRetriableError{errors.New("method GetUnixTime not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetUnixTime not implemented")}
 	}
 	respr, errRespr := i.srv.GetUnixTime(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -316,7 +316,7 @@ func (i *IntServerTransport) dispatchGetUnixTime(req *http.Request) (*http.Respo
 
 func (i *IntServerTransport) dispatchPutMax32(req *http.Request) (*http.Response, error) {
 	if i.srv.PutMax32 == nil {
-		return nil, &nonRetriableError{errors.New("method PutMax32 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMax32 not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[int32](req)
 	if err != nil {
@@ -339,7 +339,7 @@ func (i *IntServerTransport) dispatchPutMax32(req *http.Request) (*http.Response
 
 func (i *IntServerTransport) dispatchPutMax64(req *http.Request) (*http.Response, error) {
 	if i.srv.PutMax64 == nil {
-		return nil, &nonRetriableError{errors.New("method PutMax64 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMax64 not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[int64](req)
 	if err != nil {
@@ -362,7 +362,7 @@ func (i *IntServerTransport) dispatchPutMax64(req *http.Request) (*http.Response
 
 func (i *IntServerTransport) dispatchPutMin32(req *http.Request) (*http.Response, error) {
 	if i.srv.PutMin32 == nil {
-		return nil, &nonRetriableError{errors.New("method PutMin32 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMin32 not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[int32](req)
 	if err != nil {
@@ -385,7 +385,7 @@ func (i *IntServerTransport) dispatchPutMin32(req *http.Request) (*http.Response
 
 func (i *IntServerTransport) dispatchPutMin64(req *http.Request) (*http.Response, error) {
 	if i.srv.PutMin64 == nil {
-		return nil, &nonRetriableError{errors.New("method PutMin64 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutMin64 not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[int64](req)
 	if err != nil {
@@ -408,7 +408,7 @@ func (i *IntServerTransport) dispatchPutMin64(req *http.Request) (*http.Response
 
 func (i *IntServerTransport) dispatchPutUnixTimeDate(req *http.Request) (*http.Response, error) {
 	if i.srv.PutUnixTimeDate == nil {
-		return nil, &nonRetriableError{errors.New("method PutUnixTimeDate not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutUnixTimeDate not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[timeUnix](req)
 	if err != nil {

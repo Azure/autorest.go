@@ -84,7 +84,7 @@ func (h *HTTPServerFailureServerTransport) Do(req *http.Request) (*http.Response
 
 func (h *HTTPServerFailureServerTransport) dispatchDelete505(req *http.Request) (*http.Response, error) {
 	if h.srv.Delete505 == nil {
-		return nil, &nonRetriableError{errors.New("method Delete505 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Delete505 not implemented")}
 	}
 	respr, errRespr := h.srv.Delete505(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -103,7 +103,7 @@ func (h *HTTPServerFailureServerTransport) dispatchDelete505(req *http.Request) 
 
 func (h *HTTPServerFailureServerTransport) dispatchGet501(req *http.Request) (*http.Response, error) {
 	if h.srv.Get501 == nil {
-		return nil, &nonRetriableError{errors.New("method Get501 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get501 not implemented")}
 	}
 	respr, errRespr := h.srv.Get501(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -122,7 +122,7 @@ func (h *HTTPServerFailureServerTransport) dispatchGet501(req *http.Request) (*h
 
 func (h *HTTPServerFailureServerTransport) dispatchHead501(req *http.Request) (*http.Response, error) {
 	if h.srv.Head501 == nil {
-		return nil, &nonRetriableError{errors.New("method Head501 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head501 not implemented")}
 	}
 	respr, errRespr := h.srv.Head501(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -141,7 +141,7 @@ func (h *HTTPServerFailureServerTransport) dispatchHead501(req *http.Request) (*
 
 func (h *HTTPServerFailureServerTransport) dispatchPost505(req *http.Request) (*http.Response, error) {
 	if h.srv.Post505 == nil {
-		return nil, &nonRetriableError{errors.New("method Post505 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Post505 not implemented")}
 	}
 	respr, errRespr := h.srv.Post505(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 )
 
@@ -79,15 +80,19 @@ func (p *PetServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (p *PetServerTransport) dispatchDoSomething(req *http.Request) (*http.Response, error) {
 	if p.srv.DoSomething == nil {
-		return nil, &nonRetriableError{errors.New("method DoSomething not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DoSomething not implemented")}
 	}
-	const regexStr = "/errorStatusCodes/Pets/doSomething/(?P<whatAction>[a-zA-Z0-9-_]+)"
+	const regexStr = `/errorStatusCodes/Pets/doSomething/(?P<whatAction>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := p.srv.DoSomething(req.Context(), matches[regex.SubexpIndex("whatAction")], nil)
+	whatActionUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("whatAction")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := p.srv.DoSomething(req.Context(), whatActionUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -104,15 +109,19 @@ func (p *PetServerTransport) dispatchDoSomething(req *http.Request) (*http.Respo
 
 func (p *PetServerTransport) dispatchGetPetByID(req *http.Request) (*http.Response, error) {
 	if p.srv.GetPetByID == nil {
-		return nil, &nonRetriableError{errors.New("method GetPetByID not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetPetByID not implemented")}
 	}
-	const regexStr = "/errorStatusCodes/Pets/(?P<petId>[a-zA-Z0-9-_]+)/GetPet"
+	const regexStr = `/errorStatusCodes/Pets/(?P<petId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/GetPet`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := p.srv.GetPetByID(req.Context(), matches[regex.SubexpIndex("petId")], nil)
+	petIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("petId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := p.srv.GetPetByID(req.Context(), petIDUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -129,10 +138,14 @@ func (p *PetServerTransport) dispatchGetPetByID(req *http.Request) (*http.Respon
 
 func (p *PetServerTransport) dispatchHasModelsParam(req *http.Request) (*http.Response, error) {
 	if p.srv.HasModelsParam == nil {
-		return nil, &nonRetriableError{errors.New("method HasModelsParam not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method HasModelsParam not implemented")}
 	}
 	qp := req.URL.Query()
-	modelsParam := getOptional(qp.Get("models"))
+	modelsUnescaped, err := url.QueryUnescape(qp.Get("models"))
+	if err != nil {
+		return nil, err
+	}
+	modelsParam := getOptional(modelsUnescaped)
 	var options *errorsgroup.PetClientHasModelsParamOptions
 	if modelsParam != nil {
 		options = &errorsgroup.PetClientHasModelsParamOptions{

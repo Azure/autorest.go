@@ -72,7 +72,7 @@ func (p *PolymorphicrecursiveServerTransport) Do(req *http.Request) (*http.Respo
 
 func (p *PolymorphicrecursiveServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {
 	if p.srv.GetValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetValid not implemented")}
 	}
 	respr, errRespr := p.srv.GetValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -91,7 +91,7 @@ func (p *PolymorphicrecursiveServerTransport) dispatchGetValid(req *http.Request
 
 func (p *PolymorphicrecursiveServerTransport) dispatchPutValid(req *http.Request) (*http.Response, error) {
 	if p.srv.PutValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutValid not implemented")}
 	}
 	raw, err := readRequestBody(req)
 	if err != nil {

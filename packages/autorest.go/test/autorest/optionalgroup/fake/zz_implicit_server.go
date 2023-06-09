@@ -18,6 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
 	"net/http"
+	"net/url"
 	"regexp"
 )
 
@@ -110,7 +111,7 @@ func (i *ImplicitServerTransport) Do(req *http.Request) (*http.Response, error) 
 
 func (i *ImplicitServerTransport) dispatchGetOptionalGlobalQuery(req *http.Request) (*http.Response, error) {
 	if i.srv.GetOptionalGlobalQuery == nil {
-		return nil, &nonRetriableError{errors.New("method GetOptionalGlobalQuery not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetOptionalGlobalQuery not implemented")}
 	}
 	respr, errRespr := i.srv.GetOptionalGlobalQuery(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -129,11 +130,11 @@ func (i *ImplicitServerTransport) dispatchGetOptionalGlobalQuery(req *http.Reque
 
 func (i *ImplicitServerTransport) dispatchGetRequiredGlobalPath(req *http.Request) (*http.Response, error) {
 	if i.srv.GetRequiredGlobalPath == nil {
-		return nil, &nonRetriableError{errors.New("method GetRequiredGlobalPath not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetRequiredGlobalPath not implemented")}
 	}
-	const regexStr = "/reqopt/global/required/path/(?P<required_global-path>[a-zA-Z0-9-_]+)"
+	const regexStr = `/reqopt/global/required/path/(?P<required_global-path>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -154,7 +155,7 @@ func (i *ImplicitServerTransport) dispatchGetRequiredGlobalPath(req *http.Reques
 
 func (i *ImplicitServerTransport) dispatchGetRequiredGlobalQuery(req *http.Request) (*http.Response, error) {
 	if i.srv.GetRequiredGlobalQuery == nil {
-		return nil, &nonRetriableError{errors.New("method GetRequiredGlobalQuery not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetRequiredGlobalQuery not implemented")}
 	}
 	respr, errRespr := i.srv.GetRequiredGlobalQuery(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -173,15 +174,19 @@ func (i *ImplicitServerTransport) dispatchGetRequiredGlobalQuery(req *http.Reque
 
 func (i *ImplicitServerTransport) dispatchGetRequiredPath(req *http.Request) (*http.Response, error) {
 	if i.srv.GetRequiredPath == nil {
-		return nil, &nonRetriableError{errors.New("method GetRequiredPath not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetRequiredPath not implemented")}
 	}
-	const regexStr = "/reqopt/implicit/required/path/(?P<pathParameter>[a-zA-Z0-9-_]+)"
+	const regexStr = `/reqopt/implicit/required/path/(?P<pathParameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := i.srv.GetRequiredPath(req.Context(), matches[regex.SubexpIndex("pathParameter")], nil)
+	pathParameterUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathParameter")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := i.srv.GetRequiredPath(req.Context(), pathParameterUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -198,7 +203,7 @@ func (i *ImplicitServerTransport) dispatchGetRequiredPath(req *http.Request) (*h
 
 func (i *ImplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Request) (*http.Response, error) {
 	if i.srv.PutOptionalBinaryBody == nil {
-		return nil, &nonRetriableError{errors.New("method PutOptionalBinaryBody not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutOptionalBinaryBody not implemented")}
 	}
 	respr, errRespr := i.srv.PutOptionalBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -217,7 +222,7 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Reques
 
 func (i *ImplicitServerTransport) dispatchPutOptionalBody(req *http.Request) (*http.Response, error) {
 	if i.srv.PutOptionalBody == nil {
-		return nil, &nonRetriableError{errors.New("method PutOptionalBody not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutOptionalBody not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
@@ -240,7 +245,7 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBody(req *http.Request) (*h
 
 func (i *ImplicitServerTransport) dispatchPutOptionalHeader(req *http.Request) (*http.Response, error) {
 	if i.srv.PutOptionalHeader == nil {
-		return nil, &nonRetriableError{errors.New("method PutOptionalHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutOptionalHeader not implemented")}
 	}
 	queryParameterParam := getOptional(getHeaderValue(req.Header, "queryParameter"))
 	var options *optionalgroup.ImplicitClientPutOptionalHeaderOptions
@@ -266,10 +271,14 @@ func (i *ImplicitServerTransport) dispatchPutOptionalHeader(req *http.Request) (
 
 func (i *ImplicitServerTransport) dispatchPutOptionalQuery(req *http.Request) (*http.Response, error) {
 	if i.srv.PutOptionalQuery == nil {
-		return nil, &nonRetriableError{errors.New("method PutOptionalQuery not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutOptionalQuery not implemented")}
 	}
 	qp := req.URL.Query()
-	queryParameterParam := getOptional(qp.Get("queryParameter"))
+	queryParameterUnescaped, err := url.QueryUnescape(qp.Get("queryParameter"))
+	if err != nil {
+		return nil, err
+	}
+	queryParameterParam := getOptional(queryParameterUnescaped)
 	var options *optionalgroup.ImplicitClientPutOptionalQueryOptions
 	if queryParameterParam != nil {
 		options = &optionalgroup.ImplicitClientPutOptionalQueryOptions{

@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -67,11 +68,19 @@ func (o *ODataServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (o *ODataServerTransport) dispatchGetWithFilter(req *http.Request) (*http.Response, error) {
 	if o.srv.GetWithFilter == nil {
-		return nil, &nonRetriableError{errors.New("method GetWithFilter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetWithFilter not implemented")}
 	}
 	qp := req.URL.Query()
-	filterParam := getOptional(qp.Get("$filter"))
-	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
+	filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
+	if err != nil {
+		return nil, err
+	}
+	filterParam := getOptional(filterUnescaped)
+	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
+	if err != nil {
+		return nil, err
+	}
+	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -81,7 +90,11 @@ func (o *ODataServerTransport) dispatchGetWithFilter(req *http.Request) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	orderbyParam := getOptional(qp.Get("$orderby"))
+	orderbyUnescaped, err := url.QueryUnescape(qp.Get("$orderby"))
+	if err != nil {
+		return nil, err
+	}
+	orderbyParam := getOptional(orderbyUnescaped)
 	var options *azurespecialsgroup.ODataClientGetWithFilterOptions
 	if filterParam != nil || topParam != nil || orderbyParam != nil {
 		options = &azurespecialsgroup.ODataClientGetWithFilterOptions{

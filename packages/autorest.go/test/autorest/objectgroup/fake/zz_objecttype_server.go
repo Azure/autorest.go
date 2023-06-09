@@ -74,7 +74,7 @@ func (o *ObjectTypeServerTransport) Do(req *http.Request) (*http.Response, error
 
 func (o *ObjectTypeServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if o.srv.Get == nil {
-		return nil, &nonRetriableError{errors.New("method Get not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
 	respr, errRespr := o.srv.Get(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -96,7 +96,7 @@ func (o *ObjectTypeServerTransport) dispatchGet(req *http.Request) (*http.Respon
 
 func (o *ObjectTypeServerTransport) dispatchPut(req *http.Request) (*http.Response, error) {
 	if o.srv.Put == nil {
-		return nil, &nonRetriableError{errors.New("method Put not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put not implemented")}
 	}
 	body, err := io.ReadAll(req.Body)
 	if err != nil {

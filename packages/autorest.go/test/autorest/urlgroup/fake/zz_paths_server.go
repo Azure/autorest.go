@@ -18,6 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -227,15 +228,19 @@ func (p *PathsServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (p *PathsServerTransport) dispatchArrayCSVInPath(req *http.Request) (*http.Response, error) {
 	if p.srv.ArrayCSVInPath == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayCSVInPath not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayCSVInPath not implemented")}
 	}
-	const regexStr = "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/(?P<arrayPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/(?P<arrayPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := p.srv.ArrayCSVInPath(req.Context(), strings.Split(matches[regex.SubexpIndex("arrayPath")], ","), nil)
+	arrayPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("arrayPath")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := p.srv.ArrayCSVInPath(req.Context(), strings.Split(arrayPathUnescaped, ","), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -252,15 +257,19 @@ func (p *PathsServerTransport) dispatchArrayCSVInPath(req *http.Request) (*http.
 
 func (p *PathsServerTransport) dispatchBase64URL(req *http.Request) (*http.Response, error) {
 	if p.srv.Base64URL == nil {
-		return nil, &nonRetriableError{errors.New("method Base64URL not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Base64URL not implemented")}
 	}
-	const regexStr = "/paths/string/bG9yZW0/(?P<base64UrlPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/string/bG9yZW0/(?P<base64UrlPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	base64URLPathParam, err := base64.StdEncoding.DecodeString(matches[regex.SubexpIndex("base64UrlPath")])
+	base64URLPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("base64UrlPath")])
+	if err != nil {
+		return nil, err
+	}
+	base64URLPathParam, err := base64.StdEncoding.DecodeString(base64URLPathUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -281,11 +290,11 @@ func (p *PathsServerTransport) dispatchBase64URL(req *http.Request) (*http.Respo
 
 func (p *PathsServerTransport) dispatchByteEmpty(req *http.Request) (*http.Response, error) {
 	if p.srv.ByteEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method ByteEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ByteEmpty not implemented")}
 	}
-	const regexStr = "/paths/byte/empty/(?P<bytePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/byte/empty/(?P<bytePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -306,15 +315,19 @@ func (p *PathsServerTransport) dispatchByteEmpty(req *http.Request) (*http.Respo
 
 func (p *PathsServerTransport) dispatchByteMultiByte(req *http.Request) (*http.Response, error) {
 	if p.srv.ByteMultiByte == nil {
-		return nil, &nonRetriableError{errors.New("method ByteMultiByte not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ByteMultiByte not implemented")}
 	}
-	const regexStr = "/paths/byte/multibyte/(?P<bytePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/byte/multibyte/(?P<bytePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	bytePathParam, err := base64.StdEncoding.DecodeString(matches[regex.SubexpIndex("bytePath")])
+	bytePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bytePath")])
+	if err != nil {
+		return nil, err
+	}
+	bytePathParam, err := base64.StdEncoding.DecodeString(bytePathUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -335,15 +348,19 @@ func (p *PathsServerTransport) dispatchByteMultiByte(req *http.Request) (*http.R
 
 func (p *PathsServerTransport) dispatchByteNull(req *http.Request) (*http.Response, error) {
 	if p.srv.ByteNull == nil {
-		return nil, &nonRetriableError{errors.New("method ByteNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ByteNull not implemented")}
 	}
-	const regexStr = "/paths/byte/null/(?P<bytePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/byte/null/(?P<bytePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	bytePathParam, err := base64.StdEncoding.DecodeString(matches[regex.SubexpIndex("bytePath")])
+	bytePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bytePath")])
+	if err != nil {
+		return nil, err
+	}
+	bytePathParam, err := base64.StdEncoding.DecodeString(bytePathUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -364,15 +381,19 @@ func (p *PathsServerTransport) dispatchByteNull(req *http.Request) (*http.Respon
 
 func (p *PathsServerTransport) dispatchDateNull(req *http.Request) (*http.Response, error) {
 	if p.srv.DateNull == nil {
-		return nil, &nonRetriableError{errors.New("method DateNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateNull not implemented")}
 	}
-	const regexStr = "/paths/date/null/(?P<datePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/date/null/(?P<datePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	datePathParam, err := time.Parse("2006-01-02", matches[regex.SubexpIndex("datePath")])
+	datePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("datePath")])
+	if err != nil {
+		return nil, err
+	}
+	datePathParam, err := time.Parse("2006-01-02", datePathUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -393,15 +414,19 @@ func (p *PathsServerTransport) dispatchDateNull(req *http.Request) (*http.Respon
 
 func (p *PathsServerTransport) dispatchDateTimeNull(req *http.Request) (*http.Response, error) {
 	if p.srv.DateTimeNull == nil {
-		return nil, &nonRetriableError{errors.New("method DateTimeNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateTimeNull not implemented")}
 	}
-	const regexStr = "/paths/datetime/null/(?P<dateTimePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/datetime/null/(?P<dateTimePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	dateTimePathParam, err := time.Parse(time.RFC3339Nano, matches[regex.SubexpIndex("dateTimePath")])
+	dateTimePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("dateTimePath")])
+	if err != nil {
+		return nil, err
+	}
+	dateTimePathParam, err := time.Parse(time.RFC3339Nano, dateTimePathUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -422,11 +447,11 @@ func (p *PathsServerTransport) dispatchDateTimeNull(req *http.Request) (*http.Re
 
 func (p *PathsServerTransport) dispatchDateTimeValid(req *http.Request) (*http.Response, error) {
 	if p.srv.DateTimeValid == nil {
-		return nil, &nonRetriableError{errors.New("method DateTimeValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateTimeValid not implemented")}
 	}
-	const regexStr = "/paths/datetime/2012-01-01T01%3A01%3A01Z/(?P<dateTimePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/datetime/2012-01-01T01%3A01%3A01Z/(?P<dateTimePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -447,11 +472,11 @@ func (p *PathsServerTransport) dispatchDateTimeValid(req *http.Request) (*http.R
 
 func (p *PathsServerTransport) dispatchDateValid(req *http.Request) (*http.Response, error) {
 	if p.srv.DateValid == nil {
-		return nil, &nonRetriableError{errors.New("method DateValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateValid not implemented")}
 	}
-	const regexStr = "/paths/date/2012-01-01/(?P<datePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/date/2012-01-01/(?P<datePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -472,11 +497,11 @@ func (p *PathsServerTransport) dispatchDateValid(req *http.Request) (*http.Respo
 
 func (p *PathsServerTransport) dispatchDoubleDecimalNegative(req *http.Request) (*http.Response, error) {
 	if p.srv.DoubleDecimalNegative == nil {
-		return nil, &nonRetriableError{errors.New("method DoubleDecimalNegative not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DoubleDecimalNegative not implemented")}
 	}
-	const regexStr = "/paths/double/-9999999.999/(?P<doublePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/double/-9999999.999/(?P<doublePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -497,11 +522,11 @@ func (p *PathsServerTransport) dispatchDoubleDecimalNegative(req *http.Request) 
 
 func (p *PathsServerTransport) dispatchDoubleDecimalPositive(req *http.Request) (*http.Response, error) {
 	if p.srv.DoubleDecimalPositive == nil {
-		return nil, &nonRetriableError{errors.New("method DoubleDecimalPositive not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DoubleDecimalPositive not implemented")}
 	}
-	const regexStr = "/paths/double/9999999.999/(?P<doublePath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/double/9999999.999/(?P<doublePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -522,15 +547,19 @@ func (p *PathsServerTransport) dispatchDoubleDecimalPositive(req *http.Request) 
 
 func (p *PathsServerTransport) dispatchEnumNull(req *http.Request) (*http.Response, error) {
 	if p.srv.EnumNull == nil {
-		return nil, &nonRetriableError{errors.New("method EnumNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method EnumNull not implemented")}
 	}
-	const regexStr = "/paths/string/null/(?P<enumPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/string/null/(?P<enumPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := p.srv.EnumNull(req.Context(), urlgroup.URIColor(matches[regex.SubexpIndex("enumPath")]), nil)
+	enumPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("enumPath")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := p.srv.EnumNull(req.Context(), urlgroup.URIColor(enumPathUnescaped), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -547,15 +576,19 @@ func (p *PathsServerTransport) dispatchEnumNull(req *http.Request) (*http.Respon
 
 func (p *PathsServerTransport) dispatchEnumValid(req *http.Request) (*http.Response, error) {
 	if p.srv.EnumValid == nil {
-		return nil, &nonRetriableError{errors.New("method EnumValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method EnumValid not implemented")}
 	}
-	const regexStr = "/paths/enum/green%20color/(?P<enumPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/enum/green%20color/(?P<enumPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := p.srv.EnumValid(req.Context(), urlgroup.URIColor(matches[regex.SubexpIndex("enumPath")]), nil)
+	enumPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("enumPath")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := p.srv.EnumValid(req.Context(), urlgroup.URIColor(enumPathUnescaped), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -572,11 +605,11 @@ func (p *PathsServerTransport) dispatchEnumValid(req *http.Request) (*http.Respo
 
 func (p *PathsServerTransport) dispatchFloatScientificNegative(req *http.Request) (*http.Response, error) {
 	if p.srv.FloatScientificNegative == nil {
-		return nil, &nonRetriableError{errors.New("method FloatScientificNegative not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method FloatScientificNegative not implemented")}
 	}
-	const regexStr = "/paths/float/-1.034E-20/(?P<floatPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/float/-1.034E-20/(?P<floatPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -597,11 +630,11 @@ func (p *PathsServerTransport) dispatchFloatScientificNegative(req *http.Request
 
 func (p *PathsServerTransport) dispatchFloatScientificPositive(req *http.Request) (*http.Response, error) {
 	if p.srv.FloatScientificPositive == nil {
-		return nil, &nonRetriableError{errors.New("method FloatScientificPositive not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method FloatScientificPositive not implemented")}
 	}
-	const regexStr = "/paths/float/1.034E+20/(?P<floatPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/float/1.034E+20/(?P<floatPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -622,11 +655,11 @@ func (p *PathsServerTransport) dispatchFloatScientificPositive(req *http.Request
 
 func (p *PathsServerTransport) dispatchGetBooleanFalse(req *http.Request) (*http.Response, error) {
 	if p.srv.GetBooleanFalse == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanFalse not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanFalse not implemented")}
 	}
-	const regexStr = "/paths/bool/false/(?P<boolPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/bool/false/(?P<boolPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -647,11 +680,11 @@ func (p *PathsServerTransport) dispatchGetBooleanFalse(req *http.Request) (*http
 
 func (p *PathsServerTransport) dispatchGetBooleanTrue(req *http.Request) (*http.Response, error) {
 	if p.srv.GetBooleanTrue == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanTrue not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanTrue not implemented")}
 	}
-	const regexStr = "/paths/bool/true/(?P<boolPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/bool/true/(?P<boolPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -672,11 +705,11 @@ func (p *PathsServerTransport) dispatchGetBooleanTrue(req *http.Request) (*http.
 
 func (p *PathsServerTransport) dispatchGetIntNegativeOneMillion(req *http.Request) (*http.Response, error) {
 	if p.srv.GetIntNegativeOneMillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntNegativeOneMillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntNegativeOneMillion not implemented")}
 	}
-	const regexStr = "/paths/int/-1000000/(?P<intPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/int/-1000000/(?P<intPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -697,11 +730,11 @@ func (p *PathsServerTransport) dispatchGetIntNegativeOneMillion(req *http.Reques
 
 func (p *PathsServerTransport) dispatchGetIntOneMillion(req *http.Request) (*http.Response, error) {
 	if p.srv.GetIntOneMillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntOneMillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntOneMillion not implemented")}
 	}
-	const regexStr = "/paths/int/1000000/(?P<intPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/int/1000000/(?P<intPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -722,11 +755,11 @@ func (p *PathsServerTransport) dispatchGetIntOneMillion(req *http.Request) (*htt
 
 func (p *PathsServerTransport) dispatchGetNegativeTenBillion(req *http.Request) (*http.Response, error) {
 	if p.srv.GetNegativeTenBillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetNegativeTenBillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNegativeTenBillion not implemented")}
 	}
-	const regexStr = "/paths/long/-10000000000/(?P<longPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/long/-10000000000/(?P<longPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -747,11 +780,11 @@ func (p *PathsServerTransport) dispatchGetNegativeTenBillion(req *http.Request) 
 
 func (p *PathsServerTransport) dispatchGetTenBillion(req *http.Request) (*http.Response, error) {
 	if p.srv.GetTenBillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetTenBillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetTenBillion not implemented")}
 	}
-	const regexStr = "/paths/long/10000000000/(?P<longPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/long/10000000000/(?P<longPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -772,11 +805,11 @@ func (p *PathsServerTransport) dispatchGetTenBillion(req *http.Request) (*http.R
 
 func (p *PathsServerTransport) dispatchStringEmpty(req *http.Request) (*http.Response, error) {
 	if p.srv.StringEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method StringEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringEmpty not implemented")}
 	}
-	const regexStr = "/paths/string/empty/(?P<stringPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/string/empty/(?P<stringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -797,15 +830,19 @@ func (p *PathsServerTransport) dispatchStringEmpty(req *http.Request) (*http.Res
 
 func (p *PathsServerTransport) dispatchStringNull(req *http.Request) (*http.Response, error) {
 	if p.srv.StringNull == nil {
-		return nil, &nonRetriableError{errors.New("method StringNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringNull not implemented")}
 	}
-	const regexStr = "/paths/string/null/(?P<stringPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/string/null/(?P<stringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := p.srv.StringNull(req.Context(), matches[regex.SubexpIndex("stringPath")], nil)
+	stringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("stringPath")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := p.srv.StringNull(req.Context(), stringPathUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -822,11 +859,11 @@ func (p *PathsServerTransport) dispatchStringNull(req *http.Request) (*http.Resp
 
 func (p *PathsServerTransport) dispatchStringURLEncoded(req *http.Request) (*http.Response, error) {
 	if p.srv.StringURLEncoded == nil {
-		return nil, &nonRetriableError{errors.New("method StringURLEncoded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringURLEncoded not implemented")}
 	}
-	const regexStr = "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/(?P<stringPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/(?P<stringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -847,11 +884,11 @@ func (p *PathsServerTransport) dispatchStringURLEncoded(req *http.Request) (*htt
 
 func (p *PathsServerTransport) dispatchStringURLNonEncoded(req *http.Request) (*http.Response, error) {
 	if p.srv.StringURLNonEncoded == nil {
-		return nil, &nonRetriableError{errors.New("method StringURLNonEncoded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringURLNonEncoded not implemented")}
 	}
-	const regexStr = "/paths/string/begin!*'();:@&=+$,end/(?P<stringPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/string/begin!*'();:@&=+$,end/(?P<stringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -872,11 +909,11 @@ func (p *PathsServerTransport) dispatchStringURLNonEncoded(req *http.Request) (*
 
 func (p *PathsServerTransport) dispatchStringUnicode(req *http.Request) (*http.Response, error) {
 	if p.srv.StringUnicode == nil {
-		return nil, &nonRetriableError{errors.New("method StringUnicode not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringUnicode not implemented")}
 	}
-	const regexStr = "/paths/string/unicode/(?P<stringPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/string/unicode/(?P<stringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -897,15 +934,19 @@ func (p *PathsServerTransport) dispatchStringUnicode(req *http.Request) (*http.R
 
 func (p *PathsServerTransport) dispatchUnixTimeURL(req *http.Request) (*http.Response, error) {
 	if p.srv.UnixTimeURL == nil {
-		return nil, &nonRetriableError{errors.New("method UnixTimeURL not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method UnixTimeURL not implemented")}
 	}
-	const regexStr = "/paths/int/1460505600/(?P<unixTimeUrlPath>[a-zA-Z0-9-_]+)"
+	const regexStr = `/paths/int/1460505600/(?P<unixTimeUrlPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	unixTimeURLPathParam, err := strconv.ParseInt(matches[regex.SubexpIndex("unixTimeUrlPath")], 10, 64)
+	unixTimeURLPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("unixTimeUrlPath")])
+	if err != nil {
+		return nil, err
+	}
+	unixTimeURLPathParam, err := strconv.ParseInt(unixTimeURLPathUnescaped, 10, 64)
 	if err != nil {
 		return nil, err
 	}

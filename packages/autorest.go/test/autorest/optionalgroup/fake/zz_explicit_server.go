@@ -208,7 +208,7 @@ func (e *ExplicitServerTransport) Do(req *http.Request) (*http.Response, error) 
 
 func (e *ExplicitServerTransport) dispatchPostOptionalArrayHeader(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalArrayHeader == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalArrayHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalArrayHeader not implemented")}
 	}
 	headerParameterParam := strings.Split(getHeaderValue(req.Header, "headerParameter"), ",")
 	var options *optionalgroup.ExplicitClientPostOptionalArrayHeaderOptions
@@ -234,7 +234,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalArrayHeader(req *http.Requ
 
 func (e *ExplicitServerTransport) dispatchPostOptionalArrayParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalArrayParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalArrayParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalArrayParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[[]*string](req)
 	if err != nil {
@@ -263,7 +263,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalArrayParameter(req *http.R
 
 func (e *ExplicitServerTransport) dispatchPostOptionalArrayProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalArrayProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalArrayProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalArrayProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.ArrayOptionalWrapper](req)
 	if err != nil {
@@ -292,7 +292,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalArrayProperty(req *http.Re
 
 func (e *ExplicitServerTransport) dispatchPostOptionalClassParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalClassParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalClassParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalClassParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.Product](req)
 	if err != nil {
@@ -321,7 +321,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalClassParameter(req *http.R
 
 func (e *ExplicitServerTransport) dispatchPostOptionalClassProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalClassProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalClassProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalClassProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.ClassOptionalWrapper](req)
 	if err != nil {
@@ -350,7 +350,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalClassProperty(req *http.Re
 
 func (e *ExplicitServerTransport) dispatchPostOptionalIntegerHeader(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalIntegerHeader == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalIntegerHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalIntegerHeader not implemented")}
 	}
 	headerParameterParam, err := parseOptional(getHeaderValue(req.Header, "headerParameter"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
@@ -385,7 +385,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalIntegerHeader(req *http.Re
 
 func (e *ExplicitServerTransport) dispatchPostOptionalIntegerParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalIntegerParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalIntegerParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalIntegerParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[int32](req)
 	if err != nil {
@@ -414,7 +414,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalIntegerParameter(req *http
 
 func (e *ExplicitServerTransport) dispatchPostOptionalIntegerProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalIntegerProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalIntegerProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalIntegerProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.IntOptionalWrapper](req)
 	if err != nil {
@@ -443,7 +443,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalIntegerProperty(req *http.
 
 func (e *ExplicitServerTransport) dispatchPostOptionalStringHeader(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalStringHeader == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalStringHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalStringHeader not implemented")}
 	}
 	bodyParameterParam := getOptional(getHeaderValue(req.Header, "bodyParameter"))
 	var options *optionalgroup.ExplicitClientPostOptionalStringHeaderOptions
@@ -469,7 +469,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalStringHeader(req *http.Req
 
 func (e *ExplicitServerTransport) dispatchPostOptionalStringParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalStringParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalStringParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalStringParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
@@ -498,7 +498,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalStringParameter(req *http.
 
 func (e *ExplicitServerTransport) dispatchPostOptionalStringProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostOptionalStringProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptionalStringProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptionalStringProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.StringOptionalWrapper](req)
 	if err != nil {
@@ -527,7 +527,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalStringProperty(req *http.R
 
 func (e *ExplicitServerTransport) dispatchPostRequiredArrayHeader(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredArrayHeader == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredArrayHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredArrayHeader not implemented")}
 	}
 	respr, errRespr := e.srv.PostRequiredArrayHeader(req.Context(), strings.Split(getHeaderValue(req.Header, "headerParameter"), ","), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -546,7 +546,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredArrayHeader(req *http.Requ
 
 func (e *ExplicitServerTransport) dispatchPostRequiredArrayParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredArrayParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredArrayParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredArrayParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[[]*string](req)
 	if err != nil {
@@ -569,7 +569,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredArrayParameter(req *http.R
 
 func (e *ExplicitServerTransport) dispatchPostRequiredArrayProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredArrayProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredArrayProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredArrayProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.ArrayWrapper](req)
 	if err != nil {
@@ -592,7 +592,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredArrayProperty(req *http.Re
 
 func (e *ExplicitServerTransport) dispatchPostRequiredClassParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredClassParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredClassParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredClassParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.Product](req)
 	if err != nil {
@@ -615,7 +615,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredClassParameter(req *http.R
 
 func (e *ExplicitServerTransport) dispatchPostRequiredClassProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredClassProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredClassProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredClassProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.ClassWrapper](req)
 	if err != nil {
@@ -638,7 +638,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredClassProperty(req *http.Re
 
 func (e *ExplicitServerTransport) dispatchPostRequiredIntegerHeader(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredIntegerHeader == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredIntegerHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredIntegerHeader not implemented")}
 	}
 	headerParameterParam, err := parseWithCast(getHeaderValue(req.Header, "headerParameter"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
@@ -667,7 +667,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerHeader(req *http.Re
 
 func (e *ExplicitServerTransport) dispatchPostRequiredIntegerParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredIntegerParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredIntegerParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredIntegerParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[int32](req)
 	if err != nil {
@@ -690,7 +690,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerParameter(req *http
 
 func (e *ExplicitServerTransport) dispatchPostRequiredIntegerProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredIntegerProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredIntegerProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredIntegerProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.IntWrapper](req)
 	if err != nil {
@@ -713,7 +713,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerProperty(req *http.
 
 func (e *ExplicitServerTransport) dispatchPostRequiredStringHeader(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredStringHeader == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredStringHeader not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredStringHeader not implemented")}
 	}
 	respr, errRespr := e.srv.PostRequiredStringHeader(req.Context(), getHeaderValue(req.Header, "headerParameter"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -732,7 +732,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredStringHeader(req *http.Req
 
 func (e *ExplicitServerTransport) dispatchPostRequiredStringParameter(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredStringParameter == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredStringParameter not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredStringParameter not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
@@ -755,7 +755,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredStringParameter(req *http.
 
 func (e *ExplicitServerTransport) dispatchPostRequiredStringProperty(req *http.Request) (*http.Response, error) {
 	if e.srv.PostRequiredStringProperty == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequiredStringProperty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequiredStringProperty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[optionalgroup.StringWrapper](req)
 	if err != nil {
@@ -778,7 +778,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredStringProperty(req *http.R
 
 func (e *ExplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Request) (*http.Response, error) {
 	if e.srv.PutOptionalBinaryBody == nil {
-		return nil, &nonRetriableError{errors.New("method PutOptionalBinaryBody not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutOptionalBinaryBody not implemented")}
 	}
 	respr, errRespr := e.srv.PutOptionalBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -797,7 +797,7 @@ func (e *ExplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Reques
 
 func (e *ExplicitServerTransport) dispatchPutRequiredBinaryBody(req *http.Request) (*http.Response, error) {
 	if e.srv.PutRequiredBinaryBody == nil {
-		return nil, &nonRetriableError{errors.New("method PutRequiredBinaryBody not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutRequiredBinaryBody not implemented")}
 	}
 	respr, errRespr := e.srv.PutRequiredBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

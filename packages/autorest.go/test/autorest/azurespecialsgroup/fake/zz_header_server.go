@@ -78,7 +78,7 @@ func (h *HeaderServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (h *HeaderServerTransport) dispatchCustomNamedRequestID(req *http.Request) (*http.Response, error) {
 	if h.srv.CustomNamedRequestID == nil {
-		return nil, &nonRetriableError{errors.New("method CustomNamedRequestID not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CustomNamedRequestID not implemented")}
 	}
 	respr, errRespr := h.srv.CustomNamedRequestID(req.Context(), getHeaderValue(req.Header, "foo-client-request-id"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -100,7 +100,7 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestID(req *http.Request) 
 
 func (h *HeaderServerTransport) dispatchCustomNamedRequestIDHead(req *http.Request) (*http.Response, error) {
 	if h.srv.CustomNamedRequestIDHead == nil {
-		return nil, &nonRetriableError{errors.New("method CustomNamedRequestIDHead not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CustomNamedRequestIDHead not implemented")}
 	}
 	respr, errRespr := h.srv.CustomNamedRequestIDHead(req.Context(), getHeaderValue(req.Header, "foo-client-request-id"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -122,7 +122,7 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestIDHead(req *http.Reque
 
 func (h *HeaderServerTransport) dispatchCustomNamedRequestIDParamGrouping(req *http.Request) (*http.Response, error) {
 	if h.srv.CustomNamedRequestIDParamGrouping == nil {
-		return nil, &nonRetriableError{errors.New("method CustomNamedRequestIDParamGrouping not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method CustomNamedRequestIDParamGrouping not implemented")}
 	}
 	fooClientRequestIDParam := getHeaderValue(req.Header, "foo-client-request-id")
 	headerClientCustomNamedRequestIDParamGroupingParameters := azurespecialsgroup.HeaderClientCustomNamedRequestIDParamGroupingParameters{

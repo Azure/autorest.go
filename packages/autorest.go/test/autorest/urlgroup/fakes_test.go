@@ -9,6 +9,7 @@ import (
 	"generatortests/urlgroup/fake"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
@@ -37,6 +38,71 @@ func TestFakeGetGlobalAndLocalQueryNull(t *testing.T) {
 	})
 	require.NoError(t, err)
 	resp, err := client.GetGlobalAndLocalQueryNull(context.Background(), pathParam1, pathParam2, &opts)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestFakeArrayCSVInPath(t *testing.T) {
+	intputArrayPath := []string{
+		"/encoded;",
+		"notencoded",
+		"?alsoencoded@",
+	}
+	server := fake.PathsServer{
+		ArrayCSVInPath: func(ctx context.Context, arrayPath []string, options *urlgroup.PathsClientArrayCSVInPathOptions) (resp azfake.Responder[urlgroup.PathsClientArrayCSVInPathResponse], errResp azfake.ErrorResponder) {
+			require.EqualValues(t, intputArrayPath, arrayPath)
+			resp.SetResponse(http.StatusOK, urlgroup.PathsClientArrayCSVInPathResponse{}, nil)
+			return
+		},
+	}
+	client, err := urlgroup.NewPathsClient(&azcore.ClientOptions{
+		Transport: fake.NewPathsServerTransport(&server),
+	})
+	require.NoError(t, err)
+	resp, err := client.ArrayCSVInPath(context.Background(), intputArrayPath, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestFakeArrayStringCSVEmpty(t *testing.T) {
+	inputQuery := []string{
+		"/encoded;",
+		"notencoded",
+		"?alsoencoded@",
+	}
+	server := fake.QueriesServer{
+		ArrayStringCSVEmpty: func(ctx context.Context, options *urlgroup.QueriesClientArrayStringCSVEmptyOptions) (resp azfake.Responder[urlgroup.QueriesClientArrayStringCSVEmptyResponse], errResp azfake.ErrorResponder) {
+			require.NotNil(t, options)
+			require.EqualValues(t, inputQuery, options.ArrayQuery)
+			resp.SetResponse(http.StatusOK, urlgroup.QueriesClientArrayStringCSVEmptyResponse{}, nil)
+			return
+		},
+	}
+	client, err := urlgroup.NewQueriesClient(&azcore.ClientOptions{
+		Transport: fake.NewQueriesServerTransport(&server),
+	})
+	require.NoError(t, err)
+	resp, err := client.ArrayStringCSVEmpty(context.Background(), &urlgroup.QueriesClientArrayStringCSVEmptyOptions{
+		ArrayQuery: inputQuery,
+	})
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestFakeDateTimeNull(t *testing.T) {
+	now := time.Now().UTC()
+	server := fake.PathsServer{
+		DateTimeNull: func(ctx context.Context, dateTimePath time.Time, options *urlgroup.PathsClientDateTimeNullOptions) (resp azfake.Responder[urlgroup.PathsClientDateTimeNullResponse], errResp azfake.ErrorResponder) {
+			require.EqualValues(t, now, dateTimePath)
+			resp.SetResponse(http.StatusBadRequest, urlgroup.PathsClientDateTimeNullResponse{}, nil)
+			return
+		},
+	}
+	client, err := urlgroup.NewPathsClient(&azcore.ClientOptions{
+		Transport: fake.NewPathsServerTransport(&server),
+	})
+	require.NoError(t, err)
+	resp, err := client.DateTimeNull(context.Background(), now, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

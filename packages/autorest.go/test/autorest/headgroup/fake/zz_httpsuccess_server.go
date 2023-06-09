@@ -78,7 +78,7 @@ func (h *HTTPSuccessServerTransport) Do(req *http.Request) (*http.Response, erro
 
 func (h *HTTPSuccessServerTransport) dispatchHead200(req *http.Request) (*http.Response, error) {
 	if h.srv.Head200 == nil {
-		return nil, &nonRetriableError{errors.New("method Head200 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head200 not implemented")}
 	}
 	respr, errRespr := h.srv.Head200(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -97,7 +97,7 @@ func (h *HTTPSuccessServerTransport) dispatchHead200(req *http.Request) (*http.R
 
 func (h *HTTPSuccessServerTransport) dispatchHead204(req *http.Request) (*http.Response, error) {
 	if h.srv.Head204 == nil {
-		return nil, &nonRetriableError{errors.New("method Head204 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head204 not implemented")}
 	}
 	respr, errRespr := h.srv.Head204(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -116,7 +116,7 @@ func (h *HTTPSuccessServerTransport) dispatchHead204(req *http.Request) (*http.R
 
 func (h *HTTPSuccessServerTransport) dispatchHead404(req *http.Request) (*http.Response, error) {
 	if h.srv.Head404 == nil {
-		return nil, &nonRetriableError{errors.New("method Head404 not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Head404 not implemented")}
 	}
 	respr, errRespr := h.srv.Head404(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

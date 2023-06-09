@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -79,10 +80,14 @@ func (q *QueriesServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringMultiEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringMultiEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiEmpty not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), ",")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlmultigroup.QueriesClientArrayStringMultiEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiEmptyOptions{
@@ -106,10 +111,14 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request
 
 func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringMultiNull == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringMultiNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiNull not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), ",")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlmultigroup.QueriesClientArrayStringMultiNullOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiNullOptions{
@@ -133,10 +142,14 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request)
 
 func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringMultiValid == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringMultiValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), ",")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlmultigroup.QueriesClientArrayStringMultiValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiValidOptions{

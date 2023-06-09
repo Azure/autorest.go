@@ -72,7 +72,7 @@ func (x *XMSClientRequestIDServerTransport) Do(req *http.Request) (*http.Respons
 
 func (x *XMSClientRequestIDServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if x.srv.Get == nil {
-		return nil, &nonRetriableError{errors.New("method Get not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
 	respr, errRespr := x.srv.Get(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -91,7 +91,7 @@ func (x *XMSClientRequestIDServerTransport) dispatchGet(req *http.Request) (*htt
 
 func (x *XMSClientRequestIDServerTransport) dispatchParamGet(req *http.Request) (*http.Response, error) {
 	if x.srv.ParamGet == nil {
-		return nil, &nonRetriableError{errors.New("method ParamGet not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ParamGet not implemented")}
 	}
 	respr, errRespr := x.srv.ParamGet(req.Context(), getHeaderValue(req.Header, "x-ms-client-request-id"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

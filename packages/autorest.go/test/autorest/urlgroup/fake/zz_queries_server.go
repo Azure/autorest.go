@@ -18,6 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -274,10 +275,14 @@ func (q *QueriesServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (q *QueriesServerTransport) dispatchArrayStringCSVEmpty(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringCSVEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringCSVEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringCSVEmpty not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), ",")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringCSVEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVEmptyOptions{
@@ -301,10 +306,14 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVEmpty(req *http.Request) 
 
 func (q *QueriesServerTransport) dispatchArrayStringCSVNull(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringCSVNull == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringCSVNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringCSVNull not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), ",")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringCSVNullOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVNullOptions{
@@ -328,10 +337,14 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVNull(req *http.Request) (
 
 func (q *QueriesServerTransport) dispatchArrayStringCSVValid(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringCSVValid == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringCSVValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringCSVValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), ",")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringCSVValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVValidOptions{
@@ -355,10 +368,14 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVValid(req *http.Request) 
 
 func (q *QueriesServerTransport) dispatchArrayStringNoCollectionFormatEmpty(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringNoCollectionFormatEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringNoCollectionFormatEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringNoCollectionFormatEmpty not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), ",")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringNoCollectionFormatEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringNoCollectionFormatEmptyOptions{
@@ -382,10 +399,14 @@ func (q *QueriesServerTransport) dispatchArrayStringNoCollectionFormatEmpty(req 
 
 func (q *QueriesServerTransport) dispatchArrayStringPipesValid(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringPipesValid == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringPipesValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringPipesValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), "|")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, "|")
 	var options *urlgroup.QueriesClientArrayStringPipesValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringPipesValidOptions{
@@ -409,10 +430,14 @@ func (q *QueriesServerTransport) dispatchArrayStringPipesValid(req *http.Request
 
 func (q *QueriesServerTransport) dispatchArrayStringSsvValid(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringSsvValid == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringSsvValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringSsvValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), " ")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, " ")
 	var options *urlgroup.QueriesClientArrayStringSsvValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringSsvValidOptions{
@@ -436,10 +461,14 @@ func (q *QueriesServerTransport) dispatchArrayStringSsvValid(req *http.Request) 
 
 func (q *QueriesServerTransport) dispatchArrayStringTsvValid(req *http.Request) (*http.Response, error) {
 	if q.srv.ArrayStringTsvValid == nil {
-		return nil, &nonRetriableError{errors.New("method ArrayStringTsvValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ArrayStringTsvValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryParam := strings.Split(qp.Get("arrayQuery"), "\t")
+	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
+	if err != nil {
+		return nil, err
+	}
+	arrayQueryParam := strings.Split(arrayQueryUnescaped, "\t")
 	var options *urlgroup.QueriesClientArrayStringTsvValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringTsvValidOptions{
@@ -463,7 +492,7 @@ func (q *QueriesServerTransport) dispatchArrayStringTsvValid(req *http.Request) 
 
 func (q *QueriesServerTransport) dispatchByteEmpty(req *http.Request) (*http.Response, error) {
 	if q.srv.ByteEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method ByteEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ByteEmpty not implemented")}
 	}
 	respr, errRespr := q.srv.ByteEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -482,10 +511,14 @@ func (q *QueriesServerTransport) dispatchByteEmpty(req *http.Request) (*http.Res
 
 func (q *QueriesServerTransport) dispatchByteMultiByte(req *http.Request) (*http.Response, error) {
 	if q.srv.ByteMultiByte == nil {
-		return nil, &nonRetriableError{errors.New("method ByteMultiByte not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ByteMultiByte not implemented")}
 	}
 	qp := req.URL.Query()
-	byteQueryParam, err := base64.StdEncoding.DecodeString(qp.Get("byteQuery"))
+	byteQueryUnescaped, err := url.QueryUnescape(qp.Get("byteQuery"))
+	if err != nil {
+		return nil, err
+	}
+	byteQueryParam, err := base64.StdEncoding.DecodeString(byteQueryUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -512,10 +545,14 @@ func (q *QueriesServerTransport) dispatchByteMultiByte(req *http.Request) (*http
 
 func (q *QueriesServerTransport) dispatchByteNull(req *http.Request) (*http.Response, error) {
 	if q.srv.ByteNull == nil {
-		return nil, &nonRetriableError{errors.New("method ByteNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ByteNull not implemented")}
 	}
 	qp := req.URL.Query()
-	byteQueryParam, err := base64.StdEncoding.DecodeString(qp.Get("byteQuery"))
+	byteQueryUnescaped, err := url.QueryUnescape(qp.Get("byteQuery"))
+	if err != nil {
+		return nil, err
+	}
+	byteQueryParam, err := base64.StdEncoding.DecodeString(byteQueryUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -542,10 +579,14 @@ func (q *QueriesServerTransport) dispatchByteNull(req *http.Request) (*http.Resp
 
 func (q *QueriesServerTransport) dispatchDateNull(req *http.Request) (*http.Response, error) {
 	if q.srv.DateNull == nil {
-		return nil, &nonRetriableError{errors.New("method DateNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateNull not implemented")}
 	}
 	qp := req.URL.Query()
-	dateQueryParam, err := parseOptional(qp.Get("dateQuery"), func(v string) (time.Time, error) { return time.Parse("2006-01-02", v) })
+	dateQueryUnescaped, err := url.QueryUnescape(qp.Get("dateQuery"))
+	if err != nil {
+		return nil, err
+	}
+	dateQueryParam, err := parseOptional(dateQueryUnescaped, func(v string) (time.Time, error) { return time.Parse("2006-01-02", v) })
 	if err != nil {
 		return nil, err
 	}
@@ -572,10 +613,14 @@ func (q *QueriesServerTransport) dispatchDateNull(req *http.Request) (*http.Resp
 
 func (q *QueriesServerTransport) dispatchDateTimeNull(req *http.Request) (*http.Response, error) {
 	if q.srv.DateTimeNull == nil {
-		return nil, &nonRetriableError{errors.New("method DateTimeNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateTimeNull not implemented")}
 	}
 	qp := req.URL.Query()
-	dateTimeQueryParam, err := parseOptional(qp.Get("dateTimeQuery"), func(v string) (time.Time, error) { return time.Parse(time.RFC3339Nano, v) })
+	dateTimeQueryUnescaped, err := url.QueryUnescape(qp.Get("dateTimeQuery"))
+	if err != nil {
+		return nil, err
+	}
+	dateTimeQueryParam, err := parseOptional(dateTimeQueryUnescaped, func(v string) (time.Time, error) { return time.Parse(time.RFC3339Nano, v) })
 	if err != nil {
 		return nil, err
 	}
@@ -602,7 +647,7 @@ func (q *QueriesServerTransport) dispatchDateTimeNull(req *http.Request) (*http.
 
 func (q *QueriesServerTransport) dispatchDateTimeValid(req *http.Request) (*http.Response, error) {
 	if q.srv.DateTimeValid == nil {
-		return nil, &nonRetriableError{errors.New("method DateTimeValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateTimeValid not implemented")}
 	}
 	respr, errRespr := q.srv.DateTimeValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -621,7 +666,7 @@ func (q *QueriesServerTransport) dispatchDateTimeValid(req *http.Request) (*http
 
 func (q *QueriesServerTransport) dispatchDateValid(req *http.Request) (*http.Response, error) {
 	if q.srv.DateValid == nil {
-		return nil, &nonRetriableError{errors.New("method DateValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DateValid not implemented")}
 	}
 	respr, errRespr := q.srv.DateValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -640,7 +685,7 @@ func (q *QueriesServerTransport) dispatchDateValid(req *http.Request) (*http.Res
 
 func (q *QueriesServerTransport) dispatchDoubleDecimalNegative(req *http.Request) (*http.Response, error) {
 	if q.srv.DoubleDecimalNegative == nil {
-		return nil, &nonRetriableError{errors.New("method DoubleDecimalNegative not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DoubleDecimalNegative not implemented")}
 	}
 	respr, errRespr := q.srv.DoubleDecimalNegative(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -659,7 +704,7 @@ func (q *QueriesServerTransport) dispatchDoubleDecimalNegative(req *http.Request
 
 func (q *QueriesServerTransport) dispatchDoubleDecimalPositive(req *http.Request) (*http.Response, error) {
 	if q.srv.DoubleDecimalPositive == nil {
-		return nil, &nonRetriableError{errors.New("method DoubleDecimalPositive not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DoubleDecimalPositive not implemented")}
 	}
 	respr, errRespr := q.srv.DoubleDecimalPositive(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -678,10 +723,14 @@ func (q *QueriesServerTransport) dispatchDoubleDecimalPositive(req *http.Request
 
 func (q *QueriesServerTransport) dispatchDoubleNull(req *http.Request) (*http.Response, error) {
 	if q.srv.DoubleNull == nil {
-		return nil, &nonRetriableError{errors.New("method DoubleNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method DoubleNull not implemented")}
 	}
 	qp := req.URL.Query()
-	doubleQueryParam, err := parseOptional(qp.Get("doubleQuery"), func(v string) (float64, error) {
+	doubleQueryUnescaped, err := url.QueryUnescape(qp.Get("doubleQuery"))
+	if err != nil {
+		return nil, err
+	}
+	doubleQueryParam, err := parseOptional(doubleQueryUnescaped, func(v string) (float64, error) {
 		p, parseErr := strconv.ParseFloat(v, 64)
 		if parseErr != nil {
 			return 0, parseErr
@@ -714,10 +763,14 @@ func (q *QueriesServerTransport) dispatchDoubleNull(req *http.Request) (*http.Re
 
 func (q *QueriesServerTransport) dispatchEnumNull(req *http.Request) (*http.Response, error) {
 	if q.srv.EnumNull == nil {
-		return nil, &nonRetriableError{errors.New("method EnumNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method EnumNull not implemented")}
 	}
 	qp := req.URL.Query()
-	enumQueryParam := getOptional(urlgroup.URIColor(qp.Get("enumQuery")))
+	enumQueryUnescaped, err := url.QueryUnescape(qp.Get("enumQuery"))
+	if err != nil {
+		return nil, err
+	}
+	enumQueryParam := getOptional(urlgroup.URIColor(enumQueryUnescaped))
 	var options *urlgroup.QueriesClientEnumNullOptions
 	if enumQueryParam != nil {
 		options = &urlgroup.QueriesClientEnumNullOptions{
@@ -741,10 +794,14 @@ func (q *QueriesServerTransport) dispatchEnumNull(req *http.Request) (*http.Resp
 
 func (q *QueriesServerTransport) dispatchEnumValid(req *http.Request) (*http.Response, error) {
 	if q.srv.EnumValid == nil {
-		return nil, &nonRetriableError{errors.New("method EnumValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method EnumValid not implemented")}
 	}
 	qp := req.URL.Query()
-	enumQueryParam := getOptional(urlgroup.URIColor(qp.Get("enumQuery")))
+	enumQueryUnescaped, err := url.QueryUnescape(qp.Get("enumQuery"))
+	if err != nil {
+		return nil, err
+	}
+	enumQueryParam := getOptional(urlgroup.URIColor(enumQueryUnescaped))
 	var options *urlgroup.QueriesClientEnumValidOptions
 	if enumQueryParam != nil {
 		options = &urlgroup.QueriesClientEnumValidOptions{
@@ -768,10 +825,14 @@ func (q *QueriesServerTransport) dispatchEnumValid(req *http.Request) (*http.Res
 
 func (q *QueriesServerTransport) dispatchFloatNull(req *http.Request) (*http.Response, error) {
 	if q.srv.FloatNull == nil {
-		return nil, &nonRetriableError{errors.New("method FloatNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method FloatNull not implemented")}
 	}
 	qp := req.URL.Query()
-	floatQueryParam, err := parseOptional(qp.Get("floatQuery"), func(v string) (float32, error) {
+	floatQueryUnescaped, err := url.QueryUnescape(qp.Get("floatQuery"))
+	if err != nil {
+		return nil, err
+	}
+	floatQueryParam, err := parseOptional(floatQueryUnescaped, func(v string) (float32, error) {
 		p, parseErr := strconv.ParseFloat(v, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -804,7 +865,7 @@ func (q *QueriesServerTransport) dispatchFloatNull(req *http.Request) (*http.Res
 
 func (q *QueriesServerTransport) dispatchFloatScientificNegative(req *http.Request) (*http.Response, error) {
 	if q.srv.FloatScientificNegative == nil {
-		return nil, &nonRetriableError{errors.New("method FloatScientificNegative not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method FloatScientificNegative not implemented")}
 	}
 	respr, errRespr := q.srv.FloatScientificNegative(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -823,7 +884,7 @@ func (q *QueriesServerTransport) dispatchFloatScientificNegative(req *http.Reque
 
 func (q *QueriesServerTransport) dispatchFloatScientificPositive(req *http.Request) (*http.Response, error) {
 	if q.srv.FloatScientificPositive == nil {
-		return nil, &nonRetriableError{errors.New("method FloatScientificPositive not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method FloatScientificPositive not implemented")}
 	}
 	respr, errRespr := q.srv.FloatScientificPositive(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -842,7 +903,7 @@ func (q *QueriesServerTransport) dispatchFloatScientificPositive(req *http.Reque
 
 func (q *QueriesServerTransport) dispatchGetBooleanFalse(req *http.Request) (*http.Response, error) {
 	if q.srv.GetBooleanFalse == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanFalse not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanFalse not implemented")}
 	}
 	respr, errRespr := q.srv.GetBooleanFalse(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -861,10 +922,14 @@ func (q *QueriesServerTransport) dispatchGetBooleanFalse(req *http.Request) (*ht
 
 func (q *QueriesServerTransport) dispatchGetBooleanNull(req *http.Request) (*http.Response, error) {
 	if q.srv.GetBooleanNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanNull not implemented")}
 	}
 	qp := req.URL.Query()
-	boolQueryParam, err := parseOptional(qp.Get("boolQuery"), strconv.ParseBool)
+	boolQueryUnescaped, err := url.QueryUnescape(qp.Get("boolQuery"))
+	if err != nil {
+		return nil, err
+	}
+	boolQueryParam, err := parseOptional(boolQueryUnescaped, strconv.ParseBool)
 	if err != nil {
 		return nil, err
 	}
@@ -891,7 +956,7 @@ func (q *QueriesServerTransport) dispatchGetBooleanNull(req *http.Request) (*htt
 
 func (q *QueriesServerTransport) dispatchGetBooleanTrue(req *http.Request) (*http.Response, error) {
 	if q.srv.GetBooleanTrue == nil {
-		return nil, &nonRetriableError{errors.New("method GetBooleanTrue not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBooleanTrue not implemented")}
 	}
 	respr, errRespr := q.srv.GetBooleanTrue(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -910,7 +975,7 @@ func (q *QueriesServerTransport) dispatchGetBooleanTrue(req *http.Request) (*htt
 
 func (q *QueriesServerTransport) dispatchGetIntNegativeOneMillion(req *http.Request) (*http.Response, error) {
 	if q.srv.GetIntNegativeOneMillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntNegativeOneMillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntNegativeOneMillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetIntNegativeOneMillion(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -929,10 +994,14 @@ func (q *QueriesServerTransport) dispatchGetIntNegativeOneMillion(req *http.Requ
 
 func (q *QueriesServerTransport) dispatchGetIntNull(req *http.Request) (*http.Response, error) {
 	if q.srv.GetIntNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntNull not implemented")}
 	}
 	qp := req.URL.Query()
-	intQueryParam, err := parseOptional(qp.Get("intQuery"), func(v string) (int32, error) {
+	intQueryUnescaped, err := url.QueryUnescape(qp.Get("intQuery"))
+	if err != nil {
+		return nil, err
+	}
+	intQueryParam, err := parseOptional(intQueryUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -965,7 +1034,7 @@ func (q *QueriesServerTransport) dispatchGetIntNull(req *http.Request) (*http.Re
 
 func (q *QueriesServerTransport) dispatchGetIntOneMillion(req *http.Request) (*http.Response, error) {
 	if q.srv.GetIntOneMillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetIntOneMillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetIntOneMillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetIntOneMillion(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -984,10 +1053,14 @@ func (q *QueriesServerTransport) dispatchGetIntOneMillion(req *http.Request) (*h
 
 func (q *QueriesServerTransport) dispatchGetLongNull(req *http.Request) (*http.Response, error) {
 	if q.srv.GetLongNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetLongNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetLongNull not implemented")}
 	}
 	qp := req.URL.Query()
-	longQueryParam, err := parseOptional(qp.Get("longQuery"), func(v string) (int64, error) {
+	longQueryUnescaped, err := url.QueryUnescape(qp.Get("longQuery"))
+	if err != nil {
+		return nil, err
+	}
+	longQueryParam, err := parseOptional(longQueryUnescaped, func(v string) (int64, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 64)
 		if parseErr != nil {
 			return 0, parseErr
@@ -1020,7 +1093,7 @@ func (q *QueriesServerTransport) dispatchGetLongNull(req *http.Request) (*http.R
 
 func (q *QueriesServerTransport) dispatchGetNegativeTenBillion(req *http.Request) (*http.Response, error) {
 	if q.srv.GetNegativeTenBillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetNegativeTenBillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNegativeTenBillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetNegativeTenBillion(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1039,7 +1112,7 @@ func (q *QueriesServerTransport) dispatchGetNegativeTenBillion(req *http.Request
 
 func (q *QueriesServerTransport) dispatchGetTenBillion(req *http.Request) (*http.Response, error) {
 	if q.srv.GetTenBillion == nil {
-		return nil, &nonRetriableError{errors.New("method GetTenBillion not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetTenBillion not implemented")}
 	}
 	respr, errRespr := q.srv.GetTenBillion(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1058,7 +1131,7 @@ func (q *QueriesServerTransport) dispatchGetTenBillion(req *http.Request) (*http
 
 func (q *QueriesServerTransport) dispatchStringEmpty(req *http.Request) (*http.Response, error) {
 	if q.srv.StringEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method StringEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringEmpty not implemented")}
 	}
 	respr, errRespr := q.srv.StringEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1077,10 +1150,14 @@ func (q *QueriesServerTransport) dispatchStringEmpty(req *http.Request) (*http.R
 
 func (q *QueriesServerTransport) dispatchStringNull(req *http.Request) (*http.Response, error) {
 	if q.srv.StringNull == nil {
-		return nil, &nonRetriableError{errors.New("method StringNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringNull not implemented")}
 	}
 	qp := req.URL.Query()
-	stringQueryParam := getOptional(qp.Get("stringQuery"))
+	stringQueryUnescaped, err := url.QueryUnescape(qp.Get("stringQuery"))
+	if err != nil {
+		return nil, err
+	}
+	stringQueryParam := getOptional(stringQueryUnescaped)
 	var options *urlgroup.QueriesClientStringNullOptions
 	if stringQueryParam != nil {
 		options = &urlgroup.QueriesClientStringNullOptions{
@@ -1104,7 +1181,7 @@ func (q *QueriesServerTransport) dispatchStringNull(req *http.Request) (*http.Re
 
 func (q *QueriesServerTransport) dispatchStringURLEncoded(req *http.Request) (*http.Response, error) {
 	if q.srv.StringURLEncoded == nil {
-		return nil, &nonRetriableError{errors.New("method StringURLEncoded not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringURLEncoded not implemented")}
 	}
 	respr, errRespr := q.srv.StringURLEncoded(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -1123,7 +1200,7 @@ func (q *QueriesServerTransport) dispatchStringURLEncoded(req *http.Request) (*h
 
 func (q *QueriesServerTransport) dispatchStringUnicode(req *http.Request) (*http.Response, error) {
 	if q.srv.StringUnicode == nil {
-		return nil, &nonRetriableError{errors.New("method StringUnicode not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method StringUnicode not implemented")}
 	}
 	respr, errRespr := q.srv.StringUnicode(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

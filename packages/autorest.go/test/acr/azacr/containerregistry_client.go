@@ -11,15 +11,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewAuthenticationClient(endpoint string, options *azcore.ClientOptions) (*AuthenticationClient, error) {
+func NewContainerRegistryClient(endpoint string, options *azcore.ClientOptions) (*ContainerRegistryClient, error) {
 	if options == nil {
 		options = &azcore.ClientOptions{}
 	}
-	client, err := azcore.NewClient("azacr.AuthenticationClient", "v0.1.0", runtime.PipelineOptions{}, options)
+	client, err := azcore.NewClient("azacr.ContainerRegistryClient", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &AuthenticationClient{
+	return &ContainerRegistryClient{
 		internal: client,
 		endpoint: endpoint,
 	}, nil

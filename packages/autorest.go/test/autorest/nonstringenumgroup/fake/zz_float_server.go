@@ -72,7 +72,7 @@ func (f *FloatServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (f *FloatServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if f.srv.Get == nil {
-		return nil, &nonRetriableError{errors.New("method Get not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
 	respr, errRespr := f.srv.Get(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -91,7 +91,7 @@ func (f *FloatServerTransport) dispatchGet(req *http.Request) (*http.Response, e
 
 func (f *FloatServerTransport) dispatchPut(req *http.Request) (*http.Response, error) {
 	if f.srv.Put == nil {
-		return nil, &nonRetriableError{errors.New("method Put not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[nonstringenumgroup.FloatEnum](req)
 	if err != nil {

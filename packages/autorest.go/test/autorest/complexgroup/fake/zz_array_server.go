@@ -90,7 +90,7 @@ func (a *ArrayServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (a *ArrayServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
 	if a.srv.GetEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmpty not implemented")}
 	}
 	respr, errRespr := a.srv.GetEmpty(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -109,7 +109,7 @@ func (a *ArrayServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 
 func (a *ArrayServerTransport) dispatchGetNotProvided(req *http.Request) (*http.Response, error) {
 	if a.srv.GetNotProvided == nil {
-		return nil, &nonRetriableError{errors.New("method GetNotProvided not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNotProvided not implemented")}
 	}
 	respr, errRespr := a.srv.GetNotProvided(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -128,7 +128,7 @@ func (a *ArrayServerTransport) dispatchGetNotProvided(req *http.Request) (*http.
 
 func (a *ArrayServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -147,7 +147,7 @@ func (a *ArrayServerTransport) dispatchGetValid(req *http.Request) (*http.Respon
 
 func (a *ArrayServerTransport) dispatchPutEmpty(req *http.Request) (*http.Response, error) {
 	if a.srv.PutEmpty == nil {
-		return nil, &nonRetriableError{errors.New("method PutEmpty not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutEmpty not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.ArrayWrapper](req)
 	if err != nil {
@@ -170,7 +170,7 @@ func (a *ArrayServerTransport) dispatchPutEmpty(req *http.Request) (*http.Respon
 
 func (a *ArrayServerTransport) dispatchPutValid(req *http.Request) (*http.Response, error) {
 	if a.srv.PutValid == nil {
-		return nil, &nonRetriableError{errors.New("method PutValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutValid not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[complexgroup.ArrayWrapper](req)
 	if err != nil {

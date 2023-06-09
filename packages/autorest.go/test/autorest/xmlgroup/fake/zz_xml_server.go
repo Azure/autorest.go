@@ -264,7 +264,7 @@ func (x *XMLServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (x *XMLServerTransport) dispatchGetACLs(req *http.Request) (*http.Response, error) {
 	if x.srv.GetACLs == nil {
-		return nil, &nonRetriableError{errors.New("method GetACLs not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetACLs not implemented")}
 	}
 	respr, errRespr := x.srv.GetACLs(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -283,7 +283,7 @@ func (x *XMLServerTransport) dispatchGetACLs(req *http.Request) (*http.Response,
 
 func (x *XMLServerTransport) dispatchGetBytes(req *http.Request) (*http.Response, error) {
 	if x.srv.GetBytes == nil {
-		return nil, &nonRetriableError{errors.New("method GetBytes not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBytes not implemented")}
 	}
 	respr, errRespr := x.srv.GetBytes(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -302,7 +302,7 @@ func (x *XMLServerTransport) dispatchGetBytes(req *http.Request) (*http.Response
 
 func (x *XMLServerTransport) dispatchGetComplexTypeRefNoMeta(req *http.Request) (*http.Response, error) {
 	if x.srv.GetComplexTypeRefNoMeta == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplexTypeRefNoMeta not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplexTypeRefNoMeta not implemented")}
 	}
 	respr, errRespr := x.srv.GetComplexTypeRefNoMeta(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -321,7 +321,7 @@ func (x *XMLServerTransport) dispatchGetComplexTypeRefNoMeta(req *http.Request) 
 
 func (x *XMLServerTransport) dispatchGetComplexTypeRefWithMeta(req *http.Request) (*http.Response, error) {
 	if x.srv.GetComplexTypeRefWithMeta == nil {
-		return nil, &nonRetriableError{errors.New("method GetComplexTypeRefWithMeta not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetComplexTypeRefWithMeta not implemented")}
 	}
 	respr, errRespr := x.srv.GetComplexTypeRefWithMeta(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -340,7 +340,7 @@ func (x *XMLServerTransport) dispatchGetComplexTypeRefWithMeta(req *http.Request
 
 func (x *XMLServerTransport) dispatchGetEmptyChildElement(req *http.Request) (*http.Response, error) {
 	if x.srv.GetEmptyChildElement == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmptyChildElement not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmptyChildElement not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyChildElement(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -359,7 +359,7 @@ func (x *XMLServerTransport) dispatchGetEmptyChildElement(req *http.Request) (*h
 
 func (x *XMLServerTransport) dispatchGetEmptyList(req *http.Request) (*http.Response, error) {
 	if x.srv.GetEmptyList == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmptyList not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmptyList not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyList(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -378,7 +378,7 @@ func (x *XMLServerTransport) dispatchGetEmptyList(req *http.Request) (*http.Resp
 
 func (x *XMLServerTransport) dispatchGetEmptyRootList(req *http.Request) (*http.Response, error) {
 	if x.srv.GetEmptyRootList == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmptyRootList not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmptyRootList not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyRootList(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -397,7 +397,7 @@ func (x *XMLServerTransport) dispatchGetEmptyRootList(req *http.Request) (*http.
 
 func (x *XMLServerTransport) dispatchGetEmptyWrappedLists(req *http.Request) (*http.Response, error) {
 	if x.srv.GetEmptyWrappedLists == nil {
-		return nil, &nonRetriableError{errors.New("method GetEmptyWrappedLists not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetEmptyWrappedLists not implemented")}
 	}
 	respr, errRespr := x.srv.GetEmptyWrappedLists(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -416,7 +416,7 @@ func (x *XMLServerTransport) dispatchGetEmptyWrappedLists(req *http.Request) (*h
 
 func (x *XMLServerTransport) dispatchGetHeaders(req *http.Request) (*http.Response, error) {
 	if x.srv.GetHeaders == nil {
-		return nil, &nonRetriableError{errors.New("method GetHeaders not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetHeaders not implemented")}
 	}
 	respr, errRespr := x.srv.GetHeaders(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -438,7 +438,7 @@ func (x *XMLServerTransport) dispatchGetHeaders(req *http.Request) (*http.Respon
 
 func (x *XMLServerTransport) dispatchGetRootList(req *http.Request) (*http.Response, error) {
 	if x.srv.GetRootList == nil {
-		return nil, &nonRetriableError{errors.New("method GetRootList not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetRootList not implemented")}
 	}
 	respr, errRespr := x.srv.GetRootList(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -457,7 +457,7 @@ func (x *XMLServerTransport) dispatchGetRootList(req *http.Request) (*http.Respo
 
 func (x *XMLServerTransport) dispatchGetRootListSingleItem(req *http.Request) (*http.Response, error) {
 	if x.srv.GetRootListSingleItem == nil {
-		return nil, &nonRetriableError{errors.New("method GetRootListSingleItem not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetRootListSingleItem not implemented")}
 	}
 	respr, errRespr := x.srv.GetRootListSingleItem(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -476,7 +476,7 @@ func (x *XMLServerTransport) dispatchGetRootListSingleItem(req *http.Request) (*
 
 func (x *XMLServerTransport) dispatchGetServiceProperties(req *http.Request) (*http.Response, error) {
 	if x.srv.GetServiceProperties == nil {
-		return nil, &nonRetriableError{errors.New("method GetServiceProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetServiceProperties not implemented")}
 	}
 	respr, errRespr := x.srv.GetServiceProperties(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -495,7 +495,7 @@ func (x *XMLServerTransport) dispatchGetServiceProperties(req *http.Request) (*h
 
 func (x *XMLServerTransport) dispatchGetSimple(req *http.Request) (*http.Response, error) {
 	if x.srv.GetSimple == nil {
-		return nil, &nonRetriableError{errors.New("method GetSimple not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSimple not implemented")}
 	}
 	respr, errRespr := x.srv.GetSimple(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -514,7 +514,7 @@ func (x *XMLServerTransport) dispatchGetSimple(req *http.Request) (*http.Respons
 
 func (x *XMLServerTransport) dispatchGetURI(req *http.Request) (*http.Response, error) {
 	if x.srv.GetURI == nil {
-		return nil, &nonRetriableError{errors.New("method GetURI not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetURI not implemented")}
 	}
 	respr, errRespr := x.srv.GetURI(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -533,7 +533,7 @@ func (x *XMLServerTransport) dispatchGetURI(req *http.Request) (*http.Response, 
 
 func (x *XMLServerTransport) dispatchGetWrappedLists(req *http.Request) (*http.Response, error) {
 	if x.srv.GetWrappedLists == nil {
-		return nil, &nonRetriableError{errors.New("method GetWrappedLists not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetWrappedLists not implemented")}
 	}
 	respr, errRespr := x.srv.GetWrappedLists(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -552,7 +552,7 @@ func (x *XMLServerTransport) dispatchGetWrappedLists(req *http.Request) (*http.R
 
 func (x *XMLServerTransport) dispatchGetXMsText(req *http.Request) (*http.Response, error) {
 	if x.srv.GetXMsText == nil {
-		return nil, &nonRetriableError{errors.New("method GetXMsText not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetXMsText not implemented")}
 	}
 	respr, errRespr := x.srv.GetXMsText(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -571,7 +571,7 @@ func (x *XMLServerTransport) dispatchGetXMsText(req *http.Request) (*http.Respon
 
 func (x *XMLServerTransport) dispatchJSONInput(req *http.Request) (*http.Response, error) {
 	if x.srv.JSONInput == nil {
-		return nil, &nonRetriableError{errors.New("method JSONInput not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method JSONInput not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[xmlgroup.JSONInput](req)
 	if err != nil {
@@ -594,7 +594,7 @@ func (x *XMLServerTransport) dispatchJSONInput(req *http.Request) (*http.Respons
 
 func (x *XMLServerTransport) dispatchJSONOutput(req *http.Request) (*http.Response, error) {
 	if x.srv.JSONOutput == nil {
-		return nil, &nonRetriableError{errors.New("method JSONOutput not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method JSONOutput not implemented")}
 	}
 	respr, errRespr := x.srv.JSONOutput(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -613,7 +613,7 @@ func (x *XMLServerTransport) dispatchJSONOutput(req *http.Request) (*http.Respon
 
 func (x *XMLServerTransport) dispatchListBlobs(req *http.Request) (*http.Response, error) {
 	if x.srv.ListBlobs == nil {
-		return nil, &nonRetriableError{errors.New("method ListBlobs not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ListBlobs not implemented")}
 	}
 	respr, errRespr := x.srv.ListBlobs(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -632,7 +632,7 @@ func (x *XMLServerTransport) dispatchListBlobs(req *http.Request) (*http.Respons
 
 func (x *XMLServerTransport) dispatchListContainers(req *http.Request) (*http.Response, error) {
 	if x.srv.ListContainers == nil {
-		return nil, &nonRetriableError{errors.New("method ListContainers not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ListContainers not implemented")}
 	}
 	respr, errRespr := x.srv.ListContainers(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -651,7 +651,7 @@ func (x *XMLServerTransport) dispatchListContainers(req *http.Request) (*http.Re
 
 func (x *XMLServerTransport) dispatchPutACLs(req *http.Request) (*http.Response, error) {
 	if x.srv.PutACLs == nil {
-		return nil, &nonRetriableError{errors.New("method PutACLs not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutACLs not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[[]*xmlgroup.SignedIdentifier](req)
 	if err != nil {
@@ -674,7 +674,7 @@ func (x *XMLServerTransport) dispatchPutACLs(req *http.Request) (*http.Response,
 
 func (x *XMLServerTransport) dispatchPutBinary(req *http.Request) (*http.Response, error) {
 	if x.srv.PutBinary == nil {
-		return nil, &nonRetriableError{errors.New("method PutBinary not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBinary not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.ModelWithByteProperty](req)
 	if err != nil {
@@ -697,7 +697,7 @@ func (x *XMLServerTransport) dispatchPutBinary(req *http.Request) (*http.Respons
 
 func (x *XMLServerTransport) dispatchPutComplexTypeRefNoMeta(req *http.Request) (*http.Response, error) {
 	if x.srv.PutComplexTypeRefNoMeta == nil {
-		return nil, &nonRetriableError{errors.New("method PutComplexTypeRefNoMeta not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutComplexTypeRefNoMeta not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.RootWithRefAndNoMeta](req)
 	if err != nil {
@@ -720,7 +720,7 @@ func (x *XMLServerTransport) dispatchPutComplexTypeRefNoMeta(req *http.Request) 
 
 func (x *XMLServerTransport) dispatchPutComplexTypeRefWithMeta(req *http.Request) (*http.Response, error) {
 	if x.srv.PutComplexTypeRefWithMeta == nil {
-		return nil, &nonRetriableError{errors.New("method PutComplexTypeRefWithMeta not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutComplexTypeRefWithMeta not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.RootWithRefAndMeta](req)
 	if err != nil {
@@ -743,7 +743,7 @@ func (x *XMLServerTransport) dispatchPutComplexTypeRefWithMeta(req *http.Request
 
 func (x *XMLServerTransport) dispatchPutEmptyChildElement(req *http.Request) (*http.Response, error) {
 	if x.srv.PutEmptyChildElement == nil {
-		return nil, &nonRetriableError{errors.New("method PutEmptyChildElement not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutEmptyChildElement not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.Banana](req)
 	if err != nil {
@@ -766,7 +766,7 @@ func (x *XMLServerTransport) dispatchPutEmptyChildElement(req *http.Request) (*h
 
 func (x *XMLServerTransport) dispatchPutEmptyList(req *http.Request) (*http.Response, error) {
 	if x.srv.PutEmptyList == nil {
-		return nil, &nonRetriableError{errors.New("method PutEmptyList not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutEmptyList not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.Slideshow](req)
 	if err != nil {
@@ -789,7 +789,7 @@ func (x *XMLServerTransport) dispatchPutEmptyList(req *http.Request) (*http.Resp
 
 func (x *XMLServerTransport) dispatchPutEmptyRootList(req *http.Request) (*http.Response, error) {
 	if x.srv.PutEmptyRootList == nil {
-		return nil, &nonRetriableError{errors.New("method PutEmptyRootList not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutEmptyRootList not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[[]*xmlgroup.Banana](req)
 	if err != nil {
@@ -812,7 +812,7 @@ func (x *XMLServerTransport) dispatchPutEmptyRootList(req *http.Request) (*http.
 
 func (x *XMLServerTransport) dispatchPutEmptyWrappedLists(req *http.Request) (*http.Response, error) {
 	if x.srv.PutEmptyWrappedLists == nil {
-		return nil, &nonRetriableError{errors.New("method PutEmptyWrappedLists not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutEmptyWrappedLists not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.AppleBarrel](req)
 	if err != nil {
@@ -835,7 +835,7 @@ func (x *XMLServerTransport) dispatchPutEmptyWrappedLists(req *http.Request) (*h
 
 func (x *XMLServerTransport) dispatchPutRootList(req *http.Request) (*http.Response, error) {
 	if x.srv.PutRootList == nil {
-		return nil, &nonRetriableError{errors.New("method PutRootList not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutRootList not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[[]*xmlgroup.Banana](req)
 	if err != nil {
@@ -858,7 +858,7 @@ func (x *XMLServerTransport) dispatchPutRootList(req *http.Request) (*http.Respo
 
 func (x *XMLServerTransport) dispatchPutRootListSingleItem(req *http.Request) (*http.Response, error) {
 	if x.srv.PutRootListSingleItem == nil {
-		return nil, &nonRetriableError{errors.New("method PutRootListSingleItem not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutRootListSingleItem not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[[]*xmlgroup.Banana](req)
 	if err != nil {
@@ -881,7 +881,7 @@ func (x *XMLServerTransport) dispatchPutRootListSingleItem(req *http.Request) (*
 
 func (x *XMLServerTransport) dispatchPutServiceProperties(req *http.Request) (*http.Response, error) {
 	if x.srv.PutServiceProperties == nil {
-		return nil, &nonRetriableError{errors.New("method PutServiceProperties not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutServiceProperties not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.StorageServiceProperties](req)
 	if err != nil {
@@ -904,7 +904,7 @@ func (x *XMLServerTransport) dispatchPutServiceProperties(req *http.Request) (*h
 
 func (x *XMLServerTransport) dispatchPutSimple(req *http.Request) (*http.Response, error) {
 	if x.srv.PutSimple == nil {
-		return nil, &nonRetriableError{errors.New("method PutSimple not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutSimple not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.Slideshow](req)
 	if err != nil {
@@ -927,7 +927,7 @@ func (x *XMLServerTransport) dispatchPutSimple(req *http.Request) (*http.Respons
 
 func (x *XMLServerTransport) dispatchPutURI(req *http.Request) (*http.Response, error) {
 	if x.srv.PutURI == nil {
-		return nil, &nonRetriableError{errors.New("method PutURI not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutURI not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.ModelWithURLProperty](req)
 	if err != nil {
@@ -950,7 +950,7 @@ func (x *XMLServerTransport) dispatchPutURI(req *http.Request) (*http.Response, 
 
 func (x *XMLServerTransport) dispatchPutWrappedLists(req *http.Request) (*http.Response, error) {
 	if x.srv.PutWrappedLists == nil {
-		return nil, &nonRetriableError{errors.New("method PutWrappedLists not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutWrappedLists not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsXML[xmlgroup.AppleBarrel](req)
 	if err != nil {

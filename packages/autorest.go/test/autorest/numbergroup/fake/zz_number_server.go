@@ -204,7 +204,7 @@ func (n *NumberServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (n *NumberServerTransport) dispatchGetBigDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.GetBigDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method GetBigDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBigDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -223,7 +223,7 @@ func (n *NumberServerTransport) dispatchGetBigDecimal(req *http.Request) (*http.
 
 func (n *NumberServerTransport) dispatchGetBigDecimalNegativeDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.GetBigDecimalNegativeDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method GetBigDecimalNegativeDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBigDecimalNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDecimalNegativeDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -242,7 +242,7 @@ func (n *NumberServerTransport) dispatchGetBigDecimalNegativeDecimal(req *http.R
 
 func (n *NumberServerTransport) dispatchGetBigDecimalPositiveDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.GetBigDecimalPositiveDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method GetBigDecimalPositiveDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBigDecimalPositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDecimalPositiveDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -261,7 +261,7 @@ func (n *NumberServerTransport) dispatchGetBigDecimalPositiveDecimal(req *http.R
 
 func (n *NumberServerTransport) dispatchGetBigDouble(req *http.Request) (*http.Response, error) {
 	if n.srv.GetBigDouble == nil {
-		return nil, &nonRetriableError{errors.New("method GetBigDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBigDouble not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDouble(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -280,7 +280,7 @@ func (n *NumberServerTransport) dispatchGetBigDouble(req *http.Request) (*http.R
 
 func (n *NumberServerTransport) dispatchGetBigDoubleNegativeDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.GetBigDoubleNegativeDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method GetBigDoubleNegativeDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBigDoubleNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDoubleNegativeDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -299,7 +299,7 @@ func (n *NumberServerTransport) dispatchGetBigDoubleNegativeDecimal(req *http.Re
 
 func (n *NumberServerTransport) dispatchGetBigDoublePositiveDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.GetBigDoublePositiveDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method GetBigDoublePositiveDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBigDoublePositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigDoublePositiveDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -318,7 +318,7 @@ func (n *NumberServerTransport) dispatchGetBigDoublePositiveDecimal(req *http.Re
 
 func (n *NumberServerTransport) dispatchGetBigFloat(req *http.Request) (*http.Response, error) {
 	if n.srv.GetBigFloat == nil {
-		return nil, &nonRetriableError{errors.New("method GetBigFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetBigFloat not implemented")}
 	}
 	respr, errRespr := n.srv.GetBigFloat(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -337,7 +337,7 @@ func (n *NumberServerTransport) dispatchGetBigFloat(req *http.Request) (*http.Re
 
 func (n *NumberServerTransport) dispatchGetInvalidDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.GetInvalidDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalidDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalidDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetInvalidDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -356,7 +356,7 @@ func (n *NumberServerTransport) dispatchGetInvalidDecimal(req *http.Request) (*h
 
 func (n *NumberServerTransport) dispatchGetInvalidDouble(req *http.Request) (*http.Response, error) {
 	if n.srv.GetInvalidDouble == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalidDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalidDouble not implemented")}
 	}
 	respr, errRespr := n.srv.GetInvalidDouble(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -375,7 +375,7 @@ func (n *NumberServerTransport) dispatchGetInvalidDouble(req *http.Request) (*ht
 
 func (n *NumberServerTransport) dispatchGetInvalidFloat(req *http.Request) (*http.Response, error) {
 	if n.srv.GetInvalidFloat == nil {
-		return nil, &nonRetriableError{errors.New("method GetInvalidFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetInvalidFloat not implemented")}
 	}
 	respr, errRespr := n.srv.GetInvalidFloat(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -394,7 +394,7 @@ func (n *NumberServerTransport) dispatchGetInvalidFloat(req *http.Request) (*htt
 
 func (n *NumberServerTransport) dispatchGetNull(req *http.Request) (*http.Response, error) {
 	if n.srv.GetNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetNull not implemented")}
 	}
 	respr, errRespr := n.srv.GetNull(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -413,7 +413,7 @@ func (n *NumberServerTransport) dispatchGetNull(req *http.Request) (*http.Respon
 
 func (n *NumberServerTransport) dispatchGetSmallDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.GetSmallDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method GetSmallDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSmallDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.GetSmallDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -432,7 +432,7 @@ func (n *NumberServerTransport) dispatchGetSmallDecimal(req *http.Request) (*htt
 
 func (n *NumberServerTransport) dispatchGetSmallDouble(req *http.Request) (*http.Response, error) {
 	if n.srv.GetSmallDouble == nil {
-		return nil, &nonRetriableError{errors.New("method GetSmallDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSmallDouble not implemented")}
 	}
 	respr, errRespr := n.srv.GetSmallDouble(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -451,7 +451,7 @@ func (n *NumberServerTransport) dispatchGetSmallDouble(req *http.Request) (*http
 
 func (n *NumberServerTransport) dispatchGetSmallFloat(req *http.Request) (*http.Response, error) {
 	if n.srv.GetSmallFloat == nil {
-		return nil, &nonRetriableError{errors.New("method GetSmallFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSmallFloat not implemented")}
 	}
 	respr, errRespr := n.srv.GetSmallFloat(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -470,7 +470,7 @@ func (n *NumberServerTransport) dispatchGetSmallFloat(req *http.Request) (*http.
 
 func (n *NumberServerTransport) dispatchPutBigDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.PutBigDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method PutBigDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBigDecimal not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[float64](req)
 	if err != nil {
@@ -493,7 +493,7 @@ func (n *NumberServerTransport) dispatchPutBigDecimal(req *http.Request) (*http.
 
 func (n *NumberServerTransport) dispatchPutBigDecimalNegativeDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.PutBigDecimalNegativeDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method PutBigDecimalNegativeDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBigDecimalNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDecimalNegativeDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -512,7 +512,7 @@ func (n *NumberServerTransport) dispatchPutBigDecimalNegativeDecimal(req *http.R
 
 func (n *NumberServerTransport) dispatchPutBigDecimalPositiveDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.PutBigDecimalPositiveDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method PutBigDecimalPositiveDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBigDecimalPositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDecimalPositiveDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -531,7 +531,7 @@ func (n *NumberServerTransport) dispatchPutBigDecimalPositiveDecimal(req *http.R
 
 func (n *NumberServerTransport) dispatchPutBigDouble(req *http.Request) (*http.Response, error) {
 	if n.srv.PutBigDouble == nil {
-		return nil, &nonRetriableError{errors.New("method PutBigDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBigDouble not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[float64](req)
 	if err != nil {
@@ -554,7 +554,7 @@ func (n *NumberServerTransport) dispatchPutBigDouble(req *http.Request) (*http.R
 
 func (n *NumberServerTransport) dispatchPutBigDoubleNegativeDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.PutBigDoubleNegativeDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method PutBigDoubleNegativeDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBigDoubleNegativeDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDoubleNegativeDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -573,7 +573,7 @@ func (n *NumberServerTransport) dispatchPutBigDoubleNegativeDecimal(req *http.Re
 
 func (n *NumberServerTransport) dispatchPutBigDoublePositiveDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.PutBigDoublePositiveDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method PutBigDoublePositiveDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBigDoublePositiveDecimal not implemented")}
 	}
 	respr, errRespr := n.srv.PutBigDoublePositiveDecimal(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -592,7 +592,7 @@ func (n *NumberServerTransport) dispatchPutBigDoublePositiveDecimal(req *http.Re
 
 func (n *NumberServerTransport) dispatchPutBigFloat(req *http.Request) (*http.Response, error) {
 	if n.srv.PutBigFloat == nil {
-		return nil, &nonRetriableError{errors.New("method PutBigFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutBigFloat not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[float32](req)
 	if err != nil {
@@ -615,7 +615,7 @@ func (n *NumberServerTransport) dispatchPutBigFloat(req *http.Request) (*http.Re
 
 func (n *NumberServerTransport) dispatchPutSmallDecimal(req *http.Request) (*http.Response, error) {
 	if n.srv.PutSmallDecimal == nil {
-		return nil, &nonRetriableError{errors.New("method PutSmallDecimal not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutSmallDecimal not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[float64](req)
 	if err != nil {
@@ -638,7 +638,7 @@ func (n *NumberServerTransport) dispatchPutSmallDecimal(req *http.Request) (*htt
 
 func (n *NumberServerTransport) dispatchPutSmallDouble(req *http.Request) (*http.Response, error) {
 	if n.srv.PutSmallDouble == nil {
-		return nil, &nonRetriableError{errors.New("method PutSmallDouble not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutSmallDouble not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[float64](req)
 	if err != nil {
@@ -661,7 +661,7 @@ func (n *NumberServerTransport) dispatchPutSmallDouble(req *http.Request) (*http
 
 func (n *NumberServerTransport) dispatchPutSmallFloat(req *http.Request) (*http.Response, error) {
 	if n.srv.PutSmallFloat == nil {
-		return nil, &nonRetriableError{errors.New("method PutSmallFloat not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PutSmallFloat not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[float32](req)
 	if err != nil {

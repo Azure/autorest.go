@@ -72,7 +72,7 @@ func (i *IntServerTransport) Do(req *http.Request) (*http.Response, error) {
 
 func (i *IntServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if i.srv.Get == nil {
-		return nil, &nonRetriableError{errors.New("method Get not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
 	respr, errRespr := i.srv.Get(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -91,7 +91,7 @@ func (i *IntServerTransport) dispatchGet(req *http.Request) (*http.Response, err
 
 func (i *IntServerTransport) dispatchPut(req *http.Request) (*http.Response, error) {
 	if i.srv.Put == nil {
-		return nil, &nonRetriableError{errors.New("method Put not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method Put not implemented")}
 	}
 	body, err := server.UnmarshalRequestAsJSON[nonstringenumgroup.IntEnum](req)
 	if err != nil {

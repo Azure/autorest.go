@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"reflect"
 )
 
@@ -79,7 +80,7 @@ func (a *AuthenticationServerTransport) Do(req *http.Request) (*http.Response, e
 
 func (a *AuthenticationServerTransport) dispatchExchangeAADAccessTokenForAcrRefreshToken(req *http.Request) (*http.Response, error) {
 	if a.srv.ExchangeAADAccessTokenForAcrRefreshToken == nil {
-		return nil, &nonRetriableError{errors.New("method ExchangeAADAccessTokenForAcrRefreshToken not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ExchangeAADAccessTokenForAcrRefreshToken not implemented")}
 	}
 	var grantType azacr.PostContentSchemaGrantType
 	var service string
@@ -128,7 +129,7 @@ func (a *AuthenticationServerTransport) dispatchExchangeAADAccessTokenForAcrRefr
 
 func (a *AuthenticationServerTransport) dispatchExchangeAcrRefreshTokenForAcrAccessToken(req *http.Request) (*http.Response, error) {
 	if a.srv.ExchangeAcrRefreshTokenForAcrAccessToken == nil {
-		return nil, &nonRetriableError{errors.New("method ExchangeAcrRefreshTokenForAcrAccessToken not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method ExchangeAcrRefreshTokenForAcrAccessToken not implemented")}
 	}
 	var service string
 	var scope string
@@ -172,10 +173,18 @@ func (a *AuthenticationServerTransport) dispatchExchangeAcrRefreshTokenForAcrAcc
 
 func (a *AuthenticationServerTransport) dispatchGetAcrAccessTokenFromLogin(req *http.Request) (*http.Response, error) {
 	if a.srv.GetAcrAccessTokenFromLogin == nil {
-		return nil, &nonRetriableError{errors.New("method GetAcrAccessTokenFromLogin not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetAcrAccessTokenFromLogin not implemented")}
 	}
 	qp := req.URL.Query()
-	respr, errRespr := a.srv.GetAcrAccessTokenFromLogin(req.Context(), qp.Get("service"), qp.Get("scope"), nil)
+	serviceUnescaped, err := url.QueryUnescape(qp.Get("service"))
+	if err != nil {
+		return nil, err
+	}
+	scopeUnescaped, err := url.QueryUnescape(qp.Get("scope"))
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := a.srv.GetAcrAccessTokenFromLogin(req.Context(), serviceUnescaped, scopeUnescaped, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

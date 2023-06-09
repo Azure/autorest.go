@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 )
@@ -92,11 +93,15 @@ func (p *ParameterGroupingServerTransport) Do(req *http.Request) (*http.Response
 
 func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *http.Request) (*http.Response, error) {
 	if p.srv.PostMultiParamGroups == nil {
-		return nil, &nonRetriableError{errors.New("method PostMultiParamGroups not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostMultiParamGroups not implemented")}
 	}
 	qp := req.URL.Query()
 	headerOneParam := getOptional(getHeaderValue(req.Header, "header-one"))
-	queryOneParam, err := parseOptional(qp.Get("query-one"), func(v string) (int32, error) {
+	queryOneUnescaped, err := url.QueryUnescape(qp.Get("query-one"))
+	if err != nil {
+		return nil, err
+	}
+	queryOneParam, err := parseOptional(queryOneUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -107,7 +112,11 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 		return nil, err
 	}
 	headerTwoParam := getOptional(getHeaderValue(req.Header, "header-two"))
-	queryTwoParam, err := parseOptional(qp.Get("query-two"), func(v string) (int32, error) {
+	queryTwoUnescaped, err := url.QueryUnescape(qp.Get("query-two"))
+	if err != nil {
+		return nil, err
+	}
+	queryTwoParam, err := parseOptional(queryTwoUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -148,11 +157,15 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 
 func (p *ParameterGroupingServerTransport) dispatchPostOptional(req *http.Request) (*http.Response, error) {
 	if p.srv.PostOptional == nil {
-		return nil, &nonRetriableError{errors.New("method PostOptional not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostOptional not implemented")}
 	}
 	qp := req.URL.Query()
 	customHeaderParam := getOptional(getHeaderValue(req.Header, "customHeader"))
-	queryParam, err := parseOptional(qp.Get("query"), func(v string) (int32, error) {
+	queryUnescaped, err := url.QueryUnescape(qp.Get("query"))
+	if err != nil {
+		return nil, err
+	}
+	queryParam, err := parseOptional(queryUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -186,11 +199,11 @@ func (p *ParameterGroupingServerTransport) dispatchPostOptional(req *http.Reques
 
 func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Request) (*http.Response, error) {
 	if p.srv.PostRequired == nil {
-		return nil, &nonRetriableError{errors.New("method PostRequired not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostRequired not implemented")}
 	}
-	const regexStr = "/parameterGrouping/postRequired/(?P<path>[a-zA-Z0-9-_]+)"
+	const regexStr = `/parameterGrouping/postRequired/(?P<path>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.Path)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
@@ -200,7 +213,11 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 		return nil, err
 	}
 	customHeaderParam := getOptional(getHeaderValue(req.Header, "customHeader"))
-	queryParam, err := parseOptional(qp.Get("query"), func(v string) (int32, error) {
+	queryUnescaped, err := url.QueryUnescape(qp.Get("query"))
+	if err != nil {
+		return nil, err
+	}
+	queryParam, err := parseOptional(queryUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -210,7 +227,11 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	pathParam := matches[regex.SubexpIndex("path")]
+	pathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("path")])
+	if err != nil {
+		return nil, err
+	}
+	pathParam := pathUnescaped
 	parameterGroupingClientPostRequiredParameters := paramgroupinggroup.ParameterGroupingClientPostRequiredParameters{
 		CustomHeader: customHeaderParam,
 		Query:        queryParam,
@@ -234,11 +255,19 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 
 func (p *ParameterGroupingServerTransport) dispatchPostReservedWords(req *http.Request) (*http.Response, error) {
 	if p.srv.PostReservedWords == nil {
-		return nil, &nonRetriableError{errors.New("method PostReservedWords not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostReservedWords not implemented")}
 	}
 	qp := req.URL.Query()
-	fromParam := getOptional(qp.Get("from"))
-	acceptParam := getOptional(qp.Get("accept"))
+	fromUnescaped, err := url.QueryUnescape(qp.Get("from"))
+	if err != nil {
+		return nil, err
+	}
+	fromParam := getOptional(fromUnescaped)
+	acceptUnescaped, err := url.QueryUnescape(qp.Get("accept"))
+	if err != nil {
+		return nil, err
+	}
+	acceptParam := getOptional(acceptUnescaped)
 	var parameterGroupingClientPostReservedWordsParameters *paramgroupinggroup.ParameterGroupingClientPostReservedWordsParameters
 	if fromParam != nil || acceptParam != nil {
 		parameterGroupingClientPostReservedWordsParameters = &paramgroupinggroup.ParameterGroupingClientPostReservedWordsParameters{
@@ -263,11 +292,15 @@ func (p *ParameterGroupingServerTransport) dispatchPostReservedWords(req *http.R
 
 func (p *ParameterGroupingServerTransport) dispatchPostSharedParameterGroupObject(req *http.Request) (*http.Response, error) {
 	if p.srv.PostSharedParameterGroupObject == nil {
-		return nil, &nonRetriableError{errors.New("method PostSharedParameterGroupObject not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method PostSharedParameterGroupObject not implemented")}
 	}
 	qp := req.URL.Query()
 	headerOneParam := getOptional(getHeaderValue(req.Header, "header-one"))
-	queryOneParam, err := parseOptional(qp.Get("query-one"), func(v string) (int32, error) {
+	queryOneUnescaped, err := url.QueryUnescape(qp.Get("query-one"))
+	if err != nil {
+		return nil, err
+	}
+	queryOneParam, err := parseOptional(queryOneUnescaped, func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr

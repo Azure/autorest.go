@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 )
 
 // APIVersionLocalServer is a fake server for instances of the azurespecialsgroup.APIVersionLocalClient type.
@@ -84,10 +85,14 @@ func (a *APIVersionLocalServerTransport) Do(req *http.Request) (*http.Response, 
 
 func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalNull(req *http.Request) (*http.Response, error) {
 	if a.srv.GetMethodLocalNull == nil {
-		return nil, &nonRetriableError{errors.New("method GetMethodLocalNull not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMethodLocalNull not implemented")}
 	}
 	qp := req.URL.Query()
-	aPIVersionParam := getOptional(qp.Get("api-version"))
+	aPIVersionUnescaped, err := url.QueryUnescape(qp.Get("api-version"))
+	if err != nil {
+		return nil, err
+	}
+	aPIVersionParam := getOptional(aPIVersionUnescaped)
 	var options *azurespecialsgroup.APIVersionLocalClientGetMethodLocalNullOptions
 	if aPIVersionParam != nil {
 		options = &azurespecialsgroup.APIVersionLocalClientGetMethodLocalNullOptions{
@@ -111,7 +116,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalNull(req *http.Re
 
 func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetMethodLocalValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetMethodLocalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetMethodLocalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetMethodLocalValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -130,7 +135,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalValid(req *http.R
 
 func (a *APIVersionLocalServerTransport) dispatchGetPathLocalValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetPathLocalValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetPathLocalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetPathLocalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetPathLocalValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
@@ -149,7 +154,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetPathLocalValid(req *http.Req
 
 func (a *APIVersionLocalServerTransport) dispatchGetSwaggerLocalValid(req *http.Request) (*http.Response, error) {
 	if a.srv.GetSwaggerLocalValid == nil {
-		return nil, &nonRetriableError{errors.New("method GetSwaggerLocalValid not implemented")}
+		return nil, &nonRetriableError{errors.New("fake for method GetSwaggerLocalValid not implemented")}
 	}
 	respr, errRespr := a.srv.GetSwaggerLocalValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
