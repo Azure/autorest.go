@@ -111,8 +111,8 @@ type PrimitiveServer struct {
 }
 
 // NewPrimitiveServerTransport creates a new instance of PrimitiveServerTransport with the provided implementation.
-// The returned PrimitiveServerTransport instance is connected to an instance of complexgroup.PrimitiveClient by way of the
-// undefined.Transporter field.
+// The returned PrimitiveServerTransport instance is connected to an instance of complexgroup.PrimitiveClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPrimitiveServerTransport(srv *PrimitiveServer) *PrimitiveServerTransport {
 	return &PrimitiveServerTransport{srv: srv}
 }

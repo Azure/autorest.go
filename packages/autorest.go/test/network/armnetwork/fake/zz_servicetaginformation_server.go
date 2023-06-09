@@ -30,8 +30,8 @@ type ServiceTagInformationServer struct {
 }
 
 // NewServiceTagInformationServerTransport creates a new instance of ServiceTagInformationServerTransport with the provided implementation.
-// The returned ServiceTagInformationServerTransport instance is connected to an instance of armnetwork.ServiceTagInformationClient by way of the
-// undefined.Transporter field.
+// The returned ServiceTagInformationServerTransport instance is connected to an instance of armnetwork.ServiceTagInformationClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServiceTagInformationServerTransport(srv *ServiceTagInformationServer) *ServiceTagInformationServerTransport {
 	return &ServiceTagInformationServerTransport{srv: srv}
 }

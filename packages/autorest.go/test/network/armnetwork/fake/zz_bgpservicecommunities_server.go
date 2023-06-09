@@ -28,8 +28,8 @@ type BgpServiceCommunitiesServer struct {
 }
 
 // NewBgpServiceCommunitiesServerTransport creates a new instance of BgpServiceCommunitiesServerTransport with the provided implementation.
-// The returned BgpServiceCommunitiesServerTransport instance is connected to an instance of armnetwork.BgpServiceCommunitiesClient by way of the
-// undefined.Transporter field.
+// The returned BgpServiceCommunitiesServerTransport instance is connected to an instance of armnetwork.BgpServiceCommunitiesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewBgpServiceCommunitiesServerTransport(srv *BgpServiceCommunitiesServer) *BgpServiceCommunitiesServerTransport {
 	return &BgpServiceCommunitiesServerTransport{srv: srv}
 }

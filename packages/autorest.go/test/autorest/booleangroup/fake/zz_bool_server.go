@@ -47,8 +47,8 @@ type BoolServer struct {
 }
 
 // NewBoolServerTransport creates a new instance of BoolServerTransport with the provided implementation.
-// The returned BoolServerTransport instance is connected to an instance of booleangroup.BoolClient by way of the
-// undefined.Transporter field.
+// The returned BoolServerTransport instance is connected to an instance of booleangroup.BoolClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewBoolServerTransport(srv *BoolServer) *BoolServerTransport {
 	return &BoolServerTransport{srv: srv}
 }

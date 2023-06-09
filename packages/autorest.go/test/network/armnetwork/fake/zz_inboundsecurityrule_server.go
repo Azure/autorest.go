@@ -29,8 +29,8 @@ type InboundSecurityRuleServer struct {
 }
 
 // NewInboundSecurityRuleServerTransport creates a new instance of InboundSecurityRuleServerTransport with the provided implementation.
-// The returned InboundSecurityRuleServerTransport instance is connected to an instance of armnetwork.InboundSecurityRuleClient by way of the
-// undefined.Transporter field.
+// The returned InboundSecurityRuleServerTransport instance is connected to an instance of armnetwork.InboundSecurityRuleClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewInboundSecurityRuleServerTransport(srv *InboundSecurityRuleServer) *InboundSecurityRuleServerTransport {
 	return &InboundSecurityRuleServerTransport{srv: srv}
 }

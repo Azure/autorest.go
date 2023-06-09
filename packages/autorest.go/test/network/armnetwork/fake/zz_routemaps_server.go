@@ -42,8 +42,8 @@ type RouteMapsServer struct {
 }
 
 // NewRouteMapsServerTransport creates a new instance of RouteMapsServerTransport with the provided implementation.
-// The returned RouteMapsServerTransport instance is connected to an instance of armnetwork.RouteMapsClient by way of the
-// undefined.Transporter field.
+// The returned RouteMapsServerTransport instance is connected to an instance of armnetwork.RouteMapsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewRouteMapsServerTransport(srv *RouteMapsServer) *RouteMapsServerTransport {
 	return &RouteMapsServerTransport{srv: srv}
 }

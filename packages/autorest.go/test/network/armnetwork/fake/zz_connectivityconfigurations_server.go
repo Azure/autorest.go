@@ -43,8 +43,8 @@ type ConnectivityConfigurationsServer struct {
 }
 
 // NewConnectivityConfigurationsServerTransport creates a new instance of ConnectivityConfigurationsServerTransport with the provided implementation.
-// The returned ConnectivityConfigurationsServerTransport instance is connected to an instance of armnetwork.ConnectivityConfigurationsClient by way of the
-// undefined.Transporter field.
+// The returned ConnectivityConfigurationsServerTransport instance is connected to an instance of armnetwork.ConnectivityConfigurationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewConnectivityConfigurationsServerTransport(srv *ConnectivityConfigurationsServer) *ConnectivityConfigurationsServerTransport {
 	return &ConnectivityConfigurationsServerTransport{srv: srv}
 }

@@ -26,8 +26,8 @@ type OperationsServer struct {
 }
 
 // NewOperationsServerTransport creates a new instance of OperationsServerTransport with the provided implementation.
-// The returned OperationsServerTransport instance is connected to an instance of armcompute.OperationsClient by way of the
-// undefined.Transporter field.
+// The returned OperationsServerTransport instance is connected to an instance of armcompute.OperationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewOperationsServerTransport(srv *OperationsServer) *OperationsServerTransport {
 	return &OperationsServerTransport{srv: srv}
 }

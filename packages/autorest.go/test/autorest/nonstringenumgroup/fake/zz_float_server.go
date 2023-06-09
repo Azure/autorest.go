@@ -31,8 +31,8 @@ type FloatServer struct {
 }
 
 // NewFloatServerTransport creates a new instance of FloatServerTransport with the provided implementation.
-// The returned FloatServerTransport instance is connected to an instance of nonstringenumgroup.FloatClient by way of the
-// undefined.Transporter field.
+// The returned FloatServerTransport instance is connected to an instance of nonstringenumgroup.FloatClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewFloatServerTransport(srv *FloatServer) *FloatServerTransport {
 	return &FloatServerTransport{srv: srv}
 }

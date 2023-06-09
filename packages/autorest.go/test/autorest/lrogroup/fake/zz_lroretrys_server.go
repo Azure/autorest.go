@@ -52,8 +52,8 @@ type LRORetrysServer struct {
 }
 
 // NewLRORetrysServerTransport creates a new instance of LRORetrysServerTransport with the provided implementation.
-// The returned LRORetrysServerTransport instance is connected to an instance of lrogroup.LRORetrysClient by way of the
-// undefined.Transporter field.
+// The returned LRORetrysServerTransport instance is connected to an instance of lrogroup.LRORetrysClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLRORetrysServerTransport(srv *LRORetrysServer) *LRORetrysServerTransport {
 	return &LRORetrysServerTransport{srv: srv}
 }

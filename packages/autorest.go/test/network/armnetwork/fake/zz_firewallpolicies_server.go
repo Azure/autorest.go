@@ -50,8 +50,8 @@ type FirewallPoliciesServer struct {
 }
 
 // NewFirewallPoliciesServerTransport creates a new instance of FirewallPoliciesServerTransport with the provided implementation.
-// The returned FirewallPoliciesServerTransport instance is connected to an instance of armnetwork.FirewallPoliciesClient by way of the
-// undefined.Transporter field.
+// The returned FirewallPoliciesServerTransport instance is connected to an instance of armnetwork.FirewallPoliciesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewFirewallPoliciesServerTransport(srv *FirewallPoliciesServer) *FirewallPoliciesServerTransport {
 	return &FirewallPoliciesServerTransport{srv: srv}
 }

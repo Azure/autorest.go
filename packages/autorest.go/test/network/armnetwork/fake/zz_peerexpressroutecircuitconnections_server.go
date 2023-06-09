@@ -34,8 +34,8 @@ type PeerExpressRouteCircuitConnectionsServer struct {
 }
 
 // NewPeerExpressRouteCircuitConnectionsServerTransport creates a new instance of PeerExpressRouteCircuitConnectionsServerTransport with the provided implementation.
-// The returned PeerExpressRouteCircuitConnectionsServerTransport instance is connected to an instance of armnetwork.PeerExpressRouteCircuitConnectionsClient by way of the
-// undefined.Transporter field.
+// The returned PeerExpressRouteCircuitConnectionsServerTransport instance is connected to an instance of armnetwork.PeerExpressRouteCircuitConnectionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPeerExpressRouteCircuitConnectionsServerTransport(srv *PeerExpressRouteCircuitConnectionsServer) *PeerExpressRouteCircuitConnectionsServerTransport {
 	return &PeerExpressRouteCircuitConnectionsServerTransport{srv: srv}
 }

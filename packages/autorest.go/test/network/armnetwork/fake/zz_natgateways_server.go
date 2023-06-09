@@ -50,8 +50,8 @@ type NatGatewaysServer struct {
 }
 
 // NewNatGatewaysServerTransport creates a new instance of NatGatewaysServerTransport with the provided implementation.
-// The returned NatGatewaysServerTransport instance is connected to an instance of armnetwork.NatGatewaysClient by way of the
-// undefined.Transporter field.
+// The returned NatGatewaysServerTransport instance is connected to an instance of armnetwork.NatGatewaysClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewNatGatewaysServerTransport(srv *NatGatewaysServer) *NatGatewaysServerTransport {
 	return &NatGatewaysServerTransport{srv: srv}
 }

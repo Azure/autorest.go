@@ -34,8 +34,8 @@ type VirtualApplianceSKUsServer struct {
 }
 
 // NewVirtualApplianceSKUsServerTransport creates a new instance of VirtualApplianceSKUsServerTransport with the provided implementation.
-// The returned VirtualApplianceSKUsServerTransport instance is connected to an instance of armnetwork.VirtualApplianceSKUsClient by way of the
-// undefined.Transporter field.
+// The returned VirtualApplianceSKUsServerTransport instance is connected to an instance of armnetwork.VirtualApplianceSKUsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualApplianceSKUsServerTransport(srv *VirtualApplianceSKUsServer) *VirtualApplianceSKUsServerTransport {
 	return &VirtualApplianceSKUsServerTransport{srv: srv}
 }

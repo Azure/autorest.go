@@ -43,8 +43,8 @@ type GroupsServer struct {
 }
 
 // NewGroupsServerTransport creates a new instance of GroupsServerTransport with the provided implementation.
-// The returned GroupsServerTransport instance is connected to an instance of armnetwork.GroupsClient by way of the
-// undefined.Transporter field.
+// The returned GroupsServerTransport instance is connected to an instance of armnetwork.GroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewGroupsServerTransport(srv *GroupsServer) *GroupsServerTransport {
 	return &GroupsServerTransport{srv: srv}
 }

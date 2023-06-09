@@ -60,8 +60,8 @@ type Datetimerfc1123Server struct {
 }
 
 // NewDatetimerfc1123ServerTransport creates a new instance of Datetimerfc1123ServerTransport with the provided implementation.
-// The returned Datetimerfc1123ServerTransport instance is connected to an instance of datetimerfc1123group.Datetimerfc1123Client by way of the
-// undefined.Transporter field.
+// The returned Datetimerfc1123ServerTransport instance is connected to an instance of datetimerfc1123group.Datetimerfc1123Client via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDatetimerfc1123ServerTransport(srv *Datetimerfc1123Server) *Datetimerfc1123ServerTransport {
 	return &Datetimerfc1123ServerTransport{srv: srv}
 }

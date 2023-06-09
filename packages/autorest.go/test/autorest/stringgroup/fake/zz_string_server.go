@@ -75,8 +75,8 @@ type StringServer struct {
 }
 
 // NewStringServerTransport creates a new instance of StringServerTransport with the provided implementation.
-// The returned StringServerTransport instance is connected to an instance of stringgroup.StringClient by way of the
-// undefined.Transporter field.
+// The returned StringServerTransport instance is connected to an instance of stringgroup.StringClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewStringServerTransport(srv *StringServer) *StringServerTransport {
 	return &StringServerTransport{srv: srv}
 }

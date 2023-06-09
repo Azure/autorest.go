@@ -57,8 +57,8 @@ type MediaTypesServer struct {
 }
 
 // NewMediaTypesServerTransport creates a new instance of MediaTypesServerTransport with the provided implementation.
-// The returned MediaTypesServerTransport instance is connected to an instance of mediatypesgroupwithnormailzedoperationname.MediaTypesClient by way of the
-// undefined.Transporter field.
+// The returned MediaTypesServerTransport instance is connected to an instance of mediatypesgroupwithnormailzedoperationname.MediaTypesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewMediaTypesServerTransport(srv *MediaTypesServer) *MediaTypesServerTransport {
 	return &MediaTypesServerTransport{srv: srv}
 }

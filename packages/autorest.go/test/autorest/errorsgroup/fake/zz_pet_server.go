@@ -37,8 +37,8 @@ type PetServer struct {
 }
 
 // NewPetServerTransport creates a new instance of PetServerTransport with the provided implementation.
-// The returned PetServerTransport instance is connected to an instance of errorsgroup.PetClient by way of the
-// undefined.Transporter field.
+// The returned PetServerTransport instance is connected to an instance of errorsgroup.PetClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPetServerTransport(srv *PetServer) *PetServerTransport {
 	return &PetServerTransport{srv: srv}
 }

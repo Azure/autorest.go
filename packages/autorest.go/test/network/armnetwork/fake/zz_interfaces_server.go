@@ -90,8 +90,8 @@ type InterfacesServer struct {
 }
 
 // NewInterfacesServerTransport creates a new instance of InterfacesServerTransport with the provided implementation.
-// The returned InterfacesServerTransport instance is connected to an instance of armnetwork.InterfacesClient by way of the
-// undefined.Transporter field.
+// The returned InterfacesServerTransport instance is connected to an instance of armnetwork.InterfacesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewInterfacesServerTransport(srv *InterfacesServer) *InterfacesServerTransport {
 	return &InterfacesServerTransport{srv: srv}
 }

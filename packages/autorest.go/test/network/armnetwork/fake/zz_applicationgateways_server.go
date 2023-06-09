@@ -94,8 +94,8 @@ type ApplicationGatewaysServer struct {
 }
 
 // NewApplicationGatewaysServerTransport creates a new instance of ApplicationGatewaysServerTransport with the provided implementation.
-// The returned ApplicationGatewaysServerTransport instance is connected to an instance of armnetwork.ApplicationGatewaysClient by way of the
-// undefined.Transporter field.
+// The returned ApplicationGatewaysServerTransport instance is connected to an instance of armnetwork.ApplicationGatewaysClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewApplicationGatewaysServerTransport(srv *ApplicationGatewaysServer) *ApplicationGatewaysServerTransport {
 	return &ApplicationGatewaysServerTransport{srv: srv}
 }

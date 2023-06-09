@@ -50,8 +50,8 @@ type VirtualNetworkTapsServer struct {
 }
 
 // NewVirtualNetworkTapsServerTransport creates a new instance of VirtualNetworkTapsServerTransport with the provided implementation.
-// The returned VirtualNetworkTapsServerTransport instance is connected to an instance of armnetwork.VirtualNetworkTapsClient by way of the
-// undefined.Transporter field.
+// The returned VirtualNetworkTapsServerTransport instance is connected to an instance of armnetwork.VirtualNetworkTapsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualNetworkTapsServerTransport(srv *VirtualNetworkTapsServer) *VirtualNetworkTapsServerTransport {
 	return &VirtualNetworkTapsServerTransport{srv: srv}
 }

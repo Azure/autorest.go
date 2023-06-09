@@ -46,8 +46,8 @@ type ParameterGroupingServer struct {
 }
 
 // NewParameterGroupingServerTransport creates a new instance of ParameterGroupingServerTransport with the provided implementation.
-// The returned ParameterGroupingServerTransport instance is connected to an instance of paramgroupinggroup.ParameterGroupingClient by way of the
-// undefined.Transporter field.
+// The returned ParameterGroupingServerTransport instance is connected to an instance of paramgroupinggroup.ParameterGroupingClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewParameterGroupingServerTransport(srv *ParameterGroupingServer) *ParameterGroupingServerTransport {
 	return &ParameterGroupingServerTransport{srv: srv}
 }

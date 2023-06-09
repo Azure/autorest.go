@@ -37,8 +37,8 @@ type ComplexModelServer struct {
 }
 
 // NewComplexModelServerTransport creates a new instance of ComplexModelServerTransport with the provided implementation.
-// The returned ComplexModelServerTransport instance is connected to an instance of complexmodelgroup.ComplexModelClient by way of the
-// undefined.Transporter field.
+// The returned ComplexModelServerTransport instance is connected to an instance of complexmodelgroup.ComplexModelClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewComplexModelServerTransport(srv *ComplexModelServer) *ComplexModelServerTransport {
 	return &ComplexModelServerTransport{srv: srv}
 }

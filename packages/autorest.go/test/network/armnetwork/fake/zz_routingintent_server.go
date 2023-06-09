@@ -42,8 +42,8 @@ type RoutingIntentServer struct {
 }
 
 // NewRoutingIntentServerTransport creates a new instance of RoutingIntentServerTransport with the provided implementation.
-// The returned RoutingIntentServerTransport instance is connected to an instance of armnetwork.RoutingIntentClient by way of the
-// undefined.Transporter field.
+// The returned RoutingIntentServerTransport instance is connected to an instance of armnetwork.RoutingIntentClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewRoutingIntentServerTransport(srv *RoutingIntentServer) *RoutingIntentServerTransport {
 	return &RoutingIntentServerTransport{srv: srv}
 }

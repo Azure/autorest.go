@@ -71,8 +71,8 @@ type ContainerRegistryBlobServer struct {
 }
 
 // NewContainerRegistryBlobServerTransport creates a new instance of ContainerRegistryBlobServerTransport with the provided implementation.
-// The returned ContainerRegistryBlobServerTransport instance is connected to an instance of azacr.ContainerRegistryBlobClient by way of the
-// undefined.Transporter field.
+// The returned ContainerRegistryBlobServerTransport instance is connected to an instance of azacr.ContainerRegistryBlobClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewContainerRegistryBlobServerTransport(srv *ContainerRegistryBlobServer) *ContainerRegistryBlobServerTransport {
 	return &ContainerRegistryBlobServerTransport{srv: srv}
 }

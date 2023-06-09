@@ -46,8 +46,8 @@ type GalleryImageVersionsServer struct {
 }
 
 // NewGalleryImageVersionsServerTransport creates a new instance of GalleryImageVersionsServerTransport with the provided implementation.
-// The returned GalleryImageVersionsServerTransport instance is connected to an instance of armcompute.GalleryImageVersionsClient by way of the
-// undefined.Transporter field.
+// The returned GalleryImageVersionsServerTransport instance is connected to an instance of armcompute.GalleryImageVersionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewGalleryImageVersionsServerTransport(srv *GalleryImageVersionsServer) *GalleryImageVersionsServerTransport {
 	return &GalleryImageVersionsServerTransport{srv: srv}
 }

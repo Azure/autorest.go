@@ -29,8 +29,8 @@ type ODataServer struct {
 }
 
 // NewODataServerTransport creates a new instance of ODataServerTransport with the provided implementation.
-// The returned ODataServerTransport instance is connected to an instance of azurespecialsgroup.ODataClient by way of the
-// undefined.Transporter field.
+// The returned ODataServerTransport instance is connected to an instance of azurespecialsgroup.ODataClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewODataServerTransport(srv *ODataServer) *ODataServerTransport {
 	return &ODataServerTransport{srv: srv}
 }

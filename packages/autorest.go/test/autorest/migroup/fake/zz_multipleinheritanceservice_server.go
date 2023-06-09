@@ -63,8 +63,8 @@ type MultipleInheritanceServiceServer struct {
 }
 
 // NewMultipleInheritanceServiceServerTransport creates a new instance of MultipleInheritanceServiceServerTransport with the provided implementation.
-// The returned MultipleInheritanceServiceServerTransport instance is connected to an instance of migroup.MultipleInheritanceServiceClient by way of the
-// undefined.Transporter field.
+// The returned MultipleInheritanceServiceServerTransport instance is connected to an instance of migroup.MultipleInheritanceServiceClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewMultipleInheritanceServiceServerTransport(srv *MultipleInheritanceServiceServer) *MultipleInheritanceServiceServerTransport {
 	return &MultipleInheritanceServiceServerTransport{srv: srv}
 }

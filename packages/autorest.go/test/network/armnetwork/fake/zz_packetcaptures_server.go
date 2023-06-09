@@ -49,8 +49,8 @@ type PacketCapturesServer struct {
 }
 
 // NewPacketCapturesServerTransport creates a new instance of PacketCapturesServerTransport with the provided implementation.
-// The returned PacketCapturesServerTransport instance is connected to an instance of armnetwork.PacketCapturesClient by way of the
-// undefined.Transporter field.
+// The returned PacketCapturesServerTransport instance is connected to an instance of armnetwork.PacketCapturesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPacketCapturesServerTransport(srv *PacketCapturesServer) *PacketCapturesServerTransport {
 	return &PacketCapturesServerTransport{srv: srv}
 }

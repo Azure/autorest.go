@@ -42,8 +42,8 @@ type VirtualHubIPConfigurationServer struct {
 }
 
 // NewVirtualHubIPConfigurationServerTransport creates a new instance of VirtualHubIPConfigurationServerTransport with the provided implementation.
-// The returned VirtualHubIPConfigurationServerTransport instance is connected to an instance of armnetwork.VirtualHubIPConfigurationClient by way of the
-// undefined.Transporter field.
+// The returned VirtualHubIPConfigurationServerTransport instance is connected to an instance of armnetwork.VirtualHubIPConfigurationClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualHubIPConfigurationServerTransport(srv *VirtualHubIPConfigurationServer) *VirtualHubIPConfigurationServerTransport {
 	return &VirtualHubIPConfigurationServerTransport{srv: srv}
 }

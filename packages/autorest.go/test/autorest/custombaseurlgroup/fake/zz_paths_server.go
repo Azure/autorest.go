@@ -27,8 +27,8 @@ type PathsServer struct {
 }
 
 // NewPathsServerTransport creates a new instance of PathsServerTransport with the provided implementation.
-// The returned PathsServerTransport instance is connected to an instance of custombaseurlgroup.PathsClient by way of the
-// undefined.Transporter field.
+// The returned PathsServerTransport instance is connected to an instance of custombaseurlgroup.PathsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPathsServerTransport(srv *PathsServer) *PathsServerTransport {
 	return &PathsServerTransport{srv: srv}
 }

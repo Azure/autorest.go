@@ -46,8 +46,8 @@ type WebApplicationFirewallPoliciesServer struct {
 }
 
 // NewWebApplicationFirewallPoliciesServerTransport creates a new instance of WebApplicationFirewallPoliciesServerTransport with the provided implementation.
-// The returned WebApplicationFirewallPoliciesServerTransport instance is connected to an instance of armnetwork.WebApplicationFirewallPoliciesClient by way of the
-// undefined.Transporter field.
+// The returned WebApplicationFirewallPoliciesServerTransport instance is connected to an instance of armnetwork.WebApplicationFirewallPoliciesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewWebApplicationFirewallPoliciesServerTransport(srv *WebApplicationFirewallPoliciesServer) *WebApplicationFirewallPoliciesServerTransport {
 	return &WebApplicationFirewallPoliciesServerTransport{srv: srv}
 }

@@ -42,8 +42,8 @@ type ExpressRouteCircuitPeeringsServer struct {
 }
 
 // NewExpressRouteCircuitPeeringsServerTransport creates a new instance of ExpressRouteCircuitPeeringsServerTransport with the provided implementation.
-// The returned ExpressRouteCircuitPeeringsServerTransport instance is connected to an instance of armnetwork.ExpressRouteCircuitPeeringsClient by way of the
-// undefined.Transporter field.
+// The returned ExpressRouteCircuitPeeringsServerTransport instance is connected to an instance of armnetwork.ExpressRouteCircuitPeeringsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewExpressRouteCircuitPeeringsServerTransport(srv *ExpressRouteCircuitPeeringsServer) *ExpressRouteCircuitPeeringsServerTransport {
 	return &ExpressRouteCircuitPeeringsServerTransport{srv: srv}
 }

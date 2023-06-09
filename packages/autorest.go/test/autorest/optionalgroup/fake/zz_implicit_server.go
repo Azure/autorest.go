@@ -58,8 +58,8 @@ type ImplicitServer struct {
 }
 
 // NewImplicitServerTransport creates a new instance of ImplicitServerTransport with the provided implementation.
-// The returned ImplicitServerTransport instance is connected to an instance of optionalgroup.ImplicitClient by way of the
-// undefined.Transporter field.
+// The returned ImplicitServerTransport instance is connected to an instance of optionalgroup.ImplicitClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewImplicitServerTransport(srv *ImplicitServer) *ImplicitServerTransport {
 	return &ImplicitServerTransport{srv: srv}
 }

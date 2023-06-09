@@ -31,8 +31,8 @@ type PolymorphicrecursiveServer struct {
 }
 
 // NewPolymorphicrecursiveServerTransport creates a new instance of PolymorphicrecursiveServerTransport with the provided implementation.
-// The returned PolymorphicrecursiveServerTransport instance is connected to an instance of complexgroup.PolymorphicrecursiveClient by way of the
-// undefined.Transporter field.
+// The returned PolymorphicrecursiveServerTransport instance is connected to an instance of complexgroup.PolymorphicrecursiveClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPolymorphicrecursiveServerTransport(srv *PolymorphicrecursiveServer) *PolymorphicrecursiveServerTransport {
 	return &PolymorphicrecursiveServerTransport{srv: srv}
 }

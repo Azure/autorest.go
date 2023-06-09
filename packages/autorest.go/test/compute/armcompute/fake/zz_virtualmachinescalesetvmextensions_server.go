@@ -45,8 +45,8 @@ type VirtualMachineScaleSetVMExtensionsServer struct {
 }
 
 // NewVirtualMachineScaleSetVMExtensionsServerTransport creates a new instance of VirtualMachineScaleSetVMExtensionsServerTransport with the provided implementation.
-// The returned VirtualMachineScaleSetVMExtensionsServerTransport instance is connected to an instance of armcompute.VirtualMachineScaleSetVMExtensionsClient by way of the
-// undefined.Transporter field.
+// The returned VirtualMachineScaleSetVMExtensionsServerTransport instance is connected to an instance of armcompute.VirtualMachineScaleSetVMExtensionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualMachineScaleSetVMExtensionsServerTransport(srv *VirtualMachineScaleSetVMExtensionsServer) *VirtualMachineScaleSetVMExtensionsServerTransport {
 	return &VirtualMachineScaleSetVMExtensionsServerTransport{srv: srv}
 }

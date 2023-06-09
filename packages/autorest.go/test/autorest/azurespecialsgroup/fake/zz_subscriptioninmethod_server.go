@@ -41,8 +41,8 @@ type SubscriptionInMethodServer struct {
 }
 
 // NewSubscriptionInMethodServerTransport creates a new instance of SubscriptionInMethodServerTransport with the provided implementation.
-// The returned SubscriptionInMethodServerTransport instance is connected to an instance of azurespecialsgroup.SubscriptionInMethodClient by way of the
-// undefined.Transporter field.
+// The returned SubscriptionInMethodServerTransport instance is connected to an instance of azurespecialsgroup.SubscriptionInMethodClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSubscriptionInMethodServerTransport(srv *SubscriptionInMethodServer) *SubscriptionInMethodServerTransport {
 	return &SubscriptionInMethodServerTransport{srv: srv}
 }

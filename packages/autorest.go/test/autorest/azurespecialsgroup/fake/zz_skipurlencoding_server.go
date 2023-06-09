@@ -53,8 +53,8 @@ type SkipURLEncodingServer struct {
 }
 
 // NewSkipURLEncodingServerTransport creates a new instance of SkipURLEncodingServerTransport with the provided implementation.
-// The returned SkipURLEncodingServerTransport instance is connected to an instance of azurespecialsgroup.SkipURLEncodingClient by way of the
-// undefined.Transporter field.
+// The returned SkipURLEncodingServerTransport instance is connected to an instance of azurespecialsgroup.SkipURLEncodingClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSkipURLEncodingServerTransport(srv *SkipURLEncodingServer) *SkipURLEncodingServerTransport {
 	return &SkipURLEncodingServerTransport{srv: srv}
 }

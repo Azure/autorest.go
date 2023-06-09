@@ -42,8 +42,8 @@ type PrivateDNSZoneGroupsServer struct {
 }
 
 // NewPrivateDNSZoneGroupsServerTransport creates a new instance of PrivateDNSZoneGroupsServerTransport with the provided implementation.
-// The returned PrivateDNSZoneGroupsServerTransport instance is connected to an instance of armnetwork.PrivateDNSZoneGroupsClient by way of the
-// undefined.Transporter field.
+// The returned PrivateDNSZoneGroupsServerTransport instance is connected to an instance of armnetwork.PrivateDNSZoneGroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPrivateDNSZoneGroupsServerTransport(srv *PrivateDNSZoneGroupsServer) *PrivateDNSZoneGroupsServerTransport {
 	return &PrivateDNSZoneGroupsServerTransport{srv: srv}
 }

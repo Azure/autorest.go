@@ -50,8 +50,8 @@ type RestorePointCollectionsServer struct {
 }
 
 // NewRestorePointCollectionsServerTransport creates a new instance of RestorePointCollectionsServerTransport with the provided implementation.
-// The returned RestorePointCollectionsServerTransport instance is connected to an instance of armcompute.RestorePointCollectionsClient by way of the
-// undefined.Transporter field.
+// The returned RestorePointCollectionsServerTransport instance is connected to an instance of armcompute.RestorePointCollectionsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewRestorePointCollectionsServerTransport(srv *RestorePointCollectionsServer) *RestorePointCollectionsServerTransport {
 	return &RestorePointCollectionsServerTransport{srv: srv}
 }

@@ -34,8 +34,8 @@ type LoadBalancerFrontendIPConfigurationsServer struct {
 }
 
 // NewLoadBalancerFrontendIPConfigurationsServerTransport creates a new instance of LoadBalancerFrontendIPConfigurationsServerTransport with the provided implementation.
-// The returned LoadBalancerFrontendIPConfigurationsServerTransport instance is connected to an instance of armnetwork.LoadBalancerFrontendIPConfigurationsClient by way of the
-// undefined.Transporter field.
+// The returned LoadBalancerFrontendIPConfigurationsServerTransport instance is connected to an instance of armnetwork.LoadBalancerFrontendIPConfigurationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLoadBalancerFrontendIPConfigurationsServerTransport(srv *LoadBalancerFrontendIPConfigurationsServer) *LoadBalancerFrontendIPConfigurationsServerTransport {
 	return &LoadBalancerFrontendIPConfigurationsServerTransport{srv: srv}
 }

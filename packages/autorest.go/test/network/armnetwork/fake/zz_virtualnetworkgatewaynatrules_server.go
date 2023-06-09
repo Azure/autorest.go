@@ -42,8 +42,8 @@ type VirtualNetworkGatewayNatRulesServer struct {
 }
 
 // NewVirtualNetworkGatewayNatRulesServerTransport creates a new instance of VirtualNetworkGatewayNatRulesServerTransport with the provided implementation.
-// The returned VirtualNetworkGatewayNatRulesServerTransport instance is connected to an instance of armnetwork.VirtualNetworkGatewayNatRulesClient by way of the
-// undefined.Transporter field.
+// The returned VirtualNetworkGatewayNatRulesServerTransport instance is connected to an instance of armnetwork.VirtualNetworkGatewayNatRulesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualNetworkGatewayNatRulesServerTransport(srv *VirtualNetworkGatewayNatRulesServer) *VirtualNetworkGatewayNatRulesServerTransport {
 	return &VirtualNetworkGatewayNatRulesServerTransport{srv: srv}
 }

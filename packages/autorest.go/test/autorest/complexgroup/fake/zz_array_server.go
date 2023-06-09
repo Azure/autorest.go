@@ -43,8 +43,8 @@ type ArrayServer struct {
 }
 
 // NewArrayServerTransport creates a new instance of ArrayServerTransport with the provided implementation.
-// The returned ArrayServerTransport instance is connected to an instance of complexgroup.ArrayClient by way of the
-// undefined.Transporter field.
+// The returned ArrayServerTransport instance is connected to an instance of complexgroup.ArrayClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewArrayServerTransport(srv *ArrayServer) *ArrayServerTransport {
 	return &ArrayServerTransport{srv: srv}
 }

@@ -37,8 +37,8 @@ type VirtualHubBgpConnectionServer struct {
 }
 
 // NewVirtualHubBgpConnectionServerTransport creates a new instance of VirtualHubBgpConnectionServerTransport with the provided implementation.
-// The returned VirtualHubBgpConnectionServerTransport instance is connected to an instance of armnetwork.VirtualHubBgpConnectionClient by way of the
-// undefined.Transporter field.
+// The returned VirtualHubBgpConnectionServerTransport instance is connected to an instance of armnetwork.VirtualHubBgpConnectionClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualHubBgpConnectionServerTransport(srv *VirtualHubBgpConnectionServer) *VirtualHubBgpConnectionServerTransport {
 	return &VirtualHubBgpConnectionServerTransport{srv: srv}
 }

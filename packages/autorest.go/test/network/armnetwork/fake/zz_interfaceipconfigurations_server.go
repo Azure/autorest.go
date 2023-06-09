@@ -34,8 +34,8 @@ type InterfaceIPConfigurationsServer struct {
 }
 
 // NewInterfaceIPConfigurationsServerTransport creates a new instance of InterfaceIPConfigurationsServerTransport with the provided implementation.
-// The returned InterfaceIPConfigurationsServerTransport instance is connected to an instance of armnetwork.InterfaceIPConfigurationsClient by way of the
-// undefined.Transporter field.
+// The returned InterfaceIPConfigurationsServerTransport instance is connected to an instance of armnetwork.InterfaceIPConfigurationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewInterfaceIPConfigurationsServerTransport(srv *InterfaceIPConfigurationsServer) *InterfaceIPConfigurationsServerTransport {
 	return &InterfaceIPConfigurationsServerTransport{srv: srv}
 }

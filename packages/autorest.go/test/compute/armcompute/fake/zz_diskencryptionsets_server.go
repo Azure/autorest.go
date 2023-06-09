@@ -54,8 +54,8 @@ type DiskEncryptionSetsServer struct {
 }
 
 // NewDiskEncryptionSetsServerTransport creates a new instance of DiskEncryptionSetsServerTransport with the provided implementation.
-// The returned DiskEncryptionSetsServerTransport instance is connected to an instance of armcompute.DiskEncryptionSetsClient by way of the
-// undefined.Transporter field.
+// The returned DiskEncryptionSetsServerTransport instance is connected to an instance of armcompute.DiskEncryptionSetsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDiskEncryptionSetsServerTransport(srv *DiskEncryptionSetsServer) *DiskEncryptionSetsServerTransport {
 	return &DiskEncryptionSetsServerTransport{srv: srv}
 }

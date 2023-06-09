@@ -29,8 +29,8 @@ type ApplicationGatewayPrivateLinkResourcesServer struct {
 }
 
 // NewApplicationGatewayPrivateLinkResourcesServerTransport creates a new instance of ApplicationGatewayPrivateLinkResourcesServerTransport with the provided implementation.
-// The returned ApplicationGatewayPrivateLinkResourcesServerTransport instance is connected to an instance of armnetwork.ApplicationGatewayPrivateLinkResourcesClient by way of the
-// undefined.Transporter field.
+// The returned ApplicationGatewayPrivateLinkResourcesServerTransport instance is connected to an instance of armnetwork.ApplicationGatewayPrivateLinkResourcesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewApplicationGatewayPrivateLinkResourcesServerTransport(srv *ApplicationGatewayPrivateLinkResourcesServer) *ApplicationGatewayPrivateLinkResourcesServerTransport {
 	return &ApplicationGatewayPrivateLinkResourcesServerTransport{srv: srv}
 }

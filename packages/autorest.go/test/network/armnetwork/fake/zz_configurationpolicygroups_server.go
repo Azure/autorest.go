@@ -42,8 +42,8 @@ type ConfigurationPolicyGroupsServer struct {
 }
 
 // NewConfigurationPolicyGroupsServerTransport creates a new instance of ConfigurationPolicyGroupsServerTransport with the provided implementation.
-// The returned ConfigurationPolicyGroupsServerTransport instance is connected to an instance of armnetwork.ConfigurationPolicyGroupsClient by way of the
-// undefined.Transporter field.
+// The returned ConfigurationPolicyGroupsServerTransport instance is connected to an instance of armnetwork.ConfigurationPolicyGroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewConfigurationPolicyGroupsServerTransport(srv *ConfigurationPolicyGroupsServer) *ConfigurationPolicyGroupsServerTransport {
 	return &ConfigurationPolicyGroupsServerTransport{srv: srv}
 }

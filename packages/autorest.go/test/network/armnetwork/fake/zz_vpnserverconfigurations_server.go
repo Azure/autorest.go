@@ -50,8 +50,8 @@ type VPNServerConfigurationsServer struct {
 }
 
 // NewVPNServerConfigurationsServerTransport creates a new instance of VPNServerConfigurationsServerTransport with the provided implementation.
-// The returned VPNServerConfigurationsServerTransport instance is connected to an instance of armnetwork.VPNServerConfigurationsClient by way of the
-// undefined.Transporter field.
+// The returned VPNServerConfigurationsServerTransport instance is connected to an instance of armnetwork.VPNServerConfigurationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVPNServerConfigurationsServerTransport(srv *VPNServerConfigurationsServer) *VPNServerConfigurationsServerTransport {
 	return &VPNServerConfigurationsServerTransport{srv: srv}
 }

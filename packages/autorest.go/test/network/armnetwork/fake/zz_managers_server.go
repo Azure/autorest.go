@@ -51,8 +51,8 @@ type ManagersServer struct {
 }
 
 // NewManagersServerTransport creates a new instance of ManagersServerTransport with the provided implementation.
-// The returned ManagersServerTransport instance is connected to an instance of armnetwork.ManagersClient by way of the
-// undefined.Transporter field.
+// The returned ManagersServerTransport instance is connected to an instance of armnetwork.ManagersClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewManagersServerTransport(srv *ManagersServer) *ManagersServerTransport {
 	return &ManagersServerTransport{srv: srv}
 }

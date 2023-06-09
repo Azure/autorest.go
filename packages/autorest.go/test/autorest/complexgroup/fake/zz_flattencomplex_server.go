@@ -27,8 +27,8 @@ type FlattencomplexServer struct {
 }
 
 // NewFlattencomplexServerTransport creates a new instance of FlattencomplexServerTransport with the provided implementation.
-// The returned FlattencomplexServerTransport instance is connected to an instance of complexgroup.FlattencomplexClient by way of the
-// undefined.Transporter field.
+// The returned FlattencomplexServerTransport instance is connected to an instance of complexgroup.FlattencomplexClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewFlattencomplexServerTransport(srv *FlattencomplexServer) *FlattencomplexServerTransport {
 	return &FlattencomplexServerTransport{srv: srv}
 }

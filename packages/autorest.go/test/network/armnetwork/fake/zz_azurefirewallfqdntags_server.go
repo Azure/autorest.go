@@ -28,8 +28,8 @@ type AzureFirewallFqdnTagsServer struct {
 }
 
 // NewAzureFirewallFqdnTagsServerTransport creates a new instance of AzureFirewallFqdnTagsServerTransport with the provided implementation.
-// The returned AzureFirewallFqdnTagsServerTransport instance is connected to an instance of armnetwork.AzureFirewallFqdnTagsClient by way of the
-// undefined.Transporter field.
+// The returned AzureFirewallFqdnTagsServerTransport instance is connected to an instance of armnetwork.AzureFirewallFqdnTagsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAzureFirewallFqdnTagsServerTransport(srv *AzureFirewallFqdnTagsServer) *AzureFirewallFqdnTagsServerTransport {
 	return &AzureFirewallFqdnTagsServerTransport{srv: srv}
 }

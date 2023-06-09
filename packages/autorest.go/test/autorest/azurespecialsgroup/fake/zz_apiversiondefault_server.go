@@ -39,8 +39,8 @@ type APIVersionDefaultServer struct {
 }
 
 // NewAPIVersionDefaultServerTransport creates a new instance of APIVersionDefaultServerTransport with the provided implementation.
-// The returned APIVersionDefaultServerTransport instance is connected to an instance of azurespecialsgroup.APIVersionDefaultClient by way of the
-// undefined.Transporter field.
+// The returned APIVersionDefaultServerTransport instance is connected to an instance of azurespecialsgroup.APIVersionDefaultClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAPIVersionDefaultServerTransport(srv *APIVersionDefaultServer) *APIVersionDefaultServerTransport {
 	return &APIVersionDefaultServerTransport{srv: srv}
 }

@@ -54,8 +54,8 @@ type SSHPublicKeysServer struct {
 }
 
 // NewSSHPublicKeysServerTransport creates a new instance of SSHPublicKeysServerTransport with the provided implementation.
-// The returned SSHPublicKeysServerTransport instance is connected to an instance of armcompute.SSHPublicKeysClient by way of the
-// undefined.Transporter field.
+// The returned SSHPublicKeysServerTransport instance is connected to an instance of armcompute.SSHPublicKeysClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSSHPublicKeysServerTransport(srv *SSHPublicKeysServer) *SSHPublicKeysServerTransport {
 	return &SSHPublicKeysServerTransport{srv: srv}
 }

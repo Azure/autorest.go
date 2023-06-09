@@ -31,8 +31,8 @@ type InheritanceServer struct {
 }
 
 // NewInheritanceServerTransport creates a new instance of InheritanceServerTransport with the provided implementation.
-// The returned InheritanceServerTransport instance is connected to an instance of complexgroup.InheritanceClient by way of the
-// undefined.Transporter field.
+// The returned InheritanceServerTransport instance is connected to an instance of complexgroup.InheritanceClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewInheritanceServerTransport(srv *InheritanceServer) *InheritanceServerTransport {
 	return &InheritanceServerTransport{srv: srv}
 }

@@ -29,8 +29,8 @@ type AvailableDelegationsServer struct {
 }
 
 // NewAvailableDelegationsServerTransport creates a new instance of AvailableDelegationsServerTransport with the provided implementation.
-// The returned AvailableDelegationsServerTransport instance is connected to an instance of armnetwork.AvailableDelegationsClient by way of the
-// undefined.Transporter field.
+// The returned AvailableDelegationsServerTransport instance is connected to an instance of armnetwork.AvailableDelegationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAvailableDelegationsServerTransport(srv *AvailableDelegationsServer) *AvailableDelegationsServerTransport {
 	return &AvailableDelegationsServerTransport{srv: srv}
 }

@@ -50,8 +50,8 @@ type IPGroupsServer struct {
 }
 
 // NewIPGroupsServerTransport creates a new instance of IPGroupsServerTransport with the provided implementation.
-// The returned IPGroupsServerTransport instance is connected to an instance of armnetwork.IPGroupsClient by way of the
-// undefined.Transporter field.
+// The returned IPGroupsServerTransport instance is connected to an instance of armnetwork.IPGroupsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewIPGroupsServerTransport(srv *IPGroupsServer) *IPGroupsServerTransport {
 	return &IPGroupsServerTransport{srv: srv}
 }

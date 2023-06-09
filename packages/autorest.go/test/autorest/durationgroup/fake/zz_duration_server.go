@@ -39,8 +39,8 @@ type DurationServer struct {
 }
 
 // NewDurationServerTransport creates a new instance of DurationServerTransport with the provided implementation.
-// The returned DurationServerTransport instance is connected to an instance of durationgroup.DurationClient by way of the
-// undefined.Transporter field.
+// The returned DurationServerTransport instance is connected to an instance of durationgroup.DurationClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDurationServerTransport(srv *DurationServer) *DurationServerTransport {
 	return &DurationServerTransport{srv: srv}
 }

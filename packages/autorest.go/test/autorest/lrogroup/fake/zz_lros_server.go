@@ -200,8 +200,8 @@ type LROsServer struct {
 }
 
 // NewLROsServerTransport creates a new instance of LROsServerTransport with the provided implementation.
-// The returned LROsServerTransport instance is connected to an instance of lrogroup.LROsClient by way of the
-// undefined.Transporter field.
+// The returned LROsServerTransport instance is connected to an instance of lrogroup.LROsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLROsServerTransport(srv *LROsServer) *LROsServerTransport {
 	return &LROsServerTransport{srv: srv}
 }

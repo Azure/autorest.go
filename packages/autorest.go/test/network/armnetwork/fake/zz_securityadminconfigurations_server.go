@@ -43,8 +43,8 @@ type SecurityAdminConfigurationsServer struct {
 }
 
 // NewSecurityAdminConfigurationsServerTransport creates a new instance of SecurityAdminConfigurationsServerTransport with the provided implementation.
-// The returned SecurityAdminConfigurationsServerTransport instance is connected to an instance of armnetwork.SecurityAdminConfigurationsClient by way of the
-// undefined.Transporter field.
+// The returned SecurityAdminConfigurationsServerTransport instance is connected to an instance of armnetwork.SecurityAdminConfigurationsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSecurityAdminConfigurationsServerTransport(srv *SecurityAdminConfigurationsServer) *SecurityAdminConfigurationsServerTransport {
 	return &SecurityAdminConfigurationsServerTransport{srv: srv}
 }

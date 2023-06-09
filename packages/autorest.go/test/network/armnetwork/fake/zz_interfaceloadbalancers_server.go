@@ -29,8 +29,8 @@ type InterfaceLoadBalancersServer struct {
 }
 
 // NewInterfaceLoadBalancersServerTransport creates a new instance of InterfaceLoadBalancersServerTransport with the provided implementation.
-// The returned InterfaceLoadBalancersServerTransport instance is connected to an instance of armnetwork.InterfaceLoadBalancersClient by way of the
-// undefined.Transporter field.
+// The returned InterfaceLoadBalancersServerTransport instance is connected to an instance of armnetwork.InterfaceLoadBalancersClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewInterfaceLoadBalancersServerTransport(srv *InterfaceLoadBalancersServer) *InterfaceLoadBalancersServerTransport {
 	return &InterfaceLoadBalancersServerTransport{srv: srv}
 }

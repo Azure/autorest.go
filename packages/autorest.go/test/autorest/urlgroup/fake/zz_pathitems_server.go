@@ -41,8 +41,8 @@ type PathItemsServer struct {
 }
 
 // NewPathItemsServerTransport creates a new instance of PathItemsServerTransport with the provided implementation.
-// The returned PathItemsServerTransport instance is connected to an instance of urlgroup.PathItemsClient by way of the
-// undefined.Transporter field.
+// The returned PathItemsServerTransport instance is connected to an instance of urlgroup.PathItemsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPathItemsServerTransport(srv *PathItemsServer) *PathItemsServerTransport {
 	return &PathItemsServerTransport{srv: srv}
 }

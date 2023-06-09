@@ -32,8 +32,8 @@ type UploadServer struct {
 }
 
 // NewUploadServerTransport creates a new instance of UploadServerTransport with the provided implementation.
-// The returned UploadServerTransport instance is connected to an instance of binarygroup.UploadClient by way of the
-// undefined.Transporter field.
+// The returned UploadServerTransport instance is connected to an instance of binarygroup.UploadClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewUploadServerTransport(srv *UploadServer) *UploadServerTransport {
 	return &UploadServerTransport{srv: srv}
 }

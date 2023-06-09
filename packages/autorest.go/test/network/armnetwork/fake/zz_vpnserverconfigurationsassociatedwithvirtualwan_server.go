@@ -29,8 +29,8 @@ type VPNServerConfigurationsAssociatedWithVirtualWanServer struct {
 }
 
 // NewVPNServerConfigurationsAssociatedWithVirtualWanServerTransport creates a new instance of VPNServerConfigurationsAssociatedWithVirtualWanServerTransport with the provided implementation.
-// The returned VPNServerConfigurationsAssociatedWithVirtualWanServerTransport instance is connected to an instance of armnetwork.VPNServerConfigurationsAssociatedWithVirtualWanClient by way of the
-// undefined.Transporter field.
+// The returned VPNServerConfigurationsAssociatedWithVirtualWanServerTransport instance is connected to an instance of armnetwork.VPNServerConfigurationsAssociatedWithVirtualWanClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVPNServerConfigurationsAssociatedWithVirtualWanServerTransport(srv *VPNServerConfigurationsAssociatedWithVirtualWanServer) *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport {
 	return &VPNServerConfigurationsAssociatedWithVirtualWanServerTransport{srv: srv}
 }

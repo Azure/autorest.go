@@ -42,8 +42,8 @@ type SecurityRulesServer struct {
 }
 
 // NewSecurityRulesServerTransport creates a new instance of SecurityRulesServerTransport with the provided implementation.
-// The returned SecurityRulesServerTransport instance is connected to an instance of armnetwork.SecurityRulesClient by way of the
-// undefined.Transporter field.
+// The returned SecurityRulesServerTransport instance is connected to an instance of armnetwork.SecurityRulesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSecurityRulesServerTransport(srv *SecurityRulesServer) *SecurityRulesServerTransport {
 	return &SecurityRulesServerTransport{srv: srv}
 }

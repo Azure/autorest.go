@@ -37,8 +37,8 @@ type AuthenticationServer struct {
 }
 
 // NewAuthenticationServerTransport creates a new instance of AuthenticationServerTransport with the provided implementation.
-// The returned AuthenticationServerTransport instance is connected to an instance of azacr.AuthenticationClient by way of the
-// undefined.Transporter field.
+// The returned AuthenticationServerTransport instance is connected to an instance of azacr.AuthenticationClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAuthenticationServerTransport(srv *AuthenticationServer) *AuthenticationServerTransport {
 	return &AuthenticationServerTransport{srv: srv}
 }

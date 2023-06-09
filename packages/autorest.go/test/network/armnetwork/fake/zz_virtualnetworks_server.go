@@ -63,8 +63,8 @@ type VirtualNetworksServer struct {
 }
 
 // NewVirtualNetworksServerTransport creates a new instance of VirtualNetworksServerTransport with the provided implementation.
-// The returned VirtualNetworksServerTransport instance is connected to an instance of armnetwork.VirtualNetworksClient by way of the
-// undefined.Transporter field.
+// The returned VirtualNetworksServerTransport instance is connected to an instance of armnetwork.VirtualNetworksClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualNetworksServerTransport(srv *VirtualNetworksServer) *VirtualNetworksServerTransport {
 	return &VirtualNetworksServerTransport{srv: srv}
 }

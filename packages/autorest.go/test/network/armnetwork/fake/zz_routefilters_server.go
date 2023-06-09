@@ -50,8 +50,8 @@ type RouteFiltersServer struct {
 }
 
 // NewRouteFiltersServerTransport creates a new instance of RouteFiltersServerTransport with the provided implementation.
-// The returned RouteFiltersServerTransport instance is connected to an instance of armnetwork.RouteFiltersClient by way of the
-// undefined.Transporter field.
+// The returned RouteFiltersServerTransport instance is connected to an instance of armnetwork.RouteFiltersClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewRouteFiltersServerTransport(srv *RouteFiltersServer) *RouteFiltersServerTransport {
 	return &RouteFiltersServerTransport{srv: srv}
 }

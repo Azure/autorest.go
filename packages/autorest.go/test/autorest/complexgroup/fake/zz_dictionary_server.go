@@ -47,8 +47,8 @@ type DictionaryServer struct {
 }
 
 // NewDictionaryServerTransport creates a new instance of DictionaryServerTransport with the provided implementation.
-// The returned DictionaryServerTransport instance is connected to an instance of complexgroup.DictionaryClient by way of the
-// undefined.Transporter field.
+// The returned DictionaryServerTransport instance is connected to an instance of complexgroup.DictionaryClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDictionaryServerTransport(srv *DictionaryServer) *DictionaryServerTransport {
 	return &DictionaryServerTransport{srv: srv}
 }

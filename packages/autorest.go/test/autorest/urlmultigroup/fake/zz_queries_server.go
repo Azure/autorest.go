@@ -37,8 +37,8 @@ type QueriesServer struct {
 }
 
 // NewQueriesServerTransport creates a new instance of QueriesServerTransport with the provided implementation.
-// The returned QueriesServerTransport instance is connected to an instance of urlmultigroup.QueriesClient by way of the
-// undefined.Transporter field.
+// The returned QueriesServerTransport instance is connected to an instance of urlmultigroup.QueriesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewQueriesServerTransport(srv *QueriesServer) *QueriesServerTransport {
 	return &QueriesServerTransport{srv: srv}
 }

@@ -50,8 +50,8 @@ type VirtualWansServer struct {
 }
 
 // NewVirtualWansServerTransport creates a new instance of VirtualWansServerTransport with the provided implementation.
-// The returned VirtualWansServerTransport instance is connected to an instance of armnetwork.VirtualWansClient by way of the
-// undefined.Transporter field.
+// The returned VirtualWansServerTransport instance is connected to an instance of armnetwork.VirtualWansClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewVirtualWansServerTransport(srv *VirtualWansServer) *VirtualWansServerTransport {
 	return &VirtualWansServerTransport{srv: srv}
 }

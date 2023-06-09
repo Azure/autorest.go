@@ -50,8 +50,8 @@ type DedicatedHostsServer struct {
 }
 
 // NewDedicatedHostsServerTransport creates a new instance of DedicatedHostsServerTransport with the provided implementation.
-// The returned DedicatedHostsServerTransport instance is connected to an instance of armcompute.DedicatedHostsClient by way of the
-// undefined.Transporter field.
+// The returned DedicatedHostsServerTransport instance is connected to an instance of armcompute.DedicatedHostsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDedicatedHostsServerTransport(srv *DedicatedHostsServer) *DedicatedHostsServerTransport {
 	return &DedicatedHostsServerTransport{srv: srv}
 }

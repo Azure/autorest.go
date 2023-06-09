@@ -29,8 +29,8 @@ type AvailableEndpointServicesServer struct {
 }
 
 // NewAvailableEndpointServicesServerTransport creates a new instance of AvailableEndpointServicesServerTransport with the provided implementation.
-// The returned AvailableEndpointServicesServerTransport instance is connected to an instance of armnetwork.AvailableEndpointServicesClient by way of the
-// undefined.Transporter field.
+// The returned AvailableEndpointServicesServerTransport instance is connected to an instance of armnetwork.AvailableEndpointServicesClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewAvailableEndpointServicesServerTransport(srv *AvailableEndpointServicesServer) *AvailableEndpointServicesServerTransport {
 	return &AvailableEndpointServicesServerTransport{srv: srv}
 }

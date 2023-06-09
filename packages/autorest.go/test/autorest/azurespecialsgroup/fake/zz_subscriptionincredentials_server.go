@@ -44,8 +44,8 @@ type SubscriptionInCredentialsServer struct {
 }
 
 // NewSubscriptionInCredentialsServerTransport creates a new instance of SubscriptionInCredentialsServerTransport with the provided implementation.
-// The returned SubscriptionInCredentialsServerTransport instance is connected to an instance of azurespecialsgroup.SubscriptionInCredentialsClient by way of the
-// undefined.Transporter field.
+// The returned SubscriptionInCredentialsServerTransport instance is connected to an instance of azurespecialsgroup.SubscriptionInCredentialsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewSubscriptionInCredentialsServerTransport(srv *SubscriptionInCredentialsServer) *SubscriptionInCredentialsServerTransport {
 	return &SubscriptionInCredentialsServerTransport{srv: srv}
 }

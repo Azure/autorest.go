@@ -99,8 +99,8 @@ type PagingServer struct {
 }
 
 // NewPagingServerTransport creates a new instance of PagingServerTransport with the provided implementation.
-// The returned PagingServerTransport instance is connected to an instance of paginggroup.PagingClient by way of the
-// undefined.Transporter field.
+// The returned PagingServerTransport instance is connected to an instance of paginggroup.PagingClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPagingServerTransport(srv *PagingServer) *PagingServerTransport {
 	return &PagingServerTransport{srv: srv}
 }

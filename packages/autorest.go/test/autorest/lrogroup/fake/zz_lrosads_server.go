@@ -128,8 +128,8 @@ type LROSADsServer struct {
 }
 
 // NewLROSADsServerTransport creates a new instance of LROSADsServerTransport with the provided implementation.
-// The returned LROSADsServerTransport instance is connected to an instance of lrogroup.LROSADsClient by way of the
-// undefined.Transporter field.
+// The returned LROSADsServerTransport instance is connected to an instance of lrogroup.LROSADsClient via the
+// azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLROSADsServerTransport(srv *LROSADsServer) *LROSADsServerTransport {
 	return &LROSADsServerTransport{srv: srv}
 }
