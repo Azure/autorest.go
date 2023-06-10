@@ -6314,6 +6314,7 @@ operationGroups:
                         description: ''
                       go: *ref_219
                     protocol: {}
+                  implementation: Method
                   language:
                     default: &ref_220
                       name: ResumeToken
@@ -8228,6 +8229,7 @@ operationGroups:
                         description: ''
                       go: *ref_296
                     protocol: {}
+                  implementation: Method
                   language:
                     default: &ref_297
                       name: ResumeToken
