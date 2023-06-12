@@ -13,7 +13,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"io"
 	"net/http"
 	"strconv"
@@ -449,8 +448,7 @@ func (client *ExplicitClient) postOptionalStringParameterCreateRequest(ctx conte
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
-		body := streaming.NopCloser(strings.NewReader(*options.BodyParameter))
-		if err := req.SetBody(body, "application/json"); err != nil {
+		if err := runtime.MarshalAsJSON(req, *options.BodyParameter); err != nil {
 			return nil, err
 		}
 		return req, nil
@@ -910,11 +908,9 @@ func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	body := streaming.NopCloser(strings.NewReader(bodyParameter))
-	if err := req.SetBody(body, "application/json"); err != nil {
+	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {
 		return nil, err
 	}
-
 	return req, nil
 }
 
@@ -966,13 +962,13 @@ func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx contex
 // Generated from API version 1.0.0
 //   - options - ExplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBody
 //     method.
-func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutOptionalBinaryBodyOptions) (ExplicitClientPutOptionalBinaryBodyResponse, error) {
+func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ExplicitClientPutOptionalBinaryBodyOptions) (ExplicitClientPutOptionalBinaryBodyResponse, error) {
 	var err error
 	const operationName = "ExplicitClient.PutOptionalBinaryBody"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, bodyParameter, options)
+	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, options)
 	if err != nil {
 		return ExplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
@@ -988,15 +984,18 @@ func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyPar
 }
 
 // putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
-func (client *ExplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutOptionalBinaryBodyOptions) (*policy.Request, error) {
+func (client *ExplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, options *ExplicitClientPutOptionalBinaryBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/explicit/optional/binary-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := req.SetBody(bodyParameter, "application/octet-stream"); err != nil {
-		return nil, err
+	if options != nil && options.BodyParameter != nil {
+		if err := req.SetBody(options.BodyParameter, "application/octet-stream"); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }

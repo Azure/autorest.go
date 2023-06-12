@@ -43,7 +43,7 @@ const goMappings = {
     'noopsgroup': ['no-operations.json'],
     'numbergroup': ['body-number.json', '--remove-unreferenced-types'],
     'objectgroup': ['object-type.json', '--remove-unreferenced-types', '--rawjson-as-bytes'],
-    'optionalgroup': ['required-optional.json', '--remove-unreferenced-types'],
+    'optionalgroup': ['required-optional.json', '--remove-unreferenced-types --honor-body-placement'],
     'paginggroup': ['paging.json', '--remove-unreferenced-types'],
     'paramgroupinggroup': ['azure-parameter-grouping.json', '--remove-unreferenced-types'],
     'reportgroup': ['report.json', '--remove-unreferenced-types'],

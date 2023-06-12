@@ -62,7 +62,7 @@ func TestImplicitGetRequiredPath(t *testing.T) {
 
 func TestImplicitPutOptionalBody(t *testing.T) {
 	client := newImplicitClient(t)
-	result, err := client.PutOptionalBody(context.Background(), "", nil)
+	result, err := client.PutOptionalBody(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }

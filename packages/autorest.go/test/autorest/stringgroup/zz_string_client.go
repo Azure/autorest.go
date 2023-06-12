@@ -13,9 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
-	"strings"
 )
 
 // StringClient contains the methods for the String group.
@@ -560,11 +558,9 @@ func (client *StringClient) putNullCreateRequest(ctx context.Context, stringBody
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	body := streaming.NopCloser(strings.NewReader(stringBody))
-	if err := req.SetBody(body, "application/json"); err != nil {
+	if err := runtime.MarshalAsJSON(req, stringBody); err != nil {
 		return nil, err
 	}
-
 	return req, nil
 }
 

@@ -8,6 +8,8 @@
 
 package optionalgroup
 
+import "io"
+
 type ArrayOptionalWrapper struct {
 	Value []*string
 }
@@ -161,7 +163,7 @@ type ExplicitClientPostRequiredStringPropertyOptions struct {
 // ExplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBody
 // method.
 type ExplicitClientPutOptionalBinaryBodyOptions struct {
-	// placeholder for future optional parameters
+	BodyParameter io.ReadSeekCloser
 }
 
 // ExplicitClientPutRequiredBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBody
@@ -195,12 +197,12 @@ type ImplicitClientGetRequiredPathOptions struct {
 // ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
 // method.
 type ImplicitClientPutOptionalBinaryBodyOptions struct {
-	// placeholder for future optional parameters
+	BodyParameter io.ReadSeekCloser
 }
 
 // ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody method.
 type ImplicitClientPutOptionalBodyOptions struct {
-	// placeholder for future optional parameters
+	BodyParameter *string
 }
 
 // ImplicitClientPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader method.

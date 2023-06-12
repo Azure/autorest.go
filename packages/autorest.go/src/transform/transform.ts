@@ -241,6 +241,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         return '[]byte';
       }
       return 'map[string]any';
+    case SchemaType.ArmId:
+      return 'string';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;

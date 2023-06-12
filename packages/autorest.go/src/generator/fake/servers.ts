@@ -668,6 +668,7 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
           paramNilCheck.push(`len(${createLocalVariableName(param, 'Param')}) > 0`);
         } else if (param.protocol.http?.in === 'body') {
           if (param.schema.type === SchemaType.Binary) {
+            imports.add('io');
             paramNilCheck.push('req.Body != nil');
           } else {
             imports.add('reflect');

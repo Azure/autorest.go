@@ -19,6 +19,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"reflect"
 	"regexp"
 )
 
@@ -42,11 +43,11 @@ type ImplicitServer struct {
 
 	// PutOptionalBinaryBody is the fake for method ImplicitClient.PutOptionalBinaryBody
 	// HTTP status codes to indicate success: http.StatusOK
-	PutOptionalBinaryBody func(ctx context.Context, bodyParameter io.ReadSeekCloser, options *optionalgroup.ImplicitClientPutOptionalBinaryBodyOptions) (resp azfake.Responder[optionalgroup.ImplicitClientPutOptionalBinaryBodyResponse], errResp azfake.ErrorResponder)
+	PutOptionalBinaryBody func(ctx context.Context, options *optionalgroup.ImplicitClientPutOptionalBinaryBodyOptions) (resp azfake.Responder[optionalgroup.ImplicitClientPutOptionalBinaryBodyResponse], errResp azfake.ErrorResponder)
 
 	// PutOptionalBody is the fake for method ImplicitClient.PutOptionalBody
 	// HTTP status codes to indicate success: http.StatusOK
-	PutOptionalBody func(ctx context.Context, bodyParameter string, options *optionalgroup.ImplicitClientPutOptionalBodyOptions) (resp azfake.Responder[optionalgroup.ImplicitClientPutOptionalBodyResponse], errResp azfake.ErrorResponder)
+	PutOptionalBody func(ctx context.Context, options *optionalgroup.ImplicitClientPutOptionalBodyOptions) (resp azfake.Responder[optionalgroup.ImplicitClientPutOptionalBodyResponse], errResp azfake.ErrorResponder)
 
 	// PutOptionalHeader is the fake for method ImplicitClient.PutOptionalHeader
 	// HTTP status codes to indicate success: http.StatusOK
@@ -205,7 +206,13 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Reques
 	if i.srv.PutOptionalBinaryBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutOptionalBinaryBody not implemented")}
 	}
-	respr, errRespr := i.srv.PutOptionalBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	var options *optionalgroup.ImplicitClientPutOptionalBinaryBodyOptions
+	if req.Body != nil {
+		options = &optionalgroup.ImplicitClientPutOptionalBinaryBodyOptions{
+			BodyParameter: req.Body.(io.ReadSeekCloser),
+		}
+	}
+	respr, errRespr := i.srv.PutOptionalBinaryBody(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -224,11 +231,17 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBody(req *http.Request) (*h
 	if i.srv.PutOptionalBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutOptionalBody not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[string](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := i.srv.PutOptionalBody(req.Context(), body, nil)
+	var options *optionalgroup.ImplicitClientPutOptionalBodyOptions
+	if !reflect.ValueOf(body).IsZero() {
+		options = &optionalgroup.ImplicitClientPutOptionalBodyOptions{
+			BodyParameter: &body,
+		}
+	}
+	respr, errRespr := i.srv.PutOptionalBody(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

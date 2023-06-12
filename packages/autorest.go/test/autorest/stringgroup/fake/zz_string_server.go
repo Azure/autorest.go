@@ -353,7 +353,7 @@ func (s *StringServerTransport) dispatchPutNull(req *http.Request) (*http.Respon
 	if s.srv.PutNull == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutNull not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[string](req)
 	if err != nil {
 		return nil, err
 	}

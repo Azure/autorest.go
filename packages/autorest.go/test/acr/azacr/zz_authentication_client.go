@@ -22,9 +22,8 @@ import (
 // AuthenticationClient contains the methods for the Authentication group.
 // Don't use this type directly, use a constructor function instead.
 type AuthenticationClient struct {
-	internal   *azcore.Client
-	endpoint   string
-	apiVersion *string
+	internal *azcore.Client
+	endpoint string
 }
 
 // ExchangeAADAccessTokenForAcrRefreshToken - Exchange AAD tokens for an ACR refresh Token
@@ -65,9 +64,7 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCrea
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if client.apiVersion != nil {
-		reqQP.Set("api-version", "2021-07-01")
-	}
+	reqQP.Set("api-version", "2021-07-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}
@@ -138,9 +135,7 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCrea
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if client.apiVersion != nil {
-		reqQP.Set("api-version", "2021-07-01")
-	}
+	reqQP.Set("api-version", "2021-07-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}

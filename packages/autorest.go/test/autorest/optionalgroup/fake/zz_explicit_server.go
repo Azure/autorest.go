@@ -115,7 +115,7 @@ type ExplicitServer struct {
 
 	// PutOptionalBinaryBody is the fake for method ExplicitClient.PutOptionalBinaryBody
 	// HTTP status codes to indicate success: http.StatusOK
-	PutOptionalBinaryBody func(ctx context.Context, bodyParameter io.ReadSeekCloser, options *optionalgroup.ExplicitClientPutOptionalBinaryBodyOptions) (resp azfake.Responder[optionalgroup.ExplicitClientPutOptionalBinaryBodyResponse], errResp azfake.ErrorResponder)
+	PutOptionalBinaryBody func(ctx context.Context, options *optionalgroup.ExplicitClientPutOptionalBinaryBodyOptions) (resp azfake.Responder[optionalgroup.ExplicitClientPutOptionalBinaryBodyResponse], errResp azfake.ErrorResponder)
 
 	// PutRequiredBinaryBody is the fake for method ExplicitClient.PutRequiredBinaryBody
 	// HTTP status codes to indicate success: http.StatusOK
@@ -471,7 +471,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalStringParameter(req *http.
 	if e.srv.PostOptionalStringParameter == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PostOptionalStringParameter not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[string](req)
 	if err != nil {
 		return nil, err
 	}
@@ -734,7 +734,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredStringParameter(req *http.
 	if e.srv.PostRequiredStringParameter == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PostRequiredStringParameter not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[string](req)
 	if err != nil {
 		return nil, err
 	}
@@ -780,7 +780,13 @@ func (e *ExplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Reques
 	if e.srv.PutOptionalBinaryBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutOptionalBinaryBody not implemented")}
 	}
-	respr, errRespr := e.srv.PutOptionalBinaryBody(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	var options *optionalgroup.ExplicitClientPutOptionalBinaryBodyOptions
+	if req.Body != nil {
+		options = &optionalgroup.ExplicitClientPutOptionalBinaryBodyOptions{
+			BodyParameter: req.Body.(io.ReadSeekCloser),
+		}
+	}
+	respr, errRespr := e.srv.PutOptionalBinaryBody(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

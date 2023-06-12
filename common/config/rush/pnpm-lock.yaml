@@ -1,9 +1,9 @@
 dependencies:
-  '@autorest/codemodel': 4.18.2
+  '@autorest/codemodel': 4.19.3
   '@autorest/extension-base': 3.4.4
-  '@autorest/testmodeler': 2.3.2_eslint@6.6.0
+  '@autorest/testmodeler': 2.5.1
   '@azure-tools/async-io': 3.0.252
-  '@azure-tools/codegen': 2.9.1
+  '@azure-tools/codegen': 2.9.2
   '@azure-tools/linq': 3.1.261
   '@azure-tools/tasks': 3.0.252
   '@microsoft.azure/autorest.testserver': 3.3.5_e58605af5d62eced51e25286a407a18b
@@ -41,10 +41,6 @@ dependencies:
   typescript: 4.4.3
 lockfileVersion: 5.1
 packages:
-  /@aduh95/viz.js/3.7.0:
-    dev: false
-    resolution:
-      integrity: sha512-20Pk2Z98fbPLkECcrZSJszKos/OgtvJJR3NcbVfgCJ6EQjDNzW2P1BKqImOz3tJ952dvO2DWEhcLhQ1Wz1e9ng==
   /@apidevtools/json-schema-ref-parser/9.0.9:
     dependencies:
       '@jsdevtools/ono': 7.1.3
@@ -85,15 +81,15 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-BUTLfV6GufjgcSp0ysB1wdhMIG8RGQMiY4ZQnP76fHcR2KZW0QinnEAR99mMy7BVOdXiurWkNW7rilEJfKhXWg==
-  /@autorest/codemodel/4.18.2:
+  /@autorest/codemodel/4.19.3:
     dependencies:
-      '@azure-tools/codegen': 2.9.1
+      '@azure-tools/codegen': 2.9.2
       js-yaml: 4.0.0
     dev: false
     engines:
       node: '>=12.0.0'
     resolution:
-      integrity: sha512-xnGbxU2xvqtyIQYYwsEZsK+w2MmavbUrQdk1/sLPhjT+cQ5R6VUc5PX1ZTmPzBZWc/utiaAurxFC65J5J/uSgA==
+      integrity: sha512-8RMPjq2BmLNn080EHGbSc0E9pk7EO6i+vi3vGrz8xrfnTBydOZPJUZqmOpEmNnV6LRbr23cthXQo0JbA/bStWg==
   /@autorest/extension-base/3.4.4:
     dependencies:
       '@azure-tools/codegen': 2.9.0
@@ -108,27 +104,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6KWlY9rvFZt2qBA0/9N1efB81tZ57rpnzO6L/nkqV882JKEJA4RPJmf5H0cY5TrA4OEVDuMoZoHlT7bu8SvtIQ==
-  /@autorest/testmodeler/2.3.2_eslint@6.6.0:
-    dependencies:
-      '@autorest/codemodel': 4.18.2
-      '@autorest/extension-base': 3.4.4
-      '@azure-tools/codegen': 2.9.1
-      '@types/lodash': 4.14.183
-      autorest: 3.6.1
-      cross-env: 7.0.3
-      jest-junit: 12.3.0
-      js-yaml: 4.0.0
-      jsonpath: 1.1.1
-      lodash: 4.17.21
-      node-yaml: 3.2.0_eslint@6.6.0
-      oav: 3.0.3
-      reflect-metadata: 0.1.13
-      yuml2svg: 5.0.1
+  /@autorest/testmodeler/2.5.1:
     dev: false
-    peerDependencies:
-      eslint: '*'
     resolution:
-      integrity: sha512-Nh1bWdnU5+2b7lUtBdEdec/HjyV9Hpj+CGsJnRc8zBguNP+LqSo9Ad4/faUypvV4iM6BV4B/k8QBrglJwTpfxw==
+      integrity: sha512-MCWfTUr7HA9wNi+Odv7/bKp/nydIL1ZjbVEZPNrqvpqzRa/NLoMtAWle0nIqG+iie6XofKGC0ji2zeEJMEVtKQ==
   /@azure-tools/async-io/3.0.252:
     dependencies:
       '@azure-tools/tasks': 3.0.252
@@ -185,16 +164,16 @@ packages:
       node: '>=12.0.0'
     resolution:
       integrity: sha512-dWjtdn01jK561RgWVrGz+g8G5hEp2PAuqBTXjwPmrXbuvzNPUMMDoeqCXjZ+d13VhfPY52T21zexftO0aOdf3w==
-  /@azure-tools/codegen/2.9.1:
+  /@azure-tools/codegen/2.9.2:
     dependencies:
       '@azure-tools/async-io': 3.0.252
       js-yaml: 4.0.0
-      semver: 7.3.5
+      semver: 7.3.7
     dev: false
     engines:
       node: '>=12.0.0'
     resolution:
-      integrity: sha512-qlQSMaSUtrhlnW/XqgOeOcAfDw5kLUWq16DcjbnvxRC/F4QepqtNth4PHgHM+1UXZeWuiGj5sAsLQnm/9CApDQ==
+      integrity: sha512-brVLyffOtPiEijYYBYgV+4q7IyAfqXIec7XbdEqvv7As6SeEdq5WtbtN9N0LdGVHDWtEfc+JArwIx9aYGFdMUg==
   /@azure-tools/codemodel/4.13.349:
     dependencies:
       '@azure-tools/autorest-extension-base': 3.1.267
@@ -9858,17 +9837,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-u1hdk7QaxNhMXaqawFJxwGQE2nu93H0v4F+2Mzp+X0tEvc1sg1QMFE+5TcniMr7PaRVfIniYYWWVgojWzUuRDg==
-  /yuml2svg/5.0.1:
-    dependencies:
-      '@aduh95/viz.js': 3.7.0
-      color: 3.0.0
-      jsdom: 16.7.0
-    dev: false
-    engines:
-      node: ^12.17.0 || >=13.2.0
-    hasBin: true
-    resolution:
-      integrity: sha512-5KrQKh27uFcz0gOSmaTiwY8pKN2L+/ppHCPsDh8F7ZhqAbMiebSWuDoUIM+iyfPqnkrO6QrHHtIDTIIm2ytMZw==
   /z-schema/4.2.4:
     dependencies:
       lodash.get: 4.4.2
@@ -9898,11 +9866,11 @@ packages:
   'file:projects/go.tgz':
     dependencies:
       '@autorest/autorest': 3.0.6187
-      '@autorest/codemodel': 4.18.2
+      '@autorest/codemodel': 4.19.3
       '@autorest/extension-base': 3.4.4
       '@azure-tools/async-io': 3.0.252
       '@azure-tools/autorest-extension-base': 3.1.266
-      '@azure-tools/codegen': 2.9.1
+      '@azure-tools/codegen': 2.9.2
       '@azure-tools/codemodel': 4.13.349
       '@azure-tools/linq': 3.1.261
       '@azure-tools/tasks': 3.0.252
@@ -9928,15 +9896,15 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-IK9QQmKf0n2p1SaAl2HfT8RXWIGEIx46Z1YTizruvgsbSOk5tXjSVAoLyR+OqyBpwmzNZRNc1akBWQ+hKiHOFQ==
+      integrity: sha512-pfob2FuZKw/EVM/s0IC6QXjzE40aqCd1BkTC9PoeIy7M57IBZ55EK3ClmxUPq5/piR2h3TZTU8H2bR6Cww5Jvw==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
   'file:projects/gotest.tgz':
     dependencies:
-      '@autorest/codemodel': 4.18.2
+      '@autorest/codemodel': 4.19.3
       '@autorest/extension-base': 3.4.4
-      '@autorest/testmodeler': 2.3.2_eslint@6.6.0
-      '@azure-tools/codegen': 2.9.1
+      '@autorest/testmodeler': 2.5.1
+      '@azure-tools/codegen': 2.9.2
       '@azure-tools/linq': 3.1.263
       '@types/jest': 26.0.24
       '@types/lodash': 4.14.183
@@ -9965,16 +9933,16 @@ packages:
     dev: false
     name: '@rush-temp/gotest'
     resolution:
-      integrity: sha512-Hkc7ouA/JZG4jxVne383TviJZqLQBC4+YKw+YSD51jGG190+rQoACVGMtUlBIG3t0VoQmgmUm2To8je/QveP+g==
+      integrity: sha512-eEbj3MUJGQjOOlhhnXyglw+OC2P8AXNqux5FReu4EFLetUXtOqkW1ubmNx6PuChfW4y1f2ozTGz0eZ7N7CS46w==
       tarball: 'file:projects/gotest.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
-  '@autorest/codemodel': ~4.18.2
+  '@autorest/codemodel': ~4.19.3
   '@autorest/extension-base': ~3.4.4
-  '@autorest/testmodeler': ~2.3.2
+  '@autorest/testmodeler': ~2.5.1
   '@azure-tools/async-io': ~3.0.0
-  '@azure-tools/codegen': ~2.9.1
+  '@azure-tools/codegen': ~2.9.2
   '@azure-tools/linq': ~3.1.0
   '@azure-tools/tasks': ~3.0.0
   '@microsoft.azure/autorest.testserver': 3.3.5
