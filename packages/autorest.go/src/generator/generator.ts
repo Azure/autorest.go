@@ -139,9 +139,9 @@ export async function protocolGen(host: AutorestExtensionHost) {
       const operations = await generateServers(session);
       for (const op of values(operations)) {
         let fileName = op.name.toLowerCase();
-        // op.name is the client name, e.g. FooClient.
-        // insert a _ before Client, i.e. Foo_Client
-        // if the name isn't simply Client.
+        // op.name is the server name, e.g. FooServer.
+        // insert a _ before Server, i.e. Foo_Server
+        // if the name isn't simply Server.
         if (fileName !== 'server') {
           fileName = fileName.substring(0, fileName.length-6) + '_server';
         }
