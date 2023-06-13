@@ -213,14 +213,14 @@ func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).ContentLength; val != nil {
+		resp.Header.Set("Content-Length", strconv.FormatInt(*val, 10))
+	}
 	if val := server.GetResponse(respr).DockerContentDigest; val != nil {
 		resp.Header.Set("Docker-Content-Digest", *val)
 	}
 	if val := server.GetResponse(respr).Location; val != nil {
 		resp.Header.Set("Location", *val)
-	}
-	if val := server.GetResponse(respr).ContentLength; val != nil {
-		resp.Header.Set("Content-Length", strconv.FormatInt(*val, 10))
 	}
 	return resp, nil
 }
