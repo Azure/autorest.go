@@ -16,6 +16,8 @@ import { generateTimeHelpers } from './time';
 import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
+import { generateServers } from './fake/servers';
+import { generateServerInternal } from './fake/internal';
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: AutorestExtensionHost) {
@@ -130,6 +132,50 @@ export async function protocolGen(host: AutorestExtensionHost) {
         content: xmlAddlProps,
         artifactType: 'source-file-go'
       });
+    }
+
+    const generateFakes = await session.getValue('generate-fakes', false);
+    if (generateFakes) {
+      const operations = await generateServers(session);
+      for (const op of values(operations)) {
+        let fileName = op.name.toLowerCase();
+        // op.name is the client name, e.g. FooClient.
+        // insert a _ before Client, i.e. Foo_Client
+        // if the name isn't simply Client.
+        if (fileName !== 'server') {
+          fileName = fileName.substring(0, fileName.length-6) + '_server';
+        }
+        host.writeFile({
+          filename: `fake/${filePrefix}${fileName}.go`,
+          content: op.content,
+          artifactType: 'source-file-go'
+        });
+      }
+
+      const internal = await generateServerInternal(session);
+      host.writeFile({
+        filename: `fake/${filePrefix}internal.go`,
+        content: internal,
+        artifactType: 'source-file-go'
+      });
+
+      const timeHelpers = await generateTimeHelpers(session, 'fake');
+      for (const helper of values(timeHelpers)) {
+        host.writeFile({
+          filename: `fake/${filePrefix}${helper.name.toLowerCase()}.go`,
+          content: helper.content,
+          artifactType: 'source-file-go'
+        });
+      }
+
+      const polymorphics = await generatePolymorphicHelpers(session, 'fake');
+      if (polymorphics.length > 0) {
+        host.writeFile({
+          filename: `fake/${filePrefix}polymorphic_helpers.go`,
+          content: polymorphics,
+          artifactType: 'source-file-go'
+        });
+      }
     }
   } catch (E) {
     if (debug) {

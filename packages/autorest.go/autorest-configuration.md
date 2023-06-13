@@ -31,15 +31,10 @@ pipeline:
   go-protocol:
     input: go-transform
 
-  # generate code for the fakes
-  go-fake:
-    input: go-protocol
-
   # extensibility: allow text-transforms after the code gen
   go/text-transform:
     input:
       - go-protocol
-      - go-fake
 
   # output the files to disk
   go/emitter:

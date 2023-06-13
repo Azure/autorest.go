@@ -5,9 +5,9 @@
 
 import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
-import { contentPreamble } from '../generator/helpers';
+import { contentPreamble } from '../helpers';
 
-export async function generateInternal(session: Session<CodeModel>): Promise<string> {
+export async function generateServerInternal(session: Session<CodeModel>): Promise<string> {
     let text = await contentPreamble(session, 'fake');
     return text + content;
 }
