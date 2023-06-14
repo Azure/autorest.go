@@ -7,10 +7,10 @@ import { Session } from '@autorest/extension-base';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, GroupProperty, ImplementationLocation, NumberSchema, OperationGroup, Operation, Parameter, SchemaType, SerializationStyle } from '@autorest/codemodel';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, isBinaryResponseOperation, isLROOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse,isTypePassedByValue } from '../common/helpers';
-import { contentPreamble, formatParameterTypeName, formatStatusCode, formatStatusCodes, formatTypeName, formatValue, getMethodParameters, getParentImport, getResponseEnvelope, getResponseEnvelopeName, getStatusCodes } from '../generator/helpers';
-import { fixUpOperationName, getMediaType } from '../generator/operations';
-import { ImportManager } from '../generator/imports';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, isBinaryResponseOperation, isLROOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse,isTypePassedByValue } from '../../common/helpers';
+import { contentPreamble, formatParameterTypeName, formatStatusCode, formatStatusCodes, formatTypeName, formatValue, getMethodParameters, getParentImport, getResponseEnvelope, getResponseEnvelopeName, getStatusCodes } from '../helpers';
+import { fixUpOperationName, getMediaType } from '../operations';
+import { ImportManager } from '../imports';
 
 // represents the generated content for an operation group
 export class OperationGroupContent {

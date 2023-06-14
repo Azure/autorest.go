@@ -266,14 +266,14 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).DockerContentDigest; val != nil {
+		resp.Header.Set("Docker-Content-Digest", *val)
+	}
 	if val := server.GetResponse(respr).Location; val != nil {
 		resp.Header.Set("Location", *val)
 	}
 	if val := server.GetResponse(respr).Range; val != nil {
 		resp.Header.Set("Range", *val)
-	}
-	if val := server.GetResponse(respr).DockerContentDigest; val != nil {
-		resp.Header.Set("Docker-Content-Digest", *val)
 	}
 	return resp, nil
 }
@@ -427,11 +427,11 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetUploadStatus(req *http
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).Range; val != nil {
-		resp.Header.Set("Range", *val)
-	}
 	if val := server.GetResponse(respr).DockerUploadUUID; val != nil {
 		resp.Header.Set("Docker-Upload-UUID", *val)
+	}
+	if val := server.GetResponse(respr).Range; val != nil {
+		resp.Header.Set("Range", *val)
 	}
 	return resp, nil
 }
@@ -471,14 +471,14 @@ func (c *ContainerRegistryBlobServerTransport) dispatchMountBlob(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).Location; val != nil {
-		resp.Header.Set("Location", *val)
+	if val := server.GetResponse(respr).DockerContentDigest; val != nil {
+		resp.Header.Set("Docker-Content-Digest", *val)
 	}
 	if val := server.GetResponse(respr).DockerUploadUUID; val != nil {
 		resp.Header.Set("Docker-Upload-UUID", *val)
 	}
-	if val := server.GetResponse(respr).DockerContentDigest; val != nil {
-		resp.Header.Set("Docker-Content-Digest", *val)
+	if val := server.GetResponse(respr).Location; val != nil {
+		resp.Header.Set("Location", *val)
 	}
 	return resp, nil
 }
@@ -509,14 +509,14 @@ func (c *ContainerRegistryBlobServerTransport) dispatchStartUpload(req *http.Req
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).DockerUploadUUID; val != nil {
+		resp.Header.Set("Docker-Upload-UUID", *val)
+	}
 	if val := server.GetResponse(respr).Location; val != nil {
 		resp.Header.Set("Location", *val)
 	}
 	if val := server.GetResponse(respr).Range; val != nil {
 		resp.Header.Set("Range", *val)
-	}
-	if val := server.GetResponse(respr).DockerUploadUUID; val != nil {
-		resp.Header.Set("Docker-Upload-UUID", *val)
 	}
 	return resp, nil
 }
@@ -547,14 +547,14 @@ func (c *ContainerRegistryBlobServerTransport) dispatchUploadChunk(req *http.Req
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).DockerUploadUUID; val != nil {
+		resp.Header.Set("Docker-Upload-UUID", *val)
+	}
 	if val := server.GetResponse(respr).Location; val != nil {
 		resp.Header.Set("Location", *val)
 	}
 	if val := server.GetResponse(respr).Range; val != nil {
 		resp.Header.Set("Range", *val)
-	}
-	if val := server.GetResponse(respr).DockerUploadUUID; val != nil {
-		resp.Header.Set("Docker-Upload-UUID", *val)
 	}
 	return resp, nil
 }
