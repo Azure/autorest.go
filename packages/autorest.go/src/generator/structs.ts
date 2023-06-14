@@ -121,6 +121,11 @@ export class StructDef {
         continue;
       }
       if (hasDescription(param.language.go!)) {
+        if (!first) {
+          // add an extra new-line between fields IFF the field
+          // has a comment and it's not the very first one.
+          text += '\n';
+        }
         text += `\t${comment(param.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
       let pointer = '*';
@@ -129,6 +134,7 @@ export class StructDef {
       }
       const typeName = param.schema.language.go!.name;
       text += `\t${capitalize(param.language.go!.name)} ${pointer}${typeName}\n`;
+      first = false;
     }
     text += '}\n\n';
     return text;

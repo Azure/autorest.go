@@ -85,8 +85,10 @@ type HeaderClientCustomNamedRequestIDParamGroupingParameters struct {
 type ODataClientGetWithFilterOptions struct {
 	// The filter parameter with value '$filter=id gt 5 and name eq 'foo''.
 	Filter *string
+
 	// The orderby parameter with value id.
 	Orderby *string
+
 	// The top parameter with value 10.
 	Top *int32
 }

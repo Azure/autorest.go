@@ -14,6 +14,7 @@ import "time"
 type PathItemsClientGetAllWithValuesOptions struct {
 	// should contain value 'localStringQuery'
 	LocalStringQuery *string
+
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
 }
@@ -23,6 +24,7 @@ type PathItemsClientGetAllWithValuesOptions struct {
 type PathItemsClientGetGlobalAndLocalQueryNullOptions struct {
 	// should contain null value
 	LocalStringQuery *string
+
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
 }
@@ -31,6 +33,7 @@ type PathItemsClientGetGlobalAndLocalQueryNullOptions struct {
 type PathItemsClientGetGlobalQueryNullOptions struct {
 	// should contain value 'localStringQuery'
 	LocalStringQuery *string
+
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
 }
@@ -40,6 +43,7 @@ type PathItemsClientGetGlobalQueryNullOptions struct {
 type PathItemsClientGetLocalPathItemQueryNullOptions struct {
 	// should contain value null
 	LocalStringQuery *string
+
 	// should contain value null
 	PathItemStringQuery *string
 }

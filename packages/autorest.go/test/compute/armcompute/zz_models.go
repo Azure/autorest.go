@@ -933,6 +933,7 @@ type CloudServicesClientBeginCreateOrUpdateOptions struct {
 type CloudServicesClientBeginDeleteInstancesOptions struct {
 	// List of cloud service role instance names.
 	Parameters *RoleInstances
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -953,6 +954,7 @@ type CloudServicesClientBeginPowerOffOptions struct {
 type CloudServicesClientBeginRebuildOptions struct {
 	// List of cloud service role instance names.
 	Parameters *RoleInstances
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -961,6 +963,7 @@ type CloudServicesClientBeginRebuildOptions struct {
 type CloudServicesClientBeginReimageOptions struct {
 	// List of cloud service role instance names.
 	Parameters *RoleInstances
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -969,6 +972,7 @@ type CloudServicesClientBeginReimageOptions struct {
 type CloudServicesClientBeginRestartOptions struct {
 	// List of cloud service role instance names.
 	Parameters *RoleInstances
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -2396,6 +2400,7 @@ type GalleriesClientBeginUpdateOptions struct {
 type GalleriesClientGetOptions struct {
 	// The expand query option to apply on the operation.
 	Expand *GalleryExpandParams
+
 	// The select expression to apply on the operation.
 	Select *SelectPermissions
 }
@@ -4540,6 +4545,7 @@ type ResourceSKUZoneDetails struct {
 type ResourceSKUsClientListOptions struct {
 	// The filter to apply on the operation. Only location filter is supported currently.
 	Filter *string
+
 	// To Include Extended Locations information or not in the response.
 	IncludeExtendedLocations *string
 }
@@ -6582,8 +6588,10 @@ type VirtualMachineImagesEdgeZoneClientListOffersOptions struct {
 type VirtualMachineImagesEdgeZoneClientListOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
+
 	// Specifies the order of the results returned. Formatted as an OData query.
 	Orderby *string
+
 	// An integer value specifying the number of images to return that matches supplied values.
 	Top *int32
 }
@@ -8552,6 +8560,7 @@ type VirtualMachineScaleSetVMsClientBeginDeallocateOptions struct {
 type VirtualMachineScaleSetVMsClientBeginDeleteOptions struct {
 	// Optional parameter to force delete a virtual machine from a VM scale set. (Feature in Preview)
 	ForceDeletion *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -8568,6 +8577,7 @@ type VirtualMachineScaleSetVMsClientBeginPerformMaintenanceOptions struct {
 type VirtualMachineScaleSetVMsClientBeginPowerOffOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
 	// indicates otherwise. Default value for this flag is false if not specified
 	SkipShutdown *bool
@@ -8592,6 +8602,7 @@ type VirtualMachineScaleSetVMsClientBeginReimageAllOptions struct {
 type VirtualMachineScaleSetVMsClientBeginReimageOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// Parameters for the Reimaging Virtual machine in ScaleSet.
 	VMScaleSetVMReimageInput *VirtualMachineScaleSetVMReimageParameters
 }
@@ -8643,10 +8654,12 @@ type VirtualMachineScaleSetVMsClientGetOptions struct {
 type VirtualMachineScaleSetVMsClientListOptions struct {
 	// The expand expression to apply to the operation. Allowed values are 'instanceView'.
 	Expand *string
+
 	// The filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code, 'PowerState') eq true',
 	// 'properties/latestModelApplied eq true', 'properties/latestModelApplied eq
 	// false'.
 	Filter *string
+
 	// The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'.
 	Select *string
 }
@@ -8677,6 +8690,7 @@ type VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions struct {
 type VirtualMachineScaleSetsClientBeginDeallocateOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
@@ -8686,6 +8700,7 @@ type VirtualMachineScaleSetsClientBeginDeallocateOptions struct {
 type VirtualMachineScaleSetsClientBeginDeleteInstancesOptions struct {
 	// Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview)
 	ForceDeletion *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -8695,6 +8710,7 @@ type VirtualMachineScaleSetsClientBeginDeleteInstancesOptions struct {
 type VirtualMachineScaleSetsClientBeginDeleteOptions struct {
 	// Optional parameter to force delete a VM scale set. (Feature in Preview)
 	ForceDeletion *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -8704,6 +8720,7 @@ type VirtualMachineScaleSetsClientBeginDeleteOptions struct {
 type VirtualMachineScaleSetsClientBeginPerformMaintenanceOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
@@ -8713,9 +8730,11 @@ type VirtualMachineScaleSetsClientBeginPerformMaintenanceOptions struct {
 type VirtualMachineScaleSetsClientBeginPowerOffOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
 	// indicates otherwise. Default value for this flag is false if not specified
 	SkipShutdown *bool
+
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
@@ -8725,6 +8744,7 @@ type VirtualMachineScaleSetsClientBeginPowerOffOptions struct {
 type VirtualMachineScaleSetsClientBeginRedeployOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
@@ -8734,6 +8754,7 @@ type VirtualMachineScaleSetsClientBeginRedeployOptions struct {
 type VirtualMachineScaleSetsClientBeginReimageAllOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
@@ -8743,6 +8764,7 @@ type VirtualMachineScaleSetsClientBeginReimageAllOptions struct {
 type VirtualMachineScaleSetsClientBeginReimageOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// Parameters for Reimaging VM ScaleSet.
 	VMScaleSetReimageInput *VirtualMachineScaleSetReimageParameters
 }
@@ -8752,6 +8774,7 @@ type VirtualMachineScaleSetsClientBeginReimageOptions struct {
 type VirtualMachineScaleSetsClientBeginRestartOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
@@ -8768,6 +8791,7 @@ type VirtualMachineScaleSetsClientBeginSetOrchestrationServiceStateOptions struc
 type VirtualMachineScaleSetsClientBeginStartOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
@@ -8797,6 +8821,7 @@ type VirtualMachineScaleSetsClientConvertToSinglePlacementGroupOptions struct {
 type VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions struct {
 	// The placement group id for which the manual recovery walk is requested.
 	PlacementGroupID *string
+
 	// The zone in which the manual recovery walk is requested for cross zone virtual machine scale set
 	Zone *string
 }
@@ -8975,6 +9000,7 @@ type VirtualMachinesClientBeginCreateOrUpdateOptions struct {
 type VirtualMachinesClientBeginDeallocateOptions struct {
 	// Optional parameter to hibernate a virtual machine. (Feature in Preview)
 	Hibernate *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -8983,6 +9009,7 @@ type VirtualMachinesClientBeginDeallocateOptions struct {
 type VirtualMachinesClientBeginDeleteOptions struct {
 	// Optional parameter to force delete virtual machines.
 	ForceDeletion *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -9006,6 +9033,7 @@ type VirtualMachinesClientBeginPerformMaintenanceOptions struct {
 type VirtualMachinesClientBeginPowerOffOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
 	// indicates otherwise. Default value for this flag is false if not specified
 	SkipShutdown *bool
@@ -9028,6 +9056,7 @@ type VirtualMachinesClientBeginRedeployOptions struct {
 type VirtualMachinesClientBeginReimageOptions struct {
 	// Parameters supplied to the Reimage Virtual Machine operation.
 	Parameters *VirtualMachineReimageParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -9081,6 +9110,7 @@ type VirtualMachinesClientListAllOptions struct {
 	// The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq
 	// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
 	Filter *string
+
 	// statusOnly=true enables fetching run time status of all Virtual Machines in the subscription.
 	StatusOnly *string
 }

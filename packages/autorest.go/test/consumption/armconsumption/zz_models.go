@@ -308,12 +308,15 @@ type ChargesClientListOptions struct {
 	// (specific for Partner Led), or for billingProfile scope by
 	// properties/invoiceSectionId.
 	Apply *string
+
 	// End date
 	EndDate *string
+
 	// May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports
 	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne',
 	// 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
 	Filter *string
+
 	// Start date
 	StartDate *string
 }
@@ -1183,10 +1186,12 @@ type MarketplacesClientListOptions struct {
 	// properties/instanceName or properties/instanceId. The filter supports
 	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
 	Filter *string
+
 	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
 	// the value of the nextLink element will include a skiptoken parameter that
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
+
 	// May be used to limit the number of results to the most recent N marketplaces.
 	Top *int32
 }
@@ -1852,10 +1857,12 @@ type PriceSheetClientGetByBillingPeriodOptions struct {
 	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
 	// returning price sheet.
 	Expand *string
+
 	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
 	// the value of the nextLink element will include a skiptoken parameter that
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
+
 	// May be used to limit the number of results to the top N results.
 	Top *int32
 }
@@ -1865,10 +1872,12 @@ type PriceSheetClientGetOptions struct {
 	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
 	// returning price sheet.
 	Expand *string
+
 	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
 	// the value of the nextLink element will include a skiptoken parameter that
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
+
 	// May be used to limit the number of results to the top N results.
 	Top *int32
 }
@@ -2371,13 +2380,17 @@ type ReservationsDetailsClientListByReservationOrderOptions struct {
 type ReservationsDetailsClientListOptions struct {
 	// End date. Only applicable when querying with billing profile
 	EndDate *string
+
 	// Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le'
 	// and 'ge'. Not applicable when querying with billing profile
 	Filter *string
+
 	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
 	ReservationID *string
+
 	// Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order
 	ReservationOrderID *string
+
 	// Start date. Only applicable when querying with billing profile
 	StartDate *string
 }
@@ -2401,13 +2414,17 @@ type ReservationsSummariesClientListByReservationOrderOptions struct {
 type ReservationsSummariesClientListOptions struct {
 	// End date. Required only when querying with billing profile
 	EndDate *string
+
 	// The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'. Not required when querying with
 	// billing profile
 	Filter *string
+
 	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
 	ReservationID *string
+
 	// Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order
 	ReservationOrderID *string
+
 	// Start date. Required only when querying with billing profile
 	StartDate *string
 }
@@ -2504,18 +2521,22 @@ type UsageDetailsClientListOptions struct {
 	// May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default,
 	// these fields are not included when listing usage details.
 	Expand *string
+
 	// May be used to filter usageDetails by properties/resourceGroup, properties/instanceName, properties/resourceId, properties/chargeType,
 	// properties/reservationId, properties/publisherType or tags. The
 	// filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter
 	// is a key value pair string where key and value is separated by a colon (:).
 	// PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type
 	Filter *string
+
 	// Allows to select different type of cost/usage records.
 	Metric *Metrictype
+
 	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
 	// the value of the nextLink element will include a skiptoken parameter that
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
+
 	// May be used to limit the number of results to the most recent N usageDetails.
 	Top *int32
 }

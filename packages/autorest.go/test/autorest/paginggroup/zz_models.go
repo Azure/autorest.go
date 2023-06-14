@@ -12,6 +12,7 @@ package paginggroup
 type CustomParameterGroup struct {
 	// Sets the api version to use.
 	APIVersion string
+
 	// Sets the tenant to use.
 	Tenant string
 }
@@ -25,10 +26,13 @@ type ODataProductResult struct {
 // method.
 type PagingClientBeginGetMultiplePagesLROOptions struct {
 	ClientRequestID *string
+
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }
@@ -72,8 +76,10 @@ type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions struct {
 // PagingClientGetMultiplePagesOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesPager method.
 type PagingClientGetMultiplePagesOptions struct {
 	ClientRequestID *string
+
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
+
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }
@@ -94,10 +100,13 @@ type PagingClientGetMultiplePagesRetrySecondOptions struct {
 // method.
 type PagingClientGetMultiplePagesWithOffsetOptions struct {
 	ClientRequestID *string
+
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
+
 	// Offset of return value
 	Offset int32
+
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }
@@ -118,8 +127,10 @@ type PagingClientGetNullNextLinkNamePagesOptions struct {
 // method.
 type PagingClientGetODataMultiplePagesOptions struct {
 	ClientRequestID *string
+
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
+
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }
