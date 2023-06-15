@@ -18,14 +18,3 @@ type Pet struct {
 	// name
 	Name *string
 }
-
-// PetClientAddPetOptions contains the optional parameters for the PetClient.AddPet method.
-type PetClientAddPetOptions struct {
-	// pet param
-	PetParam *Pet
-}
-
-// PetClientGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
-type PetClientGetByPetIDOptions struct {
-	// placeholder for future optional parameters
-}

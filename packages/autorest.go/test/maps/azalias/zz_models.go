@@ -25,32 +25,6 @@ type AliasesCreateResponse struct {
 	LastUpdatedTimestamp *string
 }
 
-// ClientCreateOptions contains the optional parameters for the Client.Create method.
-type ClientCreateOptions struct {
-	GroupBy []SomethingCount
-
-	// The unique id that references the assigned data item to be aliased.
-	AssignedID *float32
-
-	// The unique id that references a creator data item to be aliased.
-	CreatorID *int32
-}
-
-// ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-type ClientGetScriptOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ClientListOptions contains the optional parameters for the Client.NewListPager method.
-type ClientListOptions struct {
-	GroupBy []LogMetricsGroupBy
-}
-
-// ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
-type ClientPolicyAssignmentOptions struct {
-	Interval *string
-}
-
 // ErrorResponse - An error happened.
 type ErrorResponse struct {
 	// READ-ONLY; The error code.
@@ -103,15 +77,6 @@ type GeoJSONFeatureData struct {
 
 	// test enum with a default
 	Setting *DataSetting
-}
-
-// GeoJSONObjectClassification provides polymorphic access to related types.
-// Call the interface's GetGeoJSONObject() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *GeoJSONFeature, *GeoJSONObject
-type GeoJSONObjectClassification interface {
-	// GetGeoJSONObject returns the GeoJSONObject content of the underlying type.
-	GetGeoJSONObject() *GeoJSONObject
 }
 
 // GeoJSONObject - A valid GeoJSON object. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3] for details.

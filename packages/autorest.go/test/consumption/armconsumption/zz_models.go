@@ -10,21 +10,6 @@ package armconsumption
 
 import "time"
 
-// AggregatedCostClientGetByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetByManagementGroup
-// method.
-type AggregatedCostClientGetByManagementGroupOptions struct {
-	// May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports
-	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support
-	// 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
-	Filter *string
-}
-
-// AggregatedCostClientGetForBillingPeriodByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetForBillingPeriodByManagementGroup
-// method.
-type AggregatedCostClientGetForBillingPeriodByManagementGroupOptions struct {
-	// placeholder for future optional parameters
-}
-
 // Amount - The amount plus currency .
 type Amount struct {
 	// READ-ONLY; Amount currency.
@@ -134,17 +119,6 @@ type BalancePropertiesNewPurchasesDetailsItem struct {
 	Value *float64
 }
 
-// BalancesClientGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount method.
-type BalancesClientGetByBillingAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BalancesClientGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
-// method.
-type BalancesClientGetForBillingPeriodByBillingAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
 // Budget - A budget resource.
 type Budget struct {
 	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating
@@ -240,26 +214,6 @@ type BudgetTimePeriod struct {
 	EndDate *time.Time
 }
 
-// BudgetsClientCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
-type BudgetsClientCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BudgetsClientDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
-type BudgetsClientDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BudgetsClientGetOptions contains the optional parameters for the BudgetsClient.Get method.
-type BudgetsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BudgetsClientListOptions contains the optional parameters for the BudgetsClient.NewListPager method.
-type BudgetsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // BudgetsListResult - Result of listing budgets. It contains a list of available budgets in the scope provided.
 type BudgetsListResult struct {
 	// READ-ONLY; The link (url) to the next page of results.
@@ -267,15 +221,6 @@ type BudgetsListResult struct {
 
 	// READ-ONLY; The list of budgets.
 	Value []*Budget
-}
-
-// ChargeSummaryClassification provides polymorphic access to related types.
-// Call the interface's GetChargeSummary() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *ChargeSummary, *LegacyChargeSummary, *ModernChargeSummary
-type ChargeSummaryClassification interface {
-	// GetChargeSummary returns the ChargeSummary content of the underlying type.
-	GetChargeSummary() *ChargeSummary
 }
 
 // ChargeSummary - A charge summary resource.
@@ -301,25 +246,6 @@ type ChargeSummary struct {
 
 // GetChargeSummary implements the ChargeSummaryClassification interface for type ChargeSummary.
 func (c *ChargeSummary) GetChargeSummary() *ChargeSummary { return c }
-
-// ChargesClientListOptions contains the optional parameters for the ChargesClient.List method.
-type ChargesClientListOptions struct {
-	// May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId
-	// (specific for Partner Led), or for billingProfile scope by
-	// properties/invoiceSectionId.
-	Apply *string
-
-	// End date
-	EndDate *string
-
-	// May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports
-	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne',
-	// 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
-	Filter *string
-
-	// Start date
-	StartDate *string
-}
 
 // ChargesListResult - Result of listing charge summary.
 type ChargesListResult struct {
@@ -383,11 +309,6 @@ type CreditSummaryProperties struct {
 
 	// READ-ONLY; Reseller details.
 	Reseller *Reseller
-}
-
-// CreditsClientGetOptions contains the optional parameters for the CreditsClient.Get method.
-type CreditsClientGetOptions struct {
-	// placeholder for future optional parameters
 }
 
 // CurrentSpend - The current amount of cost which is being tracked for a budget.
@@ -481,11 +402,6 @@ type Events struct {
 	Value []*EventSummary
 }
 
-// EventsClientListOptions contains the optional parameters for the EventsClient.NewListPager method.
-type EventsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // Forecast - A forecast resource.
 type Forecast struct {
 	// The properties of the forecast charge.
@@ -549,14 +465,6 @@ type ForecastSpend struct {
 
 	// READ-ONLY; The unit of measure for the budget amount.
 	Unit *string
-}
-
-// ForecastsClientListOptions contains the optional parameters for the ForecastsClient.NewListPager method.
-type ForecastsClientListOptions struct {
-	// May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter
-	// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
-	// support 'ne', 'or', or 'not'.
-	Filter *string
 }
 
 // ForecastsListResult - Result of listing forecasts. It contains a list of available forecasts.
@@ -1019,11 +927,6 @@ type Lots struct {
 	Value []*LotSummary
 }
 
-// LotsClientListOptions contains the optional parameters for the LotsClient.NewListPager method.
-type LotsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // ManagementGroupAggregatedCostProperties - The properties of the Management Group Aggregated Cost.
 type ManagementGroupAggregatedCostProperties struct {
 	// Children of a management group
@@ -1178,22 +1081,6 @@ type MarketplaceProperties struct {
 
 	// READ-ONLY; The start of the date time range covered by the usage detail.
 	UsageStart *time.Time
-}
-
-// MarketplacesClientListOptions contains the optional parameters for the MarketplacesClient.NewListPager method.
-type MarketplacesClientListOptions struct {
-	// May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup,
-	// properties/instanceName or properties/instanceId. The filter supports
-	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
-	Filter *string
-
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
-	// the value of the nextLink element will include a skiptoken parameter that
-	// specifies a starting point to use for subsequent calls.
-	Skiptoken *string
-
-	// May be used to limit the number of results to the most recent N marketplaces.
-	Top *int32
 }
 
 // MarketplacesListResult - Result of listing marketplaces. It contains a list of available marketplaces in reverse chronological
@@ -1846,42 +1733,6 @@ type OperationListResult struct {
 	Value []*Operation
 }
 
-// OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
-type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
-// method.
-type PriceSheetClientGetByBillingPeriodOptions struct {
-	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
-	// returning price sheet.
-	Expand *string
-
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
-	// the value of the nextLink element will include a skiptoken parameter that
-	// specifies a starting point to use for subsequent calls.
-	Skiptoken *string
-
-	// May be used to limit the number of results to the top N results.
-	Top *int32
-}
-
-// PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
-type PriceSheetClientGetOptions struct {
-	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
-	// returning price sheet.
-	Expand *string
-
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
-	// the value of the nextLink element will include a skiptoken parameter that
-	// specifies a starting point to use for subsequent calls.
-	Skiptoken *string
-
-	// May be used to limit the number of results to the top N results.
-	Top *int32
-}
-
 // PriceSheetModel - price sheet result. It contains the pricesheet associated with billing period
 type PriceSheetModel struct {
 	// READ-ONLY; Pricesheet download details.
@@ -2025,15 +1876,6 @@ type ReservationDetailsListResult struct {
 	Value []*ReservationDetail
 }
 
-// ReservationRecommendationClassification provides polymorphic access to related types.
-// Call the interface's GetReservationRecommendation() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *LegacyReservationRecommendation, *ModernReservationRecommendation, *ReservationRecommendation
-type ReservationRecommendationClassification interface {
-	// GetReservationRecommendation returns the ReservationRecommendation content of the underlying type.
-	GetReservationRecommendation() *ReservationRecommendation
-}
-
 // ReservationRecommendation - A reservation recommendation resource.
 type ReservationRecommendation struct {
 	// REQUIRED; Specifies the kind of reservation recommendation.
@@ -2088,12 +1930,6 @@ type ReservationRecommendationDetailsCalculatedSavingsProperties struct {
 
 	// READ-ONLY; The cost of the suggested quantity.
 	TotalReservationCost *float32
-}
-
-// ReservationRecommendationDetailsClientGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
-// method.
-type ReservationRecommendationDetailsClientGetOptions struct {
-	// placeholder for future optional parameters
 }
 
 // ReservationRecommendationDetailsModel - Reservation recommendation details.
@@ -2204,19 +2040,6 @@ type ReservationRecommendationDetailsUsageProperties struct {
 
 	// READ-ONLY; The grain of the values represented in the usage data ex: hourly.
 	UsageGrain *string
-}
-
-// ReservationRecommendationsClientListOptions contains the optional parameters for the ReservationRecommendationsClient.NewListPager
-// method.
-type ReservationRecommendationsClientListOptions struct {
-	// May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default
-	// value 'Single'; properties/resourceType with allowed values
-	// ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB',
-	// 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob',
-	// 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed
-	// values ['Last7Days', 'Last30Days', 'Last60Days'] and default value
-	// 'Last7Days'.
-	Filter *string
 }
 
 // ReservationRecommendationsListResult - Result of listing reservation recommendations.
@@ -2339,22 +2162,6 @@ type ReservationTransaction struct {
 	Type *string
 }
 
-// ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.NewListByBillingProfilePager
-// method.
-type ReservationTransactionsClientListByBillingProfileOptions struct {
-	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
-	// 'le' and 'ge'
-	Filter *string
-}
-
-// ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.NewListPager
-// method.
-type ReservationTransactionsClientListOptions struct {
-	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
-	// 'le' and 'ge'
-	Filter *string
-}
-
 // ReservationTransactionsListResult - Result of listing reservation recommendations.
 type ReservationTransactionsListResult struct {
 	// READ-ONLY; The link (url) to the next page of results.
@@ -2362,71 +2169,6 @@ type ReservationTransactionsListResult struct {
 
 	// READ-ONLY; The list of reservation recommendations.
 	Value []*ReservationTransaction
-}
-
-// ReservationsDetailsClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetailsClient.NewListByReservationOrderAndReservationPager
-// method.
-type ReservationsDetailsClientListByReservationOrderAndReservationOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.NewListByReservationOrderPager
-// method.
-type ReservationsDetailsClientListByReservationOrderOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.NewListPager method.
-type ReservationsDetailsClientListOptions struct {
-	// End date. Only applicable when querying with billing profile
-	EndDate *string
-
-	// Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le'
-	// and 'ge'. Not applicable when querying with billing profile
-	Filter *string
-
-	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
-	ReservationID *string
-
-	// Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order
-	ReservationOrderID *string
-
-	// Start date. Only applicable when querying with billing profile
-	StartDate *string
-}
-
-// ReservationsSummariesClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsSummariesClient.NewListByReservationOrderAndReservationPager
-// method.
-type ReservationsSummariesClientListByReservationOrderAndReservationOptions struct {
-	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
-	Filter *string
-}
-
-// ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.NewListByReservationOrderPager
-// method.
-type ReservationsSummariesClientListByReservationOrderOptions struct {
-	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
-	Filter *string
-}
-
-// ReservationsSummariesClientListOptions contains the optional parameters for the ReservationsSummariesClient.NewListPager
-// method.
-type ReservationsSummariesClientListOptions struct {
-	// End date. Required only when querying with billing profile
-	EndDate *string
-
-	// The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'. Not required when querying with
-	// billing profile
-	Filter *string
-
-	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
-	ReservationID *string
-
-	// Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order
-	ReservationOrderID *string
-
-	// Start date. Required only when querying with billing profile
-	StartDate *string
 }
 
 // SKUProperty - The Sku property
@@ -2459,11 +2201,6 @@ type TagProperties struct {
 	PreviousLink *string
 }
 
-// TagsClientGetOptions contains the optional parameters for the TagsClient.Get method.
-type TagsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
 // TagsResult - A resource listing all tags.
 type TagsResult struct {
 	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating
@@ -2481,15 +2218,6 @@ type TagsResult struct {
 
 	// READ-ONLY; Resource type.
 	Type *string
-}
-
-// UsageDetailClassification provides polymorphic access to related types.
-// Call the interface's GetUsageDetail() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *LegacyUsageDetail, *ModernUsageDetail, *UsageDetail
-type UsageDetailClassification interface {
-	// GetUsageDetail returns the UsageDetail content of the underlying type.
-	GetUsageDetail() *UsageDetail
 }
 
 // UsageDetail - An usage detail resource.
@@ -2515,31 +2243,6 @@ type UsageDetail struct {
 
 // GetUsageDetail implements the UsageDetailClassification interface for type UsageDetail.
 func (u *UsageDetail) GetUsageDetail() *UsageDetail { return u }
-
-// UsageDetailsClientListOptions contains the optional parameters for the UsageDetailsClient.NewListPager method.
-type UsageDetailsClientListOptions struct {
-	// May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default,
-	// these fields are not included when listing usage details.
-	Expand *string
-
-	// May be used to filter usageDetails by properties/resourceGroup, properties/instanceName, properties/resourceId, properties/chargeType,
-	// properties/reservationId, properties/publisherType or tags. The
-	// filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter
-	// is a key value pair string where key and value is separated by a colon (:).
-	// PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type
-	Filter *string
-
-	// Allows to select different type of cost/usage records.
-	Metric *Metrictype
-
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
-	// the value of the nextLink element will include a skiptoken parameter that
-	// specifies a starting point to use for subsequent calls.
-	Skiptoken *string
-
-	// May be used to limit the number of results to the most recent N usageDetails.
-	Top *int32
-}
 
 // UsageDetailsListResult - Result of listing usage details. It contains a list of available usage details in reverse chronological
 // order by billing period.

@@ -29,7 +29,6 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
   text += imports.text();
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
-    text += struct.discriminator();
     text += struct.text();
     struct.SerDeMethods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
     for (const method of values(struct.SerDeMethods)) {

@@ -8,36 +8,6 @@
 
 package stringgroup
 
-// EnumClientGetNotExpandableOptions contains the optional parameters for the EnumClient.GetNotExpandable method.
-type EnumClientGetNotExpandableOptions struct {
-	// placeholder for future optional parameters
-}
-
-// EnumClientGetReferencedConstantOptions contains the optional parameters for the EnumClient.GetReferencedConstant method.
-type EnumClientGetReferencedConstantOptions struct {
-	// placeholder for future optional parameters
-}
-
-// EnumClientGetReferencedOptions contains the optional parameters for the EnumClient.GetReferenced method.
-type EnumClientGetReferencedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// EnumClientPutNotExpandableOptions contains the optional parameters for the EnumClient.PutNotExpandable method.
-type EnumClientPutNotExpandableOptions struct {
-	// placeholder for future optional parameters
-}
-
-// EnumClientPutReferencedConstantOptions contains the optional parameters for the EnumClient.PutReferencedConstant method.
-type EnumClientPutReferencedConstantOptions struct {
-	// placeholder for future optional parameters
-}
-
-// EnumClientPutReferencedOptions contains the optional parameters for the EnumClient.PutReferenced method.
-type EnumClientPutReferencedOptions struct {
-	// placeholder for future optional parameters
-}
-
 type RefColorConstant struct {
 	// CONSTANT; Referenced Color Constant Description.
 	// Field has constant value "green-color", any specified value is ignored.
@@ -45,70 +15,4 @@ type RefColorConstant struct {
 
 	// Sample string.
 	Field1 *string
-}
-
-// StringClientGetBase64EncodedOptions contains the optional parameters for the StringClient.GetBase64Encoded method.
-type StringClientGetBase64EncodedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientGetBase64URLEncodedOptions contains the optional parameters for the StringClient.GetBase64URLEncoded method.
-type StringClientGetBase64URLEncodedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientGetEmptyOptions contains the optional parameters for the StringClient.GetEmpty method.
-type StringClientGetEmptyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientGetMBCSOptions contains the optional parameters for the StringClient.GetMBCS method.
-type StringClientGetMBCSOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientGetNotProvidedOptions contains the optional parameters for the StringClient.GetNotProvided method.
-type StringClientGetNotProvidedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientGetNullBase64URLEncodedOptions contains the optional parameters for the StringClient.GetNullBase64URLEncoded
-// method.
-type StringClientGetNullBase64URLEncodedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
-type StringClientGetNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientGetWhitespaceOptions contains the optional parameters for the StringClient.GetWhitespace method.
-type StringClientGetWhitespaceOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientPutBase64URLEncodedOptions contains the optional parameters for the StringClient.PutBase64URLEncoded method.
-type StringClientPutBase64URLEncodedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientPutEmptyOptions contains the optional parameters for the StringClient.PutEmpty method.
-type StringClientPutEmptyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientPutMBCSOptions contains the optional parameters for the StringClient.PutMBCS method.
-type StringClientPutMBCSOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
-type StringClientPutNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StringClientPutWhitespaceOptions contains the optional parameters for the StringClient.PutWhitespace method.
-type StringClientPutWhitespaceOptions struct {
-	// placeholder for future optional parameters
 }

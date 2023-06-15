@@ -7,13 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package objectgroup
-
-// ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
-type ObjectTypeClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
-type ObjectTypeClientPutOptions struct {
-	// placeholder for future optional parameters
-}

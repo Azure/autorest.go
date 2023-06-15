@@ -10,6 +10,8 @@ import { values } from '@azure-tools/linq';
 import { generateClientFactory } from './clientFactory';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
+import { generateOptions } from './options';
+import { generateInterfaces } from './interfaces';
 import { generateResponses } from './responses';
 import { generateConstants } from './constants';
 import { generateTimeHelpers } from './time';
@@ -83,6 +85,24 @@ export async function protocolGen(host: AutorestExtensionHost) {
       host.writeFile({
         filename: `${filePrefix}models_serde.go`,
         content: models.serDe,
+        artifactType: 'source-file-go'
+      });
+    }
+
+    const options = await generateOptions(session);
+    if (options.length > 0) {
+      host.writeFile({
+        filename: `${filePrefix}options.go`,
+        content: options,
+        artifactType: 'source-file-go'
+      })
+    }
+
+    const interfaces = await generateInterfaces(session);
+    if (interfaces.length > 0) {
+      host.writeFile({
+        filename: `${filePrefix}interfaces.go`,
+        content: interfaces,
         artifactType: 'source-file-go'
       });
     }

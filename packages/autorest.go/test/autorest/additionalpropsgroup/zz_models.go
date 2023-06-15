@@ -86,34 +86,3 @@ type PetAPTrue struct {
 	// READ-ONLY
 	Status *bool
 }
-
-// PetsClientCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties method.
-type PetsClientCreateAPInPropertiesOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PetsClientCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the PetsClient.CreateAPInPropertiesWithAPString
-// method.
-type PetsClientCreateAPInPropertiesWithAPStringOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PetsClientCreateAPObjectOptions contains the optional parameters for the PetsClient.CreateAPObject method.
-type PetsClientCreateAPObjectOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PetsClientCreateAPStringOptions contains the optional parameters for the PetsClient.CreateAPString method.
-type PetsClientCreateAPStringOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PetsClientCreateAPTrueOptions contains the optional parameters for the PetsClient.CreateAPTrue method.
-type PetsClientCreateAPTrueOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PetsClientCreateCatAPTrueOptions contains the optional parameters for the PetsClient.CreateCatAPTrue method.
-type PetsClientCreateCatAPTrueOptions struct {
-	// placeholder for future optional parameters
-}

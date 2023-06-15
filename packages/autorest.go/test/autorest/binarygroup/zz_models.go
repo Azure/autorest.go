@@ -7,13 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package binarygroup
-
-// UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
-type UploadClientBinaryOptions struct {
-	// placeholder for future optional parameters
-}
-
-// UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
-type UploadClientFileOptions struct {
-	// placeholder for future optional parameters
-}

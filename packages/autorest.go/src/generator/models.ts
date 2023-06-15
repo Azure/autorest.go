@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment } from '@azure-tools/codegen';
-import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter } from '@autorest/codemodel';
+import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, ObjectSchema, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, commentLength, aggregateProperties } from '../common/helpers';
 import { contentPreamble, getClientDefaultValue, sortAscending } from './helpers';
@@ -26,10 +26,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
 
   // we do model generation first as it can add imports to the imports list
   const structs = generateStructs(modelImports, serdeImports, session.model.schemas.objects);
-  const paramGroups = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
-  for (const paramGroup of values(paramGroups)) {
-    structs.push(generateParamGroupStruct(modelImports, paramGroup.schema.language.go!, paramGroup.originalParameter));
-  }
 
   modelText += modelImports.text();
 
@@ -41,7 +37,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
   let serdeTextBody = '';
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
-    modelText += struct.discriminator();
     modelText += struct.text();
 
     struct.Methods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
@@ -190,14 +185,6 @@ function needsXMLArrayMarshalling(obj: ObjectSchema): boolean {
     }
   }
   return false;
-}
-
-function generateParamGroupStruct(imports: ImportManager, lang: Language, params: Parameter[]): StructDef {
-  const st = new StructDef(lang, undefined, params);
-  for (const param of values(params)) {
-    imports.addImportForSchemaType(param.schema);
-  }
-  return st;
 }
 
 // generates discriminator marker method
