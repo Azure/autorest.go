@@ -10,22 +10,6 @@ package azartifacts
 
 import "time"
 
-// ActivityClassification provides polymorphic access to related types.
-// Call the interface's GetActivity() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *Activity, *AppendVariableActivity, *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity,
-// - *AzureMLExecutePipelineActivity, *AzureMLUpdateResourceActivity, *ControlActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUSQLActivity,
-// - *DatabricksNotebookActivity, *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity,
-// - *ExecutePipelineActivity, *ExecuteSSISPackageActivity, *ExecutionActivity, *FailActivity, *FilterActivity, *ForEachActivity,
-// - *GetMetadataActivity, *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity,
-// - *HDInsightStreamingActivity, *IfConditionActivity, *LookupActivity, *SQLPoolStoredProcedureActivity, *SQLServerStoredProcedureActivity,
-// - *ScriptActivity, *SetVariableActivity, *SwitchActivity, *SynapseNotebookActivity, *SynapseSparkJobDefinitionActivity,
-// - *UntilActivity, *ValidationActivity, *WaitActivity, *WebActivity, *WebHookActivity
-type ActivityClassification interface {
-	// GetActivity returns the Activity content of the underlying type.
-	GetActivity() *Activity
-}
-
 // Activity - A pipeline activity.
 type Activity struct {
 	// REQUIRED; Activity name.
@@ -5504,16 +5488,6 @@ type BigDataPoolResourceProperties struct {
 	LastSucceededTimestamp *time.Time
 }
 
-// BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
-type BigDataPoolsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
-type BigDataPoolsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // BinaryDataset - Binary dataset.
 type BinaryDataset struct {
 	// REQUIRED; Linked service reference.
@@ -6335,15 +6309,6 @@ func (c *CommonDataServiceForAppsSource) GetCopySource() *CopySource {
 	}
 }
 
-// CompressionReadSettingsClassification provides polymorphic access to related types.
-// Call the interface's GetCompressionReadSettings() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *CompressionReadSettings, *TarGZipReadSettings, *TarReadSettings, *ZipDeflateReadSettings
-type CompressionReadSettingsClassification interface {
-	// GetCompressionReadSettings returns the CompressionReadSettings content of the underlying type.
-	GetCompressionReadSettings() *CompressionReadSettings
-}
-
 // CompressionReadSettings - Compression read settings.
 type CompressionReadSettings struct {
 	// REQUIRED; The Compression setting type.
@@ -6522,17 +6487,6 @@ func (c *ConcurSource) GetTabularSource() *TabularSource {
 	}
 }
 
-// ControlActivityClassification provides polymorphic access to related types.
-// Call the interface's GetControlActivity() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AppendVariableActivity, *ControlActivity, *ExecutePipelineActivity, *FailActivity, *FilterActivity, *ForEachActivity,
-// - *IfConditionActivity, *SetVariableActivity, *SwitchActivity, *UntilActivity, *ValidationActivity, *WaitActivity, *WebHookActivity
-type ControlActivityClassification interface {
-	ActivityClassification
-	// GetControlActivity returns the ControlActivity content of the underlying type.
-	GetControlActivity() *ControlActivity
-}
-
 // ControlActivity - Base class for all control activities like IfCondition, ForEach , Until.
 type ControlActivity struct {
 	// REQUIRED; Activity name.
@@ -6691,20 +6645,6 @@ type CopyActivityTypeProperties struct {
 	ValidateDataConsistency any
 }
 
-// CopySinkClassification provides polymorphic access to related types.
-// Call the interface's GetCopySink() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AvroSink, *AzureBlobFSSink, *AzureDataExplorerSink, *AzureDataLakeStoreSink, *AzureDatabricksDeltaLakeSink, *AzureMySQLSink,
-// - *AzurePostgreSQLSink, *AzureQueueSink, *AzureSQLSink, *AzureSearchIndexSink, *AzureTableSink, *BinarySink, *BlobSink,
-// - *CommonDataServiceForAppsSink, *CopySink, *CosmosDbMongoDbAPISink, *CosmosDbSQLAPISink, *DelimitedTextSink, *DocumentDbCollectionSink,
-// - *DynamicsCrmSink, *DynamicsSink, *FileSystemSink, *InformixSink, *JSONSink, *MicrosoftAccessSink, *OdbcSink, *OracleSink,
-// - *OrcSink, *ParquetSink, *RestSink, *SQLDWSink, *SQLMISink, *SQLServerSink, *SQLSink, *SalesforceServiceCloudSink, *SalesforceSink,
-// - *SapCloudForCustomerSink, *SnowflakeSink
-type CopySinkClassification interface {
-	// GetCopySink returns the CopySink content of the underlying type.
-	GetCopySink() *CopySink
-}
-
 // CopySink - A copy activity sink.
 type CopySink struct {
 	// REQUIRED; Copy sink type.
@@ -6732,28 +6672,6 @@ type CopySink struct {
 // GetCopySink implements the CopySinkClassification interface for type CopySink.
 func (c *CopySink) GetCopySink() *CopySink { return c }
 
-// CopySourceClassification provides polymorphic access to related types.
-// Call the interface's GetCopySource() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AmazonMWSSource, *AmazonRdsForOracleSource, *AmazonRdsForSQLServerSource, *AmazonRedshiftSource, *AvroSource, *AzureBlobFSSource,
-// - *AzureDataExplorerSource, *AzureDataLakeStoreSource, *AzureDatabricksDeltaLakeSource, *AzureMariaDBSource, *AzureMySQLSource,
-// - *AzurePostgreSQLSource, *AzureSQLSource, *AzureTableSource, *BinarySource, *BlobSource, *CassandraSource, *CommonDataServiceForAppsSource,
-// - *ConcurSource, *CopySource, *CosmosDbMongoDbAPISource, *CosmosDbSQLAPISource, *CouchbaseSource, *Db2Source, *DelimitedTextSource,
-// - *DocumentDbCollectionSource, *DrillSource, *DynamicsAXSource, *DynamicsCrmSource, *DynamicsSource, *EloquaSource, *ExcelSource,
-// - *FileSystemSource, *GoogleAdWordsSource, *GoogleBigQuerySource, *GreenplumSource, *HBaseSource, *HTTPSource, *HdfsSource,
-// - *HiveSource, *HubspotSource, *ImpalaSource, *InformixSource, *JSONSource, *JiraSource, *MagentoSource, *MariaDBSource,
-// - *MarketoSource, *MicrosoftAccessSource, *MongoDbAtlasSource, *MongoDbSource, *MongoDbV2Source, *MySQLSource, *NetezzaSource,
-// - *ODataSource, *OdbcSource, *Office365Source, *OracleServiceCloudSource, *OracleSource, *OrcSource, *ParquetSource, *PaypalSource,
-// - *PhoenixSource, *PostgreSQLSource, *PrestoSource, *QuickBooksSource, *RelationalSource, *ResponsysSource, *RestSource,
-// - *SQLDWSource, *SQLMISource, *SQLServerSource, *SQLSource, *SalesforceMarketingCloudSource, *SalesforceServiceCloudSource,
-// - *SalesforceSource, *SapBwSource, *SapCloudForCustomerSource, *SapEccSource, *SapHanaSource, *SapOdpSource, *SapOpenHubSource,
-// - *SapTableSource, *ServiceNowSource, *SharePointOnlineListSource, *ShopifySource, *SnowflakeSource, *SparkSource, *SquareSource,
-// - *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource, *WebSource, *XMLSource, *XeroSource, *ZohoSource
-type CopySourceClassification interface {
-	// GetCopySource returns the CopySource content of the underlying type.
-	GetCopySource() *CopySource
-}
-
 // CopySource - A copy activity source.
 type CopySource struct {
 	// REQUIRED; Copy source type.
@@ -6774,15 +6692,6 @@ type CopySource struct {
 
 // GetCopySource implements the CopySourceClassification interface for type CopySource.
 func (c *CopySource) GetCopySource() *CopySource { return c }
-
-// CopyTranslatorClassification provides polymorphic access to related types.
-// Call the interface's GetCopyTranslator() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *CopyTranslator, *TabularTranslator
-type CopyTranslatorClassification interface {
-	// GetCopyTranslator returns the CopyTranslator content of the underlying type.
-	GetCopyTranslator() *CopyTranslator
-}
 
 // CopyTranslator - A copy activity translator.
 type CopyTranslator struct {
@@ -7600,15 +7509,6 @@ type CustomEventsTriggerTypeProperties struct {
 	SubjectEndsWith *string
 }
 
-// CustomSetupBaseClassification provides polymorphic access to related types.
-// Call the interface's GetCustomSetupBase() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *CustomSetupBase
-type CustomSetupBaseClassification interface {
-	// GetCustomSetupBase returns the CustomSetupBase content of the underlying type.
-	GetCustomSetupBase() *CustomSetupBase
-}
-
 // CustomSetupBase - The base definition of the custom setup.
 type CustomSetupBase struct {
 	// REQUIRED; The type of custom setup.
@@ -7649,15 +7549,6 @@ type DWCopyCommandSettings struct {
 	DefaultValues []*DWCopyCommandDefaultValue
 }
 
-// DataFlowClassification provides polymorphic access to related types.
-// Call the interface's GetDataFlow() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *DataFlow, *Flowlet, *MappingDataFlow
-type DataFlowClassification interface {
-	// GetDataFlow returns the DataFlow content of the underlying type.
-	GetDataFlow() *DataFlow
-}
-
 // DataFlow - Azure Synapse nested object which contains a flow with data movements and transformations.
 type DataFlow struct {
 	// REQUIRED; Type of data flow.
@@ -7675,42 +7566,6 @@ type DataFlow struct {
 
 // GetDataFlow implements the DataFlowClassification interface for type DataFlow.
 func (d *DataFlow) GetDataFlow() *DataFlow { return d }
-
-// DataFlowClientBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlowClient.BeginCreateOrUpdateDataFlow
-// method.
-type DataFlowClientBeginCreateOrUpdateDataFlowOptions struct {
-	// ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be
-	// * for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the DataFlowClient.BeginDeleteDataFlow method.
-type DataFlowClientBeginDeleteDataFlowOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the DataFlowClient.BeginRenameDataFlow method.
-type DataFlowClientBeginRenameDataFlowOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DataFlowClientGetDataFlowOptions contains the optional parameters for the DataFlowClient.GetDataFlow method.
-type DataFlowClientGetDataFlowOptions struct {
-	// ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
-	// provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the DataFlowClient.NewGetDataFlowsByWorkspacePager
-// method.
-type DataFlowClientGetDataFlowsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
 
 // DataFlowDebugCommandPayload - Structure of command payload.
 type DataFlowDebugCommandPayload struct {
@@ -7824,38 +7679,6 @@ type DataFlowDebugResultResponse struct {
 
 	// The run status of data preview, statistics or expression preview.
 	Status *string
-}
-
-// DataFlowDebugSessionClientAddDataFlowOptions contains the optional parameters for the DataFlowDebugSessionClient.AddDataFlow
-// method.
-type DataFlowDebugSessionClientAddDataFlowOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
-// method.
-type DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginExecuteCommand
-// method.
-type DataFlowDebugSessionClientBeginExecuteCommandOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.DeleteDataFlowDebugSession
-// method.
-type DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the DataFlowDebugSessionClient.NewQueryDataFlowDebugSessionsByWorkspacePager
-// method.
-type DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // DataFlowDebugSessionInfo - Data flow debug session info.
@@ -8324,33 +8147,6 @@ type DatabricksSparkPythonActivityTypeProperties struct {
 	Parameters []any
 }
 
-// DatasetClassification provides polymorphic access to related types.
-// Call the interface's GetDataset() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AmazonMWSObjectDataset, *AmazonRdsForOracleTableDataset, *AmazonRdsForSQLServerTableDataset, *AmazonRedshiftTableDataset,
-// - *AmazonS3Dataset, *AvroDataset, *AzureBlobDataset, *AzureBlobFSDataset, *AzureDataExplorerTableDataset, *AzureDataLakeStoreDataset,
-// - *AzureDatabricksDeltaLakeDataset, *AzureMariaDBTableDataset, *AzureMySQLTableDataset, *AzurePostgreSQLTableDataset, *AzureSQLDWTableDataset,
-// - *AzureSQLMITableDataset, *AzureSQLTableDataset, *AzureSearchIndexDataset, *AzureTableDataset, *BinaryDataset, *CassandraTableDataset,
-// - *CommonDataServiceForAppsEntityDataset, *ConcurObjectDataset, *CosmosDbMongoDbAPICollectionDataset, *CosmosDbSQLAPICollectionDataset,
-// - *CouchbaseTableDataset, *CustomDataset, *Dataset, *Db2TableDataset, *DelimitedTextDataset, *DocumentDbCollectionDataset,
-// - *DrillTableDataset, *DynamicsAXResourceDataset, *DynamicsCrmEntityDataset, *DynamicsEntityDataset, *EloquaObjectDataset,
-// - *ExcelDataset, *FileShareDataset, *GoogleAdWordsObjectDataset, *GoogleBigQueryObjectDataset, *GreenplumTableDataset,
-// - *HBaseObjectDataset, *HTTPDataset, *HiveObjectDataset, *HubspotObjectDataset, *ImpalaObjectDataset, *InformixTableDataset,
-// - *JSONDataset, *JiraObjectDataset, *MagentoObjectDataset, *MariaDBTableDataset, *MarketoObjectDataset, *MicrosoftAccessTableDataset,
-// - *MongoDbAtlasCollectionDataset, *MongoDbCollectionDataset, *MongoDbV2CollectionDataset, *MySQLTableDataset, *NetezzaTableDataset,
-// - *ODataResourceDataset, *OdbcTableDataset, *Office365Dataset, *OracleServiceCloudObjectDataset, *OracleTableDataset, *OrcDataset,
-// - *ParquetDataset, *PaypalObjectDataset, *PhoenixObjectDataset, *PostgreSQLTableDataset, *PrestoObjectDataset, *QuickBooksObjectDataset,
-// - *RelationalTableDataset, *ResponsysObjectDataset, *RestResourceDataset, *SQLServerTableDataset, *SalesforceMarketingCloudObjectDataset,
-// - *SalesforceObjectDataset, *SalesforceServiceCloudObjectDataset, *SapBwCubeDataset, *SapCloudForCustomerResourceDataset,
-// - *SapEccResourceDataset, *SapHanaTableDataset, *SapOdpResourceDataset, *SapOpenHubTableDataset, *SapTableResourceDataset,
-// - *ServiceNowObjectDataset, *SharePointOnlineListResourceDataset, *ShopifyObjectDataset, *SnowflakeDataset, *SparkObjectDataset,
-// - *SquareObjectDataset, *SybaseTableDataset, *TeradataTableDataset, *VerticaTableDataset, *WebTableDataset, *XMLDataset,
-// - *XeroObjectDataset, *ZohoObjectDataset
-type DatasetClassification interface {
-	// GetDataset returns the Dataset content of the underlying type.
-	GetDataset() *Dataset
-}
-
 // Dataset - The Azure Data Factory nested object which identifies data within different data stores, such as tables, files,
 // folders, and documents.
 type Dataset struct {
@@ -8385,42 +8181,6 @@ type Dataset struct {
 
 // GetDataset implements the DatasetClassification interface for type Dataset.
 func (d *Dataset) GetDataset() *Dataset { return d }
-
-// DatasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the DatasetClient.BeginCreateOrUpdateDataset
-// method.
-type DatasetClientBeginCreateOrUpdateDatasetOptions struct {
-	// ETag of the dataset entity. Should only be specified for update, for which it should match existing entity or can be *
-	// for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DatasetClientBeginDeleteDatasetOptions contains the optional parameters for the DatasetClient.BeginDeleteDataset method.
-type DatasetClientBeginDeleteDatasetOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DatasetClientBeginRenameDatasetOptions contains the optional parameters for the DatasetClient.BeginRenameDataset method.
-type DatasetClientBeginRenameDatasetOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DatasetClientGetDatasetOptions contains the optional parameters for the DatasetClient.GetDataset method.
-type DatasetClientGetDatasetOptions struct {
-	// ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
-	// provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the DatasetClient.NewGetDatasetsByWorkspacePager
-// method.
-type DatasetClientGetDatasetsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
 
 // DatasetCompression - The compression method used on a dataset.
 type DatasetCompression struct {
@@ -8465,17 +8225,6 @@ type DatasetListResponse struct {
 
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string
-}
-
-// DatasetLocationClassification provides polymorphic access to related types.
-// Call the interface's GetDatasetLocation() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AmazonS3Location, *AzureBlobFSLocation, *AzureBlobStorageLocation, *AzureDataLakeStoreLocation, *AzureFileStorageLocation,
-// - *DatasetLocation, *FileServerLocation, *FtpServerLocation, *GoogleCloudStorageLocation, *HTTPServerLocation, *HdfsLocation,
-// - *SftpLocation
-type DatasetLocationClassification interface {
-	// GetDatasetLocation returns the DatasetLocation content of the underlying type.
-	GetDatasetLocation() *DatasetLocation
 }
 
 // DatasetLocation - Dataset location.
@@ -8536,15 +8285,6 @@ type DatasetSchemaDataElement struct {
 
 	// Type of the schema column. Type: string (or Expression with resultType string).
 	Type any
-}
-
-// DatasetStorageFormatClassification provides polymorphic access to related types.
-// Call the interface's GetDatasetStorageFormat() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AvroFormat, *DatasetStorageFormat, *JSONFormat, *OrcFormat, *ParquetFormat, *TextFormat
-type DatasetStorageFormatClassification interface {
-	// GetDatasetStorageFormat returns the DatasetStorageFormat content of the underlying type.
-	GetDatasetStorageFormat() *DatasetStorageFormat
 }
 
 // DatasetStorageFormat - The format definition of a storage.
@@ -9109,15 +8849,6 @@ func (d *DelimitedTextWriteSettings) GetFormatWriteSettings() *FormatWriteSettin
 		Type:                 d.Type,
 		AdditionalProperties: d.AdditionalProperties,
 	}
-}
-
-// DependencyReferenceClassification provides polymorphic access to related types.
-// Call the interface's GetDependencyReference() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *DependencyReference, *SelfDependencyTumblingWindowTriggerReference, *TriggerDependencyReference, *TumblingWindowTriggerDependencyReference
-type DependencyReferenceClassification interface {
-	// GetDependencyReference returns the DependencyReference content of the underlying type.
-	GetDependencyReference() *DependencyReference
 }
 
 // DependencyReference - Referenced dependency.
@@ -10684,21 +10415,6 @@ type ExecuteSSISPackageActivityTypeProperties struct {
 	Runtime any
 }
 
-// ExecutionActivityClassification provides polymorphic access to related types.
-// Call the interface's GetExecutionActivity() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity, *AzureMLExecutePipelineActivity,
-// - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUSQLActivity, *DatabricksNotebookActivity,
-// - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSSISPackageActivity,
-// - *ExecutionActivity, *GetMetadataActivity, *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity,
-// - *HDInsightSparkActivity, *HDInsightStreamingActivity, *LookupActivity, *SQLServerStoredProcedureActivity, *ScriptActivity,
-// - *SynapseNotebookActivity, *SynapseSparkJobDefinitionActivity, *WebActivity
-type ExecutionActivityClassification interface {
-	ActivityClassification
-	// GetExecutionActivity returns the ExecutionActivity content of the underlying type.
-	GetExecutionActivity() *ExecutionActivity
-}
-
 // ExecutionActivity - Base class for all execution activities.
 type ExecutionActivity struct {
 	// REQUIRED; Activity name.
@@ -10740,15 +10456,6 @@ func (e *ExecutionActivity) GetActivity() *Activity {
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type ExecutionActivity.
 func (e *ExecutionActivity) GetExecutionActivity() *ExecutionActivity { return e }
-
-// ExportSettingsClassification provides polymorphic access to related types.
-// Call the interface's GetExportSettings() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AzureDatabricksDeltaLakeExportCommand, *ExportSettings, *SnowflakeExportCopyCommand
-type ExportSettingsClassification interface {
-	// GetExportSettings returns the ExportSettings content of the underlying type.
-	GetExportSettings() *ExportSettings
-}
 
 // ExportSettings - Export command settings.
 type ExportSettings struct {
@@ -11326,15 +11033,6 @@ type ForEachActivityTypeProperties struct {
 	IsSequential *bool
 }
 
-// FormatReadSettingsClassification provides polymorphic access to related types.
-// Call the interface's GetFormatReadSettings() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *BinaryReadSettings, *DelimitedTextReadSettings, *FormatReadSettings, *JSONReadSettings, *XMLReadSettings
-type FormatReadSettingsClassification interface {
-	// GetFormatReadSettings returns the FormatReadSettings content of the underlying type.
-	GetFormatReadSettings() *FormatReadSettings
-}
-
 // FormatReadSettings - Format read settings.
 type FormatReadSettings struct {
 	// REQUIRED; The read setting type.
@@ -11346,15 +11044,6 @@ type FormatReadSettings struct {
 
 // GetFormatReadSettings implements the FormatReadSettingsClassification interface for type FormatReadSettings.
 func (f *FormatReadSettings) GetFormatReadSettings() *FormatReadSettings { return f }
-
-// FormatWriteSettingsClassification provides polymorphic access to related types.
-// Call the interface's GetFormatWriteSettings() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AvroWriteSettings, *DelimitedTextWriteSettings, *FormatWriteSettings, *JSONWriteSettings, *OrcWriteSettings, *ParquetWriteSettings
-type FormatWriteSettingsClassification interface {
-	// GetFormatWriteSettings returns the FormatWriteSettings content of the underlying type.
-	GetFormatWriteSettings() *FormatWriteSettings
-}
 
 // FormatWriteSettings - Format write settings.
 type FormatWriteSettings struct {
@@ -14201,15 +13890,6 @@ func (i *ImpalaSource) GetTabularSource() *TabularSource {
 	}
 }
 
-// ImportSettingsClassification provides polymorphic access to related types.
-// Call the interface's GetImportSettings() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AzureDatabricksDeltaLakeImportCommand, *ImportSettings, *SnowflakeImportCopyCommand
-type ImportSettingsClassification interface {
-	// GetImportSettings returns the ImportSettings content of the underlying type.
-	GetImportSettings() *ImportSettings
-}
-
 // ImportSettings - Import command settings.
 type ImportSettings struct {
 	// REQUIRED; The import setting type.
@@ -14429,15 +14109,6 @@ type InformixTableDatasetTypeProperties struct {
 	TableName any
 }
 
-// IntegrationRuntimeClassification provides polymorphic access to related types.
-// Call the interface's GetIntegrationRuntime() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *IntegrationRuntime, *ManagedIntegrationRuntime, *SelfHostedIntegrationRuntime
-type IntegrationRuntimeClassification interface {
-	// GetIntegrationRuntime returns the IntegrationRuntime content of the underlying type.
-	GetIntegrationRuntime() *IntegrationRuntime
-}
-
 // IntegrationRuntime - Azure Synapse nested object which serves as a compute resource for activities.
 type IntegrationRuntime struct {
 	// REQUIRED; Type of integration runtime.
@@ -14620,16 +14291,6 @@ type IntegrationRuntimeVNetProperties struct {
 
 	// The ID of the VNet that this integration runtime will join.
 	VNetID *string
-}
-
-// IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
-type IntegrationRuntimesClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List method.
-type IntegrationRuntimesClientListOptions struct {
-	// placeholder for future optional parameters
 }
 
 // JSONDataset - Json dataset.
@@ -15039,30 +14700,6 @@ type KqlScript struct {
 	Content *KqlScriptContent
 }
 
-// KqlScriptClientBeginCreateOrUpdateOptions contains the optional parameters for the KqlScriptClient.BeginCreateOrUpdate
-// method.
-type KqlScriptClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// KqlScriptClientBeginDeleteByNameOptions contains the optional parameters for the KqlScriptClient.BeginDeleteByName method.
-type KqlScriptClientBeginDeleteByNameOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// KqlScriptClientBeginRenameOptions contains the optional parameters for the KqlScriptClient.BeginRename method.
-type KqlScriptClientBeginRenameOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// KqlScriptClientGetByNameOptions contains the optional parameters for the KqlScriptClient.GetByName method.
-type KqlScriptClientGetByNameOptions struct {
-	// placeholder for future optional parameters
-}
-
 type KqlScriptContent struct {
 	CurrentConnection *KqlScriptContentCurrentConnection
 	Metadata          *KqlScriptContentMetadata
@@ -15089,55 +14726,9 @@ type KqlScriptResource struct {
 	Type       *string
 }
 
-// KqlScriptsClientGetAllOptions contains the optional parameters for the KqlScriptsClient.NewGetAllPager method.
-type KqlScriptsClientGetAllOptions struct {
-	// placeholder for future optional parameters
-}
-
 type KqlScriptsResourceCollectionResponse struct {
 	NextLink *string
 	Value    []*KqlScriptResource
-}
-
-// LibraryClientAppendOptions contains the optional parameters for the LibraryClient.Append method.
-type LibraryClientAppendOptions struct {
-	// Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current
-	// offset matches this value. Otherwise, the request fails with the
-	// AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed)
-	BlobConditionAppendPosition *int64
-}
-
-// LibraryClientBeginCreateOptions contains the optional parameters for the LibraryClient.BeginCreate method.
-type LibraryClientBeginCreateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// LibraryClientBeginDeleteOptions contains the optional parameters for the LibraryClient.BeginDelete method.
-type LibraryClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// LibraryClientBeginFlushOptions contains the optional parameters for the LibraryClient.BeginFlush method.
-type LibraryClientBeginFlushOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// LibraryClientGetOperationResultOptions contains the optional parameters for the LibraryClient.GetOperationResult method.
-type LibraryClientGetOperationResultOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LibraryClientGetOptions contains the optional parameters for the LibraryClient.Get method.
-type LibraryClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LibraryClientListOptions contains the optional parameters for the LibraryClient.NewListPager method.
-type LibraryClientListOptions struct {
-	// placeholder for future optional parameters
 }
 
 // LibraryInfo - Library/package information of a Big Data pool powered by Apache Spark
@@ -15269,77 +14860,6 @@ type LinkConnection struct {
 
 	// Properties of link connection's target database
 	TargetDatabase *LinkConnectionTargetDatabase
-}
-
-// LinkConnectionClientCreateOrUpdateOptions contains the optional parameters for the LinkConnectionClient.CreateOrUpdate
-// method.
-type LinkConnectionClientCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientDeleteOptions contains the optional parameters for the LinkConnectionClient.Delete method.
-type LinkConnectionClientDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientEditTablesOptions contains the optional parameters for the LinkConnectionClient.EditTables method.
-type LinkConnectionClientEditTablesOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientGetDetailedStatusOptions contains the optional parameters for the LinkConnectionClient.GetDetailedStatus
-// method.
-type LinkConnectionClientGetDetailedStatusOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientGetOptions contains the optional parameters for the LinkConnectionClient.Get method.
-type LinkConnectionClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientListByWorkspaceOptions contains the optional parameters for the LinkConnectionClient.NewListByWorkspacePager
-// method.
-type LinkConnectionClientListByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientListLinkTablesOptions contains the optional parameters for the LinkConnectionClient.ListLinkTables
-// method.
-type LinkConnectionClientListLinkTablesOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientPauseOptions contains the optional parameters for the LinkConnectionClient.Pause method.
-type LinkConnectionClientPauseOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientQueryTableStatusOptions contains the optional parameters for the LinkConnectionClient.QueryTableStatus
-// method.
-type LinkConnectionClientQueryTableStatusOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientResumeOptions contains the optional parameters for the LinkConnectionClient.Resume method.
-type LinkConnectionClientResumeOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientStartOptions contains the optional parameters for the LinkConnectionClient.Start method.
-type LinkConnectionClientStartOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientStopOptions contains the optional parameters for the LinkConnectionClient.Stop method.
-type LinkConnectionClientStopOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LinkConnectionClientUpdateLandingZoneCredentialOptions contains the optional parameters for the LinkConnectionClient.UpdateLandingZoneCredential
-// method.
-type LinkConnectionClientUpdateLandingZoneCredentialOptions struct {
-	// placeholder for future optional parameters
 }
 
 type LinkConnectionCompute struct {
@@ -15606,15 +15126,6 @@ func (l *LinkedIntegrationRuntimeRbacAuthorization) GetLinkedIntegrationRuntimeT
 	}
 }
 
-// LinkedIntegrationRuntimeTypeClassification provides polymorphic access to related types.
-// Call the interface's GetLinkedIntegrationRuntimeType() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *LinkedIntegrationRuntimeKeyAuthorization, *LinkedIntegrationRuntimeRbacAuthorization, *LinkedIntegrationRuntimeType
-type LinkedIntegrationRuntimeTypeClassification interface {
-	// GetLinkedIntegrationRuntimeType returns the LinkedIntegrationRuntimeType content of the underlying type.
-	GetLinkedIntegrationRuntimeType() *LinkedIntegrationRuntimeType
-}
-
 // LinkedIntegrationRuntimeType - The base definition of a linked integration runtime.
 type LinkedIntegrationRuntimeType struct {
 	// REQUIRED; The authorization type for integration runtime sharing.
@@ -15624,38 +15135,6 @@ type LinkedIntegrationRuntimeType struct {
 // GetLinkedIntegrationRuntimeType implements the LinkedIntegrationRuntimeTypeClassification interface for type LinkedIntegrationRuntimeType.
 func (l *LinkedIntegrationRuntimeType) GetLinkedIntegrationRuntimeType() *LinkedIntegrationRuntimeType {
 	return l
-}
-
-// LinkedServiceClassification provides polymorphic access to related types.
-// Call the interface's GetLinkedService() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AmazonMWSLinkedService, *AmazonRdsForOracleLinkedService, *AmazonRdsForSQLServerLinkedService, *AmazonRedshiftLinkedService,
-// - *AmazonS3LinkedService, *AppFiguresLinkedService, *AsanaLinkedService, *AzureBatchLinkedService, *AzureBlobFSLinkedService,
-// - *AzureBlobStorageLinkedService, *AzureDataExplorerLinkedService, *AzureDataLakeAnalyticsLinkedService, *AzureDataLakeStoreLinkedService,
-// - *AzureDatabricksDeltaLakeLinkedService, *AzureDatabricksLinkedService, *AzureFileStorageLinkedService, *AzureFunctionLinkedService,
-// - *AzureKeyVaultLinkedService, *AzureMLLinkedService, *AzureMLServiceLinkedService, *AzureMariaDBLinkedService, *AzureMySQLLinkedService,
-// - *AzurePostgreSQLLinkedService, *AzureSQLDWLinkedService, *AzureSQLDatabaseLinkedService, *AzureSQLMILinkedService, *AzureSearchLinkedService,
-// - *AzureStorageLinkedService, *AzureSynapseArtifactsLinkedService, *AzureTableStorageLinkedService, *CassandraLinkedService,
-// - *CommonDataServiceForAppsLinkedService, *ConcurLinkedService, *CosmosDbLinkedService, *CosmosDbMongoDbAPILinkedService,
-// - *CouchbaseLinkedService, *CustomDataSourceLinkedService, *DataworldLinkedService, *Db2LinkedService, *DrillLinkedService,
-// - *DynamicsAXLinkedService, *DynamicsCrmLinkedService, *DynamicsLinkedService, *EloquaLinkedService, *FileServerLinkedService,
-// - *FtpServerLinkedService, *GoogleAdWordsLinkedService, *GoogleBigQueryLinkedService, *GoogleCloudStorageLinkedService,
-// - *GoogleSheetsLinkedService, *GreenplumLinkedService, *HBaseLinkedService, *HDInsightLinkedService, *HDInsightOnDemandLinkedService,
-// - *HTTPLinkedService, *HdfsLinkedService, *HiveLinkedService, *HubspotLinkedService, *ImpalaLinkedService, *InformixLinkedService,
-// - *JiraLinkedService, *LinkedService, *MagentoLinkedService, *MariaDBLinkedService, *MarketoLinkedService, *MicrosoftAccessLinkedService,
-// - *MongoDbAtlasLinkedService, *MongoDbLinkedService, *MongoDbV2LinkedService, *MySQLLinkedService, *NetezzaLinkedService,
-// - *ODataLinkedService, *OdbcLinkedService, *Office365LinkedService, *OracleLinkedService, *OracleServiceCloudLinkedService,
-// - *PaypalLinkedService, *PhoenixLinkedService, *PostgreSQLLinkedService, *PowerBIWorkspaceLinkedService, *PrestoLinkedService,
-// - *QuickBooksLinkedService, *QuickbaseLinkedService, *ResponsysLinkedService, *RestServiceLinkedService, *SQLServerLinkedService,
-// - *SalesforceLinkedService, *SalesforceMarketingCloudLinkedService, *SalesforceServiceCloudLinkedService, *SapBWLinkedService,
-// - *SapCloudForCustomerLinkedService, *SapEccLinkedService, *SapHanaLinkedService, *SapOdpLinkedService, *SapOpenHubLinkedService,
-// - *SapTableLinkedService, *ServiceNowLinkedService, *SftpServerLinkedService, *SharePointOnlineListLinkedService, *ShopifyLinkedService,
-// - *SmartsheetLinkedService, *SnowflakeLinkedService, *SparkLinkedService, *SquareLinkedService, *SybaseLinkedService, *TeamDeskLinkedService,
-// - *TeradataLinkedService, *TwilioLinkedService, *VerticaLinkedService, *WebLinkedService, *XeroLinkedService, *ZendeskLinkedService,
-// - *ZohoLinkedService
-type LinkedServiceClassification interface {
-	// GetLinkedService returns the LinkedService content of the underlying type.
-	GetLinkedService() *LinkedService
 }
 
 // LinkedService - The Azure Synapse nested object which contains the information and credential which can be used to connect
@@ -15682,45 +15161,6 @@ type LinkedService struct {
 
 // GetLinkedService implements the LinkedServiceClassification interface for type LinkedService.
 func (l *LinkedService) GetLinkedService() *LinkedService { return l }
-
-// LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginCreateOrUpdateLinkedService
-// method.
-type LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions struct {
-	// ETag of the linkedService entity. Should only be specified for update, for which it should match existing entity or can
-	// be * for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginDeleteLinkedService
-// method.
-type LinkedServiceClientBeginDeleteLinkedServiceOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginRenameLinkedService
-// method.
-type LinkedServiceClientBeginRenameLinkedServiceOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// LinkedServiceClientGetLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.GetLinkedService
-// method.
-type LinkedServiceClientGetLinkedServiceOptions struct {
-	// ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if
-	// * was provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the LinkedServiceClient.NewGetLinkedServicesByWorkspacePager
-// method.
-type LinkedServiceClientGetLinkedServicesByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
 
 // LinkedServiceDebugResource - Linked service debug resource.
 type LinkedServiceDebugResource struct {
@@ -16468,27 +15908,6 @@ func (m *MarketoSource) GetTabularSource() *TabularSource {
 	}
 }
 
-// MetastoreClientDeleteOptions contains the optional parameters for the MetastoreClient.Delete method.
-type MetastoreClientDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// MetastoreClientGetDatabaseOperationsOptions contains the optional parameters for the MetastoreClient.GetDatabaseOperations
-// method.
-type MetastoreClientGetDatabaseOperationsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// MetastoreClientRegisterOptions contains the optional parameters for the MetastoreClient.Register method.
-type MetastoreClientRegisterOptions struct {
-	// placeholder for future optional parameters
-}
-
-// MetastoreClientUpdateOptions contains the optional parameters for the MetastoreClient.Update method.
-type MetastoreClientUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
 type MetastoreRegisterObject struct {
 	// REQUIRED; The input folder containing CDM files.
 	InputFolder *string
@@ -17190,16 +16609,6 @@ func (m *MongoDbV2Source) GetCopySource() *CopySource {
 	}
 }
 
-// MultiplePipelineTriggerClassification provides polymorphic access to related types.
-// Call the interface's GetMultiplePipelineTrigger() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *BlobEventsTrigger, *BlobTrigger, *CustomEventsTrigger, *MultiplePipelineTrigger, *ScheduleTrigger
-type MultiplePipelineTriggerClassification interface {
-	TriggerClassification
-	// GetMultiplePipelineTrigger returns the MultiplePipelineTrigger content of the underlying type.
-	GetMultiplePipelineTrigger() *MultiplePipelineTrigger
-}
-
 // MultiplePipelineTrigger - Base class for all triggers that support one to many model for trigger to pipeline.
 type MultiplePipelineTrigger struct {
 	// REQUIRED; Trigger type.
@@ -17649,48 +17058,6 @@ type NotebookCellOutputItem struct {
 	Text any
 }
 
-// NotebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the NotebookClient.BeginCreateOrUpdateNotebook
-// method.
-type NotebookClientBeginCreateOrUpdateNotebookOptions struct {
-	// ETag of the Note book entity. Should only be specified for update, for which it should match existing entity or can be
-	// * for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// NotebookClientBeginDeleteNotebookOptions contains the optional parameters for the NotebookClient.BeginDeleteNotebook method.
-type NotebookClientBeginDeleteNotebookOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// NotebookClientBeginRenameNotebookOptions contains the optional parameters for the NotebookClient.BeginRenameNotebook method.
-type NotebookClientBeginRenameNotebookOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// NotebookClientGetNotebookOptions contains the optional parameters for the NotebookClient.GetNotebook method.
-type NotebookClientGetNotebookOptions struct {
-	// ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
-	// provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the NotebookClient.NewGetNotebookSummaryByWorkSpacePager
-// method.
-type NotebookClientGetNotebookSummaryByWorkSpaceOptions struct {
-	// placeholder for future optional parameters
-}
-
-// NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the NotebookClient.NewGetNotebooksByWorkspacePager
-// method.
-type NotebookClientGetNotebooksByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // NotebookFolder - The folder that this notebook is in. If not specified, this notebook will appear at the root level.
 type NotebookFolder struct {
 	// The name of the folder that this notebook is in.
@@ -17740,11 +17107,6 @@ type NotebookMetadata struct {
 
 	// Language info.
 	LanguageInfo *NotebookLanguageInfo
-}
-
-// NotebookOperationResultClientGetOptions contains the optional parameters for the NotebookOperationResultClient.Get method.
-type NotebookOperationResultClientGetOptions struct {
-	// placeholder for future optional parameters
 }
 
 // NotebookParameter - Notebook parameter.
@@ -19499,58 +18861,6 @@ type Pipeline struct {
 	Variables map[string]*VariableSpecification
 }
 
-// PipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the PipelineClient.BeginCreateOrUpdatePipeline
-// method.
-type PipelineClientBeginCreateOrUpdatePipelineOptions struct {
-	// ETag of the pipeline entity. Should only be specified for update, for which it should match existing entity or can be *
-	// for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// PipelineClientBeginDeletePipelineOptions contains the optional parameters for the PipelineClient.BeginDeletePipeline method.
-type PipelineClientBeginDeletePipelineOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// PipelineClientBeginRenamePipelineOptions contains the optional parameters for the PipelineClient.BeginRenamePipeline method.
-type PipelineClientBeginRenamePipelineOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// PipelineClientCreatePipelineRunOptions contains the optional parameters for the PipelineClient.CreatePipelineRun method.
-type PipelineClientCreatePipelineRunOptions struct {
-	// Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped
-	// under the same groupId.
-	IsRecovery *bool
-
-	// Parameters of the pipeline run. These parameters will be used only if the runId is not specified.
-	Parameters map[string]any
-
-	// The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run.
-	ReferencePipelineRunID *string
-
-	// In recovery mode, the rerun will start from this activity. If not specified, all activities will run.
-	StartActivityName *string
-}
-
-// PipelineClientGetPipelineOptions contains the optional parameters for the PipelineClient.GetPipeline method.
-type PipelineClientGetPipelineOptions struct {
-	// ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
-	// provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the PipelineClient.NewGetPipelinesByWorkspacePager
-// method.
-type PipelineClientGetPipelinesByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // PipelineFolder - The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
 type PipelineFolder struct {
 	// The name of the folder that this Pipeline is in.
@@ -19639,30 +18949,6 @@ type PipelineRun struct {
 
 	// READ-ONLY; The status of a pipeline run.
 	Status *string
-}
-
-// PipelineRunClientCancelPipelineRunOptions contains the optional parameters for the PipelineRunClient.CancelPipelineRun
-// method.
-type PipelineRunClientCancelPipelineRunOptions struct {
-	// If true, cancel all the Child pipelines that are triggered by the current pipeline.
-	IsRecursive *bool
-}
-
-// PipelineRunClientGetPipelineRunOptions contains the optional parameters for the PipelineRunClient.GetPipelineRun method.
-type PipelineRunClientGetPipelineRunOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PipelineRunClientQueryActivityRunsOptions contains the optional parameters for the PipelineRunClient.QueryActivityRuns
-// method.
-type PipelineRunClientQueryActivityRunsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRunClient.QueryPipelineRunsByWorkspace
-// method.
-type PipelineRunClientQueryPipelineRunsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // PipelineRunInvokedBy - Provides entity name and id that started the pipeline run.
@@ -21581,16 +20867,6 @@ type SQLPoolStoredProcedureActivityTypeProperties struct {
 	StoredProcedureParameters map[string]*StoredProcedureParameter
 }
 
-// SQLPoolsClientGetOptions contains the optional parameters for the SQLPoolsClient.Get method.
-type SQLPoolsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SQLPoolsClientListOptions contains the optional parameters for the SQLPoolsClient.List method.
-type SQLPoolsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // SQLScript - SQL script.
 type SQLScript struct {
 	// REQUIRED; The content of the SQL script.
@@ -21607,44 +20883,6 @@ type SQLScript struct {
 
 	// The type of the SQL script.
 	Type *SQLScriptType
-}
-
-// SQLScriptClientBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginCreateOrUpdateSQLScript
-// method.
-type SQLScriptClientBeginCreateOrUpdateSQLScriptOptions struct {
-	// ETag of the SQL script entity. Should only be specified for update, for which it should match existing entity or can be
-	// * for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SQLScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginDeleteSQLScript
-// method.
-type SQLScriptClientBeginDeleteSQLScriptOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SQLScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginRenameSQLScript
-// method.
-type SQLScriptClientBeginRenameSQLScriptOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SQLScriptClientGetSQLScriptOptions contains the optional parameters for the SQLScriptClient.GetSQLScript method.
-type SQLScriptClientGetSQLScriptOptions struct {
-	// ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if *
-	// was provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// SQLScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the SQLScriptClient.NewGetSQLScriptsByWorkspacePager
-// method.
-type SQLScriptClientGetSQLScriptsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // SQLScriptContent - The content of the SQL script.
@@ -24447,15 +23685,6 @@ type ScriptActivityTypePropertiesLogSettings struct {
 	LogLocationSettings *LogLocationSettings
 }
 
-// SecretBaseClassification provides polymorphic access to related types.
-// Call the interface's GetSecretBase() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AzureKeyVaultSecretReference, *SecretBase, *SecureString
-type SecretBaseClassification interface {
-	// GetSecretBase returns the SecretBase content of the underlying type.
-	GetSecretBase() *SecretBase
-}
-
 // SecretBase - The base definition of a secret type.
 type SecretBase struct {
 	// REQUIRED; Type of the secret.
@@ -25665,45 +24894,6 @@ type SparkConfiguration struct {
 	Notes *string
 }
 
-// SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginCreateOrUpdateSparkConfiguration
-// method.
-type SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions struct {
-	// ETag of the sparkConfiguration entity. Should only be specified for update, for which it should match existing entity or
-	// can be * for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkConfigurationClientBeginDeleteSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginDeleteSparkConfiguration
-// method.
-type SparkConfigurationClientBeginDeleteSparkConfigurationOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkConfigurationClientBeginRenameSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginRenameSparkConfiguration
-// method.
-type SparkConfigurationClientBeginRenameSparkConfigurationOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkConfigurationClientGetSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.GetSparkConfiguration
-// method.
-type SparkConfigurationClientGetSparkConfigurationOptions struct {
-	// ETag of the sparkConfiguration entity. Should only be specified for get. If the ETag matches the existing entity tag, or
-	// if * was provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// SparkConfigurationClientGetSparkConfigurationsByWorkspaceOptions contains the optional parameters for the SparkConfigurationClient.NewGetSparkConfigurationsByWorkspacePager
-// method.
-type SparkConfigurationClientGetSparkConfigurationsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // SparkConfigurationListResponse - A list of sparkconfiguration resources.
 type SparkConfigurationListResponse struct {
 	// REQUIRED; List of sparkconfigurations.
@@ -25786,59 +24976,6 @@ type SparkJobDefinition struct {
 
 	// The spark configuration of the spark job.
 	TargetSparkConfiguration *SparkConfigurationReference
-}
-
-// SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginCreateOrUpdateSparkJobDefinition
-// method.
-type SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions struct {
-	// ETag of the Spark Job Definition entity. Should only be specified for update, for which it should match existing entity
-	// or can be * for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDebugSparkJobDefinition
-// method.
-type SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDeleteSparkJobDefinition
-// method.
-type SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginExecuteSparkJobDefinition
-// method.
-type SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginRenameSparkJobDefinition
-// method.
-type SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SparkJobDefinitionClientGetSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.GetSparkJobDefinition
-// method.
-type SparkJobDefinitionClientGetSparkJobDefinitionOptions struct {
-	// ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag,
-	// or if * was provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the SparkJobDefinitionClient.NewGetSparkJobDefinitionsByWorkspacePager
-// method.
-type SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // SparkJobDefinitionFolder - The folder that this Spark job definition is in. If not specified, this Spark job definition
@@ -26382,17 +25519,6 @@ type StartDataFlowDebugSessionResponse struct {
 	JobVersion *string
 }
 
-// StoreReadSettingsClassification provides polymorphic access to related types.
-// Call the interface's GetStoreReadSettings() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AmazonS3ReadSettings, *AzureBlobFSReadSettings, *AzureBlobStorageReadSettings, *AzureDataLakeStoreReadSettings, *AzureFileStorageReadSettings,
-// - *FileServerReadSettings, *FtpReadSettings, *GoogleCloudStorageReadSettings, *HTTPReadSettings, *HdfsReadSettings, *SftpReadSettings,
-// - *StoreReadSettings
-type StoreReadSettingsClassification interface {
-	// GetStoreReadSettings returns the StoreReadSettings content of the underlying type.
-	GetStoreReadSettings() *StoreReadSettings
-}
-
 // StoreReadSettings - Connector read setting.
 type StoreReadSettings struct {
 	// REQUIRED; The read setting type.
@@ -26407,16 +25533,6 @@ type StoreReadSettings struct {
 
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type StoreReadSettings.
 func (s *StoreReadSettings) GetStoreReadSettings() *StoreReadSettings { return s }
-
-// StoreWriteSettingsClassification provides polymorphic access to related types.
-// Call the interface's GetStoreWriteSettings() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AzureBlobFSWriteSettings, *AzureBlobStorageWriteSettings, *AzureDataLakeStoreWriteSettings, *AzureFileStorageWriteSettings,
-// - *FileServerWriteSettings, *SftpWriteSettings, *StoreWriteSettings
-type StoreWriteSettingsClassification interface {
-	// GetStoreWriteSettings returns the StoreWriteSettings content of the underlying type.
-	GetStoreWriteSettings() *StoreWriteSettings
-}
 
 // StoreWriteSettings - Connector write settings.
 type StoreWriteSettings struct {
@@ -26930,24 +26046,6 @@ type SynapseSparkJobReference struct {
 	Type *SparkJobReferenceType
 }
 
-// TabularSourceClassification provides polymorphic access to related types.
-// Call the interface's GetTabularSource() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AmazonMWSSource, *AmazonRdsForSQLServerSource, *AmazonRedshiftSource, *AzureMariaDBSource, *AzureMySQLSource, *AzurePostgreSQLSource,
-// - *AzureSQLSource, *AzureTableSource, *CassandraSource, *ConcurSource, *CouchbaseSource, *Db2Source, *DrillSource, *DynamicsAXSource,
-// - *EloquaSource, *GoogleAdWordsSource, *GoogleBigQuerySource, *GreenplumSource, *HBaseSource, *HiveSource, *HubspotSource,
-// - *ImpalaSource, *InformixSource, *JiraSource, *MagentoSource, *MariaDBSource, *MarketoSource, *MySQLSource, *NetezzaSource,
-// - *OdbcSource, *OracleServiceCloudSource, *PaypalSource, *PhoenixSource, *PostgreSQLSource, *PrestoSource, *QuickBooksSource,
-// - *ResponsysSource, *SQLDWSource, *SQLMISource, *SQLServerSource, *SQLSource, *SalesforceMarketingCloudSource, *SalesforceSource,
-// - *SapBwSource, *SapCloudForCustomerSource, *SapEccSource, *SapHanaSource, *SapOdpSource, *SapOpenHubSource, *SapTableSource,
-// - *ServiceNowSource, *ShopifySource, *SparkSource, *SquareSource, *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource,
-// - *XeroSource, *ZohoSource
-type TabularSourceClassification interface {
-	CopySourceClassification
-	// GetTabularSource returns the TabularSource content of the underlying type.
-	GetTabularSource() *TabularSource
-}
-
 // TabularSource - Copy activity sources of tabular type.
 type TabularSource struct {
 	// REQUIRED; Copy source type.
@@ -27417,16 +26515,6 @@ type Transformation struct {
 	LinkedService *LinkedServiceReference
 }
 
-// TriggerClassification provides polymorphic access to related types.
-// Call the interface's GetTrigger() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *BlobEventsTrigger, *BlobTrigger, *ChainingTrigger, *CustomEventsTrigger, *MultiplePipelineTrigger, *RerunTumblingWindowTrigger,
-// - *ScheduleTrigger, *Trigger, *TumblingWindowTrigger
-type TriggerClassification interface {
-	// GetTrigger returns the Trigger content of the underlying type.
-	GetTrigger() *Trigger
-}
-
 // Trigger - Azure Synapse nested object which contains information about creating pipeline run
 type Trigger struct {
 	// REQUIRED; Trigger type.
@@ -27448,68 +26536,6 @@ type Trigger struct {
 // GetTrigger implements the TriggerClassification interface for type Trigger.
 func (t *Trigger) GetTrigger() *Trigger { return t }
 
-// TriggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the TriggerClient.BeginCreateOrUpdateTrigger
-// method.
-type TriggerClientBeginCreateOrUpdateTriggerOptions struct {
-	// ETag of the trigger entity. Should only be specified for update, for which it should match existing entity or can be *
-	// for unconditional update.
-	IfMatch *string
-
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggerClientBeginDeleteTriggerOptions contains the optional parameters for the TriggerClient.BeginDeleteTrigger method.
-type TriggerClientBeginDeleteTriggerOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggerClientBeginStartTriggerOptions contains the optional parameters for the TriggerClient.BeginStartTrigger method.
-type TriggerClientBeginStartTriggerOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggerClientBeginStopTriggerOptions contains the optional parameters for the TriggerClient.BeginStopTrigger method.
-type TriggerClientBeginStopTriggerOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the TriggerClient.BeginSubscribeTriggerToEvents
-// method.
-type TriggerClientBeginSubscribeTriggerToEventsOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the TriggerClient.BeginUnsubscribeTriggerFromEvents
-// method.
-type TriggerClientBeginUnsubscribeTriggerFromEventsOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the TriggerClient.GetEventSubscriptionStatus
-// method.
-type TriggerClientGetEventSubscriptionStatusOptions struct {
-	// placeholder for future optional parameters
-}
-
-// TriggerClientGetTriggerOptions contains the optional parameters for the TriggerClient.GetTrigger method.
-type TriggerClientGetTriggerOptions struct {
-	// ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was
-	// provided, then no content will be returned.
-	IfNoneMatch *string
-}
-
-// TriggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the TriggerClient.NewGetTriggersByWorkspacePager
-// method.
-type TriggerClientGetTriggersByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // TriggerDependencyProvisioningStatus - Defines the response of a provision trigger dependency operation.
 type TriggerDependencyProvisioningStatus struct {
 	// REQUIRED; Provisioning status.
@@ -27517,16 +26543,6 @@ type TriggerDependencyProvisioningStatus struct {
 
 	// REQUIRED; Trigger name.
 	TriggerName *string
-}
-
-// TriggerDependencyReferenceClassification provides polymorphic access to related types.
-// Call the interface's GetTriggerDependencyReference() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *TriggerDependencyReference, *TumblingWindowTriggerDependencyReference
-type TriggerDependencyReferenceClassification interface {
-	DependencyReferenceClassification
-	// GetTriggerDependencyReference returns the TriggerDependencyReference content of the underlying type.
-	GetTriggerDependencyReference() *TriggerDependencyReference
 }
 
 // TriggerDependencyReference - Trigger referenced dependency.
@@ -27623,24 +26639,6 @@ type TriggerRun struct {
 
 	// READ-ONLY; List of pipeline name and run Id triggered by the trigger run.
 	TriggeredPipelines map[string]*string
-}
-
-// TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
-// method.
-type TriggerRunClientCancelTriggerInstanceOptions struct {
-	// placeholder for future optional parameters
-}
-
-// TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
-// method.
-type TriggerRunClientQueryTriggerRunsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
-
-// TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
-// method.
-type TriggerRunClientRerunTriggerInstanceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // TriggerRunsQueryResponse - A list of trigger runs.
@@ -28490,15 +27488,6 @@ func (w *WebLinkedService) GetLinkedService() *LinkedService {
 	}
 }
 
-// WebLinkedServiceTypePropertiesClassification provides polymorphic access to related types.
-// Call the interface's GetWebLinkedServiceTypeProperties() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *WebAnonymousAuthentication, *WebBasicAuthentication, *WebClientCertificateAuthentication, *WebLinkedServiceTypeProperties
-type WebLinkedServiceTypePropertiesClassification interface {
-	// GetWebLinkedServiceTypeProperties returns the WebLinkedServiceTypeProperties content of the underlying type.
-	GetWebLinkedServiceTypeProperties() *WebLinkedServiceTypeProperties
-}
-
 // WebLinkedServiceTypeProperties - Base definition of WebLinkedServiceTypeProperties, this typeProperties is polymorphic
 // based on authenticationType, so not flattened in SDK models.
 type WebLinkedServiceTypeProperties struct {
@@ -28629,18 +27618,6 @@ type Workspace struct {
 
 	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string
-}
-
-// WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
-type WorkspaceClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagementClient.GetGitHubAccessToken
-// method.
-type WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions struct {
-	// Can provide a guid, which is helpful for debugging and to provide better customer support
-	ClientRequestID *string
 }
 
 // WorkspaceIdentity - Identity properties of the workspace resource.

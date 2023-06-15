@@ -7,23 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package urlmultigroup
-
-// QueriesClientArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
-// method.
-type QueriesClientArrayStringMultiEmptyOptions struct {
-	// an empty array [] of string using the multi-array format
-	ArrayQuery []string
-}
-
-// QueriesClientArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull method.
-type QueriesClientArrayStringMultiNullOptions struct {
-	// a null array of string using the multi-array format
-	ArrayQuery []string
-}
-
-// QueriesClientArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid
-// method.
-type QueriesClientArrayStringMultiValidOptions struct {
-	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
-	ArrayQuery []string
-}

@@ -8,60 +8,6 @@
 
 package mediatypesgroup
 
-import "io"
-
-// MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader
-// method.
-type MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions struct {
-	// Input parameter.
-	Input io.ReadSeekCloser
-}
-
-// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
-// method.
-type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions struct {
-	// Input parameter.
-	Input *SourcePath
-}
-
-// MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
-type MediaTypesClientAnalyzeBodyOptions struct {
-	// Input parameter.
-	Input io.ReadSeekCloser
-}
-
-// MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
-// method.
-type MediaTypesClientAnalyzeBodyWithJSONOptions struct {
-	// Input parameter.
-	Input *SourcePath
-}
-
-// MediaTypesClientBinaryBodyWithThreeContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypes
-// method.
-type MediaTypesClientBinaryBodyWithThreeContentTypesOptions struct {
-	// placeholder for future optional parameters
-}
-
-// MediaTypesClientBinaryBodyWithTwoContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithTwoContentTypes
-// method.
-type MediaTypesClientBinaryBodyWithTwoContentTypesOptions struct {
-	// placeholder for future optional parameters
-}
-
-// MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding
-// method.
-type MediaTypesClientContentTypeWithEncodingOptions struct {
-	// Input parameter.
-	Input *string
-}
-
-// MediaTypesClientPutTextAndJSONBodyOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBody
-// method.
-type MediaTypesClientPutTextAndJSONBodyOptions struct {
-	// placeholder for future optional parameters
-}
-
 // SourcePath - Uri or local path to source data.
 type SourcePath struct {
 	// File source path.

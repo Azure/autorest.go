@@ -7,9 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package morecustombaseurigroup
-
-// PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
-type PathsClientGetEmptyOptions struct {
-	// The key version. Default value 'v1'.
-	KeyVersion *string
-}

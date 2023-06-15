@@ -7,23 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package nonstringenumgroup
-
-// FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
-type FloatClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
-type FloatClientPutOptions struct {
-	// placeholder for future optional parameters
-}
-
-// IntClientGetOptions contains the optional parameters for the IntClient.Get method.
-type IntClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// IntClientPutOptions contains the optional parameters for the IntClient.Put method.
-type IntClientPutOptions struct {
-	// placeholder for future optional parameters
-}

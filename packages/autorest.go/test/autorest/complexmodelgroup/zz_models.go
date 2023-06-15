@@ -28,21 +28,6 @@ type CatalogDictionaryOfArray struct {
 	ProductDictionaryOfArray map[string][]*Product
 }
 
-// ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.
-type ComplexModelClientCreateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
-type ComplexModelClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ComplexModelClientUpdateOptions contains the optional parameters for the ComplexModelClient.Update method.
-type ComplexModelClientUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
 // Product - The product documentation.
 type Product struct {
 	// Capacity of product. For example, 4 people.

@@ -10,15 +10,6 @@ package armdataboxedge
 
 import "time"
 
-// AddonClassification provides polymorphic access to related types.
-// Call the interface's GetAddon() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *Addon, *ArcAddon, *IoTAddon
-type AddonClassification interface {
-	// GetAddon returns the Addon content of the underlying type.
-	GetAddon() *Addon
-}
-
 // Addon - Role Addon
 type Addon struct {
 	// REQUIRED; Addon type.
@@ -47,28 +38,6 @@ type AddonList struct {
 
 	// READ-ONLY; The Value.
 	Value []AddonClassification
-}
-
-// AddonsClientBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate method.
-type AddonsClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
-type AddonsClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// AddonsClientGetOptions contains the optional parameters for the AddonsClient.Get method.
-type AddonsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.NewListByRolePager method.
-type AddonsClientListByRoleOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Address - The shipping address of the customer.
@@ -158,17 +127,6 @@ type AlertProperties struct {
 	Title *string
 }
 
-// AlertsClientGetOptions contains the optional parameters for the AlertsClient.Get method.
-type AlertsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.NewListByDataBoxEdgeDevicePager
-// method.
-type AlertsClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // ArcAddon - Arc Addon.
 type ArcAddon struct {
 	// REQUIRED; Addon type.
@@ -246,11 +204,6 @@ type Authentication struct {
 	SymmetricKey *SymmetricKey
 }
 
-// AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.NewListPager method.
-type AvailableSKUsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // AzureContainerInfo - Azure container mapping of the endpoint.
 type AzureContainerInfo struct {
 	// REQUIRED; Container name (Based on the data format specified, this represents the name of Azure Files/Page blob/Block blob).
@@ -294,31 +247,6 @@ type BandwidthScheduleProperties struct {
 
 	// REQUIRED; The stop time of the schedule in UTC.
 	Stop *string
-}
-
-// BandwidthSchedulesClientBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
-// method.
-type BandwidthSchedulesClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// BandwidthSchedulesClientBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete
-// method.
-type BandwidthSchedulesClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// BandwidthSchedulesClientGetOptions contains the optional parameters for the BandwidthSchedulesClient.Get method.
-type BandwidthSchedulesClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.NewListByDataBoxEdgeDevicePager
-// method.
-type BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // BandwidthSchedulesList - The collection of bandwidth schedules.
@@ -466,36 +394,6 @@ type ContainerProperties struct {
 
 	// READ-ONLY; Details of the refresh job on this container.
 	RefreshDetails *RefreshDetails
-}
-
-// ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
-// method.
-type ContainersClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
-type ContainersClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
-type ContainersClientBeginRefreshOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// ContainersClientGetOptions contains the optional parameters for the ContainersClient.Get method.
-type ContainersClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.NewListByStorageAccountPager
-// method.
-type ContainersClientListByStorageAccountOptions struct {
-	// placeholder for future optional parameters
 }
 
 // DCAccessCode - DC Access code in the case of Self Managed Shipping.
@@ -702,100 +600,6 @@ type DevicePropertiesPatch struct {
 	EdgeProfile *EdgeProfilePatch
 }
 
-// DevicesClientBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
-// method.
-type DevicesClientBeginCreateOrUpdateSecuritySettingsOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
-type DevicesClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates method.
-type DevicesClientBeginDownloadUpdatesOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates method.
-type DevicesClientBeginInstallUpdatesOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates method.
-type DevicesClientBeginScanForUpdatesOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DevicesClientCreateOrUpdateOptions contains the optional parameters for the DevicesClient.CreateOrUpdate method.
-type DevicesClientCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientGenerateCertificateOptions contains the optional parameters for the DevicesClient.GenerateCertificate method.
-type DevicesClientGenerateCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientGetExtendedInformationOptions contains the optional parameters for the DevicesClient.GetExtendedInformation
-// method.
-type DevicesClientGetExtendedInformationOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientGetNetworkSettingsOptions contains the optional parameters for the DevicesClient.GetNetworkSettings method.
-type DevicesClientGetNetworkSettingsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientGetOptions contains the optional parameters for the DevicesClient.Get method.
-type DevicesClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientGetUpdateSummaryOptions contains the optional parameters for the DevicesClient.GetUpdateSummary method.
-type DevicesClientGetUpdateSummaryOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.NewListByResourceGroupPager
-// method.
-type DevicesClientListByResourceGroupOptions struct {
-	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
-	// page in the list.
-	Expand *string
-}
-
-// DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.NewListBySubscriptionPager
-// method.
-type DevicesClientListBySubscriptionOptions struct {
-	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
-	// page in the list.
-	Expand *string
-}
-
-// DevicesClientUpdateExtendedInformationOptions contains the optional parameters for the DevicesClient.UpdateExtendedInformation
-// method.
-type DevicesClientUpdateExtendedInformationOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientUpdateOptions contains the optional parameters for the DevicesClient.Update method.
-type DevicesClientUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DevicesClientUploadCertificateOptions contains the optional parameters for the DevicesClient.UploadCertificate method.
-type DevicesClientUploadCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
 // DiagnosticProactiveLogCollectionSettings - The diagnostic proactive log collection settings of a device.
 type DiagnosticProactiveLogCollectionSettings struct {
 	// REQUIRED; Properties of the diagnostic proactive log collection settings.
@@ -836,32 +640,6 @@ type DiagnosticRemoteSupportSettings struct {
 type DiagnosticRemoteSupportSettingsProperties struct {
 	// Remote support settings list according to the RemoteApplicationType
 	RemoteSupportSettingsList []*RemoteSupportSettings
-}
-
-// DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for
-// the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
-type DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings
-// method.
-type DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings
-// method.
-type DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
-// method.
-type DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions struct {
-	// placeholder for future optional parameters
 }
 
 // EdgeProfile - Details about Edge Profile for the resource
@@ -1226,11 +1004,6 @@ type JobProperties struct {
 	TotalRefreshErrors *int32
 }
 
-// JobsClientGetOptions contains the optional parameters for the JobsClient.Get method.
-type JobsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
 // KubernetesClusterInfo - Kubernetes cluster configuration
 type KubernetesClusterInfo struct {
 	// REQUIRED; Kubernetes cluster version
@@ -1519,29 +1292,6 @@ type MetricSpecificationV1 struct {
 	Unit *MetricUnit
 }
 
-// MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
-// method.
-type MonitoringConfigClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete method.
-type MonitoringConfigClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// MonitoringConfigClientGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
-type MonitoringConfigClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.NewListPager method.
-type MonitoringConfigClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // MonitoringMetricConfiguration - The metric setting details for the role
 type MonitoringMetricConfiguration struct {
 	// REQUIRED; The metric setting properties.
@@ -1736,12 +1486,6 @@ type NodeProperties struct {
 	NodeStatus *NodeStatus
 }
 
-// NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.NewListByDataBoxEdgeDevicePager
-// method.
-type NodesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // Operations.
 type Operation struct {
 	// Properties displayed for the operation.
@@ -1781,11 +1525,6 @@ type OperationProperties struct {
 	ServiceSpecification *ServiceSpecification
 }
 
-// OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
-type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // OperationsList - The list of operations used for the discovery of available provider operations.
 type OperationsList struct {
 	// REQUIRED; The value.
@@ -1793,11 +1532,6 @@ type OperationsList struct {
 
 	// Link to the next set of results.
 	NextLink *string
-}
-
-// OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
-type OperationsStatusClientGetOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Order - The order details.
@@ -1871,34 +1605,6 @@ type OrderStatus struct {
 
 	// READ-ONLY; Time of status update.
 	UpdateDateTime *time.Time
-}
-
-// OrdersClientBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate method.
-type OrdersClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
-type OrdersClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// OrdersClientGetOptions contains the optional parameters for the OrdersClient.Get method.
-type OrdersClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.NewListByDataBoxEdgeDevicePager
-// method.
-type OrdersClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OrdersClientListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
-type OrdersClientListDCAccessCodeOptions struct {
-	// placeholder for future optional parameters
 }
 
 // PeriodicTimerEventTrigger - Trigger details.
@@ -2028,15 +1734,6 @@ type ResourceMoveDetails struct {
 	OperationInProgressLockTimeoutInUTC *time.Time
 }
 
-// RoleClassification provides polymorphic access to related types.
-// Call the interface's GetRole() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *CloudEdgeManagementRole, *IoTRole, *KubernetesRole, *MECRole, *Role
-type RoleClassification interface {
-	// GetRole returns the Role content of the underlying type.
-	GetRole() *Role
-}
-
 // Role - Compute role.
 type Role struct {
 	// REQUIRED; Role type.
@@ -2071,29 +1768,6 @@ type RoleList struct {
 type RoleSinkInfo struct {
 	// REQUIRED; Compute role ID.
 	RoleID *string
-}
-
-// RolesClientBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate method.
-type RolesClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// RolesClientBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
-type RolesClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// RolesClientGetOptions contains the optional parameters for the RolesClient.Get method.
-type RolesClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.NewListByDataBoxEdgeDevicePager
-// method.
-type RolesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // SKU - The Sku information.
@@ -2302,35 +1976,6 @@ type ShareProperties struct {
 	ShareMappings []*MountPointMap
 }
 
-// SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate method.
-type SharesClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SharesClientBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
-type SharesClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SharesClientBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
-type SharesClientBeginRefreshOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// SharesClientGetOptions contains the optional parameters for the SharesClient.Get method.
-type SharesClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.NewListByDataBoxEdgeDevicePager
-// method.
-type SharesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // StorageAccount - Represents a Storage Account on the Data Box Edge/Gateway device.
 type StorageAccount struct {
 	// REQUIRED; The Storage Account properties.
@@ -2403,32 +2048,6 @@ type StorageAccountCredentialProperties struct {
 	UserName *string
 }
 
-// StorageAccountCredentialsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
-// method.
-type StorageAccountCredentialsClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// StorageAccountCredentialsClientBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
-// method.
-type StorageAccountCredentialsClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// StorageAccountCredentialsClientGetOptions contains the optional parameters for the StorageAccountCredentialsClient.Get
-// method.
-type StorageAccountCredentialsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager
-// method.
-type StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
-}
-
 // StorageAccountList - Collection of all the Storage Accounts on the Data Box Edge/Gateway device.
 type StorageAccountList struct {
 	// READ-ONLY; Link to the next set of results.
@@ -2459,30 +2078,6 @@ type StorageAccountProperties struct {
 	ContainerCount *int32
 }
 
-// StorageAccountsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountsClient.BeginCreateOrUpdate
-// method.
-type StorageAccountsClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// StorageAccountsClientBeginDeleteOptions contains the optional parameters for the StorageAccountsClient.BeginDelete method.
-type StorageAccountsClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// StorageAccountsClientGetOptions contains the optional parameters for the StorageAccountsClient.Get method.
-type StorageAccountsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// StorageAccountsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.NewListByDataBoxEdgeDevicePager
-// method.
-type StorageAccountsClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
-}
-
 type SubscriptionProperties struct {
 	LocationPlacementID *string
 	QuotaID             *string
@@ -2507,13 +2102,6 @@ type SupportPackageRequestProperties struct {
 
 	// MinimumTimeStamp from where logs need to be collected
 	MinimumTimeStamp *time.Time
-}
-
-// SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
-// method.
-type SupportPackagesClientBeginTriggerSupportPackageOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
 }
 
 // SymmetricKey - Symmetric key for authentication.
@@ -2556,15 +2144,6 @@ type TrackingInfo struct {
 
 	// Tracking URL of the shipment.
 	TrackingURL *string
-}
-
-// TriggerClassification provides polymorphic access to related types.
-// Call the interface's GetTrigger() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *FileEventTrigger, *PeriodicTimerEventTrigger, *Trigger
-type TriggerClassification interface {
-	// GetTrigger returns the Trigger content of the underlying type.
-	GetTrigger() *Trigger
 }
 
 // Trigger details.
@@ -2610,30 +2189,6 @@ type TriggerSupportPackageRequest struct {
 
 	// READ-ONLY; The hierarchical type of the object.
 	Type *string
-}
-
-// TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate method.
-type TriggersClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
-type TriggersClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// TriggersClientGetOptions contains the optional parameters for the TriggersClient.Get method.
-type TriggersClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.NewListByDataBoxEdgeDevicePager
-// method.
-type TriggersClientListByDataBoxEdgeDeviceOptions struct {
-	// Specify $filter='CustomContextTag eq ' to filter on custom context tag property
-	Filter *string
 }
 
 // UpdateDetails - Update Specific attributes
@@ -2874,28 +2429,4 @@ type UserProperties struct {
 
 	// READ-ONLY; List of shares that the user has rights on. This field should not be specified during user creation.
 	ShareAccessRights []*ShareAccessRight
-}
-
-// UsersClientBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate method.
-type UsersClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// UsersClientBeginDeleteOptions contains the optional parameters for the UsersClient.BeginDelete method.
-type UsersClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
-	ResumeToken string
-}
-
-// UsersClientGetOptions contains the optional parameters for the UsersClient.Get method.
-type UsersClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// UsersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.NewListByDataBoxEdgeDevicePager
-// method.
-type UsersClientListByDataBoxEdgeDeviceOptions struct {
-	// Specify $filter='Type eq ' to filter on user type property
-	Filter *string
 }

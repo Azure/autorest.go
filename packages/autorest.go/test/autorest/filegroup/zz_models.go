@@ -7,18 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package filegroup
-
-// FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
-type FilesClientGetEmptyFileOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FilesClientGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
-type FilesClientGetFileLargeOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FilesClientGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
-type FilesClientGetFileOptions struct {
-	// placeholder for future optional parameters
-}

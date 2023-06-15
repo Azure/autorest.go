@@ -7,18 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package formdatagroup
-
-// FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
-type FormdataClientUploadFileOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody method.
-type FormdataClientUploadFileViaBodyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
-type FormdataClientUploadFilesOptions struct {
-	// placeholder for future optional parameters
-}

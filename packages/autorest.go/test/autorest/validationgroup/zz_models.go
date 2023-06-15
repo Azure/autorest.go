@@ -8,30 +8,6 @@
 
 package validationgroup
 
-// AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
-// method.
-type AutoRestValidationTestClientGetWithConstantInPathOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AutoRestValidationTestClientPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
-// method.
-type AutoRestValidationTestClientPostWithConstantInBodyOptions struct {
-	Body *Product
-}
-
-// AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
-// method.
-type AutoRestValidationTestClientValidationOfBodyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AutoRestValidationTestClientValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters
-// method.
-type AutoRestValidationTestClientValidationOfMethodParametersOptions struct {
-	// placeholder for future optional parameters
-}
-
 // ChildProduct - The product documentation.
 type ChildProduct struct {
 	// CONSTANT; Constant string
