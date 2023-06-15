@@ -3630,7 +3630,7 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2021-06-01-preview
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
               responses:
                 '200':
                   body:
@@ -3762,7 +3762,7 @@ operationGroups:
                   name: mySignalRService
                   type: Microsoft.SignalRService/SignalR
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
               responses:
                 '200':
                   body:
@@ -3839,7 +3839,7 @@ operationGroups:
               parameters:
                 api-version: 2021-06-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
               responses:
                 '200':
                   body:
@@ -4015,7 +4015,7 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
               responses:
                 '200':
                   body:
@@ -4205,7 +4205,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
               responses:
                 '200':
                   body:
@@ -4482,7 +4482,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -4727,7 +4727,7 @@ operationGroups:
           - *ref_191
           - *ref_192
         responses:
-          - language: &ref_467
+          - language: &ref_468
               default:
                 name: ''
                 description: Success. The response indicates the resource is already deleted.
@@ -4772,7 +4772,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -4960,7 +4960,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
               responses:
                 '200':
                   body:
@@ -5150,7 +5150,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
               responses:
                 '200':
                   body: {}
@@ -5273,7 +5273,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
               responses:
                 '202':
                   body: {}
@@ -5348,7 +5348,7 @@ operationGroups:
           - *ref_205
           - *ref_206
         responses:
-          - language: &ref_464
+          - language: &ref_465
               default:
                 name: ''
                 description: Accepted. The response indicates the restart operation is performed in the background.
@@ -5385,7 +5385,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
               responses:
                 '202':
                   headers: &ref_375
@@ -5487,7 +5487,7 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
               responses:
                 '200':
                   body:
@@ -5617,7 +5617,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
               responses:
                 '200':
                   body:
@@ -5756,7 +5756,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
               responses:
                 '200':
                   body:
@@ -5916,7 +5916,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
               responses:
                 '200':
                   body:
@@ -6065,7 +6065,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -6180,7 +6180,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
               responses:
                 '200':
                   body:
@@ -6311,7 +6311,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
               responses:
                 '200':
                   body:
@@ -6441,7 +6441,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
               responses:
                 '200':
                   body:
@@ -6602,7 +6602,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -6754,7 +6754,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -11080,10 +11080,14 @@ testModel:
         operation: *ref_459
         operationGroup: *ref_441
   scenarioTests:
-    - &ref_470
+    - &ref_471
+      name: signalR
       _filePath: Microsoft.SignalRService\preview\2021-06-01-preview\scenarios\signalR.yaml
       _swaggerFilePaths:
         - Microsoft.SignalRService/preview/2021-06-01-preview/signalr.json
+      authentication: &ref_460
+        type: AADToken
+        scope: $(armEndpoint)/.default
       cleanUpSteps: []
       prepareSteps: []
       requiredVariables:
@@ -11095,7 +11099,8 @@ testModel:
         subscriptionId: 00000000-00000000-00000000-00000000
       scenarios:
         - description: Microsoft.SignalRService/Basic_CRUD
-          _scenarioDef: *ref_470
+          _scenarioDef: *ref_471
+          authentication: *ref_460
           requiredVariables:
             - subscriptionId
             - location
@@ -11104,7 +11109,6 @@ testModel:
             subscriptionId: 00000000-00000000-00000000-00000000
           scenario: SignalR
           secretVariables: []
-          shareScope: true
           steps:
             - type: armTemplateDeployment
               armTemplate: ./peArmTemplate/Generate_Unique_name_template.json
@@ -11131,6 +11135,7 @@ testModel:
             - type: restCall
               operationId: SignalR_CheckNameAvailability
               description: SignalR_CheckNameAvailability
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_CheckNameAvailability.json
               exampleModel:
                 name: ../examples/SignalR_CheckNameAvailability.json
@@ -11187,6 +11192,7 @@ testModel:
                           rawValue: AlreadyExists
                           language: *ref_261
                       language: *ref_259
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -11210,6 +11216,7 @@ testModel:
             - type: restCall
               operationId: SignalR_CreateOrUpdate
               description: SignalR_CreateOrUpdate
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/SignalR_CreateOrUpdate.json
@@ -12256,13 +12263,14 @@ testModel:
                               language: *ref_285
                           language: *ref_325
                       language: *ref_348
-                    headers: &ref_460
-                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
-                  '202':
                     headers: &ref_461
                       Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
                       Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                  '202':
+                    headers: &ref_462
+                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
+                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+              isManagementPlane: true
               outputVariables:
                 signalRId:
                   fromResponse: /id
@@ -12507,12 +12515,13 @@ testModel:
                       lastModifiedByType: User
                     tags:
                       key1: value1
-                  headers: *ref_460
-                '202':
                   headers: *ref_461
+                '202':
+                  headers: *ref_462
             - type: restCall
               operationId: SignalR_Get
               description: SignalR_Get
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_Get.json
               exampleModel:
                 name: ../examples/SignalR_Get.json
@@ -12927,6 +12936,7 @@ testModel:
                               language: *ref_285
                           language: *ref_325
                       language: *ref_335
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -13027,6 +13037,7 @@ testModel:
             - type: restCall
               operationId: SignalR_Update
               description: SignalR_Update
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_Update.json
               exampleModel:
                 name: ../examples/SignalR_Update.json
@@ -13688,9 +13699,10 @@ testModel:
                           language: *ref_325
                       language: *ref_359
                   '202':
-                    headers: &ref_462
+                    headers: &ref_463
                       Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
                       Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -13843,10 +13855,11 @@ testModel:
                     tags:
                       key1: value1
                 '202':
-                  headers: *ref_462
+                  headers: *ref_463
             - type: restCall
               operationId: SignalR_ListKeys
               description: SignalR_ListKeys
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_ListKeys.json
               exampleModel:
                 name: ../examples/SignalR_ListKeys.json
@@ -13882,6 +13895,7 @@ testModel:
                       parentsValue: {}
                       properties: {}
                       language: *ref_364
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -13900,6 +13914,7 @@ testModel:
             - type: restCall
               operationId: SignalR_RegenerateKey
               description: SignalR_RegenerateKey
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_RegenerateKey.json
               exampleModel:
                 name: ../examples/SignalR_RegenerateKey.json
@@ -13945,9 +13960,10 @@ testModel:
                       parentsValue: {}
                       properties: {}
                       language: *ref_370
-                    headers: &ref_463
+                    headers: &ref_464
                       Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
                       Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -13965,10 +13981,11 @@ testModel:
               responses:
                 '202':
                   body: {}
-                  headers: *ref_463
+                  headers: *ref_464
             - type: restCall
               operationId: SignalR_Restart
               description: SignalR_Restart
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_Restart.json
               exampleModel:
                 name: ../examples/SignalR_Restart.json
@@ -14000,12 +14017,13 @@ testModel:
                 responses:
                   '202':
                     body:
-                      rawValue: &ref_465 {}
-                      language: *ref_464
-                    headers: &ref_466
+                      rawValue: &ref_466 {}
+                      language: *ref_465
+                    headers: &ref_467
                       Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
                       Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -14020,12 +14038,13 @@ testModel:
               variables: {}
               responses:
                 '202':
-                  body: *ref_465
-                  headers: *ref_466
+                  body: *ref_466
+                  headers: *ref_467
                 '204': {}
             - type: restCall
               operationId: Usages_List
               description: Usages_List
+              authentication: *ref_460
               exampleFile: ../examples/Usages_List.json
               exampleModel:
                 name: ../examples/Usages_List.json
@@ -14128,6 +14147,7 @@ testModel:
                                   language: *ref_386
                           language: *ref_379
                       language: *ref_378
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -14161,6 +14181,7 @@ testModel:
             - type: restCall
               operationId: SignalR_ListByResourceGroup
               description: SignalR_ListByResourceGroup
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_ListByResourceGroup.json
               exampleModel:
                 name: ../examples/SignalR_ListByResourceGroup.json
@@ -14577,6 +14598,7 @@ testModel:
                                   language: *ref_325
                           language: *ref_266
                       language: *ref_331
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -14678,6 +14700,7 @@ testModel:
             - type: restCall
               operationId: SignalR_ListBySubscription
               description: SignalR_ListBySubscription
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_ListBySubscription.json
               exampleModel:
                 name: ../examples/SignalR_ListBySubscription.json
@@ -15089,6 +15112,7 @@ testModel:
                                   language: *ref_325
                           language: *ref_266
                       language: *ref_265
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -15188,6 +15212,7 @@ testModel:
             - type: restCall
               operationId: Operations_List
               description: Operations_List
+              authentication: *ref_460
               exampleFile: ../examples/Operations_List.json
               exampleModel:
                 name: ../examples/Operations_List.json
@@ -15253,6 +15278,7 @@ testModel:
                                   language: *ref_250
                           language: *ref_242
                       language: *ref_241
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -15278,6 +15304,7 @@ testModel:
             - type: restCall
               operationId: SignalR_Delete
               description: SignalR_Delete
+              authentication: *ref_460
               exampleFile: ../examples/SignalR_Delete.json
               exampleModel:
                 name: ../examples/SignalR_Delete.json
@@ -15309,13 +15336,14 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_468 {}
-                      language: *ref_467
+                      rawValue: &ref_469 {}
+                      language: *ref_468
                   '202':
-                    headers: &ref_469
+                    headers: &ref_470
                       Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
                       Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -15330,9 +15358,9 @@ testModel:
               variables: {}
               responses:
                 '200':
-                  body: *ref_468
+                  body: *ref_469
                 '202':
-                  headers: *ref_469
+                  headers: *ref_470
                 '204': {}
           variables:
             resourceName:
@@ -15343,6 +15371,9 @@ testModel:
       secretVariables: []
       useArmTemplate: true
       variables:
+        armEndpoint:
+          type: string
+          value: https://management.azure.com
         globalLocation:
           type: string
           value: Global

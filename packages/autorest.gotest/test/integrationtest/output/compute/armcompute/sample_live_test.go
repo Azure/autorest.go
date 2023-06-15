@@ -28,6 +28,7 @@ type SampleTestSuite struct {
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	options           *arm.ClientOptions
+	armEndpoint       string
 	fakeStepVar       string
 	resourceName      string
 	testPrefix        string
@@ -41,6 +42,7 @@ func (testsuite *SampleTestSuite) SetupSuite() {
 
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
+	testsuite.armEndpoint = "https://management.azure.com"
 	testsuite.fakeStepVar = "signalrswaggertest4"
 	testsuite.resourceName = "signalrswaggertest4"
 	testsuite.testPrefix = testutil.GenerateAlphaNumericID(testsuite.T(), "test", 6)

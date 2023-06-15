@@ -7721,7 +7721,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json
               responses:
                 '200':
                   body:
@@ -7773,7 +7773,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1285
+            optionalParamGroup: &ref_1286
               schema:
                 type: object
                 language:
@@ -7795,7 +7795,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1334
+            responseEnv: &ref_1335
               type: object
               properties:
                 - &ref_288
@@ -7993,7 +7993,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -8129,7 +8129,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
               responses:
                 '200':
                   body:
@@ -8272,7 +8272,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1286
+            optionalParamGroup: &ref_1287
               schema:
                 type: object
                 language:
@@ -8310,7 +8310,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1335
+            responseEnv: &ref_1336
               type: object
               properties:
                 - &ref_299
@@ -8410,7 +8410,7 @@ operationGroups:
           - *ref_301
           - *ref_302
         responses:
-          - language: &ref_1282
+          - language: &ref_1283
               default:
                 name: ''
                 description: Accepted. The response indicates the delete operation is performed in the background.
@@ -8456,7 +8456,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json
               responses:
                 '202':
                   headers: &ref_818
@@ -8477,7 +8477,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1287
+            optionalParamGroup: &ref_1288
               schema:
                 type: object
                 language:
@@ -8515,7 +8515,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1336
+            responseEnv: &ref_1337
               type: object
               language:
                 default: &ref_307
@@ -8685,7 +8685,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json
               responses:
                 '200':
                   body:
@@ -8783,7 +8783,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1288
+            optionalParamGroup: &ref_1289
               schema:
                 type: object
                 language:
@@ -8821,7 +8821,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1337
+            responseEnv: &ref_1338
               type: object
               properties:
                 - &ref_317
@@ -8960,7 +8960,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json
               responses:
                 '200':
                   body:
@@ -8981,7 +8981,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1289
+            optionalParamGroup: &ref_1290
               schema:
                 type: object
                 language:
@@ -9003,7 +9003,7 @@ operationGroups:
               internalMethod: listTestKeys
               requestMethod: listTestKeysCreateRequest
               responseMethod: listTestKeysHandleResponse
-            responseEnv: &ref_1338
+            responseEnv: &ref_1339
               type: object
               properties:
                 - &ref_325
@@ -9165,7 +9165,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json
               responses:
                 '200':
                   body:
@@ -9186,7 +9186,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1290
+            optionalParamGroup: &ref_1291
               schema:
                 type: object
                 language:
@@ -9208,7 +9208,7 @@ operationGroups:
               internalMethod: regenerateTestKey
               requestMethod: regenerateTestKeyCreateRequest
               responseMethod: regenerateTestKeyHandleResponse
-            responseEnv: &ref_1339
+            responseEnv: &ref_1340
               type: object
               properties:
                 - &ref_335
@@ -9307,7 +9307,7 @@ operationGroups:
           - *ref_337
           - *ref_338
         responses:
-          - language: &ref_1250
+          - language: &ref_1251
               default:
                 name: ''
                 description: Success
@@ -9342,7 +9342,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json
               responses:
                 '200': {}
         language:
@@ -9357,7 +9357,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1291
+            optionalParamGroup: &ref_1292
               schema:
                 type: object
                 language:
@@ -9379,7 +9379,7 @@ operationGroups:
               internalMethod: disableTestEndpoint
               requestMethod: disableTestEndpointCreateRequest
               responseMethod: disableTestEndpointHandleResponse
-            responseEnv: &ref_1340
+            responseEnv: &ref_1341
               type: object
               language:
                 default: &ref_341
@@ -9503,7 +9503,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json
               responses:
                 '200':
                   body:
@@ -9524,7 +9524,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1292
+            optionalParamGroup: &ref_1293
               schema:
                 type: object
                 language:
@@ -9546,7 +9546,7 @@ operationGroups:
               internalMethod: enableTestEndpoint
               requestMethod: enableTestEndpointCreateRequest
               responseMethod: enableTestEndpointHandleResponse
-            responseEnv: &ref_1341
+            responseEnv: &ref_1342
               type: object
               properties:
                 - &ref_347
@@ -9691,7 +9691,7 @@ operationGroups:
                   type: Microsoft.AppPlatform/Spring
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json
               responses:
                 '200':
                   body:
@@ -9710,7 +9710,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1293
+            optionalParamGroup: &ref_1294
               schema:
                 type: object
                 language:
@@ -9732,7 +9732,7 @@ operationGroups:
               internalMethod: checkNameAvailability
               requestMethod: checkNameAvailabilityCreateRequest
               responseMethod: checkNameAvailabilityHandleResponse
-            responseEnv: &ref_1342
+            responseEnv: &ref_1343
               type: object
               properties:
                 - &ref_357
@@ -9834,7 +9834,7 @@ operationGroups:
               parameters:
                 api-version: 2020-11-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json
               responses:
                 '200':
                   body:
@@ -9889,7 +9889,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1294
+            optionalParamGroup: &ref_1295
               schema:
                 type: object
                 language:
@@ -9913,7 +9913,7 @@ operationGroups:
               internalMethod: listBySubscription
               requestMethod: listBySubscriptionCreateRequest
               responseMethod: listBySubscriptionHandleResponse
-            responseEnv: &ref_1343
+            responseEnv: &ref_1344
               type: object
               properties:
                 - &ref_363
@@ -10033,7 +10033,7 @@ operationGroups:
                 api-version: 2020-11-01-preview
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json
               responses:
                 '200':
                   body:
@@ -10088,7 +10088,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1295
+            optionalParamGroup: &ref_1296
               schema:
                 type: object
                 language:
@@ -10112,7 +10112,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1344
+            responseEnv: &ref_1345
               type: object
               properties:
                 - &ref_369
@@ -10265,7 +10265,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json
               responses:
                 '200':
                   body:
@@ -10292,7 +10292,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1296
+            optionalParamGroup: &ref_1297
               schema:
                 type: object
                 language:
@@ -10314,7 +10314,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1345
+            responseEnv: &ref_1346
               type: object
               properties:
                 - &ref_376
@@ -10497,7 +10497,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json
               responses:
                 '200':
                   body:
@@ -10540,7 +10540,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1297
+            optionalParamGroup: &ref_1298
               schema:
                 type: object
                 language:
@@ -10578,7 +10578,7 @@ operationGroups:
               internalMethod: updatePut
               requestMethod: updatePutCreateRequest
               responseMethod: updatePutHandleResponse
-            responseEnv: &ref_1346
+            responseEnv: &ref_1347
               type: object
               properties:
                 - &ref_387
@@ -10762,7 +10762,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json
               responses:
                 '200':
                   body:
@@ -10810,7 +10810,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1298
+            optionalParamGroup: &ref_1299
               schema:
                 type: object
                 language:
@@ -10848,7 +10848,7 @@ operationGroups:
               internalMethod: updatePatch
               requestMethod: updatePatchCreateRequest
               responseMethod: updatePatchHandleResponse
-            responseEnv: &ref_1347
+            responseEnv: &ref_1348
               type: object
               properties:
                 - &ref_398
@@ -11030,7 +11030,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json
               responses:
                 '200':
                   body:
@@ -11057,7 +11057,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1299
+            optionalParamGroup: &ref_1300
               schema:
                 type: object
                 language:
@@ -11095,7 +11095,7 @@ operationGroups:
               internalMethod: validate
               requestMethod: validateCreateRequest
               responseMethod: validateHandleResponse
-            responseEnv: &ref_1348
+            responseEnv: &ref_1349
               type: object
               properties:
                 - &ref_410
@@ -11249,7 +11249,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json
               responses:
                 '200':
                   body:
@@ -11275,7 +11275,7 @@ operationGroups:
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1300
+            optionalParamGroup: &ref_1301
               schema:
                 type: object
                 language:
@@ -11297,7 +11297,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1349
+            responseEnv: &ref_1350
               type: object
               properties:
                 - &ref_417
@@ -11477,7 +11477,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json
               responses:
                 '200':
                   body:
@@ -11518,7 +11518,7 @@ operationGroups:
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1301
+            optionalParamGroup: &ref_1302
               schema:
                 type: object
                 language:
@@ -11556,7 +11556,7 @@ operationGroups:
               internalMethod: updatePut
               requestMethod: updatePutCreateRequest
               responseMethod: updatePutHandleResponse
-            responseEnv: &ref_1350
+            responseEnv: &ref_1351
               type: object
               properties:
                 - &ref_428
@@ -11737,7 +11737,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json
               responses:
                 '200':
                   body:
@@ -11783,7 +11783,7 @@ operationGroups:
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1302
+            optionalParamGroup: &ref_1303
               schema:
                 type: object
                 language:
@@ -11821,7 +11821,7 @@ operationGroups:
               internalMethod: updatePatch
               requestMethod: updatePatchCreateRequest
               responseMethod: updatePatchHandleResponse
-            responseEnv: &ref_1351
+            responseEnv: &ref_1352
               type: object
               properties:
                 - &ref_439
@@ -12028,7 +12028,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json
               responses:
                 '200':
                   body:
@@ -12072,7 +12072,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1352
+            responseEnv: &ref_1353
               type: object
               properties:
                 - &ref_449
@@ -12295,7 +12295,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -12387,7 +12387,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1303
+            optionalParamGroup: &ref_1304
               schema:
                 type: object
                 language:
@@ -12425,7 +12425,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1353
+            responseEnv: &ref_1354
               type: object
               properties:
                 - &ref_461
@@ -12542,7 +12542,7 @@ operationGroups:
           - *ref_464
           - *ref_465
         responses:
-          - language: &ref_1278
+          - language: &ref_1279
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -12600,7 +12600,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -12620,7 +12620,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1304
+            optionalParamGroup: &ref_1305
               schema:
                 type: object
                 language:
@@ -12658,7 +12658,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1354
+            responseEnv: &ref_1355
               type: object
               language:
                 default: &ref_470
@@ -12856,7 +12856,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json
               responses:
                 '200':
                   body:
@@ -12928,7 +12928,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1305
+            optionalParamGroup: &ref_1306
               schema:
                 type: object
                 language:
@@ -12966,7 +12966,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1355
+            responseEnv: &ref_1356
               type: object
               properties:
                 - &ref_481
@@ -13105,7 +13105,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json
               responses:
                 '200':
                   body:
@@ -13147,7 +13147,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1306
+            optionalParamGroup: &ref_1307
               schema:
                 type: object
                 language:
@@ -13171,7 +13171,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1356
+            responseEnv: &ref_1357
               type: object
               properties:
                 - &ref_489
@@ -13327,7 +13327,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_GetResourceUploadUrl.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_GetResourceUploadUrl.json
               responses:
                 '200':
                   body:
@@ -13346,7 +13346,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1307
+            optionalParamGroup: &ref_1308
               schema:
                 type: object
                 language:
@@ -13368,7 +13368,7 @@ operationGroups:
               internalMethod: getResourceUploadURL
               requestMethod: getResourceUploadURLCreateRequest
               responseMethod: getResourceUploadURLHandleResponse
-            responseEnv: &ref_1357
+            responseEnv: &ref_1358
               type: object
               properties:
                 - &ref_498
@@ -13548,7 +13548,7 @@ operationGroups:
                 subscriptionId: 00000000-0000-0000-0000-000000000000
                 validatePayload:
                   name: mydomain.io
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
               responses:
                 '200':
                   body:
@@ -13566,7 +13566,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1308
+            optionalParamGroup: &ref_1309
               schema:
                 type: object
                 language:
@@ -13588,7 +13588,7 @@ operationGroups:
               internalMethod: validateDomain
               requestMethod: validateDomainCreateRequest
               responseMethod: validateDomainHandleResponse
-            responseEnv: &ref_1358
+            responseEnv: &ref_1359
               type: object
               properties:
                 - &ref_510
@@ -13777,7 +13777,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json
               responses:
                 '200':
                   body:
@@ -13809,7 +13809,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1309
+            optionalParamGroup: &ref_1310
               schema:
                 type: object
                 language:
@@ -13831,7 +13831,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1359
+            responseEnv: &ref_1360
               type: object
               properties:
                 - &ref_519
@@ -14067,7 +14067,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -14138,7 +14138,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1310
+            optionalParamGroup: &ref_1311
               schema:
                 type: object
                 language:
@@ -14176,7 +14176,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1360
+            responseEnv: &ref_1361
               type: object
               properties:
                 - &ref_532
@@ -14310,7 +14310,7 @@ operationGroups:
           - *ref_536
           - *ref_537
         responses:
-          - language: &ref_1261
+          - language: &ref_1262
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -14369,7 +14369,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -14389,7 +14389,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1311
+            optionalParamGroup: &ref_1312
               schema:
                 type: object
                 language:
@@ -14427,7 +14427,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1361
+            responseEnv: &ref_1362
               type: object
               language:
                 default: &ref_542
@@ -14634,7 +14634,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json
               responses:
                 '200':
                   body:
@@ -14692,7 +14692,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1312
+            optionalParamGroup: &ref_1313
               schema:
                 type: object
                 language:
@@ -14730,7 +14730,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1362
+            responseEnv: &ref_1363
               type: object
               properties:
                 - &ref_554
@@ -14887,7 +14887,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json
               responses:
                 '200':
                   body:
@@ -14922,7 +14922,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1313
+            optionalParamGroup: &ref_1314
               schema:
                 type: object
                 language:
@@ -14946,7 +14946,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1363
+            responseEnv: &ref_1364
               type: object
               properties:
                 - &ref_563
@@ -15117,7 +15117,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json
               responses:
                 '200':
                   body:
@@ -15150,7 +15150,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1314
+            optionalParamGroup: &ref_1315
               schema:
                 type: object
                 language:
@@ -15172,7 +15172,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1364
+            responseEnv: &ref_1365
               type: object
               properties:
                 - &ref_571
@@ -15385,7 +15385,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -15459,7 +15459,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1315
+            optionalParamGroup: &ref_1316
               schema:
                 type: object
                 language:
@@ -15497,7 +15497,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1365
+            responseEnv: &ref_1366
               type: object
               properties:
                 - &ref_583
@@ -15614,7 +15614,7 @@ operationGroups:
           - *ref_586
           - *ref_587
         responses:
-          - language: &ref_1280
+          - language: &ref_1281
               default:
                 name: ''
                 description: Success. The response indicates the certificate deleted.
@@ -15672,7 +15672,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -15692,7 +15692,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1316
+            optionalParamGroup: &ref_1317
               schema:
                 type: object
                 language:
@@ -15730,7 +15730,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1366
+            responseEnv: &ref_1367
               type: object
               language:
                 default: &ref_592
@@ -15855,7 +15855,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json
               responses:
                 '200':
                   body:
@@ -15892,7 +15892,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1317
+            optionalParamGroup: &ref_1318
               schema:
                 type: object
                 language:
@@ -15916,7 +15916,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1367
+            responseEnv: &ref_1368
               type: object
               properties:
                 - &ref_599
@@ -16105,7 +16105,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json
               responses:
                 '200':
                   body:
@@ -16128,7 +16128,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1318
+            optionalParamGroup: &ref_1319
               schema:
                 type: object
                 language:
@@ -16150,7 +16150,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1368
+            responseEnv: &ref_1369
               type: object
               properties:
                 - &ref_608
@@ -16380,7 +16380,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -16424,7 +16424,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1319
+            optionalParamGroup: &ref_1320
               schema:
                 type: object
                 language:
@@ -16462,7 +16462,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1369
+            responseEnv: &ref_1370
               type: object
               properties:
                 - &ref_621
@@ -16596,7 +16596,7 @@ operationGroups:
           - *ref_625
           - *ref_626
         responses:
-          - language: &ref_1276
+          - language: &ref_1277
               default:
                 name: ''
                 description: Success. The response indicates the custom domain deleted.
@@ -16655,7 +16655,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -16675,7 +16675,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1320
+            optionalParamGroup: &ref_1321
               schema:
                 type: object
                 language:
@@ -16713,7 +16713,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1370
+            responseEnv: &ref_1371
               type: object
               language:
                 default: &ref_631
@@ -16915,7 +16915,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json
               responses:
                 '200':
                   body:
@@ -16955,7 +16955,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1321
+            optionalParamGroup: &ref_1322
               schema:
                 type: object
                 language:
@@ -16993,7 +16993,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1371
+            responseEnv: &ref_1372
               type: object
               properties:
                 - &ref_643
@@ -17150,7 +17150,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json
               responses:
                 '200':
                   body:
@@ -17177,7 +17177,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1322
+            optionalParamGroup: &ref_1323
               schema:
                 type: object
                 language:
@@ -17201,7 +17201,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1372
+            responseEnv: &ref_1373
               type: object
               properties:
                 - &ref_652
@@ -17390,7 +17390,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json
               responses:
                 '200':
                   body:
@@ -17435,7 +17435,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1323
+            optionalParamGroup: &ref_1324
               schema:
                 type: object
                 language:
@@ -17457,7 +17457,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1373
+            responseEnv: &ref_1374
               type: object
               properties:
                 - &ref_661
@@ -17702,7 +17702,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -17812,7 +17812,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1324
+            optionalParamGroup: &ref_1325
               schema:
                 type: object
                 language:
@@ -17850,7 +17850,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1374
+            responseEnv: &ref_1375
               type: object
               properties:
                 - &ref_674
@@ -17984,7 +17984,7 @@ operationGroups:
           - *ref_678
           - *ref_679
         responses:
-          - language: &ref_1274
+          - language: &ref_1275
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -18043,7 +18043,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -18063,7 +18063,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1325
+            optionalParamGroup: &ref_1326
               schema:
                 type: object
                 language:
@@ -18101,7 +18101,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1375
+            responseEnv: &ref_1376
               type: object
               language:
                 default: &ref_684
@@ -18307,7 +18307,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json
               responses:
                 '200':
                   body:
@@ -18391,7 +18391,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1326
+            optionalParamGroup: &ref_1327
               schema:
                 type: object
                 language:
@@ -18429,7 +18429,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1376
+            responseEnv: &ref_1377
               type: object
               properties:
                 - &ref_696
@@ -18624,7 +18624,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json
               responses:
                 '200':
                   body:
@@ -18679,7 +18679,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1377
+            responseEnv: &ref_1378
               type: object
               properties:
                 - &ref_708
@@ -18856,7 +18856,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json
               responses:
                 '200':
                   body:
@@ -18911,7 +18911,7 @@ operationGroups:
               internalMethod: listForCluster
               requestMethod: listForClusterCreateRequest
               responseMethod: listForClusterHandleResponse
-            responseEnv: &ref_1378
+            responseEnv: &ref_1379
               type: object
               properties:
                 - &ref_718
@@ -19044,7 +19044,7 @@ operationGroups:
           - *ref_722
           - *ref_723
         responses:
-          - language: &ref_1271
+          - language: &ref_1272
               default:
                 name: ''
                 description: Success.
@@ -19092,7 +19092,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json
               responses:
                 '200': {}
                 '202':
@@ -19113,7 +19113,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1327
+            optionalParamGroup: &ref_1328
               schema:
                 type: object
                 language:
@@ -19151,7 +19151,7 @@ operationGroups:
               internalMethod: start
               requestMethod: startCreateRequest
               responseMethod: startHandleResponse
-            responseEnv: &ref_1379
+            responseEnv: &ref_1380
               type: object
               language:
                 default: &ref_728
@@ -19271,7 +19271,7 @@ operationGroups:
           - *ref_731
           - *ref_732
         responses:
-          - language: &ref_1268
+          - language: &ref_1269
               default:
                 name: ''
                 description: Success.
@@ -19319,7 +19319,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json
               responses:
                 '200': {}
                 '202':
@@ -19340,7 +19340,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1328
+            optionalParamGroup: &ref_1329
               schema:
                 type: object
                 language:
@@ -19378,7 +19378,7 @@ operationGroups:
               internalMethod: stop
               requestMethod: stopCreateRequest
               responseMethod: stopHandleResponse
-            responseEnv: &ref_1380
+            responseEnv: &ref_1381
               type: object
               language:
                 default: &ref_737
@@ -19498,7 +19498,7 @@ operationGroups:
           - *ref_740
           - *ref_741
         responses:
-          - language: &ref_1265
+          - language: &ref_1266
               default:
                 name: ''
                 description: Success.
@@ -19546,7 +19546,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json
               responses:
                 '200': {}
                 '202':
@@ -19567,7 +19567,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1329
+            optionalParamGroup: &ref_1330
               schema:
                 type: object
                 language:
@@ -19605,7 +19605,7 @@ operationGroups:
               internalMethod: restart
               requestMethod: restartCreateRequest
               responseMethod: restartHandleResponse
-            responseEnv: &ref_1381
+            responseEnv: &ref_1382
               type: object
               language:
                 default: &ref_746
@@ -19777,7 +19777,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_GetLogFileUrl.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_GetLogFileUrl.json
               responses:
                 '200':
                   body:
@@ -19796,7 +19796,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1330
+            optionalParamGroup: &ref_1331
               schema:
                 type: object
                 language:
@@ -19818,7 +19818,7 @@ operationGroups:
               internalMethod: getLogFileURL
               requestMethod: getLogFileURLCreateRequest
               responseMethod: getLogFileURLHandleResponse
-            responseEnv: &ref_1382
+            responseEnv: &ref_1383
               type: object
               properties:
                 - &ref_755
@@ -19933,7 +19933,7 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2020-11-01-preview
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Operations_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Operations_List.json
               responses:
                 '200':
                   body:
@@ -19963,7 +19963,7 @@ operationGroups:
             azureARM: true
             clientName: OperationsClient
             openApiType: arm
-            optionalParamGroup: &ref_1331
+            optionalParamGroup: &ref_1332
               schema:
                 type: object
                 language:
@@ -19987,7 +19987,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1383
+            responseEnv: &ref_1384
               type: object
               properties:
                 - &ref_761
@@ -20100,7 +20100,7 @@ operationGroups:
             RuntimeVersions_ListRuntimeVersions:
               parameters:
                 api-version: 2020-11-01-preview
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json
               responses:
                 '200':
                   body:
@@ -20126,7 +20126,7 @@ operationGroups:
             azureARM: true
             clientName: RuntimeVersionsClient
             openApiType: arm
-            optionalParamGroup: &ref_1332
+            optionalParamGroup: &ref_1333
               schema:
                 type: object
                 language:
@@ -20148,7 +20148,7 @@ operationGroups:
               internalMethod: listRuntimeVersions
               requestMethod: listRuntimeVersionsCreateRequest
               responseMethod: listRuntimeVersionsHandleResponse
-            responseEnv: &ref_1384
+            responseEnv: &ref_1385
               type: object
               properties:
                 - &ref_767
@@ -20263,7 +20263,7 @@ operationGroups:
               parameters:
                 api-version: 2020-11-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Skus_List.json
+              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Skus_List.json
               responses:
                 '200':
                   body:
@@ -20297,7 +20297,7 @@ operationGroups:
             azureARM: true
             clientName: SKUsClient
             openApiType: arm
-            optionalParamGroup: &ref_1333
+            optionalParamGroup: &ref_1334
               schema:
                 type: object
                 language:
@@ -20321,7 +20321,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1385
+            responseEnv: &ref_1386
               type: object
               properties:
                 - &ref_773
@@ -31249,9 +31249,13 @@ testModel:
         operationGroup: *ref_1230
   scenarioTests:
     - &ref_1248
+      name: Spring
       _filePath: Microsoft.AppPlatform\preview\2020-11-01-preview\scenarios\Spring.yaml
       _swaggerFilePaths:
         - Microsoft.AppPlatform/preview/2020-11-01-preview/appplatform.json
+      authentication: &ref_1249
+        type: AADToken
+        scope: $(armEndpoint)/.default
       cleanUpSteps:
         - type: armTemplateDeployment
           armTemplate: ''
@@ -31731,6 +31735,7 @@ testModel:
       scenarios:
         - description: Microsoft.AppPlatform/Spring
           _scenarioDef: *ref_1248
+          authentication: *ref_1249
           requiredVariables:
             - customDomainName
             - mysqlKey
@@ -31752,11 +31757,11 @@ testModel:
           scenario: Spring
           secretVariables:
             - uploadUrl
-          shareScope: true
           steps:
             - type: restCall
               operationId: Services_CheckNameAvailability
               description: Services_CheckNameAvailability
+              authentication: *ref_1249
               exampleFile: ../examples/Services_CheckNameAvailability.json
               exampleModel:
                 name: ../examples/Services_CheckNameAvailability.json
@@ -31844,6 +31849,7 @@ testModel:
                           rawValue: AlreadyExists
                           language: *ref_855
                       language: *ref_856
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -31867,6 +31873,7 @@ testModel:
             - type: restCall
               operationId: Services_CreateOrUpdate
               description: Services_CreateOrUpdate
+              authentication: *ref_1249
               exampleFile: ../examples/Services_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/Services_CreateOrUpdate.json
@@ -32490,6 +32497,7 @@ testModel:
                               language: *ref_800
                           language: *ref_801
                       language: *ref_809
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -32628,6 +32636,7 @@ testModel:
             - type: restCall
               operationId: Services_Get
               description: Services_Get
+              authentication: *ref_1249
               exampleFile: ../examples/Services_Get.json
               exampleModel:
                 name: ../examples/Services_Get.json
@@ -32884,6 +32893,7 @@ testModel:
                               language: *ref_800
                           language: *ref_801
                       language: *ref_802
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -32938,6 +32948,7 @@ testModel:
             - type: restCall
               operationId: Services_Update
               description: Services_Update
+              authentication: *ref_1249
               exampleFile: ../examples/Services_Update.json
               exampleModel:
                 name: ../examples/Services_Update.json
@@ -33416,11 +33427,12 @@ testModel:
                               language: *ref_800
                           language: *ref_801
                       language: *ref_824
-                    headers: &ref_1249
+                    headers: &ref_1250
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -33521,10 +33533,11 @@ testModel:
                     tags:
                       created-by: api-test
                       hello: world
-                  headers: *ref_1249
+                  headers: *ref_1250
             - type: restCall
               operationId: Services_DisableTestEndpoint
               description: Services_DisableTestEndpoint
+              authentication: *ref_1249
               exampleFile: ../examples/Services_DisableTestEndpoint.json
               exampleModel:
                 name: ../examples/Services_DisableTestEndpoint.json
@@ -33575,8 +33588,9 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1251 {}
-                      language: *ref_1250
+                      rawValue: &ref_1252 {}
+                      language: *ref_1251
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -33591,10 +33605,11 @@ testModel:
               variables: {}
               responses:
                 '200':
-                  body: *ref_1251
+                  body: *ref_1252
             - type: restCall
               operationId: Services_EnableTestEndpoint
               description: Services_EnableTestEndpoint
+              authentication: *ref_1249
               exampleFile: ../examples/Services_EnableTestEndpoint.json
               exampleModel:
                 name: ../examples/Services_EnableTestEndpoint.json
@@ -33679,6 +33694,7 @@ testModel:
                           rawValue: <secondaryTestEndpoint>
                           language: *ref_833
                       language: *ref_847
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -33702,6 +33718,7 @@ testModel:
             - type: restCall
               operationId: Services_RegenerateTestKey
               description: Services_RegenerateTestKey
+              authentication: *ref_1249
               exampleFile: ../examples/Services_RegenerateTestKey.json
               exampleModel:
                 name: ../examples/Services_RegenerateTestKey.json
@@ -33801,6 +33818,7 @@ testModel:
                           rawValue: <secondaryTestEndpoint>
                           language: *ref_833
                       language: *ref_840
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -33826,6 +33844,7 @@ testModel:
             - type: restCall
               operationId: Services_ListTestKeys
               description: Services_ListTestKeys
+              authentication: *ref_1249
               exampleFile: ../examples/Services_ListTestKeys.json
               exampleModel:
                 name: ../examples/Services_ListTestKeys.json
@@ -33910,6 +33929,7 @@ testModel:
                           rawValue: <secondaryTestEndpoint>
                           language: *ref_833
                       language: *ref_834
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -33933,6 +33953,7 @@ testModel:
             - type: restCall
               operationId: Certificates_CreateOrUpdate
               description: Certificates_CreateOrUpdate
+              authentication: *ref_1249
               exampleFile: ../examples/Certificates_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/Certificates_CreateOrUpdate.json
@@ -34263,6 +34284,7 @@ testModel:
                               language: *ref_1052
                           language: *ref_1053
                       language: *ref_1062
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -34341,6 +34363,7 @@ testModel:
             - type: restCall
               operationId: Certificates_Get
               description: Certificates_Get
+              authentication: *ref_1249
               exampleFile: ../examples/Certificates_Get.json
               exampleModel:
                 name: ../examples/Certificates_Get.json
@@ -34498,6 +34521,7 @@ testModel:
                               language: *ref_1052
                           language: *ref_1053
                       language: *ref_1054
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -34537,6 +34561,7 @@ testModel:
             - type: restCall
               operationId: Certificates_List
               description: Certificates_List
+              authentication: *ref_1249
               exampleFile: ../examples/Certificates_List.json
               exampleModel:
                 name: ../examples/Certificates_List.json
@@ -34700,6 +34725,7 @@ testModel:
                                   language: *ref_1053
                           language: *ref_1071
                       language: *ref_1072
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -34737,6 +34763,7 @@ testModel:
             - type: restCall
               operationId: ConfigServers_Validate
               description: ConfigServers_Validate
+              authentication: *ref_1249
               exampleFile: ../examples/ConfigServers_Validate.json
               exampleModel:
                 name: ../examples/ConfigServers_Validate.json
@@ -34843,11 +34870,12 @@ testModel:
                       parentsValue: {}
                       properties: {}
                       language: *ref_897
-                    headers: &ref_1252
+                    headers: &ref_1253
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -34872,10 +34900,11 @@ testModel:
                     isValid: true
                 '202':
                   body: {}
-                  headers: *ref_1252
+                  headers: *ref_1253
             - type: restCall
               operationId: ConfigServers_UpdatePut
               description: ConfigServers_UpdatePut
+              authentication: *ref_1249
               exampleFile: ../examples/ConfigServers_UpdatePut.json
               exampleModel:
                 name: ../examples/ConfigServers_UpdatePut.json
@@ -35115,6 +35144,7 @@ testModel:
                               language: *ref_875
                           language: *ref_876
                       language: *ref_883
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -35165,6 +35195,7 @@ testModel:
             - type: restCall
               operationId: ConfigServers_UpdatePatch
               description: ConfigServers_UpdatePatch
+              authentication: *ref_1249
               exampleFile: ../examples/ConfigServers_UpdatePatch.json
               exampleModel:
                 name: ../examples/ConfigServers_UpdatePatch.json
@@ -35368,11 +35399,12 @@ testModel:
                               language: *ref_875
                           language: *ref_876
                       language: *ref_889
-                    headers: &ref_1253
+                    headers: &ref_1254
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -35411,10 +35443,11 @@ testModel:
                         gitProperty:
                           uri: https://github.com/azure-samples/spring-petclinic-microservices-config
                       provisioningState: Updating
-                  headers: *ref_1253
+                  headers: *ref_1254
             - type: restCall
               operationId: ConfigServers_Get
               description: ConfigServers_Get
+              authentication: *ref_1249
               exampleFile: ../examples/ConfigServers_Get.json
               exampleModel:
                 name: ../examples/ConfigServers_Get.json
@@ -35543,6 +35576,7 @@ testModel:
                               language: *ref_875
                           language: *ref_876
                       language: *ref_877
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -35572,6 +35606,7 @@ testModel:
             - type: restCall
               operationId: MonitoringSettings_UpdatePut
               description: MonitoringSettings_UpdatePut
+              authentication: *ref_1249
               exampleFile: ../examples/MonitoringSettings_UpdatePut.json
               exampleModel:
                 name: ../examples/MonitoringSettings_UpdatePut.json
@@ -35786,6 +35821,7 @@ testModel:
                               language: *ref_908
                           language: *ref_909
                       language: *ref_916
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -35831,6 +35867,7 @@ testModel:
             - type: restCall
               operationId: MonitoringSettings_Get
               description: MonitoringSettings_Get
+              authentication: *ref_1249
               exampleFile: ../examples/MonitoringSettings_Get.json
               exampleModel:
                 name: ../examples/MonitoringSettings_Get.json
@@ -35954,6 +35991,7 @@ testModel:
                               language: *ref_908
                           language: *ref_909
                       language: *ref_910
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -35982,6 +36020,7 @@ testModel:
             - type: restCall
               operationId: MonitoringSettings_UpdatePatch
               description: MonitoringSettings_UpdatePatch
+              authentication: *ref_1249
               exampleFile: ../examples/MonitoringSettings_UpdatePatch.json
               exampleModel:
                 name: ../examples/MonitoringSettings_UpdatePatch.json
@@ -36196,11 +36235,12 @@ testModel:
                               language: *ref_908
                           language: *ref_909
                       language: *ref_922
-                    headers: &ref_1254
+                    headers: &ref_1255
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -36243,10 +36283,11 @@ testModel:
                       appInsightsSamplingRate: 100
                       provisioningState: Updating
                       traceEnabled: true
-                  headers: *ref_1254
+                  headers: *ref_1255
             - type: restCall
               operationId: Apps_CreateOrUpdate
               description: Apps_CreateOrUpdate
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/Apps_CreateOrUpdate.json
@@ -36623,6 +36664,7 @@ testModel:
                               language: *ref_947
                           language: *ref_948
                       language: *ref_957
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -36703,6 +36745,7 @@ testModel:
             - type: restCall
               operationId: Apps_Get
               description: Apps_Get
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_Get.json
               exampleModel:
                 name: ../examples/Apps_Get.json
@@ -36904,6 +36947,7 @@ testModel:
                               language: *ref_947
                           language: *ref_948
                       language: *ref_949
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -36946,6 +36990,7 @@ testModel:
             - type: restCall
               operationId: Deployments_CreateOrUpdate
               description: Deployments_CreateOrUpdate
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/Deployments_CreateOrUpdate.json
@@ -37571,6 +37616,7 @@ testModel:
                               language: *ref_800
                           language: *ref_1144
                       language: *ref_1154
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -37704,6 +37750,7 @@ testModel:
             - type: restCall
               operationId: Deployments_Get
               description: Deployments_Get
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_Get.json
               exampleModel:
                 name: ../examples/Deployments_Get.json
@@ -37945,6 +37992,7 @@ testModel:
                               language: *ref_800
                           language: *ref_1144
                       language: *ref_1145
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -37997,6 +38045,7 @@ testModel:
             - type: restCall
               operationId: Apps_Update
               description: Apps_Update
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_Update.json
               exampleModel:
                 name: ../examples/Apps_Update.json
@@ -38410,11 +38459,12 @@ testModel:
                               language: *ref_947
                           language: *ref_948
                       language: *ref_968
-                    headers: &ref_1255
+                    headers: &ref_1256
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -38497,10 +38547,11 @@ testModel:
                         mountPath: /mytemporarydisk
                         sizeInGB: 2
                       url: myapp.myservice.azuremicroservices.io
-                  headers: *ref_1255
+                  headers: *ref_1256
             - type: restCall
               operationId: Apps_Update
               description: Apps_Update
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_Update.json
               exampleModel:
                 name: ../examples/Apps_Update.json
@@ -38914,11 +38965,12 @@ testModel:
                               language: *ref_947
                           language: *ref_948
                       language: *ref_968
-                    headers: &ref_1256
+                    headers: &ref_1257
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -39001,10 +39053,11 @@ testModel:
                         mountPath: /tmpdisk
                         sizeInGB: 3
                       url: myapp.myservice.azuremicroservices.io
-                  headers: *ref_1256
+                  headers: *ref_1257
             - type: restCall
               operationId: Apps_List
               description: Apps_List
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_List.json
               exampleModel:
                 name: ../examples/Apps_List.json
@@ -39206,6 +39259,7 @@ testModel:
                                   language: *ref_948
                           language: *ref_973
                       language: *ref_974
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -39248,6 +39302,7 @@ testModel:
             - type: restCall
               operationId: Bindings_CreateOrUpdate
               description: Bindings_CreateOrUpdate
+              authentication: *ref_1249
               exampleFile: ../examples/Bindings_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/Bindings_CreateOrUpdate.json
@@ -39607,6 +39662,7 @@ testModel:
                               language: *ref_1004
                           language: *ref_1005
                       language: *ref_1016
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -39695,6 +39751,7 @@ testModel:
             - type: restCall
               operationId: Bindings_Update
               description: Bindings_Update
+              authentication: *ref_1249
               exampleFile: ../examples/Bindings_Update.json
               exampleModel:
                 name: ../examples/Bindings_Update.json
@@ -39749,7 +39806,7 @@ testModel:
                               properties:
                                 anotherLayer:
                                   schema: *ref_2
-                                  rawValue: &ref_1257
+                                  rawValue: &ref_1258
                                     databaseName: mysqldb2
                                     username: $(mysqlKey)
                               language: *ref_998
@@ -39866,7 +39923,7 @@ testModel:
                               properties:
                                 anotherLayer:
                                   schema: *ref_2
-                                  rawValue: &ref_1258
+                                  rawValue: &ref_1259
                                     databaseName: mysqldb2
                                     username: $(mysqlKey)
                               language: *ref_998
@@ -39939,7 +39996,7 @@ testModel:
                               properties:
                                 anotherLayer:
                                   schema: *ref_2
-                                  rawValue: &ref_1259
+                                  rawValue: &ref_1260
                                     databaseName: mysqldb2
                                     username: $(mysqlKey)
                               language: *ref_998
@@ -39976,11 +40033,12 @@ testModel:
                               language: *ref_1004
                           language: *ref_1005
                       language: *ref_1029
-                    headers: &ref_1260
+                    headers: &ref_1261
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -39990,7 +40048,7 @@ testModel:
                 bindingResource:
                   properties:
                     bindingParameters:
-                      anotherLayer: *ref_1257
+                      anotherLayer: *ref_1258
                     createdAt: null
                     generatedProperties: null
                     key: $(mysqlKey)
@@ -40014,7 +40072,7 @@ testModel:
                     id: /subscriptions/$(subscriptionId)/resourceGroups/$(resourceGroupName)/providers/Microsoft.AppPlatform/Spring/$(serviceName)/apps/$(appName)/bindings/$(bindingName)
                     properties:
                       bindingParameters:
-                        anotherLayer: *ref_1258
+                        anotherLayer: *ref_1259
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -40032,7 +40090,7 @@ testModel:
                     id: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding
                     properties:
                       bindingParameters:
-                        anotherLayer: *ref_1259
+                        anotherLayer: *ref_1260
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -40043,10 +40101,11 @@ testModel:
                       resourceName: my-cosmosdb-1
                       resourceType: Microsoft.DocumentDB
                       updatedAt: '2019-01-01T12:34:56.000Z'
-                  headers: *ref_1260
+                  headers: *ref_1261
             - type: restCall
               operationId: Bindings_Get
               description: Bindings_Get
+              authentication: *ref_1249
               exampleFile: ../examples/Bindings_Get.json
               exampleModel:
                 name: ../examples/Bindings_Get.json
@@ -40199,6 +40258,7 @@ testModel:
                               language: *ref_1004
                           language: *ref_1005
                       language: *ref_1006
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -40238,6 +40298,7 @@ testModel:
             - type: restCall
               operationId: Bindings_List
               description: Bindings_List
+              authentication: *ref_1249
               exampleFile: ../examples/Bindings_List.json
               exampleModel:
                 name: ../examples/Bindings_List.json
@@ -40392,6 +40453,7 @@ testModel:
                                   language: *ref_1005
                           language: *ref_1035
                       language: *ref_1036
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -40428,6 +40490,7 @@ testModel:
             - type: restCall
               operationId: Bindings_Delete
               description: Bindings_Delete
+              authentication: *ref_1249
               exampleFile: ../examples/Bindings_Delete.json
               exampleModel:
                 name: ../examples/Bindings_Delete.json
@@ -40493,10 +40556,11 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1262 {}
-                      language: *ref_1261
+                      rawValue: &ref_1263 {}
+                      language: *ref_1262
                   '202': {}
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -40516,12 +40580,13 @@ testModel:
                   value: mysql-binding
               responses:
                 '200':
-                  body: *ref_1262
+                  body: *ref_1263
                 '202': {}
                 '204': {}
             - type: restCall
               operationId: Apps_ValidateDomain
               description: Apps_ValidateDomain
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_ValidateDomain.json
               exampleModel:
                 name: ../examples/Apps_ValidateDomain.json
@@ -40613,6 +40678,7 @@ testModel:
                           rawValue: Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name
                           language: *ref_990
                       language: *ref_991
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -40636,6 +40702,7 @@ testModel:
             - type: restCall
               operationId: CustomDomains_CreateOrUpdate
               description: CustomDomains_CreateOrUpdate
+              authentication: *ref_1249
               exampleFile: ../examples/CustomDomains_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/CustomDomains_CreateOrUpdate.json
@@ -40856,6 +40923,7 @@ testModel:
                               language: *ref_1081
                           language: *ref_1083
                       language: *ref_1093
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -40904,6 +40972,7 @@ testModel:
             - type: restCall
               operationId: CustomDomains_Update
               description: CustomDomains_Update
+              authentication: *ref_1249
               exampleFile: ../examples/CustomDomains_Update.json
               exampleModel:
                 name: ../examples/CustomDomains_Update.json
@@ -41083,11 +41152,12 @@ testModel:
                               language: *ref_1081
                           language: *ref_1083
                       language: *ref_1106
-                    headers: &ref_1263
+                    headers: &ref_1264
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -41125,10 +41195,11 @@ testModel:
                     properties:
                       appName: myapp
                       certName: asc-certificate
-                  headers: *ref_1263
+                  headers: *ref_1264
             - type: restCall
               operationId: CustomDomains_Get
               description: CustomDomains_Get
+              authentication: *ref_1249
               exampleFile: ../examples/CustomDomains_Get.json
               exampleModel:
                 name: ../examples/CustomDomains_Get.json
@@ -41249,6 +41320,7 @@ testModel:
                               language: *ref_1082
                           language: *ref_1083
                       language: *ref_1084
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -41279,6 +41351,7 @@ testModel:
             - type: restCall
               operationId: CustomDomains_List
               description: CustomDomains_List
+              authentication: *ref_1249
               exampleFile: ../examples/CustomDomains_List.json
               exampleModel:
                 name: ../examples/CustomDomains_List.json
@@ -41405,6 +41478,7 @@ testModel:
                                   language: *ref_1083
                           language: *ref_1113
                       language: *ref_1114
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -41433,6 +41507,7 @@ testModel:
             - type: restCall
               operationId: Apps_GetResourceUploadUrl
               description: Apps_GetResourceUploadUrl
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_GetResourceUploadUrl.json
               exampleModel:
                 name: ../examples/Apps_GetResourceUploadUrl.json
@@ -41514,6 +41589,7 @@ testModel:
                             https://springcloudstorageaccount.file.core.windows.net/bd172614181f42e2853f6fd90029cda8/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20190801-3ed9f4a2-986b-4bbd-b833-a42dccb2f777?sv=2018-03-28&sr=f&sig=SampleSignature&se=2019-08-01T10%3A42%3A21Z&sp=w
                           language: *ref_981
                       language: *ref_982
+              isManagementPlane: true
               outputVariables:
                 relativePath:
                   fromResponse: /relativePath
@@ -41592,6 +41668,7 @@ testModel:
             - type: restCall
               operationId: Deployments_CreateOrUpdate
               description: Deployments_CreateOrUpdate
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/Deployments_CreateOrUpdate.json
@@ -42217,6 +42294,7 @@ testModel:
                               language: *ref_800
                           language: *ref_1144
                       language: *ref_1154
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -42350,6 +42428,7 @@ testModel:
             - type: restCall
               operationId: Apps_Update
               description: Apps_Update
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_Update.json
               exampleModel:
                 name: ../examples/Apps_Update.json
@@ -42763,11 +42842,12 @@ testModel:
                               language: *ref_947
                           language: *ref_948
                       language: *ref_968
-                    headers: &ref_1264
+                    headers: &ref_1265
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/default/operationId/00000000-0000-0000-0000-000000000000?api-version=2020-11-01-preview
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -42850,10 +42930,11 @@ testModel:
                         mountPath: /mytemporarydisk
                         sizeInGB: 2
                       url: myapp.myservice.azuremicroservices.io
-                  headers: *ref_1264
+                  headers: *ref_1265
             - type: restCall
               operationId: Deployments_Restart
               description: Deployments_Restart
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_Restart.json
               exampleModel:
                 name: ../examples/Deployments_Restart.json
@@ -42919,11 +43000,12 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1266 {}
-                      language: *ref_1265
+                      rawValue: &ref_1267 {}
+                      language: *ref_1266
                   '202':
-                    headers: &ref_1267
+                    headers: &ref_1268
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -42943,12 +43025,13 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1266
+                  body: *ref_1267
                 '202':
-                  headers: *ref_1267
+                  headers: *ref_1268
             - type: restCall
               operationId: Deployments_Stop
               description: Deployments_Stop
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_Stop.json
               exampleModel:
                 name: ../examples/Deployments_Stop.json
@@ -43014,11 +43097,12 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1269 {}
-                      language: *ref_1268
+                      rawValue: &ref_1270 {}
+                      language: *ref_1269
                   '202':
-                    headers: &ref_1270
+                    headers: &ref_1271
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -43038,12 +43122,13 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1269
+                  body: *ref_1270
                 '202':
-                  headers: *ref_1270
+                  headers: *ref_1271
             - type: restCall
               operationId: Deployments_Start
               description: Deployments_Start
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_Start.json
               exampleModel:
                 name: ../examples/Deployments_Start.json
@@ -43109,11 +43194,12 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1272 {}
-                      language: *ref_1271
+                      rawValue: &ref_1273 {}
+                      language: *ref_1272
                   '202':
-                    headers: &ref_1273
+                    headers: &ref_1274
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -43133,12 +43219,13 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1272
+                  body: *ref_1273
                 '202':
-                  headers: *ref_1273
+                  headers: *ref_1274
             - type: restCall
               operationId: Deployments_GetLogFileUrl
               description: Deployments_GetLogFileUrl
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_GetLogFileUrl.json
               exampleModel:
                 name: ../examples/Deployments_GetLogFileUrl.json
@@ -43222,6 +43309,7 @@ testModel:
                           language: *ref_1204
                       language: *ref_1205
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -43248,6 +43336,7 @@ testModel:
             - type: restCall
               operationId: Deployments_List
               description: Deployments_List
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_List.json
               exampleModel:
                 name: ../examples/Deployments_List.json
@@ -43493,6 +43582,7 @@ testModel:
                                   language: *ref_1144
                           language: *ref_1173
                       language: *ref_1174
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -43542,6 +43632,7 @@ testModel:
             - type: restCall
               operationId: Deployments_ListForCluster
               description: Deployments_ListForCluster
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_ListForCluster.json
               exampleModel:
                 name: ../examples/Deployments_ListForCluster.json
@@ -43780,6 +43871,7 @@ testModel:
                                   language: *ref_1144
                           language: *ref_1173
                       language: *ref_1179
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -43829,6 +43921,7 @@ testModel:
             - type: restCall
               operationId: Services_List
               description: Services_List
+              authentication: *ref_1249
               exampleFile: ../examples/Services_List.json
               exampleModel:
                 name: ../examples/Services_List.json
@@ -44087,6 +44180,7 @@ testModel:
                                   language: *ref_801
                           language: *ref_858
                       language: *ref_863
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -44141,6 +44235,7 @@ testModel:
             - type: restCall
               operationId: Services_ListBySubscription
               description: Services_ListBySubscription
+              authentication: *ref_1249
               exampleFile: ../examples/Services_ListBySubscription.json
               exampleModel:
                 name: ../examples/Services_ListBySubscription.json
@@ -44392,6 +44487,7 @@ testModel:
                                   language: *ref_801
                           language: *ref_858
                       language: *ref_859
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -44445,6 +44541,7 @@ testModel:
             - type: restCall
               operationId: Deployments_Delete
               description: Deployments_Delete
+              authentication: *ref_1249
               exampleFile: ../examples/Deployments_Delete.json
               exampleModel:
                 name: ../examples/Deployments_Delete.json
@@ -44510,10 +44607,11 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1275 {}
-                      language: *ref_1274
+                      rawValue: &ref_1276 {}
+                      language: *ref_1275
                   '202': {}
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -44533,12 +44631,13 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1275
+                  body: *ref_1276
                 '202': {}
                 '204': {}
             - type: restCall
               operationId: CustomDomains_Delete
               description: CustomDomains_Delete
+              authentication: *ref_1249
               exampleFile: ../examples/CustomDomains_Delete.json
               exampleModel:
                 name: ../examples/CustomDomains_Delete.json
@@ -44604,10 +44703,11 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1277 {}
-                      language: *ref_1276
+                      rawValue: &ref_1278 {}
+                      language: *ref_1277
                   '202': {}
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -44627,12 +44727,13 @@ testModel:
                   value: $(dnsCname).$(customDomainName)
               responses:
                 '200':
-                  body: *ref_1277
+                  body: *ref_1278
                 '202': {}
                 '204': {}
             - type: restCall
               operationId: Apps_Delete
               description: Apps_Delete
+              authentication: *ref_1249
               exampleFile: ../examples/Apps_Delete.json
               exampleModel:
                 name: ../examples/Apps_Delete.json
@@ -44691,10 +44792,11 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1279 {}
-                      language: *ref_1278
+                      rawValue: &ref_1280 {}
+                      language: *ref_1279
                   '202': {}
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -44713,12 +44815,13 @@ testModel:
                   value: app01
               responses:
                 '200':
-                  body: *ref_1279
+                  body: *ref_1280
                 '202': {}
                 '204': {}
             - type: restCall
               operationId: Certificates_Delete
               description: Certificates_Delete
+              authentication: *ref_1249
               exampleFile: ../examples/Certificates_Delete.json
               exampleModel:
                 name: ../examples/Certificates_Delete.json
@@ -44777,10 +44880,11 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1281 {}
-                      language: *ref_1280
+                      rawValue: &ref_1282 {}
+                      language: *ref_1281
                   '202': {}
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -44799,12 +44903,13 @@ testModel:
                   value: asc-certificate
               responses:
                 '200':
-                  body: *ref_1281
+                  body: *ref_1282
                 '202': {}
                 '204': {}
             - type: restCall
               operationId: Services_Delete
               description: Services_Delete
+              authentication: *ref_1249
               exampleFile: ../examples/Services_Delete.json
               exampleModel:
                 name: ../examples/Services_Delete.json
@@ -44856,11 +44961,12 @@ testModel:
                 responses:
                   '202':
                     body:
-                      rawValue: &ref_1283 {}
-                      language: *ref_1282
-                    headers: &ref_1284
+                      rawValue: &ref_1284 {}
+                      language: *ref_1283
+                    headers: &ref_1285
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
                   '204': {}
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -44875,12 +44981,13 @@ testModel:
               variables: {}
               responses:
                 '202':
-                  body: *ref_1283
-                  headers: *ref_1284
+                  body: *ref_1284
+                  headers: *ref_1285
                 '204': {}
             - type: restCall
               operationId: Skus_List
               description: Skus_List
+              authentication: *ref_1249
               exampleFile: ../examples/Skus_List.json
               exampleModel:
                 name: ../examples/Skus_List.json
@@ -45018,6 +45125,7 @@ testModel:
                                   language: *ref_1244
                           language: *ref_1245
                       language: *ref_1246
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -45050,6 +45158,7 @@ testModel:
             - type: restCall
               operationId: Operations_List
               description: Operations_List
+              authentication: *ref_1249
               exampleFile: ../examples/Operations_List.json
               exampleModel:
                 name: ../examples/Operations_List.json
@@ -45154,6 +45263,7 @@ testModel:
                                   language: *ref_1218
                           language: *ref_1219
                       language: *ref_1220
+              isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
               parameters:
@@ -45197,6 +45307,9 @@ testModel:
         appName:
           type: string
           value: app01
+        armEndpoint:
+          type: string
+          value: https://management.azure.com
         ascDomainName:
           type: string
           value: .azuremicroservices.io
@@ -45224,6 +45337,9 @@ testModel:
         appName:
           type: string
           value: '"app01"'
+        armEndpoint:
+          type: string
+          value: '"https://management.azure.com"'
         ascDomainName:
           type: string
           value: '".azuremicroservices.io"'
@@ -45261,7 +45377,6 @@ language:
     openApiType: arm
     packageName: armappplatform
     parameterGroups:
-      - *ref_1285
       - *ref_1286
       - *ref_1287
       - *ref_1288
@@ -45279,8 +45394,8 @@ language:
       - *ref_1300
       - *ref_1301
       - *ref_1302
-      - *ref_447
       - *ref_1303
+      - *ref_447
       - *ref_1304
       - *ref_1305
       - *ref_1306
@@ -45304,18 +45419,18 @@ language:
       - *ref_1324
       - *ref_1325
       - *ref_1326
+      - *ref_1327
       - *ref_706
       - *ref_716
-      - *ref_1327
       - *ref_1328
       - *ref_1329
       - *ref_1330
       - *ref_1331
       - *ref_1332
       - *ref_1333
+      - *ref_1334
     rawJSONAsBytes: false
     responseEnvelopes:
-      - *ref_1334
       - *ref_1335
       - *ref_1336
       - *ref_1337
@@ -45367,5 +45482,6 @@ language:
       - *ref_1383
       - *ref_1384
       - *ref_1385
+      - *ref_1386
 protocol:
   http: {}

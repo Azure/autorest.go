@@ -28,6 +28,7 @@ var (
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	letterRunes       = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	armEndpoint       = "https://management.azure.com"
 	fakeStepVar       = "signalrswaggertest4"
 	resourceName      = "signalrswaggertest4"
 	testPrefix        = generateAlphaNumericID("test", 6)

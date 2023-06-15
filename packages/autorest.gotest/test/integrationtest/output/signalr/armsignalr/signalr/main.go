@@ -28,6 +28,7 @@ var (
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	letterRunes       = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	armEndpoint       = "https://management.azure.com"
 	globalLocation    = "Global"
 	publicPort        = 6910
 	location          = getEnv("LOCATION", "westus")
