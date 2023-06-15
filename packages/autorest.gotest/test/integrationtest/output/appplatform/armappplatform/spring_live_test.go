@@ -29,6 +29,7 @@ type SpringTestSuite struct {
 	cred                       azcore.TokenCredential
 	options                    *arm.ClientOptions
 	appName                    string
+	armEndpoint                string
 	ascDomainName              string
 	dnsCname                   string
 	insightsInstrumentationKey string
@@ -50,6 +51,7 @@ func (testsuite *SpringTestSuite) SetupSuite() {
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
 	testsuite.appName = "app01"
+	testsuite.armEndpoint = "https://management.azure.com"
 	testsuite.ascDomainName = ".azuremicroservices.io"
 	testsuite.dnsCname = "asc"
 	testsuite.serviceName = "test-scenario-instance"

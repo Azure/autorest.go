@@ -28,6 +28,7 @@ var (
 	cred                       azcore.TokenCredential
 	letterRunes                = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	appName                    = "app01"
+	armEndpoint                = "https://management.azure.com"
 	ascDomainName              = ".azuremicroservices.io"
 	dnsCname                   = "asc"
 	insightsInstrumentationKey string

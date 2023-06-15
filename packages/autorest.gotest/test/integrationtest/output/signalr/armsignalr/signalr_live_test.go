@@ -28,6 +28,7 @@ type SignalRTestSuite struct {
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	options           *arm.ClientOptions
+	armEndpoint       string
 	globalLocation    string
 	publicPort        int
 	location          string
@@ -40,6 +41,7 @@ func (testsuite *SignalRTestSuite) SetupSuite() {
 
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
+	testsuite.armEndpoint = "https://management.azure.com"
 	testsuite.globalLocation = "Global"
 	testsuite.publicPort = 6910
 	testsuite.location = testutil.GetEnv("LOCATION", "westus")

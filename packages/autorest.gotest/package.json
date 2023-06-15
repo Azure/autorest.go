@@ -29,6 +29,8 @@
     "author": "Microsoft Corporation",
     "license": "MIT",
     "devDependencies": {
+        "@autorest/codemodel": "~4.19.3",
+        "@azure-tools/codegen": "~2.9.2",
         "@types/jest": "~26.0.24",
         "@types/lodash": "^4.14.183",
         "@types/node": "17.0.23",
@@ -45,11 +47,11 @@
         "typescript": "~4.4.3"
     },
     "dependencies": {
-        "@autorest/codemodel": "~4.18.2",
-        "@autorest/extension-base": "~3.4.4",
-        "@autorest/go": "~4.0.0-preview.47",
-        "@autorest/testmodeler": "~2.3.2",
-        "@azure-tools/codegen": "~2.9.1",
+        "@autorest/codemodel": "~4.19.3",
+        "@autorest/extension-base": "~3.5.2",
+        "@autorest/go": "~4.0.0-preview.51",
+        "@autorest/testmodeler": "~2.4.0",
+        "@azure-tools/codegen": "~2.9.2",
         "@azure-tools/linq": "~3.1.0",
         "autorest": "^3.2.3",
         "cross-env": "^7.0.3",

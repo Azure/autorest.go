@@ -59,11 +59,11 @@ testmodeler:
   scenario:
     codemodel-restcall-only: false
 
-version: 3.8.2
+version: 3.9.6
 
 use-extension:
-  '@autorest/go': '4.0.0-preview.47'
-  '@autorest/testmodeler': '2.3.2'
+  '@autorest/go': '4.0.0-preview.51'
+  '@autorest/testmodeler': '2.5.2'
 
 pipeline:
   test-modeler:
