@@ -31,8 +31,10 @@ type BatchClientGetSparkBatchJobOptions struct {
 type BatchClientGetSparkBatchJobsOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
+
 	// Optional param specifying which index the list should begin from.
 	From *int32
+
 	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
 	Size *int32
 }
@@ -259,8 +261,10 @@ type SessionClientGetSparkSessionOptions struct {
 type SessionClientGetSparkSessionsOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
+
 	// Optional param specifying which index the list should begin from.
 	From *int32
+
 	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
 	Size *int32
 }

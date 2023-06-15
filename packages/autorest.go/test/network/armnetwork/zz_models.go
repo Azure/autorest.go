@@ -344,6 +344,7 @@ type AdminRuleCollectionsClientBeginDeleteOptions struct {
 	// Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service
 	// will do a cleanup deployment in the background, prior to the delete.
 	Force *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -366,6 +367,7 @@ type AdminRuleCollectionsClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -384,6 +386,7 @@ type AdminRulesClientBeginDeleteOptions struct {
 	// Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service
 	// will do a cleanup deployment in the background, prior to the delete.
 	Force *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -404,6 +407,7 @@ type AdminRulesClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -2092,6 +2096,7 @@ type ApplicationGatewayWebApplicationFirewallConfiguration struct {
 type ApplicationGatewaysClientBeginBackendHealthOnDemandOptions struct {
 	// Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
 	Expand *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -2101,6 +2106,7 @@ type ApplicationGatewaysClientBeginBackendHealthOnDemandOptions struct {
 type ApplicationGatewaysClientBeginBackendHealthOptions struct {
 	// Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
 	Expand *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -3966,6 +3972,7 @@ type ConnectionMonitorWorkspaceSettings struct {
 type ConnectionMonitorsClientBeginCreateOrUpdateOptions struct {
 	// Value indicating whether connection monitor V1 should be migrated to V2 format.
 	Migrate *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -4122,6 +4129,7 @@ type ConnectivityConfigurationsClientBeginDeleteOptions struct {
 	// Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service
 	// will do a cleanup deployment in the background, prior to the delete.
 	Force *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -4145,6 +4153,7 @@ type ConnectivityConfigurationsClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -7521,6 +7530,7 @@ type GroupsClientBeginDeleteOptions struct {
 	// Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service
 	// will do a cleanup deployment in the background, prior to the delete.
 	Force *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -7543,6 +7553,7 @@ type GroupsClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -9647,6 +9658,7 @@ type ManagementGroupNetworkManagerConnectionsClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -9860,6 +9872,7 @@ type ManagersClientBeginDeleteOptions struct {
 	// Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service
 	// will do a cleanup deployment in the background, prior to the delete.
 	Force *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -9881,6 +9894,7 @@ type ManagersClientListBySubscriptionOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -9891,6 +9905,7 @@ type ManagersClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -12593,6 +12608,7 @@ type ScopeConnectionsClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -12645,6 +12661,7 @@ type SecurityAdminConfigurationsClientBeginDeleteOptions struct {
 	// Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service
 	// will do a cleanup deployment in the background, prior to the delete.
 	Force *bool
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -12668,6 +12685,7 @@ type SecurityAdminConfigurationsClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -13283,6 +13301,7 @@ type ServiceTagInformation struct {
 type ServiceTagInformationClientListOptions struct {
 	// Do not return address prefixes for the tag(s).
 	NoAddressPrefixes *bool
+
 	// Return tag information for a particular tag.
 	TagName *string
 }
@@ -13488,6 +13507,7 @@ type StaticMembersClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -13679,6 +13699,7 @@ type SubscriptionNetworkManagerConnectionsClientListOptions struct {
 	// the value of the nextLink element will include a skipToken parameter that
 	// specifies a starting point to use for subsequent calls.
 	SkipToken *string
+
 	// An optional query parameter which specifies the maximum number of records to be returned by the server.
 	Top *int32
 }
@@ -14280,6 +14301,7 @@ type VPNConnectionsClientBeginDeleteOptions struct {
 type VPNConnectionsClientBeginStartPacketCaptureOptions struct {
 	// Vpn Connection packet capture parameters supplied to start packet capture on gateway connection.
 	Parameters *VPNConnectionPacketCaptureStartParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -14289,6 +14311,7 @@ type VPNConnectionsClientBeginStartPacketCaptureOptions struct {
 type VPNConnectionsClientBeginStopPacketCaptureOptions struct {
 	// Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection.
 	Parameters *VPNConnectionPacketCaptureStopParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -14456,6 +14479,7 @@ type VPNGatewaysClientBeginDeleteOptions struct {
 type VPNGatewaysClientBeginResetOptions struct {
 	// VpnGateway ipConfigurationId to specify the gateway instance.
 	IPConfigurationID *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -14465,6 +14489,7 @@ type VPNGatewaysClientBeginResetOptions struct {
 type VPNGatewaysClientBeginStartPacketCaptureOptions struct {
 	// Vpn gateway packet capture parameters supplied to start packet capture on vpn gateway.
 	Parameters *VPNGatewayPacketCaptureStartParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -14474,6 +14499,7 @@ type VPNGatewaysClientBeginStartPacketCaptureOptions struct {
 type VPNGatewaysClientBeginStopPacketCaptureOptions struct {
 	// Vpn gateway packet capture parameters supplied to stop packet capture on vpn gateway.
 	Parameters *VPNGatewayPacketCaptureStopParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -15595,6 +15621,7 @@ type VirtualHubsClientBeginDeleteOptions struct {
 type VirtualHubsClientBeginGetEffectiveVirtualHubRoutesOptions struct {
 	// Parameters supplied to get the effective routes for a specific resource.
 	EffectiveRoutesParameters *EffectiveRoutesParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -15985,6 +16012,7 @@ type VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions struct {
 type VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions struct {
 	// Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection.
 	Parameters *VPNPacketCaptureStartParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -16317,6 +16345,7 @@ type VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions struct {
 type VirtualNetworkGatewaysClientBeginGetBgpPeerStatusOptions struct {
 	// The IP address of the peer to retrieve the status of.
 	Peer *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -16354,6 +16383,7 @@ type VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions struct 
 type VirtualNetworkGatewaysClientBeginResetOptions struct {
 	// Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway.
 	GatewayVip *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -16377,6 +16407,7 @@ type VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions struct 
 type VirtualNetworkGatewaysClientBeginStartPacketCaptureOptions struct {
 	// Virtual network gateway packet capture parameters supplied to start packet capture on gateway.
 	Parameters *VPNPacketCaptureStartParameters
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -16525,6 +16556,7 @@ type VirtualNetworkPeeringPropertiesFormat struct {
 type VirtualNetworkPeeringsClientBeginCreateOrUpdateOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// Parameter indicates the intention to sync the peering with the current address space on the remote vNet after it's updated.
 	SyncRemoteAddressSpace *SyncRemoteAddressSpace
 }
@@ -16729,8 +16761,10 @@ type VirtualNetworksClientBeginDeleteOptions struct {
 type VirtualNetworksClientBeginListDdosProtectionStatusOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
+
 	// The skipToken that is given with nextLink.
 	SkipToken *string
+
 	// The max number of ip addresses to return.
 	Top *int32
 }

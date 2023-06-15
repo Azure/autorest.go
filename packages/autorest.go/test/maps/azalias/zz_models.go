@@ -28,8 +28,10 @@ type AliasesCreateResponse struct {
 // ClientCreateOptions contains the optional parameters for the Client.Create method.
 type ClientCreateOptions struct {
 	GroupBy []SomethingCount
+
 	// The unique id that references the assigned data item to be aliased.
 	AssignedID *float32
+
 	// The unique id that references a creator data item to be aliased.
 	CreatorID *int32
 }

@@ -11,6 +11,7 @@ package paramgroupinggroup
 // FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups method.
 type FirstParameterGroup struct {
 	HeaderOne *string
+
 	// Query parameter with default
 	QueryOne *int32
 }
@@ -25,6 +26,7 @@ type ParameterGroupingClientPostMultiParamGroupsOptions struct {
 // method.
 type ParameterGroupingClientPostMultiParamGroupsSecondParamGroup struct {
 	HeaderTwo *string
+
 	// Query parameter with default
 	QueryTwo *int32
 }
@@ -39,6 +41,7 @@ type ParameterGroupingClientPostOptionalOptions struct {
 // method.
 type ParameterGroupingClientPostOptionalParameters struct {
 	CustomHeader *string
+
 	// Query parameter with default
 	Query *int32
 }
@@ -54,8 +57,10 @@ type ParameterGroupingClientPostRequiredOptions struct {
 type ParameterGroupingClientPostRequiredParameters struct {
 	Body         int32
 	CustomHeader *string
+
 	// Path parameter
 	Path string
+
 	// Query parameter with default
 	Query *int32
 }
@@ -71,6 +76,7 @@ type ParameterGroupingClientPostReservedWordsOptions struct {
 type ParameterGroupingClientPostReservedWordsParameters struct {
 	// 'accept' is a reserved word. Pass in 'yes' to pass.
 	Accept *string
+
 	// 'from' is a reserved word. Pass in 'bob' to pass.
 	From *string
 }

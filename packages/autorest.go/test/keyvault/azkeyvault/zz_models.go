@@ -358,6 +358,7 @@ type ClientBeginFullBackupOptions struct {
 	// This token needs to be valid for at least next 24 hours from the time of making
 	// this call
 	AzureStorageBlobContainerURI *SASTokenParameter
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -491,6 +492,7 @@ type ClientGetCertificateVersionsOptions struct {
 type ClientGetCertificatesOptions struct {
 	// Specifies whether to include certificates which are not completely provisioned.
 	IncludePending *bool
+
 	// Specifies the maximum number of results to return in a page. Setting maxresults to a value less than 1 or greater than
 	// 25 results in error response code 400 (Bad Request). If there are additional
 	// results to return, then the service returns a nextLink containing a skip token for pagination. In certain cases, the service
@@ -509,6 +511,7 @@ type ClientGetDeletedCertificateOptions struct {
 type ClientGetDeletedCertificatesOptions struct {
 	// Specifies whether to include certificates which are not completely provisioned.
 	IncludePending *bool
+
 	// Specifies the maximum number of results to return in a page. Setting maxresults to a value less than 1 or greater than
 	// 25 results in error response code 400 (Bad Request). If there are additional
 	// results to return, then the service returns a nextLink containing a skip token for pagination. In certain cases, the service

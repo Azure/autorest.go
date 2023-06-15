@@ -7682,6 +7682,7 @@ type DataFlowClientBeginCreateOrUpdateDataFlowOptions struct {
 	// ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be
 	// * for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -8391,6 +8392,7 @@ type DatasetClientBeginCreateOrUpdateDatasetOptions struct {
 	// ETag of the dataset entity. Should only be specified for update, for which it should match existing entity or can be *
 	// for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -15687,6 +15689,7 @@ type LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions struct {
 	// ETag of the linkedService entity. Should only be specified for update, for which it should match existing entity or can
 	// be * for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -17652,6 +17655,7 @@ type NotebookClientBeginCreateOrUpdateNotebookOptions struct {
 	// ETag of the Note book entity. Should only be specified for update, for which it should match existing entity or can be
 	// * for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -19501,6 +19505,7 @@ type PipelineClientBeginCreateOrUpdatePipelineOptions struct {
 	// ETag of the pipeline entity. Should only be specified for update, for which it should match existing entity or can be *
 	// for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -19522,10 +19527,13 @@ type PipelineClientCreatePipelineRunOptions struct {
 	// Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped
 	// under the same groupId.
 	IsRecovery *bool
+
 	// Parameters of the pipeline run. These parameters will be used only if the runId is not specified.
 	Parameters map[string]any
+
 	// The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run.
 	ReferencePipelineRunID *string
+
 	// In recovery mode, the rerun will start from this activity. If not specified, all activities will run.
 	StartActivityName *string
 }
@@ -21607,6 +21615,7 @@ type SQLScriptClientBeginCreateOrUpdateSQLScriptOptions struct {
 	// ETag of the SQL script entity. Should only be specified for update, for which it should match existing entity or can be
 	// * for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -25662,6 +25671,7 @@ type SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions struct
 	// ETag of the sparkConfiguration entity. Should only be specified for update, for which it should match existing entity or
 	// can be * for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -25784,6 +25794,7 @@ type SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions struct
 	// ETag of the Spark Job Definition entity. Should only be specified for update, for which it should match existing entity
 	// or can be * for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -27443,6 +27454,7 @@ type TriggerClientBeginCreateOrUpdateTriggerOptions struct {
 	// ETag of the trigger entity. Should only be specified for update, for which it should match existing entity or can be *
 	// for unconditional update.
 	IfMatch *string
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }

@@ -26,9 +26,11 @@ type AccessPolicy struct {
 type ClientCreateOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content
 	// and return-content.
 	ResponsePreference *ResponseFormat
@@ -38,9 +40,11 @@ type ClientCreateOptions struct {
 type ClientDeleteEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -57,6 +61,7 @@ type ClientGetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -65,14 +70,18 @@ type ClientGetAccessPolicyOptions struct {
 type ClientInsertEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content
 	// and return-content.
 	ResponsePreference *ResponseFormat
+
 	// The properties for the table entity.
 	TableEntityProperties map[string]any
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -81,14 +90,17 @@ type ClientInsertEntityOptions struct {
 type ClientMergeEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// Match condition for an entity to be updated. If specified and a matching entity is not found, an error will be raised.
 	// To force an unconditional update, set to the wildcard character (*). If not
 	// specified, an insert will be performed when no existing entity is found to update and a merge will be performed if an existing
 	// entity is found.
 	IfMatch *string
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -97,20 +109,27 @@ type ClientMergeEntityOptions struct {
 type ClientQueryEntitiesOptions struct {
 	// OData filter expression.
 	Filter *string
+
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// An entity query continuation token from a previous call.
 	NextPartitionKey *string
+
 	// An entity query continuation token from a previous call.
 	NextRowKey *string
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId,
 	// ResourceId".
 	Select *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
+
 	// Maximum number of records to return.
 	Top *int32
 }
@@ -120,14 +139,18 @@ type ClientQueryEntitiesOptions struct {
 type ClientQueryEntityWithPartitionAndRowKeyOptions struct {
 	// OData filter expression.
 	Filter *string
+
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId,
 	// ResourceId".
 	Select *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -136,16 +159,21 @@ type ClientQueryEntityWithPartitionAndRowKeyOptions struct {
 type ClientQueryOptions struct {
 	// OData filter expression.
 	Filter *string
+
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// A table query continuation token from a previous call.
 	NextTableName *string
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId,
 	// ResourceId".
 	Select *string
+
 	// Maximum number of records to return.
 	Top *int32
 }
@@ -155,6 +183,7 @@ type ClientSetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -163,14 +192,17 @@ type ClientSetAccessPolicyOptions struct {
 type ClientUpdateEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
+
 	// Match condition for an entity to be updated. If specified and a matching entity is not found, an error will be raised.
 	// To force an unconditional update, set to the wildcard character (*). If not
 	// specified, an insert will be performed when no existing entity is found to update and a replace will be performed if an
 	// existing entity is found.
 	IfMatch *string
+
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -314,6 +346,7 @@ type ServiceClientGetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -323,6 +356,7 @@ type ServiceClientGetStatisticsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -332,6 +366,7 @@ type ServiceClientSetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
+
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }

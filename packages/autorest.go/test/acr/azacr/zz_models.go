@@ -99,8 +99,10 @@ type ArtifactTagProperties struct {
 type AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions struct {
 	// AAD access token, mandatory when granttype is accesstokenrefreshtoken or access_token.
 	AccessToken *string
+
 	// AAD refresh token, mandatory when granttype is accesstokenrefreshtoken or refresh_token
 	RefreshToken *string
+
 	// AAD tenant associated to the AAD credentials.
 	Tenant *string
 }
@@ -231,8 +233,10 @@ type ContainerRegistryClientGetManifestPropertiesOptions struct {
 type ContainerRegistryClientGetManifestsOptions struct {
 	// Query parameter for the last item in previous query. Result set will include values lexically after last.
 	Last *string
+
 	// query parameter for max number of items
 	N *int32
+
 	// orderby query parameter
 	Orderby *string
 }
@@ -248,6 +252,7 @@ type ContainerRegistryClientGetPropertiesOptions struct {
 type ContainerRegistryClientGetRepositoriesOptions struct {
 	// Query parameter for the last item in previous query. Result set will include values lexically after last.
 	Last *string
+
 	// query parameter for max number of items
 	N *int32
 }
@@ -263,10 +268,13 @@ type ContainerRegistryClientGetTagPropertiesOptions struct {
 type ContainerRegistryClientGetTagsOptions struct {
 	// filter by digest
 	Digest *string
+
 	// Query parameter for the last item in previous query. Result set will include values lexically after last.
 	Last *string
+
 	// query parameter for max number of items
 	N *int32
+
 	// orderby query parameter
 	Orderby *string
 }

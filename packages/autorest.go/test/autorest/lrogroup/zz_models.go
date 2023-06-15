@@ -34,6 +34,7 @@ type LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions struct
 type LRORetrysClientBeginPost202Retry200Options struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -43,6 +44,7 @@ type LRORetrysClientBeginPost202Retry200Options struct {
 type LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -122,6 +124,7 @@ type LROSADsClientBeginDeleteNonRetry400Options struct {
 type LROSADsClientBeginPost202NoLocationOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -131,6 +134,7 @@ type LROSADsClientBeginPost202NoLocationOptions struct {
 type LROSADsClientBeginPost202NonRetry400Options struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -140,6 +144,7 @@ type LROSADsClientBeginPost202NonRetry400Options struct {
 type LROSADsClientBeginPost202RetryInvalidHeaderOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -149,6 +154,7 @@ type LROSADsClientBeginPost202RetryInvalidHeaderOptions struct {
 type LROSADsClientBeginPostAsyncRelativeRetry400Options struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -158,6 +164,7 @@ type LROSADsClientBeginPostAsyncRelativeRetry400Options struct {
 type LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -167,6 +174,7 @@ type LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions struct {
 type LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -176,6 +184,7 @@ type LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions struct {
 type LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -184,6 +193,7 @@ type LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions struct {
 type LROSADsClientBeginPostNonRetry400Options struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -376,6 +386,7 @@ type LROsClientBeginPost202ListOptions struct {
 type LROsClientBeginPost202NoRetry204Options struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -384,6 +395,7 @@ type LROsClientBeginPost202NoRetry204Options struct {
 type LROsClientBeginPost202Retry200Options struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -393,6 +405,7 @@ type LROsClientBeginPost202Retry200Options struct {
 type LROsClientBeginPostAsyncNoRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -402,6 +415,7 @@ type LROsClientBeginPostAsyncNoRetrySucceededOptions struct {
 type LROsClientBeginPostAsyncRetryFailedOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -411,6 +425,7 @@ type LROsClientBeginPostAsyncRetryFailedOptions struct {
 type LROsClientBeginPostAsyncRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -420,6 +435,7 @@ type LROsClientBeginPostAsyncRetrySucceededOptions struct {
 type LROsClientBeginPostAsyncRetrycanceledOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -570,6 +586,7 @@ type LROsClientBeginPutSubResourceOptions struct {
 type LROsCustomHeaderClientBeginPost202Retry200Options struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -579,6 +596,7 @@ type LROsCustomHeaderClientBeginPost202Retry200Options struct {
 type LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
+
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
