@@ -12,7 +12,9 @@ import "time"
 
 // ClientCreateResponse contains the response from method Client.Create.
 type ClientCreateResponse struct {
+	// The response for a single table.
 	Response
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
@@ -124,7 +126,9 @@ type ClientMergeEntityResponse struct {
 
 // ClientQueryEntitiesResponse contains the response from method Client.QueryEntities.
 type ClientQueryEntitiesResponse struct {
+	// The properties for the table entity query response.
 	EntityQueryResponse
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
@@ -173,7 +177,9 @@ type ClientQueryEntityWithPartitionAndRowKeyResponse struct {
 
 // ClientQueryResponse contains the response from method Client.Query.
 type ClientQueryResponse struct {
+	// The properties for the table query response.
 	QueryResponse
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
@@ -225,7 +231,9 @@ type ClientUpdateEntityResponse struct {
 
 // ServiceClientGetPropertiesResponse contains the response from method ServiceClient.GetProperties.
 type ServiceClientGetPropertiesResponse struct {
+	// Table Service Properties.
 	ServiceProperties
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -238,7 +246,9 @@ type ServiceClientGetPropertiesResponse struct {
 
 // ServiceClientGetStatisticsResponse contains the response from method ServiceClient.GetStatistics.
 type ServiceClientGetStatisticsResponse struct {
+	// Stats for the service.
 	ServiceStats
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 

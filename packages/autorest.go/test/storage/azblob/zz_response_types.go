@@ -196,6 +196,7 @@ type BlockBlobClientCommitBlockListResponse struct {
 // BlockBlobClientGetBlockListResponse contains the response from method BlockBlobClient.GetBlockList.
 type BlockBlobClientGetBlockListResponse struct {
 	BlockList
+
 	// BlobContentLength contains the information returned from the x-ms-blob-content-length header response.
 	BlobContentLength *int64 `xml:"BlobContentLength"`
 
@@ -850,7 +851,9 @@ type ClientGetPropertiesResponse struct {
 
 // ClientGetTagsResponse contains the response from method Client.GetTags.
 type ClientGetTagsResponse struct {
+	// Blob tags
 	Tags
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1313,7 +1316,9 @@ type ContainerClientDeleteResponse struct {
 
 // ContainerClientFilterBlobsResponse contains the response from method ContainerClient.FilterBlobs.
 type ContainerClientFilterBlobsResponse struct {
+	// The result of a Filter Blobs API call
 	FilterBlobSegment
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1429,7 +1434,9 @@ type ContainerClientGetPropertiesResponse struct {
 
 // ContainerClientListBlobFlatSegmentResponse contains the response from method ContainerClient.NewListBlobFlatSegmentPager.
 type ContainerClientListBlobFlatSegmentResponse struct {
+	// An enumeration of blobs
 	ListBlobsFlatSegmentResponse
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1448,7 +1455,9 @@ type ContainerClientListBlobFlatSegmentResponse struct {
 
 // ContainerClientListBlobHierarchySegmentResponse contains the response from method ContainerClient.NewListBlobHierarchySegmentPager.
 type ContainerClientListBlobHierarchySegmentResponse struct {
+	// An enumeration of blobs
 	ListBlobsHierarchySegmentResponse
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1692,7 +1701,9 @@ type PageBlobClientCreateResponse struct {
 
 // PageBlobClientGetPageRangesDiffResponse contains the response from method PageBlobClient.NewGetPageRangesDiffPager.
 type PageBlobClientGetPageRangesDiffResponse struct {
+	// the list of pages
 	PageList
+
 	// BlobContentLength contains the information returned from the x-ms-blob-content-length header response.
 	BlobContentLength *int64 `xml:"BlobContentLength"`
 
@@ -1717,7 +1728,9 @@ type PageBlobClientGetPageRangesDiffResponse struct {
 
 // PageBlobClientGetPageRangesResponse contains the response from method PageBlobClient.NewGetPageRangesPager.
 type PageBlobClientGetPageRangesResponse struct {
+	// the list of pages
 	PageList
+
 	// BlobContentLength contains the information returned from the x-ms-blob-content-length header response.
 	BlobContentLength *int64 `xml:"BlobContentLength"`
 
@@ -1865,7 +1878,9 @@ type PageBlobClientUploadPagesResponse struct {
 
 // ServiceClientFilterBlobsResponse contains the response from method ServiceClient.FilterBlobs.
 type ServiceClientFilterBlobsResponse struct {
+	// The result of a Filter Blobs API call
 	FilterBlobSegment
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1905,7 +1920,9 @@ type ServiceClientGetAccountInfoResponse struct {
 
 // ServiceClientGetPropertiesResponse contains the response from method ServiceClient.GetProperties.
 type ServiceClientGetPropertiesResponse struct {
+	// Storage Service Properties.
 	StorageServiceProperties
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1918,7 +1935,9 @@ type ServiceClientGetPropertiesResponse struct {
 
 // ServiceClientGetStatisticsResponse contains the response from method ServiceClient.GetStatistics.
 type ServiceClientGetStatisticsResponse struct {
+	// Stats for the storage service.
 	StorageServiceStats
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1934,7 +1953,9 @@ type ServiceClientGetStatisticsResponse struct {
 
 // ServiceClientGetUserDelegationKeyResponse contains the response from method ServiceClient.GetUserDelegationKey.
 type ServiceClientGetUserDelegationKeyResponse struct {
+	// A user delegation key
 	UserDelegationKey
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -1950,7 +1971,9 @@ type ServiceClientGetUserDelegationKeyResponse struct {
 
 // ServiceClientListContainersSegmentResponse contains the response from method ServiceClient.NewListContainersSegmentPager.
 type ServiceClientListContainersSegmentResponse struct {
+	// An enumeration of containers
 	ListContainersSegmentResponse
+
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 

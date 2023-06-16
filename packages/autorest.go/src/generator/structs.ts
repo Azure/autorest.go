@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, comment } from '@azure-tools/codegen';
-import { ConstantSchema, ImplementationLocation, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { comment } from '@azure-tools/codegen';
+import { ConstantSchema, Language, SchemaType, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isArraySchema } from '../common/helpers';
 import { hasDescription, sortAscending } from './helpers';
@@ -21,26 +21,19 @@ export interface StructMethod {
 export class StructDef {
   readonly Language: Language;
   readonly Properties?: Property[];
-  readonly Parameters?: Parameter[];
   readonly SerDeMethods: StructMethod[];
   readonly Methods: StructMethod[];
-  readonly ComposedOf: string[];
   HasJSONByteArray: boolean;
   HasAny: boolean;
 
-  constructor(language: Language, props?: Property[], params?: Parameter[]) {
+  constructor(language: Language, props?: Property[]) {
     this.Language = language;
     this.Properties = props;
-    this.Parameters = params;
     if (this.Properties) {
       this.Properties.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     }
-    if (this.Parameters) {
-      this.Parameters.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
-    }
     this.SerDeMethods = new Array<StructMethod>();
     this.Methods = new Array<StructMethod>();
-    this.ComposedOf = new Array<string>();
     this.HasJSONByteArray = false;
     this.HasAny = false;
   }
@@ -51,19 +44,8 @@ export class StructDef {
       text += `${comment(this.Language.description, '// ', undefined, commentLength)}\n`;
     }
     text += `type ${this.Language.name} struct {\n`;
-    // any composed types go first
-    for (const comp of values(this.ComposedOf)) {
-      text += `\t${comp}\n`;
-    }
     // used to track when to add an extra \n between fields that have comments
     let first = true;
-    if (this.Properties === undefined && this.Parameters?.length === 0) {
-      // this is an optional params placeholder struct
-      text += '\t// placeholder for future optional parameters\n';
-    } else if (this.Properties === undefined && this.Parameters === undefined) {
-      // this is an empty response envelope
-      text += '\t// placeholder for future response values\n';
-    }
     // group fields by required/optional/read-only in that order
     this.Properties?.sort((lhs: Property, rhs: Property): number => {
       if ((lhs.required && !rhs.required) || (!lhs.readOnly && rhs.readOnly)) {
@@ -106,34 +88,7 @@ export class StructDef {
       if (this.Language.marshallingFormat === 'xml' && !prop.language.go!.isAdditionalProperties) {
         tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
       }
-      let pointer = '*';
-      if (prop.language.go!.byValue === true) {
-        pointer = '';
-      }
-      text += `\t${prop.language.go!.name} ${pointer}${typeName}${tag}\n`;
-      first = false;
-    }
-    for (const param of values(this.Parameters)) {
-      // if Parameters is set this is a param group struct
-      // none of its fields need to participate in marshalling
-      if (param.implementation === ImplementationLocation.Client) {
-        // don't add globals to the per-method options struct
-        continue;
-      }
-      if (hasDescription(param.language.go!)) {
-        if (!first) {
-          // add an extra new-line between fields IFF the field
-          // has a comment and it's not the very first one.
-          text += '\n';
-        }
-        text += `\t${comment(param.language.go!.description, '// ', undefined, commentLength)}\n`;
-      }
-      let pointer = '*';
-      if (param.required || param.language.go!.byValue === true) {
-        pointer = '';
-      }
-      const typeName = param.schema.language.go!.name;
-      text += `\t${capitalize(param.language.go!.name)} ${pointer}${typeName}\n`;
+      text += `\t${prop.language.go!.name} ${getStar(prop.language.go!)}${typeName}${tag}\n`;
       first = false;
     }
     text += '}\n\n';
@@ -154,13 +109,19 @@ export function generateStruct(imports: ImportManager, lang: Language, props?: P
   const st = new StructDef(lang, props);
   for (const prop of values(props)) {
     imports.addImportForSchemaType(prop.schema);
-    if (prop.language.go!.embeddedType) {
-      st.ComposedOf.push(prop.schema.language.go!.name);
-    } else if (prop.schema.type === SchemaType.Any && !prop.schema.language.go!.rawJSONAsBytes) {
+    if (prop.schema.type === SchemaType.Any && !prop.schema.language.go!.rawJSONAsBytes) {
       st.HasAny = true;
     }
   }
   return st;
+}
+
+export function getStar(lang: Language): string {
+  // lang is assumed to be go
+  if (lang.byValue === true) {
+    return '';
+  }
+  return '*';
 }
 
 export function getXMLSerialization(prop: Property, lang: Language): string {

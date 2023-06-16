@@ -10,7 +10,9 @@ package azalias
 
 // ClientCreateResponse contains the response from method Client.Create.
 type ClientCreateResponse struct {
+	// The response model for the Alias Create API for the case when the alias was successfully created.
 	AliasesCreateResponse
+
 	// AccessControlExposeHeaders contains the information returned from the Access-Control-Expose-Headers header response.
 	AccessControlExposeHeaders *string
 }
@@ -22,6 +24,7 @@ type ClientGetScriptResponse struct {
 
 // ClientListResponse contains the response from method Client.NewListPager.
 type ClientListResponse struct {
+	// The response model for the List API. Returns a list of all the previously created aliases.
 	ListResponse
 }
 
