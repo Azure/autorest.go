@@ -10,7 +10,7 @@ import { values } from '@azure-tools/linq';
 import { commentLength } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
 import { ImportManager } from './imports';
-import { getStar, getXMLSerialization } from './structs';
+import { getStar, getXMLSerialization } from './models';
 
 // Creates the content in response_types.go
 export async function generateResponses(session: Session<CodeModel>): Promise<string> {
