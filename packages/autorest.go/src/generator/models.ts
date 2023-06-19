@@ -24,7 +24,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   let modelText = await contentPreamble(session);
 
   // we do model generation first as it can add imports to the imports list
-  const structs = generateStructs(modelImports, serdeImports, session.model.schemas.objects);
+  const modelDefs = generateModelDefs(modelImports, serdeImports, session.model.schemas.objects);
 
   modelText += modelImports.text();
 
@@ -34,33 +34,33 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   let needsJSONPopulateByteArray = false;
   let needsJSONPopulateAny = false;
   let serdeTextBody = '';
-  structs.sort((a: ModelDef, b: ModelDef) => { return sortAscending(a.Language.name, b.Language.name) });
-  for (const struct of values(structs)) {
-    modelText += struct.text();
+  modelDefs.sort((a: ModelDef, b: ModelDef) => { return sortAscending(a.Language.name, b.Language.name) });
+  for (const modelDef of values(modelDefs)) {
+    modelText += modelDef.text();
 
-    struct.Methods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name) });
-    for (const method of values(struct.Methods)) {
+    modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name) });
+    for (const method of values(modelDef.Methods)) {
       if (method.desc.length > 0) {
         modelText += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
       }
       modelText += method.text;
     }
 
-    struct.SerDeMethods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name) });
-    for (const method of values(struct.SerDeMethods)) {
+    modelDef.SerDeMethods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name) });
+    for (const method of values(modelDef.SerDeMethods)) {
       if (method.desc.length > 0) {
         serdeTextBody += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
       }
       serdeTextBody += method.text;
     }
-    if (struct.SerDeMethods.length > 0) {
+    if (modelDef.SerDeMethods.length > 0) {
       needsJSONPopulate = true;
       needsJSONUnpopulate = true;
     }
-    if (struct.HasJSONByteArray) {
+    if (modelDef.HasJSONByteArray) {
       needsJSONPopulateByteArray = true;
     }
-    if (struct.HasAny) {
+    if (modelDef.HasAny) {
       needsJSONPopulateAny = true;
     }
   }
@@ -122,8 +122,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   };
 }
 
-function generateStructs(modelImports: ImportManager, serdeImports: ImportManager, objects?: ObjectSchema[]): ModelDef[] {
-  const structTypes = new Array<ModelDef>();
+function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, objects?: ObjectSchema[]): ModelDef[] {
+  const modelDefs = new Array<ModelDef>();
   for (const obj of values(objects)) {
     if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {
       continue;
@@ -134,11 +134,11 @@ function generateStructs(modelImports: ImportManager, serdeImports: ImportManage
       modelImports.add('context');
     }
     const props = aggregateProperties(obj);
-    const structDef = new ModelDef(obj.language.go!, props);
+    const modelDef = new ModelDef(obj.language.go!, props);
     for (const prop of values(props)) {
       modelImports.addImportForSchemaType(prop.schema);
       if (prop.schema.type === SchemaType.Any && !prop.schema.language.go!.rawJSONAsBytes) {
-        structDef.HasAny = true;
+        modelDef.HasAny = true;
       }
     }
 
@@ -149,36 +149,36 @@ function generateStructs(modelImports: ImportManager, serdeImports: ImportManage
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName || needsXMLArrayMarshalling(obj) || obj.language.go!.byteArrayFormat) {
-        generateXMLMarshaller(structDef, serdeImports);
+        generateXMLMarshaller(modelDef, serdeImports);
         if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.byteArrayFormat) {
-          generateXMLUnmarshaller(structDef, serdeImports);
+          generateXMLUnmarshaller(modelDef, serdeImports);
         }
       } else if (needsXMLDictionaryUnmarshalling(obj)) {
-        generateXMLUnmarshaller(structDef, serdeImports);
+        generateXMLUnmarshaller(modelDef, serdeImports);
       }
-      structTypes.push(structDef);
+      modelDefs.push(modelDef);
       continue;
     }
     if (obj.discriminator) {
-      generateDiscriminatorMarkerMethod(obj, structDef);
+      generateDiscriminatorMarkerMethod(obj, modelDef);
     }
     for (const parent of values(obj.parents?.all)) {
       if (isObjectSchema(parent) && parent.discriminator) {
-        generateDiscriminatorMarkerMethod(parent, structDef);
+        generateDiscriminatorMarkerMethod(parent, modelDef);
       }
     }
     serdeImports.add('reflect');
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     if (obj.language.go!.byteArrayFormat) {
-      structDef.HasJSONByteArray = true;
+      modelDef.HasJSONByteArray = true;
     }
     if (!obj.language.go!.omitSerDeMethods) {
-      generateJSONMarshaller(serdeImports, obj, structDef);
-      generateJSONUnmarshaller(serdeImports, structDef);
+      generateJSONMarshaller(serdeImports, obj, modelDef);
+      generateJSONUnmarshaller(serdeImports, modelDef);
     }
-    structTypes.push(structDef);
+    modelDefs.push(modelDef);
   }
-  return structTypes;
+  return modelDefs;
 }
 
 function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
