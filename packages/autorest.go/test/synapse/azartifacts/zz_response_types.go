@@ -10,16 +10,19 @@ package azartifacts
 
 // BigDataPoolsClientGetResponse contains the response from method BigDataPoolsClient.Get.
 type BigDataPoolsClientGetResponse struct {
+	// A Big Data pool
 	BigDataPoolResourceInfo
 }
 
 // BigDataPoolsClientListResponse contains the response from method BigDataPoolsClient.List.
 type BigDataPoolsClientListResponse struct {
+	// Collection of Big Data pool information
 	BigDataPoolResourceInfoListResult
 }
 
 // DataFlowClientCreateOrUpdateDataFlowResponse contains the response from method DataFlowClient.BeginCreateOrUpdateDataFlow.
 type DataFlowClientCreateOrUpdateDataFlowResponse struct {
+	// Data flow resource type.
 	DataFlowResource
 }
 
@@ -30,11 +33,13 @@ type DataFlowClientDeleteDataFlowResponse struct {
 
 // DataFlowClientGetDataFlowResponse contains the response from method DataFlowClient.GetDataFlow.
 type DataFlowClientGetDataFlowResponse struct {
+	// Data flow resource type.
 	DataFlowResource
 }
 
 // DataFlowClientGetDataFlowsByWorkspaceResponse contains the response from method DataFlowClient.NewGetDataFlowsByWorkspacePager.
 type DataFlowClientGetDataFlowsByWorkspaceResponse struct {
+	// A list of data flow resources.
 	DataFlowListResponse
 }
 
@@ -45,11 +50,13 @@ type DataFlowClientRenameDataFlowResponse struct {
 
 // DataFlowDebugSessionClientAddDataFlowResponse contains the response from method DataFlowDebugSessionClient.AddDataFlow.
 type DataFlowDebugSessionClientAddDataFlowResponse struct {
+	// Response body structure for starting data flow debug session.
 	AddDataFlowToDebugSessionResponse
 }
 
 // DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse contains the response from method DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession.
 type DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse struct {
+	// Response body structure for creating data flow debug session.
 	CreateDataFlowDebugSessionResponse
 }
 
@@ -60,16 +67,19 @@ type DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse struct {
 
 // DataFlowDebugSessionClientExecuteCommandResponse contains the response from method DataFlowDebugSessionClient.BeginExecuteCommand.
 type DataFlowDebugSessionClientExecuteCommandResponse struct {
+	// Response body structure of data flow result for data preview, statistics or expression preview.
 	DataFlowDebugCommandResponse
 }
 
 // DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse contains the response from method DataFlowDebugSessionClient.NewQueryDataFlowDebugSessionsByWorkspacePager.
 type DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse struct {
+	// A list of active debug sessions.
 	QueryDataFlowDebugSessionsResponse
 }
 
 // DatasetClientCreateOrUpdateDatasetResponse contains the response from method DatasetClient.BeginCreateOrUpdateDataset.
 type DatasetClientCreateOrUpdateDatasetResponse struct {
+	// Dataset resource type.
 	DatasetResource
 }
 
@@ -80,11 +90,13 @@ type DatasetClientDeleteDatasetResponse struct {
 
 // DatasetClientGetDatasetResponse contains the response from method DatasetClient.GetDataset.
 type DatasetClientGetDatasetResponse struct {
+	// Dataset resource type.
 	DatasetResource
 }
 
 // DatasetClientGetDatasetsByWorkspaceResponse contains the response from method DatasetClient.NewGetDatasetsByWorkspacePager.
 type DatasetClientGetDatasetsByWorkspaceResponse struct {
+	// A list of dataset resources.
 	DatasetListResponse
 }
 
@@ -95,11 +107,13 @@ type DatasetClientRenameDatasetResponse struct {
 
 // IntegrationRuntimesClientGetResponse contains the response from method IntegrationRuntimesClient.Get.
 type IntegrationRuntimesClientGetResponse struct {
+	// Integration runtime resource type.
 	IntegrationRuntimeResource
 }
 
 // IntegrationRuntimesClientListResponse contains the response from method IntegrationRuntimesClient.List.
 type IntegrationRuntimesClientListResponse struct {
+	// A list of integration runtime resources.
 	IntegrationRuntimeListResponse
 }
 
@@ -135,16 +149,19 @@ type LibraryClientAppendResponse struct {
 
 // LibraryClientCreateResponse contains the response from method LibraryClient.BeginCreate.
 type LibraryClientCreateResponse struct {
+	// Library resource info
 	LibraryResourceInfo
 }
 
 // LibraryClientDeleteResponse contains the response from method LibraryClient.BeginDelete.
 type LibraryClientDeleteResponse struct {
+	// Library resource info
 	LibraryResourceInfo
 }
 
 // LibraryClientFlushResponse contains the response from method LibraryClient.BeginFlush.
 type LibraryClientFlushResponse struct {
+	// Library resource info
 	LibraryResourceInfo
 }
 
@@ -156,11 +173,13 @@ type LibraryClientGetOperationResultResponse struct {
 
 // LibraryClientGetResponse contains the response from method LibraryClient.Get.
 type LibraryClientGetResponse struct {
+	// Library response details
 	LibraryResource
 }
 
 // LibraryClientListResponse contains the response from method LibraryClient.NewListPager.
 type LibraryClientListResponse struct {
+	// A list of Library resources.
 	LibraryListResponse
 }
 
@@ -231,6 +250,7 @@ type LinkConnectionClientUpdateLandingZoneCredentialResponse struct {
 
 // LinkedServiceClientCreateOrUpdateLinkedServiceResponse contains the response from method LinkedServiceClient.BeginCreateOrUpdateLinkedService.
 type LinkedServiceClientCreateOrUpdateLinkedServiceResponse struct {
+	// Linked service resource type.
 	LinkedServiceResource
 }
 
@@ -241,11 +261,13 @@ type LinkedServiceClientDeleteLinkedServiceResponse struct {
 
 // LinkedServiceClientGetLinkedServiceResponse contains the response from method LinkedServiceClient.GetLinkedService.
 type LinkedServiceClientGetLinkedServiceResponse struct {
+	// Linked service resource type.
 	LinkedServiceResource
 }
 
 // LinkedServiceClientGetLinkedServicesByWorkspaceResponse contains the response from method LinkedServiceClient.NewGetLinkedServicesByWorkspacePager.
 type LinkedServiceClientGetLinkedServicesByWorkspaceResponse struct {
+	// A list of linked service resources.
 	LinkedServiceListResponse
 }
 
@@ -276,6 +298,7 @@ type MetastoreClientUpdateResponse struct {
 
 // NotebookClientCreateOrUpdateNotebookResponse contains the response from method NotebookClient.BeginCreateOrUpdateNotebook.
 type NotebookClientCreateOrUpdateNotebookResponse struct {
+	// Notebook resource type.
 	NotebookResource
 }
 
@@ -286,16 +309,19 @@ type NotebookClientDeleteNotebookResponse struct {
 
 // NotebookClientGetNotebookResponse contains the response from method NotebookClient.GetNotebook.
 type NotebookClientGetNotebookResponse struct {
+	// Notebook resource type.
 	NotebookResource
 }
 
 // NotebookClientGetNotebookSummaryByWorkSpaceResponse contains the response from method NotebookClient.NewGetNotebookSummaryByWorkSpacePager.
 type NotebookClientGetNotebookSummaryByWorkSpaceResponse struct {
+	// A list of Notebook resources.
 	NotebookListResponse
 }
 
 // NotebookClientGetNotebooksByWorkspaceResponse contains the response from method NotebookClient.NewGetNotebooksByWorkspacePager.
 type NotebookClientGetNotebooksByWorkspaceResponse struct {
+	// A list of Notebook resources.
 	NotebookListResponse
 }
 
@@ -311,11 +337,13 @@ type NotebookOperationResultClientGetResponse struct {
 
 // PipelineClientCreateOrUpdatePipelineResponse contains the response from method PipelineClient.BeginCreateOrUpdatePipeline.
 type PipelineClientCreateOrUpdatePipelineResponse struct {
+	// Pipeline resource type.
 	PipelineResource
 }
 
 // PipelineClientCreatePipelineRunResponse contains the response from method PipelineClient.CreatePipelineRun.
 type PipelineClientCreatePipelineRunResponse struct {
+	// Response body with a run identifier.
 	CreateRunResponse
 }
 
@@ -326,11 +354,13 @@ type PipelineClientDeletePipelineResponse struct {
 
 // PipelineClientGetPipelineResponse contains the response from method PipelineClient.GetPipeline.
 type PipelineClientGetPipelineResponse struct {
+	// Pipeline resource type.
 	PipelineResource
 }
 
 // PipelineClientGetPipelinesByWorkspaceResponse contains the response from method PipelineClient.NewGetPipelinesByWorkspacePager.
 type PipelineClientGetPipelinesByWorkspaceResponse struct {
+	// A list of pipeline resources.
 	PipelineListResponse
 }
 
@@ -346,31 +376,37 @@ type PipelineRunClientCancelPipelineRunResponse struct {
 
 // PipelineRunClientGetPipelineRunResponse contains the response from method PipelineRunClient.GetPipelineRun.
 type PipelineRunClientGetPipelineRunResponse struct {
+	// Information about a pipeline run.
 	PipelineRun
 }
 
 // PipelineRunClientQueryActivityRunsResponse contains the response from method PipelineRunClient.QueryActivityRuns.
 type PipelineRunClientQueryActivityRunsResponse struct {
+	// A list activity runs.
 	ActivityRunsQueryResponse
 }
 
 // PipelineRunClientQueryPipelineRunsByWorkspaceResponse contains the response from method PipelineRunClient.QueryPipelineRunsByWorkspace.
 type PipelineRunClientQueryPipelineRunsByWorkspaceResponse struct {
+	// A list pipeline runs.
 	PipelineRunsQueryResponse
 }
 
 // SQLPoolsClientGetResponse contains the response from method SQLPoolsClient.Get.
 type SQLPoolsClientGetResponse struct {
+	// A SQL Analytics pool
 	SQLPool
 }
 
 // SQLPoolsClientListResponse contains the response from method SQLPoolsClient.List.
 type SQLPoolsClientListResponse struct {
+	// List of SQL pools
 	SQLPoolInfoListResult
 }
 
 // SQLScriptClientCreateOrUpdateSQLScriptResponse contains the response from method SQLScriptClient.BeginCreateOrUpdateSQLScript.
 type SQLScriptClientCreateOrUpdateSQLScriptResponse struct {
+	// Sql Script resource type.
 	SQLScriptResource
 }
 
@@ -381,11 +417,13 @@ type SQLScriptClientDeleteSQLScriptResponse struct {
 
 // SQLScriptClientGetSQLScriptResponse contains the response from method SQLScriptClient.GetSQLScript.
 type SQLScriptClientGetSQLScriptResponse struct {
+	// Sql Script resource type.
 	SQLScriptResource
 }
 
 // SQLScriptClientGetSQLScriptsByWorkspaceResponse contains the response from method SQLScriptClient.NewGetSQLScriptsByWorkspacePager.
 type SQLScriptClientGetSQLScriptsByWorkspaceResponse struct {
+	// A list of sql scripts resources.
 	SQLScriptsListResponse
 }
 
@@ -396,6 +434,7 @@ type SQLScriptClientRenameSQLScriptResponse struct {
 
 // SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse contains the response from method SparkConfigurationClient.BeginCreateOrUpdateSparkConfiguration.
 type SparkConfigurationClientCreateOrUpdateSparkConfigurationResponse struct {
+	// Spark Configuration resource type.
 	SparkConfigurationResource
 }
 
@@ -406,11 +445,13 @@ type SparkConfigurationClientDeleteSparkConfigurationResponse struct {
 
 // SparkConfigurationClientGetSparkConfigurationResponse contains the response from method SparkConfigurationClient.GetSparkConfiguration.
 type SparkConfigurationClientGetSparkConfigurationResponse struct {
+	// Spark Configuration resource type.
 	SparkConfigurationResource
 }
 
 // SparkConfigurationClientGetSparkConfigurationsByWorkspaceResponse contains the response from method SparkConfigurationClient.NewGetSparkConfigurationsByWorkspacePager.
 type SparkConfigurationClientGetSparkConfigurationsByWorkspaceResponse struct {
+	// A list of sparkconfiguration resources.
 	SparkConfigurationListResponse
 }
 
@@ -421,6 +462,7 @@ type SparkConfigurationClientRenameSparkConfigurationResponse struct {
 
 // SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.BeginCreateOrUpdateSparkJobDefinition.
 type SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse struct {
+	// Spark job definition resource type.
 	SparkJobDefinitionResource
 }
 
@@ -441,11 +483,13 @@ type SparkJobDefinitionClientExecuteSparkJobDefinitionResponse struct {
 
 // SparkJobDefinitionClientGetSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.GetSparkJobDefinition.
 type SparkJobDefinitionClientGetSparkJobDefinitionResponse struct {
+	// Spark job definition resource type.
 	SparkJobDefinitionResource
 }
 
 // SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse contains the response from method SparkJobDefinitionClient.NewGetSparkJobDefinitionsByWorkspacePager.
 type SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse struct {
+	// A list of spark job definitions resources.
 	SparkJobDefinitionsListResponse
 }
 
@@ -456,6 +500,7 @@ type SparkJobDefinitionClientRenameSparkJobDefinitionResponse struct {
 
 // TriggerClientCreateOrUpdateTriggerResponse contains the response from method TriggerClient.BeginCreateOrUpdateTrigger.
 type TriggerClientCreateOrUpdateTriggerResponse struct {
+	// Trigger resource type.
 	TriggerResource
 }
 
@@ -466,16 +511,19 @@ type TriggerClientDeleteTriggerResponse struct {
 
 // TriggerClientGetEventSubscriptionStatusResponse contains the response from method TriggerClient.GetEventSubscriptionStatus.
 type TriggerClientGetEventSubscriptionStatusResponse struct {
+	// Defines the response of a trigger subscription operation.
 	TriggerSubscriptionOperationStatus
 }
 
 // TriggerClientGetTriggerResponse contains the response from method TriggerClient.GetTrigger.
 type TriggerClientGetTriggerResponse struct {
+	// Trigger resource type.
 	TriggerResource
 }
 
 // TriggerClientGetTriggersByWorkspaceResponse contains the response from method TriggerClient.NewGetTriggersByWorkspacePager.
 type TriggerClientGetTriggersByWorkspaceResponse struct {
+	// A list of trigger resources.
 	TriggerListResponse
 }
 
@@ -491,11 +539,13 @@ type TriggerClientStopTriggerResponse struct {
 
 // TriggerClientSubscribeTriggerToEventsResponse contains the response from method TriggerClient.BeginSubscribeTriggerToEvents.
 type TriggerClientSubscribeTriggerToEventsResponse struct {
+	// Defines the response of a trigger subscription operation.
 	TriggerSubscriptionOperationStatus
 }
 
 // TriggerClientUnsubscribeTriggerFromEventsResponse contains the response from method TriggerClient.BeginUnsubscribeTriggerFromEvents.
 type TriggerClientUnsubscribeTriggerFromEventsResponse struct {
+	// Defines the response of a trigger subscription operation.
 	TriggerSubscriptionOperationStatus
 }
 
@@ -506,6 +556,7 @@ type TriggerRunClientCancelTriggerInstanceResponse struct {
 
 // TriggerRunClientQueryTriggerRunsByWorkspaceResponse contains the response from method TriggerRunClient.QueryTriggerRunsByWorkspace.
 type TriggerRunClientQueryTriggerRunsByWorkspaceResponse struct {
+	// A list of trigger runs.
 	TriggerRunsQueryResponse
 }
 
@@ -516,6 +567,7 @@ type TriggerRunClientRerunTriggerInstanceResponse struct {
 
 // WorkspaceClientGetResponse contains the response from method WorkspaceClient.Get.
 type WorkspaceClientGetResponse struct {
+	// A workspace
 	Workspace
 }
 

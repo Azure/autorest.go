@@ -10,251 +10,307 @@ package azkeyvault
 
 // ClientBackupCertificateResponse contains the response from method Client.BackupCertificate.
 type ClientBackupCertificateResponse struct {
+	// The backup certificate result, containing the backup blob.
 	BackupCertificateResult
 }
 
 // ClientBackupKeyResponse contains the response from method Client.BackupKey.
 type ClientBackupKeyResponse struct {
+	// The backup key result, containing the backup blob.
 	BackupKeyResult
 }
 
 // ClientBackupSecretResponse contains the response from method Client.BackupSecret.
 type ClientBackupSecretResponse struct {
+	// The backup secret result, containing the backup blob.
 	BackupSecretResult
 }
 
 // ClientBackupStorageAccountResponse contains the response from method Client.BackupStorageAccount.
 type ClientBackupStorageAccountResponse struct {
+	// The backup storage result, containing the backup blob.
 	BackupStorageResult
 }
 
 // ClientCreateCertificateResponse contains the response from method Client.CreateCertificate.
 type ClientCreateCertificateResponse struct {
+	// A certificate operation is returned in case of asynchronous requests.
 	CertificateOperation
 }
 
 // ClientCreateKeyResponse contains the response from method Client.CreateKey.
 type ClientCreateKeyResponse struct {
+	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
 // ClientDecryptResponse contains the response from method Client.Decrypt.
 type ClientDecryptResponse struct {
+	// The key operation result.
 	KeyOperationResult
 }
 
 // ClientDeleteCertificateContactsResponse contains the response from method Client.DeleteCertificateContacts.
 type ClientDeleteCertificateContactsResponse struct {
+	// The contacts for the vault certificates.
 	Contacts
 }
 
 // ClientDeleteCertificateIssuerResponse contains the response from method Client.DeleteCertificateIssuer.
 type ClientDeleteCertificateIssuerResponse struct {
+	// The issuer for Key Vault certificate.
 	IssuerBundle
 }
 
 // ClientDeleteCertificateOperationResponse contains the response from method Client.DeleteCertificateOperation.
 type ClientDeleteCertificateOperationResponse struct {
+	// A certificate operation is returned in case of asynchronous requests.
 	CertificateOperation
 }
 
 // ClientDeleteCertificateResponse contains the response from method Client.DeleteCertificate.
 type ClientDeleteCertificateResponse struct {
+	// A Deleted Certificate consisting of its previous id, attributes and its tags, as well as information on when it will be
+	// purged.
 	DeletedCertificateBundle
 }
 
 // ClientDeleteKeyResponse contains the response from method Client.DeleteKey.
 type ClientDeleteKeyResponse struct {
+	// A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
 	DeletedKeyBundle
 }
 
 // ClientDeleteSasDefinitionResponse contains the response from method Client.DeleteSasDefinition.
 type ClientDeleteSasDefinitionResponse struct {
+	// A deleted SAS definition bundle consisting of its previous id, attributes and its tags, as well as information on when
+	// it will be purged.
 	DeletedSasDefinitionBundle
 }
 
 // ClientDeleteSecretResponse contains the response from method Client.DeleteSecret.
 type ClientDeleteSecretResponse struct {
+	// A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
 	DeletedSecretBundle
 }
 
 // ClientDeleteStorageAccountResponse contains the response from method Client.DeleteStorageAccount.
 type ClientDeleteStorageAccountResponse struct {
+	// A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when
+	// it will be purged.
 	DeletedStorageBundle
 }
 
 // ClientEncryptResponse contains the response from method Client.Encrypt.
 type ClientEncryptResponse struct {
+	// The key operation result.
 	KeyOperationResult
 }
 
 // ClientFullBackupResponse contains the response from method Client.BeginFullBackup.
 type ClientFullBackupResponse struct {
+	// Full backup operation
 	FullBackupOperation
 }
 
 // ClientFullBackupStatusResponse contains the response from method Client.FullBackupStatus.
 type ClientFullBackupStatusResponse struct {
+	// Full backup operation
 	FullBackupOperation
 }
 
 // ClientFullRestoreOperationResponse contains the response from method Client.BeginFullRestoreOperation.
 type ClientFullRestoreOperationResponse struct {
+	// Restore operation
 	RestoreOperation
 }
 
 // ClientGetCertificateContactsResponse contains the response from method Client.GetCertificateContacts.
 type ClientGetCertificateContactsResponse struct {
+	// The contacts for the vault certificates.
 	Contacts
 }
 
 // ClientGetCertificateIssuerResponse contains the response from method Client.GetCertificateIssuer.
 type ClientGetCertificateIssuerResponse struct {
+	// The issuer for Key Vault certificate.
 	IssuerBundle
 }
 
 // ClientGetCertificateIssuersResponse contains the response from method Client.NewGetCertificateIssuersPager.
 type ClientGetCertificateIssuersResponse struct {
+	// The certificate issuer list result.
 	CertificateIssuerListResult
 }
 
 // ClientGetCertificateOperationResponse contains the response from method Client.GetCertificateOperation.
 type ClientGetCertificateOperationResponse struct {
+	// A certificate operation is returned in case of asynchronous requests.
 	CertificateOperation
 }
 
 // ClientGetCertificatePolicyResponse contains the response from method Client.GetCertificatePolicy.
 type ClientGetCertificatePolicyResponse struct {
+	// Management policy for a certificate.
 	CertificatePolicy
 }
 
 // ClientGetCertificateResponse contains the response from method Client.GetCertificate.
 type ClientGetCertificateResponse struct {
+	// A certificate bundle consists of a certificate (X509) plus its attributes.
 	CertificateBundle
 }
 
 // ClientGetCertificateVersionsResponse contains the response from method Client.NewGetCertificateVersionsPager.
 type ClientGetCertificateVersionsResponse struct {
+	// The certificate list result.
 	CertificateListResult
 }
 
 // ClientGetCertificatesResponse contains the response from method Client.NewGetCertificatesPager.
 type ClientGetCertificatesResponse struct {
+	// The certificate list result.
 	CertificateListResult
 }
 
 // ClientGetDeletedCertificateResponse contains the response from method Client.GetDeletedCertificate.
 type ClientGetDeletedCertificateResponse struct {
+	// A Deleted Certificate consisting of its previous id, attributes and its tags, as well as information on when it will be
+	// purged.
 	DeletedCertificateBundle
 }
 
 // ClientGetDeletedCertificatesResponse contains the response from method Client.NewGetDeletedCertificatesPager.
 type ClientGetDeletedCertificatesResponse struct {
+	// A list of certificates that have been deleted in this vault.
 	DeletedCertificateListResult
 }
 
 // ClientGetDeletedKeyResponse contains the response from method Client.GetDeletedKey.
 type ClientGetDeletedKeyResponse struct {
+	// A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
 	DeletedKeyBundle
 }
 
 // ClientGetDeletedKeysResponse contains the response from method Client.NewGetDeletedKeysPager.
 type ClientGetDeletedKeysResponse struct {
+	// A list of keys that have been deleted in this vault.
 	DeletedKeyListResult
 }
 
 // ClientGetDeletedSasDefinitionResponse contains the response from method Client.GetDeletedSasDefinition.
 type ClientGetDeletedSasDefinitionResponse struct {
+	// A deleted SAS definition bundle consisting of its previous id, attributes and its tags, as well as information on when
+	// it will be purged.
 	DeletedSasDefinitionBundle
 }
 
 // ClientGetDeletedSasDefinitionsResponse contains the response from method Client.NewGetDeletedSasDefinitionsPager.
 type ClientGetDeletedSasDefinitionsResponse struct {
+	// The deleted SAS definition list result
 	DeletedSasDefinitionListResult
 }
 
 // ClientGetDeletedSecretResponse contains the response from method Client.GetDeletedSecret.
 type ClientGetDeletedSecretResponse struct {
+	// A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
 	DeletedSecretBundle
 }
 
 // ClientGetDeletedSecretsResponse contains the response from method Client.NewGetDeletedSecretsPager.
 type ClientGetDeletedSecretsResponse struct {
+	// The deleted secret list result
 	DeletedSecretListResult
 }
 
 // ClientGetDeletedStorageAccountResponse contains the response from method Client.GetDeletedStorageAccount.
 type ClientGetDeletedStorageAccountResponse struct {
+	// A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when
+	// it will be purged.
 	DeletedStorageBundle
 }
 
 // ClientGetDeletedStorageAccountsResponse contains the response from method Client.NewGetDeletedStorageAccountsPager.
 type ClientGetDeletedStorageAccountsResponse struct {
+	// The deleted storage account list result
 	DeletedStorageListResult
 }
 
 // ClientGetKeyResponse contains the response from method Client.GetKey.
 type ClientGetKeyResponse struct {
+	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
 // ClientGetKeyVersionsResponse contains the response from method Client.NewGetKeyVersionsPager.
 type ClientGetKeyVersionsResponse struct {
+	// The key list result.
 	KeyListResult
 }
 
 // ClientGetKeysResponse contains the response from method Client.NewGetKeysPager.
 type ClientGetKeysResponse struct {
+	// The key list result.
 	KeyListResult
 }
 
 // ClientGetSasDefinitionResponse contains the response from method Client.GetSasDefinition.
 type ClientGetSasDefinitionResponse struct {
+	// A SAS definition bundle consists of key vault SAS definition details plus its attributes.
 	SasDefinitionBundle
 }
 
 // ClientGetSasDefinitionsResponse contains the response from method Client.NewGetSasDefinitionsPager.
 type ClientGetSasDefinitionsResponse struct {
+	// The storage account SAS definition list result.
 	SasDefinitionListResult
 }
 
 // ClientGetSecretResponse contains the response from method Client.GetSecret.
 type ClientGetSecretResponse struct {
+	// A secret consisting of a value, id and its attributes.
 	SecretBundle
 }
 
 // ClientGetSecretVersionsResponse contains the response from method Client.NewGetSecretVersionsPager.
 type ClientGetSecretVersionsResponse struct {
+	// The secret list result.
 	SecretListResult
 }
 
 // ClientGetSecretsResponse contains the response from method Client.NewGetSecretsPager.
 type ClientGetSecretsResponse struct {
+	// The secret list result.
 	SecretListResult
 }
 
 // ClientGetStorageAccountResponse contains the response from method Client.GetStorageAccount.
 type ClientGetStorageAccountResponse struct {
+	// A Storage account bundle consists of key vault storage account details plus its attributes.
 	StorageBundle
 }
 
 // ClientGetStorageAccountsResponse contains the response from method Client.NewGetStorageAccountsPager.
 type ClientGetStorageAccountsResponse struct {
+	// The storage accounts list result.
 	StorageListResult
 }
 
 // ClientImportCertificateResponse contains the response from method Client.ImportCertificate.
 type ClientImportCertificateResponse struct {
+	// A certificate bundle consists of a certificate (X509) plus its attributes.
 	CertificateBundle
 }
 
 // ClientImportKeyResponse contains the response from method Client.ImportKey.
 type ClientImportKeyResponse struct {
+	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
 // ClientMergeCertificateResponse contains the response from method Client.MergeCertificate.
 type ClientMergeCertificateResponse struct {
+	// A certificate bundle consists of a certificate (X509) plus its attributes.
 	CertificateBundle
 }
 
@@ -280,146 +336,175 @@ type ClientPurgeDeletedStorageAccountResponse struct {
 
 // ClientRecoverDeletedCertificateResponse contains the response from method Client.RecoverDeletedCertificate.
 type ClientRecoverDeletedCertificateResponse struct {
+	// A certificate bundle consists of a certificate (X509) plus its attributes.
 	CertificateBundle
 }
 
 // ClientRecoverDeletedKeyResponse contains the response from method Client.RecoverDeletedKey.
 type ClientRecoverDeletedKeyResponse struct {
+	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
 // ClientRecoverDeletedSasDefinitionResponse contains the response from method Client.RecoverDeletedSasDefinition.
 type ClientRecoverDeletedSasDefinitionResponse struct {
+	// A SAS definition bundle consists of key vault SAS definition details plus its attributes.
 	SasDefinitionBundle
 }
 
 // ClientRecoverDeletedSecretResponse contains the response from method Client.RecoverDeletedSecret.
 type ClientRecoverDeletedSecretResponse struct {
+	// A secret consisting of a value, id and its attributes.
 	SecretBundle
 }
 
 // ClientRecoverDeletedStorageAccountResponse contains the response from method Client.RecoverDeletedStorageAccount.
 type ClientRecoverDeletedStorageAccountResponse struct {
+	// A Storage account bundle consists of key vault storage account details plus its attributes.
 	StorageBundle
 }
 
 // ClientRegenerateStorageAccountKeyResponse contains the response from method Client.RegenerateStorageAccountKey.
 type ClientRegenerateStorageAccountKeyResponse struct {
+	// A Storage account bundle consists of key vault storage account details plus its attributes.
 	StorageBundle
 }
 
 // ClientRestoreCertificateResponse contains the response from method Client.RestoreCertificate.
 type ClientRestoreCertificateResponse struct {
+	// A certificate bundle consists of a certificate (X509) plus its attributes.
 	CertificateBundle
 }
 
 // ClientRestoreKeyResponse contains the response from method Client.RestoreKey.
 type ClientRestoreKeyResponse struct {
+	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
 // ClientRestoreSecretResponse contains the response from method Client.RestoreSecret.
 type ClientRestoreSecretResponse struct {
+	// A secret consisting of a value, id and its attributes.
 	SecretBundle
 }
 
 // ClientRestoreStatusResponse contains the response from method Client.RestoreStatus.
 type ClientRestoreStatusResponse struct {
+	// Restore operation
 	RestoreOperation
 }
 
 // ClientRestoreStorageAccountResponse contains the response from method Client.RestoreStorageAccount.
 type ClientRestoreStorageAccountResponse struct {
+	// A Storage account bundle consists of key vault storage account details plus its attributes.
 	StorageBundle
 }
 
 // ClientSelectiveKeyRestoreOperationResponse contains the response from method Client.BeginSelectiveKeyRestoreOperation.
 type ClientSelectiveKeyRestoreOperationResponse struct {
+	// Selective Key Restore operation
 	SelectiveKeyRestoreOperation
 }
 
 // ClientSetCertificateContactsResponse contains the response from method Client.SetCertificateContacts.
 type ClientSetCertificateContactsResponse struct {
+	// The contacts for the vault certificates.
 	Contacts
 }
 
 // ClientSetCertificateIssuerResponse contains the response from method Client.SetCertificateIssuer.
 type ClientSetCertificateIssuerResponse struct {
+	// The issuer for Key Vault certificate.
 	IssuerBundle
 }
 
 // ClientSetSasDefinitionResponse contains the response from method Client.SetSasDefinition.
 type ClientSetSasDefinitionResponse struct {
+	// A SAS definition bundle consists of key vault SAS definition details plus its attributes.
 	SasDefinitionBundle
 }
 
 // ClientSetSecretResponse contains the response from method Client.SetSecret.
 type ClientSetSecretResponse struct {
+	// A secret consisting of a value, id and its attributes.
 	SecretBundle
 }
 
 // ClientSetStorageAccountResponse contains the response from method Client.SetStorageAccount.
 type ClientSetStorageAccountResponse struct {
+	// A Storage account bundle consists of key vault storage account details plus its attributes.
 	StorageBundle
 }
 
 // ClientSignResponse contains the response from method Client.Sign.
 type ClientSignResponse struct {
+	// The key operation result.
 	KeyOperationResult
 }
 
 // ClientUnwrapKeyResponse contains the response from method Client.UnwrapKey.
 type ClientUnwrapKeyResponse struct {
+	// The key operation result.
 	KeyOperationResult
 }
 
 // ClientUpdateCertificateIssuerResponse contains the response from method Client.UpdateCertificateIssuer.
 type ClientUpdateCertificateIssuerResponse struct {
+	// The issuer for Key Vault certificate.
 	IssuerBundle
 }
 
 // ClientUpdateCertificateOperationResponse contains the response from method Client.UpdateCertificateOperation.
 type ClientUpdateCertificateOperationResponse struct {
+	// A certificate operation is returned in case of asynchronous requests.
 	CertificateOperation
 }
 
 // ClientUpdateCertificatePolicyResponse contains the response from method Client.UpdateCertificatePolicy.
 type ClientUpdateCertificatePolicyResponse struct {
+	// Management policy for a certificate.
 	CertificatePolicy
 }
 
 // ClientUpdateCertificateResponse contains the response from method Client.UpdateCertificate.
 type ClientUpdateCertificateResponse struct {
+	// A certificate bundle consists of a certificate (X509) plus its attributes.
 	CertificateBundle
 }
 
 // ClientUpdateKeyResponse contains the response from method Client.UpdateKey.
 type ClientUpdateKeyResponse struct {
+	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
 // ClientUpdateSasDefinitionResponse contains the response from method Client.UpdateSasDefinition.
 type ClientUpdateSasDefinitionResponse struct {
+	// A SAS definition bundle consists of key vault SAS definition details plus its attributes.
 	SasDefinitionBundle
 }
 
 // ClientUpdateSecretResponse contains the response from method Client.UpdateSecret.
 type ClientUpdateSecretResponse struct {
+	// A secret consisting of a value, id and its attributes.
 	SecretBundle
 }
 
 // ClientUpdateStorageAccountResponse contains the response from method Client.UpdateStorageAccount.
 type ClientUpdateStorageAccountResponse struct {
+	// A Storage account bundle consists of key vault storage account details plus its attributes.
 	StorageBundle
 }
 
 // ClientVerifyResponse contains the response from method Client.Verify.
 type ClientVerifyResponse struct {
+	// The key verify result.
 	KeyVerifyResult
 }
 
 // ClientWrapKeyResponse contains the response from method Client.WrapKey.
 type ClientWrapKeyResponse struct {
+	// The key operation result.
 	KeyOperationResult
 }
 
@@ -430,6 +515,7 @@ type HSMSecurityDomainClientDownloadPendingResponse struct {
 
 // HSMSecurityDomainClientDownloadResponse contains the response from method HSMSecurityDomainClient.BeginDownload.
 type HSMSecurityDomainClientDownloadResponse struct {
+	// The Security Domain.
 	SecurityDomainObject
 }
 
@@ -450,40 +536,48 @@ type HSMSecurityDomainClientUploadResponse struct {
 
 // RoleAssignmentsClientCreateResponse contains the response from method RoleAssignmentsClient.Create.
 type RoleAssignmentsClientCreateResponse struct {
+	// Role Assignments
 	RoleAssignment
 }
 
 // RoleAssignmentsClientDeleteResponse contains the response from method RoleAssignmentsClient.Delete.
 type RoleAssignmentsClientDeleteResponse struct {
+	// Role Assignments
 	RoleAssignment
 }
 
 // RoleAssignmentsClientGetResponse contains the response from method RoleAssignmentsClient.Get.
 type RoleAssignmentsClientGetResponse struct {
+	// Role Assignments
 	RoleAssignment
 }
 
 // RoleAssignmentsClientListForScopeResponse contains the response from method RoleAssignmentsClient.NewListForScopePager.
 type RoleAssignmentsClientListForScopeResponse struct {
+	// Role assignment list operation result.
 	RoleAssignmentListResult
 }
 
 // RoleDefinitionsClientCreateOrUpdateResponse contains the response from method RoleDefinitionsClient.CreateOrUpdate.
 type RoleDefinitionsClientCreateOrUpdateResponse struct {
+	// Role definition.
 	RoleDefinition
 }
 
 // RoleDefinitionsClientDeleteResponse contains the response from method RoleDefinitionsClient.Delete.
 type RoleDefinitionsClientDeleteResponse struct {
+	// Role definition.
 	RoleDefinition
 }
 
 // RoleDefinitionsClientGetResponse contains the response from method RoleDefinitionsClient.Get.
 type RoleDefinitionsClientGetResponse struct {
+	// Role definition.
 	RoleDefinition
 }
 
 // RoleDefinitionsClientListResponse contains the response from method RoleDefinitionsClient.NewListPager.
 type RoleDefinitionsClientListResponse struct {
+	// Role definition list operation result.
 	RoleDefinitionListResult
 }

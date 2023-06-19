@@ -165,6 +165,7 @@ type ContainerRegistryClientDeleteManifestResponse struct {
 
 // ContainerRegistryClientDeleteRepositoryResponse contains the response from method ContainerRegistryClient.DeleteRepository.
 type ContainerRegistryClientDeleteRepositoryResponse struct {
+	// Deleted repository
 	DeleteRepositoryResult
 }
 
@@ -175,56 +176,69 @@ type ContainerRegistryClientDeleteTagResponse struct {
 
 // ContainerRegistryClientGetManifestPropertiesResponse contains the response from method ContainerRegistryClient.GetManifestProperties.
 type ContainerRegistryClientGetManifestPropertiesResponse struct {
+	// Manifest attributes details
 	ArtifactManifestProperties
 }
 
 // ContainerRegistryClientGetManifestResponse contains the response from method ContainerRegistryClient.GetManifest.
 type ContainerRegistryClientGetManifestResponse struct {
+	// Returns the requested manifest file
 	ManifestWrapper
 }
 
 // ContainerRegistryClientGetManifestsResponse contains the response from method ContainerRegistryClient.NewGetManifestsPager.
 type ContainerRegistryClientGetManifestsResponse struct {
+	// Manifest attributes
 	Manifests
+
 	// Link contains the information returned from the Link header response.
 	Link *string
 }
 
 // ContainerRegistryClientGetPropertiesResponse contains the response from method ContainerRegistryClient.GetProperties.
 type ContainerRegistryClientGetPropertiesResponse struct {
+	// Properties of this repository.
 	ContainerRepositoryProperties
 }
 
 // ContainerRegistryClientGetRepositoriesResponse contains the response from method ContainerRegistryClient.NewGetRepositoriesPager.
 type ContainerRegistryClientGetRepositoriesResponse struct {
+	// List of repositories
 	Repositories
+
 	// Link contains the information returned from the Link header response.
 	Link *string
 }
 
 // ContainerRegistryClientGetTagPropertiesResponse contains the response from method ContainerRegistryClient.GetTagProperties.
 type ContainerRegistryClientGetTagPropertiesResponse struct {
+	// Tag attributes
 	ArtifactTagProperties
 }
 
 // ContainerRegistryClientGetTagsResponse contains the response from method ContainerRegistryClient.NewGetTagsPager.
 type ContainerRegistryClientGetTagsResponse struct {
+	// List of tag details
 	TagList
+
 	// Link contains the information returned from the Link header response.
 	Link *string
 }
 
 // ContainerRegistryClientUpdateManifestPropertiesResponse contains the response from method ContainerRegistryClient.UpdateManifestProperties.
 type ContainerRegistryClientUpdateManifestPropertiesResponse struct {
+	// Manifest attributes details
 	ArtifactManifestProperties
 }
 
 // ContainerRegistryClientUpdatePropertiesResponse contains the response from method ContainerRegistryClient.UpdateProperties.
 type ContainerRegistryClientUpdatePropertiesResponse struct {
+	// Properties of this repository.
 	ContainerRepositoryProperties
 }
 
 // ContainerRegistryClientUpdateTagAttributesResponse contains the response from method ContainerRegistryClient.UpdateTagAttributes.
 type ContainerRegistryClientUpdateTagAttributesResponse struct {
+	// Tag attributes
 	ArtifactTagProperties
 }

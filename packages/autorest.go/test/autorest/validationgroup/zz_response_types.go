@@ -15,15 +15,18 @@ type AutoRestValidationTestClientGetWithConstantInPathResponse struct {
 
 // AutoRestValidationTestClientPostWithConstantInBodyResponse contains the response from method AutoRestValidationTestClient.PostWithConstantInBody.
 type AutoRestValidationTestClientPostWithConstantInBodyResponse struct {
+	// The product documentation.
 	Product
 }
 
 // AutoRestValidationTestClientValidationOfBodyResponse contains the response from method AutoRestValidationTestClient.ValidationOfBody.
 type AutoRestValidationTestClientValidationOfBodyResponse struct {
+	// The product documentation.
 	Product
 }
 
 // AutoRestValidationTestClientValidationOfMethodParametersResponse contains the response from method AutoRestValidationTestClient.ValidationOfMethodParameters.
 type AutoRestValidationTestClientValidationOfMethodParametersResponse struct {
+	// The product documentation.
 	Product
 }

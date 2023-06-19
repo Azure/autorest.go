@@ -10,26 +10,31 @@ package armconsumption
 
 // AggregatedCostClientGetByManagementGroupResponse contains the response from method AggregatedCostClient.GetByManagementGroup.
 type AggregatedCostClientGetByManagementGroupResponse struct {
+	// A management group aggregated cost resource.
 	ManagementGroupAggregatedCostResult
 }
 
 // AggregatedCostClientGetForBillingPeriodByManagementGroupResponse contains the response from method AggregatedCostClient.GetForBillingPeriodByManagementGroup.
 type AggregatedCostClientGetForBillingPeriodByManagementGroupResponse struct {
+	// A management group aggregated cost resource.
 	ManagementGroupAggregatedCostResult
 }
 
 // BalancesClientGetByBillingAccountResponse contains the response from method BalancesClient.GetByBillingAccount.
 type BalancesClientGetByBillingAccountResponse struct {
+	// A balance resource.
 	Balance
 }
 
 // BalancesClientGetForBillingPeriodByBillingAccountResponse contains the response from method BalancesClient.GetForBillingPeriodByBillingAccount.
 type BalancesClientGetForBillingPeriodByBillingAccountResponse struct {
+	// A balance resource.
 	Balance
 }
 
 // BudgetsClientCreateOrUpdateResponse contains the response from method BudgetsClient.CreateOrUpdate.
 type BudgetsClientCreateOrUpdateResponse struct {
+	// A budget resource.
 	Budget
 }
 
@@ -40,115 +45,140 @@ type BudgetsClientDeleteResponse struct {
 
 // BudgetsClientGetResponse contains the response from method BudgetsClient.Get.
 type BudgetsClientGetResponse struct {
+	// A budget resource.
 	Budget
 }
 
 // BudgetsClientListResponse contains the response from method BudgetsClient.NewListPager.
 type BudgetsClientListResponse struct {
+	// Result of listing budgets. It contains a list of available budgets in the scope provided.
 	BudgetsListResult
 }
 
 // ChargesClientListResponse contains the response from method ChargesClient.List.
 type ChargesClientListResponse struct {
+	// Result of listing charge summary.
 	ChargesListResult
 }
 
 // CreditsClientGetResponse contains the response from method CreditsClient.Get.
 type CreditsClientGetResponse struct {
+	// A credit summary resource.
 	CreditSummary
 }
 
 // EventsClientListResponse contains the response from method EventsClient.NewListPager.
 type EventsClientListResponse struct {
+	// Result of listing event summary.
 	Events
 }
 
 // ForecastsClientListResponse contains the response from method ForecastsClient.NewListPager.
 type ForecastsClientListResponse struct {
+	// Result of listing forecasts. It contains a list of available forecasts.
 	ForecastsListResult
 }
 
 // LotsClientListResponse contains the response from method LotsClient.NewListPager.
 type LotsClientListResponse struct {
+	// Result of listing lot summary.
 	Lots
 }
 
 // MarketplacesClientListResponse contains the response from method MarketplacesClient.NewListPager.
 type MarketplacesClientListResponse struct {
+	// Result of listing marketplaces. It contains a list of available marketplaces in reverse chronological order by billing
+	// period.
 	MarketplacesListResult
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
 type OperationsClientListResponse struct {
+	// Result of listing consumption operations. It contains a list of operations and a URL link to get the next set of results.
 	OperationListResult
 }
 
 // PriceSheetClientGetByBillingPeriodResponse contains the response from method PriceSheetClient.GetByBillingPeriod.
 type PriceSheetClientGetByBillingPeriodResponse struct {
+	// An pricesheet resource.
 	PriceSheetResult
 }
 
 // PriceSheetClientGetResponse contains the response from method PriceSheetClient.Get.
 type PriceSheetClientGetResponse struct {
+	// An pricesheet resource.
 	PriceSheetResult
 }
 
 // ReservationRecommendationDetailsClientGetResponse contains the response from method ReservationRecommendationDetailsClient.Get.
 type ReservationRecommendationDetailsClientGetResponse struct {
+	// Reservation recommendation details.
 	ReservationRecommendationDetailsModel
 }
 
 // ReservationRecommendationsClientListResponse contains the response from method ReservationRecommendationsClient.NewListPager.
 type ReservationRecommendationsClientListResponse struct {
+	// Result of listing reservation recommendations.
 	ReservationRecommendationsListResult
 }
 
 // ReservationTransactionsClientListByBillingProfileResponse contains the response from method ReservationTransactionsClient.NewListByBillingProfilePager.
 type ReservationTransactionsClientListByBillingProfileResponse struct {
+	// Result of listing reservation recommendations.
 	ModernReservationTransactionsListResult
 }
 
 // ReservationTransactionsClientListResponse contains the response from method ReservationTransactionsClient.NewListPager.
 type ReservationTransactionsClientListResponse struct {
+	// Result of listing reservation recommendations.
 	ReservationTransactionsListResult
 }
 
 // ReservationsDetailsClientListByReservationOrderAndReservationResponse contains the response from method ReservationsDetailsClient.NewListByReservationOrderAndReservationPager.
 type ReservationsDetailsClientListByReservationOrderAndReservationResponse struct {
+	// Result of listing reservation details.
 	ReservationDetailsListResult
 }
 
 // ReservationsDetailsClientListByReservationOrderResponse contains the response from method ReservationsDetailsClient.NewListByReservationOrderPager.
 type ReservationsDetailsClientListByReservationOrderResponse struct {
+	// Result of listing reservation details.
 	ReservationDetailsListResult
 }
 
 // ReservationsDetailsClientListResponse contains the response from method ReservationsDetailsClient.NewListPager.
 type ReservationsDetailsClientListResponse struct {
+	// Result of listing reservation details.
 	ReservationDetailsListResult
 }
 
 // ReservationsSummariesClientListByReservationOrderAndReservationResponse contains the response from method ReservationsSummariesClient.NewListByReservationOrderAndReservationPager.
 type ReservationsSummariesClientListByReservationOrderAndReservationResponse struct {
+	// Result of listing reservation summaries.
 	ReservationSummariesListResult
 }
 
 // ReservationsSummariesClientListByReservationOrderResponse contains the response from method ReservationsSummariesClient.NewListByReservationOrderPager.
 type ReservationsSummariesClientListByReservationOrderResponse struct {
+	// Result of listing reservation summaries.
 	ReservationSummariesListResult
 }
 
 // ReservationsSummariesClientListResponse contains the response from method ReservationsSummariesClient.NewListPager.
 type ReservationsSummariesClientListResponse struct {
+	// Result of listing reservation summaries.
 	ReservationSummariesListResult
 }
 
 // TagsClientGetResponse contains the response from method TagsClient.Get.
 type TagsClientGetResponse struct {
+	// A resource listing all tags.
 	TagsResult
 }
 
 // UsageDetailsClientListResponse contains the response from method UsageDetailsClient.NewListPager.
 type UsageDetailsClientListResponse struct {
+	// Result of listing usage details. It contains a list of available usage details in reverse chronological order by billing
+	// period.
 	UsageDetailsListResult
 }

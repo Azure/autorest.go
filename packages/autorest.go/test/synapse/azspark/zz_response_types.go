@@ -25,6 +25,7 @@ type BatchClientGetSparkBatchJobResponse struct {
 
 // BatchClientGetSparkBatchJobsResponse contains the response from method BatchClient.GetSparkBatchJobs.
 type BatchClientGetSparkBatchJobsResponse struct {
+	// Response for batch list operation.
 	BatchJobCollection
 }
 

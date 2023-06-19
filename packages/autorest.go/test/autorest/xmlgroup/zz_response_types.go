@@ -21,21 +21,25 @@ type XMLClientGetBytesResponse struct {
 
 // XMLClientGetComplexTypeRefNoMetaResponse contains the response from method XMLClient.GetComplexTypeRefNoMeta.
 type XMLClientGetComplexTypeRefNoMetaResponse struct {
+	// I am root, and I ref a model with no meta
 	RootWithRefAndNoMeta
 }
 
 // XMLClientGetComplexTypeRefWithMetaResponse contains the response from method XMLClient.GetComplexTypeRefWithMeta.
 type XMLClientGetComplexTypeRefWithMetaResponse struct {
+	// I am root, and I ref a model WITH meta
 	RootWithRefAndMeta
 }
 
 // XMLClientGetEmptyChildElementResponse contains the response from method XMLClient.GetEmptyChildElement.
 type XMLClientGetEmptyChildElementResponse struct {
+	// A banana.
 	Banana
 }
 
 // XMLClientGetEmptyListResponse contains the response from method XMLClient.GetEmptyList.
 type XMLClientGetEmptyListResponse struct {
+	// Data about a slideshow
 	Slideshow
 }
 
@@ -47,6 +51,7 @@ type XMLClientGetEmptyRootListResponse struct {
 
 // XMLClientGetEmptyWrappedListsResponse contains the response from method XMLClient.GetEmptyWrappedLists.
 type XMLClientGetEmptyWrappedListsResponse struct {
+	// A barrel of apples.
 	AppleBarrel
 }
 
@@ -70,11 +75,13 @@ type XMLClientGetRootListSingleItemResponse struct {
 
 // XMLClientGetServicePropertiesResponse contains the response from method XMLClient.GetServiceProperties.
 type XMLClientGetServicePropertiesResponse struct {
+	// Storage Service Properties.
 	StorageServiceProperties
 }
 
 // XMLClientGetSimpleResponse contains the response from method XMLClient.GetSimple.
 type XMLClientGetSimpleResponse struct {
+	// Data about a slideshow
 	Slideshow
 }
 
@@ -85,11 +92,13 @@ type XMLClientGetURIResponse struct {
 
 // XMLClientGetWrappedListsResponse contains the response from method XMLClient.GetWrappedLists.
 type XMLClientGetWrappedListsResponse struct {
+	// A barrel of apples.
 	AppleBarrel
 }
 
 // XMLClientGetXMsTextResponse contains the response from method XMLClient.GetXMsText.
 type XMLClientGetXMsTextResponse struct {
+	// Contans property
 	ObjectWithXMsTextProperty
 }
 
@@ -105,11 +114,13 @@ type XMLClientJSONOutputResponse struct {
 
 // XMLClientListBlobsResponse contains the response from method XMLClient.ListBlobs.
 type XMLClientListBlobsResponse struct {
+	// An enumeration of blobs
 	ListBlobsResponse
 }
 
 // XMLClientListContainersResponse contains the response from method XMLClient.ListContainers.
 type XMLClientListContainersResponse struct {
+	// An enumeration of containers
 	ListContainersResponse
 }
 
