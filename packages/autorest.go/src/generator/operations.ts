@@ -703,7 +703,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
-    } else if (mediaType === 'XML' && bodyParam!.schema.type === SchemaType.Array) {
+    } else if (mediaType === 'XML' && isArraySchema(bodyParam!.schema)) {
       // for XML payloads, create a wrapper type if the payload is an array
       imports.add('encoding/xml');
       text += '\ttype wrapper struct {\n';
@@ -712,15 +712,12 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         tagName = bodyParam!.schema.serialization.xml.name;
       }
       text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
-      let fieldName = bodyParam!.schema.language.go!.name;
-      if (isArraySchema(bodyParam!.schema)) {
-        fieldName = capitalize(bodyParam!.language.go!.name);
-        let tag = bodyParam!.schema.elementType.language.go!.name;
-        if (bodyParam!.schema.elementType.serialization?.xml?.name) {
-          tag = bodyParam!.schema.elementType.serialization.xml.name;
-        }
-        text += `\t\t${fieldName} *${bodyParam!.schema.language.go!.name} \`xml:"${tag}"\`\n`;
+      const fieldName = capitalize(bodyParam!.language.go!.name);
+      let tag = bodyParam!.schema.elementType.language.go!.name;
+      if (bodyParam!.schema.elementType.serialization?.xml?.name) {
+        tag = bodyParam!.schema.elementType.serialization.xml.name;
       }
+      text += `\t\t${fieldName} *${bodyParam!.schema.language.go!.name} \`xml:"${tag}"\`\n`;
       text += '\t}\n';
       let addr = '&';
       if (bodyParam && (!bodyParam.required && !isTypePassedByValue(bodyParam.schema))) {
