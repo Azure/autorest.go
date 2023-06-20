@@ -8,7 +8,7 @@ import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, hasAdditionalProperties } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties } from './helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';

@@ -5,8 +5,8 @@
 
 import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
-import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
+import { Client, ConstantType, ConstantValue, GoCodeModel, HeaderResponse, InterfaceType, Method, ModelField, ModelType, PolymorphicType, ResponseEnvelope, StructField, StructType } from '../gocodemodel/gocodemodel';
 import { generateClientFactory } from './clientFactory';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
@@ -20,6 +20,7 @@ import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 import { generateServers } from './fake/servers';
 import { generateServerInternal } from './fake/internal';
+import { sortAscending } from './helpers';
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: AutorestExtensionHost) {
@@ -27,9 +28,10 @@ export async function protocolGen(host: AutorestExtensionHost) {
 
   try {
     // get the code model from the core
-    const session = await startSession<CodeModel>(host, codeModelSchema);
+    const session = await startSession<GoCodeModel>(host);
+    sortContent(session.model);
 
-    const operations = await generateOperations(session);
+    const operations = await generateOperations(session.model);
     let filePrefix = await session.getValue('file-prefix', '');
     // if a file prefix was specified, ensure it's properly snaked
     if (filePrefix.length > 0 && filePrefix[filePrefix.length - 1] !== '_') {
@@ -59,7 +61,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const clientFactory = await generateClientFactory(session);
+    const clientFactory = await generateClientFactory(session.model);
     if (clientFactory.length > 0) {
       host.writeFile({
         filename: `${filePrefix}client_factory.go`,
@@ -68,14 +70,14 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
     
-    const constants = await generateConstants(session);
+    const constants = await generateConstants(session.model);
     host.writeFile({
       filename: `${filePrefix}constants.go`,
       content: constants,
       artifactType: 'source-file-go'
     });
 
-    const models = await generateModels(session);
+    const models = await generateModels(session.model);
     host.writeFile({
       filename: `${filePrefix}models.go`,
       content: models.models,
@@ -89,7 +91,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const options = await generateOptions(session);
+    const options = await generateOptions(session.model);
     if (options.length > 0) {
       host.writeFile({
         filename: `${filePrefix}options.go`,
@@ -98,7 +100,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const interfaces = await generateInterfaces(session);
+    const interfaces = await generateInterfaces(session.model);
     if (interfaces.length > 0) {
       host.writeFile({
         filename: `${filePrefix}interfaces.go`,
@@ -107,7 +109,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const responses = await generateResponses(session);
+    const responses = await generateResponses(session.model);
     if (responses.length > 0) {
       host.writeFile({
         filename: `${filePrefix}response_types.go`,
@@ -116,7 +118,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const timeHelpers = await generateTimeHelpers(session);
+    const timeHelpers = await generateTimeHelpers(session.model);
     for (const helper of values(timeHelpers)) {
       host.writeFile({
         filename: `${filePrefix}${helper.name.toLowerCase()}.go`,
@@ -125,7 +127,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const polymorphics = await generatePolymorphicHelpers(session);
+    const polymorphics = await generatePolymorphicHelpers(session.model);
     if (polymorphics.length > 0) {
       host.writeFile({
         filename: `${filePrefix}polymorphic_helpers.go`,
@@ -136,7 +138,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
 
     // don't overwrite an existing go.mod file, update it if required
     const existingGoMod = await host.readFile('go.mod');
-    const gomod = await generateGoModFile(session, existingGoMod);
+    const gomod = await generateGoModFile(session.model, existingGoMod);
     if (gomod.length > 0) {
       host.writeFile({
         filename: 'go.mod',
@@ -145,7 +147,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const xmlAddlProps = await generateXMLAdditionalPropsHelpers(session);
+    const xmlAddlProps = await generateXMLAdditionalPropsHelpers(session.model);
     if (xmlAddlProps.length > 0) {
       host.writeFile({
         filename: `${filePrefix}xml_helper.go`,
@@ -156,7 +158,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
 
     const generateFakes = await session.getValue('generate-fakes', false);
     if (generateFakes) {
-      const operations = await generateServers(session);
+      const operations = await generateServers(session.model);
       for (const op of values(operations)) {
         let fileName = op.name.toLowerCase();
         // op.name is the server name, e.g. FooServer.
@@ -172,14 +174,14 @@ export async function protocolGen(host: AutorestExtensionHost) {
         });
       }
 
-      const internal = await generateServerInternal(session);
+      const internal = await generateServerInternal(session.model);
       host.writeFile({
         filename: `fake/${filePrefix}internal.go`,
         content: internal,
         artifactType: 'source-file-go'
       });
 
-      const timeHelpers = await generateTimeHelpers(session, 'fake');
+      const timeHelpers = await generateTimeHelpers(session.model, 'fake');
       for (const helper of values(timeHelpers)) {
         host.writeFile({
           filename: `fake/${filePrefix}${helper.name.toLowerCase()}.go`,
@@ -188,7 +190,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
         });
       }
 
-      const polymorphics = await generatePolymorphicHelpers(session, 'fake');
+      const polymorphics = await generatePolymorphicHelpers(session.model, 'fake');
       if (polymorphics.length > 0) {
         host.writeFile({
           filename: `fake/${filePrefix}polymorphic_helpers.go`,
@@ -202,5 +204,37 @@ export async function protocolGen(host: AutorestExtensionHost) {
       console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
+  }
+}
+
+function sortContent(codeModel: GoCodeModel) {
+  codeModel.constants?.sort((a: ConstantType, b: ConstantType) => { return sortAscending(a.name, b.name); });
+  for (const enm of values(codeModel.constants)) {
+    enm.values.sort((a: ConstantValue, b: ConstantValue) => { return sortAscending(a.valueName, b.valueName); });
+  }
+
+  codeModel.interfaceTypes?.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
+  for (const iface of values(codeModel.interfaceTypes)) {
+    iface.possibleTypes.sort((a: PolymorphicType, b: PolymorphicType) => { return sortAscending(a.discriminatorValue!, b.discriminatorValue!); });
+  }
+
+  codeModel.models.sort((a: ModelType | PolymorphicType, b: ModelType | PolymorphicType) => { return sortAscending(a.name, b.name); });
+  for (const model of values(codeModel.models)) {
+    model.fields.sort((a: ModelField, b: ModelField) => { return sortAscending(a.fieldName, b.fieldName); });
+  }
+
+  codeModel.paramGroups?.sort((a: StructType, b: StructType) => { return sortAscending(a.name, b.name); });
+  for (const paramGroup of values(codeModel.paramGroups)) {
+    paramGroup.fields?.sort((a: StructField, b: StructField) => { return sortAscending(a.fieldName, b.fieldName); });
+  }
+
+  codeModel.responseEnvelopes?.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
+  for (const respEnv of values(codeModel.responseEnvelopes)) {
+    respEnv.headers?.sort((a: HeaderResponse, b: HeaderResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+  }
+
+  codeModel.clients?.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
+  for (const client of values(codeModel.clients)) {
+    client.methods.sort((a: Method, b: Method) => { return sortAscending(a.methodName, b.methodName); });
   }
 }
