@@ -7,6 +7,7 @@ import { AutoRestExtension, } from '@autorest/extension-base';
 import { transform } from './transform/transform';
 import { protocolGen } from './generator/generator';
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 require('source-map-support').install();
 
 export async function main() {
