@@ -95,7 +95,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
         filename: `${filePrefix}options.go`,
         content: options,
         artifactType: 'source-file-go'
-      })
+      });
     }
 
     const interfaces = await generateInterfaces(session);

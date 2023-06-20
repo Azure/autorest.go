@@ -22,9 +22,9 @@ export async function generateOptions(session: Session<CodeModel>): Promise<stri
   let optionsText = await contentPreamble(session);
   let content = '';
 
-  paramGroups.sort((a: GroupProperty, b: GroupProperty) => { return sortAscending(a.schema.language.go!.name, b.schema.language.go!.name) });
+  paramGroups.sort((a: GroupProperty, b: GroupProperty) => { return sortAscending(a.schema.language.go!.name, b.schema.language.go!.name); });
   for (const paramGroup of values(paramGroups)) {
-    paramGroup.originalParameter.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
+    paramGroup.originalParameter.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     content += emit(paramGroup, imports);
   }
 

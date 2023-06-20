@@ -8,6 +8,11 @@ steps:
     displayName: "Build Generator Sources"
 
   - script: |
+      npm run eslint
+    displayName: "Run Lint"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
+
+  - script: |
       rush regenerate
       rush modtidy 2>&1
       git add -A ./test/.

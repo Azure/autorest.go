@@ -61,7 +61,7 @@ export const CommonAcronyms = [
   '^xml$',
   '^xsrf$',
   '^xss$'
-]
+];
 
 export const ReservedWords = [
   // Reserved keywords -- list retrieved from http://golang.org/ref/spec#Keywords
@@ -131,5 +131,5 @@ export const ReservedWords = [
   'time',
   'unicode', 'utf16', 'utf8',
   'unsafe'
-]
+];
 

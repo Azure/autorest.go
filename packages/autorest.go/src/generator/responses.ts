@@ -23,9 +23,9 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
   let text = await contentPreamble(session);
   let content = '';
 
-  responseEnvelopes.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
+  responseEnvelopes.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
   for (const respEnv of values(responseEnvelopes)) {
-    respEnv.properties?.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
+    respEnv.properties?.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     content += emit(respEnv, imports);
     content += generateUnmarshallerForResponeEnvelope(respEnv, imports);
   }
@@ -84,7 +84,7 @@ function emit(respEnv: ObjectSchema, imports: ImportManager): string {
     text += `${comment(respEnv.language.go!.description, '// ', undefined, commentLength)}\n`;
   }
 
-  text += `type ${respEnv.language.go!.name} struct {\n`
+  text += `type ${respEnv.language.go!.name} struct {\n`;
   if (!respEnv.properties) {
     // this is an empty response envelope
     text += '\t// placeholder for future response values\n';

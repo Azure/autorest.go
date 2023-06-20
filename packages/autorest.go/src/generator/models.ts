@@ -34,11 +34,11 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   let needsJSONPopulateByteArray = false;
   let needsJSONPopulateAny = false;
   let serdeTextBody = '';
-  modelDefs.sort((a: ModelDef, b: ModelDef) => { return sortAscending(a.Language.name, b.Language.name) });
+  modelDefs.sort((a: ModelDef, b: ModelDef) => { return sortAscending(a.Language.name, b.Language.name); });
   for (const modelDef of values(modelDefs)) {
     modelText += modelDef.text();
 
-    modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name) });
+    modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name); });
     for (const method of values(modelDef.Methods)) {
       if (method.desc.length > 0) {
         modelText += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
@@ -46,7 +46,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
       modelText += method.text;
     }
 
-    modelDef.SerDeMethods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name) });
+    modelDef.SerDeMethods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name); });
     for (const method of values(modelDef.SerDeMethods)) {
       if (method.desc.length > 0) {
         serdeTextBody += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
@@ -122,7 +122,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   };
 }
 
-function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, objects?: ObjectSchema[]): ModelDef[] {
+function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, objects?: Array<ObjectSchema>): Array<ModelDef> {
   const modelDefs = new Array<ModelDef>();
   for (const obj of values(objects)) {
     if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {
@@ -221,7 +221,7 @@ function generateDiscriminatorMarkerMethod(obj: ObjectSchema, modelDef: ModelDef
 }
 
 function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, modelDef: ModelDef) {
-if (!obj.discriminatorValue && (!modelDef.Properties || modelDef.Properties.length === 0)) {
+  if (!obj.discriminatorValue && (!modelDef.Properties || modelDef.Properties.length === 0)) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
     return;
@@ -294,7 +294,7 @@ function generateJSONMarshallerBody(obj: ObjectSchema, modelDef: ModelDef, impor
       assignment = `(*${addlProps.elementType.language.go!.internalTimeType})(val)`;
     }
     marshaller += `\t\t\tobjectMap[key] = ${assignment}\n`;
-    marshaller += '\t\t}\n';;
+    marshaller += '\t\t}\n';
     marshaller += '\t}\n';
   }
   return marshaller;
@@ -345,7 +345,7 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
     return addlPropsText;
-  }
+  };
   let unmarshalBody = '';
   unmarshalBody = '\tfor key, val := range rawMsg {\n';
   unmarshalBody += '\t\tvar err error\n';
@@ -419,7 +419,7 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager) {
         base64Format = 'URL';
       }
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      text += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`
+      text += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
       text += `\t\tencoded${prop.language.go!.name} := runtime.EncodeByteArray(${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
       text += `\t\taux.${prop.language.go!.name} = &encoded${prop.language.go!.name}\n`;
       text += '\t}\n';
@@ -450,7 +450,7 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager) {
         base64Format = 'URL';
       }
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      text += `\tif aux.${prop.language.go!.name} != nil {\n`
+      text += `\tif aux.${prop.language.go!.name} != nil {\n`;
       text += `\t\tif err := runtime.DecodeByteArray(*aux.${prop.language.go!.name}, &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format); err != nil {\n`;
       text += '\t\t\treturn err\n';
       text += '\t\t}\n';
@@ -465,10 +465,10 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager) {
 // generates an alias type used by custom XML marshaller/unmarshaller
 function generateAliasType(modelDef: ModelDef, receiver: string, forMarshal: boolean): string {
   let text = `\ttype alias ${modelDef.Language.name}\n`;
-  text += `\taux := &struct {\n`;
-  text += `\t\t*alias\n`;
+  text += '\taux := &struct {\n';
+  text += '\t\t*alias\n';
   for (const prop of values(modelDef.Properties)) {
-    let sn = getXMLSerialization(prop, modelDef.Language);
+    const sn = getXMLSerialization(prop, modelDef.Language);
     if (prop.schema.type === SchemaType.DateTime) {
       text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.internalTimeType} \`${modelDef.Language.marshallingFormat}:"${sn}"\`\n`;
     } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
@@ -479,7 +479,7 @@ function generateAliasType(modelDef: ModelDef, receiver: string, forMarshal: boo
       text += `\t\t${prop.language.go!.name} *string \`${modelDef.Language.marshallingFormat}:"${sn}"\`\n`;
     }
   }
-  text += `\t}{\n`;
+  text += '\t}{\n';
   let rec = receiver;
   if (forMarshal) {
     rec = '&' + rec;
@@ -494,7 +494,7 @@ function generateAliasType(modelDef: ModelDef, receiver: string, forMarshal: boo
       text += `\t\t${prop.language.go!.name}: (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name}),\n`;
     }
   }
-  text += `\t}\n`;
+  text += '\t}\n';
   return text;
 }
 
@@ -508,13 +508,13 @@ interface ModelMethod {
 // represents model definition as a Go struct
 class ModelDef {
   readonly Language: Language;
-  readonly Properties?: Property[];
-  readonly SerDeMethods: ModelMethod[];
-  readonly Methods: ModelMethod[];
+  readonly Properties?: Array<Property>;
+  readonly SerDeMethods: Array<ModelMethod>;
+  readonly Methods: Array<ModelMethod>;
   HasJSONByteArray: boolean;
   HasAny: boolean;
 
-  constructor(language: Language, props?: Property[]) {
+  constructor(language: Language, props?: Array<Property>) {
     this.Language = language;
     this.Properties = props;
     if (this.Properties) {
@@ -569,7 +569,7 @@ class ModelDef {
       }
       let readOnly = '';
       if (prop.readOnly) {
-        readOnly = ` azure:"ro"`;
+        readOnly = ' azure:"ro"';
       }
       let tag = '';
       // only emit tags for XML; JSON uses custom marshallers/unmarshallers

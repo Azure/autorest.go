@@ -52,7 +52,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, pa
       scalars.add(prop.schema.elementType.language.go!.discriminatorInterface);
       maps.add(prop.schema.elementType.language.go!.discriminatorInterface);
     }
-  }
+  };
   // calculate which discriminator helpers we actually need to generate
   for (const obj of values(session.model.schemas.objects)) {
     for (const prop of values(obj.properties)) {
@@ -74,7 +74,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, pa
     // 'exception'.  until this is fixed, we can wind up here.
     return '';
   }
-  discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminatorInterface, b.language.go!.discriminatorInterface) });
+  discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminatorInterface, b.language.go!.discriminatorInterface); });
 
   let prefix = '';
   if (packageName) {
