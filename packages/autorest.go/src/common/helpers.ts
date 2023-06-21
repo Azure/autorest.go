@@ -197,7 +197,7 @@ export function formatConstantValue(schema: ConstantSchema): string {
 
 //  returns true if the object is used for output only
 export function isOutputOnly(obj: ObjectSchema): boolean {
-  return !values(obj.usage).any((u) => { return u === SchemaContext.Input;});
+  return !values(obj.usage).any((u) => { return u === SchemaContext.Input; });
 }
 
 // aggregate the properties from the provided type and its parent types
