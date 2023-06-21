@@ -8,11 +8,11 @@ import { CodeModel } from '@autorest/codemodel';
 import { contentPreamble } from '../helpers';
 
 export async function generateServerInternal(session: Session<CodeModel>): Promise<string> {
-    if (session.model.operationGroups.length === 0) {
-        return '';
-    }
-    let text = await contentPreamble(session, 'fake');
-    return text + content;
+  if (session.model.operationGroups.length === 0) {
+    return '';
+  }
+  const text = await contentPreamble(session, 'fake');
+  return text + content;
 }
 
 const content = `

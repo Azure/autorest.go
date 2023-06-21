@@ -38,12 +38,12 @@ export function isDictionarySchema(resp: Schema): resp is DictionarySchema {
 
 // returns SchemaResponse type predicate if the response has a schema
 export function isSchemaResponse(resp: Response): resp is SchemaResponse {
-  return (resp as SchemaResponse).schema !== undefined;
+  return (<SchemaResponse>resp).schema !== undefined;
 }
 
 // returns BinaryResponse type predicate if the response is a binary response
 export function isBinaryResponse(resp: Response): resp is BinaryResponse {
-  return (resp as BinaryResponse).binary !== undefined;
+  return (<BinaryResponse>resp).binary !== undefined;
 }
 
 // returns true if the operation is pageable
@@ -197,7 +197,7 @@ export function formatConstantValue(schema: ConstantSchema): string {
 
 //  returns true if the object is used for output only
 export function isOutputOnly(obj: ObjectSchema): boolean {
-  return !values(obj.usage).any((u) => { return u === SchemaContext.Input});
+  return !values(obj.usage).any((u) => { return u === SchemaContext.Input; });
 }
 
 // aggregate the properties from the provided type and its parent types

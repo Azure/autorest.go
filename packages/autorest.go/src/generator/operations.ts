@@ -24,7 +24,7 @@ export class OperationGroupContent {
 }
 
 // Creates the content for all <operation>.go files
-export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
+export async function generateOperations(session: Session<CodeModel>): Promise<Array<OperationGroupContent>> {
   const azureARM = <boolean>session.model.language.go!.azureARM;
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
@@ -47,9 +47,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // generate client type
 
     let clientText = '';
-    let clientName = group.language.go!.clientName;
+    const clientName = group.language.go!.clientName;
     clientText += `// ${clientName} contains the methods for the ${group.language.go!.name} group.\n`;
-    clientText += `// Don't use this type directly, use `;
+    clientText += '// Don\'t use this type directly, use ';
     if (azureARM) {
       clientText += `${group.language.go!.clientCtorName}() instead.\n`;
     } else {
@@ -122,7 +122,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
             }
           }
         }
-      }
+      };
 
       const methodParams = new Array<string>();
       const paramDocs = new Array<string>();
@@ -131,7 +131,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       emitClientParams();
       methodParams.push('credential azcore.TokenCredential');
       paramDocs.push(formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
-      methodParams.push(`options *arm.ClientOptions`);
+      methodParams.push('options *arm.ClientOptions');
       paramDocs.push(formatCommentAsBulletItem('options - pass nil to accept the default values.'));
 
       // now build constructor
@@ -142,7 +142,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
       clientText += `func ${group.language.go!.clientCtorName}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
       clientText += `\tcl, err := ${clientPkg}.NewClient(moduleName+".${clientName}", moduleVersion, credential, options)\n`;
-      clientText += "\tif err != nil {\n"
+      clientText += '\tif err != nil {\n';
       clientText += '\t\treturn nil, err\n';
       clientText += '\t}\n';
 
@@ -161,7 +161,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     const injectSpans = await session.getValue('inject-spans', false);
     const generateFakes = await session.getValue('generate-fakes', false);
     let opText = '';
-    group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
+    group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
@@ -212,7 +212,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       imports.add('strconv');
       text += `\t\t${name}, err := strconv.ParseBool(val)\n`;
       break;
-    case SchemaType.ByteArray:
+    case SchemaType.ByteArray: {
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
       let byteFormat = 'Std';
@@ -222,6 +222,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       text += `\t\t${name}, err := base64.${byteFormat}Encoding.DecodeString(val)\n`;
       byRef = '';
       break;
+    }
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
       text += `\t\t${respObj}.${propName} = (*${schema.language.go!.name})(&val)\n`;
@@ -237,7 +238,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       imports.add('time');
       text += `\t\t${name}, err := time.Parse("${dateFormat}", val)\n`;
       break;
-    case SchemaType.DateTime:
+    case SchemaType.DateTime: {
       imports.add('time');
       let format = datetimeRFC3339Format;
       const dateTime = <DateTimeSchema>schema;
@@ -246,7 +247,8 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       }
       text += `\t\t${name}, err := time.Parse(${format}, val)\n`;
       break;
-    case SchemaType.Integer:
+    }
+    case SchemaType.Integer: {
       imports.add('strconv');
       const intNum = <NumberSchema>schema;
       if (intNum.precision === 32) {
@@ -256,7 +258,8 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
         text += `\t\t${name}, err := strconv.ParseInt(val, 10, 64)\n`;
       }
       break;
-    case SchemaType.Number:
+    }
+    case SchemaType.Number: {
       imports.add('strconv');
       const floatNum = <NumberSchema>schema;
       if (floatNum.precision === 32) {
@@ -266,12 +269,13 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
         text += `\t\t${name}, err := strconv.ParseFloat(val, 64)\n`;
       }
       break;
+    }
     default:
       throw new Error(`unsupported header type ${schema.type}`);
   }
-  text += `\t\tif err != nil {\n`;
+  text += '\t\tif err != nil {\n';
   text += `\t\t\treturn ${zeroResp}, err\n`;
-  text += `\t\t}\n`;
+  text += '\t\t}\n';
   text += `\t\t${respObj}.${propName} = ${byRef}${name}\n`;
   text += '\t}\n';
   return text;
@@ -288,7 +292,7 @@ function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): s
       returnType = `${getResponseEnvelopeName(op)}{}`;
     }
   }
-  return returnType
+  return returnType;
 }
 
 // returns true if the response contains any headers
@@ -313,7 +317,7 @@ function emitPagerDefinition(op: Operation, injectSpans: boolean, generateFakes:
     text += `\t\t\treturn page.${nextLink} != nil && len(*page.${nextLink}) > 0\n`;
     text += '\t\t},\n';
   } else {
-    text += `\t\t\treturn false\n`;
+    text += '\t\t\treturn false\n';
     text += '\t\t},\n';
   }
   text += `\t\tFetcher: func(ctx context.Context, page *${getResponseEnvelopeName(op)}) (${getResponseEnvelopeName(op)}, error) {\n`;
@@ -370,7 +374,7 @@ function emitPagerDefinition(op: Operation, injectSpans: boolean, generateFakes:
   if (injectSpans) {
     text += '\t\tTracer: client.internal.Tracer(),\n';
   }
-  text += `\t})\n`;
+  text += '\t})\n';
   return text;
 }
 
@@ -381,7 +385,7 @@ function genApiVersionDoc(apiVersions?: ApiVersions): string {
   const versions = new Array<string>();
   apiVersions.forEach((val) => {
     versions.push(val.version);
-  })
+  });
   return `//\n// Generated from API version ${versions.join(',')}\n`;
 }
 
@@ -400,7 +404,7 @@ function generateOperation(op: Operation, injectSpans: boolean, generateFakes: b
   }
   let text = '';
   if (hasDescription(op.language.go!)) {
-    text += `${comment(`${opName} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
+    text += `${comment(`${opName} - ${op.language.go!.description}`, '//', undefined, commentLength)}\n`;
     text += genApiVersionDoc(op.apiVersions);
   }
   if (isLROOperation(op)) {
@@ -437,13 +441,13 @@ function generateOperation(op: Operation, injectSpans: boolean, generateFakes: b
   }
   const zeroResp = getZeroReturnValue(op, 'op');
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
-  text += `\tif err != nil {\n`;
+  text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
-  text += `\t}\n`;
-  text += `\thttpResp, err := client.internal.Pipeline().Do(req)\n`;
-  text += `\tif err != nil {\n`;
+  text += '\t}\n';
+  text += '\thttpResp, err := client.internal.Pipeline().Do(req)\n';
+  text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
-  text += `\t}\n`;
+  text += '\t}\n';
   text += `\tif !runtime.HasStatusCode(httpResp, ${formatStatusCodes(statusCodes)}) {\n`;
   text += '\t\terr = runtime.NewResponseError(httpResp)\n';
   text += `\t\treturn ${zeroResp}, err\n`;
@@ -534,7 +538,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
           return (<ChoiceSchema>schema).choiceType.type === SchemaType.String;
         }
         return false;
-      }
+      };
       const skipEncoding = skipURLEncoding(pp);
       if ((pp.schema.type === SchemaType.String || choiceIsString(pp.schema)) && !skipEncoding) {
         const paramName = getParamName(pp);
@@ -567,7 +571,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       optionalParamGroupCheck = '';
     }
     return `\tif ${optionalParamGroupCheck}${paramGroupName}.${capitalize(param.language.go!.name)} != nil {\n`;
-  }
+  };
   if (hasQueryParams) {
     // add query parameters
     const encodedParams = new Array<Parameter>();
@@ -582,21 +586,21 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     const emitQueryParam = function (qp: Parameter, setter: string): string {
       let qpText = '';
       if (qp.clientDefaultValue && qp.implementation === ImplementationLocation.Method) {
-        qpText = emitClientSideDefault(qp, (name, val) => { return `\treqQP.Set(${name}, ${val})` }, imports);
+        qpText = emitClientSideDefault(qp, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
       } else if (qp.required === true) {
         qpText = `\t${setter}\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
         // global optional param
         qpText = `\tif client.${qp.language.go!.name} != nil {\n`;
         qpText += `\t\t${setter}\n`;
-        qpText += `\t}\n`;
+        qpText += '\t}\n';
       } else {
         qpText = emitParamGroupCheck(<GroupProperty>qp.language.go!.paramGroup, qp);
         qpText += `\t\t${setter}\n`;
-        qpText += `\t}\n`;
+        qpText += '\t}\n';
       }
       return qpText;
-    }
+    };
     // emit encoded params first
     if (encodedParams.length > 0) {
       text += '\treqQP := req.Raw().URL.Query()\n';
@@ -612,7 +616,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
           const arrayQP = <ArraySchema>qp.schema;
           switch (arrayQP.elementType.type) {
             case SchemaType.Choice:
-            case SchemaType.SealedChoice:
+            case SchemaType.SealedChoice: {
               const ch = <ChoiceSchema>arrayQP.elementType;
               // only string and number types are supported for enums
               if (ch.choiceType.type === SchemaType.String) {
@@ -622,6 +626,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
                 queryVal = 'fmt.Sprintf("%d", qv)';
               }
               break;
+            }
             case SchemaType.String:
               queryVal = 'qv';
               break;
@@ -683,18 +688,18 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       } else {
         return `${prefix}req.Raw().Header["${headerParam.language.go!.serializedName}"] = []string{${formatParamValue(headerParam, imports)}}\n`;
       }
-    }
+    };
     if (header.required || header.clientDefaultValue) {
       text += emitHeaderSet(header, '\t');
     } else {
       text += emitParamGroupCheck(<GroupProperty>header.language.go!.paramGroup, header);
       text += emitHeaderSet(header, '\t\t');
-      text += `\t}\n`;
+      text += '\t}\n';
     }
   });
   const emitSetBodyWithErrCheck = function(setBodyParam: string): string {
     return `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n`;
-  }
+  };
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
@@ -808,7 +813,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         text += `\t\t\t"${param.language.go!.name}": ${param.language.go!.name},\n`;
       }
     }
-    text += '}); err != nil {'
+    text += '}); err != nil {';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
     text += '\treturn req, nil\n';
@@ -820,10 +825,10 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       } else {
         formDataText = emitParamGroupCheck(<GroupProperty>param.language.go!.paramGroup, param);
         formDataText += `\t\t${setter}\n`;
-        formDataText += `\t}\n`;
+        formDataText += '\t}\n';
       }
       return formDataText;
-    }
+    };
     imports.add('net/url');
     imports.add('strings');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
@@ -834,11 +839,11 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         text += emitFormData(param, setter);
       }
     }
-    text += `\tbody := streaming.NopCloser(strings.NewReader(formData.Encode()))\n`;
+    text += '\tbody := streaming.NopCloser(strings.NewReader(formData.Encode()))\n';
     text += `\t${emitSetBodyWithErrCheck('req.SetBody(body, "application/x-www-form-urlencoded")')}`;
     text += '\treturn req, nil\n';
   } else {
-    text += `\treturn req, nil\n`;
+    text += '\treturn req, nil\n';
   }
   text += '}\n\n';
   return text;
@@ -923,17 +928,17 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    unmarshallerText += `\tcp := map[string]*time.Time{}\n`;
-    unmarshallerText += `\tfor k, v := range aux {\n`;
-    unmarshallerText += `\t\tcp[k] = (*time.Time)(v)\n`;
-    unmarshallerText += `\t}\n`;
+    unmarshallerText += '\tcp := map[string]*time.Time{}\n';
+    unmarshallerText += '\tfor k, v := range aux {\n';
+    unmarshallerText += '\t\tcp[k] = (*time.Time)(v)\n';
+    unmarshallerText += '\t}\n';
     unmarshallerText += `\tresult.${getResultFieldName(op)} = cp\n`;
     return unmarshallerText;
   }
   const mediaType = getMediaType(response.protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     if (response.schema.language.go!.rawJSONAsBytes) {
-      unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
+      unmarshallerText += '\tbody, err := runtime.Payload(resp)\n';
       unmarshallerText += '\tif err != nil {\n';
       unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
       unmarshallerText += '\t}\n';
@@ -944,7 +949,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
       unmarshallerText += '\t}\n';
     }
   } else if (mediaType === 'Text') {
-    unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
+    unmarshallerText += '\tbody, err := runtime.Payload(resp)\n';
     unmarshallerText += '\tif err != nil {\n';
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
@@ -966,7 +971,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
-  const addHeaders = function (props?: Property[]) {
+  const addHeaders = function (props?: Array<Property>) {
     const headerVals = new Array<Property>();
     for (const prop of values(props)) {
       if (prop.language.go!.fromHeader) {
@@ -976,7 +981,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     for (const headerVal of values(headerVals)) {
       text += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${getResponseEnvelopeName(op)}{}`);
     }
-  }
+  };
   if (!isMultiRespOperation(op)) {
     const respEnvName = getResponseEnvelopeName(op);
     text += `\tresult := ${respEnvName}{`;
@@ -992,7 +997,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
       text += '\tresult.Success = resp.StatusCode >= 200 && resp.StatusCode < 300\n';
     } else if (schemaResponse) {
       // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response envelope
-      let target = `result.${getResultFieldName(op)}`
+      let target = `result.${getResultFieldName(op)}`;
       if ((getMediaType(schemaResponse.protocol) === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
         target = 'result';
       }
@@ -1007,14 +1012,14 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     addHeaders(respEnv.properties);
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
-      text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
+      text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`;
       if (!isSchemaResponse(response)) {
         // the operation contains a mix of schemas and non-schema responses
         continue;
       }
       text += `\tvar val ${response.schema.language.go!.name}\n`;
       text += generateResponseUnmarshaller(op, response, 'val');
-      text += `\tresult.Value = val\n`;
+      text += '\tresult.Value = val\n';
     }
     text += '\tdefault:\n';
     text += `\t\treturn ${getZeroReturnValue(op, 'handler')}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
@@ -1083,7 +1088,7 @@ export function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | '
 }
 
 // returns true if any responses are a binary stream
-function hasBinaryResponse(responses: Response[]): boolean {
+function hasBinaryResponse(responses: Array<Response>): boolean {
   for (const resp of values(responses)) {
     if (resp.protocol.http!.knownMediaType === KnownMediaType.Binary) {
       return true;
@@ -1113,7 +1118,7 @@ export function getAPIParametersSig(op: Operation, imports: ImportManager, pkgNa
 //   api - for the API definition
 //    op - for the operation
 // handler - for the response handler
-function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): string[] {
+function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): Array<string> {
   let returnType = getResponseEnvelopeName(op);
   if (isLROOperation(op)) {
     switch (apiType) {
@@ -1156,7 +1161,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, generateFak
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   let text = '';
   if (hasDescription(op.language.go!)) {
-    text += `${comment(`${fixUpOperationName(op)} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
+    text += `${comment(`${fixUpOperationName(op)} - ${op.language.go!.description}`, '//', undefined, commentLength)}\n`;
     text += genApiVersionDoc(op.apiVersions);
   }
   const zeroResp = getZeroReturnValue(op, 'api');
@@ -1184,9 +1189,9 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, generateFak
   let opName = op.language.go!.name;
   opName = info.protocolNaming.internalMethod;
   text += `\t\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
-  text += `\t\tif err != nil {\n`;
+  text += '\t\tif err != nil {\n';
   text += `\t\t\treturn ${zeroResp}, err\n`;
-  text += `\t\t}\n`;
+  text += '\t\t}\n';
 
   let finalStateVia = '';
   // LRO operation might have a special configuration set in x-ms-long-running-operation-options
@@ -1194,24 +1199,24 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, generateFak
   if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
     finalStateVia = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     switch (finalStateVia) {
-      case "azure-async-operation":
-        finalStateVia = `runtime.FinalStateViaAzureAsyncOp`;
+      case 'azure-async-operation':
+        finalStateVia = 'runtime.FinalStateViaAzureAsyncOp';
         break;
-      case "location":
-        finalStateVia = `runtime.FinalStateViaLocation`;
+      case 'location':
+        finalStateVia = 'runtime.FinalStateViaLocation';
         break;
-      case "original-uri":
-        finalStateVia = `runtime.FinalStateViaOriginalURI`;
+      case 'original-uri':
+        finalStateVia = 'runtime.FinalStateViaOriginalURI';
         break;
-      case "operation-location":
-        finalStateVia = `runtime.FinalStateViaOpLocation`;
+      case 'operation-location':
+        finalStateVia = 'runtime.FinalStateViaOpLocation';
         break;
       default:
         throw new Error(`unhandled final-state-via value ${finalStateVia}`);
     }
   }
 
-  text += `\t\tpoller, err := runtime.NewPoller`;
+  text += '\t\tpoller, err := runtime.NewPoller';
   if (finalStateVia === '' && pollerType === 'nil') {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
@@ -1237,7 +1242,7 @@ function generateLROBeginMethod(op: Operation, injectSpans: boolean, generateFak
 
   // creating the poller from resume token branch
 
-  text += `\t\treturn runtime.NewPollerFromResumeToken`;
+  text += '\t\treturn runtime.NewPollerFromResumeToken';
   if (pollerType === 'nil') {
     text += pollerTypeParam;
   }

@@ -11,7 +11,7 @@ type importEntry = { imp: string, alias?: string };
 
 // tracks packages that need to be imported
 export class ImportManager {
-  private imports: importEntry[];
+  private imports: Array<importEntry>;
 
   constructor() {
     this.imports = new Array<importEntry>();
@@ -30,7 +30,7 @@ export class ImportManager {
 
   // returns the number of packages in the list
   length(): number {
-    return this.imports.length
+    return this.imports.length;
   }
 
   // returns the import list as Go source code
@@ -41,7 +41,7 @@ export class ImportManager {
       const first = this.imports[0];
       return `import ${this.alias(first)}"${first.imp}"\n\n`;
     }
-    this.imports.sort((a: importEntry, b: importEntry) => { return sortAscending(a.imp, b.imp) });
+    this.imports.sort((a: importEntry, b: importEntry) => { return sortAscending(a.imp, b.imp); });
     let text = 'import (\n';
     for (const imp of values(this.imports)) {
       text += `\t${this.alias(imp)}"${imp.imp}"\n`;

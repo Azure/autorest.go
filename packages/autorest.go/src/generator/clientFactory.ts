@@ -56,7 +56,7 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
     result += `${formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.')}\n`;
     result += `${formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
 
-    result += `func NewClientFactory(${allClientParams.map(p => {return `${p.language.go!.name} ${formatParameterTypeName(p)}`;}).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
+    result += `func NewClientFactory(${allClientParams.map(p => { return `${p.language.go!.name} ${formatParameterTypeName(p)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
     result += '\t_, err := arm.NewClient(moduleName+".ClientFactory", moduleVersion, credential, options)\n';
     result += '\tif err != nil {\n';
     result += '\t\treturn nil, err\n';
@@ -76,7 +76,7 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       if (clientParams) {
         clientParams.sort(sortParametersByRequired);
-        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(${clientParams.map(p => {return `c.${p.language.go!.name}`;}).join(', ')}, c.credential, c.options)\n`;
+        result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(${clientParams.map(p => { return `c.${p.language.go!.name}`; }).join(', ')}, c.credential, c.options)\n`;
       } else {
         result += `\tsubClient, _ := ${group.language.go!.clientCtorName}(c.credential, c.options)\n`;
       }

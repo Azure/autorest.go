@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
-import { contentPreamble } from './helpers'
+import { contentPreamble } from './helpers';
 import { values } from '@azure-tools/linq';
 import { ImportManager } from './imports';
 
@@ -22,7 +22,7 @@ export class Content {
 
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateTimeHelpers(session: Session<CodeModel>, packageName?: string): Promise<Content[]> {
+export async function generateTimeHelpers(session: Session<CodeModel>, packageName?: string): Promise<Array<Content>> {
   const content = new Array<Content>();
   if (!session.model.language.go!.hasTimeRFC1123 &&
     !session.model.language.go!.hasTimeRFC3339 &&

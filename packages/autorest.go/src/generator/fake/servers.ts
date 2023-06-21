@@ -23,7 +23,7 @@ export class OperationGroupContent {
   }
 }
 
-export async function generateServers(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
+export async function generateServers(session: Session<CodeModel>): Promise<Array<OperationGroupContent>> {
   const operations = new Array<OperationGroupContent>();
   const clientPkg = session.model.language.go!.packageName;
   for (const group of values(session.model.operationGroups)) {
@@ -100,7 +100,7 @@ export async function generateServers(session: Session<CodeModel>): Promise<Oper
 
     content += `// New${serverTransport} creates a new instance of ${serverTransport} with the provided implementation.\n`;
     content += `// The returned ${serverTransport} instance is connected to an instance of ${clientPkg}.${group.language.go!.clientName} via the\n`;
-    content += `// azcore.ClientOptions.Transporter field in the client's constructor parameters.\n`;
+    content += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
     content += `func New${serverTransport}(srv *${serverName}) *${serverTransport} {\n`;
     content += `\treturn &${serverTransport}{srv: srv}\n}\n\n`;
 
@@ -178,7 +178,7 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
       if (isMultiRespOperation(op)) {
         content += `\tresp, err := server.MarshalResponseAs${getMediaTypeForMultiRespOperation(op)}(respContent, server.GetResponse(respr).${getResultFieldName(op)}, req)\n`;
       } else if (isBinaryResponseOperation(op)) {
-        content += `\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n`;
+        content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
         content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(op)},\n`;
         content += '\t\tContentType: "application/octet-stream",\n';
         content += '\t})\n';
@@ -212,7 +212,7 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
         content += '\tresp, err := server.NewResponse(respContent, req, nil)\n';
       }
 
-      content += `\tif err != nil {\t\treturn nil, err\n\t}\n`;
+      content += '\tif err != nil {\t\treturn nil, err\n\t}\n';
 
       // propagate any header response values into the *http.Response
       const respEnv = getResponseEnvelope(op);
@@ -220,10 +220,10 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
         if (prop.language.go!.fromHeader) {
           if (prop.schema.language.go!.headerCollectionPrefix) {
             content += `\tfor k, v := range server.GetResponse(respr).${prop.language.go!.name} {\n`;
-            content += `\t\tif v != nil {\n`;
+            content += '\t\tif v != nil {\n';
             content += `\t\t\tresp.Header.Set("${prop.schema.language.go!.headerCollectionPrefix}"+k, *v)\n`;
-            content += `\t\t}\n`;
-            content += `\t}\n`;
+            content += '\t\t}\n';
+            content += '\t}\n';
           } else {
             content += `\tif val := server.GetResponse(respr).${prop.language.go!.name}; val != nil {\n`;
             content += `\t\tresp.Header.Set("${prop.language.go!.fromHeader}", ${formatValue('val', prop.schema, imports, true)})\n\t}\n`;
@@ -265,7 +265,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
     content += '\tregex := regexp.MustCompile(regexStr)\n';
     content += '\tmatches := regex.FindStringSubmatch(req.URL.EscapedPath())\n';
     content += `\tif matches == nil || len(matches) < ${numPathParams} {\n`;
-    content += `\t\treturn nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n\t}\n`;
+    content += '\t\treturn nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n\t}\n';
   }
   if (values(op.parameters).where((each: Parameter) => { return each.protocol.http?.in === 'query' && each.implementation === ImplementationLocation.Method && (each.schema.type !== SchemaType.Constant || !each.required); }).any()) {
     content += '\tqp := req.URL.Query()\n';
@@ -363,7 +363,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
     if (bodyParam && bodyParam.schema.type !== SchemaType.Constant) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
-      content += `\tbody, err := server.UnmarshalRequestAsText(req)\n`;
+      content += '\tbody, err := server.UnmarshalRequestAsText(req)\n';
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     }
   } else if (mediaType === 'JSON' || mediaType === 'XML') {
@@ -378,7 +378,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
         content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${format}Format)\n`;
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       } else if (bodyParam.schema.language.go!.rawJSONAsBytes) {
-        content += `\tbody, err := io.ReadAll(req.Body)\n`;
+        content += '\tbody, err := io.ReadAll(req.Body)\n';
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
         content += '\treq.Body.Close()\n';
       } else if (bodyParam.schema.language.go!.discriminatorInterface) {
@@ -427,7 +427,7 @@ function dispatchForLROBody(clientPkg: string, receiverName: string, op: Operati
 
   content += `\tif !server.PollerResponderMore(${operationStateMachine}) {\n`;
   content += `\t\t${operationStateMachine} = nil\n\t}\n\n`;
-  content += '\treturn resp, nil\n'
+  content += '\treturn resp, nil\n';
   return content;
 }
 
@@ -441,7 +441,7 @@ function dispatchForPagerBody(clientPkg: string, receiverName: string, op: Opera
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     content += `\t\tserver.PagerResponderInjectNextLinks(${operationStateMachine}, req, func(page *${clientPkg}.${getResponseEnvelopeName(op)}, createLink func() string) {\n`;
     content += `\t\t\tpage.${op.language.go!.paging.nextLinkName} = to.Ptr(createLink())\n`;
-    content += `\t\t})\n`;
+    content += '\t\t})\n';
   }
   content += '\t}\n'; // end if
   content += `\tresp, err := server.PagerResponderNext(${operationStateMachine}, req)\n`;
@@ -485,7 +485,7 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
   let content = '';
 
   // create any param groups and populate their values
-  const paramGroups = new Map<GroupProperty, Parameter[]>();
+  const paramGroups = new Map<GroupProperty, Array<Parameter>>();
   for (const param of values(consolidateHostParams(aggregateParameters(op)))) {
     if (param.implementation === ImplementationLocation.Client || (param.schema.type === SchemaType.Constant && param.required)) {
       // client params and required constants aren't passed to APIs
@@ -526,7 +526,7 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
         let fromVar: string;
         switch (asArray.elementType.type) {
           case SchemaType.Choice:
-          case SchemaType.SealedChoice:
+          case SchemaType.SealedChoice: {
             const asChoice = <ChoiceSchema>asArray.elementType;
             // we do support integers/floats as choices but apparently M4 doesn't recognize this.
             switch (<string>asChoice.choiceType.type) {
@@ -551,6 +551,7 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
                 throw new Error(`unhandled array element choice type ${asChoice.choiceType.type}`);
             }
             break;
+          }
           default:
             throw new Error(`unhandled array element type ${asArray.elementType.type}`);
         }
@@ -591,7 +592,7 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       const dateTime = <DateTimeSchema>param.schema;
       let format = 'time.RFC3339Nano';
       if (dateTime.format === 'date-time-rfc1123') {
-        format = 'time.RFC1123'
+        format = 'time.RFC1123';
       }
       let from = `time.Parse(${format}, ${paramValue})`;
       if (!param.required) {
@@ -642,12 +643,12 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       const localVar = createLocalVariableName(param, 'Param');
       content += `\tvar ${localVar} map[string]*string\n`;
-      content += `\tfor hh := range req.Header {\n`;
+      content += '\tfor hh := range req.Header {\n';
       const headerPrefix = param.schema.language.go!.headerCollectionPrefix;
       content += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("x-ms-meta-")], "${headerPrefix}") {\n`;
       content += `\t\t\tif ${localVar} == nil {\n\t\t\t\t${localVar} = map[string]*string{}\n\t\t\t}\n`;
       content += `\t\t\t${localVar}[hh[len("${headerPrefix}"):]] = to.Ptr(getHeaderValue(req.Header, hh))\n`;
-      content += `\t\t}\n\t}\n`;
+      content += '\t\t}\n\t}\n';
     }
   }
 
@@ -779,7 +780,7 @@ function getParamValueWithCast(clientPkg: string, param: Parameter, imports: Imp
   }
 
   switch (param.schema.type) {
-    case SchemaType.Array:
+    case SchemaType.Array: {
       const asArray = <ArraySchema>param.schema;
       switch (asArray.elementType.type) {
         case SchemaType.Choice:
@@ -791,6 +792,7 @@ function getParamValueWithCast(clientPkg: string, param: Parameter, imports: Imp
         default:
           throw new Error(`unhandled array element type ${asArray.elementType.type}`);
       }
+    }
     case SchemaType.Boolean:
     case SchemaType.ByteArray:
     case SchemaType.Date:
@@ -800,7 +802,7 @@ function getParamValueWithCast(clientPkg: string, param: Parameter, imports: Imp
     case SchemaType.SealedChoice:
       return `${clientPkg}.${param.schema.language.go!.name}(${value})`;
     case SchemaType.Integer:
-    case SchemaType.Number:
+    case SchemaType.Number: {
       const numSchema = <NumberSchema>param.schema;
       // optional params have been parsed/converted into their required bitness
       if (numSchema.precision === 32 && param.required) {
@@ -812,6 +814,7 @@ function getParamValueWithCast(clientPkg: string, param: Parameter, imports: Imp
       }
       // parsed ints/numbers have a default type of int64
       return createLocalVariableName(param, 'Param');
+    }
     case SchemaType.UnixTime:
       return `time.Unix(${createLocalVariableName(param, 'Param')}, 0)`;
     default:
@@ -844,7 +847,7 @@ function getArraySeparator(param: Parameter): string {
   }
 }
 
-function consolidateHostParams(params: Parameter[]): Parameter[] {
+function consolidateHostParams(params: Array<Parameter>): Array<Parameter> {
   if (!values(params).where((each: Parameter) => { return each.protocol.http?.in === 'uri'; }).any()) {
     // no host params
     return params;

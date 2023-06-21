@@ -33,7 +33,7 @@ export async function generateInterfaces(session: Session<CodeModel>): Promise<s
     }
   }
 
-  allDiscriminators.sort((a: Schema, b: Schema) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
+  allDiscriminators.sort((a: Schema, b: Schema) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
 
   let text = await contentPreamble(session);
 
@@ -41,7 +41,7 @@ export async function generateInterfaces(session: Session<CodeModel>): Promise<s
     const methodName = `Get${discriminator.language.go!.name}`;
     text += `// ${discriminator.language.go!.discriminatorInterface} provides polymorphic access to related types.\n`;
     text += `// Call the interface's ${methodName}() method to access the common type.\n`;
-    text += `// Use a type switch to determine the concrete type.  The possible types are:\n`;
+    text += '// Use a type switch to determine the concrete type.  The possible types are:\n';
     text += comment((<Array<string>>discriminator.language.go!.discriminatorTypes).join(', '), '// - ');
     text += `\ntype ${discriminator.language.go!.discriminatorInterface} interface {\n`;
     if (discriminator.language.go!.discriminatorParent) {

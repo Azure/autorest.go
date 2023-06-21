@@ -287,12 +287,12 @@ function getEscapedReservedName(name: string, appendValue: string): string {
 const gRenamed = new Map<string, boolean>();
 
 // case-preserving version of deconstruct() that also splits on more path-separator characters
-function deconstruct(identifier: string): string[] {
+function deconstruct(identifier: string): Array<string> {
   return `${identifier}`.
     replace(/([a-z]+)([A-Z])/g, '$1 $2').
     replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2').
     replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3').
-    split(/[\W|_|\.|@|-|\s|\$]+/);
+    split(/[\W|_|.|@|-|\s|$]+/);
 }
 
 function ensureNameCase(name: string, lowerFirst?: boolean): string {

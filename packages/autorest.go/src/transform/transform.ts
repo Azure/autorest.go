@@ -243,7 +243,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       return 'map[string]any';
     case SchemaType.ArmId:
       return 'string';
-    case SchemaType.Array:
+    case SchemaType.Array: {
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
       if (rawJSONAsBytes && (arrayElem.type === SchemaType.Any || arrayElem.type === SchemaType.AnyObject)) {
@@ -258,6 +258,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         return `[]*${arrayElem.language.go!.name}`;
       }
       return `[]${arrayElem.language.go!.name}`;
+    }
     case SchemaType.Binary:
       return 'io.ReadSeekCloser';
     case SchemaType.Boolean:
@@ -266,10 +267,11 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       return '[]byte';
     case SchemaType.Char:
       return 'rune';
-    case SchemaType.Constant:
-      let constSchema = <ConstantSchema>schema;
+    case SchemaType.Constant: {
+      const constSchema = <ConstantSchema>schema;
       constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, type);
       return constSchema.valueType.language.go!.name;
+    }
     case SchemaType.DateTime:
       // header/query param values are parsed separately so they don't need custom types
       if (type === 'InBody') {
@@ -291,7 +293,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         schema.language.go!.internalTimeType = 'timeUnix';
       }
       return 'time.Time';
-    case SchemaType.Dictionary:
+    case SchemaType.Dictionary: {
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
       if (rawJSONAsBytes && (dictElem.type === SchemaType.Any || dictElem.type === SchemaType.AnyObject)) {
@@ -304,6 +306,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         return `map[string]*${dictElem.language.go!.name}`;
       }
       return `map[string]${dictElem.language.go!.name}`;
+    }
     case SchemaType.Integer:
       if ((<NumberSchema>schema).precision === 32) {
         return 'int32';
@@ -349,19 +352,21 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
   }
   schema.language.go!.marshallingFormat = marshallingFormat;
   switch (schema.type) {
-    case SchemaType.Array:
+    case SchemaType.Array: {
       const arraySchema = <ArraySchema>schema;
       if (shouldRecurse(arraySchema.elementType)) {
         recursiveAddMarshallingFormat(arraySchema.elementType, marshallingFormat);
       }
       break;
-    case SchemaType.Dictionary:
+    }
+    case SchemaType.Dictionary: {
       const dictSchema = <DictionarySchema>schema;
       if (shouldRecurse(dictSchema.elementType)) {
         recursiveAddMarshallingFormat(dictSchema.elementType, marshallingFormat);
       }
       break;
-    case SchemaType.Object:
+    }
+    case SchemaType.Object: {
       const os = <ObjectSchema>schema;
       for (const prop of values(os.properties)) {
         if (shouldRecurse(prop.schema)) {
@@ -376,6 +381,7 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
         recursiveAddMarshallingFormat(parent, marshallingFormat);
       }
       break;
+    }
   }
 }
 
@@ -728,7 +734,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         // convert each header to a property and append it to the response properties list
         const name = head.language.go!.name;
         if (!headers.has(name)) {
-          const description = `${name} contains the information returned from the ${head.header} header response.`
+          const description = `${name} contains the information returned from the ${head.header} header response.`;
           headers.set(name, <HttpHeaderWithDescription>{
             ...head,
             description: description
@@ -879,7 +885,7 @@ function newString(name: string, desc: string): StringSchema {
 }
 
 function newProperty(name: string, desc: string, schema: Schema): Property {
-  let prop = new Property(name, desc, schema);
+  const prop = new Property(name, desc, schema);
   if (isObjectSchema(schema) && schema.discriminator) {
     prop.isDiscriminator = true;
   }
@@ -933,28 +939,28 @@ function recursiveTypeName(schema: Schema): string {
         return rawJSON;
       }
       return 'Object';
-    case SchemaType.Array:
+    case SchemaType.Array: {
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
       return `${recursiveTypeName(arrayElem)}Array`;
+    }
     case SchemaType.Boolean:
       return 'Bool';
     case SchemaType.ByteArray:
       return 'ByteArray';
     case SchemaType.Choice:
-      const choiceSchema = <ChoiceSchema>schema;
-      return choiceSchema.language.go!.name;
+      return (<ChoiceSchema>schema).language.go!.name;
     case SchemaType.SealedChoice:
-      const sealedChoiceSchema = <SealedChoiceSchema>schema;
-      return sealedChoiceSchema.language.go!.name;
+      return (<SealedChoiceSchema>schema).language.go!.name;
     case SchemaType.Date:
     case SchemaType.DateTime:
     case SchemaType.UnixTime:
       return 'Time';
-    case SchemaType.Dictionary:
+    case SchemaType.Dictionary: {
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
       return `MapOf${recursiveTypeName(dictElem)}`;
+    }
     case SchemaType.Integer:
       if ((<NumberSchema>schema).precision === 32) {
         return 'Int32';
@@ -981,7 +987,7 @@ function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {
 
   // walk to the root
   let root = obj;
-  while (true) {
+  for (;;) {
     if (!root.parents) {
       // simple case, already at the root
       break;
@@ -1047,9 +1053,9 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValu
 
 // convert comments that are in Markdown to html and then to plain text
 function parseComments(comment: string): string {
-  let converter = new Converter();
+  const converter = new Converter();
   converter.setOption('tables', true);
-  let html = converter.makeHtml(comment);
+  const html = converter.makeHtml(comment);
   return fromString(html, {
     wordwrap: 200,
     tables: true,
@@ -1152,7 +1158,7 @@ function dfsSchema(schema: Schema, referencedTypes: Set<Schema>) {
 function separateOperationByRequestsProtocol(group: OperationGroup, op: Operation, defaultTypes: Array<KnownMediaType>) {
   for (const req of values(op.requests)) {
     const newOp = <Operation>{...op};
-    newOp.language = clone(op.language)
+    newOp.language = clone(op.language);
     newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
     let name = op.language.go!.name;
     if (req.protocol.http!.knownMediaType && !defaultTypes.includes(req.protocol.http!.knownMediaType)) {

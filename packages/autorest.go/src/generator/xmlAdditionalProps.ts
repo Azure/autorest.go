@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
-import { contentPreamble } from './helpers'
+import { contentPreamble } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content for required additional properties XML marshalling helpers.

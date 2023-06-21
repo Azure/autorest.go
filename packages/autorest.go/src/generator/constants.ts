@@ -34,7 +34,7 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
   // data-plane clients must manage their own constants for these values
   if (<boolean>session.model.language.go!.azureARM) {
     const version = await getModuleVersion(session);
-    text += `const (\n`;
+    text += 'const (\n';
     text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
     text += `\tmoduleVersion = "v${version}"\n`;
     text += ')\n\n';
@@ -48,7 +48,7 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
     text += 'const (\n';
     for (const val of values(enm.choices)) {
       if (hasDescription(val.language.go!)) {
-        text += `\t${comment(`${val.language.go!.name} - ${val.language.go!.description}`, "//", undefined, commentLength)}\n`;
+        text += `\t${comment(`${val.language.go!.name} - ${val.language.go!.description}`, '//', undefined, commentLength)}\n`;
       }
       let formatValue = `"${val.value}"`;
       if (enm.type !== 'string') {
@@ -71,7 +71,7 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
 }
 
 // returns a collection containing all enum entries and their values
-function getEnums(schemas: Schemas): EnumEntry[] {
+function getEnums(schemas: Schemas): Array<EnumEntry> {
   // group all enum categories into a single array so they can be sorted
   const enums = new Array<EnumEntry>();
   for (const choice of values(schemas.choices)) {
@@ -99,7 +99,7 @@ function getEnums(schemas: Schemas): EnumEntry[] {
     }
     enums.push(entry);
   }
-  enums.sort((a: EnumEntry, b: EnumEntry) => { return sortAscending(a.name, b.name) });
+  enums.sort((a: EnumEntry, b: EnumEntry) => { return sortAscending(a.name, b.name); });
   return enums;
 }
 
@@ -109,8 +109,8 @@ class EnumEntry {
   type: string;
   funcName: string;
   desc?: string;
-  choices: ChoiceValue[];
-  constructor(name: string, type: string, funcName: string, choices: ChoiceValue[]) {
+  choices: Array<ChoiceValue>;
+  constructor(name: string, type: string, funcName: string, choices: Array<ChoiceValue>) {
     this.name = name;
     this.type = type;
     this.funcName = funcName;
