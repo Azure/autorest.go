@@ -275,26 +275,30 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, type);
       return constSchema.valueType.language.go!.name;
     }
-    case SchemaType.DateTime:
-      // header/query param values are parsed separately so they don't need custom types
+    case SchemaType.DateTime: {
+      const dateTime = <DateTimeSchema>schema;
+      if (dateTime.format === 'date-time-rfc1123') {
+        schema.language.go!.internalTimeType = 'timeRFC1123';
+      } else {
+        schema.language.go!.internalTimeType = 'timeRFC3339';
+      }
       if (type === 'InBody') {
         // add a marker to the code model indicating that we need
         // to include support for marshalling/unmarshalling time.
-        const dateTime = <DateTimeSchema>schema;
+        // header/query param values are parsed separately so they
+        // don't need the custom time types.
         if (dateTime.format === 'date-time-rfc1123') {
           codeModel.language.go!.hasTimeRFC1123 = true;
-          schema.language.go!.internalTimeType = 'timeRFC1123';
         } else {
           codeModel.language.go!.hasTimeRFC3339 = true;
-          schema.language.go!.internalTimeType = 'timeRFC3339';
         }
       }
       return 'time.Time';
+    }
     case SchemaType.UnixTime:
+      // unix time always requires the helper time type
       codeModel.language.go!.hasUnixTime = true;
-      if (type === 'InBody') {
-        schema.language.go!.internalTimeType = 'timeUnix';
-      }
+      schema.language.go!.internalTimeType = 'timeUnix';
       return 'time.Time';
     case SchemaType.Dictionary: {
       const dictSchema = <DictionarySchema>schema;
