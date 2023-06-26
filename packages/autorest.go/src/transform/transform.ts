@@ -568,7 +568,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
           } else if (dupe.schema !== param.schema) {
             throw new Error(`parameter group ${paramGroupName} contains overlapping parameters with different schemas`);
           }
-        } else if (param.required !== true && !(param.schema.type === SchemaType.Constant && param.protocol.http!.in === 'body')) {
+        } else if (param.implementation === ImplementationLocation.Method && param.required !== true && !(param.schema.type === SchemaType.Constant && param.protocol.http!.in === 'body')) {
           // include non-required constants that aren't body params in the optional values struct.
           (<GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(param);
           // associate the group with the param

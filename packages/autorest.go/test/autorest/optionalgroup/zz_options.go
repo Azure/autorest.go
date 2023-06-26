@@ -157,6 +157,7 @@ type ExplicitClientPutRequiredBinaryBodyOptions struct {
 // ImplicitClientGetOptionalGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetOptionalGlobalQuery
 // method.
 type ImplicitClientGetOptionalGlobalQueryOptions struct {
+	// placeholder for future optional parameters
 }
 
 // ImplicitClientGetRequiredGlobalPathOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalPath
