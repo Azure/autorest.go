@@ -251,10 +251,13 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         return '[]byte';
       }
       arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arrayElem);
-      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, type);
       // passing nil for array elements in headers, paths, and query params
       // isn't very useful as we'd just skip nil entries.  so disable it.
-      if (<boolean>arraySchema.language.go!.elementIsPtr && (type === 'Property' || type === 'InBody')) {
+      if (type !== 'Property' && type !== 'InBody') {
+        arraySchema.language.go!.elementIsPtr = false;
+      }
+      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, type);
+      if (<boolean>arraySchema.language.go!.elementIsPtr) {
         return `[]*${arrayElem.language.go!.name}`;
       }
       return `[]${arrayElem.language.go!.name}`;
