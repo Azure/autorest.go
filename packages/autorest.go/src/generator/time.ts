@@ -24,10 +24,10 @@ export class Content {
 // Will be empty if no helpers are required.
 export async function generateTimeHelpers(session: Session<CodeModel>, packageName?: string): Promise<Array<Content>> {
   const content = new Array<Content>();
-  if (!session.model.language.go!.hasTimeRFC1123 &&
-    !session.model.language.go!.hasTimeRFC3339 &&
-    !session.model.language.go!.hasUnixTime &&
-    !session.model.language.go!.hasDate) {
+  if (!session.model.language.go!.generateTimeRFC1123Helper &&
+    !session.model.language.go!.generateTimeRFC3339Helper &&
+    !session.model.language.go!.generateUnixTimeHelper &&
+    !session.model.language.go!.generateDateHelper) {
     return content;
   }
   let needsPopulate = false;
@@ -47,16 +47,16 @@ export async function generateTimeHelpers(session: Session<CodeModel>, packageNa
     }
   }
   const preamble = await contentPreamble(session, packageName);
-  if (session.model.language.go!.hasTimeRFC1123) {
+  if (session.model.language.go!.generateTimeRFC1123Helper) {
     content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsPopulate)));
   }
-  if (session.model.language.go!.hasTimeRFC3339) {
+  if (session.model.language.go!.generateTimeRFC3339Helper) {
     content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble, needsPopulate)));
   }
-  if (session.model.language.go!.hasUnixTime) {
+  if (session.model.language.go!.generateUnixTimeHelper) {
     content.push(new Content('time_unix', generateUnixTimeHelper(preamble, needsPopulate)));
   }
-  if (session.model.language.go!.hasDate) {
+  if (session.model.language.go!.generateDateHelper) {
     content.push(new Content('date_type', generateDateHelper(preamble, needsPopulate)));
   }
   return content;
