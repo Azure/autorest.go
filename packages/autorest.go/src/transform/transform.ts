@@ -288,16 +288,16 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         // header/query param values are parsed separately so they
         // don't need the custom time types.
         if (dateTime.format === 'date-time-rfc1123') {
-          codeModel.language.go!.hasTimeRFC1123 = true;
+          codeModel.language.go!.generateTimeRFC1123Helper = true;
         } else {
-          codeModel.language.go!.hasTimeRFC3339 = true;
+          codeModel.language.go!.generateTimeRFC3339Helper = true;
         }
       }
       return 'time.Time';
     }
     case SchemaType.UnixTime:
       // unix time always requires the helper time type
-      codeModel.language.go!.hasUnixTime = true;
+      codeModel.language.go!.generateUnixTimeHelper = true;
       schema.language.go!.internalTimeType = 'timeUnix';
       return 'time.Time';
     case SchemaType.Dictionary: {
@@ -332,9 +332,9 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
     case SchemaType.Uri:
       return 'string';
     case SchemaType.Date:
+      schema.language.go!.internalTimeType = 'dateType';
       if (type === 'InBody') {
-        codeModel.language.go!.hasDate = true;
-        schema.language.go!.internalTimeType = 'dateType';
+        codeModel.language.go!.generateDateHelper = true;
       }
       return 'time.Time';
     case SchemaType.Time:
