@@ -583,12 +583,16 @@ async function processOperationRequests(session: Session<CodeModel>) {
         // add the ResumeToken to the optional params type
         const tokenParam = newParameter('ResumeToken', 'Resumes the LRO from the provided token.', newString('string', ''));
         tokenParam.language.go!.byValue = true;
+        tokenParam.language.go!.isResumeToken = true;
+        tokenParam.required = false;
+        op.parameters?.push(tokenParam);
+        tokenParam.language.go!.paramGroup = op.language.go!.optionalParamGroup;
         (<GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(tokenParam);
       }
       // recursively add the marshalling format to the body param if applicable
       const marshallingFormat = getMarshallingFormat(op.requests![0].protocol);
       if (marshallingFormat !== 'na') {
-        const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+        const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
           if (marshallingFormat === 'xml' && bodyParam.schema.serialization?.xml?.name) {

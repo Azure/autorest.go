@@ -492,6 +492,10 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       continue;
     }
     if (param.language.go!.paramGroup) {
+      if (param.language.go!.isResumeToken) {
+        // skip the ResumeToken param as we don't send that back to the caller
+        continue;
+      }
       if (!paramGroups.has(param.language.go!.paramGroup)) {
         paramGroups.set(param.language.go!.paramGroup, new Array<Parameter>());
       }
@@ -715,8 +719,8 @@ function populateApiParams(clientPkg: string, op: Operation, imports: ImportMana
   for (const param of values(consolidateHostParams(getMethodParameters(op)))) {
     if (param === op.language.go!.optionalParamGroup) {
       // this is the optional params type. in some cases we just pass nil
-      const countParams = values((<GroupProperty>op.language.go!.optionalParamGroup).originalParameter).where((each: Parameter) => { return each.implementation === ImplementationLocation.Method; }).count();
-      if (countParams === 0 || (isLROOperation(op) && countParams === 1)) {
+      const countParams = values((<GroupProperty>op.language.go!.optionalParamGroup).originalParameter).where((each: Parameter) => { return each.implementation === ImplementationLocation.Method && !each.language.go!.isResumeToken; }).count();
+      if (countParams === 0) {
         // if the options param is empty or only contains the resume token param just pass nil
         params.push('nil');
         continue;
