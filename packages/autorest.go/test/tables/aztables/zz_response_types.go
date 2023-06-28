@@ -64,19 +64,19 @@ type ClientDeleteResponse struct {
 // ClientGetAccessPolicyResponse contains the response from method Client.GetAccessPolicy.
 type ClientGetAccessPolicyResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// A collection of signed identifiers.
 	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ClientInsertEntityResponse contains the response from method Client.InsertEntity.
@@ -235,13 +235,13 @@ type ServiceClientGetPropertiesResponse struct {
 	ServiceProperties
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ServiceClientGetStatisticsResponse contains the response from method ServiceClient.GetStatistics.
@@ -250,16 +250,16 @@ type ServiceClientGetStatisticsResponse struct {
 	ServiceStats
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ServiceClientSetPropertiesResponse contains the response from method ServiceClient.SetProperties.

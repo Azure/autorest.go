@@ -125,7 +125,7 @@ function emit(respEnv: ObjectSchema, imports: ImportManager): string {
 
       let tag = '';
       // only emit tags for XML; JSON uses custom marshallers/unmarshallers
-      if (respEnv.language.go!.marshallingFormat === 'xml') {
+      if (respEnv.language.go!.marshallingFormat === 'xml' && !prop.language.go!.fromHeader) {
         tag = ` \`xml:"${getXMLSerialization(prop, respEnv.language.go!)}"\``;
       }
 

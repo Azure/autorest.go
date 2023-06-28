@@ -198,28 +198,28 @@ type BlockBlobClientGetBlockListResponse struct {
 	BlockList
 
 	// BlobContentLength contains the information returned from the x-ms-blob-content-length header response.
-	BlobContentLength *int64 `xml:"BlobContentLength"`
+	BlobContentLength *int64
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string `xml:"ContentType"`
+	ContentType *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// ETag contains the information returned from the ETag header response.
-	ETag *string `xml:"ETag"`
+	ETag *string
 
 	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time `xml:"LastModified"`
+	LastModified *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // BlockBlobClientPutBlobFromURLResponse contains the response from method BlockBlobClient.PutBlobFromURL.
@@ -855,16 +855,16 @@ type ClientGetTagsResponse struct {
 	Tags
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ClientQueryResponse contains the response from method Client.Query.
@@ -1320,43 +1320,43 @@ type ContainerClientFilterBlobsResponse struct {
 	FilterBlobSegment
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ContainerClientGetAccessPolicyResponse contains the response from method ContainerClient.GetAccessPolicy.
 type ContainerClientGetAccessPolicyResponse struct {
 	// BlobPublicAccess contains the information returned from the x-ms-blob-public-access header response.
-	BlobPublicAccess *PublicAccessType `xml:"BlobPublicAccess"`
+	BlobPublicAccess *PublicAccessType
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// ETag contains the information returned from the ETag header response.
-	ETag *string `xml:"ETag"`
+	ETag *string
 
 	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time `xml:"LastModified"`
+	LastModified *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// a collection of signed identifiers
 	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ContainerClientGetAccountInfoResponse contains the response from method ContainerClient.GetAccountInfo.
@@ -1438,19 +1438,19 @@ type ContainerClientListBlobFlatSegmentResponse struct {
 	ListBlobsFlatSegmentResponse
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string `xml:"ContentType"`
+	ContentType *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ContainerClientListBlobHierarchySegmentResponse contains the response from method ContainerClient.NewListBlobHierarchySegmentPager.
@@ -1459,19 +1459,19 @@ type ContainerClientListBlobHierarchySegmentResponse struct {
 	ListBlobsHierarchySegmentResponse
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string `xml:"ContentType"`
+	ContentType *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ContainerClientReleaseLeaseResponse contains the response from method ContainerClient.ReleaseLease.
@@ -1705,25 +1705,25 @@ type PageBlobClientGetPageRangesDiffResponse struct {
 	PageList
 
 	// BlobContentLength contains the information returned from the x-ms-blob-content-length header response.
-	BlobContentLength *int64 `xml:"BlobContentLength"`
+	BlobContentLength *int64
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// ETag contains the information returned from the ETag header response.
-	ETag *string `xml:"ETag"`
+	ETag *string
 
 	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time `xml:"LastModified"`
+	LastModified *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // PageBlobClientGetPageRangesResponse contains the response from method PageBlobClient.NewGetPageRangesPager.
@@ -1732,25 +1732,25 @@ type PageBlobClientGetPageRangesResponse struct {
 	PageList
 
 	// BlobContentLength contains the information returned from the x-ms-blob-content-length header response.
-	BlobContentLength *int64 `xml:"BlobContentLength"`
+	BlobContentLength *int64
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// ETag contains the information returned from the ETag header response.
-	ETag *string `xml:"ETag"`
+	ETag *string
 
 	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time `xml:"LastModified"`
+	LastModified *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // PageBlobClientResizeResponse contains the response from method PageBlobClient.Resize.
@@ -1882,16 +1882,16 @@ type ServiceClientFilterBlobsResponse struct {
 	FilterBlobSegment
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ServiceClientGetAccountInfoResponse contains the response from method ServiceClient.GetAccountInfo.
@@ -1924,13 +1924,13 @@ type ServiceClientGetPropertiesResponse struct {
 	StorageServiceProperties
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ServiceClientGetStatisticsResponse contains the response from method ServiceClient.GetStatistics.
@@ -1939,16 +1939,16 @@ type ServiceClientGetStatisticsResponse struct {
 	StorageServiceStats
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ServiceClientGetUserDelegationKeyResponse contains the response from method ServiceClient.GetUserDelegationKey.
@@ -1957,16 +1957,16 @@ type ServiceClientGetUserDelegationKeyResponse struct {
 	UserDelegationKey
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// Date contains the information returned from the Date header response.
-	Date *time.Time `xml:"Date"`
+	Date *time.Time
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ServiceClientListContainersSegmentResponse contains the response from method ServiceClient.NewListContainersSegmentPager.
@@ -1975,13 +1975,13 @@ type ServiceClientListContainersSegmentResponse struct {
 	ListContainersSegmentResponse
 
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string `xml:"ClientRequestID"`
+	ClientRequestID *string
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string `xml:"RequestID"`
+	RequestID *string
 
 	// Version contains the information returned from the x-ms-version header response.
-	Version *string `xml:"Version"`
+	Version *string
 }
 
 // ServiceClientSetPropertiesResponse contains the response from method ServiceClient.SetProperties.
