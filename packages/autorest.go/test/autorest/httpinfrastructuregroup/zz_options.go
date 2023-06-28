@@ -10,17 +10,20 @@ package httpinfrastructuregroup
 
 // HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400 method.
 type HTTPClientFailureClientDelete400Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPClientFailureClientDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407 method.
 type HTTPClientFailureClientDelete407Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPClientFailureClientDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417 method.
 type HTTPClientFailureClientDelete417Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPClientFailureClientGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400 method.
@@ -105,17 +108,20 @@ type HTTPClientFailureClientPatch414Options struct {
 
 // HTTPClientFailureClientPost400Options contains the optional parameters for the HTTPClientFailureClient.Post400 method.
 type HTTPClientFailureClientPost400Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPClientFailureClientPost406Options contains the optional parameters for the HTTPClientFailureClient.Post406 method.
 type HTTPClientFailureClientPost406Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPClientFailureClientPost415Options contains the optional parameters for the HTTPClientFailureClient.Post415 method.
 type HTTPClientFailureClientPost415Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPClientFailureClientPut400Options contains the optional parameters for the HTTPClientFailureClient.Put400 method.
@@ -155,7 +161,8 @@ type HTTPFailureClientGetNoModelErrorOptions struct {
 
 // HTTPRedirectsClientDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
 type HTTPRedirectsClientDelete307Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPRedirectsClientGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
@@ -215,12 +222,14 @@ type HTTPRedirectsClientPatch307Options struct {
 
 // HTTPRedirectsClientPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
 type HTTPRedirectsClientPost303Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPRedirectsClientPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
 type HTTPRedirectsClientPost307Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPRedirectsClientPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
@@ -235,7 +244,8 @@ type HTTPRedirectsClientPut307Options struct {
 
 // HTTPRetryClientDelete503Options contains the optional parameters for the HTTPRetryClient.Delete503 method.
 type HTTPRetryClientDelete503Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPRetryClientGet502Options contains the optional parameters for the HTTPRetryClient.Get502 method.
@@ -265,7 +275,8 @@ type HTTPRetryClientPatch504Options struct {
 
 // HTTPRetryClientPost503Options contains the optional parameters for the HTTPRetryClient.Post503 method.
 type HTTPRetryClientPost503Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPRetryClientPut500Options contains the optional parameters for the HTTPRetryClient.Put500 method.
@@ -280,7 +291,8 @@ type HTTPRetryClientPut504Options struct {
 
 // HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505 method.
 type HTTPServerFailureClientDelete505Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501 method.
@@ -295,22 +307,26 @@ type HTTPServerFailureClientHead501Options struct {
 
 // HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505 method.
 type HTTPServerFailureClientPost505Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
 type HTTPSuccessClientDelete200Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
 type HTTPSuccessClientDelete202Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
 type HTTPSuccessClientDelete204Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
@@ -355,22 +371,26 @@ type HTTPSuccessClientPatch204Options struct {
 
 // HTTPSuccessClientPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
 type HTTPSuccessClientPost200Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
 type HTTPSuccessClientPost201Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
 type HTTPSuccessClientPost202Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
 type HTTPSuccessClientPost204Options struct {
-	// placeholder for future optional parameters
+	// Simple boolean value true. Specifying any value will set the value to true.
+	BooleanValue *bool
 }
 
 // HTTPSuccessClientPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.

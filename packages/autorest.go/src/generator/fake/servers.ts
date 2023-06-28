@@ -361,14 +361,14 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
     // nothing to do for binary media type
   } else if (mediaType === 'Text') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
-    if (bodyParam && bodyParam.schema.type !== SchemaType.Constant) {
+    if (bodyParam && !(bodyParam.required === true && bodyParam.schema.type === SchemaType.Constant)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
       content += '\tbody, err := server.UnmarshalRequestAsText(req)\n';
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     }
   } else if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
-    if (bodyParam && bodyParam.schema.type !== SchemaType.Constant) {
+    if (bodyParam && !(bodyParam.required === true && bodyParam.schema.type === SchemaType.Constant)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
       if (bodyParam.schema.type === SchemaType.ByteArray) {
         let format = 'Std';

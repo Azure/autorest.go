@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // HTTPSuccessServer is a fake server for instances of the httpinfrastructuregroup.HTTPSuccessClient type.
@@ -176,7 +177,17 @@ func (h *HTTPSuccessServerTransport) dispatchDelete200(req *http.Request) (*http
 	if h.srv.Delete200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete200 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete200(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPSuccessClientDelete200Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPSuccessClientDelete200Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete200(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -195,7 +206,17 @@ func (h *HTTPSuccessServerTransport) dispatchDelete202(req *http.Request) (*http
 	if h.srv.Delete202 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete202 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete202(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPSuccessClientDelete202Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPSuccessClientDelete202Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete202(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -214,7 +235,17 @@ func (h *HTTPSuccessServerTransport) dispatchDelete204(req *http.Request) (*http
 	if h.srv.Delete204 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete204 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete204(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPSuccessClientDelete204Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPSuccessClientDelete204Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete204(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -385,7 +416,17 @@ func (h *HTTPSuccessServerTransport) dispatchPost200(req *http.Request) (*http.R
 	if h.srv.Post200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post200 not implemented")}
 	}
-	respr, errRespr := h.srv.Post200(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPSuccessClientPost200Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPSuccessClientPost200Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post200(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -404,7 +445,17 @@ func (h *HTTPSuccessServerTransport) dispatchPost201(req *http.Request) (*http.R
 	if h.srv.Post201 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post201 not implemented")}
 	}
-	respr, errRespr := h.srv.Post201(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPSuccessClientPost201Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPSuccessClientPost201Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post201(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -423,7 +474,17 @@ func (h *HTTPSuccessServerTransport) dispatchPost202(req *http.Request) (*http.R
 	if h.srv.Post202 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post202 not implemented")}
 	}
-	respr, errRespr := h.srv.Post202(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPSuccessClientPost202Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPSuccessClientPost202Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post202(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -442,7 +503,17 @@ func (h *HTTPSuccessServerTransport) dispatchPost204(req *http.Request) (*http.R
 	if h.srv.Post204 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post204 not implemented")}
 	}
-	respr, errRespr := h.srv.Post204(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPSuccessClientPost204Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPSuccessClientPost204Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post204(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

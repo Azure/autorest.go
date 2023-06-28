@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // HTTPRetryServer is a fake server for instances of the httpinfrastructuregroup.HTTPRetryClient type.
@@ -116,7 +117,17 @@ func (h *HTTPRetryServerTransport) dispatchDelete503(req *http.Request) (*http.R
 	if h.srv.Delete503 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete503 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete503(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPRetryClientDelete503Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPRetryClientDelete503Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete503(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -230,7 +241,17 @@ func (h *HTTPRetryServerTransport) dispatchPost503(req *http.Request) (*http.Res
 	if h.srv.Post503 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post503 not implemented")}
 	}
-	respr, errRespr := h.srv.Post503(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPRetryClientPost503Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPRetryClientPost503Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post503(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

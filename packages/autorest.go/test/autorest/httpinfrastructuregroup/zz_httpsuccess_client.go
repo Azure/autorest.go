@@ -56,8 +56,11 @@ func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -96,8 +99,11 @@ func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -136,8 +142,11 @@ func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -498,8 +507,11 @@ func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -538,8 +550,11 @@ func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -578,8 +593,11 @@ func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -618,8 +636,11 @@ func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
