@@ -56,8 +56,11 @@ func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -296,8 +299,11 @@ func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }

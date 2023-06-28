@@ -57,8 +57,11 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -173,8 +176,11 @@ func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }

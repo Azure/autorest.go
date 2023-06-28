@@ -57,8 +57,11 @@ func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -98,8 +101,11 @@ func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -139,8 +145,11 @@ func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -793,8 +802,11 @@ func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -834,8 +846,11 @@ func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -875,8 +890,11 @@ func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }

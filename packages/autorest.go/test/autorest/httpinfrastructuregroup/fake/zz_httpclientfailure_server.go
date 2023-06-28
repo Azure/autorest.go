@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // HTTPClientFailureServer is a fake server for instances of the httpinfrastructuregroup.HTTPClientFailureClient type.
@@ -218,7 +219,17 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete400(req *http.Request) 
 	if h.srv.Delete400 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete400 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete400(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPClientFailureClientDelete400Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPClientFailureClientDelete400Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete400(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -237,7 +248,17 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete407(req *http.Request) 
 	if h.srv.Delete407 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete407 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete407(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPClientFailureClientDelete407Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPClientFailureClientDelete407Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete407(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -256,7 +277,17 @@ func (h *HTTPClientFailureServerTransport) dispatchDelete417(req *http.Request) 
 	if h.srv.Delete417 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete417 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete417(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPClientFailureClientDelete417Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPClientFailureClientDelete417Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete417(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -579,7 +610,17 @@ func (h *HTTPClientFailureServerTransport) dispatchPost400(req *http.Request) (*
 	if h.srv.Post400 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post400 not implemented")}
 	}
-	respr, errRespr := h.srv.Post400(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPClientFailureClientPost400Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPClientFailureClientPost400Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post400(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -598,7 +639,17 @@ func (h *HTTPClientFailureServerTransport) dispatchPost406(req *http.Request) (*
 	if h.srv.Post406 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post406 not implemented")}
 	}
-	respr, errRespr := h.srv.Post406(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPClientFailureClientPost406Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPClientFailureClientPost406Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post406(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -617,7 +668,17 @@ func (h *HTTPClientFailureServerTransport) dispatchPost415(req *http.Request) (*
 	if h.srv.Post415 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post415 not implemented")}
 	}
-	respr, errRespr := h.srv.Post415(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPClientFailureClientPost415Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPClientFailureClientPost415Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post415(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -757,7 +757,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
       setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${mediaType.toLowerCase()}")`;
     }
-    if (bodyParam!.required || bodyParam!.schema.type === SchemaType.Constant) {
+    if (bodyParam!.required) {
       text += `\t${emitSetBodyWithErrCheck(setBody)}`;
       text += '\treturn req, nil\n';
     } else {

@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // HTTPRedirectsServer is a fake server for instances of the httpinfrastructuregroup.HTTPRedirectsClient type.
@@ -158,7 +159,17 @@ func (h *HTTPRedirectsServerTransport) dispatchDelete307(req *http.Request) (*ht
 	if h.srv.Delete307 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete307 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete307(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPRedirectsClientDelete307Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPRedirectsClientDelete307Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete307(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -395,7 +406,17 @@ func (h *HTTPRedirectsServerTransport) dispatchPost303(req *http.Request) (*http
 	if h.srv.Post303 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post303 not implemented")}
 	}
-	respr, errRespr := h.srv.Post303(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPRedirectsClientPost303Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPRedirectsClientPost303Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post303(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -417,7 +438,17 @@ func (h *HTTPRedirectsServerTransport) dispatchPost307(req *http.Request) (*http
 	if h.srv.Post307 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post307 not implemented")}
 	}
-	respr, errRespr := h.srv.Post307(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPRedirectsClientPost307Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPRedirectsClientPost307Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post307(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

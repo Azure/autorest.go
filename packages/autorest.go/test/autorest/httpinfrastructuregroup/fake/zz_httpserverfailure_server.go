@@ -17,6 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // HTTPServerFailureServer is a fake server for instances of the httpinfrastructuregroup.HTTPServerFailureClient type.
@@ -86,7 +87,17 @@ func (h *HTTPServerFailureServerTransport) dispatchDelete505(req *http.Request) 
 	if h.srv.Delete505 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete505 not implemented")}
 	}
-	respr, errRespr := h.srv.Delete505(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPServerFailureClientDelete505Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPServerFailureClientDelete505Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Delete505(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -143,7 +154,17 @@ func (h *HTTPServerFailureServerTransport) dispatchPost505(req *http.Request) (*
 	if h.srv.Post505 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Post505 not implemented")}
 	}
-	respr, errRespr := h.srv.Post505(req.Context(), nil)
+	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *httpinfrastructuregroup.HTTPServerFailureClientPost505Options
+	if !reflect.ValueOf(body).IsZero() {
+		options = &httpinfrastructuregroup.HTTPServerFailureClientPost505Options{
+			BooleanValue: &body,
+		}
+	}
+	respr, errRespr := h.srv.Post505(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

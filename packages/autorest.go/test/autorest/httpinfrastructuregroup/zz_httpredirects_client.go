@@ -56,8 +56,11 @@ func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, o
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -543,8 +546,11 @@ func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
@@ -592,8 +598,11 @@ func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, true); err != nil {
-		return nil, err
+	if options != nil && options.BooleanValue != nil {
+		if err := runtime.MarshalAsJSON(req, true); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
