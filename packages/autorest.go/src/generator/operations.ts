@@ -510,7 +510,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   } else {
     throw new Error(`no host or endpoint defined for method ${group.language.go!.clientName}.${op.language.go!.name}`);
   }
-  const hasPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http?.in === 'path'; }).any();
+  const hasPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'path'; }).any();
   // storage needs the client.u to be the source-of-truth for the full path.
   // however, swagger requires that all operations specify a path, which is at odds with storage.
   // to work around this, storage specifies x-ms-path paths with path params but doesn't
@@ -527,7 +527,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     // swagger defines path params, emit path and replace tokens
     imports.add('strings');
     // replace path parameters
-    for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http?.in === 'path'; })) {
+    for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'path'; })) {
       // emit check to ensure path param isn't an empty string.  we only need
       // to do this for params that have an underlying type of string.
       const choiceIsString = function (schema: Schema): boolean {
@@ -559,7 +559,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
-  const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http?.in === 'query'; }).any();
+  const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
     if (param.implementation === ImplementationLocation.Client) {
@@ -576,7 +576,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     // add query parameters
     const encodedParams = new Array<Parameter>();
     const unencodedParams = new Array<Parameter>();
-    for (const qp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http?.in === 'query'; })) {
+    for (const qp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'query'; })) {
       if (skipURLEncoding(qp)) {
         unencodedParams.push(qp);
       } else {
@@ -671,7 +671,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     text += '\truntime.SkipBodyDownload(req)\n';
   }
   // add specific request headers
-  const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http?.in === 'header'; });
+  const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'header'; });
   headerParam.forEach(header => {
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
       if (headerParam.clientDefaultValue && headerParam.implementation === ImplementationLocation.Method) {
