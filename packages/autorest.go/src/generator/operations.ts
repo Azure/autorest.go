@@ -1099,7 +1099,7 @@ function hasBinaryResponse(responses: Array<Response>): boolean {
 
 // returns the parameters for the public API
 // e.g. "ctx context.Context, i int, s string"
-export function getAPIParametersSig(op: Operation, imports: ImportManager, pkgName?: string): string {
+function getAPIParametersSig(op: Operation, imports: ImportManager, pkgName?: string): string {
   const methodParams = getMethodParameters(op);
   const params = new Array<string>();
   if (!isPageableOperation(op) || isLROOperation(op)) {
