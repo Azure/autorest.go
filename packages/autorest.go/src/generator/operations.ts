@@ -119,24 +119,20 @@ export async function generateOperations(session: Session<CodeModel>): Promise<A
 
     if (azureARM) {
       // build constructor params
-      const emitClientParams = function() {
-        if (group.language.go!.clientParams) {
-          const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-          clientParams.sort(sortParametersByRequired);
-          for (const clientParam of values(clientParams)) {
-            methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
-            if (clientParam.language.go!.description) {
-              paramDocs.push(formatCommentAsBulletItem(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`));
-            }
-          }
-        }
-      };
-
       const methodParams = new Array<string>();
       const paramDocs = new Array<string>();
       // AzureARM is the simplest case, no parametertized host etc
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-      emitClientParams();
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        clientParams.sort(sortParametersByRequired);
+        for (const clientParam of values(clientParams)) {
+          methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+          if (clientParam.language.go!.description) {
+            paramDocs.push(formatCommentAsBulletItem(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`));
+          }
+        }
+      }
       methodParams.push('credential azcore.TokenCredential');
       paramDocs.push(formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
       methodParams.push('options *arm.ClientOptions');
