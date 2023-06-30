@@ -21,10 +21,10 @@ import (
 // Client contains the methods for the Alias group.
 // Don't use this type directly, use a constructor function instead.
 type Client struct {
-	internal      *azcore.Client
-	endpoint      string
-	clientVersion string
-	clientIndex   int32
+	internal            *azcore.Client
+	endpoint            string
+	clientGroup         ClientGroup
+	clientOptionalGroup *ClientOptionalGroup
 }
 
 // Create - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
@@ -75,7 +75,7 @@ func (client *Client) createCreateRequest(ctx context.Context, options *ClientCr
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("client-version", client.clientVersion)
+	reqQP.Set("client-version", client.clientGroup.ClientVersion)
 	creatorIDDefault := int32(123)
 	if options != nil && options.CreatorID != nil {
 		creatorIDDefault = *options.CreatorID
@@ -87,7 +87,7 @@ func (client *Client) createCreateRequest(ctx context.Context, options *ClientCr
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["client-index"] = []string{strconv.FormatInt(int64(client.clientIndex), 10)}
+	req.Raw().Header["client-index"] = []string{strconv.FormatInt(int64(client.clientGroup.ClientIndex), 10)}
 	assignedIDDefault := float32(8989)
 	if options != nil && options.AssignedID != nil {
 		assignedIDDefault = *options.AssignedID
@@ -221,7 +221,7 @@ func (client *Client) listCreateRequest(ctx context.Context, options *ClientList
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("client-version", client.clientVersion)
+	reqQP.Set("client-version", client.clientGroup.ClientVersion)
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", string(qv))
@@ -276,10 +276,16 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props S
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalVersion != nil {
+		reqQP.Set("optional-version", *client.clientOptionalGroup.OptionalVersion)
+	}
 	if options != nil && options.Interval != nil {
 		reqQP.Set("interval", *options.Interval)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalIndex != nil {
+		req.Raw().Header["optional-index"] = []string{strconv.FormatInt(int64(*client.clientOptionalGroup.OptionalIndex), 10)}
+	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err

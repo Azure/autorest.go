@@ -48,7 +48,7 @@ function emit(paramGroup: GroupProperty, imports: ImportManager): string {
     let first = true;
 
     for (const param of values(paramGroup.originalParameter)) {
-      if (param.implementation === ImplementationLocation.Client) {
+      if (param.implementation === ImplementationLocation.Client && !paramGroup.language.go!.groupedClientParams) {
         // don't add globals to the per-method options struct
         continue;
       }

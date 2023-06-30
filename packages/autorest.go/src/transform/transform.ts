@@ -443,7 +443,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         // the client might not be exported, but the options should be.
         const optionalParamsGroupName = `${capitalize(group.language.go!.clientName)}${opName}Options`;
         const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName} method.`;
-        const gp = createGroupProperty(optionalParamsGroupName, desc);
+        const gp = createGroupProperty(optionalParamsGroupName, desc, false);
         gp.language.go!.name = 'options';
         // if there's an existing parameter with the name options then pick something else
         for (const param of params) {
@@ -465,6 +465,8 @@ async function processOperationRequests(session: Session<CodeModel>) {
           // we treat method params with a client-side default as optional
           // since if you don't specify a value, a default is sent and the
           // zero-value is ambiguous.
+          // NOTE: the assumption for client parameters with client-side defaults is that
+          // the proper default values are being set in the client (hand-written) constructor.
           param.required = false;
         }
         if (!param.required && param.schema.type === SchemaType.Constant && !param.language.go!.amendedDesc) {
@@ -555,8 +557,15 @@ async function processOperationRequests(session: Session<CodeModel>) {
           }
           // create group entry and add the param to it
           if (!paramGroups.has(paramGroupName)) {
-            const desc = `${paramGroupName} contains a group of parameters for the ${group.language.go!.clientName}.${opName} method.`;
-            paramGroups.set(paramGroupName, createGroupProperty(paramGroupName, desc));
+            let subtext = `.${opName} method`;
+            let groupedClientParams = false;
+            if (param.implementation === ImplementationLocation.Client) {
+              subtext = ' client';
+              groupedClientParams = true;
+            }
+            const desc = `${paramGroupName} contains a group of parameters for the ${group.language.go!.clientName}${subtext}.`;
+            const paramGroup = createGroupProperty(paramGroupName, desc, groupedClientParams);
+            paramGroups.set(paramGroupName, paramGroup);
           }
           // associate the group with the param
           const paramGroup = paramGroups.get(paramGroupName);
@@ -571,6 +580,12 @@ async function processOperationRequests(session: Session<CodeModel>) {
             }
           } else if (dupe.schema !== param.schema) {
             throw new Error(`parameter group ${paramGroupName} contains overlapping parameters with different schemas`);
+          }
+          // check for groupings of client and method params
+          for (const otherParam of values(paramGroup?.originalParameter)) {
+            if (otherParam.implementation !== param.implementation) {
+              throw new Error(`parameter group ${paramGroupName} contains client and method parameters`);
+            }
           }
         } else if (param.implementation === ImplementationLocation.Method && param.required !== true) {
           // include all non-required method params in the optional values struct.
@@ -631,11 +646,14 @@ async function processOperationRequests(session: Session<CodeModel>) {
   }  
 }
 
-function createGroupProperty(name: string, description: string): GroupProperty {
+function createGroupProperty(name: string, description: string, groupedClientParams: boolean): GroupProperty {
   const schema = new ObjectSchema(name, description);
   schema.language.go = schema.language.default;
   const gp = new GroupProperty(name, description, schema);
   gp.language.go = gp.language.default;
+  if (groupedClientParams) {
+    gp.language.go!.groupedClientParams = true;
+  }
   return gp;
 }
 
