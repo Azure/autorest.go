@@ -24,9 +24,27 @@ type ClientGetScriptOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientGroup contains a group of parameters for the Client client.
+type ClientGroup struct {
+	// Index number of Azure Maps API.
+	ClientIndex int32
+
+	// Version number of Azure Maps API.
+	ClientVersion string
+}
+
 // ClientListOptions contains the optional parameters for the Client.NewListPager method.
 type ClientListOptions struct {
 	GroupBy []LogMetricsGroupBy
+}
+
+// ClientOptionalGroup contains a group of parameters for the Client client.
+type ClientOptionalGroup struct {
+	// Index number of Azure Maps API.
+	OptionalIndex *int32
+
+	// Version number of Azure Maps API.
+	OptionalVersion *string
 }
 
 // ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
