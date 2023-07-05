@@ -212,6 +212,7 @@ export class MockTestDataRender extends BaseDataRender {
         case SchemaType.Char:
         case SchemaType.String:
         case SchemaType.Constant:
+        case SchemaType.Uuid:
           return '"<' + Helper.toKebabCase(this.getLanguageName(param)) + '>"';
         case SchemaType.Array: {
           const elementIsPtr = param.schema.language.go.elementIsPtr && !elemByVal;
