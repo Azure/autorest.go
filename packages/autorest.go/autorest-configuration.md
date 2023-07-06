@@ -93,4 +93,7 @@ help-content:
       - key: generate-fakes
         type: boolean
         description: When true, enables generation of fake servers. The default is false.
+      - key: slice-elements-byval
+        type: boolean
+        description: When true, slice elements will not be pointer-to-type. The default is false.
 ```
