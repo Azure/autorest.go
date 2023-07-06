@@ -49,7 +49,7 @@ func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
     {%- for name, variable in variablesOutput %}
     {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
         {%- if variable.type === "prefix-string" %}
-        testsuite.{{name}} = testutil.GenerateAlphaNumericID(testsuite.T(), {{variable.value}}, 6)
+        testsuite.{{name}}, _ = recording.GenerateAlphaNumericID(testsuite.T(), {{variable.value}}, {{variable.value.length + 4}}, false)
         {%- else %}
             {%- if variable.value !== undefined and variable.value !== "testsuite." + name %}
         testsuite.{{name}} = {{variable.value}}
@@ -59,9 +59,9 @@ func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
     {%- endfor %}
     {%- for variable, _ in requiredVariablesDefault %}
         {%- if variable === "subscriptionId" %}
-        testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
+        testsuite.subscriptionId = recording.GetEnvVariable("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
         {%- else %}
-        testsuite.{{variable}} = testutil.GetEnv("{{jsFunc.snakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
+        testsuite.{{variable}} = recording.GetEnvVariable("{{jsFunc.snakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
         {%- endif %}
     {%- endfor %}
 
@@ -102,7 +102,7 @@ func (testsuite *{{testCaseName}}TestSuite) Prepare() {
 func (testsuite *{{testCaseName}}TestSuite) Test{{jsFunc.upperFirst(jsFunc.camelCase(testScenario.scenario))}}() {
     {%- for variable, value in testScenario.requiredVariablesDefault %}
     {%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
-    {{variable}} := testutil.GetEnv("{{jsFunc.snakeCase(variable).toUpperCase()}}", "{{value}}")
+    {{variable}} := recording.GetEnvVariable("{{jsFunc.snakeCase(variable).toUpperCase()}}", "{{value}}")
     {%- endif %}
     {%- endfor %}
     {%- for name, variable in testScenario.variablesOutput %}
