@@ -580,6 +580,8 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       content += `\t${createLocalVariableName(param, 'Param')}, err := base64.StdEncoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (param.language.go!.paramGroup && (param.schema.type === SchemaType.Choice || param.schema.type === SchemaType.Constant || param.schema.type === SchemaType.Duration || param.schema.type === SchemaType.SealedChoice || param.schema.type === SchemaType.String)) {
+      // for params that don't require parsing, the value is inlined into the invocation of the fake.
+      // but if it's grouped, then we need to create a local first which will later be copied into the param group.
       content += `\t${createLocalVariableName(param, 'Param')} := `;
       let paramValue = getParamValueWithCast(clientPkg, param, imports);
       if (!param.required) {
