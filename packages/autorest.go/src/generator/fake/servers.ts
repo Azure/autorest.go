@@ -561,6 +561,9 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
         }
         content += `\t\t${localVar}[i] = ${toType}(${fromVar})\n\t}\n`;
       } else if (param.language.go!.paramGroup) {
+        // for slices of strings that aren't in a parameter group, the call to strings.Split(...) is inlined
+        // into the invocation of the fake e.g. srv.FakeFunc(strings.Split...). but if it's grouped, then we
+        // need to create a local first which will later be copied into the param group.
         imports.add('strings');
         content += `\t${createLocalVariableName(param, 'Param')} := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
       }
@@ -572,11 +575,13 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       }
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    }  else if (param.schema.type === SchemaType.ByteArray) {
+    } else if (param.schema.type === SchemaType.ByteArray) {
       imports.add('encoding/base64');
       content += `\t${createLocalVariableName(param, 'Param')}, err := base64.StdEncoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (param.language.go!.paramGroup && (param.schema.type === SchemaType.Choice || param.schema.type === SchemaType.Constant || param.schema.type === SchemaType.Duration || param.schema.type === SchemaType.SealedChoice || param.schema.type === SchemaType.String)) {
+      // for params that don't require parsing, the value is inlined into the invocation of the fake.
+      // but if it's grouped, then we need to create a local first which will later be copied into the param group.
       content += `\t${createLocalVariableName(param, 'Param')} := `;
       let paramValue = getParamValueWithCast(clientPkg, param, imports);
       if (!param.required) {
