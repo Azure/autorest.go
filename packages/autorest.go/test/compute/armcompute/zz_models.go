@@ -22,7 +22,7 @@ type APIError struct {
 	Code *string
 
 	// The Api error details
-	Details []*APIErrorBase
+	Details []APIErrorBase
 
 	// The Api inner error
 	Innererror *InnerError
@@ -88,7 +88,7 @@ type AdditionalUnattendContent struct {
 // ApplicationProfile - Contains the list of gallery applications that should be made available to the VM/VMSS
 type ApplicationProfile struct {
 	// Specifies the gallery applications that should be made available to the VM/VMSS
-	GalleryApplications []*VMGalleryApplication
+	GalleryApplications []VMGalleryApplication
 }
 
 // AutomaticOSUpgradePolicy - The configuration parameters used for performing automatic OS upgrade.
@@ -161,7 +161,7 @@ type AvailabilitySet struct {
 // AvailabilitySetListResult - The List Availability Set operation response.
 type AvailabilitySetListResult struct {
 	// REQUIRED; The list of availability sets
-	Value []*AvailabilitySet
+	Value []AvailabilitySet
 
 	// The URI to fetch the next page of AvailabilitySets. Call ListNext() with this URI to fetch the next page of AvailabilitySets.
 	NextLink *string
@@ -180,10 +180,10 @@ type AvailabilitySetProperties struct {
 	ProximityPlacementGroup *SubResource
 
 	// A list of references to all virtual machines in the availability set.
-	VirtualMachines []*SubResource
+	VirtualMachines []SubResource
 
 	// READ-ONLY; The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 }
 
 // AvailabilitySetUpdate - Specifies information about the availability set that the virtual machine should be assigned to.
@@ -297,7 +297,7 @@ type CapacityReservation struct {
 	// list of zones specified during the capacity reservation group creation. The zone
 	// can be assigned only during creation. If not provided, the reservation supports only non-zonal deployments. If provided,
 	// enforces VM/VMSS using this capacity reservation to be in same zone.
-	Zones []*string
+	Zones []string
 
 	// READ-ONLY; Resource Id
 	ID *string
@@ -326,7 +326,7 @@ type CapacityReservationGroup struct {
 	// Availability Zones to use for this capacity reservation group. The zones can be assigned only during creation. If not provided,
 	// the group supports only regional resources in the region. If provided,
 	// enforces each capacity reservation in the group to be in one of the zones.
-	Zones []*string
+	Zones []string
 
 	// READ-ONLY; Resource Id
 	ID *string
@@ -340,13 +340,13 @@ type CapacityReservationGroup struct {
 
 type CapacityReservationGroupInstanceView struct {
 	// READ-ONLY; List of instance view of the capacity reservations under the capacity reservation group.
-	CapacityReservations []*CapacityReservationInstanceViewWithName
+	CapacityReservations []CapacityReservationInstanceViewWithName
 }
 
 // CapacityReservationGroupListResult - The List capacity reservation group with resource group response.
 type CapacityReservationGroupListResult struct {
 	// REQUIRED; The list of capacity reservation groups
-	Value []*CapacityReservationGroup
+	Value []CapacityReservationGroup
 
 	// The URI to fetch the next page of capacity reservation groups. Call ListNext() with this URI to fetch the next page of
 	// capacity reservation groups.
@@ -356,14 +356,14 @@ type CapacityReservationGroupListResult struct {
 // CapacityReservationGroupProperties - capacity reservation group Properties.
 type CapacityReservationGroupProperties struct {
 	// READ-ONLY; A list of all capacity reservation resource ids that belong to capacity reservation group.
-	CapacityReservations []*SubResourceReadOnly
+	CapacityReservations []SubResourceReadOnly
 
 	// READ-ONLY; The capacity reservation group instance view which has the list of instance views for all the capacity reservations
 	// that belong to the capacity reservation group.
 	InstanceView *CapacityReservationGroupInstanceView
 
 	// READ-ONLY; A list of references to all virtual machines associated to the capacity reservation group.
-	VirtualMachinesAssociated []*SubResourceReadOnly
+	VirtualMachinesAssociated []SubResourceReadOnly
 }
 
 // CapacityReservationGroupUpdate - Specifies information about the capacity reservation group. Only tags can be updated.
@@ -380,7 +380,7 @@ type CapacityReservationGroupUpdate struct {
 // operations.
 type CapacityReservationInstanceView struct {
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// Unutilized capacity of the capacity reservation.
 	UtilizationInfo *CapacityReservationUtilization
@@ -390,7 +390,7 @@ type CapacityReservationInstanceView struct {
 // reservation. It is used for the response to the instance view of a capacity reservation group.
 type CapacityReservationInstanceViewWithName struct {
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// Unutilized capacity of the capacity reservation.
 	UtilizationInfo *CapacityReservationUtilization
@@ -402,7 +402,7 @@ type CapacityReservationInstanceViewWithName struct {
 // CapacityReservationListResult - The list capacity reservation operation response.
 type CapacityReservationListResult struct {
 	// REQUIRED; The list of capacity reservations
-	Value []*CapacityReservation
+	Value []CapacityReservation
 
 	// The URI to fetch the next page of capacity reservations. Call ListNext() with this URI to fetch the next page of capacity
 	// reservations.
@@ -437,7 +437,7 @@ type CapacityReservationProperties struct {
 	TimeCreated *time.Time
 
 	// READ-ONLY; A list of all virtual machine resource ids that are associated with the capacity reservation.
-	VirtualMachinesAssociated []*SubResourceReadOnly
+	VirtualMachinesAssociated []SubResourceReadOnly
 }
 
 // CapacityReservationUpdate - Specifies information about the capacity reservation. Only tags and sku.capacity can be updated.
@@ -458,7 +458,7 @@ type CapacityReservationUpdate struct {
 // CapacityReservationUtilization - Represents the capacity reservation utilization in terms of resources allocated.
 type CapacityReservationUtilization struct {
 	// READ-ONLY; A list of all virtual machines resource ids allocated against the capacity reservation.
-	VirtualMachinesAllocated []*SubResourceReadOnly
+	VirtualMachinesAllocated []SubResourceReadOnly
 }
 
 // CloudService - Describes the cloud service.
@@ -485,7 +485,7 @@ type CloudService struct {
 // CloudServiceExtensionProfile - Describes a cloud service extension profile.
 type CloudServiceExtensionProfile struct {
 	// List of extensions for the cloud service.
-	Extensions []*Extension
+	Extensions []Extension
 }
 
 // CloudServiceExtensionProperties - Extension Properties.
@@ -510,7 +510,7 @@ type CloudServiceExtensionProperties struct {
 
 	// Optional list of roles to apply this extension. If property is not specified or '*' is specified, extension is applied
 	// to all roles in the cloud service.
-	RolesAppliedTo []*string
+	RolesAppliedTo []string
 
 	// Public settings for the extension. For JSON extensions, this is the JSON settings for the extension. For XML Extension
 	// (like RDP), this is the XML setting for the extension.
@@ -538,18 +538,18 @@ type CloudServiceInstanceView struct {
 
 	// READ-ONLY; Specifies a list of unique identifiers generated internally for the cloud service.
 	// NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details.
-	PrivateIDs []*string
+	PrivateIDs []string
 
 	// READ-ONLY; The version of the SDK that was used to generate the package for the cloud service.
 	SdkVersion *string
 
 	// READ-ONLY
-	Statuses []*ResourceInstanceViewStatus
+	Statuses []ResourceInstanceViewStatus
 }
 
 type CloudServiceListResult struct {
 	// REQUIRED
-	Value    []*CloudService
+	Value    []CloudService
 	NextLink *string
 }
 
@@ -557,7 +557,7 @@ type CloudServiceListResult struct {
 type CloudServiceNetworkProfile struct {
 	// List of Load balancer configurations. Cloud service can have up to two load balancer configurations, corresponding to a
 	// Public Load Balancer and an Internal Load Balancer.
-	LoadBalancerConfigurations []*LoadBalancerConfiguration
+	LoadBalancerConfigurations []LoadBalancerConfiguration
 
 	// The id reference of the cloud service containing the target IP with which the subject cloud service can perform a swap.
 	// This property cannot be updated once it is set. The swappable cloud service
@@ -568,7 +568,7 @@ type CloudServiceNetworkProfile struct {
 // CloudServiceOsProfile - Describes the OS profile for the cloud service.
 type CloudServiceOsProfile struct {
 	// Specifies set of certificates that should be installed onto the role instances.
-	Secrets []*CloudServiceVaultSecretGroup
+	Secrets []CloudServiceVaultSecretGroup
 }
 
 // CloudServiceProperties - Cloud service properties
@@ -649,14 +649,14 @@ type CloudServiceRole struct {
 
 type CloudServiceRoleListResult struct {
 	// REQUIRED
-	Value    []*CloudServiceRole
+	Value    []CloudServiceRole
 	NextLink *string
 }
 
 // CloudServiceRoleProfile - Describes the role profile for the cloud service.
 type CloudServiceRoleProfile struct {
 	// List of roles for the cloud service.
-	Roles []*CloudServiceRoleProfileProperties
+	Roles []CloudServiceRoleProfileProperties
 }
 
 // CloudServiceRoleProfileProperties - Describes the role properties.
@@ -711,7 +711,7 @@ type CloudServiceVaultSecretGroup struct {
 	SourceVault *SubResource
 
 	// The list of key vault references in SourceVault which contain certificates.
-	VaultCertificates []*CloudServiceVaultCertificate
+	VaultCertificates []CloudServiceVaultCertificate
 }
 
 // CommunityGallery - Specifies information about the Community Gallery that you want to create or update.
@@ -777,7 +777,7 @@ type CommunityGalleryImageProperties struct {
 	EndOfLifeDate *time.Time
 
 	// A list of gallery image features.
-	Features []*GalleryImageFeature
+	Features []GalleryImageFeature
 
 	// The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
 	HyperVGeneration *HyperVGeneration
@@ -836,7 +836,7 @@ type CommunityGalleryInfo struct {
 	CommunityGalleryEnabled *bool
 
 	// READ-ONLY; Community gallery public name list.
-	PublicNames []*string
+	PublicNames []string
 }
 
 // CreationData - Data used when creating a disk.
@@ -1007,7 +1007,7 @@ type DedicatedHostAllocatableVM struct {
 type DedicatedHostAvailableCapacity struct {
 	// The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the
 	// dedicated host.
-	AllocatableVMs []*DedicatedHostAllocatableVM
+	AllocatableVMs []DedicatedHostAllocatableVM
 }
 
 // DedicatedHostGroup - Specifies information about the dedicated host group that the dedicated hosts should be assigned to.
@@ -1026,7 +1026,7 @@ type DedicatedHostGroup struct {
 	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation.
 	// If not provided, the group supports all zones in the region. If provided,
 	// enforces each host in the group to be in the same zone.
-	Zones []*string
+	Zones []string
 
 	// READ-ONLY; Resource Id
 	ID *string
@@ -1040,13 +1040,13 @@ type DedicatedHostGroup struct {
 
 type DedicatedHostGroupInstanceView struct {
 	// List of instance view of the dedicated hosts under the dedicated host group.
-	Hosts []*DedicatedHostInstanceViewWithName
+	Hosts []DedicatedHostInstanceViewWithName
 }
 
 // DedicatedHostGroupListResult - The List Dedicated Host Group with resource group response.
 type DedicatedHostGroupListResult struct {
 	// REQUIRED; The list of dedicated host groups
-	Value []*DedicatedHostGroup
+	Value []DedicatedHostGroup
 
 	// The URI to fetch the next page of Dedicated Host Groups. Call ListNext() with this URI to fetch the next page of Dedicated
 	// Host Groups.
@@ -1065,7 +1065,7 @@ type DedicatedHostGroupProperties struct {
 	SupportAutomaticPlacement *bool
 
 	// READ-ONLY; A list of references to all dedicated hosts in the dedicated host group.
-	Hosts []*SubResourceReadOnly
+	Hosts []SubResourceReadOnly
 
 	// READ-ONLY; The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the
 	// dedicated host group.
@@ -1084,7 +1084,7 @@ type DedicatedHostGroupUpdate struct {
 	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation.
 	// If not provided, the group supports all zones in the region. If provided,
 	// enforces each host in the group to be in the same zone.
-	Zones []*string
+	Zones []string
 }
 
 // DedicatedHostInstanceView - The instance view of a dedicated host.
@@ -1093,7 +1093,7 @@ type DedicatedHostInstanceView struct {
 	AvailableCapacity *DedicatedHostAvailableCapacity
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// READ-ONLY; Specifies the unique id of the dedicated physical machine on which the dedicated host resides.
 	AssetID *string
@@ -1106,7 +1106,7 @@ type DedicatedHostInstanceViewWithName struct {
 	AvailableCapacity *DedicatedHostAvailableCapacity
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// READ-ONLY; Specifies the unique id of the dedicated physical machine on which the dedicated host resides.
 	AssetID *string
@@ -1118,7 +1118,7 @@ type DedicatedHostInstanceViewWithName struct {
 // DedicatedHostListResult - The list dedicated host operation response.
 type DedicatedHostListResult struct {
 	// REQUIRED; The list of dedicated hosts
-	Value []*DedicatedHost
+	Value []DedicatedHost
 
 	// The URI to fetch the next page of dedicated hosts. Call ListNext() with this URI to fetch the next page of dedicated hosts.
 	NextLink *string
@@ -1159,7 +1159,7 @@ type DedicatedHostProperties struct {
 	TimeCreated *time.Time
 
 	// READ-ONLY; A list of references to all virtual machines in the Dedicated Host.
-	VirtualMachines []*SubResourceReadOnly
+	VirtualMachines []SubResourceReadOnly
 }
 
 // DedicatedHostUpdate - Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may
@@ -1203,7 +1203,7 @@ type DiffDiskSettings struct {
 // Disallowed - Describes the disallowed disk types.
 type Disallowed struct {
 	// A list of disk types.
-	DiskTypes []*string
+	DiskTypes []string
 }
 
 // DisallowedConfiguration - Specifies the disallowed configuration for a virtual machine image.
@@ -1230,7 +1230,7 @@ type Disk struct {
 	Tags map[string]*string
 
 	// The Logical zone list for Disk.
-	Zones []*string
+	Zones []string
 
 	// READ-ONLY; Resource Id
 	ID *string
@@ -1240,7 +1240,7 @@ type Disk struct {
 
 	// READ-ONLY; List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to
 	// a value greater than one for disks to allow attaching them to multiple VMs.
-	ManagedByExtended []*string
+	ManagedByExtended []string
 
 	// READ-ONLY; Resource name
 	Name *string
@@ -1274,7 +1274,7 @@ type DiskAccess struct {
 // DiskAccessList - The List disk access operation response.
 type DiskAccessList struct {
 	// REQUIRED; A list of disk access resources.
-	Value []*DiskAccess
+	Value []DiskAccess
 
 	// The uri to fetch the next page of disk access resources. Call ListNext() with this to fetch the next page of disk access
 	// resources.
@@ -1284,7 +1284,7 @@ type DiskAccessList struct {
 type DiskAccessProperties struct {
 	// READ-ONLY; A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection
 	// is supported.
-	PrivateEndpointConnections []*PrivateEndpointConnection
+	PrivateEndpointConnections []PrivateEndpointConnection
 
 	// READ-ONLY; The disk access resource provisioning state.
 	ProvisioningState *string
@@ -1325,7 +1325,7 @@ type DiskEncryptionSet struct {
 // DiskEncryptionSetList - The List disk encryption set operation response.
 type DiskEncryptionSetList struct {
 	// REQUIRED; A list of disk encryption sets.
-	Value []*DiskEncryptionSet
+	Value []DiskEncryptionSet
 
 	// The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption
 	// sets.
@@ -1382,19 +1382,19 @@ type DiskEncryptionSettings struct {
 type DiskInstanceView struct {
 	// Specifies the encryption settings for the OS Disk.
 	// Minimum api-version: 2015-06-15
-	EncryptionSettings []*DiskEncryptionSettings
+	EncryptionSettings []DiskEncryptionSettings
 
 	// The disk name.
 	Name *string
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 }
 
 // DiskList - The List Disks operation response.
 type DiskList struct {
 	// REQUIRED; A list of disks.
-	Value []*Disk
+	Value []Disk
 
 	// The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks.
 	NextLink *string
@@ -1492,7 +1492,7 @@ type DiskProperties struct {
 
 	// READ-ONLY; Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than
 	// one for disks to allow attaching them to multiple VMs.
-	ShareInfo []*ShareInfoElement
+	ShareInfo []ShareInfoElement
 
 	// READ-ONLY; The time when the disk was created.
 	TimeCreated *time.Time
@@ -1528,7 +1528,7 @@ type DiskRestorePointInstanceView struct {
 // DiskRestorePointList - The List Disk Restore Points operation response.
 type DiskRestorePointList struct {
 	// REQUIRED; A list of disk restore points.
-	Value []*DiskRestorePoint
+	Value []DiskRestorePoint
 
 	// The uri to fetch the next page of disk restore points. Call ListNext() with this to fetch the next page of disk restore
 	// points.
@@ -1698,7 +1698,7 @@ type Encryption struct {
 // gallery artifact.
 type EncryptionImages struct {
 	// A list of encryption specifications for data disk images.
-	DataDiskImages []*DataDiskImageEncryption
+	DataDiskImages []DataDiskImageEncryption
 
 	// Contains encryption settings for an OS disk image.
 	OSDiskImage *OSDiskImageEncryption
@@ -1741,7 +1741,7 @@ type EncryptionSetProperties struct {
 
 	// READ-ONLY; A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is
 	// in progress. It will be empty if there is no ongoing key rotation.
-	PreviousKeys []*KeyForDiskEncryptionSet
+	PreviousKeys []KeyForDiskEncryptionSet
 
 	// READ-ONLY; The disk encryption set provisioning state.
 	ProvisioningState *string
@@ -1755,7 +1755,7 @@ type EncryptionSettingsCollection struct {
 	Enabled *bool
 
 	// A collection of encryption settings, one for each disk volume.
-	EncryptionSettings []*EncryptionSettingsElement
+	EncryptionSettings []EncryptionSettingsElement
 
 	// Describes what type of encryption is used for the disks. Once this field is set, it cannot be overwritten. '1.0' corresponds
 	// to Azure Disk Encryption with AAD app.'1.1' corresponds to Azure Disk
@@ -1836,7 +1836,7 @@ type GalleryApplication struct {
 // GalleryApplicationList - The List Gallery Applications operation response.
 type GalleryApplicationList struct {
 	// REQUIRED; A list of Gallery Applications.
-	Value []*GalleryApplication
+	Value []GalleryApplication
 
 	// The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch
 	// the next page of gallery Application Definitions.
@@ -1910,7 +1910,7 @@ type GalleryApplicationVersion struct {
 // GalleryApplicationVersionList - The List Gallery Application version operation response.
 type GalleryApplicationVersionList struct {
 	// REQUIRED; A list of gallery Application Versions.
-	Value []*GalleryApplicationVersion
+	Value []GalleryApplicationVersion
 
 	// The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery
 	// Application Versions.
@@ -1956,10 +1956,10 @@ type GalleryApplicationVersionPublishingProfile struct {
 	StorageAccountType *StorageAccountType
 
 	// The target extended locations where the Image Version is going to be replicated to. This property is updatable.
-	TargetExtendedLocations []*GalleryTargetExtendedLocation
+	TargetExtendedLocations []GalleryTargetExtendedLocation
 
 	// The target regions where the Image Version is going to be replicated to. This property is updatable.
-	TargetRegions []*TargetRegion
+	TargetRegions []TargetRegion
 
 	// READ-ONLY; The timestamp for when the gallery image version is published.
 	PublishedDate *time.Time
@@ -2068,7 +2068,7 @@ type GalleryImageIdentifier struct {
 // GalleryImageList - The List Gallery Images operation response.
 type GalleryImageList struct {
 	// REQUIRED; A list of Shared Image Gallery images.
-	Value []*GalleryImage
+	Value []GalleryImage
 
 	// The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the
 	// next page of gallery image definitions.
@@ -2108,7 +2108,7 @@ type GalleryImageProperties struct {
 	Eula *string
 
 	// A list of gallery image features.
-	Features []*GalleryImageFeature
+	Features []GalleryImageFeature
 
 	// The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
 	HyperVGeneration *HyperVGeneration
@@ -2171,7 +2171,7 @@ type GalleryImageVersion struct {
 // GalleryImageVersionList - The List Gallery Image version operation response.
 type GalleryImageVersionList struct {
 	// REQUIRED; A list of gallery image versions.
-	Value []*GalleryImageVersion
+	Value []GalleryImageVersion
 
 	// The uri to fetch the next page of gallery image versions. Call ListNext() with this to fetch the next page of gallery image
 	// versions.
@@ -2213,10 +2213,10 @@ type GalleryImageVersionPublishingProfile struct {
 	StorageAccountType *StorageAccountType
 
 	// The target extended locations where the Image Version is going to be replicated to. This property is updatable.
-	TargetExtendedLocations []*GalleryTargetExtendedLocation
+	TargetExtendedLocations []GalleryTargetExtendedLocation
 
 	// The target regions where the Image Version is going to be replicated to. This property is updatable.
-	TargetRegions []*TargetRegion
+	TargetRegions []TargetRegion
 
 	// READ-ONLY; The timestamp for when the gallery image version is published.
 	PublishedDate *time.Time
@@ -2225,7 +2225,7 @@ type GalleryImageVersionPublishingProfile struct {
 // GalleryImageVersionStorageProfile - This is the storage profile of a Gallery Image Version.
 type GalleryImageVersionStorageProfile struct {
 	// A list of data disk images.
-	DataDiskImages []*GalleryDataDiskImage
+	DataDiskImages []GalleryDataDiskImage
 
 	// This is the OS disk image.
 	OSDiskImage *GalleryOSDiskImage
@@ -2255,7 +2255,7 @@ type GalleryImageVersionUpdate struct {
 // GalleryList - The List Galleries operation response.
 type GalleryList struct {
 	// REQUIRED; A list of galleries.
-	Value []*Gallery
+	Value []Gallery
 
 	// The uri to fetch the next page of galleries. Call ListNext() with this to fetch the next page of galleries.
 	NextLink *string
@@ -2435,7 +2435,7 @@ type ImageDiskReference struct {
 // ImageListResult - The List Image operation response.
 type ImageListResult struct {
 	// REQUIRED; The list of Images.
-	Value []*Image
+	Value []Image
 
 	// The uri to fetch the next page of Images. Call ListNext() with this to fetch the next page of Images.
 	NextLink *string
@@ -2557,7 +2557,7 @@ type ImageReference struct {
 type ImageStorageProfile struct {
 	// Specifies the parameters that are used to add a data disk to a virtual machine.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines [https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview].
-	DataDisks []*ImageDataDisk
+	DataDisks []ImageDataDisk
 
 	// Specifies information about the operating system disk used by the virtual machine.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines [https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview].
@@ -2615,7 +2615,7 @@ type InstanceViewStatus struct {
 // InstanceViewStatusesSummary - Instance view statuses.
 type InstanceViewStatusesSummary struct {
 	// READ-ONLY
-	StatusesSummary []*StatusCodeCount
+	StatusesSummary []StatusCodeCount
 }
 
 // KeyForDiskEncryptionSet - Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots
@@ -2727,16 +2727,16 @@ type LinuxConfiguration struct {
 // LinuxParameters - Input for InstallPatches on a Linux VM, as directly received by the API
 type LinuxParameters struct {
 	// The update classifications to select when installing patches for Linux.
-	ClassificationsToInclude []*VMGuestPatchClassificationLinux
+	ClassificationsToInclude []VMGuestPatchClassificationLinux
 
 	// This is used as a maintenance run identifier for Auto VM Guest Patching in Linux.
 	MaintenanceRunID *string
 
 	// packages to exclude in the patch operation. Format: packageName_packageVersion
-	PackageNameMasksToExclude []*string
+	PackageNameMasksToExclude []string
 
 	// packages to include in the patch operation. Format: packageName_packageVersion
-	PackageNameMasksToInclude []*string
+	PackageNameMasksToInclude []string
 }
 
 // LinuxPatchSettings - Specifies settings related to VM Guest Patching on Linux.
@@ -2759,7 +2759,7 @@ type LinuxPatchSettings struct {
 // ListUsagesResult - The List Usages operation response.
 type ListUsagesResult struct {
 	// REQUIRED; The list of compute resource usages.
-	Value []*Usage
+	Value []Usage
 
 	// The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page
 	// of compute resource usage information.
@@ -2781,7 +2781,7 @@ type LoadBalancerConfiguration struct {
 type LoadBalancerConfigurationProperties struct {
 	// REQUIRED; Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each
 	// load balancer configuration must have exactly one frontend IP configuration.
-	FrontendIPConfigurations []*LoadBalancerFrontendIPConfiguration
+	FrontendIPConfigurations []LoadBalancerFrontendIPConfiguration
 }
 
 type LoadBalancerFrontendIPConfiguration struct {
@@ -2881,10 +2881,10 @@ type NetworkProfile struct {
 	NetworkAPIVersion *NetworkAPIVersion
 
 	// Specifies the networking configurations that will be used to create the virtual machine networking resources.
-	NetworkInterfaceConfigurations []*VirtualMachineNetworkInterfaceConfiguration
+	NetworkInterfaceConfigurations []VirtualMachineNetworkInterfaceConfiguration
 
 	// Specifies the list of resource Ids for the network interfaces associated with the virtual machine.
-	NetworkInterfaces []*NetworkInterfaceReference
+	NetworkInterfaces []NetworkInterfaceReference
 }
 
 // OSDisk - Specifies information about the operating system disk used by the virtual machine.
@@ -2995,7 +2995,7 @@ type OSFamily struct {
 
 type OSFamilyListResult struct {
 	// REQUIRED
-	Value    []*OSFamily
+	Value    []OSFamily
 	NextLink *string
 }
 
@@ -3008,7 +3008,7 @@ type OSFamilyProperties struct {
 	Name *string
 
 	// READ-ONLY; List of OS versions belonging to this family.
-	Versions []*OSVersionPropertiesBase
+	Versions []OSVersionPropertiesBase
 }
 
 // OSProfile - Specifies the operating system settings for the virtual machine. Some of the settings cannot be changed once
@@ -3074,7 +3074,7 @@ type OSProfile struct {
 	// Linux [https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux] or the Azure Key Vault virtual machine
 	// extension for Windows
 	// [https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows].
-	Secrets []*VaultSecretGroup
+	Secrets []VaultSecretGroup
 
 	// Specifies Windows operating system settings on the virtual machine.
 	WindowsConfiguration *WindowsConfiguration
@@ -3100,7 +3100,7 @@ type OSVersion struct {
 
 type OSVersionListResult struct {
 	// REQUIRED
-	Value    []*OSVersion
+	Value    []OSVersion
 	NextLink *string
 }
 
@@ -3143,7 +3143,7 @@ type OSVersionPropertiesBase struct {
 // OperationListResult - The List Compute Operation operation response.
 type OperationListResult struct {
 	// READ-ONLY; The list of compute operations
-	Value []*OperationValue
+	Value []OperationValue
 }
 
 // OperationValue - Describes the properties of a Compute Operation value.
@@ -3194,7 +3194,7 @@ type OrchestrationServiceSummary struct {
 // PatchInstallationDetail - Information about a specific patch that was encountered during an installation action.
 type PatchInstallationDetail struct {
 	// READ-ONLY; The classification(s) of the patch as provided by the patch publisher.
-	Classifications []*string
+	Classifications []string
 
 	// READ-ONLY; The state of the patch after the installation operation completed.
 	InstallationState *PatchInstallationState
@@ -3283,7 +3283,7 @@ type PrivateEndpointConnectionListResult struct {
 	NextLink *string
 
 	// Array of private endpoint connections
-	Value []*PrivateEndpointConnection
+	Value []PrivateEndpointConnection
 }
 
 // PrivateEndpointConnectionProperties - Properties of the PrivateEndpointConnectProperties.
@@ -3316,19 +3316,19 @@ type PrivateLinkResource struct {
 // PrivateLinkResourceListResult - A list of private link resources
 type PrivateLinkResourceListResult struct {
 	// Array of private link resources
-	Value []*PrivateLinkResource
+	Value []PrivateLinkResource
 }
 
 // PrivateLinkResourceProperties - Properties of a private link resource.
 type PrivateLinkResourceProperties struct {
 	// The private link resource DNS zone name.
-	RequiredZoneNames []*string
+	RequiredZoneNames []string
 
 	// READ-ONLY; The private link resource group id.
 	GroupID *string
 
 	// READ-ONLY; The private link resource required member names.
-	RequiredMembers []*string
+	RequiredMembers []string
 }
 
 // PrivateLinkServiceConnectionState - A collection of information about the state of the connection between service consumer
@@ -3374,7 +3374,7 @@ type ProximityPlacementGroup struct {
 // ProximityPlacementGroupListResult - The List Proximity Placement Group operation response.
 type ProximityPlacementGroupListResult struct {
 	// REQUIRED; The list of proximity placement groups
-	Value []*ProximityPlacementGroup
+	Value []ProximityPlacementGroup
 
 	// The URI to fetch the next page of proximity placement groups.
 	NextLink *string
@@ -3392,13 +3392,13 @@ type ProximityPlacementGroupProperties struct {
 	ProximityPlacementGroupType *ProximityPlacementGroupType
 
 	// READ-ONLY; A list of references to all availability sets in the proximity placement group.
-	AvailabilitySets []*SubResourceWithColocationStatus
+	AvailabilitySets []SubResourceWithColocationStatus
 
 	// READ-ONLY; A list of references to all virtual machine scale sets in the proximity placement group.
-	VirtualMachineScaleSets []*SubResourceWithColocationStatus
+	VirtualMachineScaleSets []SubResourceWithColocationStatus
 
 	// READ-ONLY; A list of references to all virtual machines in the proximity placement group.
-	VirtualMachines []*SubResourceWithColocationStatus
+	VirtualMachines []SubResourceWithColocationStatus
 }
 
 // ProximityPlacementGroupUpdate - Specifies information about the proximity placement group.
@@ -3497,7 +3497,7 @@ type ReplicationStatus struct {
 	AggregatedState *AggregatedReplicationState
 
 	// READ-ONLY; This is a summary of replication status for each region.
-	Summary []*RegionalReplicationStatus
+	Summary []RegionalReplicationStatus
 }
 
 // RequestRateByIntervalInput - Api request input for LogAnalytics getRequestRateByInterval Api.
@@ -3560,16 +3560,16 @@ type ResourceRange struct {
 // ResourceSKU - Describes an available Compute SKU.
 type ResourceSKU struct {
 	// READ-ONLY; The api versions that support this SKU.
-	APIVersions []*string
+	APIVersions []string
 
 	// READ-ONLY; A name value pair to describe the capability.
-	Capabilities []*ResourceSKUCapabilities
+	Capabilities []ResourceSKUCapabilities
 
 	// READ-ONLY; Specifies the number of virtual machines in the scale set.
 	Capacity *ResourceSKUCapacity
 
 	// READ-ONLY; Metadata for retrieving price info.
-	Costs []*ResourceSKUCosts
+	Costs []ResourceSKUCosts
 
 	// READ-ONLY; The Family of this particular SKU.
 	Family *string
@@ -3578,10 +3578,10 @@ type ResourceSKU struct {
 	Kind *string
 
 	// READ-ONLY; A list of locations and availability zones in those locations where the SKU is available.
-	LocationInfo []*ResourceSKULocationInfo
+	LocationInfo []ResourceSKULocationInfo
 
 	// READ-ONLY; The set of locations that the SKU is available.
-	Locations []*string
+	Locations []string
 
 	// READ-ONLY; The name of SKU.
 	Name *string
@@ -3590,7 +3590,7 @@ type ResourceSKU struct {
 	ResourceType *string
 
 	// READ-ONLY; The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.
-	Restrictions []*ResourceSKURestrictions
+	Restrictions []ResourceSKURestrictions
 
 	// READ-ONLY; The Size of the SKU.
 	Size *string
@@ -3641,7 +3641,7 @@ type ResourceSKUCosts struct {
 // ResourceSKULocationInfo - Describes an available Compute SKU Location Information.
 type ResourceSKULocationInfo struct {
 	// READ-ONLY; The names of extended locations.
-	ExtendedLocations []*string
+	ExtendedLocations []string
 
 	// READ-ONLY; Location of the SKU
 	Location *string
@@ -3650,19 +3650,19 @@ type ResourceSKULocationInfo struct {
 	Type *ExtendedLocationType
 
 	// READ-ONLY; Details of capabilities available to a SKU in specific zones.
-	ZoneDetails []*ResourceSKUZoneDetails
+	ZoneDetails []ResourceSKUZoneDetails
 
 	// READ-ONLY; List of availability zones where the SKU is supported.
-	Zones []*string
+	Zones []string
 }
 
 // ResourceSKURestrictionInfo - Describes an available Compute SKU Restriction Information.
 type ResourceSKURestrictionInfo struct {
 	// READ-ONLY; Locations where the SKU is restricted
-	Locations []*string
+	Locations []string
 
 	// READ-ONLY; List of availability zones where the SKU is restricted.
-	Zones []*string
+	Zones []string
 }
 
 // ResourceSKURestrictions - Describes scaling information of a SKU.
@@ -3678,22 +3678,22 @@ type ResourceSKURestrictions struct {
 
 	// READ-ONLY; The value of restrictions. If the restriction type is set to location. This would be different locations where
 	// the SKU is restricted.
-	Values []*string
+	Values []string
 }
 
 // ResourceSKUZoneDetails - Describes The zonal capabilities of a SKU.
 type ResourceSKUZoneDetails struct {
 	// READ-ONLY; A list of capabilities that are available for the SKU in the specified list of zones.
-	Capabilities []*ResourceSKUCapabilities
+	Capabilities []ResourceSKUCapabilities
 
 	// READ-ONLY; The set of zones that the SKU is available in with the specified capabilities.
-	Name []*string
+	Name []string
 }
 
 // ResourceSKUsResult - The List Resource Skus operation response.
 type ResourceSKUsResult struct {
 	// REQUIRED; The list of skus available for the subscription.
-	Value []*ResourceSKU
+	Value []ResourceSKU
 
 	// The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus
 	NextLink *string
@@ -3702,7 +3702,7 @@ type ResourceSKUsResult struct {
 // ResourceURIList - The List resources which are encrypted with the disk encryption set.
 type ResourceURIList struct {
 	// REQUIRED; A list of IDs or Owner IDs of resources which are encrypted with the disk encryption set.
-	Value []*string
+	Value []string
 
 	// The uri to fetch the next page of encrypted resources. Call ListNext() with this to fetch the next page of encrypted resources.
 	NextLink *string
@@ -3750,7 +3750,7 @@ type RestorePointCollectionListResult struct {
 	NextLink *string
 
 	// Gets the list of restore point collections.
-	Value []*RestorePointCollection
+	Value []RestorePointCollection
 }
 
 // RestorePointCollectionProperties - The restore point collection properties.
@@ -3765,7 +3765,7 @@ type RestorePointCollectionProperties struct {
 	RestorePointCollectionID *string
 
 	// READ-ONLY; A list containing all restore points created under this restore point collection.
-	RestorePoints []*RestorePoint
+	RestorePoints []RestorePoint
 }
 
 // RestorePointCollectionSourceProperties - The properties of the source resource that this restore point collection is created
@@ -3790,17 +3790,17 @@ type RestorePointCollectionUpdate struct {
 // RestorePointInstanceView - The instance view of a restore point.
 type RestorePointInstanceView struct {
 	// The disk restore points information.
-	DiskRestorePoints []*DiskRestorePointInstanceView
+	DiskRestorePoints []DiskRestorePointInstanceView
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 }
 
 // RestorePointProperties - The restore point properties.
 type RestorePointProperties struct {
 	// List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks
 	// will be included.
-	ExcludeDisks []*APIEntityReference
+	ExcludeDisks []APIEntityReference
 
 	// Resource Id of the source restore point from which a copy needs to be created.
 	SourceRestorePoint *APIEntityReference
@@ -3898,7 +3898,7 @@ type RestorePointSourceVMOSDisk struct {
 // RestorePointSourceVMStorageProfile - Describes the storage profile.
 type RestorePointSourceVMStorageProfile struct {
 	// Gets the data disks of the VM captured at the time of the restore point creation.
-	DataDisks []*RestorePointSourceVMDataDisk
+	DataDisks []RestorePointSourceVMDataDisk
 
 	// Gets the OS disk of the VM captured at the time of the restore point creation.
 	OSDisk *RestorePointSourceVMOSDisk
@@ -3935,14 +3935,14 @@ type RoleInstance struct {
 
 type RoleInstanceListResult struct {
 	// REQUIRED
-	Value    []*RoleInstance
+	Value    []RoleInstance
 	NextLink *string
 }
 
 // RoleInstanceNetworkProfile - Describes the network profile for the role instance.
 type RoleInstanceNetworkProfile struct {
 	// READ-ONLY; Specifies the list of resource Ids for the network interfaces associated with the role instance.
-	NetworkInterfaces []*SubResource
+	NetworkInterfaces []SubResource
 }
 
 type RoleInstanceProperties struct {
@@ -3966,13 +3966,13 @@ type RoleInstanceView struct {
 	PrivateID *string
 
 	// READ-ONLY
-	Statuses []*ResourceInstanceViewStatus
+	Statuses []ResourceInstanceViewStatus
 }
 
 // RoleInstances - Specifies a list of role instances from the cloud service.
 type RoleInstances struct {
 	// REQUIRED; List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service.
-	RoleInstances []*string
+	RoleInstances []string
 }
 
 // RollbackStatusInfo - Information about rollback on failed VM instances after a OS Upgrade operation.
@@ -4103,10 +4103,10 @@ type RunCommandDocument struct {
 	Schema *string
 
 	// REQUIRED; The script to be executed.
-	Script []*string
+	Script []string
 
 	// The parameters used by the script.
-	Parameters []*RunCommandParameterDefinition
+	Parameters []RunCommandParameterDefinition
 }
 
 // RunCommandDocumentBase - Describes the properties of a Run Command metadata.
@@ -4133,11 +4133,11 @@ type RunCommandInput struct {
 	CommandID *string
 
 	// The run command parameters.
-	Parameters []*RunCommandInputParameter
+	Parameters []RunCommandInputParameter
 
 	// Optional. The script to be executed. When this value is given, the given script will override the default script of the
 	// command.
-	Script []*string
+	Script []string
 }
 
 // RunCommandInputParameter - Describes the properties of a run command parameter.
@@ -4152,7 +4152,7 @@ type RunCommandInputParameter struct {
 // RunCommandListResult - The List Virtual Machine operation response.
 type RunCommandListResult struct {
 	// REQUIRED; The list of virtual machine run commands.
-	Value []*RunCommandDocumentBase
+	Value []RunCommandDocumentBase
 
 	// The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands.
 	NextLink *string
@@ -4175,7 +4175,7 @@ type RunCommandParameterDefinition struct {
 
 type RunCommandResult struct {
 	// Run command operation response.
-	Value []*InstanceViewStatus
+	Value []InstanceViewStatus
 }
 
 // SKU - Describes a virtual machine scale set sku. NOTE: If the new VM SKU is not supported on the hardware the scale set
@@ -4198,7 +4198,7 @@ type SKU struct {
 // SSHConfiguration - SSH configuration for Linux based VMs running on Azure
 type SSHConfiguration struct {
 	// The list of SSH public keys used to authenticate with linux based VMs.
-	PublicKeys []*SSHPublicKey
+	PublicKeys []SSHPublicKey
 }
 
 // SSHPublicKey - Contains information about SSH certificate public key and the path on the Linux VM where the public key
@@ -4270,7 +4270,7 @@ type SSHPublicKeyUpdateResource struct {
 // SSHPublicKeysGroupListResult - The list SSH public keys operation response.
 type SSHPublicKeysGroupListResult struct {
 	// REQUIRED; The list of SSH public keys
-	Value []*SSHPublicKeyResource
+	Value []SSHPublicKeyResource
 
 	// The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys.
 	NextLink *string
@@ -4295,7 +4295,7 @@ type ScaleInPolicy struct {
 	// will be chosen for removal. For zonal virtual machine scale sets, the
 	// scale set will first be balanced across zones. Within each zone, the newest virtual machines that are not protected will
 	// be chosen for removal.
-	Rules []*VirtualMachineScaleSetScaleInRules
+	Rules []VirtualMachineScaleSetScaleInRules
 }
 
 type ScheduledEventsProfile struct {
@@ -4361,7 +4361,7 @@ type SharedGalleryImage struct {
 // SharedGalleryImageList - The List Shared Gallery Images operation response.
 type SharedGalleryImageList struct {
 	// REQUIRED; A list of shared gallery images.
-	Value []*SharedGalleryImage
+	Value []SharedGalleryImage
 
 	// The uri to fetch the next page of shared gallery images. Call ListNext() with this to fetch the next page of shared gallery
 	// images.
@@ -4392,7 +4392,7 @@ type SharedGalleryImageProperties struct {
 	EndOfLifeDate *time.Time
 
 	// A list of gallery image features.
-	Features []*GalleryImageFeature
+	Features []GalleryImageFeature
 
 	// The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
 	HyperVGeneration *HyperVGeneration
@@ -4422,7 +4422,7 @@ type SharedGalleryImageVersion struct {
 // SharedGalleryImageVersionList - The List Shared Gallery Image versions operation response.
 type SharedGalleryImageVersionList struct {
 	// REQUIRED; A list of shared gallery images versions.
-	Value []*SharedGalleryImageVersion
+	Value []SharedGalleryImageVersion
 
 	// The uri to fetch the next page of shared gallery image versions. Call ListNext() with this to fetch the next page of shared
 	// gallery image versions.
@@ -4443,7 +4443,7 @@ type SharedGalleryImageVersionProperties struct {
 // SharedGalleryList - The List Shared Galleries operation response.
 type SharedGalleryList struct {
 	// REQUIRED; A list of shared galleries.
-	Value []*SharedGallery
+	Value []SharedGallery
 
 	// The uri to fetch the next page of shared galleries. Call ListNext() with this to fetch the next page of shared galleries.
 	NextLink *string
@@ -4461,13 +4461,13 @@ type SharingProfile struct {
 	Permissions *GallerySharingPermissionTypes
 
 	// READ-ONLY; A list of sharing profile groups.
-	Groups []*SharingProfileGroup
+	Groups []SharingProfileGroup
 }
 
 // SharingProfileGroup - Group of the gallery sharing profile
 type SharingProfileGroup struct {
 	// A list of subscription/tenant ids the gallery is aimed to be shared to.
-	IDs []*string
+	IDs []string
 
 	// This property allows you to specify the type of sharing group.
 	// Possible values are:
@@ -4480,7 +4480,7 @@ type SharingProfileGroup struct {
 // SharingStatus - Sharing status of current gallery.
 type SharingStatus struct {
 	// Summary of all regional sharing status.
-	Summary []*RegionalSharingStatus
+	Summary []RegionalSharingStatus
 
 	// READ-ONLY; Aggregated sharing state of current gallery.
 	AggregatedState *SharingState
@@ -4496,7 +4496,7 @@ type SharingUpdate struct {
 	OperationType *SharingUpdateOperationTypes
 
 	// A list of sharing profile groups.
-	Groups []*SharingProfileGroup
+	Groups []SharingProfileGroup
 }
 
 // Snapshot resource.
@@ -4534,7 +4534,7 @@ type Snapshot struct {
 // SnapshotList - The List Snapshots operation response.
 type SnapshotList struct {
 	// REQUIRED; A list of snapshots.
-	Value []*Snapshot
+	Value []Snapshot
 
 	// The uri to fetch the next page of snapshots. Call ListNext() with this to fetch the next page of snapshots.
 	NextLink *string
@@ -4705,7 +4705,7 @@ type StatusCodeCount struct {
 type StorageProfile struct {
 	// Specifies the parameters that are used to add a data disk to a virtual machine.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines [https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview].
-	DataDisks []*DataDisk
+	DataDisks []DataDisk
 
 	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or
 	// virtual machine images. This element is required when you want to use a platform
@@ -4819,7 +4819,7 @@ type UpdateDomain struct {
 
 type UpdateDomainListResult struct {
 	// REQUIRED
-	Value    []*UpdateDomain
+	Value    []UpdateDomain
 	NextLink *string
 }
 
@@ -5024,7 +5024,7 @@ type VaultSecretGroup struct {
 	SourceVault *SubResource
 
 	// The list of key vault references in SourceVault which contain certificates.
-	VaultCertificates []*VaultCertificate
+	VaultCertificates []VaultCertificate
 }
 
 // VirtualHardDisk - Describes the uri of a disk.
@@ -5058,7 +5058,7 @@ type VirtualMachine struct {
 	Tags map[string]*string
 
 	// The virtual machine zones.
-	Zones []*string
+	Zones []string
 
 	// READ-ONLY; Resource Id
 	ID *string
@@ -5067,7 +5067,7 @@ type VirtualMachine struct {
 	Name *string
 
 	// READ-ONLY; The virtual machine child extension resources.
-	Resources []*VirtualMachineExtension
+	Resources []VirtualMachineExtension
 
 	// READ-ONLY; Resource type
 	Type *string
@@ -5076,10 +5076,10 @@ type VirtualMachine struct {
 // VirtualMachineAgentInstanceView - The instance view of the VM Agent running on the virtual machine.
 type VirtualMachineAgentInstanceView struct {
 	// The virtual machine extension handler instance view.
-	ExtensionHandlers []*VirtualMachineExtensionHandlerInstanceView
+	ExtensionHandlers []VirtualMachineExtensionHandlerInstanceView
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// The VM Agent full version.
 	VMAgentVersion *string
@@ -5092,7 +5092,7 @@ type VirtualMachineAssessPatchesResult struct {
 	AssessmentActivityID *string
 
 	// READ-ONLY; The list of patches that have been detected as available for installation.
-	AvailablePatches []*VirtualMachineSoftwarePatchProperties
+	AvailablePatches []VirtualMachineSoftwarePatchProperties
 
 	// READ-ONLY; The number of critical or security patches that have been detected as available and not yet installed.
 	CriticalAndSecurityPatchCount *int32
@@ -5226,10 +5226,10 @@ type VirtualMachineExtensionInstanceView struct {
 	Name *string
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// The resource status information.
-	Substatuses []*InstanceViewStatus
+	Substatuses []InstanceViewStatus
 
 	// Specifies the type of the extension; an example is "CustomScriptExtension".
 	Type *string
@@ -5330,7 +5330,7 @@ type VirtualMachineExtensionUpdateProperties struct {
 // VirtualMachineExtensionsListResult - The List Extension operation response
 type VirtualMachineExtensionsListResult struct {
 	// The list of extensions
-	Value []*VirtualMachineExtension
+	Value []VirtualMachineExtension
 }
 
 // VirtualMachineHealthStatus - The health status of the VM.
@@ -5407,11 +5407,11 @@ type VirtualMachineImageProperties struct {
 
 	// Describes automatic OS upgrade properties on the image.
 	AutomaticOSUpgradeProperties *AutomaticOSUpgradeProperties
-	DataDiskImages               []*DataDiskImage
+	DataDiskImages               []DataDiskImage
 
 	// Specifies disallowed configuration for the VirtualMachine created from the image
 	Disallowed *DisallowedConfiguration
-	Features   []*VirtualMachineImageFeature
+	Features   []VirtualMachineImageFeature
 
 	// Specifies the HyperVGeneration Type
 	HyperVGeneration *HyperVGenerationTypes
@@ -5484,7 +5484,7 @@ type VirtualMachineInstallPatchesResult struct {
 	NotSelectedPatchCount *int32
 
 	// READ-ONLY; The patches that were installed during the operation.
-	Patches []*PatchInstallationDetail
+	Patches []PatchInstallationDetail
 
 	// READ-ONLY; The number of patches that were identified as meeting the installation criteria, but were not able to be installed.
 	// Typically this happens when maintenanceWindowExceeded == true.
@@ -5512,10 +5512,10 @@ type VirtualMachineInstanceView struct {
 	ComputerName *string
 
 	// The virtual machine disk information.
-	Disks []*DiskInstanceView
+	Disks []DiskInstanceView
 
 	// The extensions information.
-	Extensions []*VirtualMachineExtensionInstanceView
+	Extensions []VirtualMachineExtensionInstanceView
 
 	// Specifies the HyperVGeneration Type associated with a resource
 	HyperVGeneration *HyperVGenerationType
@@ -5542,7 +5542,7 @@ type VirtualMachineInstanceView struct {
 	RdpThumbPrint *string
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// The VM Agent running on the virtual machine.
 	VMAgent *VirtualMachineAgentInstanceView
@@ -5560,7 +5560,7 @@ type VirtualMachineInstanceView struct {
 // VirtualMachineListResult - The List Virtual Machine operation response.
 type VirtualMachineListResult struct {
 	// REQUIRED; The list of virtual machines.
-	Value []*VirtualMachine
+	Value []VirtualMachine
 
 	// The URI to fetch the next page of VMs. Call ListNext() with this URI to fetch the next page of Virtual Machines.
 	NextLink *string
@@ -5578,7 +5578,7 @@ type VirtualMachineNetworkInterfaceConfiguration struct {
 // VirtualMachineNetworkInterfaceConfigurationProperties - Describes a virtual machine network profile's IP configuration.
 type VirtualMachineNetworkInterfaceConfigurationProperties struct {
 	// REQUIRED; Specifies the IP configurations of the network interface.
-	IPConfigurations []*VirtualMachineNetworkInterfaceIPConfiguration
+	IPConfigurations []VirtualMachineNetworkInterfaceIPConfiguration
 
 	// The dns settings to be applied on the network interfaces.
 	DNSSettings *VirtualMachineNetworkInterfaceDNSSettingsConfiguration
@@ -5606,7 +5606,7 @@ type VirtualMachineNetworkInterfaceConfigurationProperties struct {
 // VirtualMachineNetworkInterfaceDNSSettingsConfiguration - Describes a virtual machines network configuration's DNS settings.
 type VirtualMachineNetworkInterfaceDNSSettingsConfiguration struct {
 	// List of DNS servers IP addresses
-	DNSServers []*string
+	DNSServers []string
 }
 
 // VirtualMachineNetworkInterfaceIPConfiguration - Describes a virtual machine network profile's IP configuration.
@@ -5624,15 +5624,15 @@ type VirtualMachineNetworkInterfaceIPConfigurationProperties struct {
 	// Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend
 	// address pools of multiple application gateways. Multiple virtual machines
 	// cannot use the same application gateway.
-	ApplicationGatewayBackendAddressPools []*SubResource
+	ApplicationGatewayBackendAddressPools []SubResource
 
 	// Specifies an array of references to application security group.
-	ApplicationSecurityGroups []*SubResource
+	ApplicationSecurityGroups []SubResource
 
 	// Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address
 	// pools of one public and one internal load balancer. [Multiple virtual
 	// machines cannot use the same basic sku load balancer].
-	LoadBalancerBackendAddressPools []*SubResource
+	LoadBalancerBackendAddressPools []SubResource
 
 	// Specifies the primary network interface in case the virtual machine has more than 1 network interface.
 	Primary *bool
@@ -5657,7 +5657,7 @@ type VirtualMachinePatchStatus struct {
 	LastPatchInstallationSummary *LastPatchInstallationSummary
 
 	// READ-ONLY; The enablement status of the specified patchMode
-	ConfigurationStatuses []*InstanceViewStatus
+	ConfigurationStatuses []InstanceViewStatus
 }
 
 // VirtualMachineProperties - Describes the properties of a Virtual Machine.
@@ -5808,7 +5808,7 @@ type VirtualMachinePublicIPAddressConfigurationProperties struct {
 	DeleteOption *DeleteOptions
 
 	// The list of IP tags associated with the public IP address.
-	IPTags []*VirtualMachineIPTag
+	IPTags []VirtualMachineIPTag
 
 	// The idle timeout of the public IP address.
 	IdleTimeoutInMinutes *int32
@@ -5884,7 +5884,7 @@ type VirtualMachineRunCommandInstanceView struct {
 	StartTime *time.Time
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 }
 
 // VirtualMachineRunCommandProperties - Describes the properties of a Virtual Machine run command.
@@ -5899,10 +5899,10 @@ type VirtualMachineRunCommandProperties struct {
 	OutputBlobURI *string
 
 	// The parameters used by the script.
-	Parameters []*RunCommandInputParameter
+	Parameters []RunCommandInputParameter
 
 	// The parameters used by the script.
-	ProtectedParameters []*RunCommandInputParameter
+	ProtectedParameters []RunCommandInputParameter
 
 	// Specifies the user account password on the VM when executing the run command.
 	RunAsPassword *string
@@ -5947,7 +5947,7 @@ type VirtualMachineRunCommandUpdate struct {
 // VirtualMachineRunCommandsListResult - The List run command operation response
 type VirtualMachineRunCommandsListResult struct {
 	// REQUIRED; The list of run commands
-	Value []*VirtualMachineRunCommand
+	Value []VirtualMachineRunCommand
 
 	// The uri to fetch the next page of run commands.
 	NextLink *string
@@ -5981,7 +5981,7 @@ type VirtualMachineScaleSet struct {
 	Tags map[string]*string
 
 	// The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set
-	Zones []*string
+	Zones []string
 
 	// READ-ONLY; Resource Id
 	ID *string
@@ -6051,7 +6051,7 @@ type VirtualMachineScaleSetExtension struct {
 // VirtualMachineScaleSetExtensionListResult - The List VM scale set extension operation response.
 type VirtualMachineScaleSetExtensionListResult struct {
 	// REQUIRED; The list of VM scale set extensions.
-	Value []*VirtualMachineScaleSetExtension
+	Value []VirtualMachineScaleSetExtension
 
 	// The uri to fetch the next page of VM scale set extensions. Call ListNext() with this to fetch the next page of VM scale
 	// set extensions.
@@ -6061,7 +6061,7 @@ type VirtualMachineScaleSetExtensionListResult struct {
 // VirtualMachineScaleSetExtensionProfile - Describes a virtual machine scale set extension profile.
 type VirtualMachineScaleSetExtensionProfile struct {
 	// The virtual machine scale set child extension resources.
-	Extensions []*VirtualMachineScaleSetExtension
+	Extensions []VirtualMachineScaleSetExtension
 
 	// Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes
 	// (inclusive) and should be specified in ISO 8601 format. The default value is 90
@@ -6092,7 +6092,7 @@ type VirtualMachineScaleSetExtensionProperties struct {
 	ProtectedSettingsFromKeyVault any
 
 	// Collection of extension names after which this extension needs to be provisioned.
-	ProvisionAfterExtensions []*string
+	ProvisionAfterExtensions []string
 
 	// The name of the extension handler publisher.
 	Publisher *string
@@ -6154,20 +6154,20 @@ type VirtualMachineScaleSetIPConfigurationProperties struct {
 	// Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address
 	// pools of multiple application gateways. Multiple scale sets cannot use the
 	// same application gateway.
-	ApplicationGatewayBackendAddressPools []*SubResource
+	ApplicationGatewayBackendAddressPools []SubResource
 
 	// Specifies an array of references to application security group.
-	ApplicationSecurityGroups []*SubResource
+	ApplicationSecurityGroups []SubResource
 
 	// Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address
 	// pools of one public and one internal load balancer. Multiple scale sets cannot
 	// use the same basic sku load balancer.
-	LoadBalancerBackendAddressPools []*SubResource
+	LoadBalancerBackendAddressPools []SubResource
 
 	// Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools
 	// of one public and one internal load balancer. Multiple scale sets cannot use
 	// the same basic sku load balancer.
-	LoadBalancerInboundNatPools []*SubResource
+	LoadBalancerInboundNatPools []SubResource
 
 	// Specifies the primary network interface in case the virtual machine has more than 1 network interface.
 	Primary *bool
@@ -6224,13 +6224,13 @@ type VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue struct {
 // VirtualMachineScaleSetInstanceView - The instance view of a virtual machine scale set.
 type VirtualMachineScaleSetInstanceView struct {
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// READ-ONLY; The extensions information.
-	Extensions []*VirtualMachineScaleSetVMExtensionsSummary
+	Extensions []VirtualMachineScaleSetVMExtensionsSummary
 
 	// READ-ONLY; The orchestration services information.
-	OrchestrationServices []*OrchestrationServiceSummary
+	OrchestrationServices []OrchestrationServiceSummary
 
 	// READ-ONLY; The instance view status summary for the virtual machine scale set.
 	VirtualMachine *VirtualMachineScaleSetInstanceViewStatusesSummary
@@ -6240,13 +6240,13 @@ type VirtualMachineScaleSetInstanceView struct {
 // scale set.
 type VirtualMachineScaleSetInstanceViewStatusesSummary struct {
 	// READ-ONLY; The extensions information.
-	StatusesSummary []*VirtualMachineStatusCodeCount
+	StatusesSummary []VirtualMachineStatusCodeCount
 }
 
 // VirtualMachineScaleSetListOSUpgradeHistory - List of Virtual Machine Scale Set OS Upgrade History operation response.
 type VirtualMachineScaleSetListOSUpgradeHistory struct {
 	// REQUIRED; The list of OS upgrades performed on the virtual machine scale set.
-	Value []*UpgradeOperationHistoricalStatusInfo
+	Value []UpgradeOperationHistoricalStatusInfo
 
 	// The uri to fetch the next page of OS Upgrade History. Call ListNext() with this to fetch the next page of history of upgrades.
 	NextLink *string
@@ -6255,7 +6255,7 @@ type VirtualMachineScaleSetListOSUpgradeHistory struct {
 // VirtualMachineScaleSetListResult - The List Virtual Machine operation response.
 type VirtualMachineScaleSetListResult struct {
 	// REQUIRED; The list of virtual machine scale sets.
-	Value []*VirtualMachineScaleSet
+	Value []VirtualMachineScaleSet
 
 	// The uri to fetch the next page of Virtual Machine Scale Sets. Call ListNext() with this to fetch the next page of VMSS.
 	NextLink *string
@@ -6264,7 +6264,7 @@ type VirtualMachineScaleSetListResult struct {
 // VirtualMachineScaleSetListSKUsResult - The Virtual Machine Scale Set List Skus operation response.
 type VirtualMachineScaleSetListSKUsResult struct {
 	// REQUIRED; The list of skus available for the virtual machine scale set.
-	Value []*VirtualMachineScaleSetSKU
+	Value []VirtualMachineScaleSetSKU
 
 	// The uri to fetch the next page of Virtual Machine Scale Set Skus. Call ListNext() with this to fetch the next page of VMSS
 	// Skus.
@@ -6274,7 +6274,7 @@ type VirtualMachineScaleSetListSKUsResult struct {
 // VirtualMachineScaleSetListWithLinkResult - The List Virtual Machine operation response.
 type VirtualMachineScaleSetListWithLinkResult struct {
 	// REQUIRED; The list of virtual machine scale sets.
-	Value []*VirtualMachineScaleSet
+	Value []VirtualMachineScaleSet
 
 	// The uri to fetch the next page of Virtual Machine Scale Sets. Call ListNext() with this to fetch the next page of Virtual
 	// Machine Scale Sets.
@@ -6310,13 +6310,13 @@ type VirtualMachineScaleSetNetworkConfiguration struct {
 // DNS settings.
 type VirtualMachineScaleSetNetworkConfigurationDNSSettings struct {
 	// List of DNS servers IP addresses
-	DNSServers []*string
+	DNSServers []string
 }
 
 // VirtualMachineScaleSetNetworkConfigurationProperties - Describes a virtual machine scale set network profile's IP configuration.
 type VirtualMachineScaleSetNetworkConfigurationProperties struct {
 	// REQUIRED; Specifies the IP configurations of the network interface.
-	IPConfigurations []*VirtualMachineScaleSetIPConfiguration
+	IPConfigurations []VirtualMachineScaleSetIPConfiguration
 
 	// The dns settings to be applied on the network interfaces.
 	DNSSettings *VirtualMachineScaleSetNetworkConfigurationDNSSettings
@@ -6352,7 +6352,7 @@ type VirtualMachineScaleSetNetworkProfile struct {
 	NetworkAPIVersion *NetworkAPIVersion
 
 	// The list of network configurations.
-	NetworkInterfaceConfigurations []*VirtualMachineScaleSetNetworkConfiguration
+	NetworkInterfaceConfigurations []VirtualMachineScaleSetNetworkConfiguration
 }
 
 // VirtualMachineScaleSetOSDisk - Describes a virtual machine scale set operating system disk.
@@ -6396,7 +6396,7 @@ type VirtualMachineScaleSetOSDisk struct {
 	OSType *OperatingSystemTypes
 
 	// Specifies the container urls that are used to store operating system disks for the scale set.
-	VhdContainers []*string
+	VhdContainers []string
 
 	// Specifies whether writeAccelerator should be enabled or disabled on the disk.
 	WriteAcceleratorEnabled *bool
@@ -6454,7 +6454,7 @@ type VirtualMachineScaleSetOSProfile struct {
 	// machine extension for Linux [https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux] or the Azure
 	// Key Vault virtual machine extension for Windows
 	// [https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows].
-	Secrets []*VaultSecretGroup
+	Secrets []VaultSecretGroup
 
 	// Specifies Windows operating system settings on the virtual machine.
 	WindowsConfiguration *WindowsConfiguration
@@ -6556,7 +6556,7 @@ type VirtualMachineScaleSetPublicIPAddressConfigurationProperties struct {
 	DeleteOption *DeleteOptions
 
 	// The list of IP tags associated with the public IP address.
-	IPTags []*VirtualMachineScaleSetIPTag
+	IPTags []VirtualMachineScaleSetIPTag
 
 	// The idle timeout of the public IP address.
 	IdleTimeoutInMinutes *int32
@@ -6573,7 +6573,7 @@ type VirtualMachineScaleSetPublicIPAddressConfigurationProperties struct {
 type VirtualMachineScaleSetReimageParameters struct {
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation
 	// being performed on all virtual machines in the virtual machine scale set.
-	InstanceIDs []*string
+	InstanceIDs []string
 
 	// Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported
 	// for VM/VMSS with Ephemeral OS disk.
@@ -6611,7 +6611,7 @@ type VirtualMachineScaleSetSKUCapacity struct {
 type VirtualMachineScaleSetStorageProfile struct {
 	// Specifies the parameters that are used to add data disks to the virtual machines in the scale set.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines [https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview].
-	DataDisks []*VirtualMachineScaleSetDataDisk
+	DataDisks []VirtualMachineScaleSetDataDisk
 
 	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or
 	// virtual machine images. This element is required when you want to use a platform
@@ -6659,16 +6659,16 @@ type VirtualMachineScaleSetUpdateIPConfiguration struct {
 // properties.
 type VirtualMachineScaleSetUpdateIPConfigurationProperties struct {
 	// The application gateway backend address pools.
-	ApplicationGatewayBackendAddressPools []*SubResource
+	ApplicationGatewayBackendAddressPools []SubResource
 
 	// Specifies an array of references to application security group.
-	ApplicationSecurityGroups []*SubResource
+	ApplicationSecurityGroups []SubResource
 
 	// The load balancer backend address pools.
-	LoadBalancerBackendAddressPools []*SubResource
+	LoadBalancerBackendAddressPools []SubResource
 
 	// The load balancer inbound nat pools.
-	LoadBalancerInboundNatPools []*SubResource
+	LoadBalancerInboundNatPools []SubResource
 
 	// Specifies the primary IP Configuration in case the network interface has more than one IP Configuration.
 	Primary *bool
@@ -6716,7 +6716,7 @@ type VirtualMachineScaleSetUpdateNetworkConfigurationProperties struct {
 	EnableIPForwarding *bool
 
 	// The virtual machine scale set IP Configuration.
-	IPConfigurations []*VirtualMachineScaleSetUpdateIPConfiguration
+	IPConfigurations []VirtualMachineScaleSetUpdateIPConfiguration
 
 	// The network security group.
 	NetworkSecurityGroup *SubResource
@@ -6737,7 +6737,7 @@ type VirtualMachineScaleSetUpdateNetworkProfile struct {
 	NetworkAPIVersion *NetworkAPIVersion
 
 	// The list of network configurations.
-	NetworkInterfaceConfigurations []*VirtualMachineScaleSetUpdateNetworkConfiguration
+	NetworkInterfaceConfigurations []VirtualMachineScaleSetUpdateNetworkConfiguration
 }
 
 // VirtualMachineScaleSetUpdateOSDisk - Describes virtual machine scale set operating system disk Update Object. This should
@@ -6760,7 +6760,7 @@ type VirtualMachineScaleSetUpdateOSDisk struct {
 	ManagedDisk *VirtualMachineScaleSetManagedDiskParameters
 
 	// The list of virtual hard disk container uris.
-	VhdContainers []*string
+	VhdContainers []string
 
 	// Specifies whether writeAccelerator should be enabled or disabled on the disk.
 	WriteAcceleratorEnabled *bool
@@ -6775,7 +6775,7 @@ type VirtualMachineScaleSetUpdateOSProfile struct {
 	LinuxConfiguration *LinuxConfiguration
 
 	// The List of certificates for addition to the VM.
-	Secrets []*VaultSecretGroup
+	Secrets []VaultSecretGroup
 
 	// The Windows Configuration of the OS profile.
 	WindowsConfiguration *WindowsConfiguration
@@ -6847,7 +6847,7 @@ type VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties struct {
 // VirtualMachineScaleSetUpdateStorageProfile - Describes a virtual machine scale set storage profile.
 type VirtualMachineScaleSetUpdateStorageProfile struct {
 	// The data disks.
-	DataDisks []*VirtualMachineScaleSetDataDisk
+	DataDisks []VirtualMachineScaleSetDataDisk
 
 	// The image reference.
 	ImageReference *ImageReference
@@ -6919,7 +6919,7 @@ type VirtualMachineScaleSetVM struct {
 	Name *string
 
 	// READ-ONLY; The virtual machine child extension resources.
-	Resources []*VirtualMachineExtension
+	Resources []VirtualMachineExtension
 
 	// READ-ONLY; The virtual machine SKU.
 	SKU *SKU
@@ -6928,7 +6928,7 @@ type VirtualMachineScaleSetVM struct {
 	Type *string
 
 	// READ-ONLY; The virtual machine zones.
-	Zones []*string
+	Zones []string
 }
 
 // VirtualMachineScaleSetVMExtension - Describes a VMSS VM Extension.
@@ -6964,7 +6964,7 @@ type VirtualMachineScaleSetVMExtensionUpdate struct {
 // VirtualMachineScaleSetVMExtensionsListResult - The List VMSS VM Extension operation response
 type VirtualMachineScaleSetVMExtensionsListResult struct {
 	// The list of VMSS VM extensions
-	Value []*VirtualMachineScaleSetVMExtension
+	Value []VirtualMachineScaleSetVMExtension
 }
 
 // VirtualMachineScaleSetVMExtensionsSummary - Extensions summary for virtual machines of a virtual machine scale set.
@@ -6973,20 +6973,20 @@ type VirtualMachineScaleSetVMExtensionsSummary struct {
 	Name *string
 
 	// READ-ONLY; The extensions information.
-	StatusesSummary []*VirtualMachineStatusCodeCount
+	StatusesSummary []VirtualMachineStatusCodeCount
 }
 
 // VirtualMachineScaleSetVMInstanceIDs - Specifies a list of virtual machine instance IDs from the VM scale set.
 type VirtualMachineScaleSetVMInstanceIDs struct {
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation
 	// being performed on all virtual machines in the virtual machine scale set.
-	InstanceIDs []*string
+	InstanceIDs []string
 }
 
 // VirtualMachineScaleSetVMInstanceRequiredIDs - Specifies a list of virtual machine instance IDs from the VM scale set.
 type VirtualMachineScaleSetVMInstanceRequiredIDs struct {
 	// REQUIRED; The virtual machine scale set instance ids.
-	InstanceIDs []*string
+	InstanceIDs []string
 }
 
 // VirtualMachineScaleSetVMInstanceView - The instance view of a virtual machine scale set VM.
@@ -6997,10 +6997,10 @@ type VirtualMachineScaleSetVMInstanceView struct {
 	BootDiagnostics *BootDiagnosticsInstanceView
 
 	// The disks information.
-	Disks []*DiskInstanceView
+	Disks []DiskInstanceView
 
 	// The extensions information.
-	Extensions []*VirtualMachineExtensionInstanceView
+	Extensions []VirtualMachineExtensionInstanceView
 
 	// The Maintenance Operation status on the virtual machine.
 	MaintenanceRedeployStatus *MaintenanceRedeployStatus
@@ -7018,7 +7018,7 @@ type VirtualMachineScaleSetVMInstanceView struct {
 	RdpThumbPrint *string
 
 	// The resource status information.
-	Statuses []*InstanceViewStatus
+	Statuses []InstanceViewStatus
 
 	// The VM Agent running on the virtual machine.
 	VMAgent *VirtualMachineAgentInstanceView
@@ -7036,7 +7036,7 @@ type VirtualMachineScaleSetVMInstanceView struct {
 // VirtualMachineScaleSetVMListResult - The List Virtual Machine Scale Set VMs operation response.
 type VirtualMachineScaleSetVMListResult struct {
 	// REQUIRED; The list of virtual machine scale sets VMs.
-	Value []*VirtualMachineScaleSetVM
+	Value []VirtualMachineScaleSetVM
 
 	// The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS
 	// VMs
@@ -7046,7 +7046,7 @@ type VirtualMachineScaleSetVMListResult struct {
 // VirtualMachineScaleSetVMNetworkProfileConfiguration - Describes a virtual machine scale set VM network profile.
 type VirtualMachineScaleSetVMNetworkProfileConfiguration struct {
 	// The list of network configurations.
-	NetworkInterfaceConfigurations []*VirtualMachineScaleSetNetworkConfiguration
+	NetworkInterfaceConfigurations []VirtualMachineScaleSetNetworkConfiguration
 }
 
 // VirtualMachineScaleSetVMProfile - Describes a virtual machine scale set virtual machine profile.
@@ -7231,7 +7231,7 @@ type VirtualMachineSize struct {
 // VirtualMachineSizeListResult - The List Virtual Machine operation response.
 type VirtualMachineSizeListResult struct {
 	// The list of virtual machine sizes.
-	Value []*VirtualMachineSize
+	Value []VirtualMachineSize
 }
 
 // VirtualMachineSoftwarePatchProperties - Describes the properties of a Virtual Machine software patch.
@@ -7244,7 +7244,7 @@ type VirtualMachineSoftwarePatchProperties struct {
 	AssessmentState *PatchAssessmentState
 
 	// READ-ONLY; The classification(s) of the patch as provided by the patch publisher.
-	Classifications []*string
+	Classifications []string
 
 	// READ-ONLY; The KBID of the patch. Only applies to Windows patches.
 	KbID *string
@@ -7296,13 +7296,13 @@ type VirtualMachineUpdate struct {
 	Tags map[string]*string
 
 	// The virtual machine zones.
-	Zones []*string
+	Zones []string
 }
 
 // WinRMConfiguration - Describes Windows Remote Management configuration of the VM
 type WinRMConfiguration struct {
 	// The list of Windows Remote Management listeners
-	Listeners []*WinRMListener
+	Listeners []WinRMListener
 }
 
 // WinRMListener - Describes Protocol and thumbprint of Windows Remote Management listener
@@ -7334,7 +7334,7 @@ type WinRMListener struct {
 type WindowsConfiguration struct {
 	// Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is
 	// used by Windows Setup.
-	AdditionalUnattendContent []*AdditionalUnattendContent
+	AdditionalUnattendContent []AdditionalUnattendContent
 
 	// Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true.
 	// For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning.
@@ -7361,16 +7361,16 @@ type WindowsConfiguration struct {
 // WindowsParameters - Input for InstallPatches on a Windows VM, as directly received by the API
 type WindowsParameters struct {
 	// The update classifications to select when installing patches for Windows.
-	ClassificationsToInclude []*VMGuestPatchClassificationWindows
+	ClassificationsToInclude []VMGuestPatchClassificationWindows
 
 	// Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true.
 	ExcludeKbsRequiringReboot *bool
 
 	// Kbs to exclude in the patch operation
-	KbNumbersToExclude []*string
+	KbNumbersToExclude []string
 
 	// Kbs to include in the patch operation
-	KbNumbersToInclude []*string
+	KbNumbersToInclude []string
 
 	// This is used to install patches that were published on or before this given max published date.
 	MaxPatchPublishDate *time.Time

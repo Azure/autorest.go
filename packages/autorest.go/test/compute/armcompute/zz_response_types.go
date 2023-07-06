@@ -1007,13 +1007,13 @@ type VirtualMachineExtensionImagesClientGetResponse struct {
 // VirtualMachineExtensionImagesClientListTypesResponse contains the response from method VirtualMachineExtensionImagesClient.ListTypes.
 type VirtualMachineExtensionImagesClientListTypesResponse struct {
 	// Array of VirtualMachineExtensionImage
-	VirtualMachineExtensionImageArray []*VirtualMachineExtensionImage
+	VirtualMachineExtensionImageArray []VirtualMachineExtensionImage
 }
 
 // VirtualMachineExtensionImagesClientListVersionsResponse contains the response from method VirtualMachineExtensionImagesClient.ListVersions.
 type VirtualMachineExtensionImagesClientListVersionsResponse struct {
 	// Array of VirtualMachineExtensionImage
-	VirtualMachineExtensionImageArray []*VirtualMachineExtensionImage
+	VirtualMachineExtensionImageArray []VirtualMachineExtensionImage
 }
 
 // VirtualMachineExtensionsClientCreateOrUpdateResponse contains the response from method VirtualMachineExtensionsClient.BeginCreateOrUpdate.
@@ -1054,25 +1054,25 @@ type VirtualMachineImagesClientGetResponse struct {
 // VirtualMachineImagesClientListOffersResponse contains the response from method VirtualMachineImagesClient.ListOffers.
 type VirtualMachineImagesClientListOffersResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImagesClientListPublishersResponse contains the response from method VirtualMachineImagesClient.ListPublishers.
 type VirtualMachineImagesClientListPublishersResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImagesClientListResponse contains the response from method VirtualMachineImagesClient.List.
 type VirtualMachineImagesClientListResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImagesClientListSKUsResponse contains the response from method VirtualMachineImagesClient.ListSKUs.
 type VirtualMachineImagesClientListSKUsResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImagesEdgeZoneClientGetResponse contains the response from method VirtualMachineImagesEdgeZoneClient.Get.
@@ -1084,25 +1084,25 @@ type VirtualMachineImagesEdgeZoneClientGetResponse struct {
 // VirtualMachineImagesEdgeZoneClientListOffersResponse contains the response from method VirtualMachineImagesEdgeZoneClient.ListOffers.
 type VirtualMachineImagesEdgeZoneClientListOffersResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImagesEdgeZoneClientListPublishersResponse contains the response from method VirtualMachineImagesEdgeZoneClient.ListPublishers.
 type VirtualMachineImagesEdgeZoneClientListPublishersResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImagesEdgeZoneClientListResponse contains the response from method VirtualMachineImagesEdgeZoneClient.List.
 type VirtualMachineImagesEdgeZoneClientListResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImagesEdgeZoneClientListSKUsResponse contains the response from method VirtualMachineImagesEdgeZoneClient.ListSKUs.
 type VirtualMachineImagesEdgeZoneClientListSKUsResponse struct {
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineRunCommandsClientCreateOrUpdateResponse contains the response from method VirtualMachineRunCommandsClient.BeginCreateOrUpdate.

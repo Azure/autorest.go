@@ -250,7 +250,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
         return '[]byte';
       }
-      arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arrayElem);
+      arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arrayElem) && !<boolean>codeModel.language.go!.sliceElementsByValue;
       // passing nil for array elements in headers, paths, and query params
       // isn't very useful as we'd just skip nil entries.  so disable it.
       if (type !== 'Property' && type !== 'InBody') {
