@@ -51,9 +51,9 @@ type Cookiecuttershark struct {
 func (c *Cookiecuttershark) GetFish() *Fish {
 	return &Fish{
 		Fishtype: c.Fishtype,
-		Species:  c.Species,
 		Length:   c.Length,
 		Siblings: c.Siblings,
+		Species:  c.Species,
 	}
 }
 
@@ -63,9 +63,9 @@ func (c *Cookiecuttershark) GetShark() *Shark {
 		Age:      c.Age,
 		Birthday: c.Birthday,
 		Fishtype: c.Fishtype,
-		Species:  c.Species,
 		Length:   c.Length,
 		Siblings: c.Siblings,
+		Species:  c.Species,
 	}
 }
 
@@ -176,9 +176,9 @@ type Goblinshark struct {
 func (g *Goblinshark) GetFish() *Fish {
 	return &Fish{
 		Fishtype: g.Fishtype,
-		Species:  g.Species,
 		Length:   g.Length,
 		Siblings: g.Siblings,
+		Species:  g.Species,
 	}
 }
 
@@ -188,9 +188,9 @@ func (g *Goblinshark) GetShark() *Shark {
 		Age:      g.Age,
 		Birthday: g.Birthday,
 		Fishtype: g.Fishtype,
-		Species:  g.Species,
 		Length:   g.Length,
 		Siblings: g.Siblings,
+		Species:  g.Species,
 	}
 }
 
@@ -229,9 +229,9 @@ type MyDerivedType struct {
 // GetMyBaseType implements the MyBaseTypeClassification interface for type MyDerivedType.
 func (m *MyDerivedType) GetMyBaseType() *MyBaseType {
 	return &MyBaseType{
+		Helper: m.Helper,
 		Kind:   m.Kind,
 		PropB1: m.PropB1,
-		Helper: m.Helper,
 	}
 }
 
@@ -258,9 +258,9 @@ type Salmon struct {
 func (s *Salmon) GetFish() *Fish {
 	return &Fish{
 		Fishtype: s.Fishtype,
-		Species:  s.Species,
 		Length:   s.Length,
 		Siblings: s.Siblings,
+		Species:  s.Species,
 	}
 }
 
@@ -286,9 +286,9 @@ type Sawshark struct {
 func (s *Sawshark) GetFish() *Fish {
 	return &Fish{
 		Fishtype: s.Fishtype,
-		Species:  s.Species,
 		Length:   s.Length,
 		Siblings: s.Siblings,
+		Species:  s.Species,
 	}
 }
 
@@ -298,9 +298,9 @@ func (s *Sawshark) GetShark() *Shark {
 		Age:      s.Age,
 		Birthday: s.Birthday,
 		Fishtype: s.Fishtype,
-		Species:  s.Species,
 		Length:   s.Length,
 		Siblings: s.Siblings,
+		Species:  s.Species,
 	}
 }
 
@@ -322,9 +322,9 @@ type Shark struct {
 func (s *Shark) GetFish() *Fish {
 	return &Fish{
 		Fishtype: s.Fishtype,
-		Species:  s.Species,
 		Length:   s.Length,
 		Siblings: s.Siblings,
+		Species:  s.Species,
 	}
 }
 
@@ -359,21 +359,21 @@ type SmartSalmon struct {
 func (s *SmartSalmon) GetFish() *Fish {
 	return &Fish{
 		Fishtype: s.Fishtype,
-		Species:  s.Species,
 		Length:   s.Length,
 		Siblings: s.Siblings,
+		Species:  s.Species,
 	}
 }
 
 // GetSalmon implements the SalmonClassification interface for type SmartSalmon.
 func (s *SmartSalmon) GetSalmon() *Salmon {
 	return &Salmon{
-		Location: s.Location,
-		Iswild:   s.Iswild,
 		Fishtype: s.Fishtype,
-		Species:  s.Species,
+		Iswild:   s.Iswild,
 		Length:   s.Length,
+		Location: s.Location,
 		Siblings: s.Siblings,
+		Species:  s.Species,
 	}
 }
 

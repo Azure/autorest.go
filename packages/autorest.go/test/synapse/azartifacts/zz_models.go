@@ -164,12 +164,12 @@ type AmazonMWSLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AmazonMWSLinkedService.
 func (a *AmazonMWSLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -246,15 +246,15 @@ type AmazonMWSObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type AmazonMWSObjectDataset.
 func (a *AmazonMWSObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -289,24 +289,24 @@ type AmazonMWSSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AmazonMWSSource.
 func (a *AmazonMWSSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AmazonMWSSource.
 func (a *AmazonMWSSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -350,12 +350,12 @@ type AmazonRdsForOracleLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AmazonRdsForOracleLinkedService.
 func (a *AmazonRdsForOracleLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -415,11 +415,11 @@ type AmazonRdsForOracleSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AmazonRdsForOracleSource.
 func (a *AmazonRdsForOracleSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -460,15 +460,15 @@ type AmazonRdsForOracleTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AmazonRdsForOracleTableDataset.
 func (a *AmazonRdsForOracleTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -508,12 +508,12 @@ type AmazonRdsForSQLServerLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AmazonRdsForSQLServerLinkedService.
 func (a *AmazonRdsForSQLServerLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -581,24 +581,24 @@ type AmazonRdsForSQLServerSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AmazonRdsForSQLServerSource.
 func (a *AmazonRdsForSQLServerSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AmazonRdsForSQLServerSource.
 func (a *AmazonRdsForSQLServerSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -639,15 +639,15 @@ type AmazonRdsForSQLServerTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AmazonRdsForSQLServerTableDataset.
 func (a *AmazonRdsForSQLServerTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -687,12 +687,12 @@ type AmazonRedshiftLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AmazonRedshiftLinkedService.
 func (a *AmazonRedshiftLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -755,24 +755,24 @@ type AmazonRedshiftSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AmazonRedshiftSource.
 func (a *AmazonRedshiftSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AmazonRedshiftSource.
 func (a *AmazonRedshiftSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -813,15 +813,15 @@ type AmazonRedshiftTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AmazonRedshiftTableDataset.
 func (a *AmazonRedshiftTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -874,15 +874,15 @@ type AmazonS3Dataset struct {
 // GetDataset implements the DatasetClassification interface for type AmazonS3Dataset.
 func (a *AmazonS3Dataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -940,12 +940,12 @@ type AmazonS3LinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AmazonS3LinkedService.
 func (a *AmazonS3LinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -999,10 +999,10 @@ type AmazonS3Location struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type AmazonS3Location.
 func (a *AmazonS3Location) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 a.Type,
-		FolderPath:           a.FolderPath,
-		FileName:             a.FileName,
 		AdditionalProperties: a.AdditionalProperties,
+		FileName:             a.FileName,
+		FolderPath:           a.FolderPath,
+		Type:                 a.Type,
 	}
 }
 
@@ -1054,9 +1054,9 @@ type AmazonS3ReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type AmazonS3ReadSettings.
 func (a *AmazonS3ReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -1087,12 +1087,12 @@ type AppFiguresLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AppFiguresLinkedService.
 func (a *AppFiguresLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -1135,24 +1135,24 @@ type AppendVariableActivity struct {
 // GetActivity implements the ActivityClassification interface for type AppendVariableActivity.
 func (a *AppendVariableActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
 		Name:                 a.Name,
 		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
 		UserProperties:       a.UserProperties,
-		AdditionalProperties: a.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type AppendVariableActivity.
 func (a *AppendVariableActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
 		Name:                 a.Name,
 		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
 		UserProperties:       a.UserProperties,
-		AdditionalProperties: a.AdditionalProperties,
 	}
 }
 
@@ -1198,12 +1198,12 @@ type AsanaLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AsanaLinkedService.
 func (a *AsanaLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -1275,15 +1275,15 @@ type AvroDataset struct {
 // GetDataset implements the DatasetClassification interface for type AvroDataset.
 func (a *AvroDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -1315,10 +1315,10 @@ type AvroFormat struct {
 // GetDatasetStorageFormat implements the DatasetStorageFormatClassification interface for type AvroFormat.
 func (a *AvroFormat) GetDatasetStorageFormat() *DatasetStorageFormat {
 	return &DatasetStorageFormat{
-		Type:                 a.Type,
-		Serializer:           a.Serializer,
-		Deserializer:         a.Deserializer,
 		AdditionalProperties: a.AdditionalProperties,
+		Deserializer:         a.Deserializer,
+		Serializer:           a.Serializer,
+		Type:                 a.Type,
 	}
 }
 
@@ -1355,13 +1355,13 @@ type AvroSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AvroSink.
 func (a *AvroSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -1393,11 +1393,11 @@ type AvroSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AvroSource.
 func (a *AvroSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -1427,8 +1427,8 @@ type AvroWriteSettings struct {
 // GetFormatWriteSettings implements the FormatWriteSettingsClassification interface for type AvroWriteSettings.
 func (a *AvroWriteSettings) GetFormatWriteSettings() *FormatWriteSettings {
 	return &FormatWriteSettings{
-		Type:                 a.Type,
 		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -1459,12 +1459,12 @@ type AzureBatchLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureBatchLinkedService.
 func (a *AzureBatchLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -1527,15 +1527,15 @@ type AzureBlobDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureBlobDataset.
 func (a *AzureBlobDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -1600,15 +1600,15 @@ type AzureBlobFSDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureBlobFSDataset.
 func (a *AzureBlobFSDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -1654,12 +1654,12 @@ type AzureBlobFSLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureBlobFSLinkedService.
 func (a *AzureBlobFSLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -1729,10 +1729,10 @@ type AzureBlobFSLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type AzureBlobFSLocation.
 func (a *AzureBlobFSLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 a.Type,
-		FolderPath:           a.FolderPath,
-		FileName:             a.FileName,
 		AdditionalProperties: a.AdditionalProperties,
+		FileName:             a.FileName,
+		FolderPath:           a.FolderPath,
+		Type:                 a.Type,
 	}
 }
 
@@ -1781,9 +1781,9 @@ type AzureBlobFSReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type AzureBlobFSReadSettings.
 func (a *AzureBlobFSReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -1817,13 +1817,13 @@ type AzureBlobFSSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureBlobFSSink.
 func (a *AzureBlobFSSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -1858,11 +1858,11 @@ type AzureBlobFSSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureBlobFSSource.
 func (a *AzureBlobFSSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -1887,10 +1887,10 @@ type AzureBlobFSWriteSettings struct {
 // GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type AzureBlobFSWriteSettings.
 func (a *AzureBlobFSWriteSettings) GetStoreWriteSettings() *StoreWriteSettings {
 	return &StoreWriteSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		CopyBehavior:             a.CopyBehavior,
 		AdditionalProperties:     a.AdditionalProperties,
+		CopyBehavior:             a.CopyBehavior,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -1921,12 +1921,12 @@ type AzureBlobStorageLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureBlobStorageLinkedService.
 func (a *AzureBlobStorageLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -2001,10 +2001,10 @@ type AzureBlobStorageLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type AzureBlobStorageLocation.
 func (a *AzureBlobStorageLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 a.Type,
-		FolderPath:           a.FolderPath,
-		FileName:             a.FileName,
 		AdditionalProperties: a.AdditionalProperties,
+		FileName:             a.FileName,
+		FolderPath:           a.FolderPath,
+		Type:                 a.Type,
 	}
 }
 
@@ -2056,9 +2056,9 @@ type AzureBlobStorageReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type AzureBlobStorageReadSettings.
 func (a *AzureBlobStorageReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -2083,10 +2083,10 @@ type AzureBlobStorageWriteSettings struct {
 // GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type AzureBlobStorageWriteSettings.
 func (a *AzureBlobStorageWriteSettings) GetStoreWriteSettings() *StoreWriteSettings {
 	return &StoreWriteSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		CopyBehavior:             a.CopyBehavior,
 		AdditionalProperties:     a.AdditionalProperties,
+		CopyBehavior:             a.CopyBehavior,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -2123,26 +2123,26 @@ type AzureDataExplorerCommandActivity struct {
 // GetActivity implements the ActivityClassification interface for type AzureDataExplorerCommandActivity.
 func (a *AzureDataExplorerCommandActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
 		Name:                 a.Name,
 		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
 		UserProperties:       a.UserProperties,
-		AdditionalProperties: a.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type AzureDataExplorerCommandActivity.
 func (a *AzureDataExplorerCommandActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    a.LinkedServiceName,
-		Policy:               a.Policy,
-		Name:                 a.Name,
-		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
-		UserProperties:       a.UserProperties,
 		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
+		LinkedServiceName:    a.LinkedServiceName,
+		Name:                 a.Name,
+		Policy:               a.Policy,
+		Type:                 a.Type,
+		UserProperties:       a.UserProperties,
 	}
 }
 
@@ -2189,12 +2189,12 @@ type AzureDataExplorerLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureDataExplorerLinkedService.
 func (a *AzureDataExplorerLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -2254,13 +2254,13 @@ type AzureDataExplorerSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureDataExplorerSink.
 func (a *AzureDataExplorerSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -2299,11 +2299,11 @@ type AzureDataExplorerSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureDataExplorerSource.
 func (a *AzureDataExplorerSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -2344,15 +2344,15 @@ type AzureDataExplorerTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureDataExplorerTableDataset.
 func (a *AzureDataExplorerTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -2383,12 +2383,12 @@ type AzureDataLakeAnalyticsLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureDataLakeAnalyticsLinkedService.
 func (a *AzureDataLakeAnalyticsLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -2461,15 +2461,15 @@ type AzureDataLakeStoreDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureDataLakeStoreDataset.
 func (a *AzureDataLakeStoreDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -2515,12 +2515,12 @@ type AzureDataLakeStoreLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureDataLakeStoreLinkedService.
 func (a *AzureDataLakeStoreLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -2578,10 +2578,10 @@ type AzureDataLakeStoreLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type AzureDataLakeStoreLocation.
 func (a *AzureDataLakeStoreLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 a.Type,
-		FolderPath:           a.FolderPath,
-		FileName:             a.FileName,
 		AdditionalProperties: a.AdditionalProperties,
+		FileName:             a.FileName,
+		FolderPath:           a.FolderPath,
+		Type:                 a.Type,
 	}
 }
 
@@ -2640,9 +2640,9 @@ type AzureDataLakeStoreReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type AzureDataLakeStoreReadSettings.
 func (a *AzureDataLakeStoreReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -2679,13 +2679,13 @@ type AzureDataLakeStoreSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureDataLakeStoreSink.
 func (a *AzureDataLakeStoreSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -2714,11 +2714,11 @@ type AzureDataLakeStoreSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureDataLakeStoreSource.
 func (a *AzureDataLakeStoreSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -2745,10 +2745,10 @@ type AzureDataLakeStoreWriteSettings struct {
 // GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type AzureDataLakeStoreWriteSettings.
 func (a *AzureDataLakeStoreWriteSettings) GetStoreWriteSettings() *StoreWriteSettings {
 	return &StoreWriteSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		CopyBehavior:             a.CopyBehavior,
 		AdditionalProperties:     a.AdditionalProperties,
+		CopyBehavior:             a.CopyBehavior,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -2789,15 +2789,15 @@ type AzureDatabricksDeltaLakeDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureDatabricksDeltaLakeDataset.
 func (a *AzureDatabricksDeltaLakeDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -2829,8 +2829,8 @@ type AzureDatabricksDeltaLakeExportCommand struct {
 // GetExportSettings implements the ExportSettingsClassification interface for type AzureDatabricksDeltaLakeExportCommand.
 func (a *AzureDatabricksDeltaLakeExportCommand) GetExportSettings() *ExportSettings {
 	return &ExportSettings{
-		Type:                 a.Type,
 		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -2852,8 +2852,8 @@ type AzureDatabricksDeltaLakeImportCommand struct {
 // GetImportSettings implements the ImportSettingsClassification interface for type AzureDatabricksDeltaLakeImportCommand.
 func (a *AzureDatabricksDeltaLakeImportCommand) GetImportSettings() *ImportSettings {
 	return &ImportSettings{
-		Type:                 a.Type,
 		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -2884,12 +2884,12 @@ type AzureDatabricksDeltaLakeLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureDatabricksDeltaLakeLinkedService.
 func (a *AzureDatabricksDeltaLakeLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -2926,13 +2926,13 @@ type AzureDatabricksDeltaLakeSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureDatabricksDeltaLakeSink.
 func (a *AzureDatabricksDeltaLakeSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -2963,11 +2963,11 @@ type AzureDatabricksDeltaLakeSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureDatabricksDeltaLakeSource.
 func (a *AzureDatabricksDeltaLakeSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -3017,12 +3017,12 @@ type AzureDatabricksLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureDatabricksLinkedService.
 func (a *AzureDatabricksLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -3144,12 +3144,12 @@ type AzureFileStorageLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureFileStorageLinkedService.
 func (a *AzureFileStorageLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -3207,10 +3207,10 @@ type AzureFileStorageLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type AzureFileStorageLocation.
 func (a *AzureFileStorageLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 a.Type,
-		FolderPath:           a.FolderPath,
-		FileName:             a.FileName,
 		AdditionalProperties: a.AdditionalProperties,
+		FileName:             a.FileName,
+		FolderPath:           a.FolderPath,
+		Type:                 a.Type,
 	}
 }
 
@@ -3262,9 +3262,9 @@ type AzureFileStorageReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type AzureFileStorageReadSettings.
 func (a *AzureFileStorageReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -3286,10 +3286,10 @@ type AzureFileStorageWriteSettings struct {
 // GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type AzureFileStorageWriteSettings.
 func (a *AzureFileStorageWriteSettings) GetStoreWriteSettings() *StoreWriteSettings {
 	return &StoreWriteSettings{
-		Type:                     a.Type,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		CopyBehavior:             a.CopyBehavior,
 		AdditionalProperties:     a.AdditionalProperties,
+		CopyBehavior:             a.CopyBehavior,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		Type:                     a.Type,
 	}
 }
 
@@ -3326,26 +3326,26 @@ type AzureFunctionActivity struct {
 // GetActivity implements the ActivityClassification interface for type AzureFunctionActivity.
 func (a *AzureFunctionActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
 		Name:                 a.Name,
 		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
 		UserProperties:       a.UserProperties,
-		AdditionalProperties: a.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type AzureFunctionActivity.
 func (a *AzureFunctionActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    a.LinkedServiceName,
-		Policy:               a.Policy,
-		Name:                 a.Name,
-		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
-		UserProperties:       a.UserProperties,
 		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
+		LinkedServiceName:    a.LinkedServiceName,
+		Name:                 a.Name,
+		Policy:               a.Policy,
+		Type:                 a.Type,
+		UserProperties:       a.UserProperties,
 	}
 }
 
@@ -3395,12 +3395,12 @@ type AzureFunctionLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureFunctionLinkedService.
 func (a *AzureFunctionLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -3444,12 +3444,12 @@ type AzureKeyVaultLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureKeyVaultLinkedService.
 func (a *AzureKeyVaultLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -3516,26 +3516,26 @@ type AzureMLBatchExecutionActivity struct {
 // GetActivity implements the ActivityClassification interface for type AzureMLBatchExecutionActivity.
 func (a *AzureMLBatchExecutionActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
 		Name:                 a.Name,
 		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
 		UserProperties:       a.UserProperties,
-		AdditionalProperties: a.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type AzureMLBatchExecutionActivity.
 func (a *AzureMLBatchExecutionActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    a.LinkedServiceName,
-		Policy:               a.Policy,
-		Name:                 a.Name,
-		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
-		UserProperties:       a.UserProperties,
 		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
+		LinkedServiceName:    a.LinkedServiceName,
+		Name:                 a.Name,
+		Policy:               a.Policy,
+		Type:                 a.Type,
+		UserProperties:       a.UserProperties,
 	}
 }
 
@@ -3590,26 +3590,26 @@ type AzureMLExecutePipelineActivity struct {
 // GetActivity implements the ActivityClassification interface for type AzureMLExecutePipelineActivity.
 func (a *AzureMLExecutePipelineActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
 		Name:                 a.Name,
 		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
 		UserProperties:       a.UserProperties,
-		AdditionalProperties: a.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type AzureMLExecutePipelineActivity.
 func (a *AzureMLExecutePipelineActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    a.LinkedServiceName,
-		Policy:               a.Policy,
-		Name:                 a.Name,
-		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
-		UserProperties:       a.UserProperties,
 		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
+		LinkedServiceName:    a.LinkedServiceName,
+		Name:                 a.Name,
+		Policy:               a.Policy,
+		Type:                 a.Type,
+		UserProperties:       a.UserProperties,
 	}
 }
 
@@ -3667,12 +3667,12 @@ type AzureMLLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureMLLinkedService.
 func (a *AzureMLLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -3731,12 +3731,12 @@ type AzureMLServiceLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureMLServiceLinkedService.
 func (a *AzureMLServiceLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -3799,26 +3799,26 @@ type AzureMLUpdateResourceActivity struct {
 // GetActivity implements the ActivityClassification interface for type AzureMLUpdateResourceActivity.
 func (a *AzureMLUpdateResourceActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
 		Name:                 a.Name,
 		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
 		UserProperties:       a.UserProperties,
-		AdditionalProperties: a.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type AzureMLUpdateResourceActivity.
 func (a *AzureMLUpdateResourceActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    a.LinkedServiceName,
-		Policy:               a.Policy,
-		Name:                 a.Name,
-		Type:                 a.Type,
-		Description:          a.Description,
-		DependsOn:            a.DependsOn,
-		UserProperties:       a.UserProperties,
 		AdditionalProperties: a.AdditionalProperties,
+		DependsOn:            a.DependsOn,
+		Description:          a.Description,
+		LinkedServiceName:    a.LinkedServiceName,
+		Name:                 a.Name,
+		Policy:               a.Policy,
+		Type:                 a.Type,
+		UserProperties:       a.UserProperties,
 	}
 }
 
@@ -3873,12 +3873,12 @@ type AzureMariaDBLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureMariaDBLinkedService.
 func (a *AzureMariaDBLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -3926,24 +3926,24 @@ type AzureMariaDBSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureMariaDBSource.
 func (a *AzureMariaDBSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AzureMariaDBSource.
 func (a *AzureMariaDBSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -3984,15 +3984,15 @@ type AzureMariaDBTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureMariaDBTableDataset.
 func (a *AzureMariaDBTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -4023,12 +4023,12 @@ type AzureMySQLLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureMySQLLinkedService.
 func (a *AzureMySQLLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -4075,13 +4075,13 @@ type AzureMySQLSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureMySQLSink.
 func (a *AzureMySQLSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -4116,24 +4116,24 @@ type AzureMySQLSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureMySQLSource.
 func (a *AzureMySQLSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AzureMySQLSource.
 func (a *AzureMySQLSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -4174,15 +4174,15 @@ type AzureMySQLTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureMySQLTableDataset.
 func (a *AzureMySQLTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -4222,12 +4222,12 @@ type AzurePostgreSQLLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzurePostgreSQLLinkedService.
 func (a *AzurePostgreSQLLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -4274,13 +4274,13 @@ type AzurePostgreSQLSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzurePostgreSQLSink.
 func (a *AzurePostgreSQLSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -4315,24 +4315,24 @@ type AzurePostgreSQLSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzurePostgreSQLSource.
 func (a *AzurePostgreSQLSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AzurePostgreSQLSource.
 func (a *AzurePostgreSQLSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -4373,15 +4373,15 @@ type AzurePostgreSQLTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzurePostgreSQLTableDataset.
 func (a *AzurePostgreSQLTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -4425,13 +4425,13 @@ type AzureQueueSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureQueueSink.
 func (a *AzureQueueSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -4462,12 +4462,12 @@ type AzureSQLDWLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureSQLDWLinkedService.
 func (a *AzureSQLDWLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -4537,15 +4537,15 @@ type AzureSQLDWTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureSQLDWTableDataset.
 func (a *AzureSQLDWTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -4588,12 +4588,12 @@ type AzureSQLDatabaseLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureSQLDatabaseLinkedService.
 func (a *AzureSQLDatabaseLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -4652,12 +4652,12 @@ type AzureSQLMILinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureSQLMILinkedService.
 func (a *AzureSQLMILinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -4726,15 +4726,15 @@ type AzureSQLMITableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureSQLMITableDataset.
 func (a *AzureSQLMITableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -4796,13 +4796,13 @@ type AzureSQLSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureSQLSink.
 func (a *AzureSQLSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -4854,24 +4854,24 @@ type AzureSQLSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureSQLSource.
 func (a *AzureSQLSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AzureSQLSource.
 func (a *AzureSQLSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -4912,15 +4912,15 @@ type AzureSQLTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureSQLTableDataset.
 func (a *AzureSQLTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -4973,15 +4973,15 @@ type AzureSearchIndexDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureSearchIndexDataset.
 func (a *AzureSearchIndexDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -5021,13 +5021,13 @@ type AzureSearchIndexSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureSearchIndexSink.
 func (a *AzureSearchIndexSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -5058,12 +5058,12 @@ type AzureSearchLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureSearchLinkedService.
 func (a *AzureSearchLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -5107,12 +5107,12 @@ type AzureStorageLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureStorageLinkedService.
 func (a *AzureStorageLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -5163,12 +5163,12 @@ type AzureSynapseArtifactsLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureSynapseArtifactsLinkedService.
 func (a *AzureSynapseArtifactsLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -5225,15 +5225,15 @@ type AzureTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type AzureTableDataset.
 func (a *AzureTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		Description:          a.Description,
-		Structure:            a.Structure,
-		Schema:               a.Schema,
+		Folder:               a.Folder,
 		LinkedServiceName:    a.LinkedServiceName,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		Folder:               a.Folder,
-		AdditionalProperties: a.AdditionalProperties,
+		Schema:               a.Schema,
+		Structure:            a.Structure,
+		Type:                 a.Type,
 	}
 }
 
@@ -5282,13 +5282,13 @@ type AzureTableSink struct {
 // GetCopySink implements the CopySinkClassification interface for type AzureTableSink.
 func (a *AzureTableSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		SinkRetryCount:           a.SinkRetryCount,
+		SinkRetryWait:            a.SinkRetryWait,
 		Type:                     a.Type,
 		WriteBatchSize:           a.WriteBatchSize,
 		WriteBatchTimeout:        a.WriteBatchTimeout,
-		SinkRetryCount:           a.SinkRetryCount,
-		SinkRetryWait:            a.SinkRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
 	}
 }
 
@@ -5326,24 +5326,24 @@ type AzureTableSource struct {
 // GetCopySource implements the CopySourceClassification interface for type AzureTableSource.
 func (a *AzureTableSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type AzureTableSource.
 func (a *AzureTableSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             a.QueryTimeout,
 		AdditionalColumns:        a.AdditionalColumns,
-		Type:                     a.Type,
+		AdditionalProperties:     a.AdditionalProperties,
+		MaxConcurrentConnections: a.MaxConcurrentConnections,
+		QueryTimeout:             a.QueryTimeout,
 		SourceRetryCount:         a.SourceRetryCount,
 		SourceRetryWait:          a.SourceRetryWait,
-		MaxConcurrentConnections: a.MaxConcurrentConnections,
-		AdditionalProperties:     a.AdditionalProperties,
+		Type:                     a.Type,
 	}
 }
 
@@ -5374,12 +5374,12 @@ type AzureTableStorageLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type AzureTableStorageLinkedService.
 func (a *AzureTableStorageLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 a.Type,
+		AdditionalProperties: a.AdditionalProperties,
+		Annotations:          a.Annotations,
 		ConnectVia:           a.ConnectVia,
 		Description:          a.Description,
 		Parameters:           a.Parameters,
-		Annotations:          a.Annotations,
-		AdditionalProperties: a.AdditionalProperties,
+		Type:                 a.Type,
 	}
 }
 
@@ -5525,15 +5525,15 @@ type BinaryDataset struct {
 // GetDataset implements the DatasetClassification interface for type BinaryDataset.
 func (b *BinaryDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 b.Type,
+		AdditionalProperties: b.AdditionalProperties,
+		Annotations:          b.Annotations,
 		Description:          b.Description,
-		Structure:            b.Structure,
-		Schema:               b.Schema,
+		Folder:               b.Folder,
 		LinkedServiceName:    b.LinkedServiceName,
 		Parameters:           b.Parameters,
-		Annotations:          b.Annotations,
-		Folder:               b.Folder,
-		AdditionalProperties: b.AdditionalProperties,
+		Schema:               b.Schema,
+		Structure:            b.Structure,
+		Type:                 b.Type,
 	}
 }
 
@@ -5561,8 +5561,8 @@ type BinaryReadSettings struct {
 // GetFormatReadSettings implements the FormatReadSettingsClassification interface for type BinaryReadSettings.
 func (b *BinaryReadSettings) GetFormatReadSettings() *FormatReadSettings {
 	return &FormatReadSettings{
-		Type:                 b.Type,
 		AdditionalProperties: b.AdditionalProperties,
+		Type:                 b.Type,
 	}
 }
 
@@ -5596,13 +5596,13 @@ type BinarySink struct {
 // GetCopySink implements the CopySinkClassification interface for type BinarySink.
 func (b *BinarySink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     b.AdditionalProperties,
+		MaxConcurrentConnections: b.MaxConcurrentConnections,
+		SinkRetryCount:           b.SinkRetryCount,
+		SinkRetryWait:            b.SinkRetryWait,
 		Type:                     b.Type,
 		WriteBatchSize:           b.WriteBatchSize,
 		WriteBatchTimeout:        b.WriteBatchTimeout,
-		SinkRetryCount:           b.SinkRetryCount,
-		SinkRetryWait:            b.SinkRetryWait,
-		MaxConcurrentConnections: b.MaxConcurrentConnections,
-		AdditionalProperties:     b.AdditionalProperties,
 	}
 }
 
@@ -5633,11 +5633,11 @@ type BinarySource struct {
 // GetCopySource implements the CopySourceClassification interface for type BinarySource.
 func (b *BinarySource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     b.Type,
+		AdditionalProperties:     b.AdditionalProperties,
+		MaxConcurrentConnections: b.MaxConcurrentConnections,
 		SourceRetryCount:         b.SourceRetryCount,
 		SourceRetryWait:          b.SourceRetryWait,
-		MaxConcurrentConnections: b.MaxConcurrentConnections,
-		AdditionalProperties:     b.AdditionalProperties,
+		Type:                     b.Type,
 	}
 }
 
@@ -5668,23 +5668,23 @@ type BlobEventsTrigger struct {
 // GetMultiplePipelineTrigger implements the MultiplePipelineTriggerClassification interface for type BlobEventsTrigger.
 func (b *BlobEventsTrigger) GetMultiplePipelineTrigger() *MultiplePipelineTrigger {
 	return &MultiplePipelineTrigger{
-		Pipelines:            b.Pipelines,
-		Type:                 b.Type,
-		Description:          b.Description,
-		RuntimeState:         b.RuntimeState,
-		Annotations:          b.Annotations,
 		AdditionalProperties: b.AdditionalProperties,
+		Annotations:          b.Annotations,
+		Description:          b.Description,
+		Pipelines:            b.Pipelines,
+		RuntimeState:         b.RuntimeState,
+		Type:                 b.Type,
 	}
 }
 
 // GetTrigger implements the TriggerClassification interface for type BlobEventsTrigger.
 func (b *BlobEventsTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 b.Type,
+		AdditionalProperties: b.AdditionalProperties,
+		Annotations:          b.Annotations,
 		Description:          b.Description,
 		RuntimeState:         b.RuntimeState,
-		Annotations:          b.Annotations,
-		AdditionalProperties: b.AdditionalProperties,
+		Type:                 b.Type,
 	}
 }
 
@@ -5749,13 +5749,13 @@ type BlobSink struct {
 // GetCopySink implements the CopySinkClassification interface for type BlobSink.
 func (b *BlobSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     b.AdditionalProperties,
+		MaxConcurrentConnections: b.MaxConcurrentConnections,
+		SinkRetryCount:           b.SinkRetryCount,
+		SinkRetryWait:            b.SinkRetryWait,
 		Type:                     b.Type,
 		WriteBatchSize:           b.WriteBatchSize,
 		WriteBatchTimeout:        b.WriteBatchTimeout,
-		SinkRetryCount:           b.SinkRetryCount,
-		SinkRetryWait:            b.SinkRetryWait,
-		MaxConcurrentConnections: b.MaxConcurrentConnections,
-		AdditionalProperties:     b.AdditionalProperties,
 	}
 }
 
@@ -5790,11 +5790,11 @@ type BlobSource struct {
 // GetCopySource implements the CopySourceClassification interface for type BlobSource.
 func (b *BlobSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     b.Type,
+		AdditionalProperties:     b.AdditionalProperties,
+		MaxConcurrentConnections: b.MaxConcurrentConnections,
 		SourceRetryCount:         b.SourceRetryCount,
 		SourceRetryWait:          b.SourceRetryWait,
-		MaxConcurrentConnections: b.MaxConcurrentConnections,
-		AdditionalProperties:     b.AdditionalProperties,
+		Type:                     b.Type,
 	}
 }
 
@@ -5825,23 +5825,23 @@ type BlobTrigger struct {
 // GetMultiplePipelineTrigger implements the MultiplePipelineTriggerClassification interface for type BlobTrigger.
 func (b *BlobTrigger) GetMultiplePipelineTrigger() *MultiplePipelineTrigger {
 	return &MultiplePipelineTrigger{
-		Pipelines:            b.Pipelines,
-		Type:                 b.Type,
-		Description:          b.Description,
-		RuntimeState:         b.RuntimeState,
-		Annotations:          b.Annotations,
 		AdditionalProperties: b.AdditionalProperties,
+		Annotations:          b.Annotations,
+		Description:          b.Description,
+		Pipelines:            b.Pipelines,
+		RuntimeState:         b.RuntimeState,
+		Type:                 b.Type,
 	}
 }
 
 // GetTrigger implements the TriggerClassification interface for type BlobTrigger.
 func (b *BlobTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 b.Type,
+		AdditionalProperties: b.AdditionalProperties,
+		Annotations:          b.Annotations,
 		Description:          b.Description,
 		RuntimeState:         b.RuntimeState,
-		Annotations:          b.Annotations,
-		AdditionalProperties: b.AdditionalProperties,
+		Type:                 b.Type,
 	}
 }
 
@@ -5884,12 +5884,12 @@ type CassandraLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type CassandraLinkedService.
 func (c *CassandraLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		ConnectVia:           c.ConnectVia,
 		Description:          c.Description,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -5953,24 +5953,24 @@ type CassandraSource struct {
 // GetCopySource implements the CopySourceClassification interface for type CassandraSource.
 func (c *CassandraSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type CassandraSource.
 func (c *CassandraSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             c.QueryTimeout,
 		AdditionalColumns:        c.AdditionalColumns,
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
+		QueryTimeout:             c.QueryTimeout,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
@@ -6011,15 +6011,15 @@ type CassandraTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type CassandraTableDataset.
 func (c *CassandraTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
-		Structure:            c.Structure,
-		Schema:               c.Schema,
+		Folder:               c.Folder,
 		LinkedServiceName:    c.LinkedServiceName,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		Folder:               c.Folder,
-		AdditionalProperties: c.AdditionalProperties,
+		Schema:               c.Schema,
+		Structure:            c.Structure,
+		Type:                 c.Type,
 	}
 }
 
@@ -6062,11 +6062,11 @@ type ChainingTrigger struct {
 // GetTrigger implements the TriggerClassification interface for type ChainingTrigger.
 func (c *ChainingTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
 		RuntimeState:         c.RuntimeState,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -6116,15 +6116,15 @@ type CommonDataServiceForAppsEntityDataset struct {
 // GetDataset implements the DatasetClassification interface for type CommonDataServiceForAppsEntityDataset.
 func (c *CommonDataServiceForAppsEntityDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
-		Structure:            c.Structure,
-		Schema:               c.Schema,
+		Folder:               c.Folder,
 		LinkedServiceName:    c.LinkedServiceName,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		Folder:               c.Folder,
-		AdditionalProperties: c.AdditionalProperties,
+		Schema:               c.Schema,
+		Structure:            c.Structure,
+		Type:                 c.Type,
 	}
 }
 
@@ -6161,12 +6161,12 @@ type CommonDataServiceForAppsLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type CommonDataServiceForAppsLinkedService.
 func (c *CommonDataServiceForAppsLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		ConnectVia:           c.ConnectVia,
 		Description:          c.Description,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -6262,13 +6262,13 @@ type CommonDataServiceForAppsSink struct {
 // GetCopySink implements the CopySinkClassification interface for type CommonDataServiceForAppsSink.
 func (c *CommonDataServiceForAppsSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
+		SinkRetryCount:           c.SinkRetryCount,
+		SinkRetryWait:            c.SinkRetryWait,
 		Type:                     c.Type,
 		WriteBatchSize:           c.WriteBatchSize,
 		WriteBatchTimeout:        c.WriteBatchTimeout,
-		SinkRetryCount:           c.SinkRetryCount,
-		SinkRetryWait:            c.SinkRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
 	}
 }
 
@@ -6301,11 +6301,11 @@ type CommonDataServiceForAppsSource struct {
 // GetCopySource implements the CopySourceClassification interface for type CommonDataServiceForAppsSource.
 func (c *CommonDataServiceForAppsSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
@@ -6348,12 +6348,12 @@ type ConcurLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ConcurLinkedService.
 func (c *ConcurLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		ConnectVia:           c.ConnectVia,
 		Description:          c.Description,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -6423,15 +6423,15 @@ type ConcurObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type ConcurObjectDataset.
 func (c *ConcurObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
-		Structure:            c.Structure,
-		Schema:               c.Schema,
+		Folder:               c.Folder,
 		LinkedServiceName:    c.LinkedServiceName,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		Folder:               c.Folder,
-		AdditionalProperties: c.AdditionalProperties,
+		Schema:               c.Schema,
+		Structure:            c.Structure,
+		Type:                 c.Type,
 	}
 }
 
@@ -6466,24 +6466,24 @@ type ConcurSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ConcurSource.
 func (c *ConcurSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type ConcurSource.
 func (c *ConcurSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             c.QueryTimeout,
 		AdditionalColumns:        c.AdditionalColumns,
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
+		QueryTimeout:             c.QueryTimeout,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
@@ -6511,12 +6511,12 @@ type ControlActivity struct {
 // GetActivity implements the ActivityClassification interface for type ControlActivity.
 func (c *ControlActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: c.AdditionalProperties,
+		DependsOn:            c.DependsOn,
+		Description:          c.Description,
 		Name:                 c.Name,
 		Type:                 c.Type,
-		Description:          c.Description,
-		DependsOn:            c.DependsOn,
 		UserProperties:       c.UserProperties,
-		AdditionalProperties: c.AdditionalProperties,
 	}
 }
 
@@ -6562,26 +6562,26 @@ type CopyActivity struct {
 // GetActivity implements the ActivityClassification interface for type CopyActivity.
 func (c *CopyActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: c.AdditionalProperties,
+		DependsOn:            c.DependsOn,
+		Description:          c.Description,
 		Name:                 c.Name,
 		Type:                 c.Type,
-		Description:          c.Description,
-		DependsOn:            c.DependsOn,
 		UserProperties:       c.UserProperties,
-		AdditionalProperties: c.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type CopyActivity.
 func (c *CopyActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    c.LinkedServiceName,
-		Policy:               c.Policy,
-		Name:                 c.Name,
-		Type:                 c.Type,
-		Description:          c.Description,
-		DependsOn:            c.DependsOn,
-		UserProperties:       c.UserProperties,
 		AdditionalProperties: c.AdditionalProperties,
+		DependsOn:            c.DependsOn,
+		Description:          c.Description,
+		LinkedServiceName:    c.LinkedServiceName,
+		Name:                 c.Name,
+		Policy:               c.Policy,
+		Type:                 c.Type,
+		UserProperties:       c.UserProperties,
 	}
 }
 
@@ -6732,12 +6732,12 @@ type CosmosDbLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type CosmosDbLinkedService.
 func (c *CosmosDbLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		ConnectVia:           c.ConnectVia,
 		Description:          c.Description,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -6797,15 +6797,15 @@ type CosmosDbMongoDbAPICollectionDataset struct {
 // GetDataset implements the DatasetClassification interface for type CosmosDbMongoDbAPICollectionDataset.
 func (c *CosmosDbMongoDbAPICollectionDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
-		Structure:            c.Structure,
-		Schema:               c.Schema,
+		Folder:               c.Folder,
 		LinkedServiceName:    c.LinkedServiceName,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		Folder:               c.Folder,
-		AdditionalProperties: c.AdditionalProperties,
+		Schema:               c.Schema,
+		Structure:            c.Structure,
+		Type:                 c.Type,
 	}
 }
 
@@ -6842,12 +6842,12 @@ type CosmosDbMongoDbAPILinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type CosmosDbMongoDbAPILinkedService.
 func (c *CosmosDbMongoDbAPILinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		ConnectVia:           c.ConnectVia,
 		Description:          c.Description,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -6894,13 +6894,13 @@ type CosmosDbMongoDbAPISink struct {
 // GetCopySink implements the CopySinkClassification interface for type CosmosDbMongoDbAPISink.
 func (c *CosmosDbMongoDbAPISink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
+		SinkRetryCount:           c.SinkRetryCount,
+		SinkRetryWait:            c.SinkRetryWait,
 		Type:                     c.Type,
 		WriteBatchSize:           c.WriteBatchSize,
 		WriteBatchTimeout:        c.WriteBatchTimeout,
-		SinkRetryCount:           c.SinkRetryCount,
-		SinkRetryWait:            c.SinkRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
 	}
 }
 
@@ -6944,11 +6944,11 @@ type CosmosDbMongoDbAPISource struct {
 // GetCopySource implements the CopySourceClassification interface for type CosmosDbMongoDbAPISource.
 func (c *CosmosDbMongoDbAPISource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
@@ -6989,15 +6989,15 @@ type CosmosDbSQLAPICollectionDataset struct {
 // GetDataset implements the DatasetClassification interface for type CosmosDbSQLAPICollectionDataset.
 func (c *CosmosDbSQLAPICollectionDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
-		Structure:            c.Structure,
-		Schema:               c.Schema,
+		Folder:               c.Folder,
 		LinkedServiceName:    c.LinkedServiceName,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		Folder:               c.Folder,
-		AdditionalProperties: c.AdditionalProperties,
+		Schema:               c.Schema,
+		Structure:            c.Structure,
+		Type:                 c.Type,
 	}
 }
 
@@ -7038,13 +7038,13 @@ type CosmosDbSQLAPISink struct {
 // GetCopySink implements the CopySinkClassification interface for type CosmosDbSQLAPISink.
 func (c *CosmosDbSQLAPISink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
+		SinkRetryCount:           c.SinkRetryCount,
+		SinkRetryWait:            c.SinkRetryWait,
 		Type:                     c.Type,
 		WriteBatchSize:           c.WriteBatchSize,
 		WriteBatchTimeout:        c.WriteBatchTimeout,
-		SinkRetryCount:           c.SinkRetryCount,
-		SinkRetryWait:            c.SinkRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
 	}
 }
 
@@ -7085,11 +7085,11 @@ type CosmosDbSQLAPISource struct {
 // GetCopySource implements the CopySourceClassification interface for type CosmosDbSQLAPISource.
 func (c *CosmosDbSQLAPISource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
@@ -7120,12 +7120,12 @@ type CouchbaseLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type CouchbaseLinkedService.
 func (c *CouchbaseLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		ConnectVia:           c.ConnectVia,
 		Description:          c.Description,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -7173,24 +7173,24 @@ type CouchbaseSource struct {
 // GetCopySource implements the CopySourceClassification interface for type CouchbaseSource.
 func (c *CouchbaseSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type CouchbaseSource.
 func (c *CouchbaseSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             c.QueryTimeout,
 		AdditionalColumns:        c.AdditionalColumns,
-		Type:                     c.Type,
+		AdditionalProperties:     c.AdditionalProperties,
+		MaxConcurrentConnections: c.MaxConcurrentConnections,
+		QueryTimeout:             c.QueryTimeout,
 		SourceRetryCount:         c.SourceRetryCount,
 		SourceRetryWait:          c.SourceRetryWait,
-		MaxConcurrentConnections: c.MaxConcurrentConnections,
-		AdditionalProperties:     c.AdditionalProperties,
+		Type:                     c.Type,
 	}
 }
 
@@ -7231,15 +7231,15 @@ type CouchbaseTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type CouchbaseTableDataset.
 func (c *CouchbaseTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
-		Structure:            c.Structure,
-		Schema:               c.Schema,
+		Folder:               c.Folder,
 		LinkedServiceName:    c.LinkedServiceName,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		Folder:               c.Folder,
-		AdditionalProperties: c.AdditionalProperties,
+		Schema:               c.Schema,
+		Structure:            c.Structure,
+		Type:                 c.Type,
 	}
 }
 
@@ -7303,26 +7303,26 @@ type CustomActivity struct {
 // GetActivity implements the ActivityClassification interface for type CustomActivity.
 func (c *CustomActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: c.AdditionalProperties,
+		DependsOn:            c.DependsOn,
+		Description:          c.Description,
 		Name:                 c.Name,
 		Type:                 c.Type,
-		Description:          c.Description,
-		DependsOn:            c.DependsOn,
 		UserProperties:       c.UserProperties,
-		AdditionalProperties: c.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type CustomActivity.
 func (c *CustomActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    c.LinkedServiceName,
-		Policy:               c.Policy,
-		Name:                 c.Name,
-		Type:                 c.Type,
-		Description:          c.Description,
-		DependsOn:            c.DependsOn,
-		UserProperties:       c.UserProperties,
 		AdditionalProperties: c.AdditionalProperties,
+		DependsOn:            c.DependsOn,
+		Description:          c.Description,
+		LinkedServiceName:    c.LinkedServiceName,
+		Name:                 c.Name,
+		Policy:               c.Policy,
+		Type:                 c.Type,
+		UserProperties:       c.UserProperties,
 	}
 }
 
@@ -7387,12 +7387,12 @@ type CustomDataSourceLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type CustomDataSourceLinkedService.
 func (c *CustomDataSourceLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		ConnectVia:           c.ConnectVia,
 		Description:          c.Description,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -7433,15 +7433,15 @@ type CustomDataset struct {
 // GetDataset implements the DatasetClassification interface for type CustomDataset.
 func (c *CustomDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
-		Structure:            c.Structure,
-		Schema:               c.Schema,
+		Folder:               c.Folder,
 		LinkedServiceName:    c.LinkedServiceName,
 		Parameters:           c.Parameters,
-		Annotations:          c.Annotations,
-		Folder:               c.Folder,
-		AdditionalProperties: c.AdditionalProperties,
+		Schema:               c.Schema,
+		Structure:            c.Structure,
+		Type:                 c.Type,
 	}
 }
 
@@ -7472,23 +7472,23 @@ type CustomEventsTrigger struct {
 // GetMultiplePipelineTrigger implements the MultiplePipelineTriggerClassification interface for type CustomEventsTrigger.
 func (c *CustomEventsTrigger) GetMultiplePipelineTrigger() *MultiplePipelineTrigger {
 	return &MultiplePipelineTrigger{
-		Pipelines:            c.Pipelines,
-		Type:                 c.Type,
-		Description:          c.Description,
-		RuntimeState:         c.RuntimeState,
-		Annotations:          c.Annotations,
 		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
+		Description:          c.Description,
+		Pipelines:            c.Pipelines,
+		RuntimeState:         c.RuntimeState,
+		Type:                 c.Type,
 	}
 }
 
 // GetTrigger implements the TriggerClassification interface for type CustomEventsTrigger.
 func (c *CustomEventsTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 c.Type,
+		AdditionalProperties: c.AdditionalProperties,
+		Annotations:          c.Annotations,
 		Description:          c.Description,
 		RuntimeState:         c.RuntimeState,
-		Annotations:          c.Annotations,
-		AdditionalProperties: c.AdditionalProperties,
+		Type:                 c.Type,
 	}
 }
 
@@ -7879,26 +7879,26 @@ type DataLakeAnalyticsUSQLActivity struct {
 // GetActivity implements the ActivityClassification interface for type DataLakeAnalyticsUSQLActivity.
 func (d *DataLakeAnalyticsUSQLActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
 		Name:                 d.Name,
 		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
 		UserProperties:       d.UserProperties,
-		AdditionalProperties: d.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type DataLakeAnalyticsUSQLActivity.
 func (d *DataLakeAnalyticsUSQLActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    d.LinkedServiceName,
-		Policy:               d.Policy,
-		Name:                 d.Name,
-		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
-		UserProperties:       d.UserProperties,
 		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
+		LinkedServiceName:    d.LinkedServiceName,
+		Name:                 d.Name,
+		Policy:               d.Policy,
+		Type:                 d.Type,
+		UserProperties:       d.UserProperties,
 	}
 }
 
@@ -7972,26 +7972,26 @@ type DatabricksNotebookActivity struct {
 // GetActivity implements the ActivityClassification interface for type DatabricksNotebookActivity.
 func (d *DatabricksNotebookActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
 		Name:                 d.Name,
 		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
 		UserProperties:       d.UserProperties,
-		AdditionalProperties: d.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type DatabricksNotebookActivity.
 func (d *DatabricksNotebookActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    d.LinkedServiceName,
-		Policy:               d.Policy,
-		Name:                 d.Name,
-		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
-		UserProperties:       d.UserProperties,
 		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
+		LinkedServiceName:    d.LinkedServiceName,
+		Name:                 d.Name,
+		Policy:               d.Policy,
+		Type:                 d.Type,
+		UserProperties:       d.UserProperties,
 	}
 }
 
@@ -8042,26 +8042,26 @@ type DatabricksSparkJarActivity struct {
 // GetActivity implements the ActivityClassification interface for type DatabricksSparkJarActivity.
 func (d *DatabricksSparkJarActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
 		Name:                 d.Name,
 		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
 		UserProperties:       d.UserProperties,
-		AdditionalProperties: d.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type DatabricksSparkJarActivity.
 func (d *DatabricksSparkJarActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    d.LinkedServiceName,
-		Policy:               d.Policy,
-		Name:                 d.Name,
-		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
-		UserProperties:       d.UserProperties,
 		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
+		LinkedServiceName:    d.LinkedServiceName,
+		Name:                 d.Name,
+		Policy:               d.Policy,
+		Type:                 d.Type,
+		UserProperties:       d.UserProperties,
 	}
 }
 
@@ -8111,26 +8111,26 @@ type DatabricksSparkPythonActivity struct {
 // GetActivity implements the ActivityClassification interface for type DatabricksSparkPythonActivity.
 func (d *DatabricksSparkPythonActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
 		Name:                 d.Name,
 		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
 		UserProperties:       d.UserProperties,
-		AdditionalProperties: d.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type DatabricksSparkPythonActivity.
 func (d *DatabricksSparkPythonActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    d.LinkedServiceName,
-		Policy:               d.Policy,
-		Name:                 d.Name,
-		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
-		UserProperties:       d.UserProperties,
 		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
+		LinkedServiceName:    d.LinkedServiceName,
+		Name:                 d.Name,
+		Policy:               d.Policy,
+		Type:                 d.Type,
+		UserProperties:       d.UserProperties,
 	}
 }
 
@@ -8332,12 +8332,12 @@ type DataworldLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type DataworldLinkedService.
 func (d *DataworldLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		ConnectVia:           d.ConnectVia,
 		Description:          d.Description,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -8378,12 +8378,12 @@ type Db2LinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type Db2LinkedService.
 func (d *Db2LinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		ConnectVia:           d.ConnectVia,
 		Description:          d.Description,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -8457,24 +8457,24 @@ type Db2Source struct {
 // GetCopySource implements the CopySourceClassification interface for type Db2Source.
 func (d *Db2Source) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type Db2Source.
 func (d *Db2Source) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             d.QueryTimeout,
 		AdditionalColumns:        d.AdditionalColumns,
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
+		QueryTimeout:             d.QueryTimeout,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
@@ -8515,15 +8515,15 @@ type Db2TableDataset struct {
 // GetDataset implements the DatasetClassification interface for type Db2TableDataset.
 func (d *Db2TableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		Description:          d.Description,
-		Structure:            d.Structure,
-		Schema:               d.Schema,
+		Folder:               d.Folder,
 		LinkedServiceName:    d.LinkedServiceName,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		Folder:               d.Folder,
-		AdditionalProperties: d.AdditionalProperties,
+		Schema:               d.Schema,
+		Structure:            d.Structure,
+		Type:                 d.Type,
 	}
 }
 
@@ -8572,26 +8572,26 @@ type DeleteActivity struct {
 // GetActivity implements the ActivityClassification interface for type DeleteActivity.
 func (d *DeleteActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
 		Name:                 d.Name,
 		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
 		UserProperties:       d.UserProperties,
-		AdditionalProperties: d.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type DeleteActivity.
 func (d *DeleteActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    d.LinkedServiceName,
-		Policy:               d.Policy,
-		Name:                 d.Name,
-		Type:                 d.Type,
-		Description:          d.Description,
-		DependsOn:            d.DependsOn,
-		UserProperties:       d.UserProperties,
 		AdditionalProperties: d.AdditionalProperties,
+		DependsOn:            d.DependsOn,
+		Description:          d.Description,
+		LinkedServiceName:    d.LinkedServiceName,
+		Name:                 d.Name,
+		Policy:               d.Policy,
+		Type:                 d.Type,
+		UserProperties:       d.UserProperties,
 	}
 }
 
@@ -8664,15 +8664,15 @@ type DelimitedTextDataset struct {
 // GetDataset implements the DatasetClassification interface for type DelimitedTextDataset.
 func (d *DelimitedTextDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		Description:          d.Description,
-		Structure:            d.Structure,
-		Schema:               d.Schema,
+		Folder:               d.Folder,
 		LinkedServiceName:    d.LinkedServiceName,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		Folder:               d.Folder,
-		AdditionalProperties: d.AdditionalProperties,
+		Schema:               d.Schema,
+		Structure:            d.Structure,
+		Type:                 d.Type,
 	}
 }
 
@@ -8733,8 +8733,8 @@ type DelimitedTextReadSettings struct {
 // GetFormatReadSettings implements the FormatReadSettingsClassification interface for type DelimitedTextReadSettings.
 func (d *DelimitedTextReadSettings) GetFormatReadSettings() *FormatReadSettings {
 	return &FormatReadSettings{
-		Type:                 d.Type,
 		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -8771,13 +8771,13 @@ type DelimitedTextSink struct {
 // GetCopySink implements the CopySinkClassification interface for type DelimitedTextSink.
 func (d *DelimitedTextSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
+		SinkRetryCount:           d.SinkRetryCount,
+		SinkRetryWait:            d.SinkRetryWait,
 		Type:                     d.Type,
 		WriteBatchSize:           d.WriteBatchSize,
 		WriteBatchTimeout:        d.WriteBatchTimeout,
-		SinkRetryCount:           d.SinkRetryCount,
-		SinkRetryWait:            d.SinkRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
 	}
 }
 
@@ -8812,11 +8812,11 @@ type DelimitedTextSource struct {
 // GetCopySource implements the CopySourceClassification interface for type DelimitedTextSource.
 func (d *DelimitedTextSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
@@ -8846,8 +8846,8 @@ type DelimitedTextWriteSettings struct {
 // GetFormatWriteSettings implements the FormatWriteSettingsClassification interface for type DelimitedTextWriteSettings.
 func (d *DelimitedTextWriteSettings) GetFormatWriteSettings() *FormatWriteSettings {
 	return &FormatWriteSettings{
-		Type:                 d.Type,
 		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -8911,15 +8911,15 @@ type DocumentDbCollectionDataset struct {
 // GetDataset implements the DatasetClassification interface for type DocumentDbCollectionDataset.
 func (d *DocumentDbCollectionDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		Description:          d.Description,
-		Structure:            d.Structure,
-		Schema:               d.Schema,
+		Folder:               d.Folder,
 		LinkedServiceName:    d.LinkedServiceName,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		Folder:               d.Folder,
-		AdditionalProperties: d.AdditionalProperties,
+		Schema:               d.Schema,
+		Structure:            d.Structure,
+		Type:                 d.Type,
 	}
 }
 
@@ -8963,13 +8963,13 @@ type DocumentDbCollectionSink struct {
 // GetCopySink implements the CopySinkClassification interface for type DocumentDbCollectionSink.
 func (d *DocumentDbCollectionSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
+		SinkRetryCount:           d.SinkRetryCount,
+		SinkRetryWait:            d.SinkRetryWait,
 		Type:                     d.Type,
 		WriteBatchSize:           d.WriteBatchSize,
 		WriteBatchTimeout:        d.WriteBatchTimeout,
-		SinkRetryCount:           d.SinkRetryCount,
-		SinkRetryWait:            d.SinkRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
 	}
 }
 
@@ -9007,11 +9007,11 @@ type DocumentDbCollectionSource struct {
 // GetCopySource implements the CopySourceClassification interface for type DocumentDbCollectionSource.
 func (d *DocumentDbCollectionSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
@@ -9054,12 +9054,12 @@ type DrillLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type DrillLinkedService.
 func (d *DrillLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		ConnectVia:           d.ConnectVia,
 		Description:          d.Description,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -9107,24 +9107,24 @@ type DrillSource struct {
 // GetCopySource implements the CopySourceClassification interface for type DrillSource.
 func (d *DrillSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type DrillSource.
 func (d *DrillSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             d.QueryTimeout,
 		AdditionalColumns:        d.AdditionalColumns,
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
+		QueryTimeout:             d.QueryTimeout,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
@@ -9165,15 +9165,15 @@ type DrillTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type DrillTableDataset.
 func (d *DrillTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		Description:          d.Description,
-		Structure:            d.Structure,
-		Schema:               d.Schema,
+		Folder:               d.Folder,
 		LinkedServiceName:    d.LinkedServiceName,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		Folder:               d.Folder,
-		AdditionalProperties: d.AdditionalProperties,
+		Schema:               d.Schema,
+		Structure:            d.Structure,
+		Type:                 d.Type,
 	}
 }
 
@@ -9210,12 +9210,12 @@ type DynamicsAXLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type DynamicsAXLinkedService.
 func (d *DynamicsAXLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		ConnectVia:           d.ConnectVia,
 		Description:          d.Description,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -9282,15 +9282,15 @@ type DynamicsAXResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type DynamicsAXResourceDataset.
 func (d *DynamicsAXResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		Description:          d.Description,
-		Structure:            d.Structure,
-		Schema:               d.Schema,
+		Folder:               d.Folder,
 		LinkedServiceName:    d.LinkedServiceName,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		Folder:               d.Folder,
-		AdditionalProperties: d.AdditionalProperties,
+		Schema:               d.Schema,
+		Structure:            d.Structure,
+		Type:                 d.Type,
 	}
 }
 
@@ -9336,24 +9336,24 @@ type DynamicsAXSource struct {
 // GetCopySource implements the CopySourceClassification interface for type DynamicsAXSource.
 func (d *DynamicsAXSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type DynamicsAXSource.
 func (d *DynamicsAXSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             d.QueryTimeout,
 		AdditionalColumns:        d.AdditionalColumns,
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
+		QueryTimeout:             d.QueryTimeout,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
@@ -9394,15 +9394,15 @@ type DynamicsCrmEntityDataset struct {
 // GetDataset implements the DatasetClassification interface for type DynamicsCrmEntityDataset.
 func (d *DynamicsCrmEntityDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		Description:          d.Description,
-		Structure:            d.Structure,
-		Schema:               d.Schema,
+		Folder:               d.Folder,
 		LinkedServiceName:    d.LinkedServiceName,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		Folder:               d.Folder,
-		AdditionalProperties: d.AdditionalProperties,
+		Schema:               d.Schema,
+		Structure:            d.Structure,
+		Type:                 d.Type,
 	}
 }
 
@@ -9439,12 +9439,12 @@ type DynamicsCrmLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type DynamicsCrmLinkedService.
 func (d *DynamicsCrmLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		ConnectVia:           d.ConnectVia,
 		Description:          d.Description,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -9538,13 +9538,13 @@ type DynamicsCrmSink struct {
 // GetCopySink implements the CopySinkClassification interface for type DynamicsCrmSink.
 func (d *DynamicsCrmSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
+		SinkRetryCount:           d.SinkRetryCount,
+		SinkRetryWait:            d.SinkRetryWait,
 		Type:                     d.Type,
 		WriteBatchSize:           d.WriteBatchSize,
 		WriteBatchTimeout:        d.WriteBatchTimeout,
-		SinkRetryCount:           d.SinkRetryCount,
-		SinkRetryWait:            d.SinkRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
 	}
 }
 
@@ -9577,11 +9577,11 @@ type DynamicsCrmSource struct {
 // GetCopySource implements the CopySourceClassification interface for type DynamicsCrmSource.
 func (d *DynamicsCrmSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
@@ -9622,15 +9622,15 @@ type DynamicsEntityDataset struct {
 // GetDataset implements the DatasetClassification interface for type DynamicsEntityDataset.
 func (d *DynamicsEntityDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		Description:          d.Description,
-		Structure:            d.Structure,
-		Schema:               d.Schema,
+		Folder:               d.Folder,
 		LinkedServiceName:    d.LinkedServiceName,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		Folder:               d.Folder,
-		AdditionalProperties: d.AdditionalProperties,
+		Schema:               d.Schema,
+		Structure:            d.Structure,
+		Type:                 d.Type,
 	}
 }
 
@@ -9667,12 +9667,12 @@ type DynamicsLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type DynamicsLinkedService.
 func (d *DynamicsLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 d.Type,
+		AdditionalProperties: d.AdditionalProperties,
+		Annotations:          d.Annotations,
 		ConnectVia:           d.ConnectVia,
 		Description:          d.Description,
 		Parameters:           d.Parameters,
-		Annotations:          d.Annotations,
-		AdditionalProperties: d.AdditionalProperties,
+		Type:                 d.Type,
 	}
 }
 
@@ -9768,13 +9768,13 @@ type DynamicsSink struct {
 // GetCopySink implements the CopySinkClassification interface for type DynamicsSink.
 func (d *DynamicsSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
+		SinkRetryCount:           d.SinkRetryCount,
+		SinkRetryWait:            d.SinkRetryWait,
 		Type:                     d.Type,
 		WriteBatchSize:           d.WriteBatchSize,
 		WriteBatchTimeout:        d.WriteBatchTimeout,
-		SinkRetryCount:           d.SinkRetryCount,
-		SinkRetryWait:            d.SinkRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
 	}
 }
 
@@ -9807,11 +9807,11 @@ type DynamicsSource struct {
 // GetCopySource implements the CopySourceClassification interface for type DynamicsSource.
 func (d *DynamicsSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     d.Type,
+		AdditionalProperties:     d.AdditionalProperties,
+		MaxConcurrentConnections: d.MaxConcurrentConnections,
 		SourceRetryCount:         d.SourceRetryCount,
 		SourceRetryWait:          d.SourceRetryWait,
-		MaxConcurrentConnections: d.MaxConcurrentConnections,
-		AdditionalProperties:     d.AdditionalProperties,
+		Type:                     d.Type,
 	}
 }
 
@@ -9847,12 +9847,12 @@ type EloquaLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type EloquaLinkedService.
 func (e *EloquaLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 e.Type,
+		AdditionalProperties: e.AdditionalProperties,
+		Annotations:          e.Annotations,
 		ConnectVia:           e.ConnectVia,
 		Description:          e.Description,
 		Parameters:           e.Parameters,
-		Annotations:          e.Annotations,
-		AdditionalProperties: e.AdditionalProperties,
+		Type:                 e.Type,
 	}
 }
 
@@ -9919,15 +9919,15 @@ type EloquaObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type EloquaObjectDataset.
 func (e *EloquaObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 e.Type,
+		AdditionalProperties: e.AdditionalProperties,
+		Annotations:          e.Annotations,
 		Description:          e.Description,
-		Structure:            e.Structure,
-		Schema:               e.Schema,
+		Folder:               e.Folder,
 		LinkedServiceName:    e.LinkedServiceName,
 		Parameters:           e.Parameters,
-		Annotations:          e.Annotations,
-		Folder:               e.Folder,
-		AdditionalProperties: e.AdditionalProperties,
+		Schema:               e.Schema,
+		Structure:            e.Structure,
+		Type:                 e.Type,
 	}
 }
 
@@ -9962,24 +9962,24 @@ type EloquaSource struct {
 // GetCopySource implements the CopySourceClassification interface for type EloquaSource.
 func (e *EloquaSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     e.Type,
+		AdditionalProperties:     e.AdditionalProperties,
+		MaxConcurrentConnections: e.MaxConcurrentConnections,
 		SourceRetryCount:         e.SourceRetryCount,
 		SourceRetryWait:          e.SourceRetryWait,
-		MaxConcurrentConnections: e.MaxConcurrentConnections,
-		AdditionalProperties:     e.AdditionalProperties,
+		Type:                     e.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type EloquaSource.
 func (e *EloquaSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             e.QueryTimeout,
 		AdditionalColumns:        e.AdditionalColumns,
-		Type:                     e.Type,
+		AdditionalProperties:     e.AdditionalProperties,
+		MaxConcurrentConnections: e.MaxConcurrentConnections,
+		QueryTimeout:             e.QueryTimeout,
 		SourceRetryCount:         e.SourceRetryCount,
 		SourceRetryWait:          e.SourceRetryWait,
-		MaxConcurrentConnections: e.MaxConcurrentConnections,
-		AdditionalProperties:     e.AdditionalProperties,
+		Type:                     e.Type,
 	}
 }
 
@@ -10090,15 +10090,15 @@ type ExcelDataset struct {
 // GetDataset implements the DatasetClassification interface for type ExcelDataset.
 func (e *ExcelDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 e.Type,
+		AdditionalProperties: e.AdditionalProperties,
+		Annotations:          e.Annotations,
 		Description:          e.Description,
-		Structure:            e.Structure,
-		Schema:               e.Schema,
+		Folder:               e.Folder,
 		LinkedServiceName:    e.LinkedServiceName,
 		Parameters:           e.Parameters,
-		Annotations:          e.Annotations,
-		Folder:               e.Folder,
-		AdditionalProperties: e.AdditionalProperties,
+		Schema:               e.Schema,
+		Structure:            e.Structure,
+		Type:                 e.Type,
 	}
 }
 
@@ -10156,11 +10156,11 @@ type ExcelSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ExcelSource.
 func (e *ExcelSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     e.Type,
+		AdditionalProperties:     e.AdditionalProperties,
+		MaxConcurrentConnections: e.MaxConcurrentConnections,
 		SourceRetryCount:         e.SourceRetryCount,
 		SourceRetryWait:          e.SourceRetryWait,
-		MaxConcurrentConnections: e.MaxConcurrentConnections,
-		AdditionalProperties:     e.AdditionalProperties,
+		Type:                     e.Type,
 	}
 }
 
@@ -10197,26 +10197,26 @@ type ExecuteDataFlowActivity struct {
 // GetActivity implements the ActivityClassification interface for type ExecuteDataFlowActivity.
 func (e *ExecuteDataFlowActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: e.AdditionalProperties,
+		DependsOn:            e.DependsOn,
+		Description:          e.Description,
 		Name:                 e.Name,
 		Type:                 e.Type,
-		Description:          e.Description,
-		DependsOn:            e.DependsOn,
 		UserProperties:       e.UserProperties,
-		AdditionalProperties: e.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type ExecuteDataFlowActivity.
 func (e *ExecuteDataFlowActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    e.LinkedServiceName,
-		Policy:               e.Policy,
-		Name:                 e.Name,
-		Type:                 e.Type,
-		Description:          e.Description,
-		DependsOn:            e.DependsOn,
-		UserProperties:       e.UserProperties,
 		AdditionalProperties: e.AdditionalProperties,
+		DependsOn:            e.DependsOn,
+		Description:          e.Description,
+		LinkedServiceName:    e.LinkedServiceName,
+		Name:                 e.Name,
+		Policy:               e.Policy,
+		Type:                 e.Type,
+		UserProperties:       e.UserProperties,
 	}
 }
 
@@ -10286,24 +10286,24 @@ type ExecutePipelineActivity struct {
 // GetActivity implements the ActivityClassification interface for type ExecutePipelineActivity.
 func (e *ExecutePipelineActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: e.AdditionalProperties,
+		DependsOn:            e.DependsOn,
+		Description:          e.Description,
 		Name:                 e.Name,
 		Type:                 e.Type,
-		Description:          e.Description,
-		DependsOn:            e.DependsOn,
 		UserProperties:       e.UserProperties,
-		AdditionalProperties: e.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type ExecutePipelineActivity.
 func (e *ExecutePipelineActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: e.AdditionalProperties,
+		DependsOn:            e.DependsOn,
+		Description:          e.Description,
 		Name:                 e.Name,
 		Type:                 e.Type,
-		Description:          e.Description,
-		DependsOn:            e.DependsOn,
 		UserProperties:       e.UserProperties,
-		AdditionalProperties: e.AdditionalProperties,
 	}
 }
 
@@ -10352,26 +10352,26 @@ type ExecuteSSISPackageActivity struct {
 // GetActivity implements the ActivityClassification interface for type ExecuteSSISPackageActivity.
 func (e *ExecuteSSISPackageActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: e.AdditionalProperties,
+		DependsOn:            e.DependsOn,
+		Description:          e.Description,
 		Name:                 e.Name,
 		Type:                 e.Type,
-		Description:          e.Description,
-		DependsOn:            e.DependsOn,
 		UserProperties:       e.UserProperties,
-		AdditionalProperties: e.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type ExecuteSSISPackageActivity.
 func (e *ExecuteSSISPackageActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    e.LinkedServiceName,
-		Policy:               e.Policy,
-		Name:                 e.Name,
-		Type:                 e.Type,
-		Description:          e.Description,
-		DependsOn:            e.DependsOn,
-		UserProperties:       e.UserProperties,
 		AdditionalProperties: e.AdditionalProperties,
+		DependsOn:            e.DependsOn,
+		Description:          e.Description,
+		LinkedServiceName:    e.LinkedServiceName,
+		Name:                 e.Name,
+		Policy:               e.Policy,
+		Type:                 e.Type,
+		UserProperties:       e.UserProperties,
 	}
 }
 
@@ -10445,12 +10445,12 @@ type ExecutionActivity struct {
 // GetActivity implements the ActivityClassification interface for type ExecutionActivity.
 func (e *ExecutionActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: e.AdditionalProperties,
+		DependsOn:            e.DependsOn,
+		Description:          e.Description,
 		Name:                 e.Name,
 		Type:                 e.Type,
-		Description:          e.Description,
-		DependsOn:            e.DependsOn,
 		UserProperties:       e.UserProperties,
-		AdditionalProperties: e.AdditionalProperties,
 	}
 }
 
@@ -10526,24 +10526,24 @@ type FailActivity struct {
 // GetActivity implements the ActivityClassification interface for type FailActivity.
 func (f *FailActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: f.AdditionalProperties,
+		DependsOn:            f.DependsOn,
+		Description:          f.Description,
 		Name:                 f.Name,
 		Type:                 f.Type,
-		Description:          f.Description,
-		DependsOn:            f.DependsOn,
 		UserProperties:       f.UserProperties,
-		AdditionalProperties: f.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type FailActivity.
 func (f *FailActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: f.AdditionalProperties,
+		DependsOn:            f.DependsOn,
+		Description:          f.Description,
 		Name:                 f.Name,
 		Type:                 f.Type,
-		Description:          f.Description,
-		DependsOn:            f.DependsOn,
 		UserProperties:       f.UserProperties,
-		AdditionalProperties: f.AdditionalProperties,
 	}
 }
 
@@ -10586,12 +10586,12 @@ type FileServerLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type FileServerLinkedService.
 func (f *FileServerLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 f.Type,
+		AdditionalProperties: f.AdditionalProperties,
+		Annotations:          f.Annotations,
 		ConnectVia:           f.ConnectVia,
 		Description:          f.Description,
 		Parameters:           f.Parameters,
-		Annotations:          f.Annotations,
-		AdditionalProperties: f.AdditionalProperties,
+		Type:                 f.Type,
 	}
 }
 
@@ -10629,10 +10629,10 @@ type FileServerLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type FileServerLocation.
 func (f *FileServerLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 f.Type,
-		FolderPath:           f.FolderPath,
-		FileName:             f.FileName,
 		AdditionalProperties: f.AdditionalProperties,
+		FileName:             f.FileName,
+		FolderPath:           f.FolderPath,
+		Type:                 f.Type,
 	}
 }
 
@@ -10685,9 +10685,9 @@ type FileServerReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type FileServerReadSettings.
 func (f *FileServerReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     f.Type,
-		MaxConcurrentConnections: f.MaxConcurrentConnections,
 		AdditionalProperties:     f.AdditionalProperties,
+		MaxConcurrentConnections: f.MaxConcurrentConnections,
+		Type:                     f.Type,
 	}
 }
 
@@ -10709,10 +10709,10 @@ type FileServerWriteSettings struct {
 // GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type FileServerWriteSettings.
 func (f *FileServerWriteSettings) GetStoreWriteSettings() *StoreWriteSettings {
 	return &StoreWriteSettings{
-		Type:                     f.Type,
-		MaxConcurrentConnections: f.MaxConcurrentConnections,
-		CopyBehavior:             f.CopyBehavior,
 		AdditionalProperties:     f.AdditionalProperties,
+		CopyBehavior:             f.CopyBehavior,
+		MaxConcurrentConnections: f.MaxConcurrentConnections,
+		Type:                     f.Type,
 	}
 }
 
@@ -10753,15 +10753,15 @@ type FileShareDataset struct {
 // GetDataset implements the DatasetClassification interface for type FileShareDataset.
 func (f *FileShareDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 f.Type,
+		AdditionalProperties: f.AdditionalProperties,
+		Annotations:          f.Annotations,
 		Description:          f.Description,
-		Structure:            f.Structure,
-		Schema:               f.Schema,
+		Folder:               f.Folder,
 		LinkedServiceName:    f.LinkedServiceName,
 		Parameters:           f.Parameters,
-		Annotations:          f.Annotations,
-		Folder:               f.Folder,
-		AdditionalProperties: f.AdditionalProperties,
+		Schema:               f.Schema,
+		Structure:            f.Structure,
+		Type:                 f.Type,
 	}
 }
 
@@ -10820,13 +10820,13 @@ type FileSystemSink struct {
 // GetCopySink implements the CopySinkClassification interface for type FileSystemSink.
 func (f *FileSystemSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     f.AdditionalProperties,
+		MaxConcurrentConnections: f.MaxConcurrentConnections,
+		SinkRetryCount:           f.SinkRetryCount,
+		SinkRetryWait:            f.SinkRetryWait,
 		Type:                     f.Type,
 		WriteBatchSize:           f.WriteBatchSize,
 		WriteBatchTimeout:        f.WriteBatchTimeout,
-		SinkRetryCount:           f.SinkRetryCount,
-		SinkRetryWait:            f.SinkRetryWait,
-		MaxConcurrentConnections: f.MaxConcurrentConnections,
-		AdditionalProperties:     f.AdditionalProperties,
 	}
 }
 
@@ -10859,11 +10859,11 @@ type FileSystemSource struct {
 // GetCopySource implements the CopySourceClassification interface for type FileSystemSource.
 func (f *FileSystemSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     f.Type,
+		AdditionalProperties:     f.AdditionalProperties,
+		MaxConcurrentConnections: f.MaxConcurrentConnections,
 		SourceRetryCount:         f.SourceRetryCount,
 		SourceRetryWait:          f.SourceRetryWait,
-		MaxConcurrentConnections: f.MaxConcurrentConnections,
-		AdditionalProperties:     f.AdditionalProperties,
+		Type:                     f.Type,
 	}
 }
 
@@ -10894,24 +10894,24 @@ type FilterActivity struct {
 // GetActivity implements the ActivityClassification interface for type FilterActivity.
 func (f *FilterActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: f.AdditionalProperties,
+		DependsOn:            f.DependsOn,
+		Description:          f.Description,
 		Name:                 f.Name,
 		Type:                 f.Type,
-		Description:          f.Description,
-		DependsOn:            f.DependsOn,
 		UserProperties:       f.UserProperties,
-		AdditionalProperties: f.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type FilterActivity.
 func (f *FilterActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: f.AdditionalProperties,
+		DependsOn:            f.DependsOn,
+		Description:          f.Description,
 		Name:                 f.Name,
 		Type:                 f.Type,
-		Description:          f.Description,
-		DependsOn:            f.DependsOn,
 		UserProperties:       f.UserProperties,
-		AdditionalProperties: f.AdditionalProperties,
 	}
 }
 
@@ -10945,10 +10945,10 @@ type Flowlet struct {
 // GetDataFlow implements the DataFlowClassification interface for type Flowlet.
 func (f *Flowlet) GetDataFlow() *DataFlow {
 	return &DataFlow{
-		Type:        f.Type,
-		Description: f.Description,
 		Annotations: f.Annotations,
+		Description: f.Description,
 		Folder:      f.Folder,
+		Type:        f.Type,
 	}
 }
 
@@ -10997,24 +10997,24 @@ type ForEachActivity struct {
 // GetActivity implements the ActivityClassification interface for type ForEachActivity.
 func (f *ForEachActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: f.AdditionalProperties,
+		DependsOn:            f.DependsOn,
+		Description:          f.Description,
 		Name:                 f.Name,
 		Type:                 f.Type,
-		Description:          f.Description,
-		DependsOn:            f.DependsOn,
 		UserProperties:       f.UserProperties,
-		AdditionalProperties: f.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type ForEachActivity.
 func (f *ForEachActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: f.AdditionalProperties,
+		DependsOn:            f.DependsOn,
+		Description:          f.Description,
 		Name:                 f.Name,
 		Type:                 f.Type,
-		Description:          f.Description,
-		DependsOn:            f.DependsOn,
 		UserProperties:       f.UserProperties,
-		AdditionalProperties: f.AdditionalProperties,
 	}
 }
 
@@ -11102,9 +11102,9 @@ type FtpReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type FtpReadSettings.
 func (f *FtpReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     f.Type,
-		MaxConcurrentConnections: f.MaxConcurrentConnections,
 		AdditionalProperties:     f.AdditionalProperties,
+		MaxConcurrentConnections: f.MaxConcurrentConnections,
+		Type:                     f.Type,
 	}
 }
 
@@ -11135,12 +11135,12 @@ type FtpServerLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type FtpServerLinkedService.
 func (f *FtpServerLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 f.Type,
+		AdditionalProperties: f.AdditionalProperties,
+		Annotations:          f.Annotations,
 		ConnectVia:           f.ConnectVia,
 		Description:          f.Description,
 		Parameters:           f.Parameters,
-		Annotations:          f.Annotations,
-		AdditionalProperties: f.AdditionalProperties,
+		Type:                 f.Type,
 	}
 }
 
@@ -11193,10 +11193,10 @@ type FtpServerLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type FtpServerLocation.
 func (f *FtpServerLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 f.Type,
-		FolderPath:           f.FolderPath,
-		FileName:             f.FileName,
 		AdditionalProperties: f.AdditionalProperties,
+		FileName:             f.FileName,
+		FolderPath:           f.FolderPath,
+		Type:                 f.Type,
 	}
 }
 
@@ -11239,26 +11239,26 @@ type GetMetadataActivity struct {
 // GetActivity implements the ActivityClassification interface for type GetMetadataActivity.
 func (g *GetMetadataActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: g.AdditionalProperties,
+		DependsOn:            g.DependsOn,
+		Description:          g.Description,
 		Name:                 g.Name,
 		Type:                 g.Type,
-		Description:          g.Description,
-		DependsOn:            g.DependsOn,
 		UserProperties:       g.UserProperties,
-		AdditionalProperties: g.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type GetMetadataActivity.
 func (g *GetMetadataActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    g.LinkedServiceName,
-		Policy:               g.Policy,
-		Name:                 g.Name,
-		Type:                 g.Type,
-		Description:          g.Description,
-		DependsOn:            g.DependsOn,
-		UserProperties:       g.UserProperties,
 		AdditionalProperties: g.AdditionalProperties,
+		DependsOn:            g.DependsOn,
+		Description:          g.Description,
+		LinkedServiceName:    g.LinkedServiceName,
+		Name:                 g.Name,
+		Policy:               g.Policy,
+		Type:                 g.Type,
+		UserProperties:       g.UserProperties,
 	}
 }
 
@@ -11334,12 +11334,12 @@ type GoogleAdWordsLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type GoogleAdWordsLinkedService.
 func (g *GoogleAdWordsLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		ConnectVia:           g.ConnectVia,
 		Description:          g.Description,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		AdditionalProperties: g.AdditionalProperties,
+		Type:                 g.Type,
 	}
 }
 
@@ -11426,15 +11426,15 @@ type GoogleAdWordsObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type GoogleAdWordsObjectDataset.
 func (g *GoogleAdWordsObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		Description:          g.Description,
-		Structure:            g.Structure,
-		Schema:               g.Schema,
+		Folder:               g.Folder,
 		LinkedServiceName:    g.LinkedServiceName,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		Folder:               g.Folder,
-		AdditionalProperties: g.AdditionalProperties,
+		Schema:               g.Schema,
+		Structure:            g.Structure,
+		Type:                 g.Type,
 	}
 }
 
@@ -11469,24 +11469,24 @@ type GoogleAdWordsSource struct {
 // GetCopySource implements the CopySourceClassification interface for type GoogleAdWordsSource.
 func (g *GoogleAdWordsSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     g.Type,
+		AdditionalProperties:     g.AdditionalProperties,
+		MaxConcurrentConnections: g.MaxConcurrentConnections,
 		SourceRetryCount:         g.SourceRetryCount,
 		SourceRetryWait:          g.SourceRetryWait,
-		MaxConcurrentConnections: g.MaxConcurrentConnections,
-		AdditionalProperties:     g.AdditionalProperties,
+		Type:                     g.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type GoogleAdWordsSource.
 func (g *GoogleAdWordsSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             g.QueryTimeout,
 		AdditionalColumns:        g.AdditionalColumns,
-		Type:                     g.Type,
+		AdditionalProperties:     g.AdditionalProperties,
+		MaxConcurrentConnections: g.MaxConcurrentConnections,
+		QueryTimeout:             g.QueryTimeout,
 		SourceRetryCount:         g.SourceRetryCount,
 		SourceRetryWait:          g.SourceRetryWait,
-		MaxConcurrentConnections: g.MaxConcurrentConnections,
-		AdditionalProperties:     g.AdditionalProperties,
+		Type:                     g.Type,
 	}
 }
 
@@ -11529,12 +11529,12 @@ type GoogleBigQueryLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type GoogleBigQueryLinkedService.
 func (g *GoogleBigQueryLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		ConnectVia:           g.ConnectVia,
 		Description:          g.Description,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		AdditionalProperties: g.AdditionalProperties,
+		Type:                 g.Type,
 	}
 }
 
@@ -11622,15 +11622,15 @@ type GoogleBigQueryObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type GoogleBigQueryObjectDataset.
 func (g *GoogleBigQueryObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		Description:          g.Description,
-		Structure:            g.Structure,
-		Schema:               g.Schema,
+		Folder:               g.Folder,
 		LinkedServiceName:    g.LinkedServiceName,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		Folder:               g.Folder,
-		AdditionalProperties: g.AdditionalProperties,
+		Schema:               g.Schema,
+		Structure:            g.Structure,
+		Type:                 g.Type,
 	}
 }
 
@@ -11665,24 +11665,24 @@ type GoogleBigQuerySource struct {
 // GetCopySource implements the CopySourceClassification interface for type GoogleBigQuerySource.
 func (g *GoogleBigQuerySource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     g.Type,
+		AdditionalProperties:     g.AdditionalProperties,
+		MaxConcurrentConnections: g.MaxConcurrentConnections,
 		SourceRetryCount:         g.SourceRetryCount,
 		SourceRetryWait:          g.SourceRetryWait,
-		MaxConcurrentConnections: g.MaxConcurrentConnections,
-		AdditionalProperties:     g.AdditionalProperties,
+		Type:                     g.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type GoogleBigQuerySource.
 func (g *GoogleBigQuerySource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             g.QueryTimeout,
 		AdditionalColumns:        g.AdditionalColumns,
-		Type:                     g.Type,
+		AdditionalProperties:     g.AdditionalProperties,
+		MaxConcurrentConnections: g.MaxConcurrentConnections,
+		QueryTimeout:             g.QueryTimeout,
 		SourceRetryCount:         g.SourceRetryCount,
 		SourceRetryWait:          g.SourceRetryWait,
-		MaxConcurrentConnections: g.MaxConcurrentConnections,
-		AdditionalProperties:     g.AdditionalProperties,
+		Type:                     g.Type,
 	}
 }
 
@@ -11713,12 +11713,12 @@ type GoogleCloudStorageLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type GoogleCloudStorageLinkedService.
 func (g *GoogleCloudStorageLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		ConnectVia:           g.ConnectVia,
 		Description:          g.Description,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		AdditionalProperties: g.AdditionalProperties,
+		Type:                 g.Type,
 	}
 }
 
@@ -11765,10 +11765,10 @@ type GoogleCloudStorageLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type GoogleCloudStorageLocation.
 func (g *GoogleCloudStorageLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 g.Type,
-		FolderPath:           g.FolderPath,
-		FileName:             g.FileName,
 		AdditionalProperties: g.AdditionalProperties,
+		FileName:             g.FileName,
+		FolderPath:           g.FolderPath,
+		Type:                 g.Type,
 	}
 }
 
@@ -11820,9 +11820,9 @@ type GoogleCloudStorageReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type GoogleCloudStorageReadSettings.
 func (g *GoogleCloudStorageReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     g.Type,
-		MaxConcurrentConnections: g.MaxConcurrentConnections,
 		AdditionalProperties:     g.AdditionalProperties,
+		MaxConcurrentConnections: g.MaxConcurrentConnections,
+		Type:                     g.Type,
 	}
 }
 
@@ -11853,12 +11853,12 @@ type GoogleSheetsLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type GoogleSheetsLinkedService.
 func (g *GoogleSheetsLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		ConnectVia:           g.ConnectVia,
 		Description:          g.Description,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		AdditionalProperties: g.AdditionalProperties,
+		Type:                 g.Type,
 	}
 }
 
@@ -11911,12 +11911,12 @@ type GreenplumLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type GreenplumLinkedService.
 func (g *GreenplumLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		ConnectVia:           g.ConnectVia,
 		Description:          g.Description,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		AdditionalProperties: g.AdditionalProperties,
+		Type:                 g.Type,
 	}
 }
 
@@ -11964,24 +11964,24 @@ type GreenplumSource struct {
 // GetCopySource implements the CopySourceClassification interface for type GreenplumSource.
 func (g *GreenplumSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     g.Type,
+		AdditionalProperties:     g.AdditionalProperties,
+		MaxConcurrentConnections: g.MaxConcurrentConnections,
 		SourceRetryCount:         g.SourceRetryCount,
 		SourceRetryWait:          g.SourceRetryWait,
-		MaxConcurrentConnections: g.MaxConcurrentConnections,
-		AdditionalProperties:     g.AdditionalProperties,
+		Type:                     g.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type GreenplumSource.
 func (g *GreenplumSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             g.QueryTimeout,
 		AdditionalColumns:        g.AdditionalColumns,
-		Type:                     g.Type,
+		AdditionalProperties:     g.AdditionalProperties,
+		MaxConcurrentConnections: g.MaxConcurrentConnections,
+		QueryTimeout:             g.QueryTimeout,
 		SourceRetryCount:         g.SourceRetryCount,
 		SourceRetryWait:          g.SourceRetryWait,
-		MaxConcurrentConnections: g.MaxConcurrentConnections,
-		AdditionalProperties:     g.AdditionalProperties,
+		Type:                     g.Type,
 	}
 }
 
@@ -12022,15 +12022,15 @@ type GreenplumTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type GreenplumTableDataset.
 func (g *GreenplumTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 g.Type,
+		AdditionalProperties: g.AdditionalProperties,
+		Annotations:          g.Annotations,
 		Description:          g.Description,
-		Structure:            g.Structure,
-		Schema:               g.Schema,
+		Folder:               g.Folder,
 		LinkedServiceName:    g.LinkedServiceName,
 		Parameters:           g.Parameters,
-		Annotations:          g.Annotations,
-		Folder:               g.Folder,
-		AdditionalProperties: g.AdditionalProperties,
+		Schema:               g.Schema,
+		Structure:            g.Structure,
+		Type:                 g.Type,
 	}
 }
 
@@ -12061,12 +12061,12 @@ type HBaseLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type HBaseLinkedService.
 func (h *HBaseLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		ConnectVia:           h.ConnectVia,
 		Description:          h.Description,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		AdditionalProperties: h.AdditionalProperties,
+		Type:                 h.Type,
 	}
 }
 
@@ -12147,15 +12147,15 @@ type HBaseObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type HBaseObjectDataset.
 func (h *HBaseObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		Description:          h.Description,
-		Structure:            h.Structure,
-		Schema:               h.Schema,
+		Folder:               h.Folder,
 		LinkedServiceName:    h.LinkedServiceName,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		Folder:               h.Folder,
-		AdditionalProperties: h.AdditionalProperties,
+		Schema:               h.Schema,
+		Structure:            h.Structure,
+		Type:                 h.Type,
 	}
 }
 
@@ -12190,24 +12190,24 @@ type HBaseSource struct {
 // GetCopySource implements the CopySourceClassification interface for type HBaseSource.
 func (h *HBaseSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type HBaseSource.
 func (h *HBaseSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             h.QueryTimeout,
 		AdditionalColumns:        h.AdditionalColumns,
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
+		QueryTimeout:             h.QueryTimeout,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
@@ -12244,26 +12244,26 @@ type HDInsightHiveActivity struct {
 // GetActivity implements the ActivityClassification interface for type HDInsightHiveActivity.
 func (h *HDInsightHiveActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
 		Name:                 h.Name,
 		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
 		UserProperties:       h.UserProperties,
-		AdditionalProperties: h.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type HDInsightHiveActivity.
 func (h *HDInsightHiveActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    h.LinkedServiceName,
-		Policy:               h.Policy,
-		Name:                 h.Name,
-		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
-		UserProperties:       h.UserProperties,
 		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
+		LinkedServiceName:    h.LinkedServiceName,
+		Name:                 h.Name,
+		Policy:               h.Policy,
+		Type:                 h.Type,
+		UserProperties:       h.UserProperties,
 	}
 }
 
@@ -12321,12 +12321,12 @@ type HDInsightLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type HDInsightLinkedService.
 func (h *HDInsightLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		ConnectVia:           h.ConnectVia,
 		Description:          h.Description,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		AdditionalProperties: h.AdditionalProperties,
+		Type:                 h.Type,
 	}
 }
 
@@ -12392,26 +12392,26 @@ type HDInsightMapReduceActivity struct {
 // GetActivity implements the ActivityClassification interface for type HDInsightMapReduceActivity.
 func (h *HDInsightMapReduceActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
 		Name:                 h.Name,
 		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
 		UserProperties:       h.UserProperties,
-		AdditionalProperties: h.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type HDInsightMapReduceActivity.
 func (h *HDInsightMapReduceActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    h.LinkedServiceName,
-		Policy:               h.Policy,
-		Name:                 h.Name,
-		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
-		UserProperties:       h.UserProperties,
 		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
+		LinkedServiceName:    h.LinkedServiceName,
+		Name:                 h.Name,
+		Policy:               h.Policy,
+		Type:                 h.Type,
+		UserProperties:       h.UserProperties,
 	}
 }
 
@@ -12469,12 +12469,12 @@ type HDInsightOnDemandLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type HDInsightOnDemandLinkedService.
 func (h *HDInsightOnDemandLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		ConnectVia:           h.ConnectVia,
 		Description:          h.Description,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		AdditionalProperties: h.AdditionalProperties,
+		Type:                 h.Type,
 	}
 }
 
@@ -12622,26 +12622,26 @@ type HDInsightPigActivity struct {
 // GetActivity implements the ActivityClassification interface for type HDInsightPigActivity.
 func (h *HDInsightPigActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
 		Name:                 h.Name,
 		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
 		UserProperties:       h.UserProperties,
-		AdditionalProperties: h.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type HDInsightPigActivity.
 func (h *HDInsightPigActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    h.LinkedServiceName,
-		Policy:               h.Policy,
-		Name:                 h.Name,
-		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
-		UserProperties:       h.UserProperties,
 		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
+		LinkedServiceName:    h.LinkedServiceName,
+		Name:                 h.Name,
+		Policy:               h.Policy,
+		Type:                 h.Type,
+		UserProperties:       h.UserProperties,
 	}
 }
 
@@ -12699,26 +12699,26 @@ type HDInsightSparkActivity struct {
 // GetActivity implements the ActivityClassification interface for type HDInsightSparkActivity.
 func (h *HDInsightSparkActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
 		Name:                 h.Name,
 		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
 		UserProperties:       h.UserProperties,
-		AdditionalProperties: h.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type HDInsightSparkActivity.
 func (h *HDInsightSparkActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    h.LinkedServiceName,
-		Policy:               h.Policy,
-		Name:                 h.Name,
-		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
-		UserProperties:       h.UserProperties,
 		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
+		LinkedServiceName:    h.LinkedServiceName,
+		Name:                 h.Name,
+		Policy:               h.Policy,
+		Type:                 h.Type,
+		UserProperties:       h.UserProperties,
 	}
 }
 
@@ -12784,26 +12784,26 @@ type HDInsightStreamingActivity struct {
 // GetActivity implements the ActivityClassification interface for type HDInsightStreamingActivity.
 func (h *HDInsightStreamingActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
 		Name:                 h.Name,
 		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
 		UserProperties:       h.UserProperties,
-		AdditionalProperties: h.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type HDInsightStreamingActivity.
 func (h *HDInsightStreamingActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    h.LinkedServiceName,
-		Policy:               h.Policy,
-		Name:                 h.Name,
-		Type:                 h.Type,
-		Description:          h.Description,
-		DependsOn:            h.DependsOn,
-		UserProperties:       h.UserProperties,
 		AdditionalProperties: h.AdditionalProperties,
+		DependsOn:            h.DependsOn,
+		Description:          h.Description,
+		LinkedServiceName:    h.LinkedServiceName,
+		Name:                 h.Name,
+		Policy:               h.Policy,
+		Type:                 h.Type,
+		UserProperties:       h.UserProperties,
 	}
 }
 
@@ -12883,15 +12883,15 @@ type HTTPDataset struct {
 // GetDataset implements the DatasetClassification interface for type HTTPDataset.
 func (h *HTTPDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		Description:          h.Description,
-		Structure:            h.Structure,
-		Schema:               h.Schema,
+		Folder:               h.Folder,
 		LinkedServiceName:    h.LinkedServiceName,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		Folder:               h.Folder,
-		AdditionalProperties: h.AdditionalProperties,
+		Schema:               h.Schema,
+		Structure:            h.Structure,
+		Type:                 h.Type,
 	}
 }
 
@@ -12945,12 +12945,12 @@ type HTTPLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type HTTPLinkedService.
 func (h *HTTPLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		ConnectVia:           h.ConnectVia,
 		Description:          h.Description,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		AdditionalProperties: h.AdditionalProperties,
+		Type:                 h.Type,
 	}
 }
 
@@ -13021,9 +13021,9 @@ type HTTPReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type HTTPReadSettings.
 func (h *HTTPReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     h.Type,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
 		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
+		Type:                     h.Type,
 	}
 }
 
@@ -13048,10 +13048,10 @@ type HTTPServerLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type HTTPServerLocation.
 func (h *HTTPServerLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 h.Type,
-		FolderPath:           h.FolderPath,
-		FileName:             h.FileName,
 		AdditionalProperties: h.AdditionalProperties,
+		FileName:             h.FileName,
+		FolderPath:           h.FolderPath,
+		Type:                 h.Type,
 	}
 }
 
@@ -13081,11 +13081,11 @@ type HTTPSource struct {
 // GetCopySource implements the CopySourceClassification interface for type HTTPSource.
 func (h *HTTPSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
@@ -13116,12 +13116,12 @@ type HdfsLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type HdfsLinkedService.
 func (h *HdfsLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		ConnectVia:           h.ConnectVia,
 		Description:          h.Description,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		AdditionalProperties: h.AdditionalProperties,
+		Type:                 h.Type,
 	}
 }
 
@@ -13164,10 +13164,10 @@ type HdfsLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type HdfsLocation.
 func (h *HdfsLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 h.Type,
-		FolderPath:           h.FolderPath,
-		FileName:             h.FileName,
 		AdditionalProperties: h.AdditionalProperties,
+		FileName:             h.FileName,
+		FolderPath:           h.FolderPath,
+		Type:                 h.Type,
 	}
 }
 
@@ -13219,9 +13219,9 @@ type HdfsReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type HdfsReadSettings.
 func (h *HdfsReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     h.Type,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
 		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
+		Type:                     h.Type,
 	}
 }
 
@@ -13253,11 +13253,11 @@ type HdfsSource struct {
 // GetCopySource implements the CopySourceClassification interface for type HdfsSource.
 func (h *HdfsSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
@@ -13300,12 +13300,12 @@ type HiveLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type HiveLinkedService.
 func (h *HiveLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		ConnectVia:           h.ConnectVia,
 		Description:          h.Description,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		AdditionalProperties: h.AdditionalProperties,
+		Type:                 h.Type,
 	}
 }
 
@@ -13406,15 +13406,15 @@ type HiveObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type HiveObjectDataset.
 func (h *HiveObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		Description:          h.Description,
-		Structure:            h.Structure,
-		Schema:               h.Schema,
+		Folder:               h.Folder,
 		LinkedServiceName:    h.LinkedServiceName,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		Folder:               h.Folder,
-		AdditionalProperties: h.AdditionalProperties,
+		Schema:               h.Schema,
+		Structure:            h.Structure,
+		Type:                 h.Type,
 	}
 }
 
@@ -13449,24 +13449,24 @@ type HiveSource struct {
 // GetCopySource implements the CopySourceClassification interface for type HiveSource.
 func (h *HiveSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type HiveSource.
 func (h *HiveSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             h.QueryTimeout,
 		AdditionalColumns:        h.AdditionalColumns,
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
+		QueryTimeout:             h.QueryTimeout,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
@@ -13497,12 +13497,12 @@ type HubspotLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type HubspotLinkedService.
 func (h *HubspotLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		ConnectVia:           h.ConnectVia,
 		Description:          h.Description,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		AdditionalProperties: h.AdditionalProperties,
+		Type:                 h.Type,
 	}
 }
 
@@ -13572,15 +13572,15 @@ type HubspotObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type HubspotObjectDataset.
 func (h *HubspotObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 h.Type,
+		AdditionalProperties: h.AdditionalProperties,
+		Annotations:          h.Annotations,
 		Description:          h.Description,
-		Structure:            h.Structure,
-		Schema:               h.Schema,
+		Folder:               h.Folder,
 		LinkedServiceName:    h.LinkedServiceName,
 		Parameters:           h.Parameters,
-		Annotations:          h.Annotations,
-		Folder:               h.Folder,
-		AdditionalProperties: h.AdditionalProperties,
+		Schema:               h.Schema,
+		Structure:            h.Structure,
+		Type:                 h.Type,
 	}
 }
 
@@ -13615,24 +13615,24 @@ type HubspotSource struct {
 // GetCopySource implements the CopySourceClassification interface for type HubspotSource.
 func (h *HubspotSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type HubspotSource.
 func (h *HubspotSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             h.QueryTimeout,
 		AdditionalColumns:        h.AdditionalColumns,
-		Type:                     h.Type,
+		AdditionalProperties:     h.AdditionalProperties,
+		MaxConcurrentConnections: h.MaxConcurrentConnections,
+		QueryTimeout:             h.QueryTimeout,
 		SourceRetryCount:         h.SourceRetryCount,
 		SourceRetryWait:          h.SourceRetryWait,
-		MaxConcurrentConnections: h.MaxConcurrentConnections,
-		AdditionalProperties:     h.AdditionalProperties,
+		Type:                     h.Type,
 	}
 }
 
@@ -13664,24 +13664,24 @@ type IfConditionActivity struct {
 // GetActivity implements the ActivityClassification interface for type IfConditionActivity.
 func (i *IfConditionActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: i.AdditionalProperties,
+		DependsOn:            i.DependsOn,
+		Description:          i.Description,
 		Name:                 i.Name,
 		Type:                 i.Type,
-		Description:          i.Description,
-		DependsOn:            i.DependsOn,
 		UserProperties:       i.UserProperties,
-		AdditionalProperties: i.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type IfConditionActivity.
 func (i *IfConditionActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: i.AdditionalProperties,
+		DependsOn:            i.DependsOn,
+		Description:          i.Description,
 		Name:                 i.Name,
 		Type:                 i.Type,
-		Description:          i.Description,
-		DependsOn:            i.DependsOn,
 		UserProperties:       i.UserProperties,
-		AdditionalProperties: i.AdditionalProperties,
 	}
 }
 
@@ -13739,12 +13739,12 @@ type ImpalaLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ImpalaLinkedService.
 func (i *ImpalaLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 i.Type,
+		AdditionalProperties: i.AdditionalProperties,
+		Annotations:          i.Annotations,
 		ConnectVia:           i.ConnectVia,
 		Description:          i.Description,
 		Parameters:           i.Parameters,
-		Annotations:          i.Annotations,
-		AdditionalProperties: i.AdditionalProperties,
+		Type:                 i.Type,
 	}
 }
 
@@ -13826,15 +13826,15 @@ type ImpalaObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type ImpalaObjectDataset.
 func (i *ImpalaObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 i.Type,
+		AdditionalProperties: i.AdditionalProperties,
+		Annotations:          i.Annotations,
 		Description:          i.Description,
-		Structure:            i.Structure,
-		Schema:               i.Schema,
+		Folder:               i.Folder,
 		LinkedServiceName:    i.LinkedServiceName,
 		Parameters:           i.Parameters,
-		Annotations:          i.Annotations,
-		Folder:               i.Folder,
-		AdditionalProperties: i.AdditionalProperties,
+		Schema:               i.Schema,
+		Structure:            i.Structure,
+		Type:                 i.Type,
 	}
 }
 
@@ -13869,24 +13869,24 @@ type ImpalaSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ImpalaSource.
 func (i *ImpalaSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     i.Type,
+		AdditionalProperties:     i.AdditionalProperties,
+		MaxConcurrentConnections: i.MaxConcurrentConnections,
 		SourceRetryCount:         i.SourceRetryCount,
 		SourceRetryWait:          i.SourceRetryWait,
-		MaxConcurrentConnections: i.MaxConcurrentConnections,
-		AdditionalProperties:     i.AdditionalProperties,
+		Type:                     i.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type ImpalaSource.
 func (i *ImpalaSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             i.QueryTimeout,
 		AdditionalColumns:        i.AdditionalColumns,
-		Type:                     i.Type,
+		AdditionalProperties:     i.AdditionalProperties,
+		MaxConcurrentConnections: i.MaxConcurrentConnections,
+		QueryTimeout:             i.QueryTimeout,
 		SourceRetryCount:         i.SourceRetryCount,
 		SourceRetryWait:          i.SourceRetryWait,
-		MaxConcurrentConnections: i.MaxConcurrentConnections,
-		AdditionalProperties:     i.AdditionalProperties,
+		Type:                     i.Type,
 	}
 }
 
@@ -13929,12 +13929,12 @@ type InformixLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type InformixLinkedService.
 func (i *InformixLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 i.Type,
+		AdditionalProperties: i.AdditionalProperties,
+		Annotations:          i.Annotations,
 		ConnectVia:           i.ConnectVia,
 		Description:          i.Description,
 		Parameters:           i.Parameters,
-		Annotations:          i.Annotations,
-		AdditionalProperties: i.AdditionalProperties,
+		Type:                 i.Type,
 	}
 }
 
@@ -13992,13 +13992,13 @@ type InformixSink struct {
 // GetCopySink implements the CopySinkClassification interface for type InformixSink.
 func (i *InformixSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     i.AdditionalProperties,
+		MaxConcurrentConnections: i.MaxConcurrentConnections,
+		SinkRetryCount:           i.SinkRetryCount,
+		SinkRetryWait:            i.SinkRetryWait,
 		Type:                     i.Type,
 		WriteBatchSize:           i.WriteBatchSize,
 		WriteBatchTimeout:        i.WriteBatchTimeout,
-		SinkRetryCount:           i.SinkRetryCount,
-		SinkRetryWait:            i.SinkRetryWait,
-		MaxConcurrentConnections: i.MaxConcurrentConnections,
-		AdditionalProperties:     i.AdditionalProperties,
 	}
 }
 
@@ -14033,24 +14033,24 @@ type InformixSource struct {
 // GetCopySource implements the CopySourceClassification interface for type InformixSource.
 func (i *InformixSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     i.Type,
+		AdditionalProperties:     i.AdditionalProperties,
+		MaxConcurrentConnections: i.MaxConcurrentConnections,
 		SourceRetryCount:         i.SourceRetryCount,
 		SourceRetryWait:          i.SourceRetryWait,
-		MaxConcurrentConnections: i.MaxConcurrentConnections,
-		AdditionalProperties:     i.AdditionalProperties,
+		Type:                     i.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type InformixSource.
 func (i *InformixSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             i.QueryTimeout,
 		AdditionalColumns:        i.AdditionalColumns,
-		Type:                     i.Type,
+		AdditionalProperties:     i.AdditionalProperties,
+		MaxConcurrentConnections: i.MaxConcurrentConnections,
+		QueryTimeout:             i.QueryTimeout,
 		SourceRetryCount:         i.SourceRetryCount,
 		SourceRetryWait:          i.SourceRetryWait,
-		MaxConcurrentConnections: i.MaxConcurrentConnections,
-		AdditionalProperties:     i.AdditionalProperties,
+		Type:                     i.Type,
 	}
 }
 
@@ -14091,15 +14091,15 @@ type InformixTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type InformixTableDataset.
 func (i *InformixTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 i.Type,
+		AdditionalProperties: i.AdditionalProperties,
+		Annotations:          i.Annotations,
 		Description:          i.Description,
-		Structure:            i.Structure,
-		Schema:               i.Schema,
+		Folder:               i.Folder,
 		LinkedServiceName:    i.LinkedServiceName,
 		Parameters:           i.Parameters,
-		Annotations:          i.Annotations,
-		Folder:               i.Folder,
-		AdditionalProperties: i.AdditionalProperties,
+		Schema:               i.Schema,
+		Structure:            i.Structure,
+		Type:                 i.Type,
 	}
 }
 
@@ -14330,15 +14330,15 @@ type JSONDataset struct {
 // GetDataset implements the DatasetClassification interface for type JSONDataset.
 func (j *JSONDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 j.Type,
+		AdditionalProperties: j.AdditionalProperties,
+		Annotations:          j.Annotations,
 		Description:          j.Description,
-		Structure:            j.Structure,
-		Schema:               j.Schema,
+		Folder:               j.Folder,
 		LinkedServiceName:    j.LinkedServiceName,
 		Parameters:           j.Parameters,
-		Annotations:          j.Annotations,
-		Folder:               j.Folder,
-		AdditionalProperties: j.AdditionalProperties,
+		Schema:               j.Schema,
+		Structure:            j.Structure,
+		Type:                 j.Type,
 	}
 }
 
@@ -14399,10 +14399,10 @@ type JSONFormat struct {
 // GetDatasetStorageFormat implements the DatasetStorageFormatClassification interface for type JSONFormat.
 func (j *JSONFormat) GetDatasetStorageFormat() *DatasetStorageFormat {
 	return &DatasetStorageFormat{
-		Type:                 j.Type,
-		Serializer:           j.Serializer,
-		Deserializer:         j.Deserializer,
 		AdditionalProperties: j.AdditionalProperties,
+		Deserializer:         j.Deserializer,
+		Serializer:           j.Serializer,
+		Type:                 j.Type,
 	}
 }
 
@@ -14421,8 +14421,8 @@ type JSONReadSettings struct {
 // GetFormatReadSettings implements the FormatReadSettingsClassification interface for type JSONReadSettings.
 func (j *JSONReadSettings) GetFormatReadSettings() *FormatReadSettings {
 	return &FormatReadSettings{
-		Type:                 j.Type,
 		AdditionalProperties: j.AdditionalProperties,
+		Type:                 j.Type,
 	}
 }
 
@@ -14459,13 +14459,13 @@ type JSONSink struct {
 // GetCopySink implements the CopySinkClassification interface for type JSONSink.
 func (j *JSONSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     j.AdditionalProperties,
+		MaxConcurrentConnections: j.MaxConcurrentConnections,
+		SinkRetryCount:           j.SinkRetryCount,
+		SinkRetryWait:            j.SinkRetryWait,
 		Type:                     j.Type,
 		WriteBatchSize:           j.WriteBatchSize,
 		WriteBatchTimeout:        j.WriteBatchTimeout,
-		SinkRetryCount:           j.SinkRetryCount,
-		SinkRetryWait:            j.SinkRetryWait,
-		MaxConcurrentConnections: j.MaxConcurrentConnections,
-		AdditionalProperties:     j.AdditionalProperties,
 	}
 }
 
@@ -14500,11 +14500,11 @@ type JSONSource struct {
 // GetCopySource implements the CopySourceClassification interface for type JSONSource.
 func (j *JSONSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     j.Type,
+		AdditionalProperties:     j.AdditionalProperties,
+		MaxConcurrentConnections: j.MaxConcurrentConnections,
 		SourceRetryCount:         j.SourceRetryCount,
 		SourceRetryWait:          j.SourceRetryWait,
-		MaxConcurrentConnections: j.MaxConcurrentConnections,
-		AdditionalProperties:     j.AdditionalProperties,
+		Type:                     j.Type,
 	}
 }
 
@@ -14524,8 +14524,8 @@ type JSONWriteSettings struct {
 // GetFormatWriteSettings implements the FormatWriteSettingsClassification interface for type JSONWriteSettings.
 func (j *JSONWriteSettings) GetFormatWriteSettings() *FormatWriteSettings {
 	return &FormatWriteSettings{
-		Type:                 j.Type,
 		AdditionalProperties: j.AdditionalProperties,
+		Type:                 j.Type,
 	}
 }
 
@@ -14556,12 +14556,12 @@ type JiraLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type JiraLinkedService.
 func (j *JiraLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 j.Type,
+		AdditionalProperties: j.AdditionalProperties,
+		Annotations:          j.Annotations,
 		ConnectVia:           j.ConnectVia,
 		Description:          j.Description,
 		Parameters:           j.Parameters,
-		Annotations:          j.Annotations,
-		AdditionalProperties: j.AdditionalProperties,
+		Type:                 j.Type,
 	}
 }
 
@@ -14632,15 +14632,15 @@ type JiraObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type JiraObjectDataset.
 func (j *JiraObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 j.Type,
+		AdditionalProperties: j.AdditionalProperties,
+		Annotations:          j.Annotations,
 		Description:          j.Description,
-		Structure:            j.Structure,
-		Schema:               j.Schema,
+		Folder:               j.Folder,
 		LinkedServiceName:    j.LinkedServiceName,
 		Parameters:           j.Parameters,
-		Annotations:          j.Annotations,
-		Folder:               j.Folder,
-		AdditionalProperties: j.AdditionalProperties,
+		Schema:               j.Schema,
+		Structure:            j.Structure,
+		Type:                 j.Type,
 	}
 }
 
@@ -14675,24 +14675,24 @@ type JiraSource struct {
 // GetCopySource implements the CopySourceClassification interface for type JiraSource.
 func (j *JiraSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     j.Type,
+		AdditionalProperties:     j.AdditionalProperties,
+		MaxConcurrentConnections: j.MaxConcurrentConnections,
 		SourceRetryCount:         j.SourceRetryCount,
 		SourceRetryWait:          j.SourceRetryWait,
-		MaxConcurrentConnections: j.MaxConcurrentConnections,
-		AdditionalProperties:     j.AdditionalProperties,
+		Type:                     j.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type JiraSource.
 func (j *JiraSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             j.QueryTimeout,
 		AdditionalColumns:        j.AdditionalColumns,
-		Type:                     j.Type,
+		AdditionalProperties:     j.AdditionalProperties,
+		MaxConcurrentConnections: j.MaxConcurrentConnections,
+		QueryTimeout:             j.QueryTimeout,
 		SourceRetryCount:         j.SourceRetryCount,
 		SourceRetryWait:          j.SourceRetryWait,
-		MaxConcurrentConnections: j.MaxConcurrentConnections,
-		AdditionalProperties:     j.AdditionalProperties,
+		Type:                     j.Type,
 	}
 }
 
@@ -15282,26 +15282,26 @@ type LookupActivity struct {
 // GetActivity implements the ActivityClassification interface for type LookupActivity.
 func (l *LookupActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: l.AdditionalProperties,
+		DependsOn:            l.DependsOn,
+		Description:          l.Description,
 		Name:                 l.Name,
 		Type:                 l.Type,
-		Description:          l.Description,
-		DependsOn:            l.DependsOn,
 		UserProperties:       l.UserProperties,
-		AdditionalProperties: l.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type LookupActivity.
 func (l *LookupActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    l.LinkedServiceName,
-		Policy:               l.Policy,
-		Name:                 l.Name,
-		Type:                 l.Type,
-		Description:          l.Description,
-		DependsOn:            l.DependsOn,
-		UserProperties:       l.UserProperties,
 		AdditionalProperties: l.AdditionalProperties,
+		DependsOn:            l.DependsOn,
+		Description:          l.Description,
+		LinkedServiceName:    l.LinkedServiceName,
+		Name:                 l.Name,
+		Policy:               l.Policy,
+		Type:                 l.Type,
+		UserProperties:       l.UserProperties,
 	}
 }
 
@@ -15344,12 +15344,12 @@ type MagentoLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MagentoLinkedService.
 func (m *MagentoLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -15413,15 +15413,15 @@ type MagentoObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type MagentoObjectDataset.
 func (m *MagentoObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -15456,24 +15456,24 @@ type MagentoSource struct {
 // GetCopySource implements the CopySourceClassification interface for type MagentoSource.
 func (m *MagentoSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type MagentoSource.
 func (m *MagentoSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             m.QueryTimeout,
 		AdditionalColumns:        m.AdditionalColumns,
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
+		QueryTimeout:             m.QueryTimeout,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -15513,9 +15513,9 @@ type ManagedIntegrationRuntime struct {
 // GetIntegrationRuntime implements the IntegrationRuntimeClassification interface for type ManagedIntegrationRuntime.
 func (m *ManagedIntegrationRuntime) GetIntegrationRuntime() *IntegrationRuntime {
 	return &IntegrationRuntime{
-		Type:                 m.Type,
-		Description:          m.Description,
 		AdditionalProperties: m.AdditionalProperties,
+		Description:          m.Description,
+		Type:                 m.Type,
 	}
 }
 
@@ -15570,10 +15570,10 @@ type MappingDataFlow struct {
 // GetDataFlow implements the DataFlowClassification interface for type MappingDataFlow.
 func (m *MappingDataFlow) GetDataFlow() *DataFlow {
 	return &DataFlow{
-		Type:        m.Type,
-		Description: m.Description,
 		Annotations: m.Annotations,
+		Description: m.Description,
 		Folder:      m.Folder,
+		Type:        m.Type,
 	}
 }
 
@@ -15622,12 +15622,12 @@ type MariaDBLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MariaDBLinkedService.
 func (m *MariaDBLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -15675,24 +15675,24 @@ type MariaDBSource struct {
 // GetCopySource implements the CopySourceClassification interface for type MariaDBSource.
 func (m *MariaDBSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type MariaDBSource.
 func (m *MariaDBSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             m.QueryTimeout,
 		AdditionalColumns:        m.AdditionalColumns,
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
+		QueryTimeout:             m.QueryTimeout,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -15733,15 +15733,15 @@ type MariaDBTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type MariaDBTableDataset.
 func (m *MariaDBTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -15772,12 +15772,12 @@ type MarketoLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MarketoLinkedService.
 func (m *MarketoLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -15844,15 +15844,15 @@ type MarketoObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type MarketoObjectDataset.
 func (m *MarketoObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -15887,24 +15887,24 @@ type MarketoSource struct {
 // GetCopySource implements the CopySourceClassification interface for type MarketoSource.
 func (m *MarketoSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type MarketoSource.
 func (m *MarketoSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             m.QueryTimeout,
 		AdditionalColumns:        m.AdditionalColumns,
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
+		QueryTimeout:             m.QueryTimeout,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -15960,12 +15960,12 @@ type MicrosoftAccessLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MicrosoftAccessLinkedService.
 func (m *MicrosoftAccessLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -16023,13 +16023,13 @@ type MicrosoftAccessSink struct {
 // GetCopySink implements the CopySinkClassification interface for type MicrosoftAccessSink.
 func (m *MicrosoftAccessSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
+		SinkRetryCount:           m.SinkRetryCount,
+		SinkRetryWait:            m.SinkRetryWait,
 		Type:                     m.Type,
 		WriteBatchSize:           m.WriteBatchSize,
 		WriteBatchTimeout:        m.WriteBatchTimeout,
-		SinkRetryCount:           m.SinkRetryCount,
-		SinkRetryWait:            m.SinkRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
 	}
 }
 
@@ -16061,11 +16061,11 @@ type MicrosoftAccessSource struct {
 // GetCopySource implements the CopySourceClassification interface for type MicrosoftAccessSource.
 func (m *MicrosoftAccessSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -16106,15 +16106,15 @@ type MicrosoftAccessTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type MicrosoftAccessTableDataset.
 func (m *MicrosoftAccessTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -16161,15 +16161,15 @@ type MongoDbAtlasCollectionDataset struct {
 // GetDataset implements the DatasetClassification interface for type MongoDbAtlasCollectionDataset.
 func (m *MongoDbAtlasCollectionDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -16206,12 +16206,12 @@ type MongoDbAtlasLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MongoDbAtlasLinkedService.
 func (m *MongoDbAtlasLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -16265,11 +16265,11 @@ type MongoDbAtlasSource struct {
 // GetCopySource implements the CopySourceClassification interface for type MongoDbAtlasSource.
 func (m *MongoDbAtlasSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -16310,15 +16310,15 @@ type MongoDbCollectionDataset struct {
 // GetDataset implements the DatasetClassification interface for type MongoDbCollectionDataset.
 func (m *MongoDbCollectionDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -16378,12 +16378,12 @@ type MongoDbLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MongoDbLinkedService.
 func (m *MongoDbLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -16452,11 +16452,11 @@ type MongoDbSource struct {
 // GetCopySource implements the CopySourceClassification interface for type MongoDbSource.
 func (m *MongoDbSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -16497,15 +16497,15 @@ type MongoDbV2CollectionDataset struct {
 // GetDataset implements the DatasetClassification interface for type MongoDbV2CollectionDataset.
 func (m *MongoDbV2CollectionDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -16542,12 +16542,12 @@ type MongoDbV2LinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MongoDbV2LinkedService.
 func (m *MongoDbV2LinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -16601,11 +16601,11 @@ type MongoDbV2Source struct {
 // GetCopySource implements the CopySourceClassification interface for type MongoDbV2Source.
 func (m *MongoDbV2Source) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -16636,11 +16636,11 @@ func (m *MultiplePipelineTrigger) GetMultiplePipelineTrigger() *MultiplePipeline
 // GetTrigger implements the TriggerClassification interface for type MultiplePipelineTrigger.
 func (m *MultiplePipelineTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
 		RuntimeState:         m.RuntimeState,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -16671,12 +16671,12 @@ type MySQLLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type MySQLLinkedService.
 func (m *MySQLLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		ConnectVia:           m.ConnectVia,
 		Description:          m.Description,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		AdditionalProperties: m.AdditionalProperties,
+		Type:                 m.Type,
 	}
 }
 
@@ -16724,24 +16724,24 @@ type MySQLSource struct {
 // GetCopySource implements the CopySourceClassification interface for type MySQLSource.
 func (m *MySQLSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type MySQLSource.
 func (m *MySQLSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             m.QueryTimeout,
 		AdditionalColumns:        m.AdditionalColumns,
-		Type:                     m.Type,
+		AdditionalProperties:     m.AdditionalProperties,
+		MaxConcurrentConnections: m.MaxConcurrentConnections,
+		QueryTimeout:             m.QueryTimeout,
 		SourceRetryCount:         m.SourceRetryCount,
 		SourceRetryWait:          m.SourceRetryWait,
-		MaxConcurrentConnections: m.MaxConcurrentConnections,
-		AdditionalProperties:     m.AdditionalProperties,
+		Type:                     m.Type,
 	}
 }
 
@@ -16782,15 +16782,15 @@ type MySQLTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type MySQLTableDataset.
 func (m *MySQLTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 m.Type,
+		AdditionalProperties: m.AdditionalProperties,
+		Annotations:          m.Annotations,
 		Description:          m.Description,
-		Structure:            m.Structure,
-		Schema:               m.Schema,
+		Folder:               m.Folder,
 		LinkedServiceName:    m.LinkedServiceName,
 		Parameters:           m.Parameters,
-		Annotations:          m.Annotations,
-		Folder:               m.Folder,
-		AdditionalProperties: m.AdditionalProperties,
+		Schema:               m.Schema,
+		Structure:            m.Structure,
+		Type:                 m.Type,
 	}
 }
 
@@ -16827,12 +16827,12 @@ type NetezzaLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type NetezzaLinkedService.
 func (n *NetezzaLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 n.Type,
+		AdditionalProperties: n.AdditionalProperties,
+		Annotations:          n.Annotations,
 		ConnectVia:           n.ConnectVia,
 		Description:          n.Description,
 		Parameters:           n.Parameters,
-		Annotations:          n.Annotations,
-		AdditionalProperties: n.AdditionalProperties,
+		Type:                 n.Type,
 	}
 }
 
@@ -16901,24 +16901,24 @@ type NetezzaSource struct {
 // GetCopySource implements the CopySourceClassification interface for type NetezzaSource.
 func (n *NetezzaSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     n.Type,
+		AdditionalProperties:     n.AdditionalProperties,
+		MaxConcurrentConnections: n.MaxConcurrentConnections,
 		SourceRetryCount:         n.SourceRetryCount,
 		SourceRetryWait:          n.SourceRetryWait,
-		MaxConcurrentConnections: n.MaxConcurrentConnections,
-		AdditionalProperties:     n.AdditionalProperties,
+		Type:                     n.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type NetezzaSource.
 func (n *NetezzaSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             n.QueryTimeout,
 		AdditionalColumns:        n.AdditionalColumns,
-		Type:                     n.Type,
+		AdditionalProperties:     n.AdditionalProperties,
+		MaxConcurrentConnections: n.MaxConcurrentConnections,
+		QueryTimeout:             n.QueryTimeout,
 		SourceRetryCount:         n.SourceRetryCount,
 		SourceRetryWait:          n.SourceRetryWait,
-		MaxConcurrentConnections: n.MaxConcurrentConnections,
-		AdditionalProperties:     n.AdditionalProperties,
+		Type:                     n.Type,
 	}
 }
 
@@ -16959,15 +16959,15 @@ type NetezzaTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type NetezzaTableDataset.
 func (n *NetezzaTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 n.Type,
+		AdditionalProperties: n.AdditionalProperties,
+		Annotations:          n.Annotations,
 		Description:          n.Description,
-		Structure:            n.Structure,
-		Schema:               n.Schema,
+		Folder:               n.Folder,
 		LinkedServiceName:    n.LinkedServiceName,
 		Parameters:           n.Parameters,
-		Annotations:          n.Annotations,
-		Folder:               n.Folder,
-		AdditionalProperties: n.AdditionalProperties,
+		Schema:               n.Schema,
+		Structure:            n.Structure,
+		Type:                 n.Type,
 	}
 }
 
@@ -17181,12 +17181,12 @@ type ODataLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ODataLinkedService.
 func (o *ODataLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		ConnectVia:           o.ConnectVia,
 		Description:          o.Description,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		AdditionalProperties: o.AdditionalProperties,
+		Type:                 o.Type,
 	}
 }
 
@@ -17277,15 +17277,15 @@ type ODataResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type ODataResourceDataset.
 func (o *ODataResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		Description:          o.Description,
-		Structure:            o.Structure,
-		Schema:               o.Schema,
+		Folder:               o.Folder,
 		LinkedServiceName:    o.LinkedServiceName,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		Folder:               o.Folder,
-		AdditionalProperties: o.AdditionalProperties,
+		Schema:               o.Schema,
+		Structure:            o.Structure,
+		Type:                 o.Type,
 	}
 }
 
@@ -17328,11 +17328,11 @@ type ODataSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ODataSource.
 func (o *ODataSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
@@ -17363,12 +17363,12 @@ type OdbcLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type OdbcLinkedService.
 func (o *OdbcLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		ConnectVia:           o.ConnectVia,
 		Description:          o.Description,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		AdditionalProperties: o.AdditionalProperties,
+		Type:                 o.Type,
 	}
 }
 
@@ -17426,13 +17426,13 @@ type OdbcSink struct {
 // GetCopySink implements the CopySinkClassification interface for type OdbcSink.
 func (o *OdbcSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
+		SinkRetryCount:           o.SinkRetryCount,
+		SinkRetryWait:            o.SinkRetryWait,
 		Type:                     o.Type,
 		WriteBatchSize:           o.WriteBatchSize,
 		WriteBatchTimeout:        o.WriteBatchTimeout,
-		SinkRetryCount:           o.SinkRetryCount,
-		SinkRetryWait:            o.SinkRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
 	}
 }
 
@@ -17467,24 +17467,24 @@ type OdbcSource struct {
 // GetCopySource implements the CopySourceClassification interface for type OdbcSource.
 func (o *OdbcSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type OdbcSource.
 func (o *OdbcSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             o.QueryTimeout,
 		AdditionalColumns:        o.AdditionalColumns,
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
+		QueryTimeout:             o.QueryTimeout,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
@@ -17525,15 +17525,15 @@ type OdbcTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type OdbcTableDataset.
 func (o *OdbcTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		Description:          o.Description,
-		Structure:            o.Structure,
-		Schema:               o.Schema,
+		Folder:               o.Folder,
 		LinkedServiceName:    o.LinkedServiceName,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		Folder:               o.Folder,
-		AdditionalProperties: o.AdditionalProperties,
+		Schema:               o.Schema,
+		Structure:            o.Structure,
+		Type:                 o.Type,
 	}
 }
 
@@ -17580,15 +17580,15 @@ type Office365Dataset struct {
 // GetDataset implements the DatasetClassification interface for type Office365Dataset.
 func (o *Office365Dataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		Description:          o.Description,
-		Structure:            o.Structure,
-		Schema:               o.Schema,
+		Folder:               o.Folder,
 		LinkedServiceName:    o.LinkedServiceName,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		Folder:               o.Folder,
-		AdditionalProperties: o.AdditionalProperties,
+		Schema:               o.Schema,
+		Structure:            o.Structure,
+		Type:                 o.Type,
 	}
 }
 
@@ -17629,12 +17629,12 @@ type Office365LinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type Office365LinkedService.
 func (o *Office365LinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		ConnectVia:           o.ConnectVia,
 		Description:          o.Description,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		AdditionalProperties: o.AdditionalProperties,
+		Type:                 o.Type,
 	}
 }
 
@@ -17698,11 +17698,11 @@ type Office365Source struct {
 // GetCopySource implements the CopySourceClassification interface for type Office365Source.
 func (o *Office365Source) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
@@ -17742,12 +17742,12 @@ type OracleLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type OracleLinkedService.
 func (o *OracleLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		ConnectVia:           o.ConnectVia,
 		Description:          o.Description,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		AdditionalProperties: o.AdditionalProperties,
+		Type:                 o.Type,
 	}
 }
 
@@ -17809,12 +17809,12 @@ type OracleServiceCloudLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type OracleServiceCloudLinkedService.
 func (o *OracleServiceCloudLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		ConnectVia:           o.ConnectVia,
 		Description:          o.Description,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		AdditionalProperties: o.AdditionalProperties,
+		Type:                 o.Type,
 	}
 }
 
@@ -17884,15 +17884,15 @@ type OracleServiceCloudObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type OracleServiceCloudObjectDataset.
 func (o *OracleServiceCloudObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		Description:          o.Description,
-		Structure:            o.Structure,
-		Schema:               o.Schema,
+		Folder:               o.Folder,
 		LinkedServiceName:    o.LinkedServiceName,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		Folder:               o.Folder,
-		AdditionalProperties: o.AdditionalProperties,
+		Schema:               o.Schema,
+		Structure:            o.Structure,
+		Type:                 o.Type,
 	}
 }
 
@@ -17927,24 +17927,24 @@ type OracleServiceCloudSource struct {
 // GetCopySource implements the CopySourceClassification interface for type OracleServiceCloudSource.
 func (o *OracleServiceCloudSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type OracleServiceCloudSource.
 func (o *OracleServiceCloudSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             o.QueryTimeout,
 		AdditionalColumns:        o.AdditionalColumns,
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
+		QueryTimeout:             o.QueryTimeout,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
@@ -17978,13 +17978,13 @@ type OracleSink struct {
 // GetCopySink implements the CopySinkClassification interface for type OracleSink.
 func (o *OracleSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
+		SinkRetryCount:           o.SinkRetryCount,
+		SinkRetryWait:            o.SinkRetryWait,
 		Type:                     o.Type,
 		WriteBatchSize:           o.WriteBatchSize,
 		WriteBatchTimeout:        o.WriteBatchTimeout,
-		SinkRetryCount:           o.SinkRetryCount,
-		SinkRetryWait:            o.SinkRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
 	}
 }
 
@@ -18025,11 +18025,11 @@ type OracleSource struct {
 // GetCopySource implements the CopySourceClassification interface for type OracleSource.
 func (o *OracleSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
@@ -18070,15 +18070,15 @@ type OracleTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type OracleTableDataset.
 func (o *OracleTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		Description:          o.Description,
-		Structure:            o.Structure,
-		Schema:               o.Schema,
+		Folder:               o.Folder,
 		LinkedServiceName:    o.LinkedServiceName,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		Folder:               o.Folder,
-		AdditionalProperties: o.AdditionalProperties,
+		Schema:               o.Schema,
+		Structure:            o.Structure,
+		Type:                 o.Type,
 	}
 }
 
@@ -18131,15 +18131,15 @@ type OrcDataset struct {
 // GetDataset implements the DatasetClassification interface for type OrcDataset.
 func (o *OrcDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 o.Type,
+		AdditionalProperties: o.AdditionalProperties,
+		Annotations:          o.Annotations,
 		Description:          o.Description,
-		Structure:            o.Structure,
-		Schema:               o.Schema,
+		Folder:               o.Folder,
 		LinkedServiceName:    o.LinkedServiceName,
 		Parameters:           o.Parameters,
-		Annotations:          o.Annotations,
-		Folder:               o.Folder,
-		AdditionalProperties: o.AdditionalProperties,
+		Schema:               o.Schema,
+		Structure:            o.Structure,
+		Type:                 o.Type,
 	}
 }
 
@@ -18170,10 +18170,10 @@ type OrcFormat struct {
 // GetDatasetStorageFormat implements the DatasetStorageFormatClassification interface for type OrcFormat.
 func (o *OrcFormat) GetDatasetStorageFormat() *DatasetStorageFormat {
 	return &DatasetStorageFormat{
-		Type:                 o.Type,
-		Serializer:           o.Serializer,
-		Deserializer:         o.Deserializer,
 		AdditionalProperties: o.AdditionalProperties,
+		Deserializer:         o.Deserializer,
+		Serializer:           o.Serializer,
+		Type:                 o.Type,
 	}
 }
 
@@ -18210,13 +18210,13 @@ type OrcSink struct {
 // GetCopySink implements the CopySinkClassification interface for type OrcSink.
 func (o *OrcSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
+		SinkRetryCount:           o.SinkRetryCount,
+		SinkRetryWait:            o.SinkRetryWait,
 		Type:                     o.Type,
 		WriteBatchSize:           o.WriteBatchSize,
 		WriteBatchTimeout:        o.WriteBatchTimeout,
-		SinkRetryCount:           o.SinkRetryCount,
-		SinkRetryWait:            o.SinkRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
 	}
 }
 
@@ -18248,11 +18248,11 @@ type OrcSource struct {
 // GetCopySource implements the CopySourceClassification interface for type OrcSource.
 func (o *OrcSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     o.Type,
+		AdditionalProperties:     o.AdditionalProperties,
+		MaxConcurrentConnections: o.MaxConcurrentConnections,
 		SourceRetryCount:         o.SourceRetryCount,
 		SourceRetryWait:          o.SourceRetryWait,
-		MaxConcurrentConnections: o.MaxConcurrentConnections,
-		AdditionalProperties:     o.AdditionalProperties,
+		Type:                     o.Type,
 	}
 }
 
@@ -18276,8 +18276,8 @@ type OrcWriteSettings struct {
 // GetFormatWriteSettings implements the FormatWriteSettingsClassification interface for type OrcWriteSettings.
 func (o *OrcWriteSettings) GetFormatWriteSettings() *FormatWriteSettings {
 	return &FormatWriteSettings{
-		Type:                 o.Type,
 		AdditionalProperties: o.AdditionalProperties,
+		Type:                 o.Type,
 	}
 }
 
@@ -18327,15 +18327,15 @@ type ParquetDataset struct {
 // GetDataset implements the DatasetClassification interface for type ParquetDataset.
 func (p *ParquetDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		Description:          p.Description,
-		Structure:            p.Structure,
-		Schema:               p.Schema,
+		Folder:               p.Folder,
 		LinkedServiceName:    p.LinkedServiceName,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		Folder:               p.Folder,
-		AdditionalProperties: p.AdditionalProperties,
+		Schema:               p.Schema,
+		Structure:            p.Structure,
+		Type:                 p.Type,
 	}
 }
 
@@ -18366,10 +18366,10 @@ type ParquetFormat struct {
 // GetDatasetStorageFormat implements the DatasetStorageFormatClassification interface for type ParquetFormat.
 func (p *ParquetFormat) GetDatasetStorageFormat() *DatasetStorageFormat {
 	return &DatasetStorageFormat{
-		Type:                 p.Type,
-		Serializer:           p.Serializer,
-		Deserializer:         p.Deserializer,
 		AdditionalProperties: p.AdditionalProperties,
+		Deserializer:         p.Deserializer,
+		Serializer:           p.Serializer,
+		Type:                 p.Type,
 	}
 }
 
@@ -18406,13 +18406,13 @@ type ParquetSink struct {
 // GetCopySink implements the CopySinkClassification interface for type ParquetSink.
 func (p *ParquetSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
+		SinkRetryCount:           p.SinkRetryCount,
+		SinkRetryWait:            p.SinkRetryWait,
 		Type:                     p.Type,
 		WriteBatchSize:           p.WriteBatchSize,
 		WriteBatchTimeout:        p.WriteBatchTimeout,
-		SinkRetryCount:           p.SinkRetryCount,
-		SinkRetryWait:            p.SinkRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
 	}
 }
 
@@ -18444,11 +18444,11 @@ type ParquetSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ParquetSource.
 func (p *ParquetSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
@@ -18472,8 +18472,8 @@ type ParquetWriteSettings struct {
 // GetFormatWriteSettings implements the FormatWriteSettingsClassification interface for type ParquetWriteSettings.
 func (p *ParquetWriteSettings) GetFormatWriteSettings() *FormatWriteSettings {
 	return &FormatWriteSettings{
-		Type:                 p.Type,
 		AdditionalProperties: p.AdditionalProperties,
+		Type:                 p.Type,
 	}
 }
 
@@ -18504,12 +18504,12 @@ type PaypalLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type PaypalLinkedService.
 func (p *PaypalLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		ConnectVia:           p.ConnectVia,
 		Description:          p.Description,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		AdditionalProperties: p.AdditionalProperties,
+		Type:                 p.Type,
 	}
 }
 
@@ -18576,15 +18576,15 @@ type PaypalObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type PaypalObjectDataset.
 func (p *PaypalObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		Description:          p.Description,
-		Structure:            p.Structure,
-		Schema:               p.Schema,
+		Folder:               p.Folder,
 		LinkedServiceName:    p.LinkedServiceName,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		Folder:               p.Folder,
-		AdditionalProperties: p.AdditionalProperties,
+		Schema:               p.Schema,
+		Structure:            p.Structure,
+		Type:                 p.Type,
 	}
 }
 
@@ -18619,24 +18619,24 @@ type PaypalSource struct {
 // GetCopySource implements the CopySourceClassification interface for type PaypalSource.
 func (p *PaypalSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type PaypalSource.
 func (p *PaypalSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             p.QueryTimeout,
 		AdditionalColumns:        p.AdditionalColumns,
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
+		QueryTimeout:             p.QueryTimeout,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
@@ -18679,12 +18679,12 @@ type PhoenixLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type PhoenixLinkedService.
 func (p *PhoenixLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		ConnectVia:           p.ConnectVia,
 		Description:          p.Description,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		AdditionalProperties: p.AdditionalProperties,
+		Type:                 p.Type,
 	}
 }
 
@@ -18770,15 +18770,15 @@ type PhoenixObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type PhoenixObjectDataset.
 func (p *PhoenixObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		Description:          p.Description,
-		Structure:            p.Structure,
-		Schema:               p.Schema,
+		Folder:               p.Folder,
 		LinkedServiceName:    p.LinkedServiceName,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		Folder:               p.Folder,
-		AdditionalProperties: p.AdditionalProperties,
+		Schema:               p.Schema,
+		Structure:            p.Structure,
+		Type:                 p.Type,
 	}
 }
 
@@ -18813,24 +18813,24 @@ type PhoenixSource struct {
 // GetCopySource implements the CopySourceClassification interface for type PhoenixSource.
 func (p *PhoenixSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type PhoenixSource.
 func (p *PhoenixSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             p.QueryTimeout,
 		AdditionalColumns:        p.AdditionalColumns,
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
+		QueryTimeout:             p.QueryTimeout,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
@@ -19020,12 +19020,12 @@ type PostgreSQLLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type PostgreSQLLinkedService.
 func (p *PostgreSQLLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		ConnectVia:           p.ConnectVia,
 		Description:          p.Description,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		AdditionalProperties: p.AdditionalProperties,
+		Type:                 p.Type,
 	}
 }
 
@@ -19073,24 +19073,24 @@ type PostgreSQLSource struct {
 // GetCopySource implements the CopySourceClassification interface for type PostgreSQLSource.
 func (p *PostgreSQLSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type PostgreSQLSource.
 func (p *PostgreSQLSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             p.QueryTimeout,
 		AdditionalColumns:        p.AdditionalColumns,
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
+		QueryTimeout:             p.QueryTimeout,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
@@ -19131,15 +19131,15 @@ type PostgreSQLTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type PostgreSQLTableDataset.
 func (p *PostgreSQLTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		Description:          p.Description,
-		Structure:            p.Structure,
-		Schema:               p.Schema,
+		Folder:               p.Folder,
 		LinkedServiceName:    p.LinkedServiceName,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		Folder:               p.Folder,
-		AdditionalProperties: p.AdditionalProperties,
+		Schema:               p.Schema,
+		Structure:            p.Structure,
+		Type:                 p.Type,
 	}
 }
 
@@ -19182,12 +19182,12 @@ type PowerBIWorkspaceLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type PowerBIWorkspaceLinkedService.
 func (p *PowerBIWorkspaceLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		ConnectVia:           p.ConnectVia,
 		Description:          p.Description,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		AdditionalProperties: p.AdditionalProperties,
+		Type:                 p.Type,
 	}
 }
 
@@ -19239,12 +19239,12 @@ type PrestoLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type PrestoLinkedService.
 func (p *PrestoLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		ConnectVia:           p.ConnectVia,
 		Description:          p.Description,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		AdditionalProperties: p.AdditionalProperties,
+		Type:                 p.Type,
 	}
 }
 
@@ -19336,15 +19336,15 @@ type PrestoObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type PrestoObjectDataset.
 func (p *PrestoObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 p.Type,
+		AdditionalProperties: p.AdditionalProperties,
+		Annotations:          p.Annotations,
 		Description:          p.Description,
-		Structure:            p.Structure,
-		Schema:               p.Schema,
+		Folder:               p.Folder,
 		LinkedServiceName:    p.LinkedServiceName,
 		Parameters:           p.Parameters,
-		Annotations:          p.Annotations,
-		Folder:               p.Folder,
-		AdditionalProperties: p.AdditionalProperties,
+		Schema:               p.Schema,
+		Structure:            p.Structure,
+		Type:                 p.Type,
 	}
 }
 
@@ -19379,24 +19379,24 @@ type PrestoSource struct {
 // GetCopySource implements the CopySourceClassification interface for type PrestoSource.
 func (p *PrestoSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type PrestoSource.
 func (p *PrestoSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             p.QueryTimeout,
 		AdditionalColumns:        p.AdditionalColumns,
-		Type:                     p.Type,
+		AdditionalProperties:     p.AdditionalProperties,
+		MaxConcurrentConnections: p.MaxConcurrentConnections,
+		QueryTimeout:             p.QueryTimeout,
 		SourceRetryCount:         p.SourceRetryCount,
 		SourceRetryWait:          p.SourceRetryWait,
-		MaxConcurrentConnections: p.MaxConcurrentConnections,
-		AdditionalProperties:     p.AdditionalProperties,
+		Type:                     p.Type,
 	}
 }
 
@@ -19508,12 +19508,12 @@ type QuickBooksLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type QuickBooksLinkedService.
 func (q *QuickBooksLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 q.Type,
+		AdditionalProperties: q.AdditionalProperties,
+		Annotations:          q.Annotations,
 		ConnectVia:           q.ConnectVia,
 		Description:          q.Description,
 		Parameters:           q.Parameters,
-		Annotations:          q.Annotations,
-		AdditionalProperties: q.AdditionalProperties,
+		Type:                 q.Type,
 	}
 }
 
@@ -19586,15 +19586,15 @@ type QuickBooksObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type QuickBooksObjectDataset.
 func (q *QuickBooksObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 q.Type,
+		AdditionalProperties: q.AdditionalProperties,
+		Annotations:          q.Annotations,
 		Description:          q.Description,
-		Structure:            q.Structure,
-		Schema:               q.Schema,
+		Folder:               q.Folder,
 		LinkedServiceName:    q.LinkedServiceName,
 		Parameters:           q.Parameters,
-		Annotations:          q.Annotations,
-		Folder:               q.Folder,
-		AdditionalProperties: q.AdditionalProperties,
+		Schema:               q.Schema,
+		Structure:            q.Structure,
+		Type:                 q.Type,
 	}
 }
 
@@ -19629,24 +19629,24 @@ type QuickBooksSource struct {
 // GetCopySource implements the CopySourceClassification interface for type QuickBooksSource.
 func (q *QuickBooksSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     q.Type,
+		AdditionalProperties:     q.AdditionalProperties,
+		MaxConcurrentConnections: q.MaxConcurrentConnections,
 		SourceRetryCount:         q.SourceRetryCount,
 		SourceRetryWait:          q.SourceRetryWait,
-		MaxConcurrentConnections: q.MaxConcurrentConnections,
-		AdditionalProperties:     q.AdditionalProperties,
+		Type:                     q.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type QuickBooksSource.
 func (q *QuickBooksSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             q.QueryTimeout,
 		AdditionalColumns:        q.AdditionalColumns,
-		Type:                     q.Type,
+		AdditionalProperties:     q.AdditionalProperties,
+		MaxConcurrentConnections: q.MaxConcurrentConnections,
+		QueryTimeout:             q.QueryTimeout,
 		SourceRetryCount:         q.SourceRetryCount,
 		SourceRetryWait:          q.SourceRetryWait,
-		MaxConcurrentConnections: q.MaxConcurrentConnections,
-		AdditionalProperties:     q.AdditionalProperties,
+		Type:                     q.Type,
 	}
 }
 
@@ -19677,12 +19677,12 @@ type QuickbaseLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type QuickbaseLinkedService.
 func (q *QuickbaseLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 q.Type,
+		AdditionalProperties: q.AdditionalProperties,
+		Annotations:          q.Annotations,
 		ConnectVia:           q.ConnectVia,
 		Description:          q.Description,
 		Parameters:           q.Parameters,
-		Annotations:          q.Annotations,
-		AdditionalProperties: q.AdditionalProperties,
+		Type:                 q.Type,
 	}
 }
 
@@ -19788,11 +19788,11 @@ type RelationalSource struct {
 // GetCopySource implements the CopySourceClassification interface for type RelationalSource.
 func (r *RelationalSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     r.Type,
+		AdditionalProperties:     r.AdditionalProperties,
+		MaxConcurrentConnections: r.MaxConcurrentConnections,
 		SourceRetryCount:         r.SourceRetryCount,
 		SourceRetryWait:          r.SourceRetryWait,
-		MaxConcurrentConnections: r.MaxConcurrentConnections,
-		AdditionalProperties:     r.AdditionalProperties,
+		Type:                     r.Type,
 	}
 }
 
@@ -19833,15 +19833,15 @@ type RelationalTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type RelationalTableDataset.
 func (r *RelationalTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 r.Type,
+		AdditionalProperties: r.AdditionalProperties,
+		Annotations:          r.Annotations,
 		Description:          r.Description,
-		Structure:            r.Structure,
-		Schema:               r.Schema,
+		Folder:               r.Folder,
 		LinkedServiceName:    r.LinkedServiceName,
 		Parameters:           r.Parameters,
-		Annotations:          r.Annotations,
-		Folder:               r.Folder,
-		AdditionalProperties: r.AdditionalProperties,
+		Schema:               r.Schema,
+		Structure:            r.Structure,
+		Type:                 r.Type,
 	}
 }
 
@@ -19903,11 +19903,11 @@ type RerunTumblingWindowTrigger struct {
 // GetTrigger implements the TriggerClassification interface for type RerunTumblingWindowTrigger.
 func (r *RerunTumblingWindowTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 r.Type,
+		AdditionalProperties: r.AdditionalProperties,
+		Annotations:          r.Annotations,
 		Description:          r.Description,
 		RuntimeState:         r.RuntimeState,
-		Annotations:          r.Annotations,
-		AdditionalProperties: r.AdditionalProperties,
+		Type:                 r.Type,
 	}
 }
 
@@ -19977,12 +19977,12 @@ type ResponsysLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ResponsysLinkedService.
 func (r *ResponsysLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 r.Type,
+		AdditionalProperties: r.AdditionalProperties,
+		Annotations:          r.Annotations,
 		ConnectVia:           r.ConnectVia,
 		Description:          r.Description,
 		Parameters:           r.Parameters,
-		Annotations:          r.Annotations,
-		AdditionalProperties: r.AdditionalProperties,
+		Type:                 r.Type,
 	}
 }
 
@@ -20052,15 +20052,15 @@ type ResponsysObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type ResponsysObjectDataset.
 func (r *ResponsysObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 r.Type,
+		AdditionalProperties: r.AdditionalProperties,
+		Annotations:          r.Annotations,
 		Description:          r.Description,
-		Structure:            r.Structure,
-		Schema:               r.Schema,
+		Folder:               r.Folder,
 		LinkedServiceName:    r.LinkedServiceName,
 		Parameters:           r.Parameters,
-		Annotations:          r.Annotations,
-		Folder:               r.Folder,
-		AdditionalProperties: r.AdditionalProperties,
+		Schema:               r.Schema,
+		Structure:            r.Structure,
+		Type:                 r.Type,
 	}
 }
 
@@ -20095,24 +20095,24 @@ type ResponsysSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ResponsysSource.
 func (r *ResponsysSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     r.Type,
+		AdditionalProperties:     r.AdditionalProperties,
+		MaxConcurrentConnections: r.MaxConcurrentConnections,
 		SourceRetryCount:         r.SourceRetryCount,
 		SourceRetryWait:          r.SourceRetryWait,
-		MaxConcurrentConnections: r.MaxConcurrentConnections,
-		AdditionalProperties:     r.AdditionalProperties,
+		Type:                     r.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type ResponsysSource.
 func (r *ResponsysSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             r.QueryTimeout,
 		AdditionalColumns:        r.AdditionalColumns,
-		Type:                     r.Type,
+		AdditionalProperties:     r.AdditionalProperties,
+		MaxConcurrentConnections: r.MaxConcurrentConnections,
+		QueryTimeout:             r.QueryTimeout,
 		SourceRetryCount:         r.SourceRetryCount,
 		SourceRetryWait:          r.SourceRetryWait,
-		MaxConcurrentConnections: r.MaxConcurrentConnections,
-		AdditionalProperties:     r.AdditionalProperties,
+		Type:                     r.Type,
 	}
 }
 
@@ -20153,15 +20153,15 @@ type RestResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type RestResourceDataset.
 func (r *RestResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 r.Type,
+		AdditionalProperties: r.AdditionalProperties,
+		Annotations:          r.Annotations,
 		Description:          r.Description,
-		Structure:            r.Structure,
-		Schema:               r.Schema,
+		Folder:               r.Folder,
 		LinkedServiceName:    r.LinkedServiceName,
 		Parameters:           r.Parameters,
-		Annotations:          r.Annotations,
-		Folder:               r.Folder,
-		AdditionalProperties: r.AdditionalProperties,
+		Schema:               r.Schema,
+		Structure:            r.Structure,
+		Type:                 r.Type,
 	}
 }
 
@@ -20210,12 +20210,12 @@ type RestServiceLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type RestServiceLinkedService.
 func (r *RestServiceLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 r.Type,
+		AdditionalProperties: r.AdditionalProperties,
+		Annotations:          r.Annotations,
 		ConnectVia:           r.ConnectVia,
 		Description:          r.Description,
 		Parameters:           r.Parameters,
-		Annotations:          r.Annotations,
-		AdditionalProperties: r.AdditionalProperties,
+		Type:                 r.Type,
 	}
 }
 
@@ -20325,13 +20325,13 @@ type RestSink struct {
 // GetCopySink implements the CopySinkClassification interface for type RestSink.
 func (r *RestSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     r.AdditionalProperties,
+		MaxConcurrentConnections: r.MaxConcurrentConnections,
+		SinkRetryCount:           r.SinkRetryCount,
+		SinkRetryWait:            r.SinkRetryWait,
 		Type:                     r.Type,
 		WriteBatchSize:           r.WriteBatchSize,
 		WriteBatchTimeout:        r.WriteBatchTimeout,
-		SinkRetryCount:           r.SinkRetryCount,
-		SinkRetryWait:            r.SinkRetryWait,
-		MaxConcurrentConnections: r.MaxConcurrentConnections,
-		AdditionalProperties:     r.AdditionalProperties,
 	}
 }
 
@@ -20380,11 +20380,11 @@ type RestSource struct {
 // GetCopySource implements the CopySourceClassification interface for type RestSource.
 func (r *RestSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     r.Type,
+		AdditionalProperties:     r.AdditionalProperties,
+		MaxConcurrentConnections: r.MaxConcurrentConnections,
 		SourceRetryCount:         r.SourceRetryCount,
 		SourceRetryWait:          r.SourceRetryWait,
-		MaxConcurrentConnections: r.MaxConcurrentConnections,
-		AdditionalProperties:     r.AdditionalProperties,
+		Type:                     r.Type,
 	}
 }
 
@@ -20518,13 +20518,13 @@ type SQLDWSink struct {
 // GetCopySink implements the CopySinkClassification interface for type SQLDWSink.
 func (s *SQLDWSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -20574,24 +20574,24 @@ type SQLDWSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SQLDWSource.
 func (s *SQLDWSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SQLDWSource.
 func (s *SQLDWSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -20641,13 +20641,13 @@ type SQLMISink struct {
 // GetCopySink implements the CopySinkClassification interface for type SQLMISink.
 func (s *SQLMISink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -20699,24 +20699,24 @@ type SQLMISource struct {
 // GetCopySource implements the CopySourceClassification interface for type SQLMISource.
 func (s *SQLMISource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SQLMISource.
 func (s *SQLMISource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -20849,12 +20849,12 @@ type SQLPoolStoredProcedureActivity struct {
 // GetActivity implements the ActivityClassification interface for type SQLPoolStoredProcedureActivity.
 func (s *SQLPoolStoredProcedureActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
@@ -20972,12 +20972,12 @@ type SQLServerLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SQLServerLinkedService.
 func (s *SQLServerLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -21043,13 +21043,13 @@ type SQLServerSink struct {
 // GetCopySink implements the CopySinkClassification interface for type SQLServerSink.
 func (s *SQLServerSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -21101,24 +21101,24 @@ type SQLServerSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SQLServerSource.
 func (s *SQLServerSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SQLServerSource.
 func (s *SQLServerSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -21155,26 +21155,26 @@ type SQLServerStoredProcedureActivity struct {
 // GetActivity implements the ActivityClassification interface for type SQLServerStoredProcedureActivity.
 func (s *SQLServerStoredProcedureActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type SQLServerStoredProcedureActivity.
 func (s *SQLServerStoredProcedureActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    s.LinkedServiceName,
-		Policy:               s.Policy,
-		Name:                 s.Name,
-		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
-		UserProperties:       s.UserProperties,
 		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
+		LinkedServiceName:    s.LinkedServiceName,
+		Name:                 s.Name,
+		Policy:               s.Policy,
+		Type:                 s.Type,
+		UserProperties:       s.UserProperties,
 	}
 }
 
@@ -21224,15 +21224,15 @@ type SQLServerTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type SQLServerTableDataset.
 func (s *SQLServerTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -21294,13 +21294,13 @@ type SQLSink struct {
 // GetCopySink implements the CopySinkClassification interface for type SQLSink.
 func (s *SQLSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -21354,24 +21354,24 @@ type SQLSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SQLSource.
 func (s *SQLSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SQLSource.
 func (s *SQLSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -21517,12 +21517,12 @@ type SalesforceLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SalesforceLinkedService.
 func (s *SalesforceLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -21577,12 +21577,12 @@ type SalesforceMarketingCloudLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SalesforceMarketingCloudLinkedService.
 func (s *SalesforceMarketingCloudLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -21655,15 +21655,15 @@ type SalesforceMarketingCloudObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type SalesforceMarketingCloudObjectDataset.
 func (s *SalesforceMarketingCloudObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -21698,24 +21698,24 @@ type SalesforceMarketingCloudSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SalesforceMarketingCloudSource.
 func (s *SalesforceMarketingCloudSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SalesforceMarketingCloudSource.
 func (s *SalesforceMarketingCloudSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -21756,15 +21756,15 @@ type SalesforceObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type SalesforceObjectDataset.
 func (s *SalesforceObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -21801,12 +21801,12 @@ type SalesforceServiceCloudLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SalesforceServiceCloudLinkedService.
 func (s *SalesforceServiceCloudLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -21874,15 +21874,15 @@ type SalesforceServiceCloudObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type SalesforceServiceCloudObjectDataset.
 func (s *SalesforceServiceCloudObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -21934,13 +21934,13 @@ type SalesforceServiceCloudSink struct {
 // GetCopySink implements the CopySinkClassification interface for type SalesforceServiceCloudSink.
 func (s *SalesforceServiceCloudSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -21975,11 +21975,11 @@ type SalesforceServiceCloudSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SalesforceServiceCloudSource.
 func (s *SalesforceServiceCloudSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -22025,13 +22025,13 @@ type SalesforceSink struct {
 // GetCopySink implements the CopySinkClassification interface for type SalesforceSink.
 func (s *SalesforceSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -22069,24 +22069,24 @@ type SalesforceSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SalesforceSource.
 func (s *SalesforceSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SalesforceSource.
 func (s *SalesforceSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -22117,12 +22117,12 @@ type SapBWLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SapBWLinkedService.
 func (s *SapBWLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -22184,15 +22184,15 @@ type SapBwCubeDataset struct {
 // GetDataset implements the DatasetClassification interface for type SapBwCubeDataset.
 func (s *SapBwCubeDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -22227,24 +22227,24 @@ type SapBwSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SapBwSource.
 func (s *SapBwSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SapBwSource.
 func (s *SapBwSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -22275,12 +22275,12 @@ type SapCloudForCustomerLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SapCloudForCustomerLinkedService.
 func (s *SapCloudForCustomerLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -22339,15 +22339,15 @@ type SapCloudForCustomerResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type SapCloudForCustomerResourceDataset.
 func (s *SapCloudForCustomerResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -22392,13 +22392,13 @@ type SapCloudForCustomerSink struct {
 // GetCopySink implements the CopySinkClassification interface for type SapCloudForCustomerSink.
 func (s *SapCloudForCustomerSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -22438,24 +22438,24 @@ type SapCloudForCustomerSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SapCloudForCustomerSource.
 func (s *SapCloudForCustomerSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SapCloudForCustomerSource.
 func (s *SapCloudForCustomerSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -22486,12 +22486,12 @@ type SapEccLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SapEccLinkedService.
 func (s *SapEccLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -22550,15 +22550,15 @@ type SapEccResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type SapEccResourceDataset.
 func (s *SapEccResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -22604,24 +22604,24 @@ type SapEccSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SapEccSource.
 func (s *SapEccSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SapEccSource.
 func (s *SapEccSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -22652,12 +22652,12 @@ type SapHanaLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SapHanaLinkedService.
 func (s *SapHanaLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -22730,24 +22730,24 @@ type SapHanaSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SapHanaSource.
 func (s *SapHanaSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SapHanaSource.
 func (s *SapHanaSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -22788,15 +22788,15 @@ type SapHanaTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type SapHanaTableDataset.
 func (s *SapHanaTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -22836,12 +22836,12 @@ type SapOdpLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SapOdpLinkedService.
 func (s *SapOdpLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -22946,15 +22946,15 @@ type SapOdpResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type SapOdpResourceDataset.
 func (s *SapOdpResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -23010,24 +23010,24 @@ type SapOdpSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SapOdpSource.
 func (s *SapOdpSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SapOdpSource.
 func (s *SapOdpSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -23058,12 +23058,12 @@ type SapOpenHubLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SapOpenHubLinkedService.
 func (s *SapOpenHubLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -23155,24 +23155,24 @@ type SapOpenHubSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SapOpenHubSource.
 func (s *SapOpenHubSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SapOpenHubSource.
 func (s *SapOpenHubSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -23213,15 +23213,15 @@ type SapOpenHubTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type SapOpenHubTableDataset.
 func (s *SapOpenHubTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -23268,12 +23268,12 @@ type SapTableLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SapTableLinkedService.
 func (s *SapTableLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -23390,15 +23390,15 @@ type SapTableResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type SapTableResourceDataset.
 func (s *SapTableResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -23468,24 +23468,24 @@ type SapTableSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SapTableSource.
 func (s *SapTableSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SapTableSource.
 func (s *SapTableSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -23516,23 +23516,23 @@ type ScheduleTrigger struct {
 // GetMultiplePipelineTrigger implements the MultiplePipelineTriggerClassification interface for type ScheduleTrigger.
 func (s *ScheduleTrigger) GetMultiplePipelineTrigger() *MultiplePipelineTrigger {
 	return &MultiplePipelineTrigger{
-		Pipelines:            s.Pipelines,
-		Type:                 s.Type,
-		Description:          s.Description,
-		RuntimeState:         s.RuntimeState,
-		Annotations:          s.Annotations,
 		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
+		Description:          s.Description,
+		Pipelines:            s.Pipelines,
+		RuntimeState:         s.RuntimeState,
+		Type:                 s.Type,
 	}
 }
 
 // GetTrigger implements the TriggerClassification interface for type ScheduleTrigger.
 func (s *ScheduleTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
 		RuntimeState:         s.RuntimeState,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -23614,26 +23614,26 @@ type ScriptActivity struct {
 // GetActivity implements the ActivityClassification interface for type ScriptActivity.
 func (s *ScriptActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type ScriptActivity.
 func (s *ScriptActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    s.LinkedServiceName,
-		Policy:               s.Policy,
-		Name:                 s.Name,
-		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
-		UserProperties:       s.UserProperties,
 		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
+		LinkedServiceName:    s.LinkedServiceName,
+		Name:                 s.Name,
+		Policy:               s.Policy,
+		Type:                 s.Type,
+		UserProperties:       s.UserProperties,
 	}
 }
 
@@ -23749,9 +23749,9 @@ type SelfHostedIntegrationRuntime struct {
 // GetIntegrationRuntime implements the IntegrationRuntimeClassification interface for type SelfHostedIntegrationRuntime.
 func (s *SelfHostedIntegrationRuntime) GetIntegrationRuntime() *IntegrationRuntime {
 	return &IntegrationRuntime{
-		Type:                 s.Type,
-		Description:          s.Description,
 		AdditionalProperties: s.AdditionalProperties,
+		Description:          s.Description,
+		Type:                 s.Type,
 	}
 }
 
@@ -23788,12 +23788,12 @@ type ServiceNowLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ServiceNowLinkedService.
 func (s *ServiceNowLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -23869,15 +23869,15 @@ type ServiceNowObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type ServiceNowObjectDataset.
 func (s *ServiceNowObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -23912,24 +23912,24 @@ type ServiceNowSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ServiceNowSource.
 func (s *ServiceNowSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type ServiceNowSource.
 func (s *ServiceNowSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -23960,24 +23960,24 @@ type SetVariableActivity struct {
 // GetActivity implements the ActivityClassification interface for type SetVariableActivity.
 func (s *SetVariableActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type SetVariableActivity.
 func (s *SetVariableActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
@@ -24008,10 +24008,10 @@ type SftpLocation struct {
 // GetDatasetLocation implements the DatasetLocationClassification interface for type SftpLocation.
 func (s *SftpLocation) GetDatasetLocation() *DatasetLocation {
 	return &DatasetLocation{
-		Type:                 s.Type,
-		FolderPath:           s.FolderPath,
-		FileName:             s.FileName,
 		AdditionalProperties: s.AdditionalProperties,
+		FileName:             s.FileName,
+		FolderPath:           s.FolderPath,
+		Type:                 s.Type,
 	}
 }
 
@@ -24063,9 +24063,9 @@ type SftpReadSettings struct {
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type SftpReadSettings.
 func (s *SftpReadSettings) GetStoreReadSettings() *StoreReadSettings {
 	return &StoreReadSettings{
-		Type:                     s.Type,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		Type:                     s.Type,
 	}
 }
 
@@ -24096,12 +24096,12 @@ type SftpServerLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SftpServerLinkedService.
 func (s *SftpServerLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -24174,10 +24174,10 @@ type SftpWriteSettings struct {
 // GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type SftpWriteSettings.
 func (s *SftpWriteSettings) GetStoreWriteSettings() *StoreWriteSettings {
 	return &StoreWriteSettings{
-		Type:                     s.Type,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		CopyBehavior:             s.CopyBehavior,
 		AdditionalProperties:     s.AdditionalProperties,
+		CopyBehavior:             s.CopyBehavior,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		Type:                     s.Type,
 	}
 }
 
@@ -24214,12 +24214,12 @@ type SharePointOnlineListLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SharePointOnlineListLinkedService.
 func (s *SharePointOnlineListLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -24284,15 +24284,15 @@ type SharePointOnlineListResourceDataset struct {
 // GetDataset implements the DatasetClassification interface for type SharePointOnlineListResourceDataset.
 func (s *SharePointOnlineListResourceDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -24326,11 +24326,11 @@ type SharePointOnlineListSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SharePointOnlineListSource.
 func (s *SharePointOnlineListSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -24361,12 +24361,12 @@ type ShopifyLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ShopifyLinkedService.
 func (s *ShopifyLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -24430,15 +24430,15 @@ type ShopifyObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type ShopifyObjectDataset.
 func (s *ShopifyObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -24473,24 +24473,24 @@ type ShopifySource struct {
 // GetCopySource implements the CopySourceClassification interface for type ShopifySource.
 func (s *ShopifySource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type ShopifySource.
 func (s *ShopifySource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -24531,12 +24531,12 @@ type SmartsheetLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SmartsheetLinkedService.
 func (s *SmartsheetLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -24587,15 +24587,15 @@ type SnowflakeDataset struct {
 // GetDataset implements the DatasetClassification interface for type SnowflakeDataset.
 func (s *SnowflakeDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -24630,8 +24630,8 @@ type SnowflakeExportCopyCommand struct {
 // GetExportSettings implements the ExportSettingsClassification interface for type SnowflakeExportCopyCommand.
 func (s *SnowflakeExportCopyCommand) GetExportSettings() *ExportSettings {
 	return &ExportSettings{
-		Type:                 s.Type,
 		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -24657,8 +24657,8 @@ type SnowflakeImportCopyCommand struct {
 // GetImportSettings implements the ImportSettingsClassification interface for type SnowflakeImportCopyCommand.
 func (s *SnowflakeImportCopyCommand) GetImportSettings() *ImportSettings {
 	return &ImportSettings{
-		Type:                 s.Type,
 		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -24689,12 +24689,12 @@ type SnowflakeLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SnowflakeLinkedService.
 func (s *SnowflakeLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -24744,13 +24744,13 @@ type SnowflakeSink struct {
 // GetCopySink implements the CopySinkClassification interface for type SnowflakeSink.
 func (s *SnowflakeSink) GetCopySink() *CopySink {
 	return &CopySink{
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		SinkRetryCount:           s.SinkRetryCount,
+		SinkRetryWait:            s.SinkRetryWait,
 		Type:                     s.Type,
 		WriteBatchSize:           s.WriteBatchSize,
 		WriteBatchTimeout:        s.WriteBatchTimeout,
-		SinkRetryCount:           s.SinkRetryCount,
-		SinkRetryWait:            s.SinkRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
 	}
 }
 
@@ -24781,11 +24781,11 @@ type SnowflakeSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SnowflakeSource.
 func (s *SnowflakeSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -25084,12 +25084,12 @@ type SparkLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SparkLinkedService.
 func (s *SparkLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -25180,15 +25180,15 @@ type SparkObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type SparkObjectDataset.
 func (s *SparkObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -25265,24 +25265,24 @@ type SparkSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SparkSource.
 func (s *SparkSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SparkSource.
 func (s *SparkSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -25313,12 +25313,12 @@ type SquareLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SquareLinkedService.
 func (s *SquareLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -25391,15 +25391,15 @@ type SquareObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type SquareObjectDataset.
 func (s *SquareObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -25434,24 +25434,24 @@ type SquareSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SquareSource.
 func (s *SquareSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SquareSource.
 func (s *SquareSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -25610,24 +25610,24 @@ type SwitchActivity struct {
 // GetActivity implements the ActivityClassification interface for type SwitchActivity.
 func (s *SwitchActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type SwitchActivity.
 func (s *SwitchActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
@@ -25682,12 +25682,12 @@ type SybaseLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type SybaseLinkedService.
 func (s *SybaseLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		ConnectVia:           s.ConnectVia,
 		Description:          s.Description,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		AdditionalProperties: s.AdditionalProperties,
+		Type:                 s.Type,
 	}
 }
 
@@ -25747,24 +25747,24 @@ type SybaseSource struct {
 // GetCopySource implements the CopySourceClassification interface for type SybaseSource.
 func (s *SybaseSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type SybaseSource.
 func (s *SybaseSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             s.QueryTimeout,
 		AdditionalColumns:        s.AdditionalColumns,
-		Type:                     s.Type,
+		AdditionalProperties:     s.AdditionalProperties,
+		MaxConcurrentConnections: s.MaxConcurrentConnections,
+		QueryTimeout:             s.QueryTimeout,
 		SourceRetryCount:         s.SourceRetryCount,
 		SourceRetryWait:          s.SourceRetryWait,
-		MaxConcurrentConnections: s.MaxConcurrentConnections,
-		AdditionalProperties:     s.AdditionalProperties,
+		Type:                     s.Type,
 	}
 }
 
@@ -25805,15 +25805,15 @@ type SybaseTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type SybaseTableDataset.
 func (s *SybaseTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 s.Type,
+		AdditionalProperties: s.AdditionalProperties,
+		Annotations:          s.Annotations,
 		Description:          s.Description,
-		Structure:            s.Structure,
-		Schema:               s.Schema,
+		Folder:               s.Folder,
 		LinkedServiceName:    s.LinkedServiceName,
 		Parameters:           s.Parameters,
-		Annotations:          s.Annotations,
-		Folder:               s.Folder,
-		AdditionalProperties: s.AdditionalProperties,
+		Schema:               s.Schema,
+		Structure:            s.Structure,
+		Type:                 s.Type,
 	}
 }
 
@@ -25856,26 +25856,26 @@ type SynapseNotebookActivity struct {
 // GetActivity implements the ActivityClassification interface for type SynapseNotebookActivity.
 func (s *SynapseNotebookActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type SynapseNotebookActivity.
 func (s *SynapseNotebookActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    s.LinkedServiceName,
-		Policy:               s.Policy,
-		Name:                 s.Name,
-		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
-		UserProperties:       s.UserProperties,
 		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
+		LinkedServiceName:    s.LinkedServiceName,
+		Name:                 s.Name,
+		Policy:               s.Policy,
+		Type:                 s.Type,
+		UserProperties:       s.UserProperties,
 	}
 }
 
@@ -26014,26 +26014,26 @@ type SynapseSparkJobDefinitionActivity struct {
 // GetActivity implements the ActivityClassification interface for type SynapseSparkJobDefinitionActivity.
 func (s *SynapseSparkJobDefinitionActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
 		Name:                 s.Name,
 		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
 		UserProperties:       s.UserProperties,
-		AdditionalProperties: s.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type SynapseSparkJobDefinitionActivity.
 func (s *SynapseSparkJobDefinitionActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    s.LinkedServiceName,
-		Policy:               s.Policy,
-		Name:                 s.Name,
-		Type:                 s.Type,
-		Description:          s.Description,
-		DependsOn:            s.DependsOn,
-		UserProperties:       s.UserProperties,
 		AdditionalProperties: s.AdditionalProperties,
+		DependsOn:            s.DependsOn,
+		Description:          s.Description,
+		LinkedServiceName:    s.LinkedServiceName,
+		Name:                 s.Name,
+		Policy:               s.Policy,
+		Type:                 s.Type,
+		UserProperties:       s.UserProperties,
 	}
 }
 
@@ -26074,11 +26074,11 @@ type TabularSource struct {
 // GetCopySource implements the CopySourceClassification interface for type TabularSource.
 func (t *TabularSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     t.Type,
+		AdditionalProperties:     t.AdditionalProperties,
+		MaxConcurrentConnections: t.MaxConcurrentConnections,
 		SourceRetryCount:         t.SourceRetryCount,
 		SourceRetryWait:          t.SourceRetryWait,
-		MaxConcurrentConnections: t.MaxConcurrentConnections,
-		AdditionalProperties:     t.AdditionalProperties,
+		Type:                     t.Type,
 	}
 }
 
@@ -26127,8 +26127,8 @@ type TabularTranslator struct {
 // GetCopyTranslator implements the CopyTranslatorClassification interface for type TabularTranslator.
 func (t *TabularTranslator) GetCopyTranslator() *CopyTranslator {
 	return &CopyTranslator{
-		Type:                 t.Type,
 		AdditionalProperties: t.AdditionalProperties,
+		Type:                 t.Type,
 	}
 }
 
@@ -26147,8 +26147,8 @@ type TarGZipReadSettings struct {
 // GetCompressionReadSettings implements the CompressionReadSettingsClassification interface for type TarGZipReadSettings.
 func (t *TarGZipReadSettings) GetCompressionReadSettings() *CompressionReadSettings {
 	return &CompressionReadSettings{
-		Type:                 t.Type,
 		AdditionalProperties: t.AdditionalProperties,
+		Type:                 t.Type,
 	}
 }
 
@@ -26167,8 +26167,8 @@ type TarReadSettings struct {
 // GetCompressionReadSettings implements the CompressionReadSettingsClassification interface for type TarReadSettings.
 func (t *TarReadSettings) GetCompressionReadSettings() *CompressionReadSettings {
 	return &CompressionReadSettings{
-		Type:                 t.Type,
 		AdditionalProperties: t.AdditionalProperties,
+		Type:                 t.Type,
 	}
 }
 
@@ -26199,12 +26199,12 @@ type TeamDeskLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type TeamDeskLinkedService.
 func (t *TeamDeskLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 t.Type,
+		AdditionalProperties: t.AdditionalProperties,
+		Annotations:          t.Annotations,
 		ConnectVia:           t.ConnectVia,
 		Description:          t.Description,
 		Parameters:           t.Parameters,
-		Annotations:          t.Annotations,
-		AdditionalProperties: t.AdditionalProperties,
+		Type:                 t.Type,
 	}
 }
 
@@ -26257,12 +26257,12 @@ type TeradataLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type TeradataLinkedService.
 func (t *TeradataLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 t.Type,
+		AdditionalProperties: t.AdditionalProperties,
+		Annotations:          t.Annotations,
 		ConnectVia:           t.ConnectVia,
 		Description:          t.Description,
 		Parameters:           t.Parameters,
-		Annotations:          t.Annotations,
-		AdditionalProperties: t.AdditionalProperties,
+		Type:                 t.Type,
 	}
 }
 
@@ -26340,24 +26340,24 @@ type TeradataSource struct {
 // GetCopySource implements the CopySourceClassification interface for type TeradataSource.
 func (t *TeradataSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     t.Type,
+		AdditionalProperties:     t.AdditionalProperties,
+		MaxConcurrentConnections: t.MaxConcurrentConnections,
 		SourceRetryCount:         t.SourceRetryCount,
 		SourceRetryWait:          t.SourceRetryWait,
-		MaxConcurrentConnections: t.MaxConcurrentConnections,
-		AdditionalProperties:     t.AdditionalProperties,
+		Type:                     t.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type TeradataSource.
 func (t *TeradataSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             t.QueryTimeout,
 		AdditionalColumns:        t.AdditionalColumns,
-		Type:                     t.Type,
+		AdditionalProperties:     t.AdditionalProperties,
+		MaxConcurrentConnections: t.MaxConcurrentConnections,
+		QueryTimeout:             t.QueryTimeout,
 		SourceRetryCount:         t.SourceRetryCount,
 		SourceRetryWait:          t.SourceRetryWait,
-		MaxConcurrentConnections: t.MaxConcurrentConnections,
-		AdditionalProperties:     t.AdditionalProperties,
+		Type:                     t.Type,
 	}
 }
 
@@ -26398,15 +26398,15 @@ type TeradataTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type TeradataTableDataset.
 func (t *TeradataTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 t.Type,
+		AdditionalProperties: t.AdditionalProperties,
+		Annotations:          t.Annotations,
 		Description:          t.Description,
-		Structure:            t.Structure,
-		Schema:               t.Schema,
+		Folder:               t.Folder,
 		LinkedServiceName:    t.LinkedServiceName,
 		Parameters:           t.Parameters,
-		Annotations:          t.Annotations,
-		Folder:               t.Folder,
-		AdditionalProperties: t.AdditionalProperties,
+		Schema:               t.Schema,
+		Structure:            t.Structure,
+		Type:                 t.Type,
 	}
 }
 
@@ -26471,10 +26471,10 @@ type TextFormat struct {
 // GetDatasetStorageFormat implements the DatasetStorageFormatClassification interface for type TextFormat.
 func (t *TextFormat) GetDatasetStorageFormat() *DatasetStorageFormat {
 	return &DatasetStorageFormat{
-		Type:                 t.Type,
-		Serializer:           t.Serializer,
-		Deserializer:         t.Deserializer,
 		AdditionalProperties: t.AdditionalProperties,
+		Deserializer:         t.Deserializer,
+		Serializer:           t.Serializer,
+		Type:                 t.Type,
 	}
 }
 
@@ -26687,11 +26687,11 @@ type TumblingWindowTrigger struct {
 // GetTrigger implements the TriggerClassification interface for type TumblingWindowTrigger.
 func (t *TumblingWindowTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		Type:                 t.Type,
+		AdditionalProperties: t.AdditionalProperties,
+		Annotations:          t.Annotations,
 		Description:          t.Description,
 		RuntimeState:         t.RuntimeState,
-		Annotations:          t.Annotations,
-		AdditionalProperties: t.AdditionalProperties,
+		Type:                 t.Type,
 	}
 }
 
@@ -26783,12 +26783,12 @@ type TwilioLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type TwilioLinkedService.
 func (t *TwilioLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 t.Type,
+		AdditionalProperties: t.AdditionalProperties,
+		Annotations:          t.Annotations,
 		ConnectVia:           t.ConnectVia,
 		Description:          t.Description,
 		Parameters:           t.Parameters,
-		Annotations:          t.Annotations,
-		AdditionalProperties: t.AdditionalProperties,
+		Type:                 t.Type,
 	}
 }
 
@@ -26850,24 +26850,24 @@ type UntilActivity struct {
 // GetActivity implements the ActivityClassification interface for type UntilActivity.
 func (u *UntilActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: u.AdditionalProperties,
+		DependsOn:            u.DependsOn,
+		Description:          u.Description,
 		Name:                 u.Name,
 		Type:                 u.Type,
-		Description:          u.Description,
-		DependsOn:            u.DependsOn,
 		UserProperties:       u.UserProperties,
-		AdditionalProperties: u.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type UntilActivity.
 func (u *UntilActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: u.AdditionalProperties,
+		DependsOn:            u.DependsOn,
+		Description:          u.Description,
 		Name:                 u.Name,
 		Type:                 u.Type,
-		Description:          u.Description,
-		DependsOn:            u.DependsOn,
 		UserProperties:       u.UserProperties,
-		AdditionalProperties: u.AdditionalProperties,
 	}
 }
 
@@ -26927,24 +26927,24 @@ type ValidationActivity struct {
 // GetActivity implements the ActivityClassification interface for type ValidationActivity.
 func (v *ValidationActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: v.AdditionalProperties,
+		DependsOn:            v.DependsOn,
+		Description:          v.Description,
 		Name:                 v.Name,
 		Type:                 v.Type,
-		Description:          v.Description,
-		DependsOn:            v.DependsOn,
 		UserProperties:       v.UserProperties,
-		AdditionalProperties: v.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type ValidationActivity.
 func (v *ValidationActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: v.AdditionalProperties,
+		DependsOn:            v.DependsOn,
+		Description:          v.Description,
 		Name:                 v.Name,
 		Type:                 v.Type,
-		Description:          v.Description,
-		DependsOn:            v.DependsOn,
 		UserProperties:       v.UserProperties,
-		AdditionalProperties: v.AdditionalProperties,
 	}
 }
 
@@ -27019,12 +27019,12 @@ type VerticaLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type VerticaLinkedService.
 func (v *VerticaLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 v.Type,
+		AdditionalProperties: v.AdditionalProperties,
+		Annotations:          v.Annotations,
 		ConnectVia:           v.ConnectVia,
 		Description:          v.Description,
 		Parameters:           v.Parameters,
-		Annotations:          v.Annotations,
-		AdditionalProperties: v.AdditionalProperties,
+		Type:                 v.Type,
 	}
 }
 
@@ -27072,24 +27072,24 @@ type VerticaSource struct {
 // GetCopySource implements the CopySourceClassification interface for type VerticaSource.
 func (v *VerticaSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     v.Type,
+		AdditionalProperties:     v.AdditionalProperties,
+		MaxConcurrentConnections: v.MaxConcurrentConnections,
 		SourceRetryCount:         v.SourceRetryCount,
 		SourceRetryWait:          v.SourceRetryWait,
-		MaxConcurrentConnections: v.MaxConcurrentConnections,
-		AdditionalProperties:     v.AdditionalProperties,
+		Type:                     v.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type VerticaSource.
 func (v *VerticaSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             v.QueryTimeout,
 		AdditionalColumns:        v.AdditionalColumns,
-		Type:                     v.Type,
+		AdditionalProperties:     v.AdditionalProperties,
+		MaxConcurrentConnections: v.MaxConcurrentConnections,
+		QueryTimeout:             v.QueryTimeout,
 		SourceRetryCount:         v.SourceRetryCount,
 		SourceRetryWait:          v.SourceRetryWait,
-		MaxConcurrentConnections: v.MaxConcurrentConnections,
-		AdditionalProperties:     v.AdditionalProperties,
+		Type:                     v.Type,
 	}
 }
 
@@ -27130,15 +27130,15 @@ type VerticaTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type VerticaTableDataset.
 func (v *VerticaTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 v.Type,
+		AdditionalProperties: v.AdditionalProperties,
+		Annotations:          v.Annotations,
 		Description:          v.Description,
-		Structure:            v.Structure,
-		Schema:               v.Schema,
+		Folder:               v.Folder,
 		LinkedServiceName:    v.LinkedServiceName,
 		Parameters:           v.Parameters,
-		Annotations:          v.Annotations,
-		Folder:               v.Folder,
-		AdditionalProperties: v.AdditionalProperties,
+		Schema:               v.Schema,
+		Structure:            v.Structure,
+		Type:                 v.Type,
 	}
 }
 
@@ -27175,24 +27175,24 @@ type WaitActivity struct {
 // GetActivity implements the ActivityClassification interface for type WaitActivity.
 func (w *WaitActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: w.AdditionalProperties,
+		DependsOn:            w.DependsOn,
+		Description:          w.Description,
 		Name:                 w.Name,
 		Type:                 w.Type,
-		Description:          w.Description,
-		DependsOn:            w.DependsOn,
 		UserProperties:       w.UserProperties,
-		AdditionalProperties: w.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type WaitActivity.
 func (w *WaitActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: w.AdditionalProperties,
+		DependsOn:            w.DependsOn,
+		Description:          w.Description,
 		Name:                 w.Name,
 		Type:                 w.Type,
-		Description:          w.Description,
-		DependsOn:            w.DependsOn,
 		UserProperties:       w.UserProperties,
-		AdditionalProperties: w.AdditionalProperties,
 	}
 }
 
@@ -27235,26 +27235,26 @@ type WebActivity struct {
 // GetActivity implements the ActivityClassification interface for type WebActivity.
 func (w *WebActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: w.AdditionalProperties,
+		DependsOn:            w.DependsOn,
+		Description:          w.Description,
 		Name:                 w.Name,
 		Type:                 w.Type,
-		Description:          w.Description,
-		DependsOn:            w.DependsOn,
 		UserProperties:       w.UserProperties,
-		AdditionalProperties: w.AdditionalProperties,
 	}
 }
 
 // GetExecutionActivity implements the ExecutionActivityClassification interface for type WebActivity.
 func (w *WebActivity) GetExecutionActivity() *ExecutionActivity {
 	return &ExecutionActivity{
-		LinkedServiceName:    w.LinkedServiceName,
-		Policy:               w.Policy,
-		Name:                 w.Name,
-		Type:                 w.Type,
-		Description:          w.Description,
-		DependsOn:            w.DependsOn,
-		UserProperties:       w.UserProperties,
 		AdditionalProperties: w.AdditionalProperties,
+		DependsOn:            w.DependsOn,
+		Description:          w.Description,
+		LinkedServiceName:    w.LinkedServiceName,
+		Name:                 w.Name,
+		Policy:               w.Policy,
+		Type:                 w.Type,
+		UserProperties:       w.UserProperties,
 	}
 }
 
@@ -27319,8 +27319,8 @@ type WebAnonymousAuthentication struct {
 // GetWebLinkedServiceTypeProperties implements the WebLinkedServiceTypePropertiesClassification interface for type WebAnonymousAuthentication.
 func (w *WebAnonymousAuthentication) GetWebLinkedServiceTypeProperties() *WebLinkedServiceTypeProperties {
 	return &WebLinkedServiceTypeProperties{
-		URL:                w.URL,
 		AuthenticationType: w.AuthenticationType,
+		URL:                w.URL,
 	}
 }
 
@@ -27343,8 +27343,8 @@ type WebBasicAuthentication struct {
 // GetWebLinkedServiceTypeProperties implements the WebLinkedServiceTypePropertiesClassification interface for type WebBasicAuthentication.
 func (w *WebBasicAuthentication) GetWebLinkedServiceTypeProperties() *WebLinkedServiceTypeProperties {
 	return &WebLinkedServiceTypeProperties{
-		URL:                w.URL,
 		AuthenticationType: w.AuthenticationType,
+		URL:                w.URL,
 	}
 }
 
@@ -27369,8 +27369,8 @@ type WebClientCertificateAuthentication struct {
 // GetWebLinkedServiceTypeProperties implements the WebLinkedServiceTypePropertiesClassification interface for type WebClientCertificateAuthentication.
 func (w *WebClientCertificateAuthentication) GetWebLinkedServiceTypeProperties() *WebLinkedServiceTypeProperties {
 	return &WebLinkedServiceTypeProperties{
-		URL:                w.URL,
 		AuthenticationType: w.AuthenticationType,
+		URL:                w.URL,
 	}
 }
 
@@ -27401,24 +27401,24 @@ type WebHookActivity struct {
 // GetActivity implements the ActivityClassification interface for type WebHookActivity.
 func (w *WebHookActivity) GetActivity() *Activity {
 	return &Activity{
+		AdditionalProperties: w.AdditionalProperties,
+		DependsOn:            w.DependsOn,
+		Description:          w.Description,
 		Name:                 w.Name,
 		Type:                 w.Type,
-		Description:          w.Description,
-		DependsOn:            w.DependsOn,
 		UserProperties:       w.UserProperties,
-		AdditionalProperties: w.AdditionalProperties,
 	}
 }
 
 // GetControlActivity implements the ControlActivityClassification interface for type WebHookActivity.
 func (w *WebHookActivity) GetControlActivity() *ControlActivity {
 	return &ControlActivity{
+		AdditionalProperties: w.AdditionalProperties,
+		DependsOn:            w.DependsOn,
+		Description:          w.Description,
 		Name:                 w.Name,
 		Type:                 w.Type,
-		Description:          w.Description,
-		DependsOn:            w.DependsOn,
 		UserProperties:       w.UserProperties,
-		AdditionalProperties: w.AdditionalProperties,
 	}
 }
 
@@ -27479,12 +27479,12 @@ type WebLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type WebLinkedService.
 func (w *WebLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 w.Type,
+		AdditionalProperties: w.AdditionalProperties,
+		Annotations:          w.Annotations,
 		ConnectVia:           w.ConnectVia,
 		Description:          w.Description,
 		Parameters:           w.Parameters,
-		Annotations:          w.Annotations,
-		AdditionalProperties: w.AdditionalProperties,
+		Type:                 w.Type,
 	}
 }
 
@@ -27529,11 +27529,11 @@ type WebSource struct {
 // GetCopySource implements the CopySourceClassification interface for type WebSource.
 func (w *WebSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     w.Type,
+		AdditionalProperties:     w.AdditionalProperties,
+		MaxConcurrentConnections: w.MaxConcurrentConnections,
 		SourceRetryCount:         w.SourceRetryCount,
 		SourceRetryWait:          w.SourceRetryWait,
-		MaxConcurrentConnections: w.MaxConcurrentConnections,
-		AdditionalProperties:     w.AdditionalProperties,
+		Type:                     w.Type,
 	}
 }
 
@@ -27574,15 +27574,15 @@ type WebTableDataset struct {
 // GetDataset implements the DatasetClassification interface for type WebTableDataset.
 func (w *WebTableDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 w.Type,
+		AdditionalProperties: w.AdditionalProperties,
+		Annotations:          w.Annotations,
 		Description:          w.Description,
-		Structure:            w.Structure,
-		Schema:               w.Schema,
+		Folder:               w.Folder,
 		LinkedServiceName:    w.LinkedServiceName,
 		Parameters:           w.Parameters,
-		Annotations:          w.Annotations,
-		Folder:               w.Folder,
-		AdditionalProperties: w.AdditionalProperties,
+		Schema:               w.Schema,
+		Structure:            w.Structure,
+		Type:                 w.Type,
 	}
 }
 
@@ -27778,15 +27778,15 @@ type XMLDataset struct {
 // GetDataset implements the DatasetClassification interface for type XMLDataset.
 func (x *XMLDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 x.Type,
+		AdditionalProperties: x.AdditionalProperties,
+		Annotations:          x.Annotations,
 		Description:          x.Description,
-		Structure:            x.Structure,
-		Schema:               x.Schema,
+		Folder:               x.Folder,
 		LinkedServiceName:    x.LinkedServiceName,
 		Parameters:           x.Parameters,
-		Annotations:          x.Annotations,
-		Folder:               x.Folder,
-		AdditionalProperties: x.AdditionalProperties,
+		Schema:               x.Schema,
+		Structure:            x.Structure,
+		Type:                 x.Type,
 	}
 }
 
@@ -27839,8 +27839,8 @@ type XMLReadSettings struct {
 // GetFormatReadSettings implements the FormatReadSettingsClassification interface for type XMLReadSettings.
 func (x *XMLReadSettings) GetFormatReadSettings() *FormatReadSettings {
 	return &FormatReadSettings{
-		Type:                 x.Type,
 		AdditionalProperties: x.AdditionalProperties,
+		Type:                 x.Type,
 	}
 }
 
@@ -27875,11 +27875,11 @@ type XMLSource struct {
 // GetCopySource implements the CopySourceClassification interface for type XMLSource.
 func (x *XMLSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     x.Type,
+		AdditionalProperties:     x.AdditionalProperties,
+		MaxConcurrentConnections: x.MaxConcurrentConnections,
 		SourceRetryCount:         x.SourceRetryCount,
 		SourceRetryWait:          x.SourceRetryWait,
-		MaxConcurrentConnections: x.MaxConcurrentConnections,
-		AdditionalProperties:     x.AdditionalProperties,
+		Type:                     x.Type,
 	}
 }
 
@@ -27910,12 +27910,12 @@ type XeroLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type XeroLinkedService.
 func (x *XeroLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 x.Type,
+		AdditionalProperties: x.AdditionalProperties,
+		Annotations:          x.Annotations,
 		ConnectVia:           x.ConnectVia,
 		Description:          x.Description,
 		Parameters:           x.Parameters,
-		Annotations:          x.Annotations,
-		AdditionalProperties: x.AdditionalProperties,
+		Type:                 x.Type,
 	}
 }
 
@@ -27986,15 +27986,15 @@ type XeroObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type XeroObjectDataset.
 func (x *XeroObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 x.Type,
+		AdditionalProperties: x.AdditionalProperties,
+		Annotations:          x.Annotations,
 		Description:          x.Description,
-		Structure:            x.Structure,
-		Schema:               x.Schema,
+		Folder:               x.Folder,
 		LinkedServiceName:    x.LinkedServiceName,
 		Parameters:           x.Parameters,
-		Annotations:          x.Annotations,
-		Folder:               x.Folder,
-		AdditionalProperties: x.AdditionalProperties,
+		Schema:               x.Schema,
+		Structure:            x.Structure,
+		Type:                 x.Type,
 	}
 }
 
@@ -28029,24 +28029,24 @@ type XeroSource struct {
 // GetCopySource implements the CopySourceClassification interface for type XeroSource.
 func (x *XeroSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     x.Type,
+		AdditionalProperties:     x.AdditionalProperties,
+		MaxConcurrentConnections: x.MaxConcurrentConnections,
 		SourceRetryCount:         x.SourceRetryCount,
 		SourceRetryWait:          x.SourceRetryWait,
-		MaxConcurrentConnections: x.MaxConcurrentConnections,
-		AdditionalProperties:     x.AdditionalProperties,
+		Type:                     x.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type XeroSource.
 func (x *XeroSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             x.QueryTimeout,
 		AdditionalColumns:        x.AdditionalColumns,
-		Type:                     x.Type,
+		AdditionalProperties:     x.AdditionalProperties,
+		MaxConcurrentConnections: x.MaxConcurrentConnections,
+		QueryTimeout:             x.QueryTimeout,
 		SourceRetryCount:         x.SourceRetryCount,
 		SourceRetryWait:          x.SourceRetryWait,
-		MaxConcurrentConnections: x.MaxConcurrentConnections,
-		AdditionalProperties:     x.AdditionalProperties,
+		Type:                     x.Type,
 	}
 }
 
@@ -28077,12 +28077,12 @@ type ZendeskLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ZendeskLinkedService.
 func (z *ZendeskLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 z.Type,
+		AdditionalProperties: z.AdditionalProperties,
+		Annotations:          z.Annotations,
 		ConnectVia:           z.ConnectVia,
 		Description:          z.Description,
 		Parameters:           z.Parameters,
-		Annotations:          z.Annotations,
-		AdditionalProperties: z.AdditionalProperties,
+		Type:                 z.Type,
 	}
 }
 
@@ -28123,8 +28123,8 @@ type ZipDeflateReadSettings struct {
 // GetCompressionReadSettings implements the CompressionReadSettingsClassification interface for type ZipDeflateReadSettings.
 func (z *ZipDeflateReadSettings) GetCompressionReadSettings() *CompressionReadSettings {
 	return &CompressionReadSettings{
-		Type:                 z.Type,
 		AdditionalProperties: z.AdditionalProperties,
+		Type:                 z.Type,
 	}
 }
 
@@ -28155,12 +28155,12 @@ type ZohoLinkedService struct {
 // GetLinkedService implements the LinkedServiceClassification interface for type ZohoLinkedService.
 func (z *ZohoLinkedService) GetLinkedService() *LinkedService {
 	return &LinkedService{
-		Type:                 z.Type,
+		AdditionalProperties: z.AdditionalProperties,
+		Annotations:          z.Annotations,
 		ConnectVia:           z.ConnectVia,
 		Description:          z.Description,
 		Parameters:           z.Parameters,
-		Annotations:          z.Annotations,
-		AdditionalProperties: z.AdditionalProperties,
+		Type:                 z.Type,
 	}
 }
 
@@ -28227,15 +28227,15 @@ type ZohoObjectDataset struct {
 // GetDataset implements the DatasetClassification interface for type ZohoObjectDataset.
 func (z *ZohoObjectDataset) GetDataset() *Dataset {
 	return &Dataset{
-		Type:                 z.Type,
+		AdditionalProperties: z.AdditionalProperties,
+		Annotations:          z.Annotations,
 		Description:          z.Description,
-		Structure:            z.Structure,
-		Schema:               z.Schema,
+		Folder:               z.Folder,
 		LinkedServiceName:    z.LinkedServiceName,
 		Parameters:           z.Parameters,
-		Annotations:          z.Annotations,
-		Folder:               z.Folder,
-		AdditionalProperties: z.AdditionalProperties,
+		Schema:               z.Schema,
+		Structure:            z.Structure,
+		Type:                 z.Type,
 	}
 }
 
@@ -28270,23 +28270,23 @@ type ZohoSource struct {
 // GetCopySource implements the CopySourceClassification interface for type ZohoSource.
 func (z *ZohoSource) GetCopySource() *CopySource {
 	return &CopySource{
-		Type:                     z.Type,
+		AdditionalProperties:     z.AdditionalProperties,
+		MaxConcurrentConnections: z.MaxConcurrentConnections,
 		SourceRetryCount:         z.SourceRetryCount,
 		SourceRetryWait:          z.SourceRetryWait,
-		MaxConcurrentConnections: z.MaxConcurrentConnections,
-		AdditionalProperties:     z.AdditionalProperties,
+		Type:                     z.Type,
 	}
 }
 
 // GetTabularSource implements the TabularSourceClassification interface for type ZohoSource.
 func (z *ZohoSource) GetTabularSource() *TabularSource {
 	return &TabularSource{
-		QueryTimeout:             z.QueryTimeout,
 		AdditionalColumns:        z.AdditionalColumns,
-		Type:                     z.Type,
+		AdditionalProperties:     z.AdditionalProperties,
+		MaxConcurrentConnections: z.MaxConcurrentConnections,
+		QueryTimeout:             z.QueryTimeout,
 		SourceRetryCount:         z.SourceRetryCount,
 		SourceRetryWait:          z.SourceRetryWait,
-		MaxConcurrentConnections: z.MaxConcurrentConnections,
-		AdditionalProperties:     z.AdditionalProperties,
+		Type:                     z.Type,
 	}
 }

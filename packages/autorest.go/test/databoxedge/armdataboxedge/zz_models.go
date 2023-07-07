@@ -151,10 +151,10 @@ type ArcAddon struct {
 // GetAddon implements the AddonClassification interface for type ArcAddon.
 func (a *ArcAddon) GetAddon() *Addon {
 	return &Addon{
-		Kind:       a.Kind,
-		SystemData: a.SystemData,
 		ID:         a.ID,
+		Kind:       a.Kind,
 		Name:       a.Name,
+		SystemData: a.SystemData,
 		Type:       a.Type,
 	}
 }
@@ -295,10 +295,10 @@ type CloudEdgeManagementRole struct {
 // GetRole implements the RoleClassification interface for type CloudEdgeManagementRole.
 func (c *CloudEdgeManagementRole) GetRole() *Role {
 	return &Role{
-		Kind:       c.Kind,
-		SystemData: c.SystemData,
 		ID:         c.ID,
+		Kind:       c.Kind,
 		Name:       c.Name,
+		SystemData: c.SystemData,
 		Type:       c.Type,
 	}
 }
@@ -706,10 +706,10 @@ type FileEventTrigger struct {
 // GetTrigger implements the TriggerClassification interface for type FileEventTrigger.
 func (f *FileEventTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		SystemData: f.SystemData,
-		Kind:       f.Kind,
 		ID:         f.ID,
+		Kind:       f.Kind,
 		Name:       f.Name,
+		SystemData: f.SystemData,
 		Type:       f.Type,
 	}
 }
@@ -806,10 +806,10 @@ type IoTAddon struct {
 // GetAddon implements the AddonClassification interface for type IoTAddon.
 func (i *IoTAddon) GetAddon() *Addon {
 	return &Addon{
-		Kind:       i.Kind,
-		SystemData: i.SystemData,
 		ID:         i.ID,
+		Kind:       i.Kind,
 		Name:       i.Name,
+		SystemData: i.SystemData,
 		Type:       i.Type,
 	}
 }
@@ -887,10 +887,10 @@ type IoTRole struct {
 // GetRole implements the RoleClassification interface for type IoTRole.
 func (i *IoTRole) GetRole() *Role {
 	return &Role{
-		Kind:       i.Kind,
-		SystemData: i.SystemData,
 		ID:         i.ID,
+		Kind:       i.Kind,
 		Name:       i.Name,
+		SystemData: i.SystemData,
 		Type:       i.Type,
 	}
 }
@@ -1060,10 +1060,10 @@ type KubernetesRole struct {
 // GetRole implements the RoleClassification interface for type KubernetesRole.
 func (k *KubernetesRole) GetRole() *Role {
 	return &Role{
-		Kind:       k.Kind,
-		SystemData: k.SystemData,
 		ID:         k.ID,
+		Kind:       k.Kind,
 		Name:       k.Name,
+		SystemData: k.SystemData,
 		Type:       k.Type,
 	}
 }
@@ -1176,10 +1176,10 @@ type MECRole struct {
 // GetRole implements the RoleClassification interface for type MECRole.
 func (m *MECRole) GetRole() *Role {
 	return &Role{
-		Kind:       m.Kind,
-		SystemData: m.SystemData,
 		ID:         m.ID,
+		Kind:       m.Kind,
 		Name:       m.Name,
+		SystemData: m.SystemData,
 		Type:       m.Type,
 	}
 }
@@ -1631,10 +1631,10 @@ type PeriodicTimerEventTrigger struct {
 // GetTrigger implements the TriggerClassification interface for type PeriodicTimerEventTrigger.
 func (p *PeriodicTimerEventTrigger) GetTrigger() *Trigger {
 	return &Trigger{
-		SystemData: p.SystemData,
-		Kind:       p.Kind,
 		ID:         p.ID,
+		Kind:       p.Kind,
 		Name:       p.Name,
+		SystemData: p.SystemData,
 		Type:       p.Type,
 	}
 }
