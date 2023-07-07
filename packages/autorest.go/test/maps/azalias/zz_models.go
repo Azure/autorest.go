@@ -59,8 +59,8 @@ type GeoJSONFeature struct {
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
 func (g *GeoJSONFeature) GetGeoJSONObject() *GeoJSONObject {
 	return &GeoJSONObject{
-		Type: g.Type,
 		ID:   g.ID,
+		Type: g.Type,
 	}
 }
 

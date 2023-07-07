@@ -199,6 +199,7 @@ function substitueDiscriminator(item: Property | Parameter | SchemaResponse): Sc
       if (!discriminatorSchemas.has(sliceDiscriminators)) {
         discriminatorSchema = new ArraySchema(sliceDiscriminators, 'slice of discriminators', elementSchema);
         discriminatorSchema.language.go! = discriminatorSchema.language.default;
+        discriminatorSchema.language.go!.elementIsPtr = false;
         discriminatorSchemas.set(sliceDiscriminators, discriminatorSchema);
       }
       return discriminatorSchemas.get(sliceDiscriminators)!;
@@ -212,6 +213,7 @@ function substitueDiscriminator(item: Property | Parameter | SchemaResponse): Sc
       if (!discriminatorSchemas.has(mapDiscriminators)) {
         discriminatorSchema = new DictionarySchema(mapDiscriminators, 'map of discriminators', elementSchema);
         discriminatorSchema.language.go! = discriminatorSchema.language.default;
+        discriminatorSchema.language.go!.elementIsPtr = false;
         discriminatorSchemas.set(mapDiscriminators, discriminatorSchema);
       }
       return discriminatorSchemas.get(mapDiscriminators)!;

@@ -136,14 +136,14 @@ type ActiveDefaultSecurityAdminRule struct {
 // GetActiveBaseSecurityAdminRule implements the ActiveBaseSecurityAdminRuleClassification interface for type ActiveDefaultSecurityAdminRule.
 func (a *ActiveDefaultSecurityAdminRule) GetActiveBaseSecurityAdminRule() *ActiveBaseSecurityAdminRule {
 	return &ActiveBaseSecurityAdminRule{
-		ID:                            a.ID,
 		CommitTime:                    a.CommitTime,
-		Region:                        a.Region,
 		ConfigurationDescription:      a.ConfigurationDescription,
-		RuleCollectionDescription:     a.RuleCollectionDescription,
-		RuleCollectionAppliesToGroups: a.RuleCollectionAppliesToGroups,
-		RuleGroups:                    a.RuleGroups,
+		ID:                            a.ID,
 		Kind:                          a.Kind,
+		Region:                        a.Region,
+		RuleCollectionAppliesToGroups: a.RuleCollectionAppliesToGroups,
+		RuleCollectionDescription:     a.RuleCollectionDescription,
+		RuleGroups:                    a.RuleGroups,
 	}
 }
 
@@ -180,14 +180,14 @@ type ActiveSecurityAdminRule struct {
 // GetActiveBaseSecurityAdminRule implements the ActiveBaseSecurityAdminRuleClassification interface for type ActiveSecurityAdminRule.
 func (a *ActiveSecurityAdminRule) GetActiveBaseSecurityAdminRule() *ActiveBaseSecurityAdminRule {
 	return &ActiveBaseSecurityAdminRule{
-		ID:                            a.ID,
 		CommitTime:                    a.CommitTime,
-		Region:                        a.Region,
 		ConfigurationDescription:      a.ConfigurationDescription,
-		RuleCollectionDescription:     a.RuleCollectionDescription,
-		RuleCollectionAppliesToGroups: a.RuleCollectionAppliesToGroups,
-		RuleGroups:                    a.RuleGroups,
+		ID:                            a.ID,
 		Kind:                          a.Kind,
+		Region:                        a.Region,
+		RuleCollectionAppliesToGroups: a.RuleCollectionAppliesToGroups,
+		RuleCollectionDescription:     a.RuleCollectionDescription,
+		RuleGroups:                    a.RuleGroups,
 	}
 }
 
@@ -278,12 +278,12 @@ type AdminRule struct {
 // GetBaseAdminRule implements the BaseAdminRuleClassification interface for type AdminRule.
 func (a *AdminRule) GetBaseAdminRule() *BaseAdminRule {
 	return &BaseAdminRule{
-		Kind:       a.Kind,
-		SystemData: a.SystemData,
-		ID:         a.ID,
-		Name:       a.Name,
-		Type:       a.Type,
 		Etag:       a.Etag,
+		ID:         a.ID,
+		Kind:       a.Kind,
+		Name:       a.Name,
+		SystemData: a.SystemData,
+		Type:       a.Type,
 	}
 }
 
@@ -2015,8 +2015,8 @@ type ApplicationRule struct {
 // GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type ApplicationRule.
 func (a *ApplicationRule) GetFirewallPolicyRule() *FirewallPolicyRule {
 	return &FirewallPolicyRule{
-		Name:        a.Name,
 		Description: a.Description,
+		Name:        a.Name,
 		RuleType:    a.RuleType,
 	}
 }
@@ -4146,12 +4146,12 @@ type DefaultAdminRule struct {
 // GetBaseAdminRule implements the BaseAdminRuleClassification interface for type DefaultAdminRule.
 func (d *DefaultAdminRule) GetBaseAdminRule() *BaseAdminRule {
 	return &BaseAdminRule{
-		Kind:       d.Kind,
-		SystemData: d.SystemData,
-		ID:         d.ID,
-		Name:       d.Name,
-		Type:       d.Type,
 		Etag:       d.Etag,
+		ID:         d.ID,
+		Kind:       d.Kind,
+		Name:       d.Name,
+		SystemData: d.SystemData,
+		Type:       d.Type,
 	}
 }
 
@@ -4356,12 +4356,12 @@ type EffectiveDefaultSecurityAdminRule struct {
 // GetEffectiveBaseSecurityAdminRule implements the EffectiveBaseSecurityAdminRuleClassification interface for type EffectiveDefaultSecurityAdminRule.
 func (e *EffectiveDefaultSecurityAdminRule) GetEffectiveBaseSecurityAdminRule() *EffectiveBaseSecurityAdminRule {
 	return &EffectiveBaseSecurityAdminRule{
-		ID:                            e.ID,
 		ConfigurationDescription:      e.ConfigurationDescription,
-		RuleCollectionDescription:     e.RuleCollectionDescription,
-		RuleCollectionAppliesToGroups: e.RuleCollectionAppliesToGroups,
-		RuleGroups:                    e.RuleGroups,
+		ID:                            e.ID,
 		Kind:                          e.Kind,
+		RuleCollectionAppliesToGroups: e.RuleCollectionAppliesToGroups,
+		RuleCollectionDescription:     e.RuleCollectionDescription,
+		RuleGroups:                    e.RuleGroups,
 	}
 }
 
@@ -4523,12 +4523,12 @@ type EffectiveSecurityAdminRule struct {
 // GetEffectiveBaseSecurityAdminRule implements the EffectiveBaseSecurityAdminRuleClassification interface for type EffectiveSecurityAdminRule.
 func (e *EffectiveSecurityAdminRule) GetEffectiveBaseSecurityAdminRule() *EffectiveBaseSecurityAdminRule {
 	return &EffectiveBaseSecurityAdminRule{
-		ID:                            e.ID,
 		ConfigurationDescription:      e.ConfigurationDescription,
-		RuleCollectionDescription:     e.RuleCollectionDescription,
-		RuleCollectionAppliesToGroups: e.RuleCollectionAppliesToGroups,
-		RuleGroups:                    e.RuleGroups,
+		ID:                            e.ID,
 		Kind:                          e.Kind,
+		RuleCollectionAppliesToGroups: e.RuleCollectionAppliesToGroups,
+		RuleCollectionDescription:     e.RuleCollectionDescription,
+		RuleGroups:                    e.RuleGroups,
 	}
 }
 
@@ -5722,9 +5722,9 @@ type FirewallPolicyFilterRuleCollection struct {
 // GetFirewallPolicyRuleCollection implements the FirewallPolicyRuleCollectionClassification interface for type FirewallPolicyFilterRuleCollection.
 func (f *FirewallPolicyFilterRuleCollection) GetFirewallPolicyRuleCollection() *FirewallPolicyRuleCollection {
 	return &FirewallPolicyRuleCollection{
-		RuleCollectionType: f.RuleCollectionType,
 		Name:               f.Name,
 		Priority:           f.Priority,
+		RuleCollectionType: f.RuleCollectionType,
 	}
 }
 
@@ -5853,9 +5853,9 @@ type FirewallPolicyNatRuleCollection struct {
 // GetFirewallPolicyRuleCollection implements the FirewallPolicyRuleCollectionClassification interface for type FirewallPolicyNatRuleCollection.
 func (f *FirewallPolicyNatRuleCollection) GetFirewallPolicyRuleCollection() *FirewallPolicyRuleCollection {
 	return &FirewallPolicyRuleCollection{
-		RuleCollectionType: f.RuleCollectionType,
 		Name:               f.Name,
 		Priority:           f.Priority,
+		RuleCollectionType: f.RuleCollectionType,
 	}
 }
 
@@ -8244,8 +8244,8 @@ type NatRule struct {
 // GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type NatRule.
 func (n *NatRule) GetFirewallPolicyRule() *FirewallPolicyRule {
 	return &FirewallPolicyRule{
-		Name:        n.Name,
 		Description: n.Description,
+		Name:        n.Name,
 		RuleType:    n.RuleType,
 	}
 }
@@ -10042,8 +10042,8 @@ type Rule struct {
 // GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type Rule.
 func (r *Rule) GetFirewallPolicyRule() *FirewallPolicyRule {
 	return &FirewallPolicyRule{
-		Name:        r.Name,
 		Description: r.Description,
+		Name:        r.Name,
 		RuleType:    r.RuleType,
 	}
 }
