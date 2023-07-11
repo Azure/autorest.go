@@ -105,7 +105,7 @@ const network = './swagger/specification/network/resource-manager/readme.md';
 generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
 
 const compute = './swagger/specification/compute/resource-manager/readme.md';
-generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
+generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2 --slice-elements-byval');
 
 const synapseArtifacts = './swagger/specification/synapse/data-plane/readme.md';
 generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-composite-v6', 'test/synapse/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');

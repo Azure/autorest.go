@@ -58,7 +58,10 @@
       "in": "query",
       "required": true,
       "x-ms-parameter-location": "client",
-      "x-ms-client-default": "2.0"
+      "x-ms-client-default": "2.0",
+      "x-ms-parameter-grouping": {
+        "name": "client-group"
+      }
     },
     "SomeClientIndex": {
       "name": "client-index",
@@ -67,7 +70,32 @@
       "in": "header",
       "required": true,
       "x-ms-parameter-location": "client",
-      "x-ms-client-default": "567"
+      "x-ms-client-default": "567",
+      "x-ms-parameter-grouping": {
+        "name": "client-group"
+      }
+    },
+    "OptionalClientVersion": {
+      "name": "optional-version",
+      "description": "Version number of Azure Maps API.",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "x-ms-parameter-location": "client",
+      "x-ms-parameter-grouping": {
+        "name": "client-optional-group"
+      }
+    },
+    "OptionalClientIndex": {
+      "name": "optional-index",
+      "description": "Index number of Azure Maps API.",
+      "type": "integer",
+      "in": "header",
+      "required": false,
+      "x-ms-parameter-location": "client",
+      "x-ms-parameter-grouping": {
+        "name": "client-optional-group"
+      }
     },
     "CreateCreatorDataItemId": {
       "name": "creator-id",
@@ -288,6 +316,12 @@
         "parameters": [
           {
             "$ref": "#/parameters/ScheduleCreateOrUpdateProperties"
+          },
+          {
+            "$ref": "#/parameters/OptionalClientVersion"
+          },
+          {
+            "$ref": "#/parameters/OptionalClientIndex"
           },
           {
             "name": "interval",

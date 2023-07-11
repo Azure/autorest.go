@@ -44,8 +44,7 @@ export function sortAscending(a: string, b: string): number {
 // returns the type name with possible * prefix
 export function formatParameterTypeName(param: Parameter, pkgName?: string): string {
   const typeName = formatTypeName(param.schema, pkgName);
-  // client params with default values are treated as optional
-  if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
+  if (param.required) {
     return typeName;
   }
   return `*${typeName}`;
@@ -185,13 +184,14 @@ export function getMethodParameters(op: Operation): Array<Parameter> {
 
 // returns the fully-qualified parameter name.  this is usually just the name
 // but will include the client or optional param group name prefix as required.
-// dereference: pass true to dereference an optional param
 export function getParamName(param: Parameter): string {
   let paramName = param.language.go!.name;
+  // must check paramGroup first as client params can also be grouped
+  if (param.language.go!.paramGroup) {
+    paramName = `${uncapitalize(param.language.go!.paramGroup.language.go!.name)}.${capitalize(paramName)}`;
+  }
   if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
-  } else if (param.language.go!.paramGroup) {
-    paramName = `${uncapitalize(param.language.go!.paramGroup.language.go!.name)}.${capitalize(paramName)}`;
   }
   if (param.required !== true && !param.language.go!.byValue) {
     paramName = `*${paramName}`;

@@ -500,12 +500,12 @@ type LegacyChargeSummary struct {
 // GetChargeSummary implements the ChargeSummaryClassification interface for type LegacyChargeSummary.
 func (l *LegacyChargeSummary) GetChargeSummary() *ChargeSummary {
 	return &ChargeSummary{
-		Kind: l.Kind,
-		ID:   l.ID,
-		Name: l.Name,
-		Type: l.Type,
 		ETag: l.ETag,
+		ID:   l.ID,
+		Kind: l.Kind,
+		Name: l.Name,
 		Tags: l.Tags,
+		Type: l.Type,
 	}
 }
 
@@ -566,14 +566,14 @@ type LegacyReservationRecommendation struct {
 // GetReservationRecommendation implements the ReservationRecommendationClassification interface for type LegacyReservationRecommendation.
 func (l *LegacyReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
 	return &ReservationRecommendation{
-		Kind:     l.Kind,
-		ID:       l.ID,
-		Name:     l.Name,
-		Type:     l.Type,
 		ETag:     l.ETag,
-		Tags:     l.Tags,
+		ID:       l.ID,
+		Kind:     l.Kind,
 		Location: l.Location,
+		Name:     l.Name,
 		SKU:      l.SKU,
+		Tags:     l.Tags,
+		Type:     l.Type,
 	}
 }
 
@@ -717,12 +717,12 @@ type LegacyUsageDetail struct {
 // GetUsageDetail implements the UsageDetailClassification interface for type LegacyUsageDetail.
 func (l *LegacyUsageDetail) GetUsageDetail() *UsageDetail {
 	return &UsageDetail{
-		Kind: l.Kind,
-		ID:   l.ID,
-		Name: l.Name,
-		Type: l.Type,
 		Etag: l.Etag,
+		ID:   l.ID,
+		Kind: l.Kind,
+		Name: l.Name,
 		Tags: l.Tags,
+		Type: l.Type,
 	}
 }
 
@@ -1168,12 +1168,12 @@ type ModernChargeSummary struct {
 // GetChargeSummary implements the ChargeSummaryClassification interface for type ModernChargeSummary.
 func (m *ModernChargeSummary) GetChargeSummary() *ChargeSummary {
 	return &ChargeSummary{
-		Kind: m.Kind,
-		ID:   m.ID,
-		Name: m.Name,
-		Type: m.Type,
 		ETag: m.ETag,
+		ID:   m.ID,
+		Kind: m.Kind,
+		Name: m.Name,
 		Tags: m.Tags,
+		Type: m.Type,
 	}
 }
 
@@ -1249,14 +1249,14 @@ type ModernReservationRecommendation struct {
 // GetReservationRecommendation implements the ReservationRecommendationClassification interface for type ModernReservationRecommendation.
 func (m *ModernReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
 	return &ReservationRecommendation{
-		Kind:     m.Kind,
-		ID:       m.ID,
-		Name:     m.Name,
-		Type:     m.Type,
 		ETag:     m.ETag,
-		Tags:     m.Tags,
+		ID:       m.ID,
+		Kind:     m.Kind,
 		Location: m.Location,
+		Name:     m.Name,
 		SKU:      m.SKU,
+		Tags:     m.Tags,
+		Type:     m.Type,
 	}
 }
 
@@ -1436,12 +1436,12 @@ type ModernUsageDetail struct {
 // GetUsageDetail implements the UsageDetailClassification interface for type ModernUsageDetail.
 func (m *ModernUsageDetail) GetUsageDetail() *UsageDetail {
 	return &UsageDetail{
-		Kind: m.Kind,
-		ID:   m.ID,
-		Name: m.Name,
-		Type: m.Type,
 		Etag: m.Etag,
+		ID:   m.ID,
+		Kind: m.Kind,
+		Name: m.Name,
 		Tags: m.Tags,
+		Type: m.Type,
 	}
 }
 

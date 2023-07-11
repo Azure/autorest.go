@@ -89,7 +89,15 @@ export async function generateOperations(session: Session<CodeModel>): Promise<A
     // now emit any client params (non parameterized host params case)
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+      const addedGroups = new Set<string>();
       for (const clientParam of values(clientParams)) {
+        if (clientParam.language.go!.paramGroup) {
+          if (!addedGroups.has(clientParam.language.go!.paramGroup.language.go!.name)) {
+            clientText += `\t${uncapitalize(clientParam.language.go!.paramGroup.language.go!.name)} ${formatParameterTypeName(<GroupProperty>clientParam.language.go!.paramGroup)}\n`;
+            addedGroups.add(clientParam.language.go!.paramGroup.language.go!.name);
+          }
+          continue;
+        }
         clientText += `\t${clientParam.language.go!.name} `;
         if (clientParam.required) {
           clientText += `${clientParam.schema.language.go!.name}\n`;
@@ -111,24 +119,20 @@ export async function generateOperations(session: Session<CodeModel>): Promise<A
 
     if (azureARM) {
       // build constructor params
-      const emitClientParams = function() {
-        if (group.language.go!.clientParams) {
-          const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-          clientParams.sort(sortParametersByRequired);
-          for (const clientParam of values(clientParams)) {
-            methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
-            if (clientParam.language.go!.description) {
-              paramDocs.push(formatCommentAsBulletItem(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`));
-            }
-          }
-        }
-      };
-
       const methodParams = new Array<string>();
       const paramDocs = new Array<string>();
       // AzureARM is the simplest case, no parametertized host etc
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-      emitClientParams();
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        clientParams.sort(sortParametersByRequired);
+        for (const clientParam of values(clientParams)) {
+          methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+          if (clientParam.language.go!.description) {
+            paramDocs.push(formatCommentAsBulletItem(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`));
+          }
+        }
+      }
       methodParams.push('credential azcore.TokenCredential');
       paramDocs.push(formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
       methodParams.push('options *arm.ClientOptions');
@@ -562,15 +566,16 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
+    let client = '';
     if (param.implementation === ImplementationLocation.Client) {
-      return `\tif client.${param.language.go!.name} != nil {\n`;
+      client = 'client.';
     }
     const paramGroupName = uncapitalize(gp.language.go!.name);
-    let optionalParamGroupCheck = `${paramGroupName} != nil && `;
+    let optionalParamGroupCheck = `${client}${paramGroupName} != nil && `;
     if (gp.required) {
       optionalParamGroupCheck = '';
     }
-    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${capitalize(param.language.go!.name)} != nil {\n`;
+    return `\tif ${optionalParamGroupCheck}${client}${paramGroupName}.${capitalize(param.language.go!.name)} != nil {\n`;
   };
   if (hasQueryParams) {
     // add query parameters
@@ -589,7 +594,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         qpText = emitClientSideDefault(qp, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
       } else if (qp.required === true) {
         qpText = `\t${setter}\n`;
-      } else if (qp.implementation === ImplementationLocation.Client) {
+      } else if (qp.implementation === ImplementationLocation.Client && !qp.language.go!.paramGroup) {
         // global optional param
         qpText = `\tif client.${qp.language.go!.name} != nil {\n`;
         qpText += `\t\t${setter}\n`;

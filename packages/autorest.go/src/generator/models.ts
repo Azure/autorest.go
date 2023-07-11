@@ -212,7 +212,9 @@ function generateDiscriminatorMarkerMethod(obj: ObjectSchema, modelDef: ModelDef
     // the marker method is on a child type, so return an instance of the parent
     // type by copying the parent values into a new instance.
     method += `\n\treturn &${obj.language.go!.name}{\n`;
-    for (const prop of values(aggregateProperties(obj))) {
+    const props = aggregateProperties(obj);
+    props.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
+    for (const prop of values(props)) {
       method += `\t\t${prop.language.go!.name}: ${modelDef.receiverName()}.${prop.language.go!.name},\n`;
     }
     method += '\t}\n}\n\n';
