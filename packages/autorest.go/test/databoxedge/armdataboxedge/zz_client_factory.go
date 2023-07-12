@@ -37,18 +37,8 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
-func (c *ClientFactory) NewOperationsClient() *OperationsClient {
-	subClient, _ := NewOperationsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewAvailableSKUsClient() *AvailableSKUsClient {
-	subClient, _ := NewAvailableSKUsClient(c.subscriptionID, c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewDevicesClient() *DevicesClient {
-	subClient, _ := NewDevicesClient(c.subscriptionID, c.credential, c.options)
+func (c *ClientFactory) NewAddonsClient() *AddonsClient {
+	subClient, _ := NewAddonsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
@@ -57,8 +47,23 @@ func (c *ClientFactory) NewAlertsClient() *AlertsClient {
 	return subClient
 }
 
+func (c *ClientFactory) NewAvailableSKUsClient() *AvailableSKUsClient {
+	subClient, _ := NewAvailableSKUsClient(c.subscriptionID, c.credential, c.options)
+	return subClient
+}
+
 func (c *ClientFactory) NewBandwidthSchedulesClient() *BandwidthSchedulesClient {
 	subClient, _ := NewBandwidthSchedulesClient(c.subscriptionID, c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewContainersClient() *ContainersClient {
+	subClient, _ := NewContainersClient(c.subscriptionID, c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewDevicesClient() *DevicesClient {
+	subClient, _ := NewDevicesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
@@ -72,8 +77,18 @@ func (c *ClientFactory) NewJobsClient() *JobsClient {
 	return subClient
 }
 
+func (c *ClientFactory) NewMonitoringConfigClient() *MonitoringConfigClient {
+	subClient, _ := NewMonitoringConfigClient(c.subscriptionID, c.credential, c.options)
+	return subClient
+}
+
 func (c *ClientFactory) NewNodesClient() *NodesClient {
 	subClient, _ := NewNodesClient(c.subscriptionID, c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewOperationsClient() *OperationsClient {
+	subClient, _ := NewOperationsClient(c.credential, c.options)
 	return subClient
 }
 
@@ -92,16 +107,6 @@ func (c *ClientFactory) NewRolesClient() *RolesClient {
 	return subClient
 }
 
-func (c *ClientFactory) NewAddonsClient() *AddonsClient {
-	subClient, _ := NewAddonsClient(c.subscriptionID, c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewMonitoringConfigClient() *MonitoringConfigClient {
-	subClient, _ := NewMonitoringConfigClient(c.subscriptionID, c.credential, c.options)
-	return subClient
-}
-
 func (c *ClientFactory) NewSharesClient() *SharesClient {
 	subClient, _ := NewSharesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
@@ -117,18 +122,13 @@ func (c *ClientFactory) NewStorageAccountsClient() *StorageAccountsClient {
 	return subClient
 }
 
-func (c *ClientFactory) NewContainersClient() *ContainersClient {
-	subClient, _ := NewContainersClient(c.subscriptionID, c.credential, c.options)
+func (c *ClientFactory) NewSupportPackagesClient() *SupportPackagesClient {
+	subClient, _ := NewSupportPackagesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewTriggersClient() *TriggersClient {
 	subClient, _ := NewTriggersClient(c.subscriptionID, c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewSupportPackagesClient() *SupportPackagesClient {
-	subClient, _ := NewSupportPackagesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 

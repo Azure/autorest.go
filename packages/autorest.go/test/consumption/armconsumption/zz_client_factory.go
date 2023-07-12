@@ -37,28 +37,8 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
-func (c *ClientFactory) NewUsageDetailsClient() *UsageDetailsClient {
-	subClient, _ := NewUsageDetailsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewMarketplacesClient() *MarketplacesClient {
-	subClient, _ := NewMarketplacesClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewBudgetsClient() *BudgetsClient {
-	subClient, _ := NewBudgetsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewTagsClient() *TagsClient {
-	subClient, _ := NewTagsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewChargesClient() *ChargesClient {
-	subClient, _ := NewChargesClient(c.credential, c.options)
+func (c *ClientFactory) NewAggregatedCostClient() *AggregatedCostClient {
+	subClient, _ := NewAggregatedCostClient(c.credential, c.options)
 	return subClient
 }
 
@@ -67,48 +47,18 @@ func (c *ClientFactory) NewBalancesClient() *BalancesClient {
 	return subClient
 }
 
-func (c *ClientFactory) NewReservationsSummariesClient() *ReservationsSummariesClient {
-	subClient, _ := NewReservationsSummariesClient(c.credential, c.options)
+func (c *ClientFactory) NewBudgetsClient() *BudgetsClient {
+	subClient, _ := NewBudgetsClient(c.credential, c.options)
 	return subClient
 }
 
-func (c *ClientFactory) NewReservationsDetailsClient() *ReservationsDetailsClient {
-	subClient, _ := NewReservationsDetailsClient(c.credential, c.options)
+func (c *ClientFactory) NewChargesClient() *ChargesClient {
+	subClient, _ := NewChargesClient(c.credential, c.options)
 	return subClient
 }
 
-func (c *ClientFactory) NewReservationRecommendationsClient() *ReservationRecommendationsClient {
-	subClient, _ := NewReservationRecommendationsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewReservationRecommendationDetailsClient() *ReservationRecommendationDetailsClient {
-	subClient, _ := NewReservationRecommendationDetailsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewReservationTransactionsClient() *ReservationTransactionsClient {
-	subClient, _ := NewReservationTransactionsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewPriceSheetClient() *PriceSheetClient {
-	subClient, _ := NewPriceSheetClient(c.subscriptionID, c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewForecastsClient() *ForecastsClient {
-	subClient, _ := NewForecastsClient(c.subscriptionID, c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewOperationsClient() *OperationsClient {
-	subClient, _ := NewOperationsClient(c.credential, c.options)
-	return subClient
-}
-
-func (c *ClientFactory) NewAggregatedCostClient() *AggregatedCostClient {
-	subClient, _ := NewAggregatedCostClient(c.credential, c.options)
+func (c *ClientFactory) NewCreditsClient() *CreditsClient {
+	subClient, _ := NewCreditsClient(c.credential, c.options)
 	return subClient
 }
 
@@ -117,12 +67,62 @@ func (c *ClientFactory) NewEventsClient() *EventsClient {
 	return subClient
 }
 
+func (c *ClientFactory) NewForecastsClient() *ForecastsClient {
+	subClient, _ := NewForecastsClient(c.subscriptionID, c.credential, c.options)
+	return subClient
+}
+
 func (c *ClientFactory) NewLotsClient() *LotsClient {
 	subClient, _ := NewLotsClient(c.credential, c.options)
 	return subClient
 }
 
-func (c *ClientFactory) NewCreditsClient() *CreditsClient {
-	subClient, _ := NewCreditsClient(c.credential, c.options)
+func (c *ClientFactory) NewMarketplacesClient() *MarketplacesClient {
+	subClient, _ := NewMarketplacesClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewOperationsClient() *OperationsClient {
+	subClient, _ := NewOperationsClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewPriceSheetClient() *PriceSheetClient {
+	subClient, _ := NewPriceSheetClient(c.subscriptionID, c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewReservationRecommendationDetailsClient() *ReservationRecommendationDetailsClient {
+	subClient, _ := NewReservationRecommendationDetailsClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewReservationRecommendationsClient() *ReservationRecommendationsClient {
+	subClient, _ := NewReservationRecommendationsClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewReservationTransactionsClient() *ReservationTransactionsClient {
+	subClient, _ := NewReservationTransactionsClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewReservationsDetailsClient() *ReservationsDetailsClient {
+	subClient, _ := NewReservationsDetailsClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewReservationsSummariesClient() *ReservationsSummariesClient {
+	subClient, _ := NewReservationsSummariesClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewTagsClient() *TagsClient {
+	subClient, _ := NewTagsClient(c.credential, c.options)
+	return subClient
+}
+
+func (c *ClientFactory) NewUsageDetailsClient() *UsageDetailsClient {
+	subClient, _ := NewUsageDetailsClient(c.credential, c.options)
 	return subClient
 }
