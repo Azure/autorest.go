@@ -16,7 +16,7 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
   let result = '';
   // generate client factory only for ARM
   if (azureARM && length(session.model.operationGroups) > 0) {
-    session.model.operationGroups.sort((a: OperationGroup, b: OperationGroup) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
+    session.model.operationGroups.sort((a: OperationGroup, b: OperationGroup) => { return sortAscending(a.language.go!.clientName, b.language.go!.clientName); });
 
     // the list of packages to import
     const imports = new ImportManager();
