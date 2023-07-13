@@ -578,7 +578,7 @@ export async function getParentImport(session: Session<CodeModel>): Promise<stri
     const majorVersion = (await session.getValue('module-version', '1.0.0')).split('.')[0];
     if (Number(majorVersion) > 1) {
       if (modName.split('/')[-1] !== 'v' + majorVersion) {
-        return modName + '/v' + majorVersion
+        return modName + '/v' + majorVersion;
       }
     }
     return modName;
