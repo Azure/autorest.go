@@ -983,6 +983,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
         headerVals.push(prop);
       }
     }
+    headerVals.sort((a: Property, b: Property) => {return sortAscending(a.language.go!.name, b.language.go!.name); });
     for (const headerVal of values(headerVals)) {
       text += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${getResponseEnvelopeName(op)}{}`);
     }
