@@ -121,18 +121,18 @@ func (client *ContainerRegistryClient) createManifestCreateRequest(ctx context.C
 // createManifestHandleResponse handles the CreateManifest response.
 func (client *ContainerRegistryClient) createManifestHandleResponse(resp *http.Response) (ContainerRegistryClientCreateManifestResponse, error) {
 	result := ContainerRegistryClientCreateManifestResponse{}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
-		result.DockerContentDigest = &val
-	}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
-	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return ContainerRegistryClientCreateManifestResponse{}, err
 		}
 		result.ContentLength = &contentLength
+	}
+	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+		result.DockerContentDigest = &val
+	}
+	if val := resp.Header.Get("Location"); val != "" {
+		result.Location = &val
 	}
 	body, err := runtime.Payload(resp)
 	if err != nil {

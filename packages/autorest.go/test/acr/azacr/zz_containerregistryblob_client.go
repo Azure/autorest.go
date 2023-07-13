@@ -254,14 +254,14 @@ func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx conte
 // completeUploadHandleResponse handles the CompleteUpload response.
 func (client *ContainerRegistryBlobClient) completeUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
 	result := ContainerRegistryBlobClientCompleteUploadResponse{}
+	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+		result.DockerContentDigest = &val
+	}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
 	if val := resp.Header.Get("Range"); val != "" {
 		result.Range = &val
-	}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
-		result.DockerContentDigest = &val
 	}
 	return result, nil
 }
@@ -506,11 +506,11 @@ func (client *ContainerRegistryBlobClient) getUploadStatusCreateRequest(ctx cont
 // getUploadStatusHandleResponse handles the GetUploadStatus response.
 func (client *ContainerRegistryBlobClient) getUploadStatusHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
 	result := ContainerRegistryBlobClientGetUploadStatusResponse{}
-	if val := resp.Header.Get("Range"); val != "" {
-		result.Range = &val
-	}
 	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
 		result.DockerUploadUUID = &val
+	}
+	if val := resp.Header.Get("Range"); val != "" {
+		result.Range = &val
 	}
 	return result, nil
 }
@@ -568,14 +568,14 @@ func (client *ContainerRegistryBlobClient) mountBlobCreateRequest(ctx context.Co
 // mountBlobHandleResponse handles the MountBlob response.
 func (client *ContainerRegistryBlobClient) mountBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientMountBlobResponse, error) {
 	result := ContainerRegistryBlobClientMountBlobResponse{}
-	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
+	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+		result.DockerContentDigest = &val
 	}
 	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
 		result.DockerUploadUUID = &val
 	}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
-		result.DockerContentDigest = &val
+	if val := resp.Header.Get("Location"); val != "" {
+		result.Location = &val
 	}
 	return result, nil
 }
@@ -627,14 +627,14 @@ func (client *ContainerRegistryBlobClient) startUploadCreateRequest(ctx context.
 // startUploadHandleResponse handles the StartUpload response.
 func (client *ContainerRegistryBlobClient) startUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientStartUploadResponse, error) {
 	result := ContainerRegistryBlobClientStartUploadResponse{}
+	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
+		result.DockerUploadUUID = &val
+	}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
 	if val := resp.Header.Get("Range"); val != "" {
 		result.Range = &val
-	}
-	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
-		result.DockerUploadUUID = &val
 	}
 	return result, nil
 }
@@ -687,14 +687,14 @@ func (client *ContainerRegistryBlobClient) uploadChunkCreateRequest(ctx context.
 // uploadChunkHandleResponse handles the UploadChunk response.
 func (client *ContainerRegistryBlobClient) uploadChunkHandleResponse(resp *http.Response) (ContainerRegistryBlobClientUploadChunkResponse, error) {
 	result := ContainerRegistryBlobClientUploadChunkResponse{}
+	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
+		result.DockerUploadUUID = &val
+	}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
 	if val := resp.Header.Get("Range"); val != "" {
 		result.Range = &val
-	}
-	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
-		result.DockerUploadUUID = &val
 	}
 	return result, nil
 }

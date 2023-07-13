@@ -139,18 +139,18 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ServiceClientGetStatisticsResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ServiceStats); err != nil {
 		return ServiceClientGetStatisticsResponse{}, err

@@ -86,12 +86,6 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -101,6 +95,12 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 	}
 	if val := resp.Header.Get("Preference-Applied"); val != "" {
 		result.PreferenceApplied = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Response); err != nil {
 		return ClientCreateResponse{}, err
@@ -157,18 +157,18 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientDeleteResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	return result, nil
 }
@@ -244,18 +244,18 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientDeleteEntityResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	return result, nil
 }
@@ -316,18 +316,18 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientGetAccessPolicyResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
 		return ClientGetAccessPolicyResponse{}, err
@@ -402,11 +402,8 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -421,8 +418,11 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 	if val := resp.Header.Get("Preference-Applied"); val != "" {
 		result.PreferenceApplied = &val
 	}
-	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ClientInsertEntityResponse{}, err
@@ -505,12 +505,6 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -520,6 +514,12 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	return result, nil
 }
@@ -586,18 +586,18 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientQueryResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextTableName"); val != "" {
 		result.XMSContinuationNextTableName = &val
@@ -681,18 +681,18 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientQueryEntitiesResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
 		result.XMSContinuationNextPartitionKey = &val
@@ -781,12 +781,6 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -796,6 +790,12 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
 		result.XMSContinuationNextPartitionKey = &val
@@ -872,18 +872,18 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientSetAccessPolicyResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	return result, nil
 }
@@ -963,12 +963,6 @@ func (client *Client) updateEntityHandleResponse(resp *http.Response) (ClientUpd
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -978,6 +972,12 @@ func (client *Client) updateEntityHandleResponse(resp *http.Response) (ClientUpd
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	return result, nil
 }
