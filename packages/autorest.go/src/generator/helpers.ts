@@ -577,9 +577,8 @@ export async function getParentImport(session: Session<CodeModel>): Promise<stri
   if (modName !== 'none') {
     const majorVersion = (await session.getValue('module-version', '1.0.0')).split('.')[0];
     if (Number(majorVersion) > 1) {
-      const version = modName.substring(`github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/${clientPkg.substring(3)}/${clientPkg}`.length).match(/v\d/)?.[0];
-      if (version == '') {
-        return `github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/${clientPkg.substring(3)}/${clientPkg}/v${majorVersion}`;
+      if (modName.split('/')[-1] !== 'v' + majorVersion) {
+        return modName + '/v' + majorVersion
       }
     }
     return modName;
