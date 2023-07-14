@@ -93,19 +93,13 @@ type GeoJSONObject struct {
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
 func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
 
-// ListItem - Detailed information for the alias.
-type ListItem struct {
-	// READ-ONLY; The id for the alias.
-	AliasID *string
+// GeoJSONObjectNamedCollection - A named collection of GeoJSON object
+type GeoJSONObjectNamedCollection struct {
+	// Name of the collection
+	CollectionName *string
 
-	// READ-ONLY; The created timestamp for the alias.
-	CreatedTimestamp *string
-
-	// READ-ONLY; The id for the creator data item that this alias references (could be null if the alias has not been assigned).
-	CreatorDataItemID *string
-
-	// READ-ONLY; The timestamp of the last time the alias was assigned.
-	LastUpdatedTimestamp *string
+	// Dictionary of
+	Objects map[string]GeoJSONObjectClassification
 }
 
 // ListResponse - The response model for the List API. Returns a list of all the previously created aliases.

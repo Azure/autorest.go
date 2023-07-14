@@ -389,6 +389,7 @@
       }
     },
     "AliasListItem": {
+      "x-ms-external": true,
       "description": "Detailed information for the alias.",
       "type": "object",
       "properties": {
@@ -433,7 +434,6 @@
       }
     },
     "GeoJsonObjectNamedCollection": {
-      "x-ms-external": true,
       "description": "A named collection of `GeoJSON` object",
       "type": "object",
       "properties": {
