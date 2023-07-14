@@ -6,47 +6,17 @@
 
 package azalias
 
-import (
-	"encoding/json"
-	"fmt"
-)
+// ListItem - Detailed information for the alias.
+type ListItem struct {
+	// READ-ONLY; The id for the alias.
+	AliasID *string
 
-// GeoJSONObjectNamedCollection - A named collection of GeoJSON object
-type GeoJSONObjectNamedCollection struct {
-	// Name of the collection
-	CollectionName *string `json:"collectionName,omitempty"`
+	// READ-ONLY; The created timestamp for the alias.
+	CreatedTimestamp *string
 
-	// Dictionary of
-	Objects map[string]GeoJSONObjectClassification `json:"objects,omitempty"`
-}
+	// READ-ONLY; The id for the creator data item that this alias references (could be null if the alias has not been assigned).
+	CreatorDataItemID *string
 
-// MarshalJSON implements the json.Marshaller interface for type GeoJSONObjectNamedCollection.
-func (g GeoJSONObjectNamedCollection) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "collectionName", g.CollectionName)
-	populate(objectMap, "objects", g.Objects)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONObjectNamedCollection.
-func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", g, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "collectionName":
-			err = unpopulate(val, "CollectionName", &g.CollectionName)
-			delete(rawMsg, key)
-		case "objects":
-			g.Objects, err = unmarshalGeoJSONObjectClassificationMap(val)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", g, err)
-		}
-	}
-	return nil
+	// READ-ONLY; The timestamp of the last time the alias was assigned.
+	LastUpdatedTimestamp *string
 }
