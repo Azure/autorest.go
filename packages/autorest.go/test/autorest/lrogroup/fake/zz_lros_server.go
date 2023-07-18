@@ -203,57 +203,103 @@ type LROsServer struct {
 // The returned LROsServerTransport instance is connected to an instance of lrogroup.LROsClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewLROsServerTransport(srv *LROsServer) *LROsServerTransport {
-	return &LROsServerTransport{srv: srv}
+	return &LROsServerTransport{
+		srv:                                              srv,
+		beginDelete202NoRetry204:                         newTracker[azfake.PollerResponder[lrogroup.LROsClientDelete202NoRetry204Response]](),
+		beginDelete202Retry200:                           newTracker[azfake.PollerResponder[lrogroup.LROsClientDelete202Retry200Response]](),
+		beginDelete204Succeeded:                          newTracker[azfake.PollerResponder[lrogroup.LROsClientDelete204SucceededResponse]](),
+		beginDeleteAsyncNoHeaderInRetry:                  newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncNoHeaderInRetryResponse]](),
+		beginDeleteAsyncNoRetrySucceeded:                 newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncNoRetrySucceededResponse]](),
+		beginDeleteAsyncRetryFailed:                      newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetryFailedResponse]](),
+		beginDeleteAsyncRetrySucceeded:                   newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetrySucceededResponse]](),
+		beginDeleteAsyncRetrycanceled:                    newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetrycanceledResponse]](),
+		beginDeleteNoHeaderInRetry:                       newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteNoHeaderInRetryResponse]](),
+		beginDeleteProvisioning202Accepted200Succeeded:   newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202Accepted200SucceededResponse]](),
+		beginDeleteProvisioning202DeletingFailed200:      newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202DeletingFailed200Response]](),
+		beginDeleteProvisioning202Deletingcanceled200:    newTracker[azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202Deletingcanceled200Response]](),
+		beginPatch200SucceededIgnoreHeaders:              newTracker[azfake.PollerResponder[lrogroup.LROsClientPatch200SucceededIgnoreHeadersResponse]](),
+		beginPatch201RetryWithAsyncHeader:                newTracker[azfake.PollerResponder[lrogroup.LROsClientPatch201RetryWithAsyncHeaderResponse]](),
+		beginPatch202RetryWithAsyncAndLocationHeader:     newTracker[azfake.PollerResponder[lrogroup.LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse]](),
+		beginPost200WithPayload:                          newTracker[azfake.PollerResponder[lrogroup.LROsClientPost200WithPayloadResponse]](),
+		beginPost202List:                                 newTracker[azfake.PollerResponder[lrogroup.LROsClientPost202ListResponse]](),
+		beginPost202NoRetry204:                           newTracker[azfake.PollerResponder[lrogroup.LROsClientPost202NoRetry204Response]](),
+		beginPost202Retry200:                             newTracker[azfake.PollerResponder[lrogroup.LROsClientPost202Retry200Response]](),
+		beginPostAsyncNoRetrySucceeded:                   newTracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncNoRetrySucceededResponse]](),
+		beginPostAsyncRetryFailed:                        newTracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetryFailedResponse]](),
+		beginPostAsyncRetrySucceeded:                     newTracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetrySucceededResponse]](),
+		beginPostAsyncRetrycanceled:                      newTracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetrycanceledResponse]](),
+		beginPostDoubleHeadersFinalAzureHeaderGet:        newTracker[azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse]](),
+		beginPostDoubleHeadersFinalAzureHeaderGetDefault: newTracker[azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse]](),
+		beginPostDoubleHeadersFinalLocationGet:           newTracker[azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalLocationGetResponse]](),
+		beginPut200Acceptedcanceled200:                   newTracker[azfake.PollerResponder[lrogroup.LROsClientPut200Acceptedcanceled200Response]](),
+		beginPut200Succeeded:                             newTracker[azfake.PollerResponder[lrogroup.LROsClientPut200SucceededResponse]](),
+		beginPut200SucceededNoState:                      newTracker[azfake.PollerResponder[lrogroup.LROsClientPut200SucceededNoStateResponse]](),
+		beginPut200UpdatingSucceeded204:                  newTracker[azfake.PollerResponder[lrogroup.LROsClientPut200UpdatingSucceeded204Response]](),
+		beginPut201CreatingFailed200:                     newTracker[azfake.PollerResponder[lrogroup.LROsClientPut201CreatingFailed200Response]](),
+		beginPut201CreatingSucceeded200:                  newTracker[azfake.PollerResponder[lrogroup.LROsClientPut201CreatingSucceeded200Response]](),
+		beginPut201Succeeded:                             newTracker[azfake.PollerResponder[lrogroup.LROsClientPut201SucceededResponse]](),
+		beginPut202Retry200:                              newTracker[azfake.PollerResponder[lrogroup.LROsClientPut202Retry200Response]](),
+		beginPutAsyncNoHeaderInRetry:                     newTracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoHeaderInRetryResponse]](),
+		beginPutAsyncNoRetrySucceeded:                    newTracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoRetrySucceededResponse]](),
+		beginPutAsyncNoRetrycanceled:                     newTracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoRetrycanceledResponse]](),
+		beginPutAsyncNonResource:                         newTracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNonResourceResponse]](),
+		beginPutAsyncRetryFailed:                         newTracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncRetryFailedResponse]](),
+		beginPutAsyncRetrySucceeded:                      newTracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncRetrySucceededResponse]](),
+		beginPutAsyncSubResource:                         newTracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncSubResourceResponse]](),
+		beginPutNoHeaderInRetry:                          newTracker[azfake.PollerResponder[lrogroup.LROsClientPutNoHeaderInRetryResponse]](),
+		beginPutNonResource:                              newTracker[azfake.PollerResponder[lrogroup.LROsClientPutNonResourceResponse]](),
+		beginPutSubResource:                              newTracker[azfake.PollerResponder[lrogroup.LROsClientPutSubResourceResponse]](),
+	}
 }
 
 // LROsServerTransport connects instances of lrogroup.LROsClient to instances of LROsServer.
 // Don't use this type directly, use NewLROsServerTransport instead.
 type LROsServerTransport struct {
 	srv                                              *LROsServer
-	beginDelete202NoRetry204                         *azfake.PollerResponder[lrogroup.LROsClientDelete202NoRetry204Response]
-	beginDelete202Retry200                           *azfake.PollerResponder[lrogroup.LROsClientDelete202Retry200Response]
-	beginDelete204Succeeded                          *azfake.PollerResponder[lrogroup.LROsClientDelete204SucceededResponse]
-	beginDeleteAsyncNoHeaderInRetry                  *azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncNoHeaderInRetryResponse]
-	beginDeleteAsyncNoRetrySucceeded                 *azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncNoRetrySucceededResponse]
-	beginDeleteAsyncRetryFailed                      *azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetryFailedResponse]
-	beginDeleteAsyncRetrySucceeded                   *azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetrySucceededResponse]
-	beginDeleteAsyncRetrycanceled                    *azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetrycanceledResponse]
-	beginDeleteNoHeaderInRetry                       *azfake.PollerResponder[lrogroup.LROsClientDeleteNoHeaderInRetryResponse]
-	beginDeleteProvisioning202Accepted200Succeeded   *azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202Accepted200SucceededResponse]
-	beginDeleteProvisioning202DeletingFailed200      *azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202DeletingFailed200Response]
-	beginDeleteProvisioning202Deletingcanceled200    *azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202Deletingcanceled200Response]
-	beginPatch200SucceededIgnoreHeaders              *azfake.PollerResponder[lrogroup.LROsClientPatch200SucceededIgnoreHeadersResponse]
-	beginPatch201RetryWithAsyncHeader                *azfake.PollerResponder[lrogroup.LROsClientPatch201RetryWithAsyncHeaderResponse]
-	beginPatch202RetryWithAsyncAndLocationHeader     *azfake.PollerResponder[lrogroup.LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse]
-	beginPost200WithPayload                          *azfake.PollerResponder[lrogroup.LROsClientPost200WithPayloadResponse]
-	beginPost202List                                 *azfake.PollerResponder[lrogroup.LROsClientPost202ListResponse]
-	beginPost202NoRetry204                           *azfake.PollerResponder[lrogroup.LROsClientPost202NoRetry204Response]
-	beginPost202Retry200                             *azfake.PollerResponder[lrogroup.LROsClientPost202Retry200Response]
-	beginPostAsyncNoRetrySucceeded                   *azfake.PollerResponder[lrogroup.LROsClientPostAsyncNoRetrySucceededResponse]
-	beginPostAsyncRetryFailed                        *azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetryFailedResponse]
-	beginPostAsyncRetrySucceeded                     *azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetrySucceededResponse]
-	beginPostAsyncRetrycanceled                      *azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetrycanceledResponse]
-	beginPostDoubleHeadersFinalAzureHeaderGet        *azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse]
-	beginPostDoubleHeadersFinalAzureHeaderGetDefault *azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse]
-	beginPostDoubleHeadersFinalLocationGet           *azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalLocationGetResponse]
-	beginPut200Acceptedcanceled200                   *azfake.PollerResponder[lrogroup.LROsClientPut200Acceptedcanceled200Response]
-	beginPut200Succeeded                             *azfake.PollerResponder[lrogroup.LROsClientPut200SucceededResponse]
-	beginPut200SucceededNoState                      *azfake.PollerResponder[lrogroup.LROsClientPut200SucceededNoStateResponse]
-	beginPut200UpdatingSucceeded204                  *azfake.PollerResponder[lrogroup.LROsClientPut200UpdatingSucceeded204Response]
-	beginPut201CreatingFailed200                     *azfake.PollerResponder[lrogroup.LROsClientPut201CreatingFailed200Response]
-	beginPut201CreatingSucceeded200                  *azfake.PollerResponder[lrogroup.LROsClientPut201CreatingSucceeded200Response]
-	beginPut201Succeeded                             *azfake.PollerResponder[lrogroup.LROsClientPut201SucceededResponse]
-	beginPut202Retry200                              *azfake.PollerResponder[lrogroup.LROsClientPut202Retry200Response]
-	beginPutAsyncNoHeaderInRetry                     *azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoHeaderInRetryResponse]
-	beginPutAsyncNoRetrySucceeded                    *azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoRetrySucceededResponse]
-	beginPutAsyncNoRetrycanceled                     *azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoRetrycanceledResponse]
-	beginPutAsyncNonResource                         *azfake.PollerResponder[lrogroup.LROsClientPutAsyncNonResourceResponse]
-	beginPutAsyncRetryFailed                         *azfake.PollerResponder[lrogroup.LROsClientPutAsyncRetryFailedResponse]
-	beginPutAsyncRetrySucceeded                      *azfake.PollerResponder[lrogroup.LROsClientPutAsyncRetrySucceededResponse]
-	beginPutAsyncSubResource                         *azfake.PollerResponder[lrogroup.LROsClientPutAsyncSubResourceResponse]
-	beginPutNoHeaderInRetry                          *azfake.PollerResponder[lrogroup.LROsClientPutNoHeaderInRetryResponse]
-	beginPutNonResource                              *azfake.PollerResponder[lrogroup.LROsClientPutNonResourceResponse]
-	beginPutSubResource                              *azfake.PollerResponder[lrogroup.LROsClientPutSubResourceResponse]
+	beginDelete202NoRetry204                         *tracker[azfake.PollerResponder[lrogroup.LROsClientDelete202NoRetry204Response]]
+	beginDelete202Retry200                           *tracker[azfake.PollerResponder[lrogroup.LROsClientDelete202Retry200Response]]
+	beginDelete204Succeeded                          *tracker[azfake.PollerResponder[lrogroup.LROsClientDelete204SucceededResponse]]
+	beginDeleteAsyncNoHeaderInRetry                  *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncNoHeaderInRetryResponse]]
+	beginDeleteAsyncNoRetrySucceeded                 *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncNoRetrySucceededResponse]]
+	beginDeleteAsyncRetryFailed                      *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetryFailedResponse]]
+	beginDeleteAsyncRetrySucceeded                   *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetrySucceededResponse]]
+	beginDeleteAsyncRetrycanceled                    *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteAsyncRetrycanceledResponse]]
+	beginDeleteNoHeaderInRetry                       *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteNoHeaderInRetryResponse]]
+	beginDeleteProvisioning202Accepted200Succeeded   *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202Accepted200SucceededResponse]]
+	beginDeleteProvisioning202DeletingFailed200      *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202DeletingFailed200Response]]
+	beginDeleteProvisioning202Deletingcanceled200    *tracker[azfake.PollerResponder[lrogroup.LROsClientDeleteProvisioning202Deletingcanceled200Response]]
+	beginPatch200SucceededIgnoreHeaders              *tracker[azfake.PollerResponder[lrogroup.LROsClientPatch200SucceededIgnoreHeadersResponse]]
+	beginPatch201RetryWithAsyncHeader                *tracker[azfake.PollerResponder[lrogroup.LROsClientPatch201RetryWithAsyncHeaderResponse]]
+	beginPatch202RetryWithAsyncAndLocationHeader     *tracker[azfake.PollerResponder[lrogroup.LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse]]
+	beginPost200WithPayload                          *tracker[azfake.PollerResponder[lrogroup.LROsClientPost200WithPayloadResponse]]
+	beginPost202List                                 *tracker[azfake.PollerResponder[lrogroup.LROsClientPost202ListResponse]]
+	beginPost202NoRetry204                           *tracker[azfake.PollerResponder[lrogroup.LROsClientPost202NoRetry204Response]]
+	beginPost202Retry200                             *tracker[azfake.PollerResponder[lrogroup.LROsClientPost202Retry200Response]]
+	beginPostAsyncNoRetrySucceeded                   *tracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncNoRetrySucceededResponse]]
+	beginPostAsyncRetryFailed                        *tracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetryFailedResponse]]
+	beginPostAsyncRetrySucceeded                     *tracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetrySucceededResponse]]
+	beginPostAsyncRetrycanceled                      *tracker[azfake.PollerResponder[lrogroup.LROsClientPostAsyncRetrycanceledResponse]]
+	beginPostDoubleHeadersFinalAzureHeaderGet        *tracker[azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse]]
+	beginPostDoubleHeadersFinalAzureHeaderGetDefault *tracker[azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse]]
+	beginPostDoubleHeadersFinalLocationGet           *tracker[azfake.PollerResponder[lrogroup.LROsClientPostDoubleHeadersFinalLocationGetResponse]]
+	beginPut200Acceptedcanceled200                   *tracker[azfake.PollerResponder[lrogroup.LROsClientPut200Acceptedcanceled200Response]]
+	beginPut200Succeeded                             *tracker[azfake.PollerResponder[lrogroup.LROsClientPut200SucceededResponse]]
+	beginPut200SucceededNoState                      *tracker[azfake.PollerResponder[lrogroup.LROsClientPut200SucceededNoStateResponse]]
+	beginPut200UpdatingSucceeded204                  *tracker[azfake.PollerResponder[lrogroup.LROsClientPut200UpdatingSucceeded204Response]]
+	beginPut201CreatingFailed200                     *tracker[azfake.PollerResponder[lrogroup.LROsClientPut201CreatingFailed200Response]]
+	beginPut201CreatingSucceeded200                  *tracker[azfake.PollerResponder[lrogroup.LROsClientPut201CreatingSucceeded200Response]]
+	beginPut201Succeeded                             *tracker[azfake.PollerResponder[lrogroup.LROsClientPut201SucceededResponse]]
+	beginPut202Retry200                              *tracker[azfake.PollerResponder[lrogroup.LROsClientPut202Retry200Response]]
+	beginPutAsyncNoHeaderInRetry                     *tracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoHeaderInRetryResponse]]
+	beginPutAsyncNoRetrySucceeded                    *tracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoRetrySucceededResponse]]
+	beginPutAsyncNoRetrycanceled                     *tracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNoRetrycanceledResponse]]
+	beginPutAsyncNonResource                         *tracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncNonResourceResponse]]
+	beginPutAsyncRetryFailed                         *tracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncRetryFailedResponse]]
+	beginPutAsyncRetrySucceeded                      *tracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncRetrySucceededResponse]]
+	beginPutAsyncSubResource                         *tracker[azfake.PollerResponder[lrogroup.LROsClientPutAsyncSubResourceResponse]]
+	beginPutNoHeaderInRetry                          *tracker[azfake.PollerResponder[lrogroup.LROsClientPutNoHeaderInRetryResponse]]
+	beginPutNonResource                              *tracker[azfake.PollerResponder[lrogroup.LROsClientPutNonResourceResponse]]
+	beginPutSubResource                              *tracker[azfake.PollerResponder[lrogroup.LROsClientPutSubResourceResponse]]
 }
 
 // Do implements the policy.Transporter interface for LROsServerTransport.
@@ -371,24 +417,27 @@ func (l *LROsServerTransport) dispatchBeginDelete202NoRetry204(req *http.Request
 	if l.srv.BeginDelete202NoRetry204 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDelete202NoRetry204 not implemented")}
 	}
-	if l.beginDelete202NoRetry204 == nil {
+	beginDelete202NoRetry204 := l.beginDelete202NoRetry204.get(req)
+	if beginDelete202NoRetry204 == nil {
 		respr, errRespr := l.srv.BeginDelete202NoRetry204(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDelete202NoRetry204 = &respr
+		beginDelete202NoRetry204 = &respr
+		l.beginDelete202NoRetry204.add(req, beginDelete202NoRetry204)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDelete202NoRetry204, req)
+	resp, err := server.PollerResponderNext(beginDelete202NoRetry204, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginDelete202NoRetry204.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDelete202NoRetry204) {
-		l.beginDelete202NoRetry204 = nil
+	if !server.PollerResponderMore(beginDelete202NoRetry204) {
+		l.beginDelete202NoRetry204.remove(req)
 	}
 
 	return resp, nil
@@ -398,24 +447,27 @@ func (l *LROsServerTransport) dispatchBeginDelete202Retry200(req *http.Request) 
 	if l.srv.BeginDelete202Retry200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDelete202Retry200 not implemented")}
 	}
-	if l.beginDelete202Retry200 == nil {
+	beginDelete202Retry200 := l.beginDelete202Retry200.get(req)
+	if beginDelete202Retry200 == nil {
 		respr, errRespr := l.srv.BeginDelete202Retry200(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDelete202Retry200 = &respr
+		beginDelete202Retry200 = &respr
+		l.beginDelete202Retry200.add(req, beginDelete202Retry200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDelete202Retry200, req)
+	resp, err := server.PollerResponderNext(beginDelete202Retry200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginDelete202Retry200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDelete202Retry200) {
-		l.beginDelete202Retry200 = nil
+	if !server.PollerResponderMore(beginDelete202Retry200) {
+		l.beginDelete202Retry200.remove(req)
 	}
 
 	return resp, nil
@@ -425,24 +477,27 @@ func (l *LROsServerTransport) dispatchBeginDelete204Succeeded(req *http.Request)
 	if l.srv.BeginDelete204Succeeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDelete204Succeeded not implemented")}
 	}
-	if l.beginDelete204Succeeded == nil {
+	beginDelete204Succeeded := l.beginDelete204Succeeded.get(req)
+	if beginDelete204Succeeded == nil {
 		respr, errRespr := l.srv.BeginDelete204Succeeded(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDelete204Succeeded = &respr
+		beginDelete204Succeeded = &respr
+		l.beginDelete204Succeeded.add(req, beginDelete204Succeeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDelete204Succeeded, req)
+	resp, err := server.PollerResponderNext(beginDelete204Succeeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusNoContent}, resp.StatusCode) {
+		l.beginDelete204Succeeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDelete204Succeeded) {
-		l.beginDelete204Succeeded = nil
+	if !server.PollerResponderMore(beginDelete204Succeeded) {
+		l.beginDelete204Succeeded.remove(req)
 	}
 
 	return resp, nil
@@ -452,24 +507,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteAsyncNoHeaderInRetry(req *http.
 	if l.srv.BeginDeleteAsyncNoHeaderInRetry == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncNoHeaderInRetry not implemented")}
 	}
-	if l.beginDeleteAsyncNoHeaderInRetry == nil {
+	beginDeleteAsyncNoHeaderInRetry := l.beginDeleteAsyncNoHeaderInRetry.get(req)
+	if beginDeleteAsyncNoHeaderInRetry == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncNoHeaderInRetry(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteAsyncNoHeaderInRetry = &respr
+		beginDeleteAsyncNoHeaderInRetry = &respr
+		l.beginDeleteAsyncNoHeaderInRetry.add(req, beginDeleteAsyncNoHeaderInRetry)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteAsyncNoHeaderInRetry, req)
+	resp, err := server.PollerResponderNext(beginDeleteAsyncNoHeaderInRetry, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+		l.beginDeleteAsyncNoHeaderInRetry.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteAsyncNoHeaderInRetry) {
-		l.beginDeleteAsyncNoHeaderInRetry = nil
+	if !server.PollerResponderMore(beginDeleteAsyncNoHeaderInRetry) {
+		l.beginDeleteAsyncNoHeaderInRetry.remove(req)
 	}
 
 	return resp, nil
@@ -479,24 +537,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteAsyncNoRetrySucceeded(req *http
 	if l.srv.BeginDeleteAsyncNoRetrySucceeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncNoRetrySucceeded not implemented")}
 	}
-	if l.beginDeleteAsyncNoRetrySucceeded == nil {
+	beginDeleteAsyncNoRetrySucceeded := l.beginDeleteAsyncNoRetrySucceeded.get(req)
+	if beginDeleteAsyncNoRetrySucceeded == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncNoRetrySucceeded(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteAsyncNoRetrySucceeded = &respr
+		beginDeleteAsyncNoRetrySucceeded = &respr
+		l.beginDeleteAsyncNoRetrySucceeded.add(req, beginDeleteAsyncNoRetrySucceeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteAsyncNoRetrySucceeded, req)
+	resp, err := server.PollerResponderNext(beginDeleteAsyncNoRetrySucceeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginDeleteAsyncNoRetrySucceeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteAsyncNoRetrySucceeded) {
-		l.beginDeleteAsyncNoRetrySucceeded = nil
+	if !server.PollerResponderMore(beginDeleteAsyncNoRetrySucceeded) {
+		l.beginDeleteAsyncNoRetrySucceeded.remove(req)
 	}
 
 	return resp, nil
@@ -506,24 +567,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteAsyncRetryFailed(req *http.Requ
 	if l.srv.BeginDeleteAsyncRetryFailed == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRetryFailed not implemented")}
 	}
-	if l.beginDeleteAsyncRetryFailed == nil {
+	beginDeleteAsyncRetryFailed := l.beginDeleteAsyncRetryFailed.get(req)
+	if beginDeleteAsyncRetryFailed == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRetryFailed(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteAsyncRetryFailed = &respr
+		beginDeleteAsyncRetryFailed = &respr
+		l.beginDeleteAsyncRetryFailed.add(req, beginDeleteAsyncRetryFailed)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteAsyncRetryFailed, req)
+	resp, err := server.PollerResponderNext(beginDeleteAsyncRetryFailed, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginDeleteAsyncRetryFailed.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteAsyncRetryFailed) {
-		l.beginDeleteAsyncRetryFailed = nil
+	if !server.PollerResponderMore(beginDeleteAsyncRetryFailed) {
+		l.beginDeleteAsyncRetryFailed.remove(req)
 	}
 
 	return resp, nil
@@ -533,24 +597,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteAsyncRetrySucceeded(req *http.R
 	if l.srv.BeginDeleteAsyncRetrySucceeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRetrySucceeded not implemented")}
 	}
-	if l.beginDeleteAsyncRetrySucceeded == nil {
+	beginDeleteAsyncRetrySucceeded := l.beginDeleteAsyncRetrySucceeded.get(req)
+	if beginDeleteAsyncRetrySucceeded == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRetrySucceeded(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteAsyncRetrySucceeded = &respr
+		beginDeleteAsyncRetrySucceeded = &respr
+		l.beginDeleteAsyncRetrySucceeded.add(req, beginDeleteAsyncRetrySucceeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteAsyncRetrySucceeded, req)
+	resp, err := server.PollerResponderNext(beginDeleteAsyncRetrySucceeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginDeleteAsyncRetrySucceeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteAsyncRetrySucceeded) {
-		l.beginDeleteAsyncRetrySucceeded = nil
+	if !server.PollerResponderMore(beginDeleteAsyncRetrySucceeded) {
+		l.beginDeleteAsyncRetrySucceeded.remove(req)
 	}
 
 	return resp, nil
@@ -560,24 +627,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteAsyncRetrycanceled(req *http.Re
 	if l.srv.BeginDeleteAsyncRetrycanceled == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteAsyncRetrycanceled not implemented")}
 	}
-	if l.beginDeleteAsyncRetrycanceled == nil {
+	beginDeleteAsyncRetrycanceled := l.beginDeleteAsyncRetrycanceled.get(req)
+	if beginDeleteAsyncRetrycanceled == nil {
 		respr, errRespr := l.srv.BeginDeleteAsyncRetrycanceled(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteAsyncRetrycanceled = &respr
+		beginDeleteAsyncRetrycanceled = &respr
+		l.beginDeleteAsyncRetrycanceled.add(req, beginDeleteAsyncRetrycanceled)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteAsyncRetrycanceled, req)
+	resp, err := server.PollerResponderNext(beginDeleteAsyncRetrycanceled, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginDeleteAsyncRetrycanceled.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteAsyncRetrycanceled) {
-		l.beginDeleteAsyncRetrycanceled = nil
+	if !server.PollerResponderMore(beginDeleteAsyncRetrycanceled) {
+		l.beginDeleteAsyncRetrycanceled.remove(req)
 	}
 
 	return resp, nil
@@ -587,24 +657,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteNoHeaderInRetry(req *http.Reque
 	if l.srv.BeginDeleteNoHeaderInRetry == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteNoHeaderInRetry not implemented")}
 	}
-	if l.beginDeleteNoHeaderInRetry == nil {
+	beginDeleteNoHeaderInRetry := l.beginDeleteNoHeaderInRetry.get(req)
+	if beginDeleteNoHeaderInRetry == nil {
 		respr, errRespr := l.srv.BeginDeleteNoHeaderInRetry(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteNoHeaderInRetry = &respr
+		beginDeleteNoHeaderInRetry = &respr
+		l.beginDeleteNoHeaderInRetry.add(req, beginDeleteNoHeaderInRetry)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteNoHeaderInRetry, req)
+	resp, err := server.PollerResponderNext(beginDeleteNoHeaderInRetry, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+		l.beginDeleteNoHeaderInRetry.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteNoHeaderInRetry) {
-		l.beginDeleteNoHeaderInRetry = nil
+	if !server.PollerResponderMore(beginDeleteNoHeaderInRetry) {
+		l.beginDeleteNoHeaderInRetry.remove(req)
 	}
 
 	return resp, nil
@@ -614,24 +687,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteProvisioning202Accepted200Succe
 	if l.srv.BeginDeleteProvisioning202Accepted200Succeeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteProvisioning202Accepted200Succeeded not implemented")}
 	}
-	if l.beginDeleteProvisioning202Accepted200Succeeded == nil {
+	beginDeleteProvisioning202Accepted200Succeeded := l.beginDeleteProvisioning202Accepted200Succeeded.get(req)
+	if beginDeleteProvisioning202Accepted200Succeeded == nil {
 		respr, errRespr := l.srv.BeginDeleteProvisioning202Accepted200Succeeded(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteProvisioning202Accepted200Succeeded = &respr
+		beginDeleteProvisioning202Accepted200Succeeded = &respr
+		l.beginDeleteProvisioning202Accepted200Succeeded.add(req, beginDeleteProvisioning202Accepted200Succeeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteProvisioning202Accepted200Succeeded, req)
+	resp, err := server.PollerResponderNext(beginDeleteProvisioning202Accepted200Succeeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginDeleteProvisioning202Accepted200Succeeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteProvisioning202Accepted200Succeeded) {
-		l.beginDeleteProvisioning202Accepted200Succeeded = nil
+	if !server.PollerResponderMore(beginDeleteProvisioning202Accepted200Succeeded) {
+		l.beginDeleteProvisioning202Accepted200Succeeded.remove(req)
 	}
 
 	return resp, nil
@@ -641,24 +717,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteProvisioning202DeletingFailed20
 	if l.srv.BeginDeleteProvisioning202DeletingFailed200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteProvisioning202DeletingFailed200 not implemented")}
 	}
-	if l.beginDeleteProvisioning202DeletingFailed200 == nil {
+	beginDeleteProvisioning202DeletingFailed200 := l.beginDeleteProvisioning202DeletingFailed200.get(req)
+	if beginDeleteProvisioning202DeletingFailed200 == nil {
 		respr, errRespr := l.srv.BeginDeleteProvisioning202DeletingFailed200(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteProvisioning202DeletingFailed200 = &respr
+		beginDeleteProvisioning202DeletingFailed200 = &respr
+		l.beginDeleteProvisioning202DeletingFailed200.add(req, beginDeleteProvisioning202DeletingFailed200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteProvisioning202DeletingFailed200, req)
+	resp, err := server.PollerResponderNext(beginDeleteProvisioning202DeletingFailed200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginDeleteProvisioning202DeletingFailed200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteProvisioning202DeletingFailed200) {
-		l.beginDeleteProvisioning202DeletingFailed200 = nil
+	if !server.PollerResponderMore(beginDeleteProvisioning202DeletingFailed200) {
+		l.beginDeleteProvisioning202DeletingFailed200.remove(req)
 	}
 
 	return resp, nil
@@ -668,24 +747,27 @@ func (l *LROsServerTransport) dispatchBeginDeleteProvisioning202Deletingcanceled
 	if l.srv.BeginDeleteProvisioning202Deletingcanceled200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDeleteProvisioning202Deletingcanceled200 not implemented")}
 	}
-	if l.beginDeleteProvisioning202Deletingcanceled200 == nil {
+	beginDeleteProvisioning202Deletingcanceled200 := l.beginDeleteProvisioning202Deletingcanceled200.get(req)
+	if beginDeleteProvisioning202Deletingcanceled200 == nil {
 		respr, errRespr := l.srv.BeginDeleteProvisioning202Deletingcanceled200(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginDeleteProvisioning202Deletingcanceled200 = &respr
+		beginDeleteProvisioning202Deletingcanceled200 = &respr
+		l.beginDeleteProvisioning202Deletingcanceled200.add(req, beginDeleteProvisioning202Deletingcanceled200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginDeleteProvisioning202Deletingcanceled200, req)
+	resp, err := server.PollerResponderNext(beginDeleteProvisioning202Deletingcanceled200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginDeleteProvisioning202Deletingcanceled200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginDeleteProvisioning202Deletingcanceled200) {
-		l.beginDeleteProvisioning202Deletingcanceled200 = nil
+	if !server.PollerResponderMore(beginDeleteProvisioning202Deletingcanceled200) {
+		l.beginDeleteProvisioning202Deletingcanceled200.remove(req)
 	}
 
 	return resp, nil
@@ -695,7 +777,8 @@ func (l *LROsServerTransport) dispatchBeginPatch200SucceededIgnoreHeaders(req *h
 	if l.srv.BeginPatch200SucceededIgnoreHeaders == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPatch200SucceededIgnoreHeaders not implemented")}
 	}
-	if l.beginPatch200SucceededIgnoreHeaders == nil {
+	beginPatch200SucceededIgnoreHeaders := l.beginPatch200SucceededIgnoreHeaders.get(req)
+	if beginPatch200SucceededIgnoreHeaders == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -704,19 +787,21 @@ func (l *LROsServerTransport) dispatchBeginPatch200SucceededIgnoreHeaders(req *h
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPatch200SucceededIgnoreHeaders = &respr
+		beginPatch200SucceededIgnoreHeaders = &respr
+		l.beginPatch200SucceededIgnoreHeaders.add(req, beginPatch200SucceededIgnoreHeaders)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPatch200SucceededIgnoreHeaders, req)
+	resp, err := server.PollerResponderNext(beginPatch200SucceededIgnoreHeaders, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPatch200SucceededIgnoreHeaders.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPatch200SucceededIgnoreHeaders) {
-		l.beginPatch200SucceededIgnoreHeaders = nil
+	if !server.PollerResponderMore(beginPatch200SucceededIgnoreHeaders) {
+		l.beginPatch200SucceededIgnoreHeaders.remove(req)
 	}
 
 	return resp, nil
@@ -726,7 +811,8 @@ func (l *LROsServerTransport) dispatchBeginPatch201RetryWithAsyncHeader(req *htt
 	if l.srv.BeginPatch201RetryWithAsyncHeader == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPatch201RetryWithAsyncHeader not implemented")}
 	}
-	if l.beginPatch201RetryWithAsyncHeader == nil {
+	beginPatch201RetryWithAsyncHeader := l.beginPatch201RetryWithAsyncHeader.get(req)
+	if beginPatch201RetryWithAsyncHeader == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -735,19 +821,21 @@ func (l *LROsServerTransport) dispatchBeginPatch201RetryWithAsyncHeader(req *htt
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPatch201RetryWithAsyncHeader = &respr
+		beginPatch201RetryWithAsyncHeader = &respr
+		l.beginPatch201RetryWithAsyncHeader.add(req, beginPatch201RetryWithAsyncHeader)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPatch201RetryWithAsyncHeader, req)
+	resp, err := server.PollerResponderNext(beginPatch201RetryWithAsyncHeader, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+		l.beginPatch201RetryWithAsyncHeader.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPatch201RetryWithAsyncHeader) {
-		l.beginPatch201RetryWithAsyncHeader = nil
+	if !server.PollerResponderMore(beginPatch201RetryWithAsyncHeader) {
+		l.beginPatch201RetryWithAsyncHeader.remove(req)
 	}
 
 	return resp, nil
@@ -757,7 +845,8 @@ func (l *LROsServerTransport) dispatchBeginPatch202RetryWithAsyncAndLocationHead
 	if l.srv.BeginPatch202RetryWithAsyncAndLocationHeader == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPatch202RetryWithAsyncAndLocationHeader not implemented")}
 	}
-	if l.beginPatch202RetryWithAsyncAndLocationHeader == nil {
+	beginPatch202RetryWithAsyncAndLocationHeader := l.beginPatch202RetryWithAsyncAndLocationHeader.get(req)
+	if beginPatch202RetryWithAsyncAndLocationHeader == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -766,19 +855,21 @@ func (l *LROsServerTransport) dispatchBeginPatch202RetryWithAsyncAndLocationHead
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPatch202RetryWithAsyncAndLocationHeader = &respr
+		beginPatch202RetryWithAsyncAndLocationHeader = &respr
+		l.beginPatch202RetryWithAsyncAndLocationHeader.add(req, beginPatch202RetryWithAsyncAndLocationHeader)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPatch202RetryWithAsyncAndLocationHeader, req)
+	resp, err := server.PollerResponderNext(beginPatch202RetryWithAsyncAndLocationHeader, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginPatch202RetryWithAsyncAndLocationHeader.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPatch202RetryWithAsyncAndLocationHeader) {
-		l.beginPatch202RetryWithAsyncAndLocationHeader = nil
+	if !server.PollerResponderMore(beginPatch202RetryWithAsyncAndLocationHeader) {
+		l.beginPatch202RetryWithAsyncAndLocationHeader.remove(req)
 	}
 
 	return resp, nil
@@ -788,24 +879,27 @@ func (l *LROsServerTransport) dispatchBeginPost200WithPayload(req *http.Request)
 	if l.srv.BeginPost200WithPayload == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPost200WithPayload not implemented")}
 	}
-	if l.beginPost200WithPayload == nil {
+	beginPost200WithPayload := l.beginPost200WithPayload.get(req)
+	if beginPost200WithPayload == nil {
 		respr, errRespr := l.srv.BeginPost200WithPayload(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPost200WithPayload = &respr
+		beginPost200WithPayload = &respr
+		l.beginPost200WithPayload.add(req, beginPost200WithPayload)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPost200WithPayload, req)
+	resp, err := server.PollerResponderNext(beginPost200WithPayload, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginPost200WithPayload.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPost200WithPayload) {
-		l.beginPost200WithPayload = nil
+	if !server.PollerResponderMore(beginPost200WithPayload) {
+		l.beginPost200WithPayload.remove(req)
 	}
 
 	return resp, nil
@@ -815,24 +909,27 @@ func (l *LROsServerTransport) dispatchBeginPost202List(req *http.Request) (*http
 	if l.srv.BeginPost202List == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPost202List not implemented")}
 	}
-	if l.beginPost202List == nil {
+	beginPost202List := l.beginPost202List.get(req)
+	if beginPost202List == nil {
 		respr, errRespr := l.srv.BeginPost202List(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPost202List = &respr
+		beginPost202List = &respr
+		l.beginPost202List.add(req, beginPost202List)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPost202List, req)
+	resp, err := server.PollerResponderNext(beginPost202List, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginPost202List.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPost202List) {
-		l.beginPost202List = nil
+	if !server.PollerResponderMore(beginPost202List) {
+		l.beginPost202List.remove(req)
 	}
 
 	return resp, nil
@@ -842,7 +939,8 @@ func (l *LROsServerTransport) dispatchBeginPost202NoRetry204(req *http.Request) 
 	if l.srv.BeginPost202NoRetry204 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPost202NoRetry204 not implemented")}
 	}
-	if l.beginPost202NoRetry204 == nil {
+	beginPost202NoRetry204 := l.beginPost202NoRetry204.get(req)
+	if beginPost202NoRetry204 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -857,19 +955,21 @@ func (l *LROsServerTransport) dispatchBeginPost202NoRetry204(req *http.Request) 
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPost202NoRetry204 = &respr
+		beginPost202NoRetry204 = &respr
+		l.beginPost202NoRetry204.add(req, beginPost202NoRetry204)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPost202NoRetry204, req)
+	resp, err := server.PollerResponderNext(beginPost202NoRetry204, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPost202NoRetry204.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPost202NoRetry204) {
-		l.beginPost202NoRetry204 = nil
+	if !server.PollerResponderMore(beginPost202NoRetry204) {
+		l.beginPost202NoRetry204.remove(req)
 	}
 
 	return resp, nil
@@ -879,7 +979,8 @@ func (l *LROsServerTransport) dispatchBeginPost202Retry200(req *http.Request) (*
 	if l.srv.BeginPost202Retry200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPost202Retry200 not implemented")}
 	}
-	if l.beginPost202Retry200 == nil {
+	beginPost202Retry200 := l.beginPost202Retry200.get(req)
+	if beginPost202Retry200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -894,19 +995,21 @@ func (l *LROsServerTransport) dispatchBeginPost202Retry200(req *http.Request) (*
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPost202Retry200 = &respr
+		beginPost202Retry200 = &respr
+		l.beginPost202Retry200.add(req, beginPost202Retry200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPost202Retry200, req)
+	resp, err := server.PollerResponderNext(beginPost202Retry200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPost202Retry200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPost202Retry200) {
-		l.beginPost202Retry200 = nil
+	if !server.PollerResponderMore(beginPost202Retry200) {
+		l.beginPost202Retry200.remove(req)
 	}
 
 	return resp, nil
@@ -916,7 +1019,8 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncNoRetrySucceeded(req *http.R
 	if l.srv.BeginPostAsyncNoRetrySucceeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncNoRetrySucceeded not implemented")}
 	}
-	if l.beginPostAsyncNoRetrySucceeded == nil {
+	beginPostAsyncNoRetrySucceeded := l.beginPostAsyncNoRetrySucceeded.get(req)
+	if beginPostAsyncNoRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -931,19 +1035,21 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncNoRetrySucceeded(req *http.R
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPostAsyncNoRetrySucceeded = &respr
+		beginPostAsyncNoRetrySucceeded = &respr
+		l.beginPostAsyncNoRetrySucceeded.add(req, beginPostAsyncNoRetrySucceeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPostAsyncNoRetrySucceeded, req)
+	resp, err := server.PollerResponderNext(beginPostAsyncNoRetrySucceeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginPostAsyncNoRetrySucceeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPostAsyncNoRetrySucceeded) {
-		l.beginPostAsyncNoRetrySucceeded = nil
+	if !server.PollerResponderMore(beginPostAsyncNoRetrySucceeded) {
+		l.beginPostAsyncNoRetrySucceeded.remove(req)
 	}
 
 	return resp, nil
@@ -953,7 +1059,8 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncRetryFailed(req *http.Reques
 	if l.srv.BeginPostAsyncRetryFailed == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRetryFailed not implemented")}
 	}
-	if l.beginPostAsyncRetryFailed == nil {
+	beginPostAsyncRetryFailed := l.beginPostAsyncRetryFailed.get(req)
+	if beginPostAsyncRetryFailed == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -968,19 +1075,21 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncRetryFailed(req *http.Reques
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPostAsyncRetryFailed = &respr
+		beginPostAsyncRetryFailed = &respr
+		l.beginPostAsyncRetryFailed.add(req, beginPostAsyncRetryFailed)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPostAsyncRetryFailed, req)
+	resp, err := server.PollerResponderNext(beginPostAsyncRetryFailed, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPostAsyncRetryFailed.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPostAsyncRetryFailed) {
-		l.beginPostAsyncRetryFailed = nil
+	if !server.PollerResponderMore(beginPostAsyncRetryFailed) {
+		l.beginPostAsyncRetryFailed.remove(req)
 	}
 
 	return resp, nil
@@ -990,7 +1099,8 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncRetrySucceeded(req *http.Req
 	if l.srv.BeginPostAsyncRetrySucceeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRetrySucceeded not implemented")}
 	}
-	if l.beginPostAsyncRetrySucceeded == nil {
+	beginPostAsyncRetrySucceeded := l.beginPostAsyncRetrySucceeded.get(req)
+	if beginPostAsyncRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1005,19 +1115,21 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncRetrySucceeded(req *http.Req
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPostAsyncRetrySucceeded = &respr
+		beginPostAsyncRetrySucceeded = &respr
+		l.beginPostAsyncRetrySucceeded.add(req, beginPostAsyncRetrySucceeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPostAsyncRetrySucceeded, req)
+	resp, err := server.PollerResponderNext(beginPostAsyncRetrySucceeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginPostAsyncRetrySucceeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPostAsyncRetrySucceeded) {
-		l.beginPostAsyncRetrySucceeded = nil
+	if !server.PollerResponderMore(beginPostAsyncRetrySucceeded) {
+		l.beginPostAsyncRetrySucceeded.remove(req)
 	}
 
 	return resp, nil
@@ -1027,7 +1139,8 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncRetrycanceled(req *http.Requ
 	if l.srv.BeginPostAsyncRetrycanceled == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPostAsyncRetrycanceled not implemented")}
 	}
-	if l.beginPostAsyncRetrycanceled == nil {
+	beginPostAsyncRetrycanceled := l.beginPostAsyncRetrycanceled.get(req)
+	if beginPostAsyncRetrycanceled == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1042,19 +1155,21 @@ func (l *LROsServerTransport) dispatchBeginPostAsyncRetrycanceled(req *http.Requ
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPostAsyncRetrycanceled = &respr
+		beginPostAsyncRetrycanceled = &respr
+		l.beginPostAsyncRetrycanceled.add(req, beginPostAsyncRetrycanceled)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPostAsyncRetrycanceled, req)
+	resp, err := server.PollerResponderNext(beginPostAsyncRetrycanceled, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPostAsyncRetrycanceled.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPostAsyncRetrycanceled) {
-		l.beginPostAsyncRetrycanceled = nil
+	if !server.PollerResponderMore(beginPostAsyncRetrycanceled) {
+		l.beginPostAsyncRetrycanceled.remove(req)
 	}
 
 	return resp, nil
@@ -1064,24 +1179,27 @@ func (l *LROsServerTransport) dispatchBeginPostDoubleHeadersFinalAzureHeaderGet(
 	if l.srv.BeginPostDoubleHeadersFinalAzureHeaderGet == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPostDoubleHeadersFinalAzureHeaderGet not implemented")}
 	}
-	if l.beginPostDoubleHeadersFinalAzureHeaderGet == nil {
+	beginPostDoubleHeadersFinalAzureHeaderGet := l.beginPostDoubleHeadersFinalAzureHeaderGet.get(req)
+	if beginPostDoubleHeadersFinalAzureHeaderGet == nil {
 		respr, errRespr := l.srv.BeginPostDoubleHeadersFinalAzureHeaderGet(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPostDoubleHeadersFinalAzureHeaderGet = &respr
+		beginPostDoubleHeadersFinalAzureHeaderGet = &respr
+		l.beginPostDoubleHeadersFinalAzureHeaderGet.add(req, beginPostDoubleHeadersFinalAzureHeaderGet)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPostDoubleHeadersFinalAzureHeaderGet, req)
+	resp, err := server.PollerResponderNext(beginPostDoubleHeadersFinalAzureHeaderGet, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPostDoubleHeadersFinalAzureHeaderGet.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPostDoubleHeadersFinalAzureHeaderGet) {
-		l.beginPostDoubleHeadersFinalAzureHeaderGet = nil
+	if !server.PollerResponderMore(beginPostDoubleHeadersFinalAzureHeaderGet) {
+		l.beginPostDoubleHeadersFinalAzureHeaderGet.remove(req)
 	}
 
 	return resp, nil
@@ -1091,24 +1209,27 @@ func (l *LROsServerTransport) dispatchBeginPostDoubleHeadersFinalAzureHeaderGetD
 	if l.srv.BeginPostDoubleHeadersFinalAzureHeaderGetDefault == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPostDoubleHeadersFinalAzureHeaderGetDefault not implemented")}
 	}
-	if l.beginPostDoubleHeadersFinalAzureHeaderGetDefault == nil {
+	beginPostDoubleHeadersFinalAzureHeaderGetDefault := l.beginPostDoubleHeadersFinalAzureHeaderGetDefault.get(req)
+	if beginPostDoubleHeadersFinalAzureHeaderGetDefault == nil {
 		respr, errRespr := l.srv.BeginPostDoubleHeadersFinalAzureHeaderGetDefault(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPostDoubleHeadersFinalAzureHeaderGetDefault = &respr
+		beginPostDoubleHeadersFinalAzureHeaderGetDefault = &respr
+		l.beginPostDoubleHeadersFinalAzureHeaderGetDefault.add(req, beginPostDoubleHeadersFinalAzureHeaderGetDefault)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPostDoubleHeadersFinalAzureHeaderGetDefault, req)
+	resp, err := server.PollerResponderNext(beginPostDoubleHeadersFinalAzureHeaderGetDefault, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPostDoubleHeadersFinalAzureHeaderGetDefault.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPostDoubleHeadersFinalAzureHeaderGetDefault) {
-		l.beginPostDoubleHeadersFinalAzureHeaderGetDefault = nil
+	if !server.PollerResponderMore(beginPostDoubleHeadersFinalAzureHeaderGetDefault) {
+		l.beginPostDoubleHeadersFinalAzureHeaderGetDefault.remove(req)
 	}
 
 	return resp, nil
@@ -1118,24 +1239,27 @@ func (l *LROsServerTransport) dispatchBeginPostDoubleHeadersFinalLocationGet(req
 	if l.srv.BeginPostDoubleHeadersFinalLocationGet == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPostDoubleHeadersFinalLocationGet not implemented")}
 	}
-	if l.beginPostDoubleHeadersFinalLocationGet == nil {
+	beginPostDoubleHeadersFinalLocationGet := l.beginPostDoubleHeadersFinalLocationGet.get(req)
+	if beginPostDoubleHeadersFinalLocationGet == nil {
 		respr, errRespr := l.srv.BeginPostDoubleHeadersFinalLocationGet(req.Context(), nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPostDoubleHeadersFinalLocationGet = &respr
+		beginPostDoubleHeadersFinalLocationGet = &respr
+		l.beginPostDoubleHeadersFinalLocationGet.add(req, beginPostDoubleHeadersFinalLocationGet)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPostDoubleHeadersFinalLocationGet, req)
+	resp, err := server.PollerResponderNext(beginPostDoubleHeadersFinalLocationGet, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPostDoubleHeadersFinalLocationGet.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPostDoubleHeadersFinalLocationGet) {
-		l.beginPostDoubleHeadersFinalLocationGet = nil
+	if !server.PollerResponderMore(beginPostDoubleHeadersFinalLocationGet) {
+		l.beginPostDoubleHeadersFinalLocationGet.remove(req)
 	}
 
 	return resp, nil
@@ -1145,7 +1269,8 @@ func (l *LROsServerTransport) dispatchBeginPut200Acceptedcanceled200(req *http.R
 	if l.srv.BeginPut200Acceptedcanceled200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut200Acceptedcanceled200 not implemented")}
 	}
-	if l.beginPut200Acceptedcanceled200 == nil {
+	beginPut200Acceptedcanceled200 := l.beginPut200Acceptedcanceled200.get(req)
+	if beginPut200Acceptedcanceled200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1154,19 +1279,21 @@ func (l *LROsServerTransport) dispatchBeginPut200Acceptedcanceled200(req *http.R
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut200Acceptedcanceled200 = &respr
+		beginPut200Acceptedcanceled200 = &respr
+		l.beginPut200Acceptedcanceled200.add(req, beginPut200Acceptedcanceled200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut200Acceptedcanceled200, req)
+	resp, err := server.PollerResponderNext(beginPut200Acceptedcanceled200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPut200Acceptedcanceled200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut200Acceptedcanceled200) {
-		l.beginPut200Acceptedcanceled200 = nil
+	if !server.PollerResponderMore(beginPut200Acceptedcanceled200) {
+		l.beginPut200Acceptedcanceled200.remove(req)
 	}
 
 	return resp, nil
@@ -1176,7 +1303,8 @@ func (l *LROsServerTransport) dispatchBeginPut200Succeeded(req *http.Request) (*
 	if l.srv.BeginPut200Succeeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut200Succeeded not implemented")}
 	}
-	if l.beginPut200Succeeded == nil {
+	beginPut200Succeeded := l.beginPut200Succeeded.get(req)
+	if beginPut200Succeeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1185,19 +1313,21 @@ func (l *LROsServerTransport) dispatchBeginPut200Succeeded(req *http.Request) (*
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut200Succeeded = &respr
+		beginPut200Succeeded = &respr
+		l.beginPut200Succeeded.add(req, beginPut200Succeeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut200Succeeded, req)
+	resp, err := server.PollerResponderNext(beginPut200Succeeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusNoContent}, resp.StatusCode) {
+		l.beginPut200Succeeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut200Succeeded) {
-		l.beginPut200Succeeded = nil
+	if !server.PollerResponderMore(beginPut200Succeeded) {
+		l.beginPut200Succeeded.remove(req)
 	}
 
 	return resp, nil
@@ -1207,7 +1337,8 @@ func (l *LROsServerTransport) dispatchBeginPut200SucceededNoState(req *http.Requ
 	if l.srv.BeginPut200SucceededNoState == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut200SucceededNoState not implemented")}
 	}
-	if l.beginPut200SucceededNoState == nil {
+	beginPut200SucceededNoState := l.beginPut200SucceededNoState.get(req)
+	if beginPut200SucceededNoState == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1216,19 +1347,21 @@ func (l *LROsServerTransport) dispatchBeginPut200SucceededNoState(req *http.Requ
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut200SucceededNoState = &respr
+		beginPut200SucceededNoState = &respr
+		l.beginPut200SucceededNoState.add(req, beginPut200SucceededNoState)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut200SucceededNoState, req)
+	resp, err := server.PollerResponderNext(beginPut200SucceededNoState, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPut200SucceededNoState.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut200SucceededNoState) {
-		l.beginPut200SucceededNoState = nil
+	if !server.PollerResponderMore(beginPut200SucceededNoState) {
+		l.beginPut200SucceededNoState.remove(req)
 	}
 
 	return resp, nil
@@ -1238,7 +1371,8 @@ func (l *LROsServerTransport) dispatchBeginPut200UpdatingSucceeded204(req *http.
 	if l.srv.BeginPut200UpdatingSucceeded204 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut200UpdatingSucceeded204 not implemented")}
 	}
-	if l.beginPut200UpdatingSucceeded204 == nil {
+	beginPut200UpdatingSucceeded204 := l.beginPut200UpdatingSucceeded204.get(req)
+	if beginPut200UpdatingSucceeded204 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1247,19 +1381,21 @@ func (l *LROsServerTransport) dispatchBeginPut200UpdatingSucceeded204(req *http.
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut200UpdatingSucceeded204 = &respr
+		beginPut200UpdatingSucceeded204 = &respr
+		l.beginPut200UpdatingSucceeded204.add(req, beginPut200UpdatingSucceeded204)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut200UpdatingSucceeded204, req)
+	resp, err := server.PollerResponderNext(beginPut200UpdatingSucceeded204, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPut200UpdatingSucceeded204.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut200UpdatingSucceeded204) {
-		l.beginPut200UpdatingSucceeded204 = nil
+	if !server.PollerResponderMore(beginPut200UpdatingSucceeded204) {
+		l.beginPut200UpdatingSucceeded204.remove(req)
 	}
 
 	return resp, nil
@@ -1269,7 +1405,8 @@ func (l *LROsServerTransport) dispatchBeginPut201CreatingFailed200(req *http.Req
 	if l.srv.BeginPut201CreatingFailed200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut201CreatingFailed200 not implemented")}
 	}
-	if l.beginPut201CreatingFailed200 == nil {
+	beginPut201CreatingFailed200 := l.beginPut201CreatingFailed200.get(req)
+	if beginPut201CreatingFailed200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1278,19 +1415,21 @@ func (l *LROsServerTransport) dispatchBeginPut201CreatingFailed200(req *http.Req
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut201CreatingFailed200 = &respr
+		beginPut201CreatingFailed200 = &respr
+		l.beginPut201CreatingFailed200.add(req, beginPut201CreatingFailed200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut201CreatingFailed200, req)
+	resp, err := server.PollerResponderNext(beginPut201CreatingFailed200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+		l.beginPut201CreatingFailed200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut201CreatingFailed200) {
-		l.beginPut201CreatingFailed200 = nil
+	if !server.PollerResponderMore(beginPut201CreatingFailed200) {
+		l.beginPut201CreatingFailed200.remove(req)
 	}
 
 	return resp, nil
@@ -1300,7 +1439,8 @@ func (l *LROsServerTransport) dispatchBeginPut201CreatingSucceeded200(req *http.
 	if l.srv.BeginPut201CreatingSucceeded200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut201CreatingSucceeded200 not implemented")}
 	}
-	if l.beginPut201CreatingSucceeded200 == nil {
+	beginPut201CreatingSucceeded200 := l.beginPut201CreatingSucceeded200.get(req)
+	if beginPut201CreatingSucceeded200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1309,19 +1449,21 @@ func (l *LROsServerTransport) dispatchBeginPut201CreatingSucceeded200(req *http.
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut201CreatingSucceeded200 = &respr
+		beginPut201CreatingSucceeded200 = &respr
+		l.beginPut201CreatingSucceeded200.add(req, beginPut201CreatingSucceeded200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut201CreatingSucceeded200, req)
+	resp, err := server.PollerResponderNext(beginPut201CreatingSucceeded200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+		l.beginPut201CreatingSucceeded200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut201CreatingSucceeded200) {
-		l.beginPut201CreatingSucceeded200 = nil
+	if !server.PollerResponderMore(beginPut201CreatingSucceeded200) {
+		l.beginPut201CreatingSucceeded200.remove(req)
 	}
 
 	return resp, nil
@@ -1331,7 +1473,8 @@ func (l *LROsServerTransport) dispatchBeginPut201Succeeded(req *http.Request) (*
 	if l.srv.BeginPut201Succeeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut201Succeeded not implemented")}
 	}
-	if l.beginPut201Succeeded == nil {
+	beginPut201Succeeded := l.beginPut201Succeeded.get(req)
+	if beginPut201Succeeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1340,19 +1483,21 @@ func (l *LROsServerTransport) dispatchBeginPut201Succeeded(req *http.Request) (*
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut201Succeeded = &respr
+		beginPut201Succeeded = &respr
+		l.beginPut201Succeeded.add(req, beginPut201Succeeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut201Succeeded, req)
+	resp, err := server.PollerResponderNext(beginPut201Succeeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusCreated}, resp.StatusCode) {
+		l.beginPut201Succeeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusCreated", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut201Succeeded) {
-		l.beginPut201Succeeded = nil
+	if !server.PollerResponderMore(beginPut201Succeeded) {
+		l.beginPut201Succeeded.remove(req)
 	}
 
 	return resp, nil
@@ -1362,7 +1507,8 @@ func (l *LROsServerTransport) dispatchBeginPut202Retry200(req *http.Request) (*h
 	if l.srv.BeginPut202Retry200 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPut202Retry200 not implemented")}
 	}
-	if l.beginPut202Retry200 == nil {
+	beginPut202Retry200 := l.beginPut202Retry200.get(req)
+	if beginPut202Retry200 == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1371,19 +1517,21 @@ func (l *LROsServerTransport) dispatchBeginPut202Retry200(req *http.Request) (*h
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPut202Retry200 = &respr
+		beginPut202Retry200 = &respr
+		l.beginPut202Retry200.add(req, beginPut202Retry200)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPut202Retry200, req)
+	resp, err := server.PollerResponderNext(beginPut202Retry200, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPut202Retry200.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPut202Retry200) {
-		l.beginPut202Retry200 = nil
+	if !server.PollerResponderMore(beginPut202Retry200) {
+		l.beginPut202Retry200.remove(req)
 	}
 
 	return resp, nil
@@ -1393,7 +1541,8 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNoHeaderInRetry(req *http.Req
 	if l.srv.BeginPutAsyncNoHeaderInRetry == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncNoHeaderInRetry not implemented")}
 	}
-	if l.beginPutAsyncNoHeaderInRetry == nil {
+	beginPutAsyncNoHeaderInRetry := l.beginPutAsyncNoHeaderInRetry.get(req)
+	if beginPutAsyncNoHeaderInRetry == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1402,19 +1551,21 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNoHeaderInRetry(req *http.Req
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutAsyncNoHeaderInRetry = &respr
+		beginPutAsyncNoHeaderInRetry = &respr
+		l.beginPutAsyncNoHeaderInRetry.add(req, beginPutAsyncNoHeaderInRetry)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutAsyncNoHeaderInRetry, req)
+	resp, err := server.PollerResponderNext(beginPutAsyncNoHeaderInRetry, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusCreated}, resp.StatusCode) {
+		l.beginPutAsyncNoHeaderInRetry.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusCreated", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutAsyncNoHeaderInRetry) {
-		l.beginPutAsyncNoHeaderInRetry = nil
+	if !server.PollerResponderMore(beginPutAsyncNoHeaderInRetry) {
+		l.beginPutAsyncNoHeaderInRetry.remove(req)
 	}
 
 	return resp, nil
@@ -1424,7 +1575,8 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNoRetrySucceeded(req *http.Re
 	if l.srv.BeginPutAsyncNoRetrySucceeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncNoRetrySucceeded not implemented")}
 	}
-	if l.beginPutAsyncNoRetrySucceeded == nil {
+	beginPutAsyncNoRetrySucceeded := l.beginPutAsyncNoRetrySucceeded.get(req)
+	if beginPutAsyncNoRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1433,19 +1585,21 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNoRetrySucceeded(req *http.Re
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutAsyncNoRetrySucceeded = &respr
+		beginPutAsyncNoRetrySucceeded = &respr
+		l.beginPutAsyncNoRetrySucceeded.add(req, beginPutAsyncNoRetrySucceeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutAsyncNoRetrySucceeded, req)
+	resp, err := server.PollerResponderNext(beginPutAsyncNoRetrySucceeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPutAsyncNoRetrySucceeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutAsyncNoRetrySucceeded) {
-		l.beginPutAsyncNoRetrySucceeded = nil
+	if !server.PollerResponderMore(beginPutAsyncNoRetrySucceeded) {
+		l.beginPutAsyncNoRetrySucceeded.remove(req)
 	}
 
 	return resp, nil
@@ -1455,7 +1609,8 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNoRetrycanceled(req *http.Req
 	if l.srv.BeginPutAsyncNoRetrycanceled == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncNoRetrycanceled not implemented")}
 	}
-	if l.beginPutAsyncNoRetrycanceled == nil {
+	beginPutAsyncNoRetrycanceled := l.beginPutAsyncNoRetrycanceled.get(req)
+	if beginPutAsyncNoRetrycanceled == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1464,19 +1619,21 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNoRetrycanceled(req *http.Req
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutAsyncNoRetrycanceled = &respr
+		beginPutAsyncNoRetrycanceled = &respr
+		l.beginPutAsyncNoRetrycanceled.add(req, beginPutAsyncNoRetrycanceled)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutAsyncNoRetrycanceled, req)
+	resp, err := server.PollerResponderNext(beginPutAsyncNoRetrycanceled, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPutAsyncNoRetrycanceled.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutAsyncNoRetrycanceled) {
-		l.beginPutAsyncNoRetrycanceled = nil
+	if !server.PollerResponderMore(beginPutAsyncNoRetrycanceled) {
+		l.beginPutAsyncNoRetrycanceled.remove(req)
 	}
 
 	return resp, nil
@@ -1486,7 +1643,8 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNonResource(req *http.Request
 	if l.srv.BeginPutAsyncNonResource == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncNonResource not implemented")}
 	}
-	if l.beginPutAsyncNonResource == nil {
+	beginPutAsyncNonResource := l.beginPutAsyncNonResource.get(req)
+	if beginPutAsyncNonResource == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.SKU](req)
 		if err != nil {
 			return nil, err
@@ -1495,19 +1653,21 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncNonResource(req *http.Request
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutAsyncNonResource = &respr
+		beginPutAsyncNonResource = &respr
+		l.beginPutAsyncNonResource.add(req, beginPutAsyncNonResource)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutAsyncNonResource, req)
+	resp, err := server.PollerResponderNext(beginPutAsyncNonResource, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPutAsyncNonResource.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutAsyncNonResource) {
-		l.beginPutAsyncNonResource = nil
+	if !server.PollerResponderMore(beginPutAsyncNonResource) {
+		l.beginPutAsyncNonResource.remove(req)
 	}
 
 	return resp, nil
@@ -1517,7 +1677,8 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncRetryFailed(req *http.Request
 	if l.srv.BeginPutAsyncRetryFailed == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRetryFailed not implemented")}
 	}
-	if l.beginPutAsyncRetryFailed == nil {
+	beginPutAsyncRetryFailed := l.beginPutAsyncRetryFailed.get(req)
+	if beginPutAsyncRetryFailed == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1526,19 +1687,21 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncRetryFailed(req *http.Request
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutAsyncRetryFailed = &respr
+		beginPutAsyncRetryFailed = &respr
+		l.beginPutAsyncRetryFailed.add(req, beginPutAsyncRetryFailed)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutAsyncRetryFailed, req)
+	resp, err := server.PollerResponderNext(beginPutAsyncRetryFailed, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPutAsyncRetryFailed.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutAsyncRetryFailed) {
-		l.beginPutAsyncRetryFailed = nil
+	if !server.PollerResponderMore(beginPutAsyncRetryFailed) {
+		l.beginPutAsyncRetryFailed.remove(req)
 	}
 
 	return resp, nil
@@ -1548,7 +1711,8 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncRetrySucceeded(req *http.Requ
 	if l.srv.BeginPutAsyncRetrySucceeded == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncRetrySucceeded not implemented")}
 	}
-	if l.beginPutAsyncRetrySucceeded == nil {
+	beginPutAsyncRetrySucceeded := l.beginPutAsyncRetrySucceeded.get(req)
+	if beginPutAsyncRetrySucceeded == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1557,19 +1721,21 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncRetrySucceeded(req *http.Requ
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutAsyncRetrySucceeded = &respr
+		beginPutAsyncRetrySucceeded = &respr
+		l.beginPutAsyncRetrySucceeded.add(req, beginPutAsyncRetrySucceeded)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutAsyncRetrySucceeded, req)
+	resp, err := server.PollerResponderNext(beginPutAsyncRetrySucceeded, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		l.beginPutAsyncRetrySucceeded.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutAsyncRetrySucceeded) {
-		l.beginPutAsyncRetrySucceeded = nil
+	if !server.PollerResponderMore(beginPutAsyncRetrySucceeded) {
+		l.beginPutAsyncRetrySucceeded.remove(req)
 	}
 
 	return resp, nil
@@ -1579,7 +1745,8 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncSubResource(req *http.Request
 	if l.srv.BeginPutAsyncSubResource == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutAsyncSubResource not implemented")}
 	}
-	if l.beginPutAsyncSubResource == nil {
+	beginPutAsyncSubResource := l.beginPutAsyncSubResource.get(req)
+	if beginPutAsyncSubResource == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.SubProduct](req)
 		if err != nil {
 			return nil, err
@@ -1588,19 +1755,21 @@ func (l *LROsServerTransport) dispatchBeginPutAsyncSubResource(req *http.Request
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutAsyncSubResource = &respr
+		beginPutAsyncSubResource = &respr
+		l.beginPutAsyncSubResource.add(req, beginPutAsyncSubResource)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutAsyncSubResource, req)
+	resp, err := server.PollerResponderNext(beginPutAsyncSubResource, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPutAsyncSubResource.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutAsyncSubResource) {
-		l.beginPutAsyncSubResource = nil
+	if !server.PollerResponderMore(beginPutAsyncSubResource) {
+		l.beginPutAsyncSubResource.remove(req)
 	}
 
 	return resp, nil
@@ -1610,7 +1779,8 @@ func (l *LROsServerTransport) dispatchBeginPutNoHeaderInRetry(req *http.Request)
 	if l.srv.BeginPutNoHeaderInRetry == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutNoHeaderInRetry not implemented")}
 	}
-	if l.beginPutNoHeaderInRetry == nil {
+	beginPutNoHeaderInRetry := l.beginPutNoHeaderInRetry.get(req)
+	if beginPutNoHeaderInRetry == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.Product](req)
 		if err != nil {
 			return nil, err
@@ -1619,19 +1789,21 @@ func (l *LROsServerTransport) dispatchBeginPutNoHeaderInRetry(req *http.Request)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutNoHeaderInRetry = &respr
+		beginPutNoHeaderInRetry = &respr
+		l.beginPutNoHeaderInRetry.add(req, beginPutNoHeaderInRetry)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutNoHeaderInRetry, req)
+	resp, err := server.PollerResponderNext(beginPutNoHeaderInRetry, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPutNoHeaderInRetry.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutNoHeaderInRetry) {
-		l.beginPutNoHeaderInRetry = nil
+	if !server.PollerResponderMore(beginPutNoHeaderInRetry) {
+		l.beginPutNoHeaderInRetry.remove(req)
 	}
 
 	return resp, nil
@@ -1641,7 +1813,8 @@ func (l *LROsServerTransport) dispatchBeginPutNonResource(req *http.Request) (*h
 	if l.srv.BeginPutNonResource == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutNonResource not implemented")}
 	}
-	if l.beginPutNonResource == nil {
+	beginPutNonResource := l.beginPutNonResource.get(req)
+	if beginPutNonResource == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.SKU](req)
 		if err != nil {
 			return nil, err
@@ -1650,19 +1823,21 @@ func (l *LROsServerTransport) dispatchBeginPutNonResource(req *http.Request) (*h
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutNonResource = &respr
+		beginPutNonResource = &respr
+		l.beginPutNonResource.add(req, beginPutNonResource)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutNonResource, req)
+	resp, err := server.PollerResponderNext(beginPutNonResource, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPutNonResource.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutNonResource) {
-		l.beginPutNonResource = nil
+	if !server.PollerResponderMore(beginPutNonResource) {
+		l.beginPutNonResource.remove(req)
 	}
 
 	return resp, nil
@@ -1672,7 +1847,8 @@ func (l *LROsServerTransport) dispatchBeginPutSubResource(req *http.Request) (*h
 	if l.srv.BeginPutSubResource == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginPutSubResource not implemented")}
 	}
-	if l.beginPutSubResource == nil {
+	beginPutSubResource := l.beginPutSubResource.get(req)
+	if beginPutSubResource == nil {
 		body, err := server.UnmarshalRequestAsJSON[lrogroup.SubProduct](req)
 		if err != nil {
 			return nil, err
@@ -1681,19 +1857,21 @@ func (l *LROsServerTransport) dispatchBeginPutSubResource(req *http.Request) (*h
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		l.beginPutSubResource = &respr
+		beginPutSubResource = &respr
+		l.beginPutSubResource.add(req, beginPutSubResource)
 	}
 
-	resp, err := server.PollerResponderNext(l.beginPutSubResource, req)
+	resp, err := server.PollerResponderNext(beginPutSubResource, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		l.beginPutSubResource.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(l.beginPutSubResource) {
-		l.beginPutSubResource = nil
+	if !server.PollerResponderMore(beginPutSubResource) {
+		l.beginPutSubResource.remove(req)
 	}
 
 	return resp, nil

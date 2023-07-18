@@ -92,16 +92,21 @@ type ContainerRegistryServer struct {
 // The returned ContainerRegistryServerTransport instance is connected to an instance of azacr.ContainerRegistryClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewContainerRegistryServerTransport(srv *ContainerRegistryServer) *ContainerRegistryServerTransport {
-	return &ContainerRegistryServerTransport{srv: srv}
+	return &ContainerRegistryServerTransport{
+		srv:                     srv,
+		newGetManifestsPager:    newTracker[azfake.PagerResponder[azacr.ContainerRegistryClientGetManifestsResponse]](),
+		newGetRepositoriesPager: newTracker[azfake.PagerResponder[azacr.ContainerRegistryClientGetRepositoriesResponse]](),
+		newGetTagsPager:         newTracker[azfake.PagerResponder[azacr.ContainerRegistryClientGetTagsResponse]](),
+	}
 }
 
 // ContainerRegistryServerTransport connects instances of azacr.ContainerRegistryClient to instances of ContainerRegistryServer.
 // Don't use this type directly, use NewContainerRegistryServerTransport instead.
 type ContainerRegistryServerTransport struct {
 	srv                     *ContainerRegistryServer
-	newGetManifestsPager    *azfake.PagerResponder[azacr.ContainerRegistryClientGetManifestsResponse]
-	newGetRepositoriesPager *azfake.PagerResponder[azacr.ContainerRegistryClientGetRepositoriesResponse]
-	newGetTagsPager         *azfake.PagerResponder[azacr.ContainerRegistryClientGetTagsResponse]
+	newGetManifestsPager    *tracker[azfake.PagerResponder[azacr.ContainerRegistryClientGetManifestsResponse]]
+	newGetRepositoriesPager *tracker[azfake.PagerResponder[azacr.ContainerRegistryClientGetRepositoriesResponse]]
+	newGetTagsPager         *tracker[azfake.PagerResponder[azacr.ContainerRegistryClientGetTagsResponse]]
 }
 
 // Do implements the policy.Transporter interface for ContainerRegistryServerTransport.
@@ -397,7 +402,8 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 	if c.srv.NewGetManifestsPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetManifestsPager not implemented")}
 	}
-	if c.newGetManifestsPager == nil {
+	newGetManifestsPager := c.newGetManifestsPager.get(req)
+	if newGetManifestsPager == nil {
 		const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_manifests`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -442,20 +448,22 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 			}
 		}
 		resp := c.srv.NewGetManifestsPager(nameUnescaped, options)
-		c.newGetManifestsPager = &resp
-		server.PagerResponderInjectNextLinks(c.newGetManifestsPager, req, func(page *azacr.ContainerRegistryClientGetManifestsResponse, createLink func() string) {
+		newGetManifestsPager = &resp
+		c.newGetManifestsPager.add(req, newGetManifestsPager)
+		server.PagerResponderInjectNextLinks(newGetManifestsPager, req, func(page *azacr.ContainerRegistryClientGetManifestsResponse, createLink func() string) {
 			page.Link = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(c.newGetManifestsPager, req)
+	resp, err := server.PagerResponderNext(newGetManifestsPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		c.newGetManifestsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(c.newGetManifestsPager) {
-		c.newGetManifestsPager = nil
+	if !server.PagerResponderMore(newGetManifestsPager) {
+		c.newGetManifestsPager.remove(req)
 	}
 	return resp, nil
 }
@@ -493,7 +501,8 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetRepositoriesPager(req *
 	if c.srv.NewGetRepositoriesPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetRepositoriesPager not implemented")}
 	}
-	if c.newGetRepositoriesPager == nil {
+	newGetRepositoriesPager := c.newGetRepositoriesPager.get(req)
+	if newGetRepositoriesPager == nil {
 		qp := req.URL.Query()
 		lastUnescaped, err := url.QueryUnescape(qp.Get("last"))
 		if err != nil {
@@ -522,20 +531,22 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetRepositoriesPager(req *
 			}
 		}
 		resp := c.srv.NewGetRepositoriesPager(options)
-		c.newGetRepositoriesPager = &resp
-		server.PagerResponderInjectNextLinks(c.newGetRepositoriesPager, req, func(page *azacr.ContainerRegistryClientGetRepositoriesResponse, createLink func() string) {
+		newGetRepositoriesPager = &resp
+		c.newGetRepositoriesPager.add(req, newGetRepositoriesPager)
+		server.PagerResponderInjectNextLinks(newGetRepositoriesPager, req, func(page *azacr.ContainerRegistryClientGetRepositoriesResponse, createLink func() string) {
 			page.Link = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(c.newGetRepositoriesPager, req)
+	resp, err := server.PagerResponderNext(newGetRepositoriesPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		c.newGetRepositoriesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(c.newGetRepositoriesPager) {
-		c.newGetRepositoriesPager = nil
+	if !server.PagerResponderMore(newGetRepositoriesPager) {
+		c.newGetRepositoriesPager.remove(req)
 	}
 	return resp, nil
 }
@@ -577,7 +588,8 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 	if c.srv.NewGetTagsPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetTagsPager not implemented")}
 	}
-	if c.newGetTagsPager == nil {
+	newGetTagsPager := c.newGetTagsPager.get(req)
+	if newGetTagsPager == nil {
 		const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -628,20 +640,22 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 			}
 		}
 		resp := c.srv.NewGetTagsPager(nameUnescaped, options)
-		c.newGetTagsPager = &resp
-		server.PagerResponderInjectNextLinks(c.newGetTagsPager, req, func(page *azacr.ContainerRegistryClientGetTagsResponse, createLink func() string) {
+		newGetTagsPager = &resp
+		c.newGetTagsPager.add(req, newGetTagsPager)
+		server.PagerResponderInjectNextLinks(newGetTagsPager, req, func(page *azacr.ContainerRegistryClientGetTagsResponse, createLink func() string) {
 			page.Link = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(c.newGetTagsPager, req)
+	resp, err := server.PagerResponderNext(newGetTagsPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		c.newGetTagsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(c.newGetTagsPager) {
-		c.newGetTagsPager = nil
+	if !server.PagerResponderMore(newGetTagsPager) {
+		c.newGetTagsPager.remove(req)
 	}
 	return resp, nil
 }

@@ -5,23 +5,44 @@
 
 import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
+import { values } from '@azure-tools/linq';
 import { contentPreamble } from '../helpers';
+import { ImportManager } from '../imports';
+import { isLROOperation, isPageableOperation } from '../../common/helpers';
 
 export async function generateServerInternal(session: Session<CodeModel>): Promise<string> {
   if (session.model.operationGroups.length === 0) {
     return '';
   }
   const text = await contentPreamble(session, 'fake');
-  return text + content;
+  const imports = new ImportManager();
+  imports.add('io');
+  imports.add('net/http');
+  imports.add('reflect');
+  let body = content;
+  // only generate the tracker content if required
+  let needsTracker = false;
+  for (const group of values(session.model.operationGroups)) {
+    for (const op of values(group.operations)) {
+      if (isLROOperation(op) || isPageableOperation(op)) {
+        needsTracker = true;
+        break;
+      }
+    }
+    if (needsTracker) {
+      break;
+    }
+  }
+  if (needsTracker) {
+    imports.add('regexp');
+    imports.add('strings');
+    imports.add('sync');
+    body += tracker;
+  }
+  return text + imports.text() + body;
 }
 
 const content = `
-import (
-	"io"
-	"net/http"
-	"reflect"
-)
-
 type nonRetriableError struct {
 	error
 }
@@ -83,5 +104,47 @@ func contains[T comparable](s []T, v T) bool {
 		}
 	}
 	return false
+}
+`;
+
+const tracker = `
+func newTracker[T any]() *tracker[T] {
+	return &tracker[T]{
+		items: map[string]*T{},
+	}
+}
+
+type tracker[T any] struct {
+	items map[string]*T
+	mu sync.Mutex
+}
+
+func (p *tracker[T]) key(req *http.Request) string {
+	path := req.URL.Path
+	if match, _ := regexp.Match(\`/page_\\d+$\`, []byte(path)); match {
+		path = path[:strings.LastIndex(path, "/")]
+	}
+	return req.Method + path
+}
+
+func (p *tracker[T]) get(req *http.Request) *T {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	if item, ok := p.items[p.key(req)]; ok {
+		return item
+	}
+	return nil
+}
+
+func (p *tracker[T]) add(req *http.Request, item *T) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	p.items[p.key(req)] = item
+}
+
+func (p *tracker[T]) remove(req *http.Request) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	delete(p.items, p.key(req))
 }
 `;

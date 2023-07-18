@@ -48,6 +48,8 @@ export async function generateServers(session: Session<CodeModel>): Promise<Arra
 
     // we might remove some operations from the list
     const finalOperations = new Array<Operation>();
+    let countLROs = 0;
+    let countPagers = 0;
 
     for (const op of values(group.operations)) {
       if (isLROOperation(op)) {
@@ -90,6 +92,11 @@ export async function generateServers(session: Session<CodeModel>): Promise<Arra
       }
       content += `\t${operationName} func(${getAPIParametersSig(op, imports, clientPkg)}) (${op.language.go!.serverResponse})\n\n`;
       finalOperations.push(op);
+      if (isLROOperation(op)) {
+        ++countLROs;
+      } else if (isPageableOperation(op)) {
+        ++countPagers;
+      }
     }
 
     content += '}\n\n';
@@ -102,7 +109,23 @@ export async function generateServers(session: Session<CodeModel>): Promise<Arra
     content += `// The returned ${serverTransport} instance is connected to an instance of ${clientPkg}.${group.language.go!.clientName} via the\n`;
     content += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
     content += `func New${serverTransport}(srv *${serverName}) *${serverTransport} {\n`;
-    content += `\treturn &${serverTransport}{srv: srv}\n}\n\n`;
+    if (countLROs === 0 && countPagers === 0) {
+      content += `\treturn &${serverTransport}{srv: srv}\n}\n\n`;
+    } else {
+      content += `\treturn &${serverTransport}{\n\t\tsrv: srv,\n`;
+      for (const op of values(finalOperations)) {
+        let respType = `${clientPkg}.${getResponseEnvelopeName(op)}`;
+        if (isLROOperation(op)) {
+          if (isPageableOperation(op)) {
+            respType = `azfake.PagerResponder[${clientPkg}.${getResponseEnvelopeName(op)}]`;
+          }
+          content += `\t\t${uncapitalize(fixUpOperationName(op))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
+        } else if (isPageableOperation(op)) {
+          content += `\t\t${uncapitalize(fixUpOperationName(op))}: newTracker[azfake.PagerResponder[${respType}]](),\n`;
+        }
+      }
+      content += '\t}\n}\n\n';
+    }
 
     content += `// ${serverTransport} connects instances of ${clientPkg}.${group.language.go!.clientName} to instances of ${serverName}.\n`;
     content += `// Don't use this type directly, use New${serverTransport} instead.\n`;
@@ -110,14 +133,14 @@ export async function generateServers(session: Session<CodeModel>): Promise<Arra
     content += `\tsrv *${serverName}\n`;
     for (const op of values(finalOperations)) {
       // create state machines for any pager/poller operations
+      let respType = `${clientPkg}.${getResponseEnvelopeName(op)}`;
       if (isLROOperation(op)) {
-        let respType = `${clientPkg}.${getResponseEnvelopeName(op)}`;
         if (isPageableOperation(op)) {
           respType = `azfake.PagerResponder[${clientPkg}.${getResponseEnvelopeName(op)}]`;
         }
-        content +=`\t${uncapitalize(fixUpOperationName(op))} *azfake.PollerResponder[${respType}]\n`;
+        content +=`\t${uncapitalize(fixUpOperationName(op))} *tracker[azfake.PollerResponder[${respType}]]\n`;
       } else if (isPageableOperation(op)) {
-        content += `\t${uncapitalize(fixUpOperationName(op))} *azfake.PagerResponder[${clientPkg}.${getResponseEnvelopeName(op)}]\n`;
+        content += `\t${uncapitalize(fixUpOperationName(op))} *tracker[azfake.PagerResponder[${respType}]]\n`;
       }
     }
     content += '}\n\n';
@@ -412,47 +435,55 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, op: O
 
 function dispatchForLROBody(clientPkg: string, receiverName: string, op: Operation, imports: ImportManager): string {
   const operationName = fixUpOperationName(op);
+  const localVarName = uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${uncapitalize(operationName)}`;
-  let content = `\tif ${operationStateMachine} == nil {\n`;
+  let content = `\t${localVarName} := ${operationStateMachine}.get(req)\n`;
+  content += `\tif ${localVarName} == nil {\n`;
   content += dispatchForOperationBody(clientPkg, receiverName, op, imports);
-  content += `\t\t${operationStateMachine} = &respr\n`;
+  content += `\t\t${localVarName} = &respr\n`;
+  content += `\t\t${operationStateMachine}.add(req, ${localVarName})\n`;
   content += '\t}\n\n';
 
-  content += `\tresp, err := server.PollerResponderNext(${operationStateMachine}, req)\n`;
+  content += `\tresp, err := server.PollerResponderNext(${localVarName}, req)\n`;
   content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n\n';
 
   const formattedStatusCodes = formatStatusCodes(getStatusCodes(op));
   content += `\tif !contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
+  content += `\t\t${operationStateMachine}.remove(req)\n`;
   content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;
 
-  content += `\tif !server.PollerResponderMore(${operationStateMachine}) {\n`;
-  content += `\t\t${operationStateMachine} = nil\n\t}\n\n`;
+  content += `\tif !server.PollerResponderMore(${localVarName}) {\n`;
+  content += `\t\t${operationStateMachine}.remove(req)\n\t}\n\n`;
   content += '\treturn resp, nil\n';
   return content;
 }
 
 function dispatchForPagerBody(clientPkg: string, receiverName: string, op: Operation, imports: ImportManager): string {
   const operationName = fixUpOperationName(op);
+  const localVarName = uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${uncapitalize(operationName)}`;
-  let content = `\tif ${operationStateMachine} == nil {\n`;
+  let content = `\t${localVarName} := ${operationStateMachine}.get(req)\n`;
+  content += `\tif ${localVarName} == nil {\n`;
   content += dispatchForOperationBody(clientPkg, receiverName, op, imports);
-  content += `\t\t${operationStateMachine} = &resp\n`;
+  content += `\t\t${localVarName} = &resp\n`;
+  content += `\t\t${operationStateMachine}.add(req, ${localVarName})\n`;
   if (op.language.go!.paging.nextLinkName) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    content += `\t\tserver.PagerResponderInjectNextLinks(${operationStateMachine}, req, func(page *${clientPkg}.${getResponseEnvelopeName(op)}, createLink func() string) {\n`;
+    content += `\t\tserver.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${clientPkg}.${getResponseEnvelopeName(op)}, createLink func() string) {\n`;
     content += `\t\t\tpage.${op.language.go!.paging.nextLinkName} = to.Ptr(createLink())\n`;
     content += '\t\t})\n';
   }
   content += '\t}\n'; // end if
-  content += `\tresp, err := server.PagerResponderNext(${operationStateMachine}, req)\n`;
+  content += `\tresp, err := server.PagerResponderNext(${localVarName}, req)\n`;
   content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
 
   const formattedStatusCodes = formatStatusCodes(getStatusCodes(op));
   content += `\tif !contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
+  content += `\t\t${operationStateMachine}.remove(req)\n`;
   content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;
 
-  content += `\tif !server.PagerResponderMore(${operationStateMachine}) {\n`;
-  content += `\t\t${operationStateMachine} = nil\n\t}\n`;
+  content += `\tif !server.PagerResponderMore(${localVarName}) {\n`;
+  content += `\t\t${operationStateMachine}.remove(req)\n\t}\n`;
   content += '\treturn resp, nil\n';
   return content;
 }
