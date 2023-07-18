@@ -95,8 +95,10 @@ func (p *tracker[T]) key(req *http.Request) string {
 	path := req.URL.Path
 	if match, _ := regexp.Match(`/page_\d+$`, []byte(path)); match {
 		path = path[:strings.LastIndex(path, "/")]
+	} else if strings.HasSuffix(path, "/get/fake/status") {
+		path = path[:len(path)-16]
 	}
-	return req.Method + path
+	return path
 }
 
 func (p *tracker[T]) get(req *http.Request) *T {
