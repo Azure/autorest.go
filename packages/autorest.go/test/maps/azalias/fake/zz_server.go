@@ -46,14 +46,17 @@ type Server struct {
 // The returned ServerTransport instance is connected to an instance of azalias.Client via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServerTransport(srv *Server) *ServerTransport {
-	return &ServerTransport{srv: srv}
+	return &ServerTransport{
+		srv:          srv,
+		newListPager: newTracker[azfake.PagerResponder[azalias.ClientListResponse]](),
+	}
 }
 
 // ServerTransport connects instances of azalias.Client to instances of Server.
 // Don't use this type directly, use NewServerTransport instead.
 type ServerTransport struct {
 	srv          *Server
-	newListPager *azfake.PagerResponder[azalias.ClientListResponse]
+	newListPager *tracker[azfake.PagerResponder[azalias.ClientListResponse]]
 }
 
 // Do implements the policy.Transporter interface for ServerTransport.
@@ -183,7 +186,8 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 	if s.srv.NewListPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListPager not implemented")}
 	}
-	if s.newListPager == nil {
+	newListPager := s.newListPager.get(req)
+	if newListPager == nil {
 		qp := req.URL.Query()
 		groupByUnescaped, err := url.QueryUnescape(qp.Get("groupBy"))
 		if err != nil {
@@ -201,20 +205,22 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 			}
 		}
 		resp := s.srv.NewListPager(options)
-		s.newListPager = &resp
-		server.PagerResponderInjectNextLinks(s.newListPager, req, func(page *azalias.ClientListResponse, createLink func() string) {
+		newListPager = &resp
+		s.newListPager.add(req, newListPager)
+		server.PagerResponderInjectNextLinks(newListPager, req, func(page *azalias.ClientListResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(s.newListPager, req)
+	resp, err := server.PagerResponderNext(newListPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		s.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(s.newListPager) {
-		s.newListPager = nil
+	if !server.PagerResponderMore(newListPager) {
+		s.newListPager.remove(req)
 	}
 	return resp, nil
 }

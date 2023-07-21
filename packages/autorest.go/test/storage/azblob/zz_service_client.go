@@ -95,18 +95,18 @@ func (client *ServiceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ServiceClientFilterBlobsResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.FilterBlobSegment); err != nil {
 		return ServiceClientFilterBlobsResponse{}, err
@@ -159,14 +159,11 @@ func (client *ServiceClient) getAccountInfoCreateRequest(ctx context.Context, re
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *ServiceClient) getAccountInfoHandleResponse(resp *http.Response) (ServiceClientGetAccountInfoResponse, error) {
 	result := ServiceClientGetAccountInfoResponse{}
+	if val := resp.Header.Get("x-ms-account-kind"); val != "" {
+		result.AccountKind = (*AccountKind)(&val)
+	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -175,18 +172,21 @@ func (client *ServiceClient) getAccountInfoHandleResponse(resp *http.Response) (
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-sku-name"); val != "" {
-		result.SKUName = (*SKUName)(&val)
-	}
-	if val := resp.Header.Get("x-ms-account-kind"); val != "" {
-		result.AccountKind = (*AccountKind)(&val)
-	}
 	if val := resp.Header.Get("x-ms-is-hns-enabled"); val != "" {
 		isHierarchicalNamespaceEnabled, err := strconv.ParseBool(val)
 		if err != nil {
 			return ServiceClientGetAccountInfoResponse{}, err
 		}
 		result.IsHierarchicalNamespaceEnabled = &isHierarchicalNamespaceEnabled
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-sku-name"); val != "" {
+		result.SKUName = (*SKUName)(&val)
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	return result, nil
 }
@@ -313,18 +313,18 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ServiceClientGetStatisticsResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.StorageServiceStats); err != nil {
 		return ServiceClientGetStatisticsResponse{}, err
@@ -392,18 +392,18 @@ func (client *ServiceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ServiceClientGetUserDelegationKeyResponse{}, err
 		}
 		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.UserDelegationKey); err != nil {
 		return ServiceClientGetUserDelegationKeyResponse{}, err

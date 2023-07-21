@@ -102,31 +102,51 @@ type PagingServer struct {
 // The returned PagingServerTransport instance is connected to an instance of paginggroup.PagingClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPagingServerTransport(srv *PagingServer) *PagingServerTransport {
-	return &PagingServerTransport{srv: srv}
+	return &PagingServerTransport{
+		srv:                                                  srv,
+		newDuplicateParamsPager:                              newTracker[azfake.PagerResponder[paginggroup.PagingClientDuplicateParamsResponse]](),
+		newFirstResponseEmptyPager:                           newTracker[azfake.PagerResponder[paginggroup.PagingClientFirstResponseEmptyResponse]](),
+		newGetMultiplePagesPager:                             newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesResponse]](),
+		newGetMultiplePagesFailurePager:                      newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureResponse]](),
+		newGetMultiplePagesFailureURIPager:                   newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureURIResponse]](),
+		newGetMultiplePagesFragmentNextLinkPager:             newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse]](),
+		newGetMultiplePagesFragmentWithGroupingNextLinkPager: newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse]](),
+		beginGetMultiplePagesLRO:                             newTracker[azfake.PollerResponder[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesLROResponse]]](),
+		newGetMultiplePagesRetryFirstPager:                   newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesRetryFirstResponse]](),
+		newGetMultiplePagesRetrySecondPager:                  newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesRetrySecondResponse]](),
+		newGetMultiplePagesWithOffsetPager:                   newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesWithOffsetResponse]](),
+		newGetNoItemNamePagesPager:                           newTracker[azfake.PagerResponder[paginggroup.PagingClientGetNoItemNamePagesResponse]](),
+		newGetNullNextLinkNamePagesPager:                     newTracker[azfake.PagerResponder[paginggroup.PagingClientGetNullNextLinkNamePagesResponse]](),
+		newGetODataMultiplePagesPager:                        newTracker[azfake.PagerResponder[paginggroup.PagingClientGetODataMultiplePagesResponse]](),
+		newGetPagingModelWithItemNameWithXMSClientNamePager:  newTracker[azfake.PagerResponder[paginggroup.PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]](),
+		newGetSinglePagesPager:                               newTracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesResponse]](),
+		newGetSinglePagesFailurePager:                        newTracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesFailureResponse]](),
+		newGetWithQueryParamsPager:                           newTracker[azfake.PagerResponder[paginggroup.PagingClientGetWithQueryParamsResponse]](),
+	}
 }
 
 // PagingServerTransport connects instances of paginggroup.PagingClient to instances of PagingServer.
 // Don't use this type directly, use NewPagingServerTransport instead.
 type PagingServerTransport struct {
 	srv                                                  *PagingServer
-	newDuplicateParamsPager                              *azfake.PagerResponder[paginggroup.PagingClientDuplicateParamsResponse]
-	newFirstResponseEmptyPager                           *azfake.PagerResponder[paginggroup.PagingClientFirstResponseEmptyResponse]
-	newGetMultiplePagesPager                             *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesResponse]
-	newGetMultiplePagesFailurePager                      *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureResponse]
-	newGetMultiplePagesFailureURIPager                   *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureURIResponse]
-	newGetMultiplePagesFragmentNextLinkPager             *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse]
-	newGetMultiplePagesFragmentWithGroupingNextLinkPager *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse]
-	beginGetMultiplePagesLRO                             *azfake.PollerResponder[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesLROResponse]]
-	newGetMultiplePagesRetryFirstPager                   *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesRetryFirstResponse]
-	newGetMultiplePagesRetrySecondPager                  *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesRetrySecondResponse]
-	newGetMultiplePagesWithOffsetPager                   *azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesWithOffsetResponse]
-	newGetNoItemNamePagesPager                           *azfake.PagerResponder[paginggroup.PagingClientGetNoItemNamePagesResponse]
-	newGetNullNextLinkNamePagesPager                     *azfake.PagerResponder[paginggroup.PagingClientGetNullNextLinkNamePagesResponse]
-	newGetODataMultiplePagesPager                        *azfake.PagerResponder[paginggroup.PagingClientGetODataMultiplePagesResponse]
-	newGetPagingModelWithItemNameWithXMSClientNamePager  *azfake.PagerResponder[paginggroup.PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]
-	newGetSinglePagesPager                               *azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesResponse]
-	newGetSinglePagesFailurePager                        *azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesFailureResponse]
-	newGetWithQueryParamsPager                           *azfake.PagerResponder[paginggroup.PagingClientGetWithQueryParamsResponse]
+	newDuplicateParamsPager                              *tracker[azfake.PagerResponder[paginggroup.PagingClientDuplicateParamsResponse]]
+	newFirstResponseEmptyPager                           *tracker[azfake.PagerResponder[paginggroup.PagingClientFirstResponseEmptyResponse]]
+	newGetMultiplePagesPager                             *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesResponse]]
+	newGetMultiplePagesFailurePager                      *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureResponse]]
+	newGetMultiplePagesFailureURIPager                   *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureURIResponse]]
+	newGetMultiplePagesFragmentNextLinkPager             *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse]]
+	newGetMultiplePagesFragmentWithGroupingNextLinkPager *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse]]
+	beginGetMultiplePagesLRO                             *tracker[azfake.PollerResponder[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesLROResponse]]]
+	newGetMultiplePagesRetryFirstPager                   *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesRetryFirstResponse]]
+	newGetMultiplePagesRetrySecondPager                  *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesRetrySecondResponse]]
+	newGetMultiplePagesWithOffsetPager                   *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesWithOffsetResponse]]
+	newGetNoItemNamePagesPager                           *tracker[azfake.PagerResponder[paginggroup.PagingClientGetNoItemNamePagesResponse]]
+	newGetNullNextLinkNamePagesPager                     *tracker[azfake.PagerResponder[paginggroup.PagingClientGetNullNextLinkNamePagesResponse]]
+	newGetODataMultiplePagesPager                        *tracker[azfake.PagerResponder[paginggroup.PagingClientGetODataMultiplePagesResponse]]
+	newGetPagingModelWithItemNameWithXMSClientNamePager  *tracker[azfake.PagerResponder[paginggroup.PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]]
+	newGetSinglePagesPager                               *tracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesResponse]]
+	newGetSinglePagesFailurePager                        *tracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesFailureResponse]]
+	newGetWithQueryParamsPager                           *tracker[azfake.PagerResponder[paginggroup.PagingClientGetWithQueryParamsResponse]]
 }
 
 // Do implements the policy.Transporter interface for PagingServerTransport.
@@ -192,7 +212,8 @@ func (p *PagingServerTransport) dispatchNewDuplicateParamsPager(req *http.Reques
 	if p.srv.NewDuplicateParamsPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewDuplicateParamsPager not implemented")}
 	}
-	if p.newDuplicateParamsPager == nil {
+	newDuplicateParamsPager := p.newDuplicateParamsPager.get(req)
+	if newDuplicateParamsPager == nil {
 		qp := req.URL.Query()
 		filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
 		if err != nil {
@@ -206,20 +227,22 @@ func (p *PagingServerTransport) dispatchNewDuplicateParamsPager(req *http.Reques
 			}
 		}
 		resp := p.srv.NewDuplicateParamsPager(options)
-		p.newDuplicateParamsPager = &resp
-		server.PagerResponderInjectNextLinks(p.newDuplicateParamsPager, req, func(page *paginggroup.PagingClientDuplicateParamsResponse, createLink func() string) {
+		newDuplicateParamsPager = &resp
+		p.newDuplicateParamsPager.add(req, newDuplicateParamsPager)
+		server.PagerResponderInjectNextLinks(newDuplicateParamsPager, req, func(page *paginggroup.PagingClientDuplicateParamsResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newDuplicateParamsPager, req)
+	resp, err := server.PagerResponderNext(newDuplicateParamsPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newDuplicateParamsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newDuplicateParamsPager) {
-		p.newDuplicateParamsPager = nil
+	if !server.PagerResponderMore(newDuplicateParamsPager) {
+		p.newDuplicateParamsPager.remove(req)
 	}
 	return resp, nil
 }
@@ -228,22 +251,25 @@ func (p *PagingServerTransport) dispatchNewFirstResponseEmptyPager(req *http.Req
 	if p.srv.NewFirstResponseEmptyPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewFirstResponseEmptyPager not implemented")}
 	}
-	if p.newFirstResponseEmptyPager == nil {
+	newFirstResponseEmptyPager := p.newFirstResponseEmptyPager.get(req)
+	if newFirstResponseEmptyPager == nil {
 		resp := p.srv.NewFirstResponseEmptyPager(nil)
-		p.newFirstResponseEmptyPager = &resp
-		server.PagerResponderInjectNextLinks(p.newFirstResponseEmptyPager, req, func(page *paginggroup.PagingClientFirstResponseEmptyResponse, createLink func() string) {
+		newFirstResponseEmptyPager = &resp
+		p.newFirstResponseEmptyPager.add(req, newFirstResponseEmptyPager)
+		server.PagerResponderInjectNextLinks(newFirstResponseEmptyPager, req, func(page *paginggroup.PagingClientFirstResponseEmptyResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newFirstResponseEmptyPager, req)
+	resp, err := server.PagerResponderNext(newFirstResponseEmptyPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newFirstResponseEmptyPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newFirstResponseEmptyPager) {
-		p.newFirstResponseEmptyPager = nil
+	if !server.PagerResponderMore(newFirstResponseEmptyPager) {
+		p.newFirstResponseEmptyPager.remove(req)
 	}
 	return resp, nil
 }
@@ -252,7 +278,8 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesPager(req *http.Reque
 	if p.srv.NewGetMultiplePagesPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesPager not implemented")}
 	}
-	if p.newGetMultiplePagesPager == nil {
+	newGetMultiplePagesPager := p.newGetMultiplePagesPager.get(req)
+	if newGetMultiplePagesPager == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
 		maxresultsParam, err := parseOptional(getHeaderValue(req.Header, "maxresults"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
@@ -283,20 +310,22 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesPager(req *http.Reque
 			}
 		}
 		resp := p.srv.NewGetMultiplePagesPager(options)
-		p.newGetMultiplePagesPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesPager, req, func(page *paginggroup.PagingClientGetMultiplePagesResponse, createLink func() string) {
+		newGetMultiplePagesPager = &resp
+		p.newGetMultiplePagesPager.add(req, newGetMultiplePagesPager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesPager, req, func(page *paginggroup.PagingClientGetMultiplePagesResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesPager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesPager) {
-		p.newGetMultiplePagesPager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesPager) {
+		p.newGetMultiplePagesPager.remove(req)
 	}
 	return resp, nil
 }
@@ -305,22 +334,25 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailurePager(req *htt
 	if p.srv.NewGetMultiplePagesFailurePager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFailurePager not implemented")}
 	}
-	if p.newGetMultiplePagesFailurePager == nil {
+	newGetMultiplePagesFailurePager := p.newGetMultiplePagesFailurePager.get(req)
+	if newGetMultiplePagesFailurePager == nil {
 		resp := p.srv.NewGetMultiplePagesFailurePager(nil)
-		p.newGetMultiplePagesFailurePager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesFailurePager, req, func(page *paginggroup.PagingClientGetMultiplePagesFailureResponse, createLink func() string) {
+		newGetMultiplePagesFailurePager = &resp
+		p.newGetMultiplePagesFailurePager.add(req, newGetMultiplePagesFailurePager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesFailurePager, req, func(page *paginggroup.PagingClientGetMultiplePagesFailureResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesFailurePager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesFailurePager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesFailurePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesFailurePager) {
-		p.newGetMultiplePagesFailurePager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesFailurePager) {
+		p.newGetMultiplePagesFailurePager.remove(req)
 	}
 	return resp, nil
 }
@@ -329,22 +361,25 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailureURIPager(req *
 	if p.srv.NewGetMultiplePagesFailureURIPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFailureURIPager not implemented")}
 	}
-	if p.newGetMultiplePagesFailureURIPager == nil {
+	newGetMultiplePagesFailureURIPager := p.newGetMultiplePagesFailureURIPager.get(req)
+	if newGetMultiplePagesFailureURIPager == nil {
 		resp := p.srv.NewGetMultiplePagesFailureURIPager(nil)
-		p.newGetMultiplePagesFailureURIPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesFailureURIPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFailureURIResponse, createLink func() string) {
+		newGetMultiplePagesFailureURIPager = &resp
+		p.newGetMultiplePagesFailureURIPager.add(req, newGetMultiplePagesFailureURIPager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesFailureURIPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFailureURIResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesFailureURIPager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesFailureURIPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesFailureURIPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesFailureURIPager) {
-		p.newGetMultiplePagesFailureURIPager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesFailureURIPager) {
+		p.newGetMultiplePagesFailureURIPager.remove(req)
 	}
 	return resp, nil
 }
@@ -353,7 +388,8 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager
 	if p.srv.NewGetMultiplePagesFragmentNextLinkPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFragmentNextLinkPager not implemented")}
 	}
-	if p.newGetMultiplePagesFragmentNextLinkPager == nil {
+	newGetMultiplePagesFragmentNextLinkPager := p.newGetMultiplePagesFragmentNextLinkPager.get(req)
+	if newGetMultiplePagesFragmentNextLinkPager == nil {
 		const regexStr = `/paging/multiple/fragment/(?P<tenant>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -370,20 +406,22 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager
 			return nil, err
 		}
 		resp := p.srv.NewGetMultiplePagesFragmentNextLinkPager(apiVersionUnescaped, tenantUnescaped, nil)
-		p.newGetMultiplePagesFragmentNextLinkPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesFragmentNextLinkPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse, createLink func() string) {
+		newGetMultiplePagesFragmentNextLinkPager = &resp
+		p.newGetMultiplePagesFragmentNextLinkPager.add(req, newGetMultiplePagesFragmentNextLinkPager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesFragmentNextLinkPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse, createLink func() string) {
 			page.ODataNextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesFragmentNextLinkPager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesFragmentNextLinkPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesFragmentNextLinkPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesFragmentNextLinkPager) {
-		p.newGetMultiplePagesFragmentNextLinkPager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesFragmentNextLinkPager) {
+		p.newGetMultiplePagesFragmentNextLinkPager.remove(req)
 	}
 	return resp, nil
 }
@@ -392,7 +430,8 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingN
 	if p.srv.NewGetMultiplePagesFragmentWithGroupingNextLinkPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesFragmentWithGroupingNextLinkPager not implemented")}
 	}
-	if p.newGetMultiplePagesFragmentWithGroupingNextLinkPager == nil {
+	newGetMultiplePagesFragmentWithGroupingNextLinkPager := p.newGetMultiplePagesFragmentWithGroupingNextLinkPager.get(req)
+	if newGetMultiplePagesFragmentWithGroupingNextLinkPager == nil {
 		const regexStr = `/paging/multiple/fragmentwithgrouping/(?P<tenant>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -415,20 +454,22 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingN
 			Tenant:     tenantParam,
 		}
 		resp := p.srv.NewGetMultiplePagesFragmentWithGroupingNextLinkPager(customParameterGroup, nil)
-		p.newGetMultiplePagesFragmentWithGroupingNextLinkPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesFragmentWithGroupingNextLinkPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse, createLink func() string) {
+		newGetMultiplePagesFragmentWithGroupingNextLinkPager = &resp
+		p.newGetMultiplePagesFragmentWithGroupingNextLinkPager.add(req, newGetMultiplePagesFragmentWithGroupingNextLinkPager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesFragmentWithGroupingNextLinkPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse, createLink func() string) {
 			page.ODataNextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesFragmentWithGroupingNextLinkPager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesFragmentWithGroupingNextLinkPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesFragmentWithGroupingNextLinkPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesFragmentWithGroupingNextLinkPager) {
-		p.newGetMultiplePagesFragmentWithGroupingNextLinkPager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesFragmentWithGroupingNextLinkPager) {
+		p.newGetMultiplePagesFragmentWithGroupingNextLinkPager.remove(req)
 	}
 	return resp, nil
 }
@@ -437,7 +478,8 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 	if p.srv.BeginGetMultiplePagesLRO == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginGetMultiplePagesLRO not implemented")}
 	}
-	if p.beginGetMultiplePagesLRO == nil {
+	beginGetMultiplePagesLRO := p.beginGetMultiplePagesLRO.get(req)
+	if beginGetMultiplePagesLRO == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
 		maxresultsParam, err := parseOptional(getHeaderValue(req.Header, "maxresults"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
@@ -471,19 +513,21 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		p.beginGetMultiplePagesLRO = &respr
+		beginGetMultiplePagesLRO = &respr
+		p.beginGetMultiplePagesLRO.add(req, beginGetMultiplePagesLRO)
 	}
 
-	resp, err := server.PollerResponderNext(p.beginGetMultiplePagesLRO, req)
+	resp, err := server.PollerResponderNext(beginGetMultiplePagesLRO, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		p.beginGetMultiplePagesLRO.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(p.beginGetMultiplePagesLRO) {
-		p.beginGetMultiplePagesLRO = nil
+	if !server.PollerResponderMore(beginGetMultiplePagesLRO) {
+		p.beginGetMultiplePagesLRO.remove(req)
 	}
 
 	return resp, nil
@@ -493,22 +537,25 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetryFirstPager(req *
 	if p.srv.NewGetMultiplePagesRetryFirstPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesRetryFirstPager not implemented")}
 	}
-	if p.newGetMultiplePagesRetryFirstPager == nil {
+	newGetMultiplePagesRetryFirstPager := p.newGetMultiplePagesRetryFirstPager.get(req)
+	if newGetMultiplePagesRetryFirstPager == nil {
 		resp := p.srv.NewGetMultiplePagesRetryFirstPager(nil)
-		p.newGetMultiplePagesRetryFirstPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesRetryFirstPager, req, func(page *paginggroup.PagingClientGetMultiplePagesRetryFirstResponse, createLink func() string) {
+		newGetMultiplePagesRetryFirstPager = &resp
+		p.newGetMultiplePagesRetryFirstPager.add(req, newGetMultiplePagesRetryFirstPager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesRetryFirstPager, req, func(page *paginggroup.PagingClientGetMultiplePagesRetryFirstResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesRetryFirstPager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesRetryFirstPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesRetryFirstPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesRetryFirstPager) {
-		p.newGetMultiplePagesRetryFirstPager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesRetryFirstPager) {
+		p.newGetMultiplePagesRetryFirstPager.remove(req)
 	}
 	return resp, nil
 }
@@ -517,22 +564,25 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetrySecondPager(req 
 	if p.srv.NewGetMultiplePagesRetrySecondPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesRetrySecondPager not implemented")}
 	}
-	if p.newGetMultiplePagesRetrySecondPager == nil {
+	newGetMultiplePagesRetrySecondPager := p.newGetMultiplePagesRetrySecondPager.get(req)
+	if newGetMultiplePagesRetrySecondPager == nil {
 		resp := p.srv.NewGetMultiplePagesRetrySecondPager(nil)
-		p.newGetMultiplePagesRetrySecondPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesRetrySecondPager, req, func(page *paginggroup.PagingClientGetMultiplePagesRetrySecondResponse, createLink func() string) {
+		newGetMultiplePagesRetrySecondPager = &resp
+		p.newGetMultiplePagesRetrySecondPager.add(req, newGetMultiplePagesRetrySecondPager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesRetrySecondPager, req, func(page *paginggroup.PagingClientGetMultiplePagesRetrySecondResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesRetrySecondPager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesRetrySecondPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesRetrySecondPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesRetrySecondPager) {
-		p.newGetMultiplePagesRetrySecondPager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesRetrySecondPager) {
+		p.newGetMultiplePagesRetrySecondPager.remove(req)
 	}
 	return resp, nil
 }
@@ -541,7 +591,8 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 	if p.srv.NewGetMultiplePagesWithOffsetPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetMultiplePagesWithOffsetPager not implemented")}
 	}
-	if p.newGetMultiplePagesWithOffsetPager == nil {
+	newGetMultiplePagesWithOffsetPager := p.newGetMultiplePagesWithOffsetPager.get(req)
+	if newGetMultiplePagesWithOffsetPager == nil {
 		const regexStr = `/paging/multiple/withpath/(?P<offset>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -590,20 +641,22 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 			Timeout:         timeoutParam,
 		}
 		resp := p.srv.NewGetMultiplePagesWithOffsetPager(options)
-		p.newGetMultiplePagesWithOffsetPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetMultiplePagesWithOffsetPager, req, func(page *paginggroup.PagingClientGetMultiplePagesWithOffsetResponse, createLink func() string) {
+		newGetMultiplePagesWithOffsetPager = &resp
+		p.newGetMultiplePagesWithOffsetPager.add(req, newGetMultiplePagesWithOffsetPager)
+		server.PagerResponderInjectNextLinks(newGetMultiplePagesWithOffsetPager, req, func(page *paginggroup.PagingClientGetMultiplePagesWithOffsetResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetMultiplePagesWithOffsetPager, req)
+	resp, err := server.PagerResponderNext(newGetMultiplePagesWithOffsetPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetMultiplePagesWithOffsetPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetMultiplePagesWithOffsetPager) {
-		p.newGetMultiplePagesWithOffsetPager = nil
+	if !server.PagerResponderMore(newGetMultiplePagesWithOffsetPager) {
+		p.newGetMultiplePagesWithOffsetPager.remove(req)
 	}
 	return resp, nil
 }
@@ -612,22 +665,25 @@ func (p *PagingServerTransport) dispatchNewGetNoItemNamePagesPager(req *http.Req
 	if p.srv.NewGetNoItemNamePagesPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetNoItemNamePagesPager not implemented")}
 	}
-	if p.newGetNoItemNamePagesPager == nil {
+	newGetNoItemNamePagesPager := p.newGetNoItemNamePagesPager.get(req)
+	if newGetNoItemNamePagesPager == nil {
 		resp := p.srv.NewGetNoItemNamePagesPager(nil)
-		p.newGetNoItemNamePagesPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetNoItemNamePagesPager, req, func(page *paginggroup.PagingClientGetNoItemNamePagesResponse, createLink func() string) {
+		newGetNoItemNamePagesPager = &resp
+		p.newGetNoItemNamePagesPager.add(req, newGetNoItemNamePagesPager)
+		server.PagerResponderInjectNextLinks(newGetNoItemNamePagesPager, req, func(page *paginggroup.PagingClientGetNoItemNamePagesResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetNoItemNamePagesPager, req)
+	resp, err := server.PagerResponderNext(newGetNoItemNamePagesPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetNoItemNamePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetNoItemNamePagesPager) {
-		p.newGetNoItemNamePagesPager = nil
+	if !server.PagerResponderMore(newGetNoItemNamePagesPager) {
+		p.newGetNoItemNamePagesPager.remove(req)
 	}
 	return resp, nil
 }
@@ -636,19 +692,22 @@ func (p *PagingServerTransport) dispatchNewGetNullNextLinkNamePagesPager(req *ht
 	if p.srv.NewGetNullNextLinkNamePagesPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetNullNextLinkNamePagesPager not implemented")}
 	}
-	if p.newGetNullNextLinkNamePagesPager == nil {
+	newGetNullNextLinkNamePagesPager := p.newGetNullNextLinkNamePagesPager.get(req)
+	if newGetNullNextLinkNamePagesPager == nil {
 		resp := p.srv.NewGetNullNextLinkNamePagesPager(nil)
-		p.newGetNullNextLinkNamePagesPager = &resp
+		newGetNullNextLinkNamePagesPager = &resp
+		p.newGetNullNextLinkNamePagesPager.add(req, newGetNullNextLinkNamePagesPager)
 	}
-	resp, err := server.PagerResponderNext(p.newGetNullNextLinkNamePagesPager, req)
+	resp, err := server.PagerResponderNext(newGetNullNextLinkNamePagesPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetNullNextLinkNamePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetNullNextLinkNamePagesPager) {
-		p.newGetNullNextLinkNamePagesPager = nil
+	if !server.PagerResponderMore(newGetNullNextLinkNamePagesPager) {
+		p.newGetNullNextLinkNamePagesPager.remove(req)
 	}
 	return resp, nil
 }
@@ -657,7 +716,8 @@ func (p *PagingServerTransport) dispatchNewGetODataMultiplePagesPager(req *http.
 	if p.srv.NewGetODataMultiplePagesPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetODataMultiplePagesPager not implemented")}
 	}
-	if p.newGetODataMultiplePagesPager == nil {
+	newGetODataMultiplePagesPager := p.newGetODataMultiplePagesPager.get(req)
+	if newGetODataMultiplePagesPager == nil {
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
 		maxresultsParam, err := parseOptional(getHeaderValue(req.Header, "maxresults"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
@@ -688,20 +748,22 @@ func (p *PagingServerTransport) dispatchNewGetODataMultiplePagesPager(req *http.
 			}
 		}
 		resp := p.srv.NewGetODataMultiplePagesPager(options)
-		p.newGetODataMultiplePagesPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetODataMultiplePagesPager, req, func(page *paginggroup.PagingClientGetODataMultiplePagesResponse, createLink func() string) {
+		newGetODataMultiplePagesPager = &resp
+		p.newGetODataMultiplePagesPager.add(req, newGetODataMultiplePagesPager)
+		server.PagerResponderInjectNextLinks(newGetODataMultiplePagesPager, req, func(page *paginggroup.PagingClientGetODataMultiplePagesResponse, createLink func() string) {
 			page.ODataNextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetODataMultiplePagesPager, req)
+	resp, err := server.PagerResponderNext(newGetODataMultiplePagesPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetODataMultiplePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetODataMultiplePagesPager) {
-		p.newGetODataMultiplePagesPager = nil
+	if !server.PagerResponderMore(newGetODataMultiplePagesPager) {
+		p.newGetODataMultiplePagesPager.remove(req)
 	}
 	return resp, nil
 }
@@ -710,22 +772,25 @@ func (p *PagingServerTransport) dispatchNewGetPagingModelWithItemNameWithXMSClie
 	if p.srv.NewGetPagingModelWithItemNameWithXMSClientNamePager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetPagingModelWithItemNameWithXMSClientNamePager not implemented")}
 	}
-	if p.newGetPagingModelWithItemNameWithXMSClientNamePager == nil {
+	newGetPagingModelWithItemNameWithXMSClientNamePager := p.newGetPagingModelWithItemNameWithXMSClientNamePager.get(req)
+	if newGetPagingModelWithItemNameWithXMSClientNamePager == nil {
 		resp := p.srv.NewGetPagingModelWithItemNameWithXMSClientNamePager(nil)
-		p.newGetPagingModelWithItemNameWithXMSClientNamePager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetPagingModelWithItemNameWithXMSClientNamePager, req, func(page *paginggroup.PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse, createLink func() string) {
+		newGetPagingModelWithItemNameWithXMSClientNamePager = &resp
+		p.newGetPagingModelWithItemNameWithXMSClientNamePager.add(req, newGetPagingModelWithItemNameWithXMSClientNamePager)
+		server.PagerResponderInjectNextLinks(newGetPagingModelWithItemNameWithXMSClientNamePager, req, func(page *paginggroup.PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetPagingModelWithItemNameWithXMSClientNamePager, req)
+	resp, err := server.PagerResponderNext(newGetPagingModelWithItemNameWithXMSClientNamePager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetPagingModelWithItemNameWithXMSClientNamePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetPagingModelWithItemNameWithXMSClientNamePager) {
-		p.newGetPagingModelWithItemNameWithXMSClientNamePager = nil
+	if !server.PagerResponderMore(newGetPagingModelWithItemNameWithXMSClientNamePager) {
+		p.newGetPagingModelWithItemNameWithXMSClientNamePager.remove(req)
 	}
 	return resp, nil
 }
@@ -734,22 +799,25 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesPager(req *http.Request
 	if p.srv.NewGetSinglePagesPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetSinglePagesPager not implemented")}
 	}
-	if p.newGetSinglePagesPager == nil {
+	newGetSinglePagesPager := p.newGetSinglePagesPager.get(req)
+	if newGetSinglePagesPager == nil {
 		resp := p.srv.NewGetSinglePagesPager(nil)
-		p.newGetSinglePagesPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetSinglePagesPager, req, func(page *paginggroup.PagingClientGetSinglePagesResponse, createLink func() string) {
+		newGetSinglePagesPager = &resp
+		p.newGetSinglePagesPager.add(req, newGetSinglePagesPager)
+		server.PagerResponderInjectNextLinks(newGetSinglePagesPager, req, func(page *paginggroup.PagingClientGetSinglePagesResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetSinglePagesPager, req)
+	resp, err := server.PagerResponderNext(newGetSinglePagesPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetSinglePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetSinglePagesPager) {
-		p.newGetSinglePagesPager = nil
+	if !server.PagerResponderMore(newGetSinglePagesPager) {
+		p.newGetSinglePagesPager.remove(req)
 	}
 	return resp, nil
 }
@@ -758,22 +826,25 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesFailurePager(req *http.
 	if p.srv.NewGetSinglePagesFailurePager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetSinglePagesFailurePager not implemented")}
 	}
-	if p.newGetSinglePagesFailurePager == nil {
+	newGetSinglePagesFailurePager := p.newGetSinglePagesFailurePager.get(req)
+	if newGetSinglePagesFailurePager == nil {
 		resp := p.srv.NewGetSinglePagesFailurePager(nil)
-		p.newGetSinglePagesFailurePager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetSinglePagesFailurePager, req, func(page *paginggroup.PagingClientGetSinglePagesFailureResponse, createLink func() string) {
+		newGetSinglePagesFailurePager = &resp
+		p.newGetSinglePagesFailurePager.add(req, newGetSinglePagesFailurePager)
+		server.PagerResponderInjectNextLinks(newGetSinglePagesFailurePager, req, func(page *paginggroup.PagingClientGetSinglePagesFailureResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetSinglePagesFailurePager, req)
+	resp, err := server.PagerResponderNext(newGetSinglePagesFailurePager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetSinglePagesFailurePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetSinglePagesFailurePager) {
-		p.newGetSinglePagesFailurePager = nil
+	if !server.PagerResponderMore(newGetSinglePagesFailurePager) {
+		p.newGetSinglePagesFailurePager.remove(req)
 	}
 	return resp, nil
 }
@@ -782,7 +853,8 @@ func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Req
 	if p.srv.NewGetWithQueryParamsPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetWithQueryParamsPager not implemented")}
 	}
-	if p.newGetWithQueryParamsPager == nil {
+	newGetWithQueryParamsPager := p.newGetWithQueryParamsPager.get(req)
+	if newGetWithQueryParamsPager == nil {
 		qp := req.URL.Query()
 		requiredQueryParameterUnescaped, err := url.QueryUnescape(qp.Get("requiredQueryParameter"))
 		if err != nil {
@@ -799,20 +871,22 @@ func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Req
 			return nil, err
 		}
 		resp := p.srv.NewGetWithQueryParamsPager(int32(requiredQueryParameterParam), nil)
-		p.newGetWithQueryParamsPager = &resp
-		server.PagerResponderInjectNextLinks(p.newGetWithQueryParamsPager, req, func(page *paginggroup.PagingClientGetWithQueryParamsResponse, createLink func() string) {
+		newGetWithQueryParamsPager = &resp
+		p.newGetWithQueryParamsPager.add(req, newGetWithQueryParamsPager)
+		server.PagerResponderInjectNextLinks(newGetWithQueryParamsPager, req, func(page *paginggroup.PagingClientGetWithQueryParamsResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(p.newGetWithQueryParamsPager, req)
+	resp, err := server.PagerResponderNext(newGetWithQueryParamsPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetWithQueryParamsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(p.newGetWithQueryParamsPager) {
-		p.newGetWithQueryParamsPager = nil
+	if !server.PagerResponderMore(newGetWithQueryParamsPager) {
+		p.newGetWithQueryParamsPager.remove(req)
 	}
 	return resp, nil
 }

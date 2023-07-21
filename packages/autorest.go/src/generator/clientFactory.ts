@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, Parameter} from '@autorest/codemodel';
+import { CodeModel, OperationGroup, Parameter} from '@autorest/codemodel';
 import { length, values } from '@azure-tools/linq';
-import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, sortAscending, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 
@@ -16,6 +16,8 @@ export async function generateClientFactory(session: Session<CodeModel>): Promis
   let result = '';
   // generate client factory only for ARM
   if (azureARM && length(session.model.operationGroups) > 0) {
+    session.model.operationGroups.sort((a: OperationGroup, b: OperationGroup) => { return sortAscending(a.language.go!.clientName, b.language.go!.clientName); });
+
     // the list of packages to import
     const imports = new ImportManager();
     

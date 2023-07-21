@@ -53,18 +53,25 @@ type DedicatedHostsServer struct {
 // The returned DedicatedHostsServerTransport instance is connected to an instance of armcompute.DedicatedHostsClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewDedicatedHostsServerTransport(srv *DedicatedHostsServer) *DedicatedHostsServerTransport {
-	return &DedicatedHostsServerTransport{srv: srv}
+	return &DedicatedHostsServerTransport{
+		srv:                     srv,
+		beginCreateOrUpdate:     newTracker[azfake.PollerResponder[armcompute.DedicatedHostsClientCreateOrUpdateResponse]](),
+		beginDelete:             newTracker[azfake.PollerResponder[armcompute.DedicatedHostsClientDeleteResponse]](),
+		newListByHostGroupPager: newTracker[azfake.PagerResponder[armcompute.DedicatedHostsClientListByHostGroupResponse]](),
+		beginRestart:            newTracker[azfake.PollerResponder[armcompute.DedicatedHostsClientRestartResponse]](),
+		beginUpdate:             newTracker[azfake.PollerResponder[armcompute.DedicatedHostsClientUpdateResponse]](),
+	}
 }
 
 // DedicatedHostsServerTransport connects instances of armcompute.DedicatedHostsClient to instances of DedicatedHostsServer.
 // Don't use this type directly, use NewDedicatedHostsServerTransport instead.
 type DedicatedHostsServerTransport struct {
 	srv                     *DedicatedHostsServer
-	beginCreateOrUpdate     *azfake.PollerResponder[armcompute.DedicatedHostsClientCreateOrUpdateResponse]
-	beginDelete             *azfake.PollerResponder[armcompute.DedicatedHostsClientDeleteResponse]
-	newListByHostGroupPager *azfake.PagerResponder[armcompute.DedicatedHostsClientListByHostGroupResponse]
-	beginRestart            *azfake.PollerResponder[armcompute.DedicatedHostsClientRestartResponse]
-	beginUpdate             *azfake.PollerResponder[armcompute.DedicatedHostsClientUpdateResponse]
+	beginCreateOrUpdate     *tracker[azfake.PollerResponder[armcompute.DedicatedHostsClientCreateOrUpdateResponse]]
+	beginDelete             *tracker[azfake.PollerResponder[armcompute.DedicatedHostsClientDeleteResponse]]
+	newListByHostGroupPager *tracker[azfake.PagerResponder[armcompute.DedicatedHostsClientListByHostGroupResponse]]
+	beginRestart            *tracker[azfake.PollerResponder[armcompute.DedicatedHostsClientRestartResponse]]
+	beginUpdate             *tracker[azfake.PollerResponder[armcompute.DedicatedHostsClientUpdateResponse]]
 }
 
 // Do implements the policy.Transporter interface for DedicatedHostsServerTransport.
@@ -106,7 +113,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 	if d.srv.BeginCreateOrUpdate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginCreateOrUpdate not implemented")}
 	}
-	if d.beginCreateOrUpdate == nil {
+	beginCreateOrUpdate := d.beginCreateOrUpdate.get(req)
+	if beginCreateOrUpdate == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/hostGroups/(?P<hostGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/hosts/(?P<hostName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -133,19 +141,21 @@ func (d *DedicatedHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		d.beginCreateOrUpdate = &respr
+		beginCreateOrUpdate = &respr
+		d.beginCreateOrUpdate.add(req, beginCreateOrUpdate)
 	}
 
-	resp, err := server.PollerResponderNext(d.beginCreateOrUpdate, req)
+	resp, err := server.PollerResponderNext(beginCreateOrUpdate, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+		d.beginCreateOrUpdate.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(d.beginCreateOrUpdate) {
-		d.beginCreateOrUpdate = nil
+	if !server.PollerResponderMore(beginCreateOrUpdate) {
+		d.beginCreateOrUpdate.remove(req)
 	}
 
 	return resp, nil
@@ -155,7 +165,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginDelete(req *http.Request) (
 	if d.srv.BeginDelete == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDelete not implemented")}
 	}
-	if d.beginDelete == nil {
+	beginDelete := d.beginDelete.get(req)
+	if beginDelete == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/hostGroups/(?P<hostGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/hosts/(?P<hostName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -178,19 +189,21 @@ func (d *DedicatedHostsServerTransport) dispatchBeginDelete(req *http.Request) (
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		d.beginDelete = &respr
+		beginDelete = &respr
+		d.beginDelete.add(req, beginDelete)
 	}
 
-	resp, err := server.PollerResponderNext(d.beginDelete, req)
+	resp, err := server.PollerResponderNext(beginDelete, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+		d.beginDelete.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(d.beginDelete) {
-		d.beginDelete = nil
+	if !server.PollerResponderMore(beginDelete) {
+		d.beginDelete.remove(req)
 	}
 
 	return resp, nil
@@ -249,7 +262,8 @@ func (d *DedicatedHostsServerTransport) dispatchNewListByHostGroupPager(req *htt
 	if d.srv.NewListByHostGroupPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListByHostGroupPager not implemented")}
 	}
-	if d.newListByHostGroupPager == nil {
+	newListByHostGroupPager := d.newListByHostGroupPager.get(req)
+	if newListByHostGroupPager == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/hostGroups/(?P<hostGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/hosts`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -265,20 +279,22 @@ func (d *DedicatedHostsServerTransport) dispatchNewListByHostGroupPager(req *htt
 			return nil, err
 		}
 		resp := d.srv.NewListByHostGroupPager(resourceGroupNameUnescaped, hostGroupNameUnescaped, nil)
-		d.newListByHostGroupPager = &resp
-		server.PagerResponderInjectNextLinks(d.newListByHostGroupPager, req, func(page *armcompute.DedicatedHostsClientListByHostGroupResponse, createLink func() string) {
+		newListByHostGroupPager = &resp
+		d.newListByHostGroupPager.add(req, newListByHostGroupPager)
+		server.PagerResponderInjectNextLinks(newListByHostGroupPager, req, func(page *armcompute.DedicatedHostsClientListByHostGroupResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
-	resp, err := server.PagerResponderNext(d.newListByHostGroupPager, req)
+	resp, err := server.PagerResponderNext(newListByHostGroupPager, req)
 	if err != nil {
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		d.newListByHostGroupPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PagerResponderMore(d.newListByHostGroupPager) {
-		d.newListByHostGroupPager = nil
+	if !server.PagerResponderMore(newListByHostGroupPager) {
+		d.newListByHostGroupPager.remove(req)
 	}
 	return resp, nil
 }
@@ -287,7 +303,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginRestart(req *http.Request) 
 	if d.srv.BeginRestart == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginRestart not implemented")}
 	}
-	if d.beginRestart == nil {
+	beginRestart := d.beginRestart.get(req)
+	if beginRestart == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/hostGroups/(?P<hostGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/hosts/(?P<hostName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restart`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -310,19 +327,21 @@ func (d *DedicatedHostsServerTransport) dispatchBeginRestart(req *http.Request) 
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		d.beginRestart = &respr
+		beginRestart = &respr
+		d.beginRestart.add(req, beginRestart)
 	}
 
-	resp, err := server.PollerResponderNext(d.beginRestart, req)
+	resp, err := server.PollerResponderNext(beginRestart, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		d.beginRestart.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(d.beginRestart) {
-		d.beginRestart = nil
+	if !server.PollerResponderMore(beginRestart) {
+		d.beginRestart.remove(req)
 	}
 
 	return resp, nil
@@ -332,7 +351,8 @@ func (d *DedicatedHostsServerTransport) dispatchBeginUpdate(req *http.Request) (
 	if d.srv.BeginUpdate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginUpdate not implemented")}
 	}
-	if d.beginUpdate == nil {
+	beginUpdate := d.beginUpdate.get(req)
+	if beginUpdate == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/hostGroups/(?P<hostGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/hosts/(?P<hostName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -359,19 +379,21 @@ func (d *DedicatedHostsServerTransport) dispatchBeginUpdate(req *http.Request) (
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
-		d.beginUpdate = &respr
+		beginUpdate = &respr
+		d.beginUpdate.add(req, beginUpdate)
 	}
 
-	resp, err := server.PollerResponderNext(d.beginUpdate, req)
+	resp, err := server.PollerResponderNext(beginUpdate, req)
 	if err != nil {
 		return nil, err
 	}
 
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		d.beginUpdate.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
-	if !server.PollerResponderMore(d.beginUpdate) {
-		d.beginUpdate = nil
+	if !server.PollerResponderMore(beginUpdate) {
+		d.beginUpdate.remove(req)
 	}
 
 	return resp, nil
