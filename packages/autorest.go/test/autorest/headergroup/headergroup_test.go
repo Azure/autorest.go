@@ -109,16 +109,15 @@ func TestHeaderParamEnum(t *testing.T) {
 	require.Zero(t, result)
 }
 
-// func TestHeaderParamExistingKey(t *testing.T) {
-// 	client := newHeaderClient(t)
-// 	result, err := client.ParamExistingKey(context.Background(), "overwrite")
-// 	if err != nil {
-// 		t.Fatalf("ParamExistingKey: %v", err)
-// 	}
-// 	if !reflect.ValueOf(result).IsZero() {
-//		t.Fatal("expected zero-value result")
-//	}
-// }
+func TestHeaderParamExistingKey(t *testing.T) {
+	t.Skip("won't fix: https://github.com/Azure/azure-sdk-for-go/issues/19890")
+	client := newHeaderClient(t)
+	result, err := client.ParamExistingKey(context.Background(), "overwrite", nil)
+	if err != nil {
+		t.Fatalf("ParamExistingKey: %v", err)
+	}
+	require.Zero(t, result)
+}
 
 func TestHeaderParamFloat(t *testing.T) {
 	client := newHeaderClient(t)
