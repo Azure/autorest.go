@@ -17,7 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/internal/recording"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform"
+	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform/v2"
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
 	"github.com/stretchr/testify/suite"
@@ -63,7 +63,7 @@ func (testsuite *SpringTestSuite) SetupSuite() {
 	testsuite.location = recording.GetEnvVariable("LOCATION", "westus")
 	testsuite.mysqlKey = recording.GetEnvVariable("MYSQL_KEY", "")
 	testsuite.resourceGroupName = recording.GetEnvVariable("RESOURCE_GROUP_NAME", "scenarioTestTempGroup")
-	testsuite.subscriptionId = recording.GetEnvVariable("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
+	testsuite.subscriptionId = recording.GetEnvVariable("AZURE_SUBSCRIPTION_ID", "00000000-0000-0000-0000-000000000000")
 	testsuite.userAssignedIdentity = recording.GetEnvVariable("USER_ASSIGNED_IDENTITY", "")
 	resourceGroup, _, err := testutil.CreateResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.location)
 	testsuite.Require().NoError(err)

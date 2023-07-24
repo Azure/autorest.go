@@ -3013,30 +3013,6 @@ schemas:
           name: EndpointAuthKeysSecondaryKey
           description: The secondary key.
       protocol: {}
-    - &ref_293
-      type: string
-      apiVersions:
-        - version: 2022-02-01-preview
-      extensions:
-        x-ms-mutability:
-          - read
-      language:
-        default:
-          name: EndpointPropertiesBaseScoringUri
-          description: Endpoint URI.
-      protocol: {}
-    - &ref_294
-      type: string
-      apiVersions:
-        - version: 2022-02-01-preview
-      extensions:
-        x-ms-mutability:
-          - read
-      language:
-        default:
-          name: EndpointPropertiesBaseSwaggerUri
-          description: Endpoint Swagger URI.
-      protocol: {}
     - &ref_5
       type: string
       apiVersions:
@@ -11103,6 +11079,31 @@ schemas:
           name: TargetUtilizationScaleSettingsPollingInterval
           description: The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds.
       protocol: {}
+  uris:
+    - &ref_293
+      type: uri
+      apiVersions:
+        - version: 2022-02-01-preview
+      extensions:
+        x-ms-mutability:
+          - read
+      language:
+        default:
+          name: EndpointPropertiesBaseScoringUri
+          description: Endpoint URI.
+      protocol: {}
+    - &ref_294
+      type: uri
+      apiVersions:
+        - version: 2022-02-01-preview
+      extensions:
+        x-ms-mutability:
+          - read
+      language:
+        default:
+          name: EndpointPropertiesBaseSwaggerUri
+          description: Endpoint Swagger URI.
+      protocol: {}
   uuids:
     - &ref_76
       type: uuid
@@ -12358,7 +12359,6 @@ schemas:
                                                     nullable: true
                                                     serializedName: subnet
                                                     extensions:
-                                                      x-ms-azure-resource: true
                                                       x-nullable: true
                                                     language:
                                                       default:
@@ -12599,8 +12599,6 @@ schemas:
                                                     protocol: {}
                                                   - schema: *ref_151
                                                     serializedName: subnet
-                                                    extensions:
-                                                      x-ms-azure-resource: true
                                                     language:
                                                       default:
                                                         name: subnet
@@ -17482,7 +17480,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: AccountKey
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17546,7 +17543,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: Certificate
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17616,7 +17612,6 @@ schemas:
                                                                             required: true
                                                                             serializedName: secrets
                                                                             extensions:
-                                                                              x-ms-discriminator-value: KerberosPassword
                                                                               x-ms-mutability:
                                                                                 - create
                                                                                 - update
@@ -17699,7 +17694,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: KerberosKeytab
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17761,7 +17755,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: Sas
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17825,7 +17818,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: ServicePrincipal
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -18935,7 +18927,6 @@ schemas:
                                                                                                           nullable: true
                                                                                                           serializedName: data
                                                                                                           extensions:
-                                                                                                            x-ms-discriminator-value: MLTable
                                                                                                             x-nullable: true
                                                                                                           language:
                                                                                                             default:
@@ -19047,7 +19038,6 @@ schemas:
                                                                                               nullable: true
                                                                                               serializedName: data
                                                                                               extensions:
-                                                                                                x-ms-discriminator-value: MLTable
                                                                                                 x-nullable: true
                                                                                               language:
                                                                                                 default:
@@ -19091,8 +19081,6 @@ schemas:
                                                                                             - schema: *ref_38
                                                                                               required: true
                                                                                               serializedName: data
-                                                                                              extensions:
-                                                                                                x-ms-discriminator-value: MLTable
                                                                                               language:
                                                                                                 default:
                                                                                                   name: data
@@ -21685,7 +21673,6 @@ schemas:
                                                           required: false
                                                           serializedName: limits
                                                           extensions:
-                                                            x-ms-discriminator-value: Command
                                                             x-ms-mutability:
                                                               - create
                                                               - read
@@ -21862,7 +21849,6 @@ schemas:
                                                           required: false
                                                           serializedName: limits
                                                           extensions:
-                                                            x-ms-discriminator-value: Sweep
                                                             x-ms-mutability:
                                                               - create
                                                               - read

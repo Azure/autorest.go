@@ -3909,8 +3909,6 @@ schemas:
                 namespace: ''
             protocol: {}
           serializedName: error
-          extensions:
-            x-ms-external: true
           language:
             default:
               name: error
