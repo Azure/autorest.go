@@ -90,12 +90,6 @@ func (a *AutoRestValidationTestServerTransport) dispatchGetWithConstantInPath(re
 	if a.srv.GetWithConstantInPath == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetWithConstantInPath not implemented")}
 	}
-	const regexStr = `/validation/constantsInPath/(?P<constantParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/value`
-	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
-		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-	}
 	respr, errRespr := a.srv.GetWithConstantInPath(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
@@ -114,12 +108,6 @@ func (a *AutoRestValidationTestServerTransport) dispatchGetWithConstantInPath(re
 func (a *AutoRestValidationTestServerTransport) dispatchPostWithConstantInBody(req *http.Request) (*http.Response, error) {
 	if a.srv.PostWithConstantInBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PostWithConstantInBody not implemented")}
-	}
-	const regexStr = `/validation/constantsInPath/(?P<constantParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/value`
-	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
-		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[validationgroup.Product](req)
 	if err != nil {

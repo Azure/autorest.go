@@ -280,7 +280,9 @@ function getMediaTypeForMultiRespOperation(op: Operation): string {
 }
 
 function dispatchForOperationBody(clientPkg: string, receiverName: string, op: Operation, imports: ImportManager): string {
-  const numPathParams = values(op.parameters).where((each: Parameter) => { return each.protocol.http?.in === 'path'; }).count();
+  // M4 models literal parameters as required === true with a type of Constant.
+  // since these are directly embedded in the generated code, they aren't passed as parameters so skip those
+  const numPathParams = values(op.parameters).where((each: Parameter) => { return each.protocol.http?.in === 'path' && !(each.required && each.schema.type === SchemaType.Constant); }).count();
   let content = '';
   if (numPathParams > 0) {
     imports.add('regexp');

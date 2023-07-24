@@ -243,12 +243,6 @@ func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerPathValid(req *http.R
 	if s.srv.GetSwaggerPathValid == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetSwaggerPathValid not implemented")}
 	}
-	const regexStr = `/azurespecials/skipUrlEncoding/swagger/path/valid/(?P<unencodedPathParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
-		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-	}
 	respr, errRespr := s.srv.GetSwaggerPathValid(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
