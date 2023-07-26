@@ -575,11 +575,12 @@ export async function getParentImport(session: Session<CodeModel>): Promise<stri
   const modName = await session.getValue('module', 'none');
   const containingMod = await session.getValue('containing-module', 'none');
   if (modName !== 'none') {
+    if (modName.split('/')[-1].match(/v\d/) !== null) {
+      throw new Error('module name should not contain major version suffix');
+    }
     const majorVersion = (await session.getValue('module-version', '1.0.0')).split('.')[0];
     if (Number(majorVersion) > 1) {
-      if (modName.split('/')[-1] !== 'v' + majorVersion) {
         return modName + '/v' + majorVersion;
-      }
     }
     return modName;
   } else if (containingMod !== 'none') {
