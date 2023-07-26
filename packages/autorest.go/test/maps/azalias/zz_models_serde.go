@@ -242,6 +242,113 @@ func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type GeoJSONRecursiveDisciminators.
+func (g GeoJSONRecursiveDisciminators) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "combinedOne", g.CombinedOne)
+	populate(objectMap, "combinedThree", g.CombinedThree)
+	populate(objectMap, "combinedTwo", g.CombinedTwo)
+	populate(objectMap, "items", g.Items)
+	populate(objectMap, "objects", g.Objects)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONRecursiveDisciminators.
+func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", g, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "combinedOne":
+			var combinedOneRaw []map[string]json.RawMessage
+			if err := json.Unmarshal(val, &combinedOneRaw); err != nil {
+				return err
+			}
+			combinedOne := make([]map[string]map[string]GeoJSONObjectClassification, len(combinedOneRaw))
+			for i1 := range combinedOneRaw {
+				combinedOne[i1] = map[string]map[string]GeoJSONObjectClassification{}
+				for k2, v2 := range combinedOneRaw[i1] {
+					combinedOne[i1][k2], err = unmarshalGeoJSONObjectClassificationMap(v2)
+					if err != nil {
+						return fmt.Errorf("unmarshalling type %T: %v", g, err)
+					}
+				}
+			}
+			g.CombinedOne = combinedOne
+			delete(rawMsg, key)
+		case "combinedThree":
+			var combinedThreeRaw map[string][]json.RawMessage
+			if err := json.Unmarshal(val, &combinedThreeRaw); err != nil {
+				return err
+			}
+			combinedThree := map[string][]map[string]GeoJSONObjectClassification{}
+			for k1, v1 := range combinedThreeRaw {
+				combinedThree[k1] = make([]map[string]GeoJSONObjectClassification, len(v1))
+				for i2 := range v1 {
+					combinedThree[k1][i2], err = unmarshalGeoJSONObjectClassificationMap(v1[i2])
+					if err != nil {
+						return fmt.Errorf("unmarshalling type %T: %v", g, err)
+					}
+				}
+			}
+			g.CombinedThree = combinedThree
+			delete(rawMsg, key)
+		case "combinedTwo":
+			var combinedTwoRaw map[string]map[string]json.RawMessage
+			if err := json.Unmarshal(val, &combinedTwoRaw); err != nil {
+				return err
+			}
+			combinedTwo := map[string]map[string][]GeoJSONObjectClassification{}
+			for k1, v1 := range combinedTwoRaw {
+				combinedTwo[k1] = map[string][]GeoJSONObjectClassification{}
+				for k2, v2 := range v1 {
+					combinedTwo[k1][k2], err = unmarshalGeoJSONObjectClassificationArray(v2)
+					if err != nil {
+						return fmt.Errorf("unmarshalling type %T: %v", g, err)
+					}
+				}
+			}
+			g.CombinedTwo = combinedTwo
+			delete(rawMsg, key)
+		case "items":
+			var itemsRaw []json.RawMessage
+			if err := json.Unmarshal(val, &itemsRaw); err != nil {
+				return err
+			}
+			items := make([][]GeoJSONObjectClassification, len(itemsRaw))
+			for i1 := range itemsRaw {
+				items[i1], err = unmarshalGeoJSONObjectClassificationArray(itemsRaw[i1])
+				if err != nil {
+					return fmt.Errorf("unmarshalling type %T: %v", g, err)
+				}
+			}
+			g.Items = items
+			delete(rawMsg, key)
+		case "objects":
+			var objectsRaw map[string]json.RawMessage
+			if err := json.Unmarshal(val, &objectsRaw); err != nil {
+				return err
+			}
+			objects := map[string]map[string]GeoJSONObjectClassification{}
+			for k1, v1 := range objectsRaw {
+				objects[k1], err = unmarshalGeoJSONObjectClassificationMap(v1)
+				if err != nil {
+					return fmt.Errorf("unmarshalling type %T: %v", g, err)
+				}
+			}
+			g.Objects = objects
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", g, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type ListResponse.
 func (l ListResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)

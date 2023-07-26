@@ -225,3 +225,11 @@ export function aggregateProperties(obj: ObjectSchema): Array<Property> {
   }
   return allProps;
 }
+
+// returns the leaf element type for an array or dictionary
+export function recursiveUnwrapArrayDictionary(item: ArraySchema | DictionarySchema): Schema {
+  if (isArraySchema(item.elementType) || isDictionarySchema(item.elementType)) {
+    return recursiveUnwrapArrayDictionary(item.elementType);
+  }
+  return item.elementType;
+}

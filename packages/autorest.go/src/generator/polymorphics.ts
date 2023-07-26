@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema, isDictionarySchema } from '../common/helpers';
+import { isArraySchema, isDictionarySchema, recursiveUnwrapArrayDictionary } from '../common/helpers';
 import { contentPreamble, getParentImport, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
@@ -45,12 +45,18 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, pa
   const trackDisciminator = function(prop: Property) {
     if (prop.schema.language.go!.discriminatorInterface) {
       scalars.add(prop.schema.language.go!.discriminatorInterface);
-    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      scalars.add(prop.schema.elementType.language.go!.discriminatorInterface);
-      arrays.add(prop.schema.elementType.language.go!.discriminatorInterface);
-    } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      scalars.add(prop.schema.elementType.language.go!.discriminatorInterface);
-      maps.add(prop.schema.elementType.language.go!.discriminatorInterface);
+    } else if (isArraySchema(prop.schema)) {
+      const discriminatorInterface = recursiveUnwrapArrayDictionary(prop.schema).language.go!.discriminatorInterface;
+      if (discriminatorInterface) {
+        scalars.add(discriminatorInterface);
+        arrays.add(discriminatorInterface);
+      }
+    } else if (isDictionarySchema(prop.schema)) {
+      const discriminatorInterface = recursiveUnwrapArrayDictionary(prop.schema).language.go!.discriminatorInterface;
+      if (discriminatorInterface) {
+        scalars.add(discriminatorInterface);
+        maps.add(discriminatorInterface);
+      }
     }
   };
   // calculate which discriminator helpers we actually need to generate

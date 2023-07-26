@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment } from '@azure-tools/codegen';
-import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, Language, ObjectSchema, Property, SchemaType } from '@autorest/codemodel';
+import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, Language, ObjectSchema, Property, Schema, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, commentLength, aggregateProperties } from '../common/helpers';
 import { contentPreamble, hasDescription, getClientDefaultValue, sortAscending } from './helpers';
@@ -359,12 +359,8 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager
       continue;
     }
     unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
-    if (prop.schema.language.go!.discriminatorInterface) {
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
-    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
-    } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
+    if (hasDiscriminatorInterface(prop.schema)) {
+      unmarshalBody += generateDiscriminatorUnmarshaller(prop, receiver);
     } else if (prop.schema.language.go!.internalTimeType) {
       unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
@@ -386,7 +382,7 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager
     } else {
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
     }
-    unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
+    unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
   }
   if (addlProps) {
     unmarshalBody += '\t\tdefault:\n';
@@ -399,6 +395,127 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager
   unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
   unmarshalBody += '\treturn nil\n';
   return unmarshalBody;
+}
+
+// returns true if item has a discriminator interface.
+// recursively called for arrays and dictionaries.
+function hasDiscriminatorInterface(item: Schema): boolean {
+  if (item.language.go!.discriminatorInterface) {
+    return true;
+  } else if (isArraySchema(item) || isDictionarySchema(item)) {
+    return hasDiscriminatorInterface(item.elementType);
+  }
+  return false;
+}
+
+// returns the text for unmarshalling a discriminated type
+function generateDiscriminatorUnmarshaller(prop: Property, receiver: string): string {
+  const startingIndentation = '\t\t\t';
+  const propertyName = prop.language.go!.name;
+
+  // these are the simple, non-nested cases (e.g. IterfaceType, []InterfaceType, map[string]InterfaceType)
+  if (isObjectSchema(prop.schema)) {
+    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
+  } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
+    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
+  } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
+    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
+  }
+
+  // nested case (e.g. [][]InterfaceType, map[string]map[string]InterfaceType etc)
+  // first, unmarshal the raw data
+  const rawTargetVar = `${prop.serializedName}Raw`;
+  let text = `${startingIndentation}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(prop.schema, true)}\n`;
+  text += `${startingIndentation}if err := json.Unmarshal(val, &${rawTargetVar}); err != nil {\n`;
+  text += `${startingIndentation}\treturn err\n${startingIndentation}}\n`;
+
+  // create a local instantiation of the final type
+  const finalTargetVar = prop.serializedName;
+  let finalTargetCtor = recursiveGetDiscriminatorTypeName(prop.schema, false);
+  if (prop.schema.type === SchemaType.Array) {
+    finalTargetCtor = `make(${finalTargetCtor}, len(${rawTargetVar}))`;
+  } else {
+    // must be a dictionary
+    finalTargetCtor = `${finalTargetCtor}{}`;
+  }
+  text += `${startingIndentation}${finalTargetVar} := ${finalTargetCtor}\n`;
+
+  // now populate the final type
+  text += recursivePopulateDiscriminator(prop.schema, receiver, rawTargetVar, finalTargetVar, startingIndentation, 1);
+
+  // finally, assign the final target to the property
+  text += `${startingIndentation}${receiver}.${propertyName} = ${finalTargetVar}\n`;
+  return text;
+}
+
+// constructs the type name for a nested discriminated type
+// raw e.g. map[string]json.RawMessage, []json.RawMessage etc
+// !raw e.g. map[string]map[string]InterfaceType, [][]InterfaceType etc
+function recursiveGetDiscriminatorTypeName(item: Schema, raw: boolean): string {
+  // when raw is true, stop recursing at the level before the leaf schema
+  if (isArraySchema(item)) {
+    if (!raw || item.elementType.type !== SchemaType.Object) {
+      return `[]${recursiveGetDiscriminatorTypeName(item.elementType, raw)}`;
+    }
+  } else if (isDictionarySchema(item)) {
+    if (!raw || item.elementType.type !== SchemaType.Object) {
+      return `map[string]${recursiveGetDiscriminatorTypeName(item.elementType, raw)}`;
+    }
+  }
+  if (raw) {
+    return 'json.RawMessage';
+  }
+  return item.language.go!.discriminatorInterface;
+}
+
+// recursively constructs the text to populate a nested discriminator
+function recursivePopulateDiscriminator(item: Schema, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
+  let text = '';
+  let interfaceName = '';
+  let targetType = '';
+
+  if (isArraySchema(item)) {
+    if (item.elementType.type !== SchemaType.Object) {
+      if (nesting > 1) {
+        // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
+        text += `${indent}${dest} = make(${recursiveGetDiscriminatorTypeName(item, false)}, len(${rawSrc}))\n`;
+      }
+
+      text += `${indent}for i${nesting} := range ${rawSrc} {\n`;
+      rawSrc = `${rawSrc}[i${nesting}]`; // source becomes each element in the source slice
+      dest = `${dest}[i${nesting}]`; // update destination to each element in the destination slice
+      text += recursivePopulateDiscriminator(item.elementType, receiver, rawSrc, dest, indent+'\t', nesting+1);
+      text += `${indent}}\n`;
+      return text;
+    }
+
+    // we're at leaf node - 1, so get the interface from the element's type
+    interfaceName = item.elementType.language.go!.discriminatorInterface;
+    targetType = 'Array';
+  } else if (isDictionarySchema(item)) {
+    if (item.elementType.type !== SchemaType.Object) {
+      if (nesting > 1) {
+        // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
+        text += `${indent}${dest} = ${recursiveGetDiscriminatorTypeName(item, false)}{}\n`;
+      }
+
+      text += `${indent}for k${nesting}, v${nesting} := range ${rawSrc} {\n`;
+      rawSrc = `v${nesting}`; // source becomes the current value in the source map
+      dest = `${dest}[k${nesting}]`; // update destination to the destination map's value for the current key
+      text += recursivePopulateDiscriminator(item.elementType, receiver, rawSrc, dest, indent+'\t', nesting+1);
+      text += `${indent}}\n`;
+      return text;
+    }
+
+    // we're at leaf node - 1, so get the interface from the element's type
+    interfaceName = item.elementType.language.go!.discriminatorInterface;
+    targetType = 'Map';
+  }
+
+  text += `${indent}${dest}, err = unmarshal${interfaceName}${targetType}(${rawSrc})\n`;
+  text += `${indent}if err != nil {\n${indent}\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n${indent}}\n`;
+
+  return text;
 }
 
 function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager) {
