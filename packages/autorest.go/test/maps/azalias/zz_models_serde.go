@@ -264,7 +264,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "combinedOne":
 			var combinedOneRaw []map[string]json.RawMessage
-			if err := json.Unmarshal(val, &combinedOneRaw); err != nil {
+			if err = json.Unmarshal(val, &combinedOneRaw); err != nil {
 				return err
 			}
 			combinedOne := make([]map[string]map[string]GeoJSONObjectClassification, len(combinedOneRaw))
@@ -281,7 +281,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "combinedThree":
 			var combinedThreeRaw map[string][]json.RawMessage
-			if err := json.Unmarshal(val, &combinedThreeRaw); err != nil {
+			if err = json.Unmarshal(val, &combinedThreeRaw); err != nil {
 				return err
 			}
 			combinedThree := map[string][]map[string]GeoJSONObjectClassification{}
@@ -298,7 +298,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "combinedTwo":
 			var combinedTwoRaw map[string]map[string]json.RawMessage
-			if err := json.Unmarshal(val, &combinedTwoRaw); err != nil {
+			if err = json.Unmarshal(val, &combinedTwoRaw); err != nil {
 				return err
 			}
 			combinedTwo := map[string]map[string][]GeoJSONObjectClassification{}
@@ -315,7 +315,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "items":
 			var itemsRaw []json.RawMessage
-			if err := json.Unmarshal(val, &itemsRaw); err != nil {
+			if err = json.Unmarshal(val, &itemsRaw); err != nil {
 				return err
 			}
 			items := make([][]GeoJSONObjectClassification, len(itemsRaw))
@@ -329,7 +329,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "objects":
 			var objectsRaw map[string]json.RawMessage
-			if err := json.Unmarshal(val, &objectsRaw); err != nil {
+			if err = json.Unmarshal(val, &objectsRaw); err != nil {
 				return err
 			}
 			objects := map[string]map[string]GeoJSONObjectClassification{}

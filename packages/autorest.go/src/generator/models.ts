@@ -426,7 +426,7 @@ function generateDiscriminatorUnmarshaller(prop: Property, receiver: string): st
   // first, unmarshal the raw data
   const rawTargetVar = `${prop.serializedName}Raw`;
   let text = `${startingIndentation}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(prop.schema, true)}\n`;
-  text += `${startingIndentation}if err := json.Unmarshal(val, &${rawTargetVar}); err != nil {\n`;
+  text += `${startingIndentation}if err = json.Unmarshal(val, &${rawTargetVar}); err != nil {\n`;
   text += `${startingIndentation}\treturn err\n${startingIndentation}}\n`;
 
   // create a local instantiation of the final type
