@@ -10,16 +10,6 @@ import { length, values } from '@azure-tools/linq';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
 import { commentLength } from '../common/helpers';
 
-async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
-  const version = await session.getValue('module-version', '');
-  if (version === '') {
-    throw new Error('--module-version is a required parameter');
-  } else if (!version.match(/^\d+\.\d+\.\d+$/) && !version.match(/^\d+\.\d+\.\d+-beta\.\d+$/)) {
-    throw new Error(`module version ${version} must in the format major.minor.patch[-beta.N]`);
-  }
-  return version;
-}
-
 // Creates the content in constants.go
 export async function generateConstants(session: Session<CodeModel>): Promise<string> {
   const enums = getEnums(session.model.schemas);
@@ -33,10 +23,12 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
   }
   // data-plane clients must manage their own constants for these values
   if (<boolean>session.model.language.go!.azureARM) {
-    const version = await getModuleVersion(session);
+    if (session.model.language.go!.moduleVersion === '') {
+      throw new Error('--module-version is a required parameter');
+    }
     text += 'const (\n';
     text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
-    text += `\tmoduleVersion = "v${version}"\n`;
+    text += `\tmoduleVersion = "v${session.model.language.go!.moduleVersion}"\n`;
     text += ')\n\n';
   }
   for (const enm of values(enums)) {

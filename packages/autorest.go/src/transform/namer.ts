@@ -90,18 +90,23 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.rawJSONAsBytes = rawJSONAsBytes;
   const sliceElementsByValue = await session.getValue('slice-elements-byval', false);
   model.language.go!.sliceElementsByValue = sliceElementsByValue;
+  const moduleVersion = await session.getValue('module-version', '');
+  if (moduleVersion !== '' && !moduleVersion.match(/^\d+\.\d+\.\d+$/) && !moduleVersion.match(/^\d+\.\d+\.\d+-beta\.\d+$/)) {
+    throw new Error(`module version ${moduleVersion} must in the format major.minor.patch[-beta.N]`);
+  }
+  model.language.go!.moduleVersion = moduleVersion;
 
-  let module = 'none';
-  const modName = await session.getValue('module', 'none');
-  if (modName !== 'none') {
-    if ((modName.split('/').at(-1))?.match(/^v\d+$/) !== null) {
-      throw new Error('module name should not contain major version suffix');
+  let module = await session.getValue('module', 'none');
+  if (module !== 'none') {
+    if (module.match(/\/v\d+$/)) {
+      throw new Error('module name must not contain major version suffix');
     }
-    const majorVersion = (await session.getValue('module-version', '1.0.0')).split('.')[0];
-    if (Number(majorVersion) > 1) {
-      module = modName + '/v' + majorVersion;
-    }else {
-      module = modName;
+    if (moduleVersion !== '') {
+      // if the modules major version is greater than one, add a major version suffix to the module name
+      const majorVersion = moduleVersion.substring(0, moduleVersion.indexOf('.'));
+      if (Number(majorVersion) > 1) {
+        module += '/v' + majorVersion;
+      }
     }
   }
   model.language.go!.module = module;

@@ -99,36 +99,36 @@ for (namespace in goMappings) {
 }
 
 const blobStorage = './swagger/specification/storage/data-plane/Microsoft.BlobStorage/readme.md';
-generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--inject-spans --azcore-version=1.7.0-beta.2');
+generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--module-version=0.1.0 --inject-spans --azcore-version=1.7.0-beta.2');
 
 const network = './swagger/specification/network/resource-manager/readme.md';
-generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
+generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
 
 const compute = './swagger/specification/compute/resource-manager/readme.md';
-generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2 --slice-elements-byval');
+generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2 --slice-elements-byval');
 
 const synapseArtifacts = './swagger/specification/synapse/data-plane/readme.md';
-generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-composite-v6', 'test/synapse/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
+generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-composite-v6', 'test/synapse/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --module-version=0.1.0 --openapi-type="data-plane"');
 
 const synapseSpark = './swagger/specification/synapse/data-plane/readme.md';
-generateFromReadme("azspark", synapseSpark, 'package-spark-2020-12-01', 'test/synapse/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
+generateFromReadme("azspark", synapseSpark, 'package-spark-2020-12-01', 'test/synapse/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --module-version=0.1.0 --openapi-type="data-plane"');
 
 const tables = './swagger/specification/cosmos-db/data-plane/readme.md';
-generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table --rawjson-as-bytes');
+generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --module-version=0.1.0 --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table --rawjson-as-bytes');
 
 const keyvault = './swagger/specification/keyvault/data-plane/readme.md';
-generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/azkeyvault', '--module=azkeyvault');
+generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/azkeyvault', '--module=azkeyvault --module-version=0.1.0');
 
 const consumption = './swagger/specification/consumption/resource-manager/readme.md';
-generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --azure-arm=true --remove-unreferenced-types');
+generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --module-version=1.0.0 --azure-arm=true --remove-unreferenced-types');
 
 const databoxedge = './swagger/specification/databoxedge/resource-manager/readme.md';
-generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --azure-arm=true --remove-unreferenced-types');
+generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --module-version=2.0.0 --azure-arm=true --remove-unreferenced-types');
 
 const acr = './swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
-generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes --azcore-version=1.7.0-beta.2');
+generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes --azcore-version=1.7.0-beta.2');
 
-generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane" --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
+generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
 
 function should_generate(name) {
     if (filter !== undefined) {
@@ -170,7 +170,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
         console.log('generating ' + readme);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
+        exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
 }
 
