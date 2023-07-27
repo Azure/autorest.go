@@ -20,7 +20,7 @@ export async function generateGoModFile(session: Session<CodeModel>, existingGoM
   const azcore = 'github.com/Azure/azure-sdk-for-go/sdk/azcore v' + version;
   if (existingGoMod === null) {
     // no preexisting go.mod file, generate the default one
-    const modName = await session.getValue('module', 'none');
+    const modName = session.model.language.go!.module;
     if (modName === 'none') {
       return '';
     }

@@ -91,6 +91,21 @@ export async function namer(session: Session<CodeModel>) {
   const sliceElementsByValue = await session.getValue('slice-elements-byval', false);
   model.language.go!.sliceElementsByValue = sliceElementsByValue;
 
+  let module = 'none';
+  const modName = await session.getValue('module', 'none');
+  if (modName !== 'none') {
+    if ((modName.split('/').at(-1))?.match(/^v\d+$/) !== null) {
+      throw new Error('module name should not contain major version suffix');
+    }
+    const majorVersion = (await session.getValue('module-version', '1.0.0')).split('.')[0];
+    if (Number(majorVersion) > 1) {
+      module = modName + '/v' + majorVersion;
+    }else {
+      module = modName;
+    }
+  }
+  model.language.go!.module = module;
+
   // fix up type names
   const structNames = new Set<string>();
   for (const obj of values(model.schemas.objects)) {
