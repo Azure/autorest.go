@@ -102,6 +102,23 @@ type GeoJSONObjectNamedCollection struct {
 	Objects map[string]GeoJSONObjectClassification
 }
 
+type GeoJSONRecursiveDisciminators struct {
+	// slice of map of map of discriminators
+	CombinedOne []map[string]map[string]GeoJSONObjectClassification
+
+	// map of slice of map of discriminators
+	CombinedThree map[string][]map[string]GeoJSONObjectClassification
+
+	// map of map of slice of discriminators
+	CombinedTwo map[string]map[string][]GeoJSONObjectClassification
+
+	// slice of slice of discriminators
+	Items [][]GeoJSONObjectClassification
+
+	// map of map of discriminators
+	Objects map[string]map[string]GeoJSONObjectClassification
+}
+
 // ListResponse - The response model for the List API. Returns a list of all the previously created aliases.
 type ListResponse struct {
 	// READ-ONLY; A list of all the previously created aliases.

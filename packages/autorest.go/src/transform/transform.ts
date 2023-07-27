@@ -7,7 +7,7 @@ import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties, recursiveUnwrapArrayDictionary } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -190,38 +190,69 @@ function substitueDiscriminator(item: Property | Parameter | SchemaResponse): Sc
   if (item.schema.type === SchemaType.Object && item.schema.language.go!.discriminatorInterface) {
     item.language.go!.byValue = true;
     return getDiscriminatorSchema(<ObjectSchema>item.schema);
-  } else if (item.schema.type === SchemaType.Array) {
-    let elementSchema = (<ArraySchema>item.schema).elementType;
-    if (elementSchema.type === SchemaType.Object && elementSchema.language.go!.discriminatorInterface) {
-      elementSchema = getDiscriminatorSchema(<ObjectSchema>elementSchema);
-      const sliceDiscriminators = `[]${elementSchema.language.go!.discriminatorInterface}`;
-      let discriminatorSchema: Schema;
-      if (!discriminatorSchemas.has(sliceDiscriminators)) {
-        discriminatorSchema = new ArraySchema(sliceDiscriminators, 'slice of discriminators', elementSchema);
-        discriminatorSchema.language.go! = discriminatorSchema.language.default;
-        discriminatorSchema.language.go!.elementIsPtr = false;
-        discriminatorSchemas.set(sliceDiscriminators, discriminatorSchema);
-      }
-      return discriminatorSchemas.get(sliceDiscriminators)!;
-    }
-  } else if (item.schema.type === SchemaType.Dictionary) {
-    let elementSchema = (<DictionarySchema>item.schema).elementType;
-    if (elementSchema.type === SchemaType.Object && elementSchema.language.go!.discriminatorInterface) {
-      elementSchema = getDiscriminatorSchema(<ObjectSchema>elementSchema);
-      const mapDiscriminators = `map[string]${elementSchema.language.go!.name}`;
-      let discriminatorSchema: Schema;
-      if (!discriminatorSchemas.has(mapDiscriminators)) {
-        discriminatorSchema = new DictionarySchema(mapDiscriminators, 'map of discriminators', elementSchema);
-        discriminatorSchema.language.go! = discriminatorSchema.language.default;
-        discriminatorSchema.language.go!.elementIsPtr = false;
-        discriminatorSchemas.set(mapDiscriminators, discriminatorSchema);
-      }
-      return discriminatorSchemas.get(mapDiscriminators)!;
+  } else if (isArraySchema(item.schema) || isDictionarySchema(item.schema)) {
+    const leafElementSchema = recursiveUnwrapArrayDictionary(item.schema);
+    if (leafElementSchema.type === SchemaType.Object && leafElementSchema.language.go!.discriminatorInterface) {
+      return recursiveSubstitueDiscriminator(item.schema);
     }
   }
 
   // not a discriminator
   return item.schema;
+}
+
+// constructs a new schema for arrays/maps with a leaf element that's a discriminator
+// NOTE: assumes that the leaf element type is a discriminated type
+// e.g. []map[string]DiscriminatorInterface
+function recursiveSubstitueDiscriminator(item: Schema): Schema {
+  const strings = recursiveBuildDiscriminatorStrings(item);
+  let discriminatorSchema = discriminatorSchemas.get(strings.Name);
+  if (discriminatorSchema) {
+    return discriminatorSchema;
+  }
+  if (isArraySchema(item)) {
+    discriminatorSchema = new ArraySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
+    discriminatorSchema.language.go! = discriminatorSchema.language.default;
+    discriminatorSchema.language.go!.elementIsPtr = false;
+    discriminatorSchemas.set(strings.Name, discriminatorSchema);
+    return discriminatorSchema;
+  } else if (isDictionarySchema(item)) {
+    discriminatorSchema = new DictionarySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
+    discriminatorSchema.language.go! = discriminatorSchema.language.default;
+    discriminatorSchema.language.go!.elementIsPtr = false;
+    discriminatorSchemas.set(strings.Name, discriminatorSchema);
+    return discriminatorSchema;
+  }
+  return getDiscriminatorSchema(<ObjectSchema>item);
+}
+
+interface DiscriminatorStrings {
+  Name: string;
+  Desc: string;
+}
+
+// constructs the name and description for arrays/maps with a leaf element that's a discriminator
+// NOTE: assumes that the leaf element type is a discriminated type
+// Name: []map[string]DiscriminatorInterface
+// Desc: slice of map of discriminators
+function recursiveBuildDiscriminatorStrings(item: Schema): DiscriminatorStrings {
+  if (isArraySchema(item)) {
+    const strings = recursiveBuildDiscriminatorStrings(item.elementType);
+    return {
+      Name: `[]${strings.Name}`,
+      Desc: `array of ${strings.Desc}`
+    };
+  } else if (isDictionarySchema(item)) {
+    const strings = recursiveBuildDiscriminatorStrings(item.elementType);
+    return {
+      Name: `map[string]${strings.Name}`,
+      Desc: `map of ${strings.Desc}`
+    };
+  }
+  return {
+    Name: getDiscriminatorSchema(<ObjectSchema>item).language.go!.discriminatorInterface,
+    Desc: 'discriminators'
+  };
 }
 
 const dictionaryElementAnySchema = new AnySchema('any schema for maps');

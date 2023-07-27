@@ -168,3 +168,95 @@ func TestInterfaceJSONNull(t *testing.T) {
 	require.Contains(t, string(b), `"anyObject":null`)
 	require.NotContains(t, string(b), "anything")
 }
+
+func TestGeoJSONRecursiveDisciminators(t *testing.T) {
+	obj1 := GeoJSONRecursiveDisciminators{
+		CombinedOne: []map[string]map[string]GeoJSONObjectClassification{
+			{
+				"entry": {
+					"thing": &GeoJSONFeature{
+						FeatureType: to.Ptr("slice-of-map-of-map-of-discriminators"),
+						ID:          to.Ptr("entry-one"),
+						Setting:     to.Ptr(DataSettingOne),
+						Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+					},
+				},
+			},
+		},
+		CombinedThree: map[string][]map[string]GeoJSONObjectClassification{
+			"entry": {
+				{
+					"thing": &GeoJSONFeature{
+						FeatureType: to.Ptr("map-of-slice-of-map-of-discriminators"),
+						ID:          to.Ptr("entry-one"),
+						Setting:     to.Ptr(DataSettingOne),
+						Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+					},
+				},
+			},
+		},
+		CombinedTwo: map[string]map[string][]GeoJSONObjectClassification{
+			"entry": {
+				"thing": {
+					&GeoJSONFeature{
+						FeatureType: to.Ptr("map-of-map-of-slice-of-discriminators"),
+						ID:          to.Ptr("0-0"),
+						Setting:     to.Ptr(DataSettingOne),
+						Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+					},
+					&GeoJSONFeature{
+						FeatureType: to.Ptr("map-of-map-of-slice-of-discriminators"),
+						ID:          to.Ptr("0-1"),
+						Setting:     to.Ptr(DataSettingTwo),
+						Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+					},
+				},
+			},
+		},
+		Items: [][]GeoJSONObjectClassification{
+			{
+				&GeoJSONFeature{
+					FeatureType: to.Ptr("slice-of-slice-discriminators"),
+					ID:          to.Ptr("0-0"),
+					Setting:     to.Ptr(DataSettingOne),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+				},
+				&GeoJSONFeature{
+					FeatureType: to.Ptr("slice-of-slice-discriminators"),
+					ID:          to.Ptr("0-1"),
+					Setting:     to.Ptr(DataSettingTwo),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+				},
+			},
+			{
+				&GeoJSONFeature{
+					FeatureType: to.Ptr("slice-of-slice-discriminators"),
+					ID:          to.Ptr("1-0"),
+					Setting:     to.Ptr(DataSettingTwo),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+				},
+				&GeoJSONFeature{
+					FeatureType: to.Ptr("slice-of-slice-discriminators"),
+					ID:          to.Ptr("1-1"),
+					Setting:     to.Ptr(DataSettingThree),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+				},
+			},
+		},
+		Objects: map[string]map[string]GeoJSONObjectClassification{
+			"entry": {
+				"thing": &GeoJSONFeature{
+					FeatureType: to.Ptr("map-of-map-of-discriminators"),
+					ID:          to.Ptr("entry-one"),
+					Setting:     to.Ptr(DataSettingOne),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature), // set by marshaller but set here to simplify the test
+				},
+			},
+		},
+	}
+	b, err := json.Marshal(obj1)
+	require.NoError(t, err)
+	var obj2 GeoJSONRecursiveDisciminators
+	require.NoError(t, json.Unmarshal(b, &obj2))
+	require.EqualValues(t, obj1, obj2)
+}

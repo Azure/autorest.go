@@ -577,6 +577,64 @@
         }
       ]
     },
+    "GeoJsonRecursiveDisciminators": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "description": "slice of slice of discriminators",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/GeoJsonObject"
+            }
+          }
+        },
+        "objects": {
+          "description": "map of map of discriminators",
+          "type": "object",
+          "additionalProperties": {
+            "additionalProperties": {
+              "$ref": "#/definitions/GeoJsonObject"
+            }
+          }
+        },
+        "combinedOne": {
+          "description": "slice of map of map of discriminators",
+          "type": "array",
+          "items": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "$ref": "#/definitions/GeoJsonObject"
+              }
+            }
+          }
+        },
+        "combinedTwo": {
+          "description": "map of map of slice of discriminators",
+          "additionalProperties": {
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GeoJsonObject"
+              }
+            }
+          }
+        },
+        "combinedThree": {
+          "description": "map of slice of map of discriminators",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/GeoJsonObject"
+              }
+            }
+          }
+        }
+      }
+    },
     "ScheduleCreateOrUpdateProperties": {
       "properties": {
         "description": {
