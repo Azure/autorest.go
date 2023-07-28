@@ -45,7 +45,7 @@ export async function generateGoModFile(session: Session<CodeModel>, existingGoM
     existingGoMod = existingGoMod.replace(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?/, azcore);
   }
   // now check if the module name needs to be replaced due to a major version increase
-  if (!existingGoMod.match(`module ${session.model.language.go!.module}$`)) {
+  if (session.model.language.go!.module !== 'none' && !existingGoMod.match(`module ${session.model.language.go!.module}$`)) {
     existingGoMod = existingGoMod.replace(/module \S+/, `module ${session.model.language.go!.module}`);
   }
   return existingGoMod;

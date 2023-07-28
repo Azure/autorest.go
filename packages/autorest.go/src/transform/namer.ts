@@ -91,7 +91,7 @@ export async function namer(session: Session<CodeModel>) {
   const sliceElementsByValue = await session.getValue('slice-elements-byval', false);
   model.language.go!.sliceElementsByValue = sliceElementsByValue;
   const moduleVersion = await session.getValue('module-version', '');
-  if (moduleVersion !== '' && !moduleVersion.match(/^\d+\.\d+\.\d+$/) && !moduleVersion.match(/^\d+\.\d+\.\d+-beta\.\d+$/)) {
+  if (!moduleVersion.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
     throw new Error(`module version ${moduleVersion} must in the format major.minor.patch[-beta.N]`);
   }
   model.language.go!.moduleVersion = moduleVersion;

@@ -16,7 +16,7 @@ export class GenerateContext {
     this.packageName = this.codeModel?.language?.go?.packageName;
     this.importManager = new ImportManager();
     if (this.packageName) {
-      const modName = this.codeModel.language.go!.module
+      const modName = this.codeModel.language.go!.module;
       if (modName !== 'none' && modName) {
         this.importManager.add(modName);
       }
