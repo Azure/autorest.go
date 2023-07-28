@@ -13894,6 +13894,7 @@ language:
     groupParameters: true
     headAsBoolean: true
     module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/agrifood/armagrifood
+    moduleVersion: 0.7.0
     openApiType: arm
     packageName: armagrifood
     parameterGroups:
