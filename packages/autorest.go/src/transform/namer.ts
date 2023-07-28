@@ -111,6 +111,12 @@ export async function namer(session: Session<CodeModel>) {
   }
   model.language.go!.module = module;
 
+  const containingModule = await session.getValue('containing-module', 'none');
+  if (containingModule !== 'none' && module !== 'none') {
+    throw new Error('--module and --containing-module are mutually exclusive');
+  }
+  model.language.go!.containingModule = containingModule;
+
   // fix up type names
   const structNames = new Set<string>();
   for (const obj of values(model.schemas.objects)) {

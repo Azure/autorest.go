@@ -39,14 +39,13 @@ export async function m4ToGoCodeModel(session: Session<M4CodeModel>): Promise<Go
   if (session.model.language.go!.needsXMLDictionaryUnmarshalling) {
     codeModel.marshallingRequirements.generateXMLDictionaryUnmarshallingHelper = true;
   }
-
-  codeModel.options.moduleVersion = await session.getValue('module-version', '');
-  const modName = await session.getValue('module', 'none');
-  const containingMod = await session.getValue('containing-module', 'none');
-  if (modName !== 'none') {
-    codeModel.options.module = modName;
-  } else if (containingMod !== 'none') {
-    codeModel.options.containingModule = containingMod;
+  if (session.model.language.go!.moduleVersion !== '') {
+    codeModel.options.moduleVersion = session.model.language.go!.moduleVersion;
+  }
+  if (session.model.language.go!.module !== 'none') {
+    codeModel.options.module = session.model.language.go!.module;
+  } else if (session.model.language.go!.containingModule !== 'none') {
+    codeModel.options.containingModule = session.model.language.go!.containingModule;
   }
   codeModel.constants = adaptConstantTypes(session);
   codeModel.interfaceTypes = adaptInterfaceTypes(session);
